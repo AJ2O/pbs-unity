@@ -472,7 +472,7 @@ public class BTLUI_Dialog : MonoBehaviour
         for (int i = 0; i < message.Length; i++) // Got overflow point
         {
             float height = textGen.GetPreferredHeight(message.Substring(0, i), generationSettings);
-            if (height > generationSettings.fontSize * (lines + 1))
+            if (height > generationSettings.fontSize * (lines + 2))
             {
                 for (int i2 = i; i2 > 0; i2--)
                 {

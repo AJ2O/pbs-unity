@@ -8996,6 +8996,7 @@ public class EffectDatabase
                         : (this as GriseousOrb).Clone()
                         )
                     : (this is Judgment) ? (this as Judgment).Clone()
+                    : (this is LiechiBerry) ? (this as LiechiBerry).Clone()
                     : (this is LifeOrb) ? (this as LifeOrb).Clone() 
                     : (this is MegaStone) ? (this as MegaStone).Clone()
                     : (this is NaturalGift) ? (this as NaturalGift).Clone()
@@ -9228,14 +9229,17 @@ public class EffectDatabase
             public General.StatStageMod statStageMod;
 
             public LiechiBerry(
-                General.StatStageMod statStageMod)
-                : base(effectType: ItemEffectType.LiechiBerry)
+                General.StatStageMod statStageMod,
+                bool applyOnConsume = false, bool applyOnUse = true)
+                : base(effectType: ItemEffectType.LiechiBerry,
+                      applyOnConsume: applyOnConsume, applyOnUse: applyOnUse)
             {
                 this.statStageMod = statStageMod.Clone();
             }
             public new LiechiBerry Clone()
             {
-                return new LiechiBerry(statStageMod: statStageMod);
+                return new LiechiBerry(statStageMod: statStageMod,
+                    applyOnConsume: applyOnConsume, applyOnUse: applyOnUse);
             }
         }
 

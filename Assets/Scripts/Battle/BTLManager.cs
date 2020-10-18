@@ -461,33 +461,19 @@ public class BTLManager : MonoBehaviour
                 SendEvent(textEvent1);
 
                 trainer.bProps.usedDynamax = true;
+
                 float preHPPercent = battle.GetPokemonHPAsPercentage(pokemon);
                 int preMaxHP = pokemon.maxHP;
 
+                battle.PBPDynamax(pokemon);
                 if (!string.IsNullOrEmpty(pokemon.dynamaxProps.GMaxForm))
                 {
-                    pokemon.dynamaxState = Pokemon.DynamaxState.Gigantamax;
                     yield return StartCoroutine(PBPChangeForm(
                         pokemon: pokemon,
                         toForm: pokemon.dynamaxProps.GMaxForm,
                         checkAbility: false));
                 }
-                else
-                {
-                    pokemon.dynamaxState = Pokemon.DynamaxState.Dynamax;
-                }
-                pokemon.dynamaxProps.turnsLeft = GameSettings.pkmnDynamaxTurns;
 
-                int postMaxHP = pokemon.maxHP;
-                if (postMaxHP != preMaxHP)
-                {
-                    if (pokemon.currentHP > 0)
-                    {
-                        int newCurHP = battle.GetPokemonHPByPercent(pokemon: pokemon, HPPercent: preHPPercent);
-                        pokemon.currentHP = Mathf.Max(1, newCurHP);
-                    }
-                }
-                
                 BTLEvent_Update updateEvent = new BTLEvent_Update();
                 updateEvent.SetCloneModel(battle);
                 updateEvent.Create(new List<Pokemon> { pokemon });
@@ -513,24 +499,7 @@ public class BTLManager : MonoBehaviour
             textEvent.Create(textID: "pokemon-dynamax-end", userPokemon: pokemon);
             SendEvent(textEvent);
 
-            float preHPPercent = battle.GetPokemonHPAsPercentage(pokemon);
-            int preMaxHP = pokemon.maxHP;
-
-            if (pokemon.dynamaxState == Pokemon.DynamaxState.Gigantamax)
-            {
-                battle.PBPRevertForm(pokemon);
-            }
-            pokemon.dynamaxState = Pokemon.DynamaxState.None;
-
-            int postMaxHP = pokemon.maxHP;
-            if (postMaxHP != preMaxHP)
-            {
-                if (pokemon.currentHP > 0)
-                {
-                    int newCurHP = battle.GetPokemonHPByPercent(pokemon: pokemon, HPPercent: preHPPercent);
-                    pokemon.currentHP = Mathf.Max(1, newCurHP);
-                }
-            }
+            battle.PBPUndynamax(pokemon);
 
             BTLEvent_Update updateEvent = new BTLEvent_Update();
             updateEvent.SetCloneModel(battle);
@@ -16751,20 +16720,23 @@ public class BTLManager : MonoBehaviour
         bool showAbility = false;
 
         // Contrary
-        AbilityEffect contraryEffect = targetAbilityData.GetEffect(AbilityEffectType.Contrary);
-        if (contraryEffect != null)
+        if (targetAbilityData != null)
         {
-            showAbility = true;
-            modValue = -modValue;
-            if (maximize)
+            AbilityEffect contraryEffect = targetAbilityData.GetEffect(AbilityEffectType.Contrary);
+            if (contraryEffect != null)
             {
-                maximize = false;
-                minimize = true;
-            }
-            else if (minimize)
-            {
-                maximize = true;
-                minimize = false;
+                showAbility = true;
+                modValue = -modValue;
+                if (maximize)
+                {
+                    maximize = false;
+                    minimize = true;
+                }
+                else if (minimize)
+                {
+                    maximize = true;
+                    minimize = false;
+                }
             }
         }
 
@@ -16772,14 +16744,17 @@ public class BTLManager : MonoBehaviour
         modValue = (minimize) ? GameSettings.GetMinStatBoost() : modValue;
 
         // Simple
-        AbilityEffect simpleEffect = targetAbilityData.GetEffect(AbilityEffectType.Simple);
-        if (simpleEffect != null
-            && !maximize
-            && !minimize)
+        if (targetAbilityData != null)
         {
-            int simpleFactor = Mathf.FloorToInt(simpleEffect.GetFloat(0));
-            modValue *= simpleFactor;
-            showAbility = true;
+            AbilityEffect simpleEffect = targetAbilityData.GetEffect(AbilityEffectType.Simple);
+            if (simpleEffect != null
+                && !maximize
+                && !minimize)
+            {
+                int simpleFactor = Mathf.FloorToInt(simpleEffect.GetFloat(0));
+                modValue *= simpleFactor;
+                showAbility = true;
+            }
         }
 
         // Growth
@@ -17493,7 +17468,7 @@ public class BTLManager : MonoBehaviour
                     }
                 }
                 // Stat Stage Changes
-                else if (effect.effectType == ItemEffectType.StatStageMod
+                else if (effect.effectType == ItemEffectType.XAttack
                     || effect.effectType == ItemEffectType.StatStageMax)
                 {
                     bool maximizeStats = (effect.effectType == ItemEffectType.StatStageMax)
@@ -17501,7 +17476,7 @@ public class BTLManager : MonoBehaviour
                     bool minimizeStats = (effect.effectType == ItemEffectType.StatStageMax)
                         ? !effect.GetBool(1) : false;
 
-                    int statMod = (effect.effectType == ItemEffectType.StatStageMod)
+                    int statMod = (effect.effectType == ItemEffectType.XAttack)
                         ? Mathf.FloorToInt(effect.GetFloat(0)) : 0;
 
                     List<PokemonStats> statsToModify = GameTextDatabase.GetStatsFromList(effect.stringParams);

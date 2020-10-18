@@ -208,7 +208,7 @@ public enum ItemEffectType
     /// <summary>
     /// Adds / Subtracts stat stages of the target pokemon.
     /// </summary>
-    StatStageMod,
+    XAttack,
     /// float0:
     ///     range: any
     ///     desc: the stage to add to existing stat stage changes

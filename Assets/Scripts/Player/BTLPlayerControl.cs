@@ -1327,7 +1327,6 @@ public class BTLPlayerControl : MonoBehaviour
 
         // set the possible items that the trainer can use
         itemSlots = trainer.GetItemsByBattlePocket(pocket);
-        Debug.Log("Items in pocket " + pocket.ToString() + ": " + itemSlots.Count);
 
         // set the initial item index
         if (itemOffset + itemIndex >= itemSlots.Count)

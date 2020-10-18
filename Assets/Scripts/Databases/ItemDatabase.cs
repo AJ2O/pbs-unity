@@ -62,15 +62,7 @@ public class ItemDatabase
                 {
 
                 },
-
-                effects: new ItemEffect[]
-                {
-                    new ItemEffect(
-                        ItemEffectType.Potion,
-                        floatParams: new float[] { 8 },
-                        stringParams: new string[]{ "DEFAULT" }
-                        ),
-                },
+                
                 effectsNew: new EffectDatabase.ItemEff.ItemEffect[]
                 {
                     new EffectDatabase.ItemEff.Potion(
@@ -303,14 +295,12 @@ public class ItemDatabase
                 {
                     ItemTag.OnlyUseableInBattle,
                 },
-
-                effects: new ItemEffect[]
+                
+                effectsNew: new EffectDatabase.ItemEff.ItemEffect[]
                 {
-                    new ItemEffect(
-                        ItemEffectType.StatStageMod,
-                        floatParams: new float[] { 1 },
-                        stringParams: new string[] { "atk" }
-                        ),
+                    new EffectDatabase.ItemEff.LiechiBerry(
+                        statStageMod: new EffectDatabase.General.StatStageMod(ATKMod: 1)
+                        )
                 }
                 ) },
 
@@ -326,13 +316,11 @@ public class ItemDatabase
                     ItemTag.OnlyUseableInBattle,
                 },
 
-                effects: new ItemEffect[]
+                effectsNew: new EffectDatabase.ItemEff.ItemEffect[]
                 {
-                    new ItemEffect(
-                        ItemEffectType.StatStageMod,
-                        floatParams: new float[] { 1 },
-                        stringParams: new string[] { "def" }
-                        ),
+                    new EffectDatabase.ItemEff.LiechiBerry(
+                        statStageMod: new EffectDatabase.General.StatStageMod(DEFMod: 1)
+                        )
                 }
                 ) },
 
@@ -348,13 +336,11 @@ public class ItemDatabase
                     ItemTag.OnlyUseableInBattle,
                 },
 
-                effects: new ItemEffect[]
+                effectsNew: new EffectDatabase.ItemEff.ItemEffect[]
                 {
-                    new ItemEffect(
-                        ItemEffectType.StatStageMod,
-                        floatParams: new float[] { 1 },
-                        stringParams: new string[] { "spa" }
-                        ),
+                    new EffectDatabase.ItemEff.LiechiBerry(
+                        statStageMod: new EffectDatabase.General.StatStageMod(SPAMod: 1)
+                        )
                 }
                 ) },
 
@@ -370,13 +356,11 @@ public class ItemDatabase
                     ItemTag.OnlyUseableInBattle,
                 },
 
-                effects: new ItemEffect[]
+                effectsNew: new EffectDatabase.ItemEff.ItemEffect[]
                 {
-                    new ItemEffect(
-                        ItemEffectType.StatStageMod,
-                        floatParams: new float[] { 1 },
-                        stringParams: new string[] { "spd" }
-                        ),
+                    new EffectDatabase.ItemEff.LiechiBerry(
+                        statStageMod: new EffectDatabase.General.StatStageMod(SPDMod: 1)
+                        )
                 }
                 ) },
 
@@ -392,13 +376,11 @@ public class ItemDatabase
                     ItemTag.OnlyUseableInBattle,
                 },
 
-                effects: new ItemEffect[]
+                effectsNew: new EffectDatabase.ItemEff.ItemEffect[]
                 {
-                    new ItemEffect(
-                        ItemEffectType.StatStageMod,
-                        floatParams: new float[] { 1 },
-                        stringParams: new string[] { "spe" }
-                        ),
+                    new EffectDatabase.ItemEff.LiechiBerry(
+                        statStageMod: new EffectDatabase.General.StatStageMod(SPEMod: 1)
+                        )
                 }
                 ) },
 
@@ -414,13 +396,11 @@ public class ItemDatabase
                     ItemTag.OnlyUseableInBattle,
                 },
 
-                effects: new ItemEffect[]
+                effectsNew: new EffectDatabase.ItemEff.ItemEffect[]
                 {
-                    new ItemEffect(
-                        ItemEffectType.StatStageMod,
-                        floatParams: new float[] { 1 },
-                        stringParams: new string[] { "acc" }
-                        ),
+                    new EffectDatabase.ItemEff.LiechiBerry(
+                        statStageMod: new EffectDatabase.General.StatStageMod(ACCMod: 1)
+                        )
                 }
                 ) },
 

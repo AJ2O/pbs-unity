@@ -21,7 +21,7 @@ public class GameSettings
     public const int pkmnMaxMoveCount = 4;
     public const int pkmnMaxPPUps = 3;
     public const float pkmnDynamaxHPLevelBoost = 0.05f;
-    public const int pkmnDynamaxTurns = 3;
+    public const int pkmnDynamaxTurns = 2;
 
     // Trainer
     public const int trnMaxPartyCount = 6;

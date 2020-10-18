@@ -203,7 +203,7 @@ public class BTLUIPanelFight : BTLUIPanel
             string moveText = "<color=" + typeData.typeColor + ">" + typeData.typeName + "</color>\n";
             moveText += moveData.category.ToString() + " / ";
             moveText += (moveData.basePower > 0) ? moveData.basePower + " BP / " : "";
-            moveText += (moveData.accuracy < 0) ? (Mathf.FloorToInt(moveData.accuracy * 100)) + "% ACC" 
+            moveText += (moveData.accuracy > 0) ? (Mathf.FloorToInt(moveData.accuracy * 100)) + "% ACC" 
                 : "Never Misses";
             promptText.text = moveText;
         }

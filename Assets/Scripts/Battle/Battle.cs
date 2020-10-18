@@ -1569,7 +1569,7 @@ public class Battle
                     {
                         PBPRevertForm(pokemonOnField[i]);
                     }
-                    pokemonOnField[i].dynamaxState = Pokemon.DynamaxState.None;
+                    PBPUndynamax(pokemonOnField[i]);
                 }
 
                 ResetBattleOnlyProperties(pokemonOnField[i]);
@@ -2985,6 +2985,52 @@ public class Battle
     // ---POKEMON BATTLE PROPERTIES---
     
     // Form Changes
+    public void PBPDynamax(Pokemon pokemon)
+    {
+        float preHPPercent = GetPokemonHPAsPercentage(pokemon);
+        int preMaxHP = pokemon.maxHP;
+        
+        if (!string.IsNullOrEmpty(pokemon.dynamaxProps.GMaxForm))
+        {
+            pokemon.dynamaxState = Pokemon.DynamaxState.Gigantamax;
+        }
+        else
+        {
+            pokemon.dynamaxState = Pokemon.DynamaxState.Dynamax;
+        }
+        pokemon.dynamaxProps.turnsLeft = GameSettings.pkmnDynamaxTurns;
+
+        int postMaxHP = pokemon.maxHP;
+        if (postMaxHP != preMaxHP)
+        {
+            if (pokemon.currentHP > 0)
+            {
+                int newCurHP = GetPokemonHPByPercent(pokemon: pokemon, HPPercent: preHPPercent);
+                pokemon.currentHP = Mathf.Max(1, newCurHP);
+            }
+        }
+    }
+    public void PBPUndynamax(Pokemon pokemon)
+    {
+        float preHPPercent = GetPokemonHPAsPercentage(pokemon);
+        int preMaxHP = pokemon.maxHP;
+
+        if (pokemon.dynamaxState == Pokemon.DynamaxState.Gigantamax)
+        {
+            PBPRevertForm(pokemon);
+        }
+        pokemon.dynamaxState = Pokemon.DynamaxState.None;
+
+        int postMaxHP = pokemon.maxHP;
+        if (postMaxHP != preMaxHP)
+        {
+            if (pokemon.currentHP > 0)
+            {
+                int newCurHP = GetPokemonHPByPercent(pokemon: pokemon, HPPercent: preHPPercent);
+                pokemon.currentHP = Mathf.Max(1, newCurHP);
+            }
+        }
+    }
     public void PBPChangeForm(Pokemon pokemon, string newPokemonID)
     {
         float preHPPercent = GetPokemonHPAsPercentage(pokemon);
@@ -9234,8 +9280,6 @@ public class Battle
         }
 
         // Shield Dust
-        Debug.Log(targetPokemon.nickname);
-        Debug.Log(targetPokemon.bProps.abilities == null);
         List<EffectDatabase.AbilityEff.AbilityEffect> shieldDust_ =
             PBPGetAbilityEffects(targetPokemon, AbilityEffectType.ShieldDust);
         for (int i = 0; i < shieldDust_.Count; i++)

@@ -4,7 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/BWBattleScene.unity
+    guid: 97fd098ceb35a30439de25025216a86f
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 74a8f29171a647648a6fecb1905c4573,
       type: 2}
