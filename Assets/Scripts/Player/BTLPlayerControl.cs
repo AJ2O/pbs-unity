@@ -893,6 +893,8 @@ public class BTLPlayerControl : MonoBehaviour
         view.battleUI.SetPokemonHUDsActive(true);
         for (int i = 0; i < pokemonToControl.Count; i++)
         {
+            view.battleUI.UndrawDialogBox();
+
             playerCommand = null;
             committedCommands[i] = null;
             switchPosition = pokemonToControl[i].battlePos;
@@ -1077,8 +1079,11 @@ public class BTLPlayerControl : MonoBehaviour
         else
         {
             // Check Mega-Evolution / Form Change
-            if (!commandTrainer.bProps.usedMegaEvolution 
-                && !canZMove && !canDynamax && !canFormChange)
+            if (!commandTrainer.bProps.usedMegaEvolution
+                && battleModel.battleSettings.canMegaEvolve
+                && !canZMove 
+                && !canDynamax 
+                && !canFormChange)
             {
                 Item item = pokemon.item;
                 if (item != null)
@@ -1102,7 +1107,9 @@ public class BTLPlayerControl : MonoBehaviour
 
             // Check Z-Move
             if (!commandTrainer.bProps.usedZMove
-                && !canMegaEvolve && !canDynamax)
+                && battleModel.battleSettings.canZMove
+                && !canMegaEvolve 
+                && !canDynamax)
             {
                 for (int i = 0; i < moveslots.Count && !canZMove; i++)
                 {
@@ -1118,7 +1125,8 @@ public class BTLPlayerControl : MonoBehaviour
             // Check Dynamax
             if (!commandTrainer.bProps.usedDynamax
                 && battleModel.battleSettings.canDynamax
-                && !canMegaEvolve && !canZMove)
+                && !canMegaEvolve 
+                && !canZMove)
             {
                 canDynamax = true;
             }
@@ -1151,7 +1159,9 @@ public class BTLPlayerControl : MonoBehaviour
             moveslots: moveslots, 
             canMegaEvolve: canMegaEvolve, 
             canZMove: canZMove,
-            canDynamax: canDynamax);
+            canDynamax: canDynamax,
+            choosingZMove: chooseZMove,
+            choosingMaxMove: chooseDynamax || commandPokemon.dynamaxState != Pokemon.DynamaxState.None);
         view.battleUI.SwitchPanel(BTLUI_Base.Panel.Fight);
         view.battleUI.SwitchSelectedMoveTo(
             pokemon: commandPokemon, 
@@ -1690,6 +1700,14 @@ public class BTLPlayerControl : MonoBehaviour
         {
             chooseDynamax = !chooseDynamax;
         }
+        view.battleUI.SetMoves(
+            pokemon: commandPokemon,
+            moveslots: moveslots,
+            canMegaEvolve: canMegaEvolve,
+            canZMove: canZMove,
+            canDynamax: canDynamax,
+            choosingZMove: chooseZMove,
+            choosingMaxMove: chooseDynamax || commandPokemon.dynamaxState != Pokemon.DynamaxState.None);
         view.battleUI.SwitchSelectedMoveTo(
             pokemon: commandPokemon,
             selected: moveslots[moveIndex],
@@ -1726,6 +1744,10 @@ public class BTLPlayerControl : MonoBehaviour
                 if (ZMoveData == null)
                 {
                     validMove = false;
+                }
+                else
+                {
+                    StartCoroutine(view.battleUI.DrawTextInstant("This move cannot use Z-Power!", undrawOnFinish: true));
                 }
             }
 
@@ -1855,6 +1877,10 @@ public class BTLPlayerControl : MonoBehaviour
                 if (ZMoveData == null)
                 {
                     validMove = false;
+                }
+                else
+                {
+                    StartCoroutine(view.battleUI.DrawTextInstant("This move cannot use Z-Power!", undrawOnFinish: true));
                 }
             }
 

@@ -9217,7 +9217,6 @@ public class Battle
         {
             return false;
         }
-
         // Sheer Force Check
         EffectDatabase.AbilityEff.AbilityEffect sheerForce_ = 
             PBPGetAbilityEffect(userPokemon, AbilityEffectType.SheerForce);
@@ -9229,7 +9228,14 @@ public class Battle
             }
         }
 
+        if (targetPokemon == null)
+        {
+            return true;
+        }
+
         // Shield Dust
+        Debug.Log(targetPokemon.nickname);
+        Debug.Log(targetPokemon.bProps.abilities == null);
         List<EffectDatabase.AbilityEff.AbilityEffect> shieldDust_ =
             PBPGetAbilityEffects(targetPokemon, AbilityEffectType.ShieldDust);
         for (int i = 0; i < shieldDust_.Count; i++)

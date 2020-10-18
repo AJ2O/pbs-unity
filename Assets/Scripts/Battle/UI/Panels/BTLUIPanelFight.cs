@@ -26,7 +26,8 @@ public class BTLUIPanelFight : BTLUIPanel
         Battle battle, 
         Pokemon pokemon, 
         List<Pokemon.Moveslot> moveList,
-        bool canMegaEvolve, bool canZMove = false, bool canDynamax = false)
+        bool canMegaEvolve, bool canZMove = false, bool canDynamax = false,
+        bool choosingZMove = false, bool choosingMaxMove = false)
     {
         // Set each move button
         for (int i = 0; i < moveList.Count; i++)
@@ -43,8 +44,8 @@ public class BTLUIPanelFight : BTLUIPanel
                     battle: battle,
                     pokemon: pokemon,
                     moveslot: moveslot,
-                    choosingZMove: canZMove,
-                    choosingMaxMove: canDynamax,
+                    choosingZMove: choosingZMove,
+                    choosingMaxMove: choosingMaxMove,
                     moveBtn: curBtn);
             }
         }
@@ -104,24 +105,40 @@ public class BTLUIPanelFight : BTLUIPanel
         BTLUI_ButtonFight moveBtn,
         bool choosingZMove = false, bool choosingMaxMove = false)
     {
-        MoveData moveData = battle.GetPokemonMoveData(
-            userPokemon: pokemon,
-            moveID: moveslot.moveID,
-            overrideZMove: false, 
-            overrideMaxMove: false);
-        TypeData typeData = TypeDatabase.instance.GetTypeData(moveData.moveType);
+        MoveData moveData = battle.GetPokemonMoveData(userPokemon: pokemon, moveID: moveslot.moveID);
+        if (choosingZMove)
+        {
+            moveData = battle.GetPokemonZMoveData(pokemon, moveslot.moveID);
+        }
+        if (choosingMaxMove)
+        {
+            moveData = battle.GetPokemonMaxMoveData(pokemon, moveData);
+        }
+        if (moveData != null)
+        {
+            TypeData typeData = TypeDatabase.instance.GetTypeData(moveData.moveType);
+            Color typeColor = Color.clear;
+            ColorUtility.TryParseHtmlString(typeData.typeColor, out typeColor);
 
-        Color typeColor = Color.clear;
-        ColorUtility.TryParseHtmlString(typeData.typeColor, out typeColor);
+            moveBtn.moveTxt.text = moveData.moveName;
+            moveBtn.ppTxt.text = moveslot.PP + "/" + moveslot.maxPP;
+            moveBtn.typeTxt.text = typeData.typeName;
+            moveBtn.typeTxt.color = typeColor;
 
-        moveBtn.moveTxt.text = moveData.moveName;
-        moveBtn.ppTxt.text = moveslot.PP + "/" + moveslot.maxPP;
-        moveBtn.typeTxt.text = typeData.typeName;
-        moveBtn.typeTxt.color = typeColor;
-
-        moveBtn.moveData = moveData;
-        moveBtn.moveslot = moveslot;
-        moveBtn.colorSel = new Color(typeColor.r, typeColor.g, typeColor.b, 0.75f);
+            moveBtn.moveData = moveData;
+            moveBtn.moveslot = moveslot;
+            moveBtn.hiddenByZMove = false;
+            moveBtn.colorSel = new Color(typeColor.r, typeColor.g, typeColor.b, 0.75f);
+        }
+        else
+        {
+            moveBtn.moveTxt.text = "";
+            moveBtn.ppTxt.text = "";
+            moveBtn.typeTxt.text = "";
+            moveBtn.moveData = null;
+            moveBtn.moveslot = null;
+            moveBtn.hiddenByZMove = true;
+        }
         moveBtn.UnselectSelf();
     }
 

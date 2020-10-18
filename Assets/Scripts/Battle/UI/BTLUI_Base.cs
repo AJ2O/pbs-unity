@@ -52,7 +52,8 @@ public class BTLUI_Base : MonoBehaviour
     public virtual void SetMoves(
         Pokemon pokemon,
         List<Pokemon.Moveslot> moveslots,
-        bool canMegaEvolve, bool canZMove = false, bool canDynamax = false)
+        bool canMegaEvolve, bool canZMove = false, bool canDynamax = false,
+        bool choosingZMove = false, bool choosingMaxMove = false)
     { }
     public virtual void SwitchSelectedMoveTo(
         Pokemon pokemon,

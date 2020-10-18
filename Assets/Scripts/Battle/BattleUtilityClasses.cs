@@ -8,18 +8,22 @@ public class BattleSettings
     public BattleType battleType;
     public bool isWildBattle;
     public bool isInverse;
-    public bool canDynamax;
+    public bool canMegaEvolve, canZMove, canDynamax;
 
     public BattleSettings(
         BattleType battleType = BattleType.Single,
         bool isWildBattle = false,
         bool isInverse = false,
+        bool canMegaEvolve = true,
+        bool canZMove = true,
         bool canDynamax = true
         )
     {
         this.battleType = battleType;
         this.isWildBattle = isWildBattle;
         this.isInverse = isInverse;
+        this.canMegaEvolve = canMegaEvolve;
+        this.canZMove = canZMove;
         this.canDynamax = canDynamax;
     }
 }

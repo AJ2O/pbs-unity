@@ -126,7 +126,8 @@ public class BTLUI_New : BTLUI_Base
     public override void SetMoves(
         Pokemon pokemon, 
         List<Pokemon.Moveslot> moveslots, 
-        bool canMegaEvolve, bool canZMove = false, bool canDynamax = false)
+        bool canMegaEvolve, bool canZMove = false, bool canDynamax = false,
+        bool choosingZMove = false, bool choosingMaxMove = false)
     {
         List<Pokemon.Moveslot> filteredMoveslots = new List<Pokemon.Moveslot>(moveslots);
         for (int i = 0; i < filteredMoveslots.Count; i++)
@@ -142,7 +143,8 @@ public class BTLUI_New : BTLUI_Base
             battle: battleModel,
             pokemon: pokemon,
             moveList: filteredMoveslots,
-            canMegaEvolve: canMegaEvolve, canZMove: canZMove, canDynamax: canDynamax);
+            canMegaEvolve: canMegaEvolve, canZMove: canZMove, canDynamax: canDynamax,
+            choosingZMove: choosingZMove, choosingMaxMove: choosingMaxMove);
     }
     public override void SwitchSelectedMoveTo(
         Pokemon pokemon, 
@@ -156,6 +158,15 @@ public class BTLUI_New : BTLUI_Base
         else
         {
             fightPanel.HighlightMove(selected);
+        }
+
+        if (choosingSpecial || choosingZMove || choosingMaxMove)
+        {
+            fightPanel.specialBtn.SelectSelf();
+        }
+        else
+        {
+            fightPanel.specialBtn.UnselectSelf();
         }
     }
 

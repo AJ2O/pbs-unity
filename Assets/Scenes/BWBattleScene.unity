@@ -426,6 +426,7 @@ MonoBehaviour:
   image: {fileID: 50419650}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0.5019608}
+  isSelected: 0
   rectTransform: {fileID: 0}
 --- !u!114 &50419650
 MonoBehaviour:
@@ -635,6 +636,7 @@ MonoBehaviour:
   image: {fileID: 59916385}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0, g: 0, b: 0, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
   moveTxt: {fileID: 1149214161}
   ppTxt: {fileID: 1888123811}
@@ -728,6 +730,7 @@ MonoBehaviour:
   image: {fileID: 101093875}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0.5019608}
+  isSelected: 0
   rectTransform: {fileID: 0}
 --- !u!114 &101093875
 MonoBehaviour:
@@ -897,6 +900,7 @@ MonoBehaviour:
   image: {fileID: 125859420}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0, g: 0, b: 0, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
 --- !u!114 &125859420
 MonoBehaviour:
@@ -990,6 +994,7 @@ MonoBehaviour:
   image: {fileID: 133444982}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
   nameTxt: {fileID: 1629570421}
   amountTxt: {fileID: 1761192822}
@@ -1594,6 +1599,7 @@ MonoBehaviour:
   image: {fileID: 199485844}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0, g: 0, b: 0, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
 --- !u!114 &199485844
 MonoBehaviour:
@@ -1687,6 +1693,7 @@ MonoBehaviour:
   image: {fileID: 200117950}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0, g: 0, b: 0, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
   txt: {fileID: 2019257612}
 --- !u!114 &200117950
@@ -2113,6 +2120,7 @@ MonoBehaviour:
   image: {fileID: 271854855}
   colorSel: {r: 1, g: 1, b: 0, a: 0.7529412}
   colorUnsel: {r: 0, g: 0, b: 0, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
   txt: {fileID: 715538234}
   commandType: 4
@@ -2855,6 +2863,7 @@ MonoBehaviour:
   image: {fileID: 418815404}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0.5019608}
+  isSelected: 0
   rectTransform: {fileID: 0}
 --- !u!114 &418815404
 MonoBehaviour:
@@ -3235,6 +3244,7 @@ MonoBehaviour:
   image: {fileID: 470154923}
   colorSel: {r: 0, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0, g: 0, b: 0, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
   txt: {fileID: 715538234}
   commandType: 5
@@ -3499,6 +3509,7 @@ MonoBehaviour:
   image: {fileID: 548551058}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0, g: 0, b: 0, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
 --- !u!114 &548551058
 MonoBehaviour:
@@ -4490,6 +4501,7 @@ MonoBehaviour:
   image: {fileID: 640630533}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0, g: 0, b: 0, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
   moveTxt: {fileID: 1851605530}
   ppTxt: {fileID: 1732394003}
@@ -4548,6 +4560,7 @@ MonoBehaviour:
   image: {fileID: 655285562}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0, g: 0, b: 0, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
 --- !u!114 &655285562
 MonoBehaviour:
@@ -4860,6 +4873,7 @@ MonoBehaviour:
   image: {fileID: 711767279}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0, g: 0, b: 0, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
 --- !u!114 &711767279
 MonoBehaviour:
@@ -6223,6 +6237,7 @@ MonoBehaviour:
   image: {fileID: 930679472}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0.5019608}
+  isSelected: 0
   rectTransform: {fileID: 0}
 --- !u!114 &930679472
 MonoBehaviour:
@@ -6606,6 +6621,7 @@ MonoBehaviour:
   image: {fileID: 1042816092}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
   nameTxt: {fileID: 1698278361}
   amountTxt: {fileID: 1257929024}
@@ -6954,6 +6970,7 @@ MonoBehaviour:
   image: {fileID: 1085720615}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0, g: 0, b: 0, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
 --- !u!114 &1085720615
 MonoBehaviour:
@@ -7449,6 +7466,7 @@ MonoBehaviour:
   image: {fileID: 1137023862}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
 --- !u!1001 &1140120955
 PrefabInstance:
@@ -8687,6 +8705,7 @@ MonoBehaviour:
   image: {fileID: 1244563509}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0, g: 0, b: 0, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
 --- !u!114 &1244563509
 MonoBehaviour:
@@ -8964,6 +8983,7 @@ MonoBehaviour:
   image: {fileID: 1278693203}
   colorSel: {r: 0, g: 1, b: 0, a: 0.7529412}
   colorUnsel: {r: 0, g: 0, b: 0, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
   txt: {fileID: 715538234}
   commandType: 2
@@ -9136,6 +9156,7 @@ MonoBehaviour:
   image: {fileID: 1302247636}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0, g: 0, b: 0, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
 --- !u!114 &1302247636
 MonoBehaviour:
@@ -9547,6 +9568,7 @@ MonoBehaviour:
   image: {fileID: 1403467540}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0, g: 0, b: 0, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
   moveTxt: {fileID: 958441403}
   ppTxt: {fileID: 675569968}
@@ -10142,6 +10164,7 @@ MonoBehaviour:
   image: {fileID: 1471221707}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
   nameTxt: {fileID: 556958132}
   amountTxt: {fileID: 1304879132}
@@ -10829,6 +10852,7 @@ MonoBehaviour:
   image: {fileID: 1563360612}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
 --- !u!1 &1569952446
 GameObject:
@@ -11094,10 +11118,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleSettings:
-    battleType: 0
+    battleType: 1
     isWildBattle: 0
-    isInverse: 0
-    canDynamax: 0
+    isInverse: 1
+    canMegaEvolve: 1
+    canZMove: 1
+    canDynamax: 1
   btlManager: {fileID: 919912970}
 --- !u!1 &1613654674
 GameObject:
@@ -11929,6 +11955,7 @@ MonoBehaviour:
   image: {fileID: 1739655499}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0, g: 0, b: 0, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
 --- !u!114 &1739655499
 MonoBehaviour:
@@ -13337,6 +13364,7 @@ MonoBehaviour:
   image: {fileID: 1910766547}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
   nameTxt: {fileID: 805301297}
   amountTxt: {fileID: 1919393527}
@@ -13901,6 +13929,7 @@ MonoBehaviour:
   image: {fileID: 1935611328}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0, g: 0, b: 0, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
 --- !u!114 &1935611328
 MonoBehaviour:
@@ -14607,6 +14636,7 @@ MonoBehaviour:
   image: {fileID: 2045016845}
   colorSel: {r: 1, g: 1, b: 1, a: 0.7529412}
   colorUnsel: {r: 0, g: 0, b: 0, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
   moveTxt: {fileID: 1627542970}
   ppTxt: {fileID: 679520155}
@@ -15043,6 +15073,7 @@ MonoBehaviour:
   image: {fileID: 2126175396}
   colorSel: {r: 1, g: 0, b: 0, a: 0.7529412}
   colorUnsel: {r: 0, g: 0, b: 0, a: 0.2509804}
+  isSelected: 0
   rectTransform: {fileID: 0}
   txt: {fileID: 715538234}
   commandType: 1

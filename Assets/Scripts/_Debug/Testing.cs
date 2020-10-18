@@ -22,23 +22,20 @@ public class Testing : MonoBehaviour
 
     public void TestBattle()
     {
+        BattleTeam.TeamMode teamMode = (battleSettings.battleType == BattleType.Single) ? BattleTeam.TeamMode.Single
+            : BattleTeam.TeamMode.Double;
+
         Trainer playerTrainer = CreateTrainerUsingTeamNo("Player 1");
         playerTrainer.playerID = 1;
         BattleTeam playerTeam = new BattleTeam(
-            teamMode: BattleTeam.TeamMode.Double,
+            teamMode: teamMode,
             trainers: new List<Trainer> { playerTrainer }
             );
 
         Trainer aiTrainer = CreateTrainer2("Player 2");
         BattleTeam aiTeam = new BattleTeam(
-            teamMode: BattleTeam.TeamMode.Double,
+            teamMode: teamMode,
             trainers: new List<Trainer> { aiTrainer }
-            );
-
-        BattleSettings battleSettings = new BattleSettings(
-            battleType: BattleType.Double,
-            isWildBattle: false,
-            isInverse: false
             );
 
         List<BattleTeam> teams = new List<BattleTeam> { playerTeam, aiTeam };
@@ -410,6 +407,42 @@ public class Testing : MonoBehaviour
                             new Pokemon.Moveslot("recover"),
                         }
                         //nonVolatileStatus: new StatusCondition("paralysis")
+                        ),
+
+                    new Pokemon(
+                        pokemonID: "tapukoko",
+                        level: 15,
+                        hpPercent: 1f,
+                        natureID: "jolly",
+                        moveslots: new Pokemon.Moveslot[]
+                        {
+                            new Pokemon.Moveslot("knockoff"),
+                            new Pokemon.Moveslot("dragondance"),
+                            new Pokemon.Moveslot("roost"),
+                            new Pokemon.Moveslot("naturesmadness"),
+                        },
+                        item: new Item("tapuniumz")
+                        ),
+
+                    new Pokemon(
+                        pokemonID: "blastoise",
+                        level: 15,
+                        hpPercent: 1f,
+                        natureID: "modest",
+                        moveslots: new Pokemon.Moveslot[]
+                        {
+                            new Pokemon.Moveslot("hydropump"),
+                            new Pokemon.Moveslot("stormthrow"),
+                            new Pokemon.Moveslot("roost"),
+                            new Pokemon.Moveslot("magnitude"),
+                        },
+                        dynamaxProps: new Pokemon.DynamaxProperties(
+                            dynamaxLevel: 10,
+                            GMaxForm: "blastoise-gmax",
+                            GMaxMove: "gmaxcannonade",
+                            moveType: "water"
+                            ),
+                        item: new Item("blastoisinite")
                         )
                 });
                 break;
