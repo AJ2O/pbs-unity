@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: PokemonAnimations
+  m_EditorClassIdentifier: 
+  m_GroupName: PokemonAnimations
+  m_Data:
+    m_SerializedData: []
+  m_GUID: e39af19b985a1cb4f9f9bdb26cb54a15
+  m_SerializeEntries: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1b081ff04808d9944a10198ab6e155b6, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 54ec293384b7c734db055aeaaca43309, type: 2}
+    - {fileID: 11400000, guid: b74e44420b9bfe64a832d24bd632ae21, type: 2}

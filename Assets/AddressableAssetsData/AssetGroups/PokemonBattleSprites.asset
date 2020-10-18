@@ -1,0 +1,683 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: PokemonBattleSprites
+  m_EditorClassIdentifier: 
+  m_GroupName: PokemonBattleSprites
+  m_Data:
+    m_SerializedData: []
+  m_GUID: a409076d5e8ca3641af0c27eafede856
+  m_SerializeEntries:
+  - m_GUID: 04e4e3f609ed61f4998c234b0e5c4fa0
+    m_Address: pokemonSprites/back/arceus-ground
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 04f0d619d287d734d8245f00f0a919db
+    m_Address: pokemonSprites/back/hoopa-unbound
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 07c92396f68392b40b37cfaeed5621c1
+    m_Address: pokemonSprites/front/arceus-flying
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 084472fa28892364ab3b14f259e92b3e
+    m_Address: pokemonSprites/back/cramorant
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 2800000, guid: 084472fa28892364ab3b14f259e92b3e, type: 3}
+    m_TargetAsset: {fileID: 2800000, guid: 084472fa28892364ab3b14f259e92b3e, type: 3}
+  - m_GUID: 08b20d1cce15f4f44938d80f31ce2c64
+    m_Address: pokemonSprites/front/morpeko
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 0e5dac40a6d55004d8cec8c2436f686f
+    m_Address: pokemonSprites/back/tapulele
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 10f2dc9be2ad3994d8891abec485b433
+    m_Address: pokemonSprites/back/arceus-flying
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 134587108ff37bc47a801a7b81d8bca1
+    m_Address: pokemonSprites/back/arceus-water
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 14be5c8211beedb47b443b043a5e92b3
+    m_Address: pokemonSprites/front/tapufini
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 16e68ed1cd5d19e40995a5c14d202712
+    m_Address: pokemonSprites/back/arceus-bug
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 1832b4d176c302c4bbf1d8ef9d19e962
+    m_Address: pokemonSprites/front/morpeko-hangry
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 18ff888510354564dba8f532e09c350b
+    m_Address: pokemonSprites/back/tapubulu
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 19739402510f13848ab8e397e5c710d8
+    m_Address: pokemonSprites/front/arceus-rock
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 1cc57da92ba3c85429acef2bf8db6903
+    m_Address: pokemonSprites/back/arceus-dark
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 215c2d8021dba0445b01d8174c6a07a0
+    m_Address: pokemonSprites/back/tapukoko
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 26ff9535613f97a49a3f7399bcabb314
+    m_Address: pokemonSprites/front/greninja
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 2971f65f239023c43b11b87fe33fc95f
+    m_Address: pokemonSprites/back/arceus
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 2d28a9ca4a06aaa42a1d6e9934ef486b
+    m_Address: pokemonSprites/back/charmander
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 2dab50a51f14325468278cdc2f777507
+    m_Address: pokemonSprites/back/arceus-fighting
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 342425164f080f848868464792685a89
+    m_Address: pokemonSprites/back/arceus-ghost
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 34d9917fe1f10754792f3ea1b4c3560d
+    m_Address: pokemonSprites/front/arceus-electric
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 3579edc72256ca54cbd210964ed69b5a
+    m_Address: pokemonSprites/back/cramorant-gulping
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 2800000, guid: 3579edc72256ca54cbd210964ed69b5a, type: 3}
+    m_TargetAsset: {fileID: 2800000, guid: 3579edc72256ca54cbd210964ed69b5a, type: 3}
+  - m_GUID: 375f3b13a7ba9e2418a7194c62186b42
+    m_Address: pokemonSprites/front/arceus-bug
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 395c1cd06ab949f4e96d41c6a65a89e9
+    m_Address: pokemonSprites/back/arceus-ice
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 3b4012a6ba0d83b449e4a833d9b33e4a
+    m_Address: pokemonSprites/front/squirtle
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 3c3a3ec156e3667408b94b1bbcd7b6e2
+    m_Address: pokemonSprites/front/charmander
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 448886cfb1a1ce54cbf8331994c7bb6c
+    m_Address: pokemonSprites/front/tapukoko
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 44956f56a85515547b74979cf1dd22af
+    m_Address: pokemonSprites/back/arceus-psychic
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 48bc4550b5d225448a5399abcc96e89d
+    m_Address: pokemonSprites/front/necrozma-dawnwings
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 4b29dc94cc1a4394c9083a2549d949b3
+    m_Address: pokemonSprites/front/tapubulu
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 50df3e716b00f9442a235f81c2af619e
+    m_Address: pokemonSprites/back/blastoise-mega
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 59dbceb9cff220642ba55a0d4f9738ea
+    m_Address: pokemonSprites/front/hoopa-confined
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 5de06e4898b5ba14bb956ab797811546
+    m_Address: pokemonSprites/front/hoopa-unbound
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 5e11e47a07ac7cd4686af9b329d9c8fb
+    m_Address: pokemonSprites/front/arceus-grass
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 62641ce70c4a873448476da47f65461c
+    m_Address: pokemonSprites/front/arceus-ground
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 62bdf1bddbfb8604ab3d410c740104f4
+    m_Address: pokemonSprites/back/squirtle
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 6387dd293290c28418eb402204611158
+    m_Address: pokemonSprites/back/blastoise
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 63ef4aed06e90424ea4a86a071222f19
+    m_Address: pokemonSprites/back/arceus-dragon
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 65ce8a03b393d654da079ad1c6e6494e
+    m_Address: pokemonSprites/front/arceus-dark
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 6aa8c7211e335a64eb4b2b48ed7e693b
+    m_Address: pokemonSprites/front/blastoise-gmax
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 6b11fdbb6b9df4f40851b58203677f4a
+    m_Address: pokemonSprites/back/blastoise-gmax
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 6c9e8f1dc24eaa3409b62da7295c597d
+    m_Address: pokemonSprites/back/cramorant-gorging
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 2800000, guid: 6c9e8f1dc24eaa3409b62da7295c597d, type: 3}
+    m_TargetAsset: {fileID: 2800000, guid: 6c9e8f1dc24eaa3409b62da7295c597d, type: 3}
+  - m_GUID: 6cc31f4f3670f9846847b43753943cc1
+    m_Address: pokemonSprites/front/arceus-water
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 701ac7f702f59fb4d91c7e368bb9b6d3
+    m_Address: pokemonSprites/back/bulbasaur
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 7055bc47437bd944dae6e8a80ac175a0
+    m_Address: pokemonSprites/front/arceus-fire
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 7735adcc9ea73fd4eb95e572388c0f2e
+    m_Address: pokemonSprites/back/pikachu
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 775afa68524aeae47806acb7c60e9e19
+    m_Address: pokemonSprites/front/arceus-dragon
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 796b633a926a07a4eaf83e39682d9ffa
+    m_Address: pokemonSprites/back/greninja
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 7c2b80f3b2438314cb51023ad12d462e
+    m_Address: pokemonSprites/front/mimikyu
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 81a04aa8fc4a3b04a9140a14019bae58
+    m_Address: pokemonSprites/front/cramorant-gorging
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 2800000, guid: 81a04aa8fc4a3b04a9140a14019bae58, type: 3}
+    m_TargetAsset: {fileID: 2800000, guid: 81a04aa8fc4a3b04a9140a14019bae58, type: 3}
+  - m_GUID: 81c49dc086e57a8468372cafdfad290d
+    m_Address: pokemonSprites/front/arceus-fairy
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 8291b36894146fa479d3733b2c85570d
+    m_Address: pokemonSprites/back/zygarde-10
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 88bf09c62ef733d41b51f08226467a06
+    m_Address: pokemonSprites/front/greninja-ash
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 8c596bbacd08a2345b7f0745ff11b274
+    m_Address: pokemonSprites/front/arceus
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 92bba5fd0fd21d14189bcbb40273aa38
+    m_Address: pokemonSprites/front/arceus-ghost
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 93e34b350fb599c4a8b7525fd128f7c9
+    m_Address: pokemonSprites/back/morpeko
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 9583edbd245448a46a69378f8dc26dd7
+    m_Address: pokemonSprites/front/wailord
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 96abff57f41d81c47a6fc02ace6f4738
+    m_Address: pokemonSprites/back/zygarde
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 9822efdb9e3d5884497d03ed876b764a
+    m_Address: pokemonSprites/front/zygarde
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 9a30e04370c024748bb0cf9a536f16ad
+    m_Address: pokemonSprites/back/arceus-electric
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 9f18c6ae967d2e84ebb6bb80a7bb83f4
+    m_Address: pokemonSprites/front/blastoise
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: a18bf9e418af58f458b440bb29159cb1
+    m_Address: pokemonSprites/back/hoopa-confined
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: a1f43b846aece3a43a41c0c06ab2c03f
+    m_Address: pokemonSprites/front/necrozma
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: a22fbd3252547f8429d43093d07d3727
+    m_Address: pokemonSprites/front/blastoise-mega
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: a4fb161438bca1c488a929eb73ba4185
+    m_Address: pokemonSprites/back/arceus-steel
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: a767d51a712a53247961e42c2c55f7b1
+    m_Address: pokemonSprites/back/arceus-poison
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: a7c4fce4ee1f2704cac4e11148530f3c
+    m_Address: pokemonSprites/front/arceus-fighting
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: a7d065a89a2c11944bcc70e7f0dd5919
+    m_Address: pokemonSprites/front/bulbasaur
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: aa2ab7c8d426bc14382f4cdd7279da38
+    m_Address: pokemonSprites/front/cramorant
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 2800000, guid: aa2ab7c8d426bc14382f4cdd7279da38, type: 3}
+    m_TargetAsset: {fileID: 2800000, guid: aa2ab7c8d426bc14382f4cdd7279da38, type: 3}
+  - m_GUID: aee7d8dac38b4bd489007e421867deab
+    m_Address: pokemonSprites/back/arceus-rock
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: b51f5efa45f07e549892366faf7ff52a
+    m_Address: pokemonSprites/front/tapulele
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: b8f4dbdb52cee814a9d3c701f9b49970
+    m_Address: pokemonSprites/front/cramorant-gulping
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 2800000, guid: b8f4dbdb52cee814a9d3c701f9b49970, type: 3}
+    m_TargetAsset: {fileID: 2800000, guid: b8f4dbdb52cee814a9d3c701f9b49970, type: 3}
+  - m_GUID: bc3c62b1e54bb7f4eb5b63465f39b663
+    m_Address: pokemonSprites/front/arceus-ice
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: c038534461dbc2245903f758d064edf4
+    m_Address: pokemonSprites/back/arceus-fairy
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: c777bb80fe7dbc54aaac989e3c9b6565
+    m_Address: pokemonSprites/front/mimikyu-busted
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: cc1f3c15397a5ef4397b38e3244b88f7
+    m_Address: pokemonSprites/back/arceus-grass
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: d4fba1c04cc5a0940ba3d87a7b056a37
+    m_Address: pokemonSprites/front/arceus-steel
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: d715192f19b4fdf45bbafc8039100f8b
+    m_Address: pokemonSprites/back/morpeko-hangry
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: d9417a80a615ff847bb2b224376643d0
+    m_Address: pokemonSprites/back/greninja-ash
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: dc030c31188cb2c478708f1b85e12028
+    m_Address: pokemonSprites/back/meloetta-pirouette
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: de42fa75b70a29c4f81296dbc923f498
+    m_Address: pokemonSprites/front/meloetta-pirouette
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: e6d52cb5963031244afaf9f29a686d6b
+    m_Address: pokemonSprites/front/meloetta-aria
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: ec935cca3201f824ba3892d7fd9e5499
+    m_Address: pokemonSprites/back/mimikyu
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: edf75b0840bdcd346a3a9f48e3fb2392
+    m_Address: pokemonSprites/front/pikachu
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: ef124acb18491c549872d1404b85d18e
+    m_Address: pokemonSprites/front/necrozma-ultra
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: ef9418b4be689cf48affd92894b15199
+    m_Address: pokemonSprites/back/meloetta-aria
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: ef99a2936e50f8b4893b228b714bf7b3
+    m_Address: pokemonSprites/back/mimikyu-busted
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: f582d77f5f6f3a940bdfd770be03dc83
+    m_Address: pokemonSprites/back/wailord
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: f6c8d8d7414aa36419257638b44957de
+    m_Address: pokemonSprites/front/necrozma-duskmane
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: fa3fb4e90f969fe47827a6ae499d811b
+    m_Address: pokemonSprites/back/arceus-fire
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: fa75a28d8fe41674388039bd266b3f3d
+    m_Address: pokemonSprites/back/tapufini
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - back
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: fb0bc07b9de981c4d9e819fcab7812a1
+    m_Address: pokemonSprites/front/zygarde-10
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: fd3679cc2d9562440a7c08ffba40130c
+    m_Address: pokemonSprites/front/arceus-poison
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: fe8b1e59f5ce16e4cab2b4cb4a13b876
+    m_Address: pokemonSprites/front/arceus-psychic
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - front
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1b081ff04808d9944a10198ab6e155b6, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 4d83eab30d7092e43af53888fa2ca397, type: 2}
+    - {fileID: 11400000, guid: 9189b8ac8dea24b48856177b63fbdb8a, type: 2}

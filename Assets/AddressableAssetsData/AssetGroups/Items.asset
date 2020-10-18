@@ -1,0 +1,543 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Items
+  m_EditorClassIdentifier: 
+  m_GroupName: Items
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 5b910d45ca21ac247ac82a7ed5a9c790
+  m_SerializeEntries:
+  - m_GUID: 01838d9dcc9297348952440db09932e1
+    m_Address: itemSprites/decidiumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 06682cbb5e4701c4992ae97e2634b2fa
+    m_Address: itemSprites/wacanberry
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 07af00a6dabb4594e83d82bbdb6e2c2c
+    m_Address: itemSprites/earthplate
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 0914ffbf0d7dde24482a363567ae7f98
+    m_Address: itemSprites/buginiumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 0cb49bcedd6a3384e9075d0a7c2f499a
+    m_Address: itemSprites/skyplate
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 0cd6587809e2414409eee6b5bca86ec7
+    m_Address: itemSprites/eeviumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 11bab28d8144e38428802f167a6cfa52
+    m_Address: itemSprites/flameplate
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 144725c2e2f974a42a2122dcd893b3bd
+    m_Address: itemSprites/megaring
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 2347d434209382e40b1baab861a55685
+    m_Address: itemSprites/firiumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 23b7249b7c6ebb74682b92ad9bb0a94a
+    m_Address: itemSprites/sitrusberry
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 2800000, guid: 23b7249b7c6ebb74682b92ad9bb0a94a, type: 3}
+    m_TargetAsset: {fileID: 2800000, guid: 23b7249b7c6ebb74682b92ad9bb0a94a, type: 3}
+  - m_GUID: 266d3af4bb57fdf429813bad34199771
+    m_Address: itemSprites/primariumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 29f47119b19815e46875211b9cef8cd5
+    m_Address: itemSprites/rockiumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 2ca01db4e7e48624da1c5940b34653e0
+    m_Address: itemSprites/mewniumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 2ea76d32ab0ab3d4080e7c419eb6a06d
+    m_Address: itemSprites/marshadiumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 2f34567721822b04d960c18a4d0df720
+    m_Address: itemSprites/antidote
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 2f4f03985fcf31e4db4e0773416f2a84
+    m_Address: itemSprites/groundiumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 32c0b5e6b3728094fa3feda7691b8785
+    m_Address: itemSprites/steeliumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 37f0ced190fe9f840a52e7108e20e51d
+    m_Address: itemSprites/focussash
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 384a58ac2b632584a9b5d362465a339a
+    m_Address: itemSprites/chilanberry
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 396814920e8006c4fafbf8e42f24d453
+    m_Address: itemSprites/insectplate
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 408e322565ec7ea4fa3e2fffb437f320
+    m_Address: itemSprites/inciniumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 44edbd02325d0794c905cd9718246ffd
+    m_Address: itemSprites/lumberry
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 4ba517ec9c7e67841b53a4ee3e5e73b0
+    m_Address: itemSprites/xspeed
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 4f9785e553e788b46917fcae770241e7
+    m_Address: itemSprites/dragoniumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 4fca17a0ea8f37d4387c6dbc65fc9ed6
+    m_Address: itemSprites/wateriumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 577a4175ab3d57f4fa1fba189c337df0
+    m_Address: itemSprites/spookyplate
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 5af23c0802d712c4587e257be218d175
+    m_Address: itemSprites/iciumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 5eb2782297ba4bd4aad9db4e5873ea7d
+    m_Address: itemSprites/fistplate
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 61b30a56e37cfbf488a17b0aaf78e5aa
+    m_Address: itemSprites/mindplate
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 6216881bef6537a4a94e2ba7d0343eba
+    m_Address: itemSprites/meadowplate
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 62e16baf8036faa4d860d31caef8e1aa
+    m_Address: itemSprites/splashplate
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 66f63cc9f904d7d409596a57d3af4646
+    m_Address: itemSprites/icicleplate
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 6967dd8ea1bd1bf4aa4f591ec44eb1e5
+    m_Address: itemSprites/dreadplate
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 6a3b6989561add64f8f95ef92cdd1aa9
+    m_Address: itemSprites/darkiniumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 6cae3e29e52739a4ba26a5bac18c789d
+    m_Address: itemSprites/xattack
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 6d02e9b3c713583449dbdc97b5101b60
+    m_Address: itemSprites/direhit
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 76b3048a88f0c5142b8d5346bbbce29d
+    m_Address: itemSprites/occaberry
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 7b8f7fffc8518a04b814289af5a465c4
+    m_Address: itemSprites/aloraichiumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 8432dfaa782072a46a7ab65c5db578b4
+    m_Address: itemSprites/xaccuracy
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 899882c9b636bf34f847a05364527ba5
+    m_Address: itemSprites/mimikiumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 8e41687166ed6084db4cb172517ee1bf
+    m_Address: itemSprites/dynamaxband
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 9bbf4dded0cbafb4b8e9c476428257cf
+    m_Address: itemSprites/normaliumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 9df0f88deee01a342a97eba0a894c770
+    m_Address: itemSprites/toxicplate
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: a1cbd35d1d8f9ff45b61e306a46aebf9
+    m_Address: itemSprites/guardspec
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: a37c45a517691b34399fe7ac24dc06bd
+    m_Address: itemSprites/poisoniumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: a6ae3d347204b8649a26fec72494270a
+    m_Address: itemSprites/fairiumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: adfea3862cfab2a4b9b2517fca71ec54
+    m_Address: itemSprites/lycaniumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: ae03459e40259d242a9db2fa95080c9e
+    m_Address: itemSprites/dracoplate
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: aea485cfae2f7c5459f36ce5a706eb26
+    m_Address: itemSprites/ghostiumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: b6029448119e69549b05d8b99c1e83e2
+    m_Address: itemSprites/tapuniumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: b633659df81e3804aa84b7e12dec9822
+    m_Address: itemSprites/psychiumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: b91f149af007350409c5214a40d1fc8e
+    m_Address: itemSprites/fightiniumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: beb105df2865f944fad1920ef1aa5be8
+    m_Address: itemSprites/kommoniumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: bf04f1f4de41c4b449d094333ffd3511
+    m_Address: itemSprites/pixieplate
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: c1a972999202e014ba2ad8e909eeaadc
+    m_Address: itemSprites/grassiumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: c1c4db56bf151f6479431d275beaaea4
+    m_Address: itemSprites/xspatk
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: c4c1127cd65e1864794ac4d9492d6bc4
+    m_Address: itemSprites/solganiumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: c5a63415528f89340808dc079a407adf
+    m_Address: itemSprites/flyiniumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: c8ec6353387df2f4a8e128014d151735
+    m_Address: itemSprites/xspdef
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: d16e41bb3bbdbfe4f8dec2df8473db30
+    m_Address: itemSprites/pikaniumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: d4c54d253997b6e4f953bffe5083fd4e
+    m_Address: itemSprites/lunaliumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: d79242eff71a1f340872f5b7378e258c
+    m_Address: itemSprites/potion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: d9427a1673f4aea439aa6b978be958eb
+    m_Address: itemSprites/pikashuniumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: dba4859ade426724e80474745b8aa6f1
+    m_Address: itemSprites/zring
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: dcd926b1290536e468b8940d5338340b
+    m_Address: itemSprites/electriumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: df6e07422364237469eb621f6054f4b5
+    m_Address: itemSprites/stoneplate
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: e9bd9ccc8ef68c146a0bfa0c8aa12a82
+    m_Address: itemSprites/snorliumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: eabf19e5535e27246a4565edd4f63adb
+    m_Address: itemSprites/passhoberry
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: eb1d2c24d15340c43a5bb5f308239869
+    m_Address: itemSprites/ultranecroziumz
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: ed3b327800a001a479dcce4ede18345b
+    m_Address: itemSprites/ironplate
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: ef473e28a187bc84bbb28684cd542ce2
+    m_Address: itemSprites/xdefense
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: f1852c203b2480d42b4c7daa32c81931
+    m_Address: itemSprites/oranberry
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: f83600b68c2ab7a468bb65d24bbe8ffd
+    m_Address: itemSprites/blastoisinite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: fe4ba1ba53def6e4a82436c1fc7e9b84
+    m_Address: itemSprites/zapplate
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1b081ff04808d9944a10198ab6e155b6, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: a58ba9eaf11668b4e916853466286fa9, type: 2}
+    - {fileID: 11400000, guid: 43bee922701c49144be0dce42363479e, type: 2}

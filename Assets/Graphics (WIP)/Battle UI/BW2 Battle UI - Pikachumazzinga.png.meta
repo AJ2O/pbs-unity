@@ -1,0 +1,632 @@
+fileFormatVersion: 2
+guid: 725f0894c47db694485b6a7fe1e49abe
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7878765127704303657
+    second: BW2_PokemonHUDLevel
+  - first:
+      213: 5149136033808794481
+    second: BW2 Battle UI - Pikachumazzinga_1
+  - first:
+      213: -8657103725666643737
+    second: B2_PokemonHUDFar
+  - first:
+      213: 8286714368369558314
+    second: W2_PokemonHUDFar
+  - first:
+      213: 3892489367837582592
+    second: BW2 Battle UI - Pikachumazzinga_4
+  - first:
+      213: -8076336689405503689
+    second: BW2 Battle UI - Pikachumazzinga_5
+  - first:
+      213: 1395063403413302071
+    second: B2_PokemonHUDNear
+  - first:
+      213: -7746752941258396622
+    second: W2_PokemonHUDNear
+  - first:
+      213: 2697770910246578024
+    second: BW2_PokemonHUDGenderM
+  - first:
+      213: 6554467978227383239
+    second: BW2_PokemonHUDGenderF
+  - first:
+      213: 5423889344691672464
+    second: BW2 Battle UI - Pikachumazzinga_10
+  - first:
+      213: 1108943534364993281
+    second: BW2 Battle UI - Pikachumazzinga_11
+  - first:
+      213: 4694913101941296012
+    second: BW2 Battle UI - Pikachumazzinga_12
+  - first:
+      213: 808623480552144829
+    second: BW2 Battle UI - Pikachumazzinga_13
+  - first:
+      213: -5356340831969333305
+    second: BW2 Battle UI - Pikachumazzinga_14
+  - first:
+      213: 5968687300744397016
+    second: BW2 Battle UI - Pikachumazzinga_15
+  - first:
+      213: -1969870635901073806
+    second: BW2_PokemonHUDAbility
+  - first:
+      213: -3949984207505788682
+    second: BW2 Battle UI - Pikachumazzinga_17
+  - first:
+      213: -4949289274052330101
+    second: BW2 Battle UI - Pikachumazzinga_18
+  - first:
+      213: 2989969150210331220
+    second: BW2 Battle UI - Pikachumazzinga_19
+  - first:
+      213: 6726208903599157191
+    second: BW2 Battle UI - Pikachumazzinga_20
+  - first:
+      213: 4845712990031622856
+    second: BW2_PokemonHUDHPGreen
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BW2_PokemonHUDLevel
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 246
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d7237e1cd009a290800000000000000
+      internalID: -7878765127704303657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW2 Battle UI - Pikachumazzinga_1
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 246
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 173465301f7657740800000000000000
+      internalID: 5149136033808794481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: B2_PokemonHUDFar
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 234
+        width: 104
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 4, y: 3, z: 4, w: 2}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e0ddef570acbd780800000000000000
+      internalID: -8657103725666643737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: W2_PokemonHUDFar
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 234
+        width: 104
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a230bc920d2500370800000000000000
+      internalID: 8286714368369558314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW2 Battle UI - Pikachumazzinga_4
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 214
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 005a1fde476e40630800000000000000
+      internalID: 3892489367837582592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW2 Battle UI - Pikachumazzinga_5
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 214
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 737d78d32961bef80800000000000000
+      internalID: -8076336689405503689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: B2_PokemonHUDNear
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 196
+        width: 114
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73be89726c24c5310800000000000000
+      internalID: 1395063403413302071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: W2_PokemonHUDNear
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 196
+        width: 114
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23ca4957e310e7490800000000000000
+      internalID: -7746752941258396622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW2_PokemonHUDGenderM
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 203
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86721a67958607520800000000000000
+      internalID: 2697770910246578024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW2_PokemonHUDGenderF
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 202
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cb7aed26e526fa50800000000000000
+      internalID: 6554467978227383239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW2 Battle UI - Pikachumazzinga_10
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 200
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0959f5b3f96854b40800000000000000
+      internalID: 5423889344691672464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW2 Battle UI - Pikachumazzinga_11
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 200
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 107aac1e442c36f00800000000000000
+      internalID: 1108943534364993281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW2 Battle UI - Pikachumazzinga_12
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 200
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8bc98c679ea72140800000000000000
+      internalID: 4694913101941296012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW2 Battle UI - Pikachumazzinga_13
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 200
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbfb95375cec83b00800000000000000
+      internalID: 808623480552144829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW2 Battle UI - Pikachumazzinga_14
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 194
+        width: 136
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cf2c8674647aa5b0800000000000000
+      internalID: -5356340831969333305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW2 Battle UI - Pikachumazzinga_15
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 186
+        width: 136
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d041400a7905d250800000000000000
+      internalID: 5968687300744397016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW2_PokemonHUDAbility
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 164
+        width: 136
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 276c4ade71d99a4e0800000000000000
+      internalID: -1969870635901073806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW2 Battle UI - Pikachumazzinga_17
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 164
+        width: 136
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f0f63b8a46de29c0800000000000000
+      internalID: -3949984207505788682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW2 Battle UI - Pikachumazzinga_18
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 0
+        width: 231
+        height: 153
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8db571b0a7905bb0800000000000000
+      internalID: -4949289274052330101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW2 Battle UI - Pikachumazzinga_19
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 31
+        width: 142
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 452d9afb9118e7920800000000000000
+      internalID: 2989969150210331220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW2 Battle UI - Pikachumazzinga_20
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 51
+        width: 86
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cfe8106c5b485d50800000000000000
+      internalID: 6726208903599157191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW2_PokemonHUDHPGreen
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 243
+        width: 48
+        height: 3
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 1, y: 1, z: 1, w: 1}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c2b45e6a4e6f3340800000000000000
+      internalID: 4845712990031622856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: faf42a58380f7f44ab1c70c3d7b94acf
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
