@@ -3,7 +3,12 @@
 ## Overview
 This was a short project I worked on and off for about 4 months, and it simulates the Pokemon battling system for the 8th generation. It works for Single and Double battles, and uses a human-controlled player vs. the CPU. The focus of the project was solely the battle system, so there is no overworld or exploration component. Furthermore, most of the present game data such as Pokemon, items, moves, abilities, etc. are placeholders used to test the wide range of mechanics. The underlying system is in place for users to add their own game data to the project however, but I haven't documented it fully as of yet.
 
-## Controls
+## How To Play
+Make sure you select the scene 'BWBattleScene' in Assets/Scenes, and click the Play button at the top of the Editor.
+
+The scene can also be played by building the project.
+
+### Controls
 - **Arrow Keys**: Navigate battle menus
 - **Spacebar**: Confirm selection
 - **X**: Cancel selection
@@ -93,5 +98,15 @@ Most item effects are unimplimented, but the basics are present, and the others 
 All non-volatile status conditions are implemented and most volatile status conditions. Some of the status effects are in the enhanced effect class, and some are in the legacy effect class. 
 The same is true for team conditions (ex. Stealth Rock, G-Max Wildfire) and environmental conditions (weather, terrain, rooms, etc.).
 
-## Final Notes
-Most of the code isn't documented as well as I'd like, and it has some legacy code, but I figured it'd be better if it was put up publicly than deleted. It was a short, fun project that I worked on, but I'm probably not coming back to it. If anyone else wants to work on it, I hope my prototype can help you out, and good luck!
+## Customizability
+I tried to make all my game data as customizable and plug-and-play as possible. It's easy to modify or create new moves, abilities, items, status conditions, weather, terrain, and effects from pre-existing ones, **without modifying the battle system at all**. It's up to the user to populate the databases with whatever content they need, and it should all fit into the battle system seamlessly. This is a really cool feature to play around with, I'm reachable if a user needs assistance knowing how it all works. For example,  without modifying the battle code at all, the following can be achieved or changed:
+  - 'Heavy Rain' extending 'Rain' (simply adding new effects on top of Rain)
+  - 'Toxic' extend from 'Poison' (1 additional damage stacking effect)
+  - 'Blaze' and 'Overgrow' differ by one property value (type affected)
+  - Forms added or removed from 'Forecast' and will trigger based on the weather (or terrain, rooms, if you so choose)
+  - The HP thresholds on Power Construct-like abilities
+  - Parental Bond hits and damage scaling
+  - ... many, many more
+
+# Final Notes
+Most of the code isn't documented as well as I'd like, and it has some legacy code, but I figured it'd be better if it was put up publicly than deleted. It was a short, fun project that I worked on, but I'm probably not coming back to it. If anyone else wants to work on it, I hope my prototype can help you out, and good luck! If you need help with learning what the code does, I am reachable to help you out.
