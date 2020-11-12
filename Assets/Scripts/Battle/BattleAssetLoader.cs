@@ -63,6 +63,36 @@ public class BattleAssetLoader : MonoBehaviour
         yield return null;
     }
     
+    public IEnumerator LoadBattleAssets(PBS.Battle.Core.Model battle)
+    {
+        float startTime = Time.time;
+        for (int i = 0; i < battle.teams.Count; i++)
+        {
+            for (int k = 0; k < battle.teams[i].trainers.Count; k++)
+            {
+                Trainer trainer = battle.teams[i].trainers[k];
+
+                // load pokemon assets
+                List<Pokemon> party = trainer.party;
+                for (int j = 0; j < party.Count; j++)
+                {
+                    yield return StartCoroutine(LoadPokemon(party[j]));
+                }
+
+                // load item assets
+                for (int j = 0; j < trainer.items.Count; j++)
+                {
+                    yield return StartCoroutine(LoadItem(trainer.items[j]));
+                }
+
+                // load trainer assets
+                yield return StartCoroutine(LoadTrainer(trainer));
+            }
+        }
+        Debug.Log("Time taken to load battle assets: " + (Time.time - startTime));
+        yield return null;
+    }
+
     // ---POKEMON---
     
     public IEnumerator LoadPokemon(Pokemon pokemon,

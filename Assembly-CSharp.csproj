@@ -47,6 +47,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Unity/VSTU</UnityProjectGenerator>
+    <UnityProjectGeneratorVersion>4.8.2.0</UnityProjectGeneratorVersion>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2019.4.0f1</UnityVersion>
@@ -76,6 +77,8 @@
     <Compile Include="Assets\Scripts\Battle\Battle.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleAssetLoader.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleUtilityClasses.cs" />
+    <Compile Include="Assets\Scripts\Battle\Core\Manager.cs" />
+    <Compile Include="Assets\Scripts\Battle\Core\Model.cs" />
     <Compile Include="Assets\Scripts\Battle\Scene\BTLSCN.cs" />
     <Compile Include="Assets\Scripts\Battle\Scene\BTLSCN_Pokemon.cs" />
     <Compile Include="Assets\Scripts\Battle\Scene\BTLSCN_PokemonBW.cs" />
@@ -101,6 +104,8 @@
     <Compile Include="Assets\Scripts\Battle\UI\Panels\BTLUIPanelFight.cs" />
     <Compile Include="Assets\Scripts\Battle\UI\Panels\BTLUIPanelHUD.cs" />
     <Compile Include="Assets\Scripts\Battle\UI\Panels\BTLUIPanelParty.cs" />
+    <Compile Include="Assets\Scripts\Battle\View\Event.cs" />
+    <Compile Include="Assets\Scripts\Battle\View\Model.cs" />
     <Compile Include="Assets\Scripts\Controls.cs" />
     <Compile Include="Assets\Scripts\Core\BattleCondition.cs" />
     <Compile Include="Assets\Scripts\Core\BattleTeam.cs" />
@@ -131,6 +136,11 @@
     <Compile Include="Assets\Scripts\Databases\StatusPKDatabase.cs" />
     <Compile Include="Assets\Scripts\Databases\StatusTEDatabase.cs" />
     <Compile Include="Assets\Scripts\Databases\TypeDatabase.cs" />
+    <Compile Include="Assets\Scripts\Master.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core.cs" />
+    <Compile Include="Assets\Scripts\Networking\CustomSerialization.cs" />
+    <Compile Include="Assets\Scripts\Networking\Manager.cs" />
+    <Compile Include="Assets\Scripts\Networking\Player.cs" />
     <Compile Include="Assets\Scripts\Player\BTLPlayerControl.cs" />
     <Compile Include="Assets\Scripts\Utility\CustomEnums.cs" />
     <Compile Include="Assets\Scripts\Utility\GameEffect.cs" />

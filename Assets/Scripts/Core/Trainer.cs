@@ -2,31 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace PBS.Core.Trainer
+{
+
+}
+
 public class Trainer
 {
     // General
-    public string name { get; set; }
-    public int teamPos { get; set; }
-    public bool isWildPokemon { get; set; }
-    public Item megaRing { get; set; }
-    public Item ZRing { get; set; }
-    public Item dynamaxBand { get; set; }
+    public string name;
+    public int teamPos;
+    public bool isWildPokemon;
+    public Item megaRing;
+    public Item ZRing;
+    public Item dynamaxBand;
 
     // Team
-    public List<Pokemon> party { get; set; }
-    public List<Item> items { get; set; }
-    public int[] controlPos { get; set; }
+    public List<Pokemon> party;
+    public List<Item> items;
+    public int[] controlPos;
 
     // Network
     public int playerID = -1;
 
     // Battle-only Properties
-    public TrainerBattleProperties bProps { get; set; }
+    public TrainerBattleProperties bProps;
 
     // Constructor
     public Trainer(
         string name = "",
-        int playerID = -1,
+        int playerID = -1, int teamPos = 1,
         bool isWildPokemon = false,
         IEnumerable<Pokemon> party=null,
         IEnumerable<Item> items=null,
@@ -37,6 +42,7 @@ public class Trainer
     {
         this.name = name;
         this.playerID = playerID;
+        this.teamPos = teamPos;
 
         this.party = new List<Pokemon>();
         if (party != null)
@@ -75,7 +81,7 @@ public class Trainer
 
         Trainer cloneTrainer = new Trainer(
             name: name,
-            playerID: playerID,
+            playerID: playerID, teamPos: teamPos,
             isWildPokemon: isWildPokemon,
             party: partyPokemon,
             items: trainerItems,
@@ -223,16 +229,20 @@ public class Trainer
 
 public class TrainerBattleProperties
 {
-    public bool usedMegaEvolution { get; set; }
-    public bool usedZMove { get; set; }
-    public bool usedDynamax { get; set; }
+    public bool usedMegaEvolution;
+    public bool usedZMove;
+    public bool usedDynamax;
 
-    public bool usedBallFetch { get; set; }
+    public bool usedBallFetch;
 
-    public Item failedPokeball { get; set; }
-    public int payDayMoney { get; set; }
+    public string failedPokeball;
+    public int payDayMoney;
 
     // Constructor
+    public TrainerBattleProperties()
+    {
+        Reset();
+    }
     public TrainerBattleProperties(Trainer trainer)
     {
         Reset(trainer);
@@ -248,13 +258,13 @@ public class TrainerBattleProperties
 
         clone.usedBallFetch = usedBallFetch;
 
-        clone.failedPokeball = (failedPokeball == null) ? null : failedPokeball.Clone();
+        clone.failedPokeball = failedPokeball;
         clone.payDayMoney = payDayMoney;
 
         return clone;
     }
 
-    public void Reset(Trainer trainer)
+    public void Reset(Trainer trainer = null)
     {
         usedMegaEvolution = false;
         usedZMove = false;

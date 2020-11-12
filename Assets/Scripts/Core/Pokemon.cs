@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace PBS.Core.Pokemon
+{
+
+}
+
 public class Pokemon
 {
     public class Ability
@@ -60,10 +65,10 @@ public class Pokemon
     }
     public class Moveslot
     {
-        public string moveID { get; set; }
-        public int PP { get; set; }
-        public int PPUps { get; set; }
-        private int p_maxPP { get; set; }
+        public string moveID;
+        public int PP;
+        public int PPUps;
+        private int p_maxPP;
         public int maxPP
         {
             get
@@ -119,7 +124,7 @@ public class Pokemon
 
     public class BattleProperties
     {
-        public List<Ability> abilities { get; set; }
+        public List<Ability> abilities;
 
         public class Bound
         {
@@ -142,9 +147,9 @@ public class Pokemon
                 return new Bound(boundCauser, statusData, turnsLeft);
             }
         }
-        public Bound bound { get; set; }
+        public Bound bound;
 
-        public EffectDatabase.StatusPKEff.DefenseCurl defenseCurl { get; set; }
+        public EffectDatabase.StatusPKEff.DefenseCurl defenseCurl;
 
         public class Disable
         {
@@ -167,9 +172,9 @@ public class Pokemon
                 return new Disable(disableMove, turnsLeft, statusData);
             }
         }
-        public Disable disable { get; set; }
+        public Disable disable;
 
-        public EffectDatabase.StatusPKEff.Electrify electrify { get; set; }
+        public EffectDatabase.StatusPKEff.Electrify electrify;
 
         public class Embargo
         {
@@ -196,7 +201,7 @@ public class Pokemon
                     );
             }
         }
-        public Embargo embargo { get; set; }
+        public Embargo embargo;
 
         public class Encore
         {
@@ -219,9 +224,9 @@ public class Pokemon
                 return new Encore(encoreMove, turnsLeft, statusData);
             }
         }
-        public Encore encore { get; set; }
+        public Encore encore;
 
-        public EffectDatabase.MoveEff.Endure endure { get; set; }
+        public EffectDatabase.MoveEff.Endure endure;
 
         public class FlashFireBoost
         {
@@ -237,9 +242,9 @@ public class Pokemon
                 return new FlashFireBoost(moveType, boost);
             }
         }
-        public List<FlashFireBoost> flashFireBoosts { get; set; }
+        public List<FlashFireBoost> flashFireBoosts;
 
-        public EffectDatabase.StatusPKEff.Flinch flinch { get; set; }
+        public EffectDatabase.StatusPKEff.Flinch flinch;
 
         public class ForestsCurse
         {
@@ -258,11 +263,11 @@ public class Pokemon
                 return new ForestsCurse(other.moveID, other.typeID, other.turnsLeft);
             }
         }
-        public List<ForestsCurse> forestsCurses { get; set; }
+        public List<ForestsCurse> forestsCurses;
 
         public bool friskIdentified { get; set; }
 
-        public EffectDatabase.AbilityEff.GulpMissile.Missile gulpMissile { get; set; }
+        public EffectDatabase.AbilityEff.GulpMissile.Missile gulpMissile;
 
         public class HealBlock
         {
@@ -282,9 +287,9 @@ public class Pokemon
                 return new HealBlock(turnsLeft, statusData);
             }
         }
-        public HealBlock healBlock { get; set; }
+        public HealBlock healBlock;
 
-        public List<EffectDatabase.StatusPKEff.Identification> identifieds { get; set; }
+        public List<EffectDatabase.StatusPKEff.Identification> identifieds;
         
         public class Illusion
         {
@@ -314,10 +319,10 @@ public class Pokemon
                 return clone;
             }
         }
-        public Illusion illusion { get; set; }
+        public Illusion illusion;
 
-        public EffectDatabase.StatusPKEff.Imprison imprison { get; set; }
-        public EffectDatabase.StatusPKEff.Infatuation infatuation { get; set; }
+        public EffectDatabase.StatusPKEff.Imprison imprison;
+        public EffectDatabase.StatusPKEff.Infatuation infatuation;
 
         public class LockOn
         {
@@ -336,7 +341,7 @@ public class Pokemon
                 return new LockOn(other.pokemonUniqueID, other.moveID, other.turnsLeft);
             }
         }
-        public List<LockOn> lockOnTargets { get; set; }
+        public List<LockOn> lockOnTargets;
 
         public class MoveLimiter
         {
@@ -386,11 +391,11 @@ public class Pokemon
                 return null;
             }
         }
-        public List<MoveLimiter> moveLimiters { get; set; }
+        public List<MoveLimiter> moveLimiters;
 
-        public EffectDatabase.StatusPKEff.PerishSong perishSong { get; set; }
-        public EffectDatabase.General.Protect protect { get; set; }
-        public List<EffectDatabase.StatusPKEff.TarShot> tarShots { get; set; }
+        public EffectDatabase.StatusPKEff.PerishSong perishSong;
+        public EffectDatabase.General.Protect protect;
+        public List<EffectDatabase.StatusPKEff.TarShot> tarShots;
 
         public class Taunt
         {
@@ -410,7 +415,7 @@ public class Pokemon
                 return new Taunt(turnsLeft, statusData);
             }
         }
-        public Taunt taunt { get; set; }
+        public Taunt taunt;
 
         public class Torment
         {
@@ -433,75 +438,75 @@ public class Pokemon
                 return new Torment(tormentMove, turnsLeft, statusData);
             }
         }
-        public Torment torment { get; set; }
+        public Torment torment;
 
-        public TransformProperties tProps { get; set; }
+        public TransformProperties tProps;
         public int truantTurns = 0;
 
-        public string unburdenItem { get; set; }
+        public string unburdenItem;
 
-        public EffectDatabase.StatusPKEff.Yawn yawn { get; set; }
+        public EffectDatabase.StatusPKEff.Yawn yawn;
 
-        public int turnsActive { get; set; }
+        public int turnsActive;
 
-        public int ATKStage { get; set; }
-        public int DEFStage { get; set; }
-        public int SPAStage { get; set; }
-        public int SPDStage { get; set; }
-        public int SPEStage { get; set; }
-        public int ACCStage { get; set; }
-        public int EVAStage { get; set; }
+        public int ATKStage;
+        public int DEFStage;
+        public int SPAStage;
+        public int SPDStage;
+        public int SPEStage;
+        public int ACCStage;
+        public int EVAStage;
 
-        public bool ATKRaised { get; set; }
-        public bool ATKLowered { get; set; }
-        public bool DEFRaised { get; set; }
-        public bool DEFLowered { get; set; }
-        public bool SPARaised { get; set; }
-        public bool SPALowered { get; set; }
-        public bool SPDRaised { get; set; }
-        public bool SPDLowered { get; set; }
-        public bool SPERaised { get; set; }
-        public bool SPELowered { get; set; }
-        public bool ACCRaised { get; set; }
-        public bool ACCLowered { get; set; }
-        public bool EVARaised { get; set; }
-        public bool EVALowered { get; set; }
+        public bool ATKRaised;
+        public bool ATKLowered;
+        public bool DEFRaised;
+        public bool DEFLowered;
+        public bool SPARaised;
+        public bool SPALowered;
+        public bool SPDRaised;
+        public bool SPDLowered;
+        public bool SPERaised;
+        public bool SPELowered;
+        public bool ACCRaised;
+        public bool ACCLowered;
+        public bool EVARaised;
+        public bool EVALowered;
 
-        public int ATKOverride { get; set; }
-        public int DEFOverride { get; set; }
-        public int SPAOverride { get; set; }
-        public int SPDOverride { get; set; }
-        public int SPEOverride { get; set; }
+        public int ATKOverride;
+        public int DEFOverride;
+        public int SPAOverride;
+        public int SPDOverride;
+        public int SPEOverride;
 
-        public PokemonStats ATKMappedStat { get; set; }
-        public PokemonStats DEFMappedStat { get; set; }
-        public PokemonStats SPAMappedStat { get; set; }
-        public PokemonStats SPDMappedStat { get; set; }
-        public PokemonStats SPEMappedStat { get; set; }
+        public PokemonStats ATKMappedStat;
+        public PokemonStats DEFMappedStat;
+        public PokemonStats SPAMappedStat;
+        public PokemonStats SPDMappedStat;
+        public PokemonStats SPEMappedStat;
 
-        public List<string> types { get; set; }
+        public List<string> types;
 
-        public List<StatusCondition> statusConditions { get; set; }
+        public List<StatusCondition> statusConditions;
 
-        public PokemonSavedCommand nextCommand { get; set; }
+        public PokemonSavedCommand nextCommand;
 
-        public bool wasStruckForDamage { get; set; }
-        public bool wasHitByOpponent { get; set; }
-        public bool wasHitByAlly { get; set; }
-        public string lastMove { get; set; }
-        public string lastMoveHitBy { get; set; }
-        public string lastMoveTargetedBy { get; set; }
-        public int lastMoveTargetedTurns { get; set; }
-        public string lastTargeterPokemon { get; set; }
-        public BattlePosition lastTargeterPosition { get; set; }
-        public BattlePosition lastDamagerPosition { get; set; }
+        public bool wasStruckForDamage;
+        public bool wasHitByOpponent;
+        public bool wasHitByAlly;
+        public string lastMove;
+        public string lastMoveHitBy;
+        public string lastMoveTargetedBy;
+        public int lastMoveTargetedTurns;
+        public string lastTargeterPokemon;
+        public BattlePosition lastTargeterPosition;
+        public BattlePosition lastDamagerPosition;
 
-        public bool actedThisTurn { get; set; }
-        public bool switchedIn { get; set; }
-        public bool isSwitchingOut { get; set; }
+        public bool actedThisTurn;
+        public bool switchedIn;
+        public bool isSwitchingOut;
 
-        public int turnPhysicalDamageTaken { get; set; }
-        public int turnSpecialDamageTaken { get; set; }
+        public int turnPhysicalDamageTaken;
+        public int turnSpecialDamageTaken;
         public int turnTotalDamageTaken
         {
             get
@@ -509,93 +514,93 @@ public class Pokemon
                 return turnPhysicalDamageTaken + turnSpecialDamageTaken;
             }
         }
-        public string choiceMove { get; set; }
+        public string choiceMove;
 
-        public float preHPPercent { get; set; }
+        public float preHPPercent;
 
-        public string consumedItem { get; set; }
-        public string consumedBerry { get; set; }
+        public string consumedItem;
+        public string consumedBerry;
 
-        public string lostItem { get; set; }
+        public string lostItem;
 
-        public bool isAbilitySuppressed { get; set; }
+        public bool isAbilitySuppressed;
 
-        public int bideDamageTaken { get; set; }
-        public int bideTurnsLeft { get; set; }
+        public int bideDamageTaken;
+        public int bideTurnsLeft;
 
-        public int rechargeTurns { get; set; }
+        public int rechargeTurns;
 
-        public string thrashMove { get; set; }
-        public int thrashTurns { get; set; }
+        public string thrashMove;
+        public int thrashTurns;
 
-        public string uproarMove { get; set; }
-        public int uproarTurns { get; set; }
+        public string uproarMove;
+        public int uproarTurns;
 
-        public bool inDigState { get; set; }
-        public bool inDiveState { get; set; }
-        public bool inFlyState { get; set; }
-        public bool inShadowForceState { get; set; }
+        public bool inDigState;
+        public bool inDiveState;
+        public bool inFlyState;
+        public bool inShadowForceState;
 
-        public bool attemptingToSkyDrop { get; set; }
-        public string skyDropMove { get; set; }
-        public string skyDropUser { get; set; }
-        public List<string> skyDropTargets { get; set; }
+        public bool attemptingToSkyDrop;
+        public string skyDropMove;
+        public string skyDropUser;
+        public List<string> skyDropTargets;
 
-        public bool isMagicCoatActive { get; set; }
-        public string magicCoatMove { get; set; }
-        public bool isMinimizeActive { get; set; }
-        public string snatchMove { get; set; }
+        public bool isMagicCoatActive;
+        public string magicCoatMove;
+        public bool isMinimizeActive;
+        public string snatchMove;
 
-        public bool isSmackedDown { get; set; }
+        public bool isSmackedDown;
 
-        public string leechSeedMove { get; set; }
-        public BattlePosition leechSeedPosition { get; set; }
+        public string leechSeedMove;
+        public BattlePosition leechSeedPosition;
 
-        public string substituteMove { get; set; }
-        public int substituteHP { get; set; }
+        public string substituteMove;
+        public int substituteHP;
 
-        public string blockMove { get; set; }
-        public string blockPokemon { get; set; }
+        public string blockMove;
+        public string blockPokemon;
 
-        public string bindMove { get; set; }
-        public string bindPokemon { get; set; }
-        public int bindTurns { get; set; }
+        public string bindMove;
+        public string bindPokemon;
+        public int bindTurns;
 
-        public string rageMove { get; set; }
-        public int rageCounter { get; set; }
+        public string rageMove;
+        public int rageCounter;
 
-        public string confusionMove { get; set; }
-        public int confusionTurns { get; set; }
+        public string confusionMove;
+        public int confusionTurns;
 
-        public List<string> ingrainMoves { get; set; }
+        public List<string> ingrainMoves;
 
-        public string mimicBaseMove { get; set; }
-        public Moveslot mimicMoveslot { get; set; }
-        public string sketchBaseMove { get; set; }
-        public Moveslot sketchMoveslot { get; set; }
+        public string mimicBaseMove;
+        public Moveslot mimicMoveslot;
+        public string sketchBaseMove;
+        public Moveslot sketchMoveslot;
 
-        public bool usingMeFirst { get; set; }
+        public bool usingMeFirst;
 
-        public string roostMove { get; set; }
+        public string roostMove;
 
 
-        public string endureMove { get; set; }
-        public string protectMove { get; set; }
-        public int protectCounter { get; set; }
+        public string endureMove;
+        public string protectMove;
+        public int protectCounter;
 
-        public string beakBlastMove { get; set; }
-        public string focusPunchMove { get; set; }
-        public string shellTrapMove { get; set; }
+        public string beakBlastMove;
+        public string focusPunchMove;
+        public string shellTrapMove;
 
-        public bool isFlinching { get; set; }
+        public bool isFlinching;
 
-        public string powderMove { get; set; }
+        public string powderMove;
 
-        public string destinyBondMove { get; set; }
+        public string destinyBondMove;
 
-        public bool isCenterOfAttention { get; set; }
+        public bool isCenterOfAttention;
 
-        public List<string> helpingHandMoves { get; set; }
+        public List<string> helpingHandMoves;
 
         // Constructor
         public BattleProperties(Pokemon pokemon)
@@ -1151,14 +1156,14 @@ public class Pokemon
     }
 
     // General
-    public string uniqueID { get; set; }
+    public string uniqueID;
     public string uniqueIDTrunc { get
         {
             return uniqueID.Substring(0, 8);
         }
     }
-    public string basePokemonID { get; set; }
-    public string pokemonID { get; set; }
+    public string basePokemonID;
+    public string pokemonID;
     private string p_nickname;
     public string nickname {
         get {
@@ -1173,9 +1178,9 @@ public class Pokemon
             p_nickname = value;
         }
     }
-    public int level { get; set; }
-    public string natureID { get; set; }
-    public PokemonGender gender { get; set; }
+    public int level;
+    public string natureID;
+    public PokemonGender gender;
     public PokemonData data
     {
         get
@@ -1185,21 +1190,21 @@ public class Pokemon
     }
 
     // Stats
-    public int ivHP { get; set; }
-    public int ivATK { get; set; }
-    public int ivDEF { get; set; }
-    public int ivSPA { get; set; }
-    public int ivSPD { get; set; }
-    public int ivSPE { get; set; }
+    public int ivHP;
+    public int ivATK;
+    public int ivDEF;
+    public int ivSPA;
+    public int ivSPD;
+    public int ivSPE;
 
-    public int evHP { get; set; }
-    public int evATK { get; set; }
-    public int evDEF { get; set; }
-    public int evSPA { get; set; }
-    public int evSPD { get; set; }
-    public int evSPE { get; set; }
+    public int evHP;
+    public int evATK;
+    public int evDEF;
+    public int evSPA;
+    public int evSPD;
+    public int evSPE;
 
-    public int currentHP { get; set; }
+    public int currentHP;
     public int maxHP {
         get
         {
@@ -1320,14 +1325,14 @@ public class Pokemon
     }
 
     // Moves
-    public Moveslot[] moveslots { get; set; }
+    public Moveslot[] moveslots;
 
     // Ability
-    public int abilityNo { get; set; }
-    public bool isHiddenAbility { get; set; }
+    public int abilityNo;
+    public bool isHiddenAbility;
 
     // Status
-    public StatusCondition nonVolatileStatus { get; set; }
+    public StatusCondition nonVolatileStatus;
 
     // Items
     public Item item { 
@@ -1336,14 +1341,14 @@ public class Pokemon
             return (items.Count > 0) ? items[0] : null;
         } 
     }
-    public List<Item> items { get; set; }
+    public List<Item> items;
 
     // Mega Properties
-    public MegaState megaState { get; set; }
+    public MegaState megaState;
 
     // Dynamax Properties
-    public DynamaxState dynamaxState { get; set; }
-    public DynamaxProperties dynamaxProps { get; set; }
+    public DynamaxState dynamaxState;
+    public DynamaxProperties dynamaxProps;
     public void ResetDynamaxProps()
     {
         dynamaxState = DynamaxState.None;
@@ -1351,11 +1356,11 @@ public class Pokemon
     }
 
     // Battle-only Properties
-    public bool isInBattleMode { get; set; }
-    public int teamPos { get; set; }
-    public int battlePos { get; set; }
-    public int faintPos { get; set; }
-    public BattleProperties bProps { get; set; }
+    public bool isInBattleMode;
+    public int teamPos;
+    public int battlePos;
+    public int faintPos;
+    public BattleProperties bProps;
 
     // Constructor
     public Pokemon(

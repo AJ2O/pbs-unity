@@ -18723,8 +18723,8 @@ public class BTLManager : MonoBehaviour
                     && !trainer.bProps.usedBallFetch
                     && trainer.bProps.failedPokeball != null)
                 {
-                    ItemData itemData = trainer.bProps.failedPokeball.data;
-                    pokemon.SetItem(trainer.bProps.failedPokeball.Clone());
+                    ItemData itemData = ItemDatabase.instance.GetItemData(trainer.bProps.failedPokeball);
+                    pokemon.SetItem(new Item(itemID: itemData.ID));
                     trainer.bProps.usedBallFetch = true;
                     trainer.bProps.failedPokeball = null;
 

@@ -334,7 +334,7 @@ public class Testing : MonoBehaviour
         return trainer;
     }
 
-    public Trainer CreateTrainerUsingTeamNo(string trainerName = "Red", int teamNo = 1)
+    public static Trainer CreateTrainerUsingTeamNo(string trainerName = "Red", int teamNo = 1)
     {
         // party
         List<Pokemon> party = new List<Pokemon>();
