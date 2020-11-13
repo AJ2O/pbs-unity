@@ -11,14 +11,14 @@ public class BattleTeam
     }
 
     // General
-    public int teamPos { get; set; }
-    public TeamMode teamMode { get; set; }
+    public int teamPos;
+    public TeamMode teamMode;
 
     // Trainers
     public List<Trainer> trainers;
 
     // Battle-only Properties
-    public BattleTeamProperties bProps { get; set; }
+    public BattleTeamProperties bProps;
 
     // Constructor
     public BattleTeam(
@@ -166,30 +166,30 @@ public class BattleTeamProperties
                 );
         }
     }
-    public List<EntryHazard> entryHazards { get; set; }
+    public List<EntryHazard> entryHazards;
     
     public class GMaxWildfire
     {
-        public StatusTEData statusData;
+        public string statusID;
         public int turnsLeft;
         public GMaxWildfire(
-            StatusTEData statusData,
+            string statusID,
             int turnsLeft
             )
         {
-            this.statusData = statusData;
+            this.statusID = statusID;
             this.turnsLeft = turnsLeft;
         }
         public GMaxWildfire Clone()
         {
-            return new GMaxWildfire(statusData, turnsLeft);
+            return new GMaxWildfire(statusID, turnsLeft);
         }
     }
-    public GMaxWildfire GMaxWildfireStatus { get; set; }
+    public GMaxWildfire GMaxWildfireStatus;
 
-    public List<TeamCondition> lightScreens { get; set; }
+    public List<TeamCondition> lightScreens;
 
-    public List<EffectDatabase.General.Protect> matBlocks { get; set; }
+    public List<EffectDatabase.General.Protect> matBlocks;
 
     public class ReflectScreen
     {
@@ -209,7 +209,7 @@ public class BattleTeamProperties
                 );
         }
     }
-    public List<ReflectScreen> reflectScreens { get; set; }
+    public List<ReflectScreen> reflectScreens;
 
     public class Safeguard
     {
@@ -229,10 +229,10 @@ public class BattleTeamProperties
                 );
         }
     }
-    public List<Safeguard> safeguards { get; set; }
+    public List<Safeguard> safeguards;
 
-    public List<string> protectMovesActive { get; set; }
-    public List<TeamCondition> conditions { get; set; }
+    public List<string> protectMovesActive;
+    public List<TeamCondition> conditions;
 
     // Constructor
     public BattleTeamProperties()

@@ -7,7 +7,7 @@ namespace PBS.Networking {
 
     public class Core : NetworkBehaviour
     {
-        [HideInInspector] public Battle.Core.Model model;
+        [HideInInspector] public Battle.Core.Model battle;
         public bool isRunningBattle;
         Coroutine battleCoroutine;
         Coroutine waitCoroutine;
@@ -23,7 +23,7 @@ namespace PBS.Networking {
         public void FinishComponents()
         {
             allCommands.Clear();
-            model = null;
+            battle = null;
             isRunningBattle = false;
         }
 
@@ -44,8 +44,21 @@ namespace PBS.Networking {
                 playerObj.TargetReceiveEvent(bEvent);
             }
         }
-
-
+        public void SendEvents(List<PBS.Battle.View.Events.Base> bEvents)
+        {
+            for (int i = 0; i < bEvents.Count; i++)
+            {
+                SendEvent(bEvents[i]);
+            }
+        }
+        public void UpdateClients()
+        {
+            SendEvent(new PBS.Battle.View.Events.ModelUpdate 
+            { 
+                model = new PBS.Battle.View.Model(battle), 
+                updateType = PBS.Battle.View.Events.ModelUpdate.UpdateType.None 
+            });
+        }
 
         // 6.
         public IEnumerator StartBattle(
@@ -53,38 +66,52 @@ namespace PBS.Networking {
             List<BattleTeam> teams)
         {
             InitializeComponents();
-            model = new Battle.Core.Model(battleSettings: battleSettings, turns: 0, teams: teams);
+            battle = new Battle.Core.Model(battleSettings: battleSettings, turns: 0, teams: teams);
             
             // load assets on player clients
-            SendEvent(new PBS.Battle.View.Events.ModelUpdate(
-                model: model, 
-                updateType: PBS.Battle.View.Events.ModelUpdate.UpdateType.LoadAssets));
+            SendEvent(new PBS.Battle.View.Events.ModelUpdate 
+            { 
+                model = new PBS.Battle.View.Model(battle), 
+                updateType = PBS.Battle.View.Events.ModelUpdate.UpdateType.LoadAssets 
+            });
 
             // send start message
-            SendEvent(new PBS.Battle.View.Events.StartBattle(model));
+            SendEvent(new PBS.Battle.View.Events.StartBattle());
 
             // force out pokemon
-            /*Dictionary<Trainer, List<Pokemon>> sentOutMap = battle.ForceSendAllPokemon();
-            Battle.Core.Model startModel = Battle.CloneModel(battle);
-
-            BTLEvent_SendOut[] sendEvents = new BTLEvent_SendOut[sentOutMap.Count];
+            Dictionary<Trainer, List<Pokemon>> sentOutMap = battle.ForceSendAllPokemon();
+            List<PBS.Battle.View.Events.TrainerSendOut> sendEvents = new List<PBS.Battle.View.Events.TrainerSendOut>();
             List<Trainer> trainers = new List<Trainer>(sentOutMap.Keys);
             for (int i = 0; i < trainers.Count; i++)
             {
-                sendEvents[i] = new BTLEvent_SendOut();
-                sendEvents[i].SetBattleModel(startModel);
-                sendEvents[i].Create(trainers[i], sentOutMap[trainers[i]]);
+                Trainer trainer = trainers[i];
+                PBS.Battle.View.Events.TrainerSendOut sendEvent = new Battle.View.Events.TrainerSendOut
+                {
+                    playerID = trainer.playerID,
+                    pokemonUniqueIDs = new List<string>()
+                };
+                List<Pokemon> sentPokemon = sentOutMap[trainer];
+                for (int j = 0; j < sentPokemon.Count; j++)
+                {
+                    sendEvent.pokemonUniqueIDs.Add(sentPokemon[j].uniqueID);
+                }
+                sendEvents.Add(sendEvent);
+                SendEvent(sendEvent);
             }
-
-            BTLEvent_ForceOut forceOutEvent = new BTLEvent_ForceOut();
-            forceOutEvent.SetBattleModel(startModel);
-            forceOutEvent.Create(sendEvents);
-            yield return StartCoroutine(SendEventAndWait(forceOutEvent));
+            
+            PBS.Battle.View.Events.TrainerMultiSendOut multiSendEvent = new Battle.View.Events.TrainerMultiSendOut
+            {
+                sendEvents = sendEvents
+            };
+            
+            UpdateClients();
+            // TODO: Come back to multi-send event
+            //SendEvent(multiSendEvent);
 
             // Run Starting notifications
 
-            // Initial Weather / Terrain / etc.
-            List<BattleCondition> initialBConditions = model.BBPGetSCs();
+            /*/ Initial Weather / Terrain / etc.
+            List<BattleCondition> initialBConditions = battle.BBPGetSCs();
             for (int i = 0; i < initialBConditions.Count; i++)
             {
                 string natureText = initialBConditions[i].data.natureTextID;
@@ -96,20 +123,20 @@ namespace PBS.Networking {
                         );
                     SendEvent(textEvent);
                 }
-            }
+            }*/
 
 
             // Initial Team Effects
 
 
             // Initial Abilities
-            yield return StartCoroutine(PBPRunEnterAbilities(battle.pokemonOnField));
+            //yield return StartCoroutine(PBPRunEnterAbilities(battle.pokemonOnField));
 
             // enter battle loop
-            yield return StartCoroutine(BattleLoop());
+            //yield return StartCoroutine(BattleLoop());
 
             // end battle
-            yield return StartCoroutine(EndBattle());*/
+            //yield return StartCoroutine(EndBattle());
             yield return null;
         }
 

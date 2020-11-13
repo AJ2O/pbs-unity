@@ -94,7 +94,7 @@ public class BTLSCN : MonoBehaviour
 
         // load model
         newScnPokemon.pokemonID = pokemon.pokemonID;
-        StartCoroutine(BattleAssetLoader.instance.LoadPokemon(
+        StartCoroutine(BattleAssetLoader.instance.LegacyLoadPokemon(
             pokemon: pokemon,
             useFront: !isNear,
             useBack: isNear,

@@ -554,7 +554,8 @@ public class BTLManager : MonoBehaviour
                 BattleTeamProperties.GMaxWildfire GMaxWildfire = team.bProps.GMaxWildfireStatus;
                 if (GMaxWildfire != null)
                 {
-                    EffectDatabase.StatusTEEff.TeamSE effect_ = GMaxWildfire.statusData.GetEffectNew(TeamSEType.HPLoss);
+                    StatusTEData statusData = StatusTEDatabase.instance.GetStatusData(GMaxWildfire.statusID); 
+                    EffectDatabase.StatusTEEff.TeamSE effect_ = statusData.GetEffectNew(TeamSEType.HPLoss);
                     if (effect_ != null)
                     {
                         if (effect_.timing == TeamSETiming.EndOfTurn)
@@ -563,7 +564,7 @@ public class BTLManager : MonoBehaviour
                             if (GMaxWildfire.turnsLeft == 0)
                             {
                                 yield return StartCoroutine(EndTeamSC(
-                                    statusData: GMaxWildfire.statusData,
+                                    statusData: statusData,
                                     targetTeam: team,
                                     callback: (result) => { }
                                     ));
@@ -574,7 +575,7 @@ public class BTLManager : MonoBehaviour
                                 yield return StartCoroutine(ExecuteTeamSE(
                                     effect_: effect_,
                                     team: team,
-                                    statusData: GMaxWildfire.statusData
+                                    statusData: statusData
                                     ));
                             }
                         }
@@ -11361,7 +11362,7 @@ public class BTLManager : MonoBehaviour
                 BattleTeamProperties.GMaxWildfire existingStatus = targetTeam.bProps.GMaxWildfireStatus;
                 if (existingStatus != null)
                 {
-                    StatusTEData existingData = existingStatus.statusData;
+                    StatusTEData existingData = StatusTEDatabase.instance.GetStatusData(existingStatus.statusID);
 
                     EffectDatabase.StatusTEEff.TeamSE oldPriority_ = 
                         existingData.GetEffectNew(TeamSEType.GMaxWildfirePriority);
@@ -11438,7 +11439,7 @@ public class BTLManager : MonoBehaviour
                 if (isGMaxWildfire)
                 {
                     targetTeam.bProps.GMaxWildfireStatus = 
-                        new BattleTeamProperties.GMaxWildfire(inflictData, turnsLeft);
+                        new BattleTeamProperties.GMaxWildfire(inflictData.ID, turnsLeft);
                 }
                 else
                 {
@@ -11467,7 +11468,7 @@ public class BTLManager : MonoBehaviour
         // End G-Max Wildfire
         if (targetTeam.bProps.GMaxWildfireStatus != null)
         {
-            if (targetTeam.bProps.GMaxWildfireStatus.statusData == statusData)
+            if (targetTeam.bProps.GMaxWildfireStatus.statusID == statusData.ID)
             {
                 success = true;
                 if (apply)

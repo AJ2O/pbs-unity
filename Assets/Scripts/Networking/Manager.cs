@@ -51,8 +51,6 @@ namespace PBS.Networking {
 
         public void AddPlayer(NetworkConnection conn, PBS.Networking.Player player)
         {
-            Debug.Log(conn.connectionId);
-            Debug.Log(player.name);
             playerConnections.Add(conn.connectionId, player);
         }
         public void AddTrainer(NetworkConnection conn)
@@ -127,11 +125,17 @@ namespace PBS.Networking {
             // TODO: More than 2 trainers
             for (int i = 0; i < allTrainers.Count && i < 2; i++)
             {
-                Trainer currentTrainer = allTrainers[i];
+                Trainer trainer = allTrainers[i];
                 BattleTeam team = new BattleTeam(
                     teamMode: teamMode,
-                    trainers: new List<Trainer> { currentTrainer }
+                    trainers: new List<Trainer> { trainer }
                     );
+
+                // Synchronize trainer to player
+                PBS.Networking.Player player = GetPlayer(trainer.playerID);
+                player.RpcSyncTrainerToClient(new Battle.View.Compact.Trainer(trainer));
+                player.RpcSyncTeamPerspectiveToClient(new Battle.View.Compact.Team(team));
+
                 teams.Add(team);
             }
 

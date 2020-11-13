@@ -279,11 +279,11 @@ public class BTLPlayerControl : MonoBehaviour
         }
         if (bEvent.pokemonData != null)
         {
-            yield return StartCoroutine(BattleAssetLoader.instance.LoadPokemon(bEvent.pokemonData));
+            yield return StartCoroutine(BattleAssetLoader.instance.LegacyLoadPokemon(bEvent.pokemonData));
         }
         if (bEvent.pokemon != null)
         {
-            yield return StartCoroutine(BattleAssetLoader.instance.LoadPokemon(bEvent.pokemon));
+            yield return StartCoroutine(BattleAssetLoader.instance.LegacyLoadPokemon(bEvent.pokemon));
         }
         if (bEvent.item != null)
         {

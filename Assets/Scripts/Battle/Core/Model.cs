@@ -15,14 +15,6 @@ namespace PBS.Battle.Core
         public List<BattleTeam> teams;
 
         // Battling Conditions
-        public BattleCondition terrain;
-        public BattleCondition weather;
-        public BattleCondition gravity;
-        public BattleCondition magicRoom;
-        public BattleCondition trickRoom;
-        public BattleCondition wonderRoom;
-        public List<BattleCondition> statusConditions;
-
         public string defaultWeather;
         public string defaultTerrain;
         public string defaultGravity;
@@ -30,6 +22,14 @@ namespace PBS.Battle.Core
         public string defaultTrickRoom;
         public string defaultWonderRoom;
 
+        public BattleCondition weather;
+        public BattleCondition terrain;
+        public BattleCondition gravity;
+        public BattleCondition magicRoom;
+        public BattleCondition trickRoom;
+        public BattleCondition wonderRoom;
+        public List<BattleCondition> statusConditions;
+        
         // Other Variables
         public Pokemon runningPokemon;
         public string lastUsedMove;

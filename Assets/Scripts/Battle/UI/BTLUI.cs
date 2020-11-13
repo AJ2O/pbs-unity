@@ -617,7 +617,7 @@ public class BTLUI : MonoBehaviour
             }
             else
             {
-                StartCoroutine(BattleAssetLoader.instance.LoadPokemon(
+                StartCoroutine(BattleAssetLoader.instance.LegacyLoadPokemon(
                     pokemon: pokemon,
                     useicon: true,
                     imagePokemon: btn.icon
@@ -782,7 +782,7 @@ public class BTLUI : MonoBehaviour
         }
         else
         {
-            StartCoroutine(BattleAssetLoader.instance.LoadPokemon(
+            StartCoroutine(BattleAssetLoader.instance.LegacyLoadPokemon(
                 pokemon: pokemon,
                 useicon: true,
                 imagePokemon: btn.icon

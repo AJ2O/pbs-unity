@@ -5,9 +5,9 @@ using UnityEngine;
 public class BattleCondition
 {
     // General
-    public string statusID { get; set; }
-    public int turnsActive { get; set; }
-    public int turnsLeft { get; set; }
+    public string statusID;
+    public int turnsActive;
+    public int turnsLeft;
     public StatusBTLData data
     {
         get

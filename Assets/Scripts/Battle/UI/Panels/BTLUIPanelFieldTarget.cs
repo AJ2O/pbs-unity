@@ -167,7 +167,7 @@ public class BTLUIPanelFieldTarget : BTLUIPanel
             }
             else
             {
-                StartCoroutine(BattleAssetLoader.instance.LoadPokemon(
+                StartCoroutine(BattleAssetLoader.instance.LegacyLoadPokemon(
                     pokemon: pokemon,
                     useicon: true,
                     imagePokemon: btn.icon

@@ -97,7 +97,7 @@ public class BTLScene : MonoBehaviour
         }
         else
         {
-            StartCoroutine(BattleAssetLoader.instance.LoadPokemon(
+            StartCoroutine(BattleAssetLoader.instance.LegacyLoadPokemon(
                 pokemon: pokemon,
                 useFront: !isNear,
                 useBack: isNear,

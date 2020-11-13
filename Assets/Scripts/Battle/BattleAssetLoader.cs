@@ -46,7 +46,7 @@ public class BattleAssetLoader : MonoBehaviour
                 List<Pokemon> party = trainer.party;
                 for (int j = 0; j < party.Count; j++)
                 {
-                    yield return StartCoroutine(LoadPokemon(party[j]));
+                    yield return StartCoroutine(LegacyLoadPokemon(party[j]));
                 }
 
                 // load item assets
@@ -56,7 +56,7 @@ public class BattleAssetLoader : MonoBehaviour
                 }
 
                 // load trainer assets
-                yield return StartCoroutine(LoadTrainer(trainer));
+                yield return StartCoroutine(LegacyLoadTrainer(trainer));
             }
         }
         Debug.Log("Time taken to load battle assets: " + (Time.time - startTime));
@@ -74,6 +74,36 @@ public class BattleAssetLoader : MonoBehaviour
 
                 // load pokemon assets
                 List<Pokemon> party = trainer.party;
+                for (int j = 0; j < party.Count; j++)
+                {
+                    yield return StartCoroutine(LegacyLoadPokemon(party[j]));
+                }
+
+                // load item assets
+                for (int j = 0; j < trainer.items.Count; j++)
+                {
+                    yield return StartCoroutine(LoadItem(trainer.items[j]));
+                }
+
+                // load trainer assets
+                yield return StartCoroutine(LegacyLoadTrainer(trainer));
+            }
+        }
+        Debug.Log("Time taken to load battle assets: " + (Time.time - startTime));
+        yield return null;
+    }
+
+    public IEnumerator LoadBattleAssets(PBS.Battle.View.Model battle)
+    {
+        float startTime = Time.time;
+        for (int i = 0; i < battle.teams.Count; i++)
+        {
+            for (int k = 0; k < battle.teams[i].trainers.Count; k++)
+            {
+                PBS.Battle.View.Compact.Trainer trainer = battle.teams[i].trainers[k];
+
+                // load pokemon assets
+                List<PBS.Battle.View.Compact.Pokemon> party = trainer.party;
                 for (int j = 0; j < party.Count; j++)
                 {
                     yield return StartCoroutine(LoadPokemon(party[j]));
@@ -94,8 +124,27 @@ public class BattleAssetLoader : MonoBehaviour
     }
 
     // ---POKEMON---
-    
-    public IEnumerator LoadPokemon(Pokemon pokemon,
+    public IEnumerator LoadPokemon(
+        PBS.Battle.View.Compact.Pokemon pokemon,
+        bool useicon = false,
+        bool useFront = false,
+        bool useBack = false,
+        BTLSCN_Pokemon scnPokemon = null,
+        BTLSCN_PokemonBW scnPokemonBW = null,
+        Image imagePokemon = null
+        )
+    {
+        PokemonData pokemonData = PokemonDatabase.instance.GetPokemonData(pokemon.pokemonID);
+        yield return StartCoroutine(LegacyLoadPokemon(
+            data: pokemonData,
+            useicon: useicon, useFront: useFront, useBack: useBack,
+            scnPokemon: scnPokemon, scnPokemonBW: scnPokemonBW,
+            imagePokemon: imagePokemon
+            ));
+    }
+
+
+    public IEnumerator LegacyLoadPokemon(Pokemon pokemon,
         bool useicon = false,
         bool useFront = false,
         bool useBack = false,
@@ -105,14 +154,14 @@ public class BattleAssetLoader : MonoBehaviour
     {
         PokemonData pokemonData = (pokemon.bProps.illusion != null) ?
             PokemonDatabase.instance.GetPokemonIllusionData(pokemon.bProps.illusion) : pokemon.data;
-        yield return StartCoroutine(LoadPokemon(
+        yield return StartCoroutine(LegacyLoadPokemon(
             data: pokemonData,
             useicon: useicon, useFront: useFront, useBack: useBack,
             scnPokemon: scnPokemon, scnPokemonBW: scnPokemonBW,
             imagePokemon: imagePokemon
             ));
     }
-    public IEnumerator LoadPokemon(PokemonData data, 
+    public IEnumerator LegacyLoadPokemon(PokemonData data, 
         bool useicon = false,
         bool useFront = false,
         bool useBack = false,
@@ -238,7 +287,11 @@ public class BattleAssetLoader : MonoBehaviour
 
     // ---TRAINERS---
     
-    public IEnumerator LoadTrainer(Trainer trainer)
+    public IEnumerator LoadTrainer(PBS.Battle.View.Compact.Trainer trainer)
+    {
+        yield return null;
+    }
+    public IEnumerator LegacyLoadTrainer(Trainer trainer)
     {
         yield return null;
     }
@@ -248,9 +301,19 @@ public class BattleAssetLoader : MonoBehaviour
     public IEnumerator LoadItem(
         Item item, 
         SpriteRenderer spriteRenderer = null,
+        Image image = null
+        )
+    {
+        yield return StartCoroutine(
+            LoadItem(itemID: item.itemID, spriteRenderer: spriteRenderer, image: image
+            ));
+    }
+    public IEnumerator LoadItem(
+        string itemID, 
+        SpriteRenderer spriteRenderer = null,
         Image image = null)
     {
-        string itemSprite = "itemSprites/" + item.itemID;
+        string itemSprite = "itemSprites/" + itemID;
 
         if (!loadedItemSprites.ContainsKey(itemSprite))
         {

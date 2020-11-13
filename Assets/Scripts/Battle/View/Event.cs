@@ -8,10 +8,22 @@ namespace PBS.Battle.View.Events
     /// Displays events to the player's view.
     /// </summary>
     public class Base { 
-        public Base() { }
+
     }
 
-    // Messages
+    // Battle Phases (0 - 99)
+
+    public class StartBattle : Base
+    {
+
+    }
+
+    public class EndBattle : Base
+    {
+
+    }
+
+    // Messages (100 - 199)
 
     /// <summary>
     /// Displays a message to the player's dialog box.
@@ -19,46 +31,34 @@ namespace PBS.Battle.View.Events
     public class Message : Base
     {
         public string message;
-        public Message(string message)
-        {
-            this.message = message;
-        }
     }
 
-    // Backend
+    // Backend (200 - 299)
 
     public class ModelUpdate : Base
     {
-        public enum UpdateType : byte
+        public enum UpdateType
         {
+            None,
             LoadAssets
         }
-
-        public Battle.Core.Model model;
         public UpdateType updateType;
-        public ModelUpdate(Battle.Core.Model model, UpdateType updateType = UpdateType.LoadAssets)
-        {
-            this.model = model;
-            this.updateType = updateType;
-        }
+        public bool synchronize = true;
+        public Battle.View.Model model;
     }
 
-    // Phases
 
-    public class StartBattle : Base
+    // Trainer Interactions (1001 - 1099)
+
+    public class TrainerSendOut : Base
     {
-        public StartBattle(Battle.Core.Model model)
-        {
-
-        }
+        public int playerID;
+        public List<string> pokemonUniqueIDs;
     }
 
-    public class EndBattle : Base
+    public class TrainerMultiSendOut : Base
     {
-        public EndBattle(Battle.Core.Model model)
-        {
-
-        }
+        public List<TrainerSendOut> sendEvents;
     }
 
 }

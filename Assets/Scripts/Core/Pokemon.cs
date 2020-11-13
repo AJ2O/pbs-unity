@@ -265,7 +265,7 @@ public class Pokemon
         }
         public List<ForestsCurse> forestsCurses;
 
-        public bool friskIdentified { get; set; }
+        public bool friskIdentified;
 
         public EffectDatabase.AbilityEff.GulpMissile.Missile gulpMissile;
 
@@ -1082,14 +1082,14 @@ public class Pokemon
     }
     public class TransformProperties
     {
-        public string pokemonID { get; set; }
-        public Moveslot[] moveslots { get; set; }
+        public string pokemonID;
+        public Moveslot[] moveslots;
 
-        public int ATK { get; set; }
-        public int DEF { get; set; }
-        public int SPA { get; set; }
-        public int SPD { get; set; }
-        public int SPE { get; set; }
+        public int ATK;
+        public int DEF;
+        public int SPA;
+        public int SPD;
+        public int SPE;
 
         // Constructor
         private TransformProperties()
@@ -1881,12 +1881,12 @@ public class Pokemon
 
 public class PokemonSavedCommand
 {
-    public string moveID { get; set; }
-    public List<BattlePosition> targetPositions { get; set; }
-    public bool isPlayerCommand { get; set; }
-    public int iteration { get; set; }
-    public bool consumePP { get; set; }
-    public bool displayMove { get; set; }
+    public string moveID;
+    public List<BattlePosition> targetPositions;
+    public bool isPlayerCommand;
+    public int iteration;
+    public bool consumePP;
+    public bool displayMove;
 
     // Constructor
     public PokemonSavedCommand(

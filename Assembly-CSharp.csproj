@@ -104,6 +104,7 @@
     <Compile Include="Assets\Scripts\Battle\UI\Panels\BTLUIPanelFight.cs" />
     <Compile Include="Assets\Scripts\Battle\UI\Panels\BTLUIPanelHUD.cs" />
     <Compile Include="Assets\Scripts\Battle\UI\Panels\BTLUIPanelParty.cs" />
+    <Compile Include="Assets\Scripts\Battle\View\Compact.cs" />
     <Compile Include="Assets\Scripts\Battle\View\Event.cs" />
     <Compile Include="Assets\Scripts\Battle\View\Model.cs" />
     <Compile Include="Assets\Scripts\Controls.cs" />
@@ -138,7 +139,9 @@
     <Compile Include="Assets\Scripts\Databases\TypeDatabase.cs" />
     <Compile Include="Assets\Scripts\Master.cs" />
     <Compile Include="Assets\Scripts\Networking\Core.cs" />
-    <Compile Include="Assets\Scripts\Networking\CustomSerialization.cs" />
+    <Compile Include="Assets\Scripts\Networking\CustomSerialization\Battle\Core.cs" />
+    <Compile Include="Assets\Scripts\Networking\CustomSerialization\Battle\View\Events.cs" />
+    <Compile Include="Assets\Scripts\Networking\CustomSerialization\Core.cs" />
     <Compile Include="Assets\Scripts\Networking\Manager.cs" />
     <Compile Include="Assets\Scripts\Networking\Player.cs" />
     <Compile Include="Assets\Scripts\Player\BTLPlayerControl.cs" />
