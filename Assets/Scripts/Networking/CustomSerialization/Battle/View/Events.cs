@@ -31,10 +31,33 @@ namespace PBS.Networking.CustomSerialization.Battle.View
         // Team Interactions (601 - 699)
 
 
+        // Environmental Interactions (701 - 799)
+        const int ENVIRONMENTALCONDITIONSTART = 701;
+        const int ENVIRONMENTALCONDITIONEND = 702;
 
-        // Environmental Interactions (3001 - 3099)
-        const int ENVIRONMENTALCONDITIONSTART = 3001;
-        const int ENVIRONMENTALCONDITIONEND = 3002;
+
+        // --- Pokemon Interactions ---
+
+        // General (1001 - 1099)
+
+        // Damage / Health (1101 - 1199)
+        const int POKEMONHEALTHDAMAGE = 1101;
+        const int POKEMONHEALTHHEAL = 1102;
+        const int POKEMONHEALTHFAINT = 1103;
+        const int POKEMONHEALTHREVIVE = 1104;
+
+        // Abilities (1201 - 1299)
+        const int POKEMONABILITYACTIVATE = 1201;
+        const int POKEMONABILITYQUICKDRAW = 1250;
+
+        // Moves (1301 - 1399)
+
+        // Stats (1401 - 1499)
+
+        // Items (1501 - 1599)
+        const int POKEMONITEMQUICKCLAW = 1550;
+
+
 
 
         public static void WriteBattleViewEvent(this NetworkWriter writer, PBS.Battle.View.Events.Base obj)
@@ -51,6 +74,7 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 writer.WriteArray(messageParameterized.parameters);
             }
 
+
             else if (obj is PBS.Battle.View.Events.ModelUpdate modelUpdate)
             {
                 writer.WriteInt32(MODELUPDATE);
@@ -58,6 +82,7 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 writer.WriteBoolean(modelUpdate.synchronize);
                 writer.Write(modelUpdate.model);
             }
+
 
             else if (obj is PBS.Battle.View.Events.StartBattle startBattle)
             {
@@ -68,6 +93,7 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 writer.WriteInt32(ENDBATTLE);
                 writer.WriteInt32(endBattle.winningTeam);
             }
+
 
             else if (obj is PBS.Battle.View.Events.TrainerSendOut trainerSendOut)
             {
@@ -81,6 +107,7 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 writer.WriteList(trainerMultiSendOut.sendEvents);
             }
 
+
             else if (obj is PBS.Battle.View.Events.EnvironmentalConditionStart environmentalConditionStart)
             {
                 writer.WriteInt32(ENVIRONMENTALCONDITIONSTART);
@@ -90,6 +117,52 @@ namespace PBS.Networking.CustomSerialization.Battle.View
             {
                 writer.WriteInt32(ENVIRONMENTALCONDITIONEND);
                 writer.WriteString(environmentalConditionEnd.conditionID);
+            }
+
+
+            else if (obj is PBS.Battle.View.Events.PokemonHealthDamage pokemonHealthDamage)
+            {
+                writer.WriteInt32(POKEMONHEALTHDAMAGE);
+                writer.WriteString(pokemonHealthDamage.pokemonUniqueID);
+                writer.WriteInt32(pokemonHealthDamage.preHP);
+                writer.WriteInt32(pokemonHealthDamage.postHP);
+            }
+            else if (obj is PBS.Battle.View.Events.PokemonHealthHeal pokemonHealthHeal)
+            {
+                writer.WriteInt32(POKEMONHEALTHDAMAGE);
+                writer.WriteString(pokemonHealthHeal.pokemonUniqueID);
+                writer.WriteInt32(pokemonHealthHeal.preHP);
+                writer.WriteInt32(pokemonHealthHeal.postHP);
+            }
+            else if (obj is PBS.Battle.View.Events.PokemonHealthFaint pokemonHealthFaint)
+            {
+                writer.WriteInt32(POKEMONHEALTHDAMAGE);
+                writer.WriteString(pokemonHealthFaint.pokemonUniqueID);
+            }
+            else if (obj is PBS.Battle.View.Events.PokemonHealthRevive pokemonHealthRevive)
+            {
+                writer.WriteInt32(POKEMONHEALTHFAINT);
+                writer.WriteString(pokemonHealthRevive.pokemonUniqueID);
+            }
+
+            else if (obj is PBS.Battle.View.Events.PokemonAbilityQuickDraw pokemonAbilityQuickDraw)
+            {
+                writer.WriteInt32(POKEMONABILITYACTIVATE);
+                writer.WriteString(pokemonAbilityQuickDraw.pokemonUniqueID);
+                writer.WriteString(pokemonAbilityQuickDraw.abilityID);
+            }
+            else if (obj is PBS.Battle.View.Events.PokemonAbilityActivate pokemonAbilityActivate)
+            {
+                writer.WriteInt32(POKEMONABILITYACTIVATE);
+                writer.WriteString(pokemonAbilityActivate.pokemonUniqueID);
+                writer.WriteString(pokemonAbilityActivate.abilityID);
+            }
+
+            else if (obj is PBS.Battle.View.Events.PokemonItemQuickClaw pokemonItemQuickClaw)
+            {
+                writer.WriteInt32(POKEMONITEMQUICKCLAW);
+                writer.WriteString(pokemonItemQuickClaw.pokemonUniqueID);
+                writer.WriteString(pokemonItemQuickClaw.itemID);
             }
 
         }
@@ -152,7 +225,50 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                     {
                         conditionID = reader.ReadString()
                     };
-                
+
+                case POKEMONHEALTHDAMAGE:
+                    return new PBS.Battle.View.Events.PokemonHealthDamage
+                    {
+                        pokemonUniqueID = reader.ReadString(),
+                        preHP = reader.ReadInt32(),
+                        postHP = reader.ReadInt32()
+                    };
+                case POKEMONHEALTHHEAL:
+                    return new PBS.Battle.View.Events.PokemonHealthHeal
+                    {
+                        pokemonUniqueID = reader.ReadString(),
+                        preHP = reader.ReadInt32(),
+                        postHP = reader.ReadInt32()
+                    };
+                case POKEMONHEALTHFAINT:
+                    return new PBS.Battle.View.Events.PokemonHealthFaint
+                    {
+                        pokemonUniqueID = reader.ReadString()
+                    };
+                case POKEMONHEALTHREVIVE:
+                    return new PBS.Battle.View.Events.PokemonHealthRevive
+                    {
+                        pokemonUniqueID = reader.ReadString()
+                    };
+                case POKEMONABILITYACTIVATE:
+                    return new PBS.Battle.View.Events.PokemonAbilityActivate
+                    {
+                        pokemonUniqueID = reader.ReadString(),
+                        abilityID = reader.ReadString()
+                    };
+                case POKEMONABILITYQUICKDRAW:
+                    return new PBS.Battle.View.Events.PokemonAbilityQuickDraw
+                    {
+                        pokemonUniqueID = reader.ReadString(),
+                        abilityID = reader.ReadString()
+                    };
+                case POKEMONITEMQUICKCLAW:
+                    return new PBS.Battle.View.Events.PokemonItemQuickClaw
+                    {
+                        pokemonUniqueID = reader.ReadString(),
+                        itemID = reader.ReadString()
+                    };
+
                 default:
                     throw new System.Exception($"Invalid event type {type}");
             }

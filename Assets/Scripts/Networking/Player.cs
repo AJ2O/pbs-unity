@@ -67,6 +67,18 @@ namespace PBS.Networking {
         {
             return IsTrainerPlayer(trainer.playerID);
         }
+        public bool IsPokemonOwnedByPlayer(PBS.Battle.View.Compact.Pokemon pokemon)
+        {
+            if (myTrainer != null)
+            {
+                PBS.Battle.View.Compact.Trainer ownerTrainer = myModel.GetTrainer(pokemon);
+                if (ownerTrainer != null)
+                {
+                    return ownerTrainer.playerID == myTrainer.playerID;
+                }
+            }
+            return false;
+        }
 
         // 4.
         [Command]
@@ -152,6 +164,33 @@ namespace PBS.Networking {
                 ExecuteEvent_EnvironmentalConditionStart(bEvent as PBS.Battle.View.Events.EnvironmentalConditionStart)
                 : (bEvent is PBS.Battle.View.Events.EnvironmentalConditionEnd)? 
                 ExecuteEvent_EnvironmentalConditionEnd(bEvent as PBS.Battle.View.Events.EnvironmentalConditionEnd)
+
+
+                // --- Pokemon Interactions ---
+
+                // General
+
+                // Damage / Health
+                : (bEvent is PBS.Battle.View.Events.PokemonHealthDamage)? 
+                ExecuteEvent_PokemonHealthDamage(bEvent as PBS.Battle.View.Events.PokemonHealthDamage)
+                : (bEvent is PBS.Battle.View.Events.PokemonHealthHeal)? 
+                ExecuteEvent_PokemonHealthHeal(bEvent as PBS.Battle.View.Events.PokemonHealthHeal)
+                : (bEvent is PBS.Battle.View.Events.PokemonHealthFaint)? 
+                ExecuteEvent_PokemonHealthFaint(bEvent as PBS.Battle.View.Events.PokemonHealthFaint)
+                : (bEvent is PBS.Battle.View.Events.PokemonHealthRevive)? 
+                ExecuteEvent_PokemonHealthRevive(bEvent as PBS.Battle.View.Events.PokemonHealthRevive)
+
+                // Abilities
+                : (bEvent is PBS.Battle.View.Events.PokemonAbilityQuickDraw)? 
+                ExecuteEvent_PokemonAbilityQuickDraw(bEvent as PBS.Battle.View.Events.PokemonAbilityQuickDraw)
+                : (bEvent is PBS.Battle.View.Events.PokemonAbilityActivate)? 
+                ExecuteEvent_PokemonAbilityActivate(bEvent as PBS.Battle.View.Events.PokemonAbilityActivate)
+
+                // Moves
+
+                // Stats
+
+                // Items
 
 
                 // Unhandled
@@ -414,8 +453,93 @@ namespace PBS.Networking {
         }
 
 
+        // --- Pokemon Interactions ---
 
+        // General
 
+        // Damage / Health
+        public IEnumerator ExecuteEvent_PokemonHealthDamage(PBS.Battle.View.Events.PokemonHealthDamage bEvent)
+        {
+            PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
+            int preHP = bEvent.preHP;
+            int postHP = bEvent.postHP;
+
+            string text = "";
+            if (IsPokemonOwnedByPlayer(pokemon))
+            {
+                text = pokemon.nickame + " lost " + bEvent.damageDealt + " HP!";
+            }
+            else
+            {
+                text = pokemon.nickame = " lost HP!";
+            }
+
+            Debug.Log(text);
+            yield return null;
+        }
+        public IEnumerator ExecuteEvent_PokemonHealthHeal(PBS.Battle.View.Events.PokemonHealthHeal bEvent)
+        {
+            PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
+            int preHP = bEvent.preHP;
+            int postHP = bEvent.postHP;
+
+            string text = "";
+            if (IsPokemonOwnedByPlayer(pokemon))
+            {
+                text = pokemon.nickame + " recovered " + bEvent.hpHealed + " HP!";
+            }
+            else
+            {
+                text = pokemon.nickame = " recovered HP!";
+            }
+
+            Debug.Log(text);
+            yield return null;
+        }
+        public IEnumerator ExecuteEvent_PokemonHealthFaint(PBS.Battle.View.Events.PokemonHealthFaint bEvent)
+        {
+            PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
+            Debug.Log($"{pokemon.nickame} fainted!");
+            yield return null;
+        }
+        public IEnumerator ExecuteEvent_PokemonHealthRevive(PBS.Battle.View.Events.PokemonHealthRevive bEvent)
+        {
+            PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
+            Debug.Log($"{pokemon.nickame} was revived!");
+            yield return null;
+        }
+
+        // Abilities
+        public IEnumerator ExecuteEvent_PokemonAbilityActivate(PBS.Battle.View.Events.PokemonAbilityActivate bEvent)
+        {
+            PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
+            AbilityData abilityData = AbilityDatabase.instance.GetAbilityData(bEvent.abilityID);
+            Debug.Log($"{pokemon.nickame}'s {abilityData.abilityName}");
+
+            yield return null;
+        }
+        public IEnumerator ExecuteEvent_PokemonAbilityQuickDraw(PBS.Battle.View.Events.PokemonAbilityQuickDraw bEvent)
+        {
+            yield return StartCoroutine(ExecuteEvent_PokemonAbilityActivate(bEvent));
+            PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
+            Debug.Log($"{pokemon.nickame} moved first!");
+
+            yield return null;
+        }
+
+        // Moves
+
+        // Stats
+
+        // Items
+        public IEnumerator ExecuteEvent_PokemonItemQuickClaw(PBS.Battle.View.Events.PokemonItemQuickClaw bEvent)
+        {
+            PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
+            ItemData itemData = ItemDatabase.instance.GetItemData(bEvent.itemID);
+            Debug.Log($"{pokemon.nickame}'s {itemData.itemName} activated!");
+
+            yield return null;
+        }
 
 
 

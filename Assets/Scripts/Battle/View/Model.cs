@@ -92,6 +92,26 @@ namespace PBS.Battle.View
 
 
         // Trainer
+        public PBS.Battle.View.Compact.Trainer GetTrainer(PBS.Battle.View.Compact.Pokemon pokemon)
+        {
+            return GetTrainer(pokemon.uniqueID);
+        } 
+        public PBS.Battle.View.Compact.Trainer GetTrainer(string pokemonUniqueID)
+        {
+            List<PBS.Battle.View.Compact.Trainer> trainers = GetTrainers();
+            for (int i = 0; i < trainers.Count; i++)
+            {
+                PBS.Battle.View.Compact.Trainer trainer = trainers[i];
+                for (int j = 0; j < trainer.party.Count; j++)
+                {
+                    if (pokemonUniqueID == trainer.party[j].uniqueID)
+                    {
+                        return trainer;
+                    }
+                }
+            }
+            return null;
+        }
         /// <summary>
         /// Returns all the trainers in the battle.
         /// </summary>

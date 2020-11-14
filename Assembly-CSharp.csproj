@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Assets\AutoShadows.cs" />
     <Compile Include="Assets\Scripts\AI\BTLAIControl.cs" />
+    <Compile Include="Assets\Scripts\AI\Battle.cs" />
     <Compile Include="Assets\Scripts\AssetLoader.cs" />
     <Compile Include="Assets\Scripts\Battle\BTLCamera.cs" />
     <Compile Include="Assets\Scripts\Battle\BTLEvent.cs" />

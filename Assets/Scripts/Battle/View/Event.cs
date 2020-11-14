@@ -17,7 +17,6 @@ namespace PBS.Battle.View.Events
     {
 
     }
-
     public class EndBattle : Base
     {
         public int winningTeam;
@@ -39,7 +38,6 @@ namespace PBS.Battle.View.Events
     }
 
     // Backend
-
     public class ModelUpdate : Base
     {
         public enum UpdateType
@@ -54,13 +52,11 @@ namespace PBS.Battle.View.Events
 
 
     // Trainer Interactions
-
     public class TrainerSendOut : Base
     {
         public int playerID;
         public List<string> pokemonUniqueIDs;
     }
-
     public class TrainerMultiSendOut : Base
     {
         public List<TrainerSendOut> sendEvents;
@@ -68,7 +64,6 @@ namespace PBS.Battle.View.Events
 
 
     // Weather / Environmental Conditions
-    
     public class EnvironmentalConditionStart : Base
     {
         public string conditionID;
@@ -77,6 +72,67 @@ namespace PBS.Battle.View.Events
     {
         public string conditionID;
     }
+
+
+    // --- Pokemon Interactions ---
+
+    // General
+
+    // Health
+    public class PokemonHealthDamage : Base
+    {
+        public string pokemonUniqueID;
+        public int preHP;
+        public int postHP;
+        public int damageDealt
+        {
+            get
+            {
+                return preHP - postHP;
+            }
+        }
+    }
+    public class PokemonHealthHeal : Base
+    {
+        public string pokemonUniqueID;
+        public int preHP;
+        public int postHP;
+        public int hpHealed
+        {
+            get
+            {
+                return postHP - preHP;
+            }
+        }
+    }
+    public class PokemonHealthFaint : Base
+    {
+        public string pokemonUniqueID;
+    }
+    public class PokemonHealthRevive : Base
+    {
+        public string pokemonUniqueID;
+    }
+
+    // Abilities
+    public class PokemonAbilityActivate : Base
+    {
+        public string pokemonUniqueID;
+        public string abilityID;
+    }
+    public class PokemonAbilityQuickDraw : PokemonAbilityActivate { }
+
+    // Moves
+
+    // Stats
+
+    // Items
+    public class PokemonItemQuickClaw : Base
+    {
+        public string pokemonUniqueID;
+        public string itemID;
+    }
+
 
 }
 
