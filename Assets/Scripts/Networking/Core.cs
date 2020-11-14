@@ -110,23 +110,22 @@ namespace PBS.Networking {
 
             // Run Starting notifications
 
-            /*/ Initial Weather / Terrain / etc.
+            // Initial Weather / Terrain / etc.
             List<BattleCondition> initialBConditions = battle.BBPGetSCs();
             for (int i = 0; i < initialBConditions.Count; i++)
             {
                 string natureText = initialBConditions[i].data.natureTextID;
                 if (!string.IsNullOrEmpty(natureText))
                 {
-                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                    textEvent.Create(
-                        textID: initialBConditions[i].data.natureTextID
-                        );
-                    SendEvent(textEvent);
+                    SendEvent(new Battle.View.Events.EnvironmentalConditionStart
+                    {
+                        conditionID = initialBConditions[i].statusID
+                    });
                 }
-            }*/
+            }
 
 
-            // Initial Team Effects
+            // TODO: Initial Team Effects
 
 
             // Initial Abilities
@@ -136,7 +135,34 @@ namespace PBS.Networking {
             //yield return StartCoroutine(BattleLoop());
 
             // end battle
-            //yield return StartCoroutine(EndBattle());
+            yield return StartCoroutine(EndBattle());
+            yield return null;
+        }
+
+        // 11.
+        private IEnumerator EndBattle()
+        {
+            Debug.Log("Battle Finished (Server)");
+
+            // Revert all forms
+            List<Pokemon> allPokemon = battle.GetPokemonFromAllTrainers();
+            for (int i = 0; i < allPokemon.Count; i++)
+            {
+                if (allPokemon[i].data.HasTag(PokemonTag.RevertOnBattleEnd))
+                {
+                    battle.PBPRevertForm(allPokemon[i]);
+                }
+            }
+            UpdateClients();
+
+            BattleTeam winningTeam = battle.GetWinningTeam();
+            int winningTeamNo = (winningTeam == null) ? -1 : winningTeam.teamPos;
+            SendEvent(new Battle.View.Events.EndBattle
+            {
+                winningTeam = winningTeamNo
+            });
+            
+            FinishComponents();
             yield return null;
         }
 

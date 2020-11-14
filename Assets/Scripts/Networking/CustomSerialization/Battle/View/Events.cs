@@ -13,16 +13,29 @@ namespace PBS.Networking.CustomSerialization.Battle.View
         const int STARTBATTLE = 1;
         const int ENDBATTLE = 2;
 
+
         // Messages (101 - 199)
         const int MESSAGE = 101;
+        const int MESSAGEPARAMETERIZED = 102;
+
 
         // Backend (201 - 299)
         const int MODELUPDATE = 201;
 
-        // Trainer Interactions (1001 - 1099)
 
-        const int TRAINERSENDOUT = 1001;
-        const int TRAINERMULTISENDOUT = 1002;
+        // Trainer Interactions (501 - 599)
+        const int TRAINERSENDOUT = 501;
+        const int TRAINERMULTISENDOUT = 502;
+
+
+        // Team Interactions (601 - 699)
+
+
+
+        // Environmental Interactions (3001 - 3099)
+        const int ENVIRONMENTALCONDITIONSTART = 3001;
+        const int ENVIRONMENTALCONDITIONEND = 3002;
+
 
         public static void WriteBattleViewEvent(this NetworkWriter writer, PBS.Battle.View.Events.Base obj)
         {
@@ -31,6 +44,13 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 writer.WriteInt32(MESSAGE);
                 writer.WriteString(message.message);
             }
+            else if (obj is PBS.Battle.View.Events.MessageParameterized messageParameterized)
+            {
+                writer.WriteInt32(MESSAGEPARAMETERIZED);
+                writer.WriteString(messageParameterized.messageCode);
+                writer.WriteArray(messageParameterized.parameters);
+            }
+
             else if (obj is PBS.Battle.View.Events.ModelUpdate modelUpdate)
             {
                 writer.WriteInt32(MODELUPDATE);
@@ -38,6 +58,7 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 writer.WriteBoolean(modelUpdate.synchronize);
                 writer.Write(modelUpdate.model);
             }
+
             else if (obj is PBS.Battle.View.Events.StartBattle startBattle)
             {
                 writer.WriteInt32(STARTBATTLE);
@@ -45,19 +66,32 @@ namespace PBS.Networking.CustomSerialization.Battle.View
             else if (obj is PBS.Battle.View.Events.EndBattle endBattle)
             {
                 writer.WriteInt32(ENDBATTLE);
+                writer.WriteInt32(endBattle.winningTeam);
             }
+
             else if (obj is PBS.Battle.View.Events.TrainerSendOut trainerSendOut)
             {
                 writer.WriteInt32(TRAINERSENDOUT);
                 writer.WriteInt32(trainerSendOut.playerID);
                 writer.WriteList(trainerSendOut.pokemonUniqueIDs);
-                Debug.Log("Could write base send out");
             }
             else if (obj is PBS.Battle.View.Events.TrainerMultiSendOut trainerMultiSendOut)
             {
                 writer.WriteInt32(TRAINERMULTISENDOUT);
                 writer.WriteList(trainerMultiSendOut.sendEvents);
             }
+
+            else if (obj is PBS.Battle.View.Events.EnvironmentalConditionStart environmentalConditionStart)
+            {
+                writer.WriteInt32(ENVIRONMENTALCONDITIONSTART);
+                writer.WriteString(environmentalConditionStart.conditionID);
+            }
+            else if (obj is PBS.Battle.View.Events.EnvironmentalConditionEnd environmentalConditionEnd)
+            {
+                writer.WriteInt32(ENVIRONMENTALCONDITIONEND);
+                writer.WriteString(environmentalConditionEnd.conditionID);
+            }
+
         }
 
         public static PBS.Battle.View.Events.Base ReadBattleViewEvent(this NetworkReader reader)
@@ -73,13 +107,19 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 case ENDBATTLE:
                     return new PBS.Battle.View.Events.EndBattle
                     {
-
+                        winningTeam = reader.ReadInt32()
                     };
 
                 case MESSAGE:
                     return new PBS.Battle.View.Events.Message
                     {
                         message = reader.ReadString()
+                    };
+                case MESSAGEPARAMETERIZED:
+                    return new PBS.Battle.View.Events.MessageParameterized
+                    {
+                        messageCode = reader.ReadString(),
+                        parameters = reader.ReadArray<string>()
                     };
 
                 case MODELUPDATE:
@@ -100,6 +140,17 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                     return new PBS.Battle.View.Events.TrainerMultiSendOut
                     {
                         sendEvents = reader.ReadList<PBS.Battle.View.Events.TrainerSendOut>()
+                    };
+
+                case ENVIRONMENTALCONDITIONSTART:
+                    return new PBS.Battle.View.Events.EnvironmentalConditionStart
+                    {
+                        conditionID = reader.ReadString()
+                    };
+                case ENVIRONMENTALCONDITIONEND:
+                    return new PBS.Battle.View.Events.EnvironmentalConditionEnd
+                    {
+                        conditionID = reader.ReadString()
                     };
                 
                 default:

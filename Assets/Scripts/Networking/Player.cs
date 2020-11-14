@@ -124,7 +124,6 @@ namespace PBS.Networking {
             yield return StartCoroutine(
 
                 // Battle Phases
-
                 (bEvent is PBS.Battle.View.Events.StartBattle)? 
                 ExecuteEvent_StartBattle(bEvent as PBS.Battle.View.Events.StartBattle)
                 : (bEvent is PBS.Battle.View.Events.EndBattle)? 
@@ -132,23 +131,27 @@ namespace PBS.Networking {
 
 
                 // Messages
-
                 : (bEvent is PBS.Battle.View.Events.Message)? 
                 ExecuteEvent_Message(bEvent as PBS.Battle.View.Events.Message)
 
 
                 // Backend
-
                 : (bEvent is PBS.Battle.View.Events.ModelUpdate)? 
                 ExecuteEvent_ModelUpdate(bEvent as PBS.Battle.View.Events.ModelUpdate)
 
 
                 // Trainer Interactions
-
                 : (bEvent is PBS.Battle.View.Events.TrainerSendOut)? 
                 ExecuteEvent_TrainerSendOut(bEvent as PBS.Battle.View.Events.TrainerSendOut)
                 : (bEvent is PBS.Battle.View.Events.TrainerMultiSendOut)? 
                 ExecuteEvent_TrainerMultiSendOut(bEvent as PBS.Battle.View.Events.TrainerMultiSendOut)
+
+
+                // Environmental Interactions
+                : (bEvent is PBS.Battle.View.Events.EnvironmentalConditionStart)? 
+                ExecuteEvent_EnvironmentalConditionStart(bEvent as PBS.Battle.View.Events.EnvironmentalConditionStart)
+                : (bEvent is PBS.Battle.View.Events.EnvironmentalConditionEnd)? 
+                ExecuteEvent_EnvironmentalConditionEnd(bEvent as PBS.Battle.View.Events.EnvironmentalConditionEnd)
 
 
                 // Unhandled
@@ -168,7 +171,6 @@ namespace PBS.Networking {
 
 
         // Battle Phases
-
         /// <summary>
         /// TODO: Description
         /// </summary>
@@ -214,13 +216,39 @@ namespace PBS.Networking {
         /// <returns></returns>
         public IEnumerator ExecuteEvent_EndBattle(PBS.Battle.View.Events.EndBattle bEvent)
         {
-            Debug.Log("You ended your battle with --- !");
+            if (bEvent.winningTeam < 0)
+            {
+                Debug.Log("The battle ended in a draw!");
+            }
+            else
+            {
+                // spectator
+                string allyString = "";
+                string enemyString = GetTrainerNames(myModel.GetTrainerEnemies(myTeamPerspective));
+                string resultString = " defeated ";
+                string endString = "!";
+                if (myTrainer == null)
+                {
+                    allyString = GetTrainerNames(myTeamPerspective.trainers);
+                }
+                else
+                {
+                    allyString = "You";
+                }
+
+                if (myTeamPerspective.teamPos != bEvent.winningTeam)
+                {
+                    resultString = " lost to ";
+                    endString = "...";
+                }
+                Debug.Log($"{allyString}{resultString}{enemyString}{endString}");
+            }
+
             yield return null;
         }
 
 
         // Messages
-
         /// <summary>
         /// TODO: Use dialog box
         /// </summary>
@@ -234,7 +262,6 @@ namespace PBS.Networking {
 
 
         // Backend
-
         /// <summary>
         /// TODO: Description
         /// </summary>
@@ -259,7 +286,6 @@ namespace PBS.Networking {
 
 
         // Trainer Interactions
-
         /// <summary>
         /// TODO: Description
         /// </summary>
@@ -357,6 +383,69 @@ namespace PBS.Networking {
             }
 
             yield return null;
+        }
+
+
+        // Environmental Interactions
+        /// <summary>
+        /// TODO: Use dialog box
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_EnvironmentalConditionStart(PBS.Battle.View.Events.EnvironmentalConditionStart bEvent)
+        {
+            StatusBTLData data = StatusBTLDatabase.instance.GetStatusData(bEvent.conditionID);
+
+            Debug.Log($"{data.conditionName} started!");
+            yield return null;
+        }
+
+        /// <summary>
+        /// TODO: Use dialog box
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_EnvironmentalConditionEnd(PBS.Battle.View.Events.EnvironmentalConditionEnd bEvent)
+        {
+            StatusBTLData data = StatusBTLDatabase.instance.GetStatusData(bEvent.conditionID);
+
+            Debug.Log($"{data.conditionName} ended!");
+            yield return null;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Helpers
+        private string GetPokemonNames(List<PBS.Battle.View.Compact.Pokemon> pokemon)
+        {
+            string text = "";
+            for (int i = 0; i < pokemon.Count; i++)
+            {
+                text += (i == 0)? pokemon[i].nickame : " and " + pokemon[i].nickame;
+            }
+            return text;
+        }
+        private string GetTrainerNames(List<PBS.Battle.View.Compact.Trainer> trainers)
+        {
+            string text = "";
+            for (int i = 0; i < trainers.Count; i++)
+            {
+                text += (i == 0)? trainers[i].name : " and " + trainers[i].name;
+            }
+            return text;
         }
 
     }

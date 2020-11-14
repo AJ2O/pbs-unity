@@ -11,7 +11,7 @@ namespace PBS.Battle.View.Events
 
     }
 
-    // Battle Phases (0 - 99)
+    // Battle Phases
 
     public class StartBattle : Base
     {
@@ -20,10 +20,10 @@ namespace PBS.Battle.View.Events
 
     public class EndBattle : Base
     {
-
+        public int winningTeam;
     }
 
-    // Messages (100 - 199)
+    // Messages
 
     /// <summary>
     /// Displays a message to the player's dialog box.
@@ -32,8 +32,13 @@ namespace PBS.Battle.View.Events
     {
         public string message;
     }
+    public class MessageParameterized : Base
+    {
+        public string messageCode;
+        public string[] parameters;
+    }
 
-    // Backend (200 - 299)
+    // Backend
 
     public class ModelUpdate : Base
     {
@@ -48,7 +53,7 @@ namespace PBS.Battle.View.Events
     }
 
 
-    // Trainer Interactions (1001 - 1099)
+    // Trainer Interactions
 
     public class TrainerSendOut : Base
     {
@@ -59,6 +64,18 @@ namespace PBS.Battle.View.Events
     public class TrainerMultiSendOut : Base
     {
         public List<TrainerSendOut> sendEvents;
+    }
+
+
+    // Weather / Environmental Conditions
+    
+    public class EnvironmentalConditionStart : Base
+    {
+        public string conditionID;
+    }
+    public class EnvironmentalConditionEnd : Base
+    {
+        public string conditionID;
     }
 
 }
