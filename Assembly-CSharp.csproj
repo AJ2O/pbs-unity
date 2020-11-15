@@ -106,6 +106,7 @@
     <Compile Include="Assets\Scripts\Battle\UI\Panels\BTLUIPanelHUD.cs" />
     <Compile Include="Assets\Scripts\Battle\UI\Panels\BTLUIPanelParty.cs" />
     <Compile Include="Assets\Scripts\Battle\View\Compact.cs" />
+    <Compile Include="Assets\Scripts\Battle\View\Enums.cs" />
     <Compile Include="Assets\Scripts\Battle\View\Event.cs" />
     <Compile Include="Assets\Scripts\Battle\View\Model.cs" />
     <Compile Include="Assets\Scripts\Controls.cs" />

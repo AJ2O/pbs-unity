@@ -9,12 +9,14 @@ namespace PBS.Networking.CustomSerialization.Battle
     {
         public static void WriteBattleViewModel(this NetworkWriter writer, PBS.Battle.View.Model obj)
         {
+            writer.WriteBattleSettings(obj.settings);
             writer.WriteList(obj.teams);
         }
         public static PBS.Battle.View.Model ReadBattleViewModel(this NetworkReader reader)
         {
            PBS.Battle.View.Model obj = new PBS.Battle.View.Model
            {
+               settings = reader.ReadBattleSettings(),
                teams = reader.ReadList<PBS.Battle.View.Compact.Team>()
            };
            return obj;

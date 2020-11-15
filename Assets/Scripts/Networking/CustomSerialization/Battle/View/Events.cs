@@ -44,6 +44,8 @@ namespace PBS.Networking.CustomSerialization.Battle.View
         // --- Pokemon Interactions ---
 
         // General (1001 - 1099)
+        const int POKEMONCHANGEFORM = 1005;
+        const int POKEMONSWITCHPOSITION = 1050;
 
         // Damage / Health (1101 - 1199)
         const int POKEMONHEALTHDAMAGE = 1101;
@@ -57,6 +59,7 @@ namespace PBS.Networking.CustomSerialization.Battle.View
 
         // Moves (1301 - 1399)
         const int POKEMONMOVEUSE = 1301;
+        const int POKEMONMOVEHIT = 1302;
         const int POKEMONMOVECELEBRATE = 1350;
 
         // Stats (1401 - 1499)
@@ -149,7 +152,7 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 writer.WriteInt32(MODELUPDATE);
                 writer.WriteInt32((int)modelUpdate.updateType);
                 writer.WriteBoolean(modelUpdate.synchronize);
-                writer.Write(modelUpdate.model);
+                writer.WriteBattleViewModel(modelUpdate.model);
             }
 
 
@@ -202,6 +205,20 @@ namespace PBS.Networking.CustomSerialization.Battle.View
             }
 
 
+            else if (obj is PBS.Battle.View.Events.PokemonChangeForm pokemonChangeForm)
+            {
+                writer.WriteInt32(POKEMONCHANGEFORM);
+                writer.WriteString(pokemonChangeForm.pokemonUniqueID);
+                writer.WriteString(pokemonChangeForm.preForm);
+                writer.WriteString(pokemonChangeForm.postForm);
+            }
+            else if (obj is PBS.Battle.View.Events.PokemonSwitchPosition pokemonSwitchPosition)
+            {
+                writer.WriteInt32(POKEMONSWITCHPOSITION);
+                writer.WriteString(pokemonSwitchPosition.pokemonUniqueID1);
+                writer.WriteString(pokemonSwitchPosition.pokemonUniqueID2);
+            }
+
             else if (obj is PBS.Battle.View.Events.PokemonHealthDamage pokemonHealthDamage)
             {
                 writer.WriteInt32(POKEMONHEALTHDAMAGE);
@@ -232,6 +249,14 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 writer.WriteInt32(POKEMONMOVEUSE);
                 writer.WriteString(pokemonMoveUse.pokemonUniqueID);
                 writer.WriteString(pokemonMoveUse.moveID);
+            }
+            else if (obj is PBS.Battle.View.Events.PokemonMoveHit pokemonMoveHit)
+            {
+                writer.WriteInt32(POKEMONMOVEHIT);
+                writer.WriteString(pokemonMoveHit.pokemonUniqueID);
+                writer.WriteString(pokemonMoveHit.moveID);
+                writer.WriteInt32(pokemonMoveHit.currentHit);
+                writer.WriteList(pokemonMoveHit.hitTargets);
             }
             else if (obj is PBS.Battle.View.Events.PokemonMoveCelebrate pokemonMoveCelebrate)
             {
@@ -299,7 +324,6 @@ namespace PBS.Networking.CustomSerialization.Battle.View
             }
 
         }
-
         public static PBS.Battle.View.Events.Base ReadBattleViewEvent(this NetworkReader reader)
         {
             int type = reader.ReadInt32();
@@ -394,7 +418,7 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                     {
                         updateType = (PBS.Battle.View.Events.ModelUpdate.UpdateType)reader.ReadInt32(),
                         synchronize = reader.ReadBoolean(),
-                        model = reader.Read<PBS.Battle.View.Model>()
+                        model = reader.ReadBattleViewModel()
                     };
 
 
@@ -422,6 +446,7 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                         itemID = reader.ReadString()
                     };
 
+
                 case ENVIRONMENTALCONDITIONSTART:
                     return new PBS.Battle.View.Events.EnvironmentalConditionStart
                     {
@@ -433,6 +458,20 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                         conditionID = reader.ReadString()
                     };
 
+
+                case POKEMONCHANGEFORM:
+                    return new PBS.Battle.View.Events.PokemonChangeForm
+                    {
+                        pokemonUniqueID = reader.ReadString(),
+                        preForm = reader.ReadString(),
+                        postForm = reader.ReadString()
+                    };
+                case POKEMONSWITCHPOSITION:
+                    return new PBS.Battle.View.Events.PokemonSwitchPosition
+                    {
+                        pokemonUniqueID1 = reader.ReadString(),
+                        pokemonUniqueID2 = reader.ReadString()
+                    };
 
                 case POKEMONHEALTHDAMAGE:
                     return new PBS.Battle.View.Events.PokemonHealthDamage
@@ -463,6 +502,14 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                     return new PBS.Battle.View.Events.PokemonMoveUse
                     {
                         pokemonUniqueID = reader.ReadString()
+                    };
+                case POKEMONMOVEHIT:
+                    return new PBS.Battle.View.Events.PokemonMoveHit
+                    {
+                        pokemonUniqueID = reader.ReadString(),
+                        moveID = reader.ReadString(),
+                        currentHit = reader.ReadInt32(),
+                        hitTargets = reader.ReadList<PBS.Battle.View.Events.PokemonMoveHitTarget>()
                     };
                 case POKEMONMOVECELEBRATE:
                     return new PBS.Battle.View.Events.PokemonMoveCelebrate
@@ -539,6 +586,26 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 default:
                     throw new System.Exception($"Invalid event type {type}");
             }
+        }
+
+        public static void WriteBattleViewEventPokemonMoveHitTarget(this NetworkWriter writer, PBS.Battle.View.Events.PokemonMoveHitTarget obj)
+        {
+            writer.WriteString(obj.pokemonUniqueID);
+            writer.WriteBoolean(obj.affectedByMove);
+            writer.WriteBoolean(obj.missed);
+            writer.WriteBoolean(obj.criticalHit);
+            writer.WriteDouble((double)obj.effectiveness);
+        }
+        public static PBS.Battle.View.Events.PokemonMoveHitTarget ReadBattleViewEventPokemonMoveHitTarget(this NetworkReader reader)
+        {
+            return new PBS.Battle.View.Events.PokemonMoveHitTarget
+            {
+                pokemonUniqueID = reader.ReadString(),
+                affectedByMove = reader.ReadBoolean(),
+                missed = reader.ReadBoolean(),
+                criticalHit = reader.ReadBoolean(),
+                effectiveness = (float)reader.ReadDouble()
+            };
         }
     }
 }

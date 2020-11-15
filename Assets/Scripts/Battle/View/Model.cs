@@ -10,6 +10,7 @@ namespace PBS.Battle.View
     /// </summary>
     public class Model
     {
+        public BattleSettings settings;
         public List<PBS.Battle.View.Compact.Team> teams;
 
         public Model() { }

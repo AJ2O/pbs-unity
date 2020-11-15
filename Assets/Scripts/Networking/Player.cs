@@ -181,6 +181,10 @@ namespace PBS.Networking {
                 // --- Pokemon Interactions ---
 
                 // General
+                : (bEvent is PBS.Battle.View.Events.PokemonChangeForm)? 
+                ExecuteEvent_PokemonChangeForm(bEvent as PBS.Battle.View.Events.PokemonChangeForm)
+                : (bEvent is PBS.Battle.View.Events.PokemonSwitchPosition)? 
+                ExecuteEvent_PokemonSwitchPosition(bEvent as PBS.Battle.View.Events.PokemonSwitchPosition)
 
                 // Damage / Health
                 : (bEvent is PBS.Battle.View.Events.PokemonHealthDamage)? 
@@ -596,6 +600,29 @@ namespace PBS.Networking {
         // --- Pokemon Interactions ---
 
         // General
+        /// <summary>
+        /// TODO: Description, Animation
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_PokemonChangeForm(PBS.Battle.View.Events.PokemonChangeForm bEvent)
+        {
+            PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
+
+            PokemonData preFormData = PokemonDatabase.instance.GetPokemonData(bEvent.preForm);
+            PokemonData postFormData = PokemonDatabase.instance.GetPokemonData(bEvent.postForm);
+            Debug.Log("DEBUG - " + pokemon.nickname + " changed from "
+                + preFormData.speciesName + " (" + preFormData.formName + ") to "
+                + postFormData.speciesName + " (" + postFormData.formName + ") ");
+            yield return null;
+        }
+        public IEnumerator ExecuteEvent_PokemonSwitchPosition(PBS.Battle.View.Events.PokemonSwitchPosition bEvent)
+        {
+            PBS.Battle.View.Compact.Pokemon pokemon1 = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID1);
+            PBS.Battle.View.Compact.Pokemon pokemon2 = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID2);
+            Debug.Log($"{pokemon1.nickname} and {pokemon2.nickname} switched places!");
+            yield return null;
+        }
 
         // Damage / Health
         public IEnumerator ExecuteEvent_PokemonHealthDamage(PBS.Battle.View.Events.PokemonHealthDamage bEvent)
@@ -673,6 +700,318 @@ namespace PBS.Networking {
             PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
             MoveData moveData = MoveDatabase.instance.GetMoveData(bEvent.moveID);
             Debug.Log($"{pokemon.nickname} used {moveData.moveName}!");
+
+            yield return null;
+        }
+        public IEnumerator ExecuteEvent_PokemonMoveHit(PBS.Battle.View.Events.PokemonMoveHit bEvent)
+        {
+            PBS.Battle.View.Compact.Pokemon userPokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
+            MoveData moveData = MoveDatabase.instance.GetMoveData(bEvent.moveID);
+            List<PBS.Battle.View.Events.PokemonMoveHitTarget> hitTargets = bEvent.hitTargets;
+
+            List<PBS.Battle.View.Compact.Pokemon> missedPokemon = new List<PBS.Battle.View.Compact.Pokemon>();
+            for (int i = 0; i < hitTargets.Count; i++)
+            {
+                if (hitTargets[i].missed)
+                {
+                    missedPokemon.Add(myModel.GetMatchingPokemon(hitTargets[i].pokemonUniqueID));
+                }
+            }
+
+            // display missed pokemon
+            if (missedPokemon.Count > 0)
+            {
+                if (myModel.settings.battleType == BattleType.Single)
+                {
+                    string missText = "It missed!";
+                    Debug.Log(missText);
+                    //yield return StartCoroutine(battleUI.DrawText(missText));
+                }
+                else
+                {
+                    List<PBS.Battle.View.Compact.Pokemon> enemyDodgers = FilterPokemonByPerspective(missedPokemon, PBS.Battle.View.Enums.ViewPerspective.Enemy);
+                    if (enemyDodgers.Count > 0) 
+                    {
+                        string text = GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Enemy) 
+                            + GetPokemonNames(enemyDodgers) 
+                            + " avoided the " 
+                            + ((bEvent.currentHit == 1) ? "attack" : "hit") + "!";
+                        Debug.Log(text);
+                        //yield return StartCoroutine(battleUI.DrawText(text));
+                    }
+
+                    List<PBS.Battle.View.Compact.Pokemon> allyDodgers = FilterPokemonByPerspective(missedPokemon, PBS.Battle.View.Enums.ViewPerspective.Ally);
+                    if (allyDodgers.Count > 0)
+                    {
+                        string text = GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Ally)
+                            + GetPokemonNames(allyDodgers)
+                            + " avoided the "
+                            + ((bEvent.currentHit == 1) ? "attack" : "hit") + "!";
+                        Debug.Log(text);
+                        //yield return StartCoroutine(battleUI.DrawText(text));
+                    }
+
+                    List<PBS.Battle.View.Compact.Pokemon> playerDodgers = FilterPokemonByPerspective(missedPokemon, PBS.Battle.View.Enums.ViewPerspective.Player);
+                    if (playerDodgers.Count > 0)
+                    {
+                        string text = GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Player)
+                            + GetPokemonNames(playerDodgers)
+                            + " avoided the "
+                            + ((bEvent.currentHit == 1) ? "attack" : "hit") + "!";
+                        Debug.Log(text);
+                        //yield return StartCoroutine(battleUI.DrawText(text));
+                    }
+                }
+            }
+            else if (bEvent.currentHit == 1
+                && hitTargets.Count == 0
+                && missedPokemon.Count == 0)
+            {
+                string text = "But there was no target...";
+                Debug.Log(text);
+                //yield return StartCoroutine(battleUI.DrawText(text));
+            }
+
+            // display immune pokemon
+            List<PBS.Battle.View.Compact.Pokemon> immunePokemon = new List<PBS.Battle.View.Compact.Pokemon>();
+            for (int i = 0; i < hitTargets.Count; i++)
+            {
+                if (hitTargets[i].affectedByMove && hitTargets[i].effectiveness == 0)
+                {
+                    immunePokemon.Add(myModel.GetMatchingPokemon(hitTargets[i].pokemonUniqueID));
+                }
+            }
+            if (immunePokemon.Count > 0)
+            {
+                if (myModel.settings.battleType == BattleType.Single)
+                {
+                    string text = "It had no effect...";
+                    Debug.Log(text);
+                    //yield return StartCoroutine(battleUI.DrawText("It had no effect..."));
+                }
+                else
+                {
+                    string prefixTxt = "It had no effect on ";
+
+                    List<PBS.Battle.View.Compact.Pokemon> enemyImmune = FilterPokemonByPerspective(immunePokemon, PBS.Battle.View.Enums.ViewPerspective.Enemy);
+                    if (enemyImmune.Count > 0)
+                    {
+                        string text = prefixTxt
+                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Enemy, true)
+                            + GetPokemonNames(enemyImmune, true)
+                            + "...";
+                        Debug.Log(text);
+                        //yield return StartCoroutine(battleUI.DrawText(text));
+                    }
+
+                    List<PBS.Battle.View.Compact.Pokemon> allyImmune = FilterPokemonByPerspective(immunePokemon, PBS.Battle.View.Enums.ViewPerspective.Ally);
+                    if (allyImmune.Count > 0)
+                    {
+                        string text = prefixTxt
+                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Ally, true)
+                            + GetPokemonNames(allyImmune, true)
+                            + "...";
+                        Debug.Log(text);
+                        //yield return StartCoroutine(battleUI.DrawText(text));
+                    }
+
+                    List<PBS.Battle.View.Compact.Pokemon> playerImmune = FilterPokemonByPerspective(immunePokemon, PBS.Battle.View.Enums.ViewPerspective.Player);
+                    if (playerImmune.Count > 0)
+                    {
+                        string text = prefixTxt
+                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Player, true)
+                            + GetPokemonNames(playerImmune, true)
+                            + "...";
+                        Debug.Log(text);
+                        //yield return StartCoroutine(battleUI.DrawText(text));
+                    }
+                }
+            }
+
+            // Animate HP Loss
+            List<Coroutine> hpRoutines = new List<Coroutine>();
+            // TODO: Come back to edit HP Bars
+            for (int i = 0; i < hitTargets.Count; i++)
+            {
+                PBS.Battle.View.Events.PokemonMoveHitTarget curTarget = hitTargets[i];
+                /*if (curTarget.affectedByMove && curTarget.damageDealt >= 0)
+                {
+                    Coroutine cr = StartCoroutine(DealDamage(
+                        pokemon: curTarget.pokemon,
+                        preHP: curTarget.preHP,
+                        postHP: curTarget.postHP,
+                        damageDealt: curTarget.damageDealt,
+                        effectiveness: curTarget.effectiveness.GetTotalEffectiveness(),
+                        criticalHit: curTarget.criticalHit
+                        ));
+                    hpRoutines.Add(cr);
+                }*/
+            }
+            for (int i = 0; i < hpRoutines.Count; i++)
+            {
+                yield return hpRoutines[i];
+            }
+
+            // Critical Hits / Effectiveness
+            List<PBS.Battle.View.Compact.Pokemon> criticalTargets = new List<PBS.Battle.View.Compact.Pokemon>();
+            List<PBS.Battle.View.Compact.Pokemon> superEffTargets = new List<PBS.Battle.View.Compact.Pokemon>();
+            List<PBS.Battle.View.Compact.Pokemon> nveEffTargets = new List<PBS.Battle.View.Compact.Pokemon>();
+    
+            for (int i = 0; i < hitTargets.Count; i++)
+            {
+                PBS.Battle.View.Events.PokemonMoveHitTarget curTarget = hitTargets[i];
+                PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(curTarget.pokemonUniqueID);
+                if (curTarget.affectedByMove)
+                {
+                    if (curTarget.criticalHit)
+                    {
+                        criticalTargets.Add(pokemon);
+                    }
+                    if (curTarget.effectiveness > 1)
+                    {
+                        superEffTargets.Add(pokemon);
+                    }
+                    else if (curTarget.effectiveness < 1)
+                    {
+                        nveEffTargets.Add(pokemon);
+                    }
+                }
+            }
+            if (criticalTargets.Count > 0)
+            {
+                if (myModel.settings.battleType == BattleType.Single)
+                {
+                    string text = "A critical hit!";
+                    Debug.Log(text);
+                    //yield return StartCoroutine(battleUI.DrawText(text));
+                }
+                else
+                {
+                    string prefixTxt = "It was a critical hit on ";
+                    List<PBS.Battle.View.Compact.Pokemon> enemyPokemon = FilterPokemonByPerspective(criticalTargets, PBS.Battle.View.Enums.ViewPerspective.Enemy);
+                    if (enemyPokemon.Count > 0)
+                    {
+                        string text = prefixTxt
+                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Enemy, true)
+                            + GetPokemonNames(enemyPokemon)
+                            + "!";
+                        Debug.Log(text);
+                        //yield return StartCoroutine(battleUI.DrawText(text));
+                    }
+
+                    List<PBS.Battle.View.Compact.Pokemon> allyPokemon = FilterPokemonByPerspective(criticalTargets, PBS.Battle.View.Enums.ViewPerspective.Ally);
+                    if (allyPokemon.Count > 0)
+                    {
+                        string text = prefixTxt
+                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Ally, true)
+                            + GetPokemonNames(allyPokemon)
+                            + "!";
+                        Debug.Log(text);
+                        //yield return StartCoroutine(battleUI.DrawText(text));
+                    }
+
+                    List<PBS.Battle.View.Compact.Pokemon> playerPokemon = FilterPokemonByPerspective(criticalTargets, PBS.Battle.View.Enums.ViewPerspective.Player);
+                    if (playerPokemon.Count > 0)
+                    {
+                        string text = prefixTxt
+                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Player, true)
+                            + GetPokemonNames(playerPokemon)
+                            + "!";
+                        Debug.Log(text);
+                        //yield return StartCoroutine(battleUI.DrawText(text));
+                    }
+                }
+            }
+            if (superEffTargets.Count > 0)
+            {
+                if (myModel.settings.battleType == BattleType.Single)
+                {
+                    string text = "It was super-effective!";
+                    Debug.Log(text);
+                    //yield return StartCoroutine(battleUI.DrawText(text));
+                }
+                else
+                {
+                    string prefixTxt = "It was super-effective on ";
+                    List<PBS.Battle.View.Compact.Pokemon> enemyPokemon = FilterPokemonByPerspective(superEffTargets, PBS.Battle.View.Enums.ViewPerspective.Enemy);
+                    if (enemyPokemon.Count > 0)
+                    {
+                        string text = prefixTxt
+                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Enemy, true)
+                            + GetPokemonNames(enemyPokemon)
+                            + "!";
+                        Debug.Log(text);
+                        //yield return StartCoroutine(battleUI.DrawText(text));
+                    }
+
+                    List<PBS.Battle.View.Compact.Pokemon> allyPokemon = FilterPokemonByPerspective(superEffTargets, PBS.Battle.View.Enums.ViewPerspective.Ally);
+                    if (allyPokemon.Count > 0)
+                    {
+                        string text = prefixTxt
+                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Ally, true)
+                            + GetPokemonNames(allyPokemon)
+                            + "!";
+                        Debug.Log(text);
+                        //yield return StartCoroutine(battleUI.DrawText(text));
+                    }
+
+                    List<PBS.Battle.View.Compact.Pokemon> playerPokemon = FilterPokemonByPerspective(superEffTargets, PBS.Battle.View.Enums.ViewPerspective.Player);
+                    if (playerPokemon.Count > 0)
+                    {
+                        string text = prefixTxt
+                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Player, true)
+                            + GetPokemonNames(playerPokemon)
+                            + "!";
+                        Debug.Log(text);
+                        //yield return StartCoroutine(battleUI.DrawText(text));
+                    }
+                }
+            }
+            if (nveEffTargets.Count > 0)
+            {
+                if (myModel.settings.battleType == BattleType.Single)
+                {
+                    string text = "It was not very effective.";
+                    Debug.Log(text);
+                    //yield return StartCoroutine(battleUI.DrawText(text));
+                }
+                else
+                {
+                    string prefixTxt = "It was not very effective on ";
+                    List<PBS.Battle.View.Compact.Pokemon> enemyPokemon = FilterPokemonByPerspective(nveEffTargets, PBS.Battle.View.Enums.ViewPerspective.Enemy);
+                    if (enemyPokemon.Count > 0)
+                    {
+                        string text = prefixTxt
+                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Enemy, true)
+                            + GetPokemonNames(enemyPokemon)
+                            + ".";
+                        Debug.Log(text);
+                        //yield return StartCoroutine(battleUI.DrawText(text));
+                    }
+
+                    List<PBS.Battle.View.Compact.Pokemon> allyPokemon = FilterPokemonByPerspective(nveEffTargets, PBS.Battle.View.Enums.ViewPerspective.Ally);
+                    if (allyPokemon.Count > 0)
+                    {
+                        string text = prefixTxt
+                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Ally, true)
+                            + GetPokemonNames(allyPokemon)
+                            + ".";
+                        Debug.Log(text);
+                        //yield return StartCoroutine(battleUI.DrawText(text));
+                    }
+
+                    List<PBS.Battle.View.Compact.Pokemon> playerPokemon = FilterPokemonByPerspective(nveEffTargets, PBS.Battle.View.Enums.ViewPerspective.Player);
+                    if (playerPokemon.Count > 0)
+                    {
+                        string text = prefixTxt
+                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Player, true)
+                            + GetPokemonNames(playerPokemon)
+                            + ".";
+                        Debug.Log(text);
+                        //yield return StartCoroutine(battleUI.DrawText(text));
+                    }
+                }
+            }
 
             yield return null;
         }
@@ -757,14 +1096,100 @@ namespace PBS.Networking {
 
 
         // Helpers
-        private string GetPokemonNames(List<PBS.Battle.View.Compact.Pokemon> pokemon)
+        public PBS.Battle.View.Enums.ViewPerspective GetPerspective(PBS.Battle.View.Compact.Pokemon pokemon)
         {
-            string text = "";
+            PBS.Battle.View.Compact.Trainer trainer = myModel.GetTrainer(pokemon);
+            PBS.Battle.View.Compact.Team team = myModel.GetTeamOfTrainer(trainer);
+            if (team.teamPos != myTeamPerspective.teamPos)
+            {
+                return PBS.Battle.View.Enums.ViewPerspective.Enemy;
+            }
+            else
+            {
+                if (myTrainer == null)
+                {
+                    return PBS.Battle.View.Enums.ViewPerspective.Ally;
+                }
+                return PBS.Battle.View.Enums.ViewPerspective.Player;
+            }
+        }
+        public List<PBS.Battle.View.Compact.Pokemon> FilterPokemonByPerspective(List<PBS.Battle.View.Compact.Pokemon> pokemon, PBS.Battle.View.Enums.ViewPerspective viewPerspective)
+        {
+            List<PBS.Battle.View.Compact.Pokemon> filteredPokemon = new List<PBS.Battle.View.Compact.Pokemon>();
             for (int i = 0; i < pokemon.Count; i++)
             {
-                text += (i == 0)? pokemon[i].nickname : " and " + pokemon[i].nickname;
+                if (GetPerspective(pokemon[i]) == viewPerspective)
+                {
+                    filteredPokemon.Add(pokemon[i]);
+                }
+            }
+            return filteredPokemon;
+        }
+        public string GetPrefix(PBS.Battle.View.Enums.ViewPerspective viewPerspective, bool lowercase = false)
+        {
+            string prefix = (viewPerspective == PBS.Battle.View.Enums.ViewPerspective.Ally) ? "The ally "
+                : (viewPerspective == PBS.Battle.View.Enums.ViewPerspective.Enemy) ? 
+                    (myModel.settings.isWildBattle? "The wild " : "The foe's ")
+                : "";
+            if (lowercase)
+            {
+                prefix = prefix.ToLower();
+            }
+
+            return prefix;
+        }
+        public string GetPrefix(PBS.Battle.View.Compact.Pokemon pokemon, bool capitalize = true)
+        {
+            string text = "";
+            PBS.Battle.View.Compact.Trainer trainer = myModel.GetTrainer(pokemon);
+            if (pokemon.teamPos != myTeamPerspective.teamPos)
+            {
+                text = "The opposing ";
+            }
+            else
+            {
+                if (myTrainer != null)
+                {
+                    if (trainer.playerID != myTrainer.playerID)
+                    {
+                        text = "The ally ";
+                    }
+                }
+            }
+            if (!capitalize)
+            {
+                text = text.ToLower();
+                text = " " + text;
             }
             return text;
+        }
+        public string GetPokemonName(PBS.Battle.View.Compact.Pokemon pokemon)
+        {
+            return GetPokemonNames(new List<PBS.Battle.View.Compact.Pokemon> { pokemon });
+        }
+        public string GetPokemonNames(List<PBS.Battle.View.Compact.Pokemon> pokemonList, bool orConjunct = false)
+        {
+            string conjunct = (orConjunct) ? "or" : "and";
+
+            string names = "";
+            if (pokemonList.Count == 1)
+            {
+                return pokemonList[0].nickname;
+            }
+            else if (pokemonList.Count == 2)
+            {
+                return pokemonList[0].nickname + " " + conjunct + " " + pokemonList[1].nickname;
+            }
+            else
+            {
+                for (int i = 0; i < pokemonList.Count; i++)
+                {
+                    names += (i == pokemonList.Count - 1) ?
+                        conjunct + " " + pokemonList[i].nickname :
+                        pokemonList[i].nickname + ", ";
+                }
+            }
+            return names;
         }
         private string GetTrainerNames(List<PBS.Battle.View.Compact.Trainer> trainers)
         {

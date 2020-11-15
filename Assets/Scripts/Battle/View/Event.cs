@@ -133,6 +133,17 @@ namespace PBS.Battle.View.Events
     // --- Pokemon Interactions ---
 
     // General
+    public class PokemonChangeForm : Base
+    {
+        public string pokemonUniqueID;
+        public string preForm;
+        public string postForm;
+    }
+    public class PokemonSwitchPosition : Base
+    {
+        public string pokemonUniqueID1;
+        public string pokemonUniqueID2;
+    }
 
     // Health
     public class PokemonHealthDamage : Base
@@ -184,6 +195,32 @@ namespace PBS.Battle.View.Events
         public string pokemonUniqueID;
         public string moveID;
     }
+    
+    public class PokemonMoveHitTarget
+    {
+        public string pokemonUniqueID;
+        public bool affectedByMove = false;
+        public bool missed = false;
+        public bool criticalHit = false;
+        public float effectiveness = 1f;
+
+        public PokemonMoveHitTarget() { }
+        public PokemonMoveHitTarget(BattleHitTarget hitTarget)
+        {
+            pokemonUniqueID = hitTarget.pokemon.uniqueID;
+            missed = hitTarget.missed;
+            criticalHit = hitTarget.criticalHit;
+            effectiveness = hitTarget.effectiveness.GetTotalEffectiveness();
+        }
+    }
+    public class PokemonMoveHit : Base
+    {
+        public string pokemonUniqueID;
+        public string moveID;
+        public int currentHit = 1;
+        public List<PokemonMoveHitTarget> hitTargets;
+    }
+    
     public class PokemonMoveCelebrate : Base { }
 
     // Stats
@@ -212,7 +249,7 @@ namespace PBS.Battle.View.Events
 
     // Status
 
-    // Misc Status
+    // Misc
     public class PokemonMiscProtect : Base
     {
         public string pokemonUniqueID;

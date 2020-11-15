@@ -81,7 +81,27 @@ namespace PBS.Networking.CustomSerialization
         }
 
 
-        // View
+        // Battle
+        public static void WriteBattleSettings(this NetworkWriter writer, BattleSettings obj)
+        {
+            writer.WriteInt32((int)obj.battleType);
+            writer.WriteBoolean(obj.isWildBattle);
+            writer.WriteBoolean(obj.isInverse);
+            writer.WriteBoolean(obj.canMegaEvolve);
+            writer.WriteBoolean(obj.canZMove);
+            writer.WriteBoolean(obj.canDynamax);
+        }
+        public static BattleSettings ReadBattleSettings(this NetworkReader reader)
+        {
+            return new BattleSettings(
+                battleType: (BattleType)reader.ReadInt32(),
+                isWildBattle: reader.ReadBoolean(),
+                isInverse: reader.ReadBoolean(),
+                canMegaEvolve: reader.ReadBoolean(),
+                canZMove: reader.ReadBoolean(),
+                canDynamax: reader.ReadBoolean()
+                );
+        }
     }
 }
 

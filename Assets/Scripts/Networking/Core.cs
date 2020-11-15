@@ -4261,13 +4261,19 @@ namespace PBS.Networking {
 
                     // send the move hit event
                     // TODO: Come back to handle moves
-                    BTLEvent_MoveHit moveHitEvent = new BTLEvent_MoveHit();
-                    moveHitEvent.moveID = moveHitData.ID;
-                    moveHitEvent.moveHit = curHit;
-                    moveHitEvent.SetCloneModel(battle);
-                    moveHitEvent.SetUser(userPokemon);
-                    moveHitEvent.SetHitTargets(battleHitTargets);
-                    SendEvent(moveHitEvent);
+                    PBS.Battle.View.Events.PokemonMoveHit moveHitEventNew = new Battle.View.Events.PokemonMoveHit
+                    {
+                        pokemonUniqueID = userPokemon.uniqueID,
+                        moveID = moveHitData.ID,
+                        currentHit = curHit
+                    };
+                    List<PBS.Battle.View.Events.PokemonMoveHitTarget> hitTargetsNew = new List<Battle.View.Events.PokemonMoveHitTarget>();
+                    for (int k = 0; k < battleHitTargets.Count; k++)
+                    {
+                        hitTargetsNew.Add(new Battle.View.Events.PokemonMoveHitTarget(battleHitTargets[k]));
+                    }
+                    moveHitEventNew.hitTargets = new List<Battle.View.Events.PokemonMoveHitTarget>(hitTargetsNew);
+                    SendEvent(moveHitEventNew);
 
                     // Only run some effects on the first hit
                     if (curHit == 1)
@@ -4540,17 +4546,16 @@ namespace PBS.Networking {
                                     // heal HP here
                                     if (userPokemon.currentHP < userPokemon.maxHP && !ignoreDrain)
                                     {
-                                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                        textEvent.SetBattleModel(Battle.CloneModel(battle));
-                                        textEvent.Create(
-                                            textID: absorb.displayText,
-                                            userPokemon: userPokemon,
-                                            targetPokemon: currentTarget.pokemon);
+                                        SendEvent(new Battle.View.Events.MessageParameterized
+                                        {
+                                            messageCode = absorb.displayText,
+                                            pokemonUserID = userPokemon.uniqueID,
+                                            pokemonTargetID = currentTarget.pokemon.uniqueID
+                                        });
 
                                         yield return StartCoroutine(PBPHealPokemon(
                                             pokemon: userPokemon,
-                                            HPToAdd: drainedHP,
-                                            textEvent: textEvent
+                                            HPToAdd: drainedHP
                                             ));
                                     }
                                 }
@@ -4581,15 +4586,12 @@ namespace PBS.Networking {
                         {
                             userPokemon.bProps.mimicBaseMove = moveHitData.ID;
                             userPokemon.bProps.mimicMoveslot = new Pokemon.Moveslot(enablerPokemon.bProps.lastMove);
-
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetCloneModel(battle);
-                            textEvent.Create(
-                                textID: "move-mimic-success-default",
-                                userPokemon: userPokemon,
-                                moveID: enablerPokemon.bProps.lastMove
-                                );
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = "move-mimic-success-default",
+                                pokemonUserID = userPokemon.uniqueID,
+                                moveID = enablerPokemon.bProps.lastMove
+                            });
                         }
                         else
                         {
@@ -4623,15 +4625,12 @@ namespace PBS.Networking {
 
                             userPokemon.bProps.sketchBaseMove = moveHitData.ID;
                             userPokemon.bProps.sketchMoveslot = new Pokemon.Moveslot(enablerPokemon.bProps.lastMove);
-
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetCloneModel(battle);
-                            textEvent.Create(
-                                textID: textID,
-                                userPokemon: userPokemon,
-                                moveID: enablerPokemon.bProps.lastMove
-                                );
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = textID,
+                                pokemonUserID = userPokemon.uniqueID,
+                                moveID = enablerPokemon.bProps.lastMove
+                            });
                         }
                         else
                         {
@@ -4666,16 +4665,20 @@ namespace PBS.Networking {
                             string prePokemon = userPokemon.pokemonID;
                             string postPokemon = enablerPokemon.pokemonID;
                             battle.PBPTransformIntoPokemon(userPokemon, enablerPokemon);
+                            SendEvent(new Battle.View.Events.PokemonChangeForm
+                            {
+                                pokemonUniqueID = userPokemon.uniqueID,
+                                preForm = prePokemon,
+                                postForm = postPokemon
+                            });
+                            UpdateClients();
 
-                            BTLEvent_ChangePokemon changeEvent = new BTLEvent_ChangePokemon();
-                            changeEvent.SetCloneModel(battle);
-                            changeEvent.Create(pokemon: userPokemon, prePokemon: prePokemon, postPokemon: postPokemon);
-                            SendEvent(changeEvent);
-
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetCloneModel(battle);
-                            textEvent.Create(textID: textID, userPokemon: userPokemon, targetPokemon: enablerPokemon);
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = textID,
+                                pokemonUserID = userPokemon.uniqueID,
+                                pokemonTargetID = enablerPokemon.uniqueID
+                            });
                         }
                         else
                         {
@@ -4852,20 +4855,18 @@ namespace PBS.Networking {
                                     MoveDatabase.instance.GetMoveData(currentTarget.pokemon.bProps.substituteMove);
                                 MoveEffect effect = subMoveData.GetEffect(MoveEffectType.Substitute);
 
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.SetBattleModel(battle);
                                 // substitute took damage and still alive
                                 if (subDamage >= 0 && damage == 0 && currentTarget.pokemon.bProps.substituteHP > 0)
                                 {
                                     string textID = effect.GetString(5);
                                     textID = (textID == "DEFAULT") ? "move-substitute-damage-default" : textID;
-                                    textEvent.Create(
-                                        textID: textID,
-                                        userPokemon: userPokemon,
-                                        targetPokemon: currentTarget.pokemon,
-                                        moveID: moveHitData.ID
-                                        );
-                                    SendEvent(textEvent);
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = textID,
+                                        pokemonUserID = userPokemon.uniqueID,
+                                        pokemonTargetID = currentTarget.pokemon.uniqueID,
+                                        moveID = moveHitData.ID
+                                    });
                                 }
                                 // break substitute
                                 else if (currentTarget.pokemon.bProps.substituteHP == 0)
@@ -4873,13 +4874,13 @@ namespace PBS.Networking {
                                     currentTarget.pokemon.bProps.substituteMove = null;
                                     string textID = effect.GetString(1);
                                     textID = (textID == "DEFAULT") ? "move-substitute-destroy-default" : textID;
-                                    textEvent.Create(
-                                        textID: textID,
-                                        userPokemon: userPokemon,
-                                        targetPokemon: currentTarget.pokemon,
-                                        moveID: moveHitData.ID
-                                        );
-                                    SendEvent(textEvent);
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = textID,
+                                        pokemonUserID = userPokemon.uniqueID,
+                                        pokemonTargetID = currentTarget.pokemon.uniqueID,
+                                        moveID = moveHitData.ID
+                                    });
                                 }
                             }
                         }
@@ -4963,32 +4964,20 @@ namespace PBS.Networking {
                                         {
                                             PBPShowAbility(currentTarget.pokemon, afterMathData);
 
-                                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                            textEvent.SetCloneModel(battle);
-                                            textEvent.Create(
-                                                textID: aftermath.damage.displayText,
-                                                userPokemon: currentTarget.pokemon,
-                                                targetPokemon: userPokemon
-                                                );
-
+                                            SendEvent(new Battle.View.Events.MessageParameterized
+                                            {
+                                                messageCode = aftermath.damage.displayText,
+                                                pokemonUserID = currentTarget.pokemon.uniqueID,
+                                                pokemonTargetID = userPokemon.uniqueID
+                                            });
                                             int damage = battle.GetDamage(
                                                 damage: aftermath.damage,
                                                 targetPokemon: userPokemon,
                                                 attackerPokemon: currentTarget.pokemon
                                                 );
-
-                                            BTLEvent_GameText dmgText = new BTLEvent_GameText();
-                                            dmgText.SetCloneModel(battle);
-                                            dmgText.Create(
-                                                textID: aftermath.damage.displayText,
-                                                targetPokemon: userPokemon,
-                                                userPokemon: currentTarget.pokemon
-                                                );
-
                                             yield return StartCoroutine(PBPDamagePokemon(
                                                 pokemon: userPokemon,
-                                                HPToLose: damage,
-                                                textEvent: dmgText
+                                                HPToLose: damage
                                                 ));
                                         }
                                     }
@@ -5145,14 +5134,11 @@ namespace PBS.Networking {
                                                 MoveEffect effect = moveHitData.GetEffect(MoveEffectType.Quash);
                                                 string textID = effect.GetString(0);
                                                 textID = (textID == "DEFAULT") ? "move-quash-default" : textID;
-
-                                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                                textEvent.SetCloneModel(battle);
-                                                textEvent.Create(
-                                                    textID: textID,
-                                                    targetPokemon: currentTarget.pokemon
-                                                    );
-                                                SendEvent(textEvent);
+                                                SendEvent(new Battle.View.Events.MessageParameterized
+                                                {
+                                                    messageCode = textID,
+                                                    pokemonTargetID = currentTarget.pokemon.uniqueID
+                                                });
 
                                                 allCommands.Remove(curCommand);
                                                 allCommands.Add(curCommand);
@@ -5376,10 +5362,13 @@ namespace PBS.Networking {
                 }
                 if (faintedPokemon.Count > 0)
                 {
-                    BTLEvent_Faint faintEvent = new BTLEvent_Faint();
-                    faintEvent.SetBattleModel(Battle.CloneModel(battle));
-                    faintEvent.Create(faintedPokemon);
-                    SendEvent(faintEvent);
+                    for (int i = 0; i < faintedPokemon.Count; i++)
+                    {
+                        SendEvent(new Battle.View.Events.PokemonHealthFaint
+                        {
+                            pokemonUniqueID = faintedPokemon[i].uniqueID
+                        });
+                    }
                 }
 
                 // check for user
@@ -5422,16 +5411,13 @@ namespace PBS.Networking {
                                         currentTarget.pokemon.bProps.inDiveState = diveState;
                                         currentTarget.pokemon.bProps.inFlyState = flyState;
                                         currentTarget.pokemon.bProps.inShadowForceState = shadowForceState;
-
-                                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                        textEvent.SetCloneModel(battle);
-                                        textEvent.Create(
-                                            textID: textID,
-                                            userPokemon: userPokemon,
-                                            targetPokemon: currentTarget.pokemon,
-                                            moveID: masterMoveData.ID
-                                            );
-                                        SendEvent(textEvent);
+                                        SendEvent(new Battle.View.Events.MessageParameterized
+                                        {
+                                            messageCode = textID,
+                                            pokemonUserID = userPokemon.uniqueID,
+                                            pokemonTargetID = currentTarget.pokemon.uniqueID,
+                                            moveID = masterMoveData.ID
+                                        });
                                     }
                                 }
                             }
@@ -5479,25 +5465,23 @@ namespace PBS.Networking {
                             battle.SetPokemonPosition(allySwitchPokemon, userPosition);
 
                             // Send visual update
-                            BTLEvent_SwitchPosition switchPosEvent = new BTLEvent_SwitchPosition();
-                            switchPosEvent.SetCloneModel(battle);
-                            switchPosEvent.Create(userPokemon, allySwitchPokemon);
-                            SendEvent(switchPosEvent);
+                            SendEvent(new Battle.View.Events.PokemonSwitchPosition
+                            {
+                                pokemonUniqueID1 = userPokemon.uniqueID,
+                                pokemonUniqueID2 = allySwitchPokemon.uniqueID
+                            });
 
                             // Send text event
                             MoveEffect effect = masterMoveData.GetEffect(MoveEffectType.AllySwitch);
                             string textID = effect.GetString(0);
                             textID = (textID == "DEFAULT") ? "move-allyswitch" : textID;
-
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetCloneModel(battle);
-                            textEvent.Create(
-                                textID: textID,
-                                userPokemon: userPokemon,
-                                targetPokemon: allySwitchPokemon,
-                                moveID: masterMoveData.ID
-                                );
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = textID,
+                                pokemonUserID = userPokemon.uniqueID,
+                                pokemonTargetID = allySwitchPokemon.uniqueID,
+                                moveID = masterMoveData.ID
+                            });
                         }
                     }
 
@@ -5535,20 +5519,17 @@ namespace PBS.Networking {
                                     battle.GetPokemonHPByPercent(userPokemon, doubleEdge.hpLossPercent)
                                     : 1;
                                 recoilDamage = Mathf.Max(1, recoilDamage);
-
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.SetCloneModel(battle);
-                                textEvent.Create(
-                                    textID: doubleEdge.displayText,
-                                    userPokemon: userPokemon
-                                    );
+                                SendEvent(new Battle.View.Events.MessageParameterized
+                                {
+                                    messageCode = doubleEdge.displayText,
+                                    pokemonUserID = userPokemon.uniqueID
+                                });
 
                                 recoilActivated = true;
                                 yield return StartCoroutine(PBPDamagePokemon(
                                     pokemon: userPokemon,
                                     HPToLose: recoilDamage,
-                                    checkFaint: false,
-                                    textEvent: textEvent
+                                    checkFaint: false
                                     ));
                             }
                         }
@@ -5688,19 +5669,16 @@ namespace PBS.Networking {
                                                 // Change Form
                                                 canTransform = true;
                                                 changedForm = true;
-
-                                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                                textEvent.SetCloneModel(battle);
-                                                textEvent.Create(
-                                                    textID: gulpMissile.gulpText,
-                                                    userPokemon: userPokemon
-                                                    );
+                                                SendEvent(new Battle.View.Events.MessageParameterized
+                                                {
+                                                    messageCode = gulpMissile.gulpText,
+                                                    pokemonUserID = userPokemon.uniqueID
+                                                });
 
                                                 PBPShowAbility(pokemon: userPokemon, ability: ability);
                                                 yield return StartCoroutine(PBPChangeForm(
                                                     pokemon: userPokemon,
-                                                    toForm: gulpTrns.transformation.toForm,
-                                                    textEvent: textEvent
+                                                    toForm: gulpTrns.transformation.toForm
                                                     ));
 
                                                 // Add Missile to User
@@ -5743,13 +5721,12 @@ namespace PBS.Networking {
                         // Nature Power?
                         if (masterMoveData.GetEffect(MoveEffectType.NaturePower) != null)
                         {
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetCloneModel(battle);
-                            textEvent.Create(
-                                textID: "move-naturepower-default",
-                                moveIDs: new string[] { masterMoveData.ID, callCommand.moveID }
-                                );
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = "move-naturepower-default",
+                                pokemonUserID = userPokemon.uniqueID,
+                                moveIDs = new List<string> { masterMoveData.ID, callCommand.moveID }
+                            });
                         }
 
 
@@ -5798,10 +5775,10 @@ namespace PBS.Networking {
                         && battle.IsPokemonFainted(userPokemon))
                     {
                         battle.FaintPokemon(userPokemon);
-                        BTLEvent_Faint faintEvent = new BTLEvent_Faint();
-                        faintEvent.SetBattleModel(Battle.CloneModel(battle));
-                        faintEvent.Create(userPokemon);
-                        SendEvent(faintEvent);
+                        SendEvent(new Battle.View.Events.PokemonHealthFaint
+                        {
+                            pokemonUniqueID = userPokemon.uniqueID
+                        });
                         yield return StartCoroutine(UntiePokemon(userPokemon));
                     }
                 }
@@ -5863,10 +5840,10 @@ namespace PBS.Networking {
                     if (battle.IsPokemonFainted(userPokemon))
                     {
                         battle.FaintPokemon(userPokemon);
-                        BTLEvent_Faint faintEvent = new BTLEvent_Faint();
-                        faintEvent.SetBattleModel(Battle.CloneModel(battle));
-                        faintEvent.Create(userPokemon);
-                        SendEvent(faintEvent);
+                        SendEvent(new Battle.View.Events.PokemonHealthFaint
+                        {
+                            pokemonUniqueID = userPokemon.uniqueID
+                        });
                         yield return StartCoroutine(UntiePokemon(userPokemon));
                     }
                 }
@@ -5962,15 +5939,12 @@ namespace PBS.Networking {
 
                                 string textID = uproarEffect.GetString(1);
                                 textID = (textID == "DEFAULT") ? "move-uproar-end-default" : textID;
-
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.SetCloneModel(battle);
-                                textEvent.Create(
-                                    textID: textID,
-                                    userPokemon: userPokemon,
-                                    moveID: masterMoveData.ID
-                                    );
-                                SendEvent(textEvent);
+                                SendEvent(new Battle.View.Events.MessageParameterized
+                                {
+                                    messageCode = textID,
+                                    pokemonUserID = userPokemon.uniqueID,
+                                    moveID = masterMoveData.ID
+                                });
                                 battle.UnsetPokemonUproarMove(userPokemon);
                             }
                         }
@@ -6090,15 +6064,12 @@ namespace PBS.Networking {
                             {
                                 string textID = uproarEffect.GetString(0);
                                 textID = (textID == "DEFAULT") ? "move-uproar-start-default" : textID;
-
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.SetCloneModel(battle);
-                                textEvent.Create(
-                                    textID: textID,
-                                    userPokemon: userPokemon,
-                                    moveID: masterMoveData.ID
-                                    );
-                                SendEvent(textEvent);
+                                SendEvent(new Battle.View.Events.MessageParameterized
+                                {
+                                    messageCode = textID,
+                                    pokemonUserID = userPokemon.uniqueID,
+                                    moveID = masterMoveData.ID
+                                });
 
                                 // Wake other pokemon up
                                 List<Pokemon> ablePokemon = battle.GetPokemonUnfaintedFrom(battle.pokemonOnField);
@@ -6225,15 +6196,12 @@ namespace PBS.Networking {
                         {
                             string textID = effect.GetString(0);
                             textID = (textID == "DEFAULT") ? "move-afteryou-default" : textID;
-
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetCloneModel(battle);
-                            textEvent.Create(
-                                textID: textID,
-                                userPokemon: userPokemon,
-                                targetPokemon: afterYouPokemon
-                                );
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = textID,
+                                pokemonUserID = userPokemon.uniqueID,
+                                pokemonTargetID = afterYouPokemon.uniqueID
+                            });
                         }
                         yield return StartCoroutine(ExecuteCommand(afterYouCommands[k]));
                     }
@@ -6430,17 +6398,14 @@ namespace PBS.Networking {
                                         targetPokemon.SetItem(userItem);
 
                                         string textID = effect.GetString(0);
-                                        textID = (textID == "DEFAULT") ? "move-bestow-default"
-                                            : textID;
-                                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                        textEvent.SetCloneModel(battle);
-                                        textEvent.Create(
-                                            textID: textID,
-                                            userPokemon: userPokemon,
-                                            targetPokemon: targetPokemon,
-                                            itemID: userItem.itemID
-                                            );
-                                        SendEvent(textEvent);
+                                        textID = (textID == "DEFAULT") ? "move-bestow-default" : textID;
+                                        SendEvent(new Battle.View.Events.MessageParameterized
+                                        {
+                                            messageCode = textID,
+                                            pokemonUserID = userPokemon.uniqueID,
+                                            pokemonTargetID = targetPokemon.uniqueID,
+                                            itemID = userItem.itemID
+                                        });
                                     }
                                     effectSuccess = true;
                                 }
@@ -6476,15 +6441,13 @@ namespace PBS.Networking {
 
                                         string textID = effect.GetString(0);
                                         textID = (textID == "DEFAULT") ? "move-bind-start-default" : textID;
-
-                                        BTLEvent_GameText gameText = new BTLEvent_GameText();
-                                        gameText.SetCloneModel(battle);
-                                        gameText.Create(
-                                            textID: textID,
-                                            userPokemon: userPokemon,
-                                            targetPokemon: targetPokemon,
-                                            moveID: moveData.ID);
-                                        SendEvent(gameText);
+                                        SendEvent(new Battle.View.Events.MessageParameterized
+                                        {
+                                            messageCode = textID,
+                                            pokemonUserID = userPokemon.uniqueID,
+                                            pokemonTargetID = targetPokemon.uniqueID,
+                                            moveID = moveData.ID
+                                        });
                                     }
                                     effectSuccess = canBeBinded;
                                 }
@@ -6517,29 +6480,25 @@ namespace PBS.Networking {
 
                                         string textID = effect.GetString(0);
                                         textID = (textID == "DEFAULT") ? "move-block-start-default" : textID;
-
-                                        BTLEvent_GameText gameText = new BTLEvent_GameText();
-                                        gameText.SetCloneModel(battle);
-                                        gameText.Create(
-                                            textID: textID,
-                                            userPokemon: userPokemon,
-                                            targetPokemon: targetPokemon,
-                                            moveID: moveData.ID);
-                                        SendEvent(gameText);
+                                        SendEvent(new Battle.View.Events.MessageParameterized
+                                        {
+                                            messageCode = textID,
+                                            pokemonUserID = userPokemon.uniqueID,
+                                            pokemonTargetID = targetPokemon.uniqueID,
+                                            moveID = moveData.ID
+                                        });
                                     }
                                     else if (forceEffectDisplay)
                                     {
                                         string textID = effect.GetString(1);
                                         textID = (textID == "DEFAULT") ? "move-block-fail-default" : textID;
-
-                                        BTLEvent_GameText gameText = new BTLEvent_GameText();
-                                        gameText.SetCloneModel(battle);
-                                        gameText.Create(
-                                            textID: textID,
-                                            userPokemon: userPokemon,
-                                            targetPokemon: targetPokemon,
-                                            moveID: moveData.ID);
-                                        SendEvent(gameText);
+                                        SendEvent(new Battle.View.Events.MessageParameterized
+                                        {
+                                            messageCode = textID,
+                                            pokemonUserID = userPokemon.uniqueID,
+                                            pokemonTargetID = targetPokemon.uniqueID,
+                                            moveID = moveData.ID
+                                        });
                                     }
                                     effectSuccess = canBeBlocked;
                                 }
@@ -6607,17 +6566,14 @@ namespace PBS.Networking {
                                             textID = (textID == "DEFAULT") ? 
                                                 (allTypes? "move-burnup-all" : "move-burnup") 
                                                 : textID;
-
-                                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                            textEvent.SetBattleModel(battle);
-                                            textEvent.Create(
-                                                textID: textID,
-                                                targetPokemon: targetPokemon,
-                                                userPokemon: userPokemon,
-                                                moveID: moveData.ID,
-                                                typeIDs: typesRemoved.ToArray()
-                                                );
-                                            SendEvent(textEvent);
+                                            SendEvent(new Battle.View.Events.MessageParameterized
+                                            {
+                                                messageCode = textID,
+                                                pokemonUserID = userPokemon.uniqueID,
+                                                pokemonTargetID = targetPokemon.uniqueID,
+                                                moveID = moveData.ID,
+                                                typeIDs = new List<string>(typesRemoved)
+                                            });
                                         }
                                     }
                                 }
@@ -6629,18 +6585,14 @@ namespace PBS.Networking {
                                 // Lifting Protection moves
                                 if (targetPokemon.bProps.protect != null)
                                 {
-                                    targetPokemon.bProps.protectMove = null;
-
-                                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                    textEvent.SetBattleModel(battle);
-                                    textEvent.Create(
-                                        textID: "move-feint",
-                                        targetPokemon: targetPokemon,
-                                        userPokemon: userPokemon
-                                        );
-                                    SendEvent(textEvent);
-
                                     effectSuccess = true;
+                                    targetPokemon.bProps.protectMove = null;
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = "move-feint",
+                                        pokemonUserID = userPokemon.uniqueID,
+                                        pokemonTargetID = targetPokemon.uniqueID
+                                    });
                                 }
 
                                 // Lifting Mat Block moves
@@ -6656,17 +6608,14 @@ namespace PBS.Networking {
                                         {
                                             MoveData protectData =
                                                 MoveDatabase.instance.GetMoveData(targetTeam.bProps.protectMovesActive[i]);
-
-                                            BTLEvent_GameText gameText = new BTLEvent_GameText();
-                                            gameText.SetBattleModel(battle);
-                                            gameText.Create(
-                                                textID: textID,
-                                                targetPokemon: targetPokemon,
-                                                userPokemon: userPokemon,
-                                                moveID: protectData.ID,
-                                                targetTeam: targetTeam
-                                                );
-                                            SendEvent(gameText);
+                                            SendEvent(new Battle.View.Events.MessageParameterized
+                                            {
+                                                messageCode = textID,
+                                                pokemonUserID = userPokemon.uniqueID,
+                                                pokemonTargetID = targetPokemon.uniqueID,
+                                                teamID = targetTeam.teamPos,
+                                                moveID = protectData.ID
+                                            });
                                         }
                                         targetTeam.bProps.protectMovesActive.Clear();
                                         effectSuccess = true;
@@ -6695,17 +6644,14 @@ namespace PBS.Networking {
                                     targetPokemon.bProps.isCenterOfAttention = true;
 
                                     string textID = effect.GetString(0);
-                                    textID = (textID == "DEFAULT") ? "move-followme-default"
-                                        : textID;
-                                    BTLEvent_GameText gameText = new BTLEvent_GameText();
-                                    gameText.SetBattleModel(battle);
-                                    gameText.Create(
-                                        textID: textID,
-                                        targetPokemon: targetPokemon,
-                                        userPokemon: userPokemon,
-                                        moveID: moveData.ID
-                                        );
-                                    SendEvent(gameText);
+                                    textID = (textID == "DEFAULT") ? "move-followme-default" : textID;
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = textID,
+                                        pokemonUserID = userPokemon.uniqueID,
+                                        pokemonTargetID = targetPokemon.uniqueID,
+                                        moveID = moveData.ID
+                                    });
                                 }
                                 effectSuccess = true;
                             }
@@ -6801,17 +6747,14 @@ namespace PBS.Networking {
                                         textID = (textID == "DEFAULT") ?
                                             (allTypes ? "move-forestscurse-all" : "move-forestscurse")
                                             : textID;
-
-                                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                        textEvent.SetBattleModel(battle);
-                                        textEvent.Create(
-                                            textID: textID,
-                                            targetPokemon: targetPokemon,
-                                            userPokemon: userPokemon,
-                                            moveID: moveData.ID,
-                                            typeIDs: addableTypes.ToArray()
-                                            );
-                                        SendEvent(textEvent);
+                                        SendEvent(new Battle.View.Events.MessageParameterized
+                                        {
+                                            messageCode = textID,
+                                            pokemonUserID = userPokemon.uniqueID,
+                                            pokemonTargetID = targetPokemon.uniqueID,
+                                            moveID = moveData.ID,
+                                            typeIDs = new List<string>(addableTypes)
+                                        });
                                     }
                                 }
                             }
@@ -6857,16 +6800,13 @@ namespace PBS.Networking {
                                     {
                                         textID = hazeText.GetString(0);
                                     }
-
-                                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                    textEvent.SetBattleModel(battle);
-                                    textEvent.Create(
-                                        textID: textID,
-                                        targetPokemon: targetPokemon,
-                                        userPokemon: userPokemon,
-                                        moveID: moveData.ID
-                                        );
-                                    SendEvent(textEvent);
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = textID,
+                                        pokemonUserID = userPokemon.uniqueID,
+                                        pokemonTargetID = targetPokemon.uniqueID,
+                                        moveID = moveData.ID
+                                    });
                                 }
 
                                 effectSuccess = true;
@@ -6881,17 +6821,14 @@ namespace PBS.Networking {
                                         targetPokemon.bProps.helpingHandMoves.Add(moveData.ID);
 
                                         string textID = effect.GetString(0);
-                                        textID = (textID == "DEFAULT") ? "move-helpinghand-default"
-                                            : textID;
-                                        BTLEvent_GameText gameText = new BTLEvent_GameText();
-                                        gameText.SetBattleModel(battle);
-                                        gameText.Create(
-                                            textID: textID,
-                                            targetPokemon: targetPokemon,
-                                            userPokemon: userPokemon,
-                                            moveID: moveData.ID
-                                            );
-                                        SendEvent(gameText);
+                                        textID = (textID == "DEFAULT") ? "move-helpinghand-default" : textID;
+                                        SendEvent(new Battle.View.Events.MessageParameterized
+                                        {
+                                            messageCode = textID,
+                                            pokemonUserID = userPokemon.uniqueID,
+                                            pokemonTargetID = targetPokemon.uniqueID,
+                                            moveID = moveData.ID
+                                        });
                                     }
                                     effectSuccess = true;
                                 }
@@ -6905,17 +6842,14 @@ namespace PBS.Networking {
                                     if (apply)
                                     {
                                         string textID = effect.GetString(0);
-                                        textID = (textID == "DEFAULT") ? "move-holdhands-default"
-                                            : textID;
-                                        BTLEvent_GameText gameText = new BTLEvent_GameText();
-                                        gameText.SetBattleModel(battle);
-                                        gameText.Create(
-                                            textID: textID,
-                                            targetPokemon: targetPokemon,
-                                            userPokemon: userPokemon,
-                                            moveID: moveData.ID
-                                            );
-                                        SendEvent(gameText);
+                                        textID = (textID == "DEFAULT") ? "move-holdhands-default" : textID;
+                                        SendEvent(new Battle.View.Events.MessageParameterized
+                                        {
+                                            messageCode = textID,
+                                            pokemonUserID = userPokemon.uniqueID,
+                                            pokemonTargetID = targetPokemon.uniqueID,
+                                            moveID = moveData.ID
+                                        });
                                     }
                                     effectSuccess = true;
                                 }
@@ -6931,15 +6865,13 @@ namespace PBS.Networking {
 
                                         string textID = effect.GetString(0);
                                         textID = (textID == "DEFAULT") ? "move-ingrain" : textID;
-                                        BTLEvent_GameText gameText = new BTLEvent_GameText();
-                                        gameText.SetBattleModel(battle);
-                                        gameText.Create(
-                                            textID: textID,
-                                            targetPokemon: targetPokemon,
-                                            userPokemon: userPokemon,
-                                            moveID: moveData.ID
-                                            );
-                                        SendEvent(gameText);
+                                        SendEvent(new Battle.View.Events.MessageParameterized
+                                        {
+                                            messageCode = textID,
+                                            pokemonUserID = userPokemon.uniqueID,
+                                            pokemonTargetID = targetPokemon.uniqueID,
+                                            moveID = moveData.ID
+                                        });
                                     }
                                     effectSuccess = true;
                                 }
@@ -6977,27 +6909,25 @@ namespace PBS.Networking {
 
                                             string textID = effect.GetString(0);
                                             textID = (textID == "DEFAULT") ? "move-leechseed-seed-default" : textID;
-                                            BTLEvent_GameText gameText = new BTLEvent_GameText();
-                                            gameText.SetCloneModel(battle);
-                                            gameText.Create(
-                                                textID: textID,
-                                                userPokemon: userPokemon,
-                                                targetPokemon: targetPokemon,
-                                                moveID: moveData.ID);
-                                            SendEvent(gameText);
+                                            SendEvent(new Battle.View.Events.MessageParameterized
+                                            {
+                                                messageCode = textID,
+                                                pokemonUserID = userPokemon.uniqueID,
+                                                pokemonTargetID = targetPokemon.uniqueID,
+                                                moveID = moveData.ID
+                                            });
                                         }
                                         else if (forceEffectDisplay)
                                         {
                                             string textID = effect.GetString(2);
                                             textID = (textID == "DEFAULT") ? "move-leechseed-fail-default" : textID;
-                                            BTLEvent_GameText gameText = new BTLEvent_GameText();
-                                            gameText.SetCloneModel(battle);
-                                            gameText.Create(
-                                                textID: textID,
-                                                userPokemon: userPokemon,
-                                                targetPokemon: targetPokemon,
-                                                moveID: moveData.ID);
-                                            SendEvent(gameText);
+                                            SendEvent(new Battle.View.Events.MessageParameterized
+                                            {
+                                                messageCode = textID,
+                                                pokemonUserID = userPokemon.uniqueID,
+                                                pokemonTargetID = targetPokemon.uniqueID,
+                                                moveID = moveData.ID
+                                            });
                                         }
 
                                         effectSuccess = canBeSeeded;
@@ -7032,28 +6962,23 @@ namespace PBS.Networking {
 
                                         textID = effect.GetString(0);
                                         textID = (textID == "DEFAULT") ? "move-lockon" : textID;
-
-                                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                        textEvent.SetCloneModel(battle);
-                                        textEvent.Create(
-                                            textID: textID,
-                                            userPokemon: userPokemon,
-                                            targetPokemon: targetPokemon,
-                                            moveID: moveData.ID
-                                            );
-                                        SendEvent(textEvent);
+                                        SendEvent(new Battle.View.Events.MessageParameterized
+                                        {
+                                            messageCode = textID,
+                                            pokemonUserID = userPokemon.uniqueID,
+                                            pokemonTargetID = targetPokemon.uniqueID,
+                                            moveID = moveData.ID
+                                        });
                                     }
                                     else if (!canLockOn && forceEffectDisplay)
                                     {
-                                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                        textEvent.SetCloneModel(battle);
-                                        textEvent.Create(
-                                            textID: textID,
-                                            userPokemon: userPokemon,
-                                            targetPokemon: targetPokemon,
-                                            moveID: moveData.ID
-                                            );
-                                        SendEvent(textEvent);
+                                        SendEvent(new Battle.View.Events.MessageParameterized
+                                        {
+                                            messageCode = textID,
+                                            pokemonUserID = userPokemon.uniqueID,
+                                            pokemonTargetID = targetPokemon.uniqueID,
+                                            moveID = moveData.ID
+                                        });
                                     }
 
                                     effectSuccess = canLockOn;
@@ -7067,17 +6992,14 @@ namespace PBS.Networking {
                                     targetPokemon.bProps.powderMove = moveData.ID;
 
                                     string textID = effect.GetString(0);
-                                    textID = (textID == "DEFAULT") ? "move-powder-start-default"
-                                        : textID;
-                                    BTLEvent_GameText gameText = new BTLEvent_GameText();
-                                    gameText.SetBattleModel(battle);
-                                    gameText.Create(
-                                        textID: textID,
-                                        targetPokemon: targetPokemon,
-                                        userPokemon: userPokemon,
-                                        moveID: moveData.ID
-                                        );
-                                    SendEvent(gameText);
+                                    textID = (textID == "DEFAULT") ? "move-powder-start-default" : textID;
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = textID,
+                                        pokemonUserID = userPokemon.uniqueID,
+                                        pokemonTargetID = targetPokemon.uniqueID,
+                                        moveID = moveData.ID
+                                    });
                                 }
                                 effectSuccess = true;
                             }
@@ -7144,17 +7066,14 @@ namespace PBS.Networking {
 
                                     string textID = effect.GetString(0);
                                     textID = (textID == "DEFAULT") ? "move-powertrick" : textID;
-
-                                    BTLEvent_GameText gameText = new BTLEvent_GameText();
-                                    gameText.SetBattleModel(battle);
-                                    gameText.Create(
-                                        textID: textID,
-                                        targetPokemon: targetPokemon,
-                                        userPokemon: userPokemon,
-                                        moveID: moveData.ID,
-                                        statList: new PokemonStats[] { statToSwap1, statToSwap2 }
-                                        );
-                                    SendEvent(gameText);
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = textID,
+                                        pokemonUserID = userPokemon.uniqueID,
+                                        pokemonTargetID = targetPokemon.uniqueID,
+                                        moveID = moveData.ID,
+                                        statList = new List<PokemonStats> { statToSwap1, statToSwap2 }
+                                    });
                                 }
                                 effectSuccess = true;
                             }
@@ -7166,8 +7085,6 @@ namespace PBS.Networking {
                                 int preHP = targetPokemon.currentHP;
                                 int recoverableHP = targetPokemon.HPdifference;
 
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.SetCloneModel(battle);
                                 if (recoverableHP == 0)
                                 {
                                     canRecover = false;
@@ -7175,12 +7092,12 @@ namespace PBS.Networking {
                                     {
                                         string textID = effect.GetString(1);
                                         textID = (textID == "DEFAULT") ? "move-recover-fail-default" : textID;
-                                        textEvent.Create(
-                                            textID: textID,
-                                            targetPokemon: targetPokemon,
-                                            moveID: moveData.ID
-                                            );
-                                        SendEvent(textEvent);
+                                        SendEvent(new Battle.View.Events.MessageParameterized
+                                        {
+                                            messageCode = textID,
+                                            pokemonTargetID = targetPokemon.uniqueID,
+                                            moveID = moveData.ID
+                                        });
                                     }
                                 }
                                 if (canRecover && apply)
@@ -7190,11 +7107,12 @@ namespace PBS.Networking {
 
                                     string textID = effect.GetString(0);
                                     textID = (textID == "DEFAULT") ? "move-recover-success-default" : textID;
-                                    textEvent.Create(
-                                        textID: textID,
-                                        targetPokemon: targetPokemon,
-                                        moveID: moveData.ID
-                                        );
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = textID,
+                                        pokemonTargetID = targetPokemon.uniqueID,
+                                        moveID = moveData.ID
+                                    });
 
                                     yield return StartCoroutine(PBPChangePokemonHP(
                                         pokemon: targetPokemon,
@@ -7219,17 +7137,14 @@ namespace PBS.Networking {
                                         targetPokemon.SetItem(recycledItem);
 
                                         string textID = effect.GetString(0);
-                                        textID = (textID == "DEFAULT") ? "move-recycle-default"
-                                            : textID;
-                                        BTLEvent_GameText gameText = new BTLEvent_GameText();
-                                        gameText.SetBattleModel(battle);
-                                        gameText.Create(
-                                            textID: textID,
-                                            targetPokemon: targetPokemon,
-                                            moveID: moveData.ID,
-                                            itemID: recycledItem.itemID
-                                            );
-                                        SendEvent(gameText);
+                                        textID = (textID == "DEFAULT") ? "move-recycle-default" : textID;
+                                        SendEvent(new Battle.View.Events.MessageParameterized
+                                        {
+                                            messageCode = textID,
+                                            pokemonTargetID = targetPokemon.uniqueID,
+                                            moveID = moveData.ID,
+                                            itemID = recycledItem.itemID
+                                        });
                                     }
                                     effectSuccess = true;
                                 }
@@ -7284,14 +7199,12 @@ namespace PBS.Networking {
                                 else if (!canRefresh && forceEffectDisplay)
                                 {
                                     string textID = "move-refresh-fail";
-                                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                    textEvent.SetCloneModel(battle);
-                                    textEvent.Create(
-                                        textID: textID,
-                                        targetPokemon: targetPokemon,
-                                        moveID: moveData.ID
-                                        );
-                                    SendEvent(textEvent);
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = textID,
+                                        pokemonTargetID = targetPokemon.uniqueID,
+                                        moveID = moveData.ID
+                                    });
                                 }
 
                                 effectSuccess = canRefresh;
@@ -7308,15 +7221,12 @@ namespace PBS.Networking {
 
                                         string textID = effect.GetString(0);
                                         textID = (textID == "DEFAULT") ? "move-smackdown-default" : textID;
-
-                                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                        textEvent.SetCloneModel(battle);
-                                        textEvent.Create(
-                                            textID: textID,
-                                            userPokemon: userPokemon,
-                                            targetPokemon: targetPokemon
-                                            );
-                                        SendEvent(textEvent);
+                                        SendEvent(new Battle.View.Events.MessageParameterized
+                                        {
+                                            messageCode = textID,
+                                            pokemonUserID = userPokemon.uniqueID,
+                                            pokemonTargetID = targetPokemon.uniqueID
+                                        });
                                     }
                                 }
                             }
@@ -7356,17 +7266,14 @@ namespace PBS.Networking {
                                             textID = (textID == "DEFAULT") ?
                                                 (allTypes ? "move-soak-all" : "move-soak")
                                                 : textID;
-
-                                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                            textEvent.SetBattleModel(battle);
-                                            textEvent.Create(
-                                                textID: textID,
-                                                targetPokemon: targetPokemon,
-                                                userPokemon: userPokemon,
-                                                moveID: moveData.ID,
-                                                typeIDs: soakTypes.ToArray()
-                                                );
-                                            SendEvent(textEvent);
+                                            SendEvent(new Battle.View.Events.MessageParameterized
+                                            {
+                                                messageCode = textID,
+                                                pokemonUserID = userPokemon.uniqueID,
+                                                pokemonTargetID = targetPokemon.uniqueID,
+                                                moveID = moveData.ID,
+                                                typeIDs = new List<string>(soakTypes)
+                                            });
                                         }
                                     }
                                 }
@@ -7496,14 +7403,12 @@ namespace PBS.Networking {
                                     {
                                         if (!stoleStats)
                                         {
-                                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                            textEvent.SetCloneModel(battle);
-                                            textEvent.Create(
-                                                textID: "move-spectralthief-default",
-                                                userPokemon: userPokemon,
-                                                targetPokemon: targetPokemon
-                                                );
-                                            SendEvent(textEvent);
+                                            SendEvent(new Battle.View.Events.MessageParameterized
+                                            {
+                                                messageCode = "move-spectralthief-default",
+                                                pokemonUserID = userPokemon.uniqueID,
+                                                pokemonTargetID = targetPokemon.uniqueID
+                                            });
                                         }
 
                                         yield return StartCoroutine(TryToApplyStatStageMods(
@@ -7774,16 +7679,13 @@ namespace PBS.Networking {
                                             textID = (textID == "DEFAULT") ?
                                                 (allTypes ? "move-burnup-all" : "move-burnup")
                                                 : textID;
-
-                                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                            textEvent.SetBattleModel(battle);
-                                            textEvent.Create(
-                                                textID: textID,
-                                                targetPokemon: userPokemon,
-                                                moveID: moveData.ID,
-                                                typeIDs: typesRemoved.ToArray()
-                                                );
-                                            SendEvent(textEvent);
+                                            SendEvent(new Battle.View.Events.MessageParameterized
+                                            {
+                                                messageCode = textID,
+                                                pokemonTargetID = userPokemon.uniqueID,
+                                                moveID = moveData.ID,
+                                                typeIDs = new List<string>(typesRemoved)
+                                            });
                                         }
                                     }
                                 }
@@ -7798,16 +7700,13 @@ namespace PBS.Networking {
                                 
                                     // snatch wait event
                                     string textID = effect.GetString(0);
-                                    textID = (textID == "DEFAULT") ? "move-destinybond-start-default"
-                                        : textID;
-                                    BTLEvent_GameText gameText = new BTLEvent_GameText();
-                                    gameText.SetBattleModel(battle);
-                                    gameText.Create(
-                                        textID: textID,
-                                        userPokemon: userPokemon,
-                                        moveID: moveData.ID
-                                        );
-                                    SendEvent(gameText);
+                                    textID = (textID == "DEFAULT") ? "move-destinybond-start-default" : textID;
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = textID,
+                                        pokemonUserID = userPokemon.uniqueID,
+                                        moveID = moveData.ID
+                                    });
                                 }
                                 effectSuccess = true;
                             }
@@ -7820,16 +7719,13 @@ namespace PBS.Networking {
                                     userPokemon.bProps.protectCounter++;
 
                                     string textID = effect.GetString(0);
-                                    textID = (textID == "DEFAULT") ? "move-endure-start-default"
-                                        : textID;
-                                    BTLEvent_GameText gameText = new BTLEvent_GameText();
-                                    gameText.SetBattleModel(battle);
-                                    gameText.Create(
-                                        textID: textID,
-                                        userPokemon: userPokemon,
-                                        moveID: moveData.ID
-                                        );
-                                    SendEvent(gameText);
+                                    textID = (textID == "DEFAULT") ? "move-endure-start-default" : textID;
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = textID,
+                                        pokemonUserID = userPokemon.uniqueID,
+                                        moveID = moveData.ID
+                                    });
                                 }
                                 effectSuccess = true;
                             }
@@ -7925,16 +7821,13 @@ namespace PBS.Networking {
                                         textID = (textID == "DEFAULT") ?
                                             (allTypes ? "move-forestscurse-all" : "move-forestscurse")
                                             : textID;
-
-                                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                        textEvent.SetBattleModel(battle);
-                                        textEvent.Create(
-                                            textID: textID,
-                                            targetPokemon: userPokemon,
-                                            moveID: moveData.ID,
-                                            typeIDs: addableTypes.ToArray()
-                                            );
-                                        SendEvent(textEvent);
+                                        SendEvent(new Battle.View.Events.MessageParameterized
+                                        {
+                                            messageCode = textID,
+                                            pokemonTargetID = userPokemon.uniqueID,
+                                            moveID = moveData.ID,
+                                            typeIDs = new List<string>(addableTypes)
+                                        });
                                     }
                                 }
                             }
@@ -7968,14 +7861,12 @@ namespace PBS.Networking {
                                     string textID = effect.GetString(0);
                                     textID = (textID == "DEFAULT") ? "move-protect-start-default"
                                         : textID;
-                                    BTLEvent_GameText gameText = new BTLEvent_GameText();
-                                    gameText.SetBattleModel(battle);
-                                    gameText.Create(
-                                        textID: textID,
-                                        userPokemon: userPokemon,
-                                        moveID: moveData.ID
-                                        );
-                                    SendEvent(gameText);
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = textID,
+                                        pokemonUserID = userPokemon.uniqueID,
+                                        moveID = moveData.ID
+                                    });
                                 }
                                 effectSuccess = true;
                             }
@@ -8066,15 +7957,13 @@ namespace PBS.Networking {
                                     string textID = effect.GetString(0);
                                     textID = (textID == "DEFAULT") ? "move-snatch-wait-default"
                                         : textID;
-                                    BTLEvent_GameText gameText = new BTLEvent_GameText();
-                                    gameText.SetBattleModel(battle);
-                                    gameText.Create(
-                                        textID: textID,
-                                        targetPokemon: userPokemon,
-                                        userPokemon: userPokemon,
-                                        moveID: moveData.ID
-                                        );
-                                    SendEvent(gameText);
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = textID,
+                                        pokemonUserID = userPokemon.uniqueID,
+                                        pokemonTargetID = userPokemon.uniqueID,
+                                        moveID = moveData.ID
+                                    });
                                 }
                                 effectSuccess = true;
                             }
@@ -8114,16 +8003,13 @@ namespace PBS.Networking {
                                             textID = (textID == "DEFAULT") ?
                                                 (allTypes ? "move-soak-all" : "move-soak")
                                                 : textID;
-
-                                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                            textEvent.SetBattleModel(battle);
-                                            textEvent.Create(
-                                                textID: textID,
-                                                targetPokemon: userPokemon,
-                                                moveID: moveData.ID,
-                                                typeIDs: soakTypes.ToArray()
-                                                );
-                                            SendEvent(textEvent);
+                                            SendEvent(new Battle.View.Events.MessageParameterized
+                                            {
+                                                messageCode = textID,
+                                                pokemonTargetID = userPokemon.uniqueID,
+                                                moveID = moveData.ID,
+                                                typeIDs = new List<string>(soakTypes)
+                                            });
                                         }
                                     }
                                 }
@@ -8133,9 +8019,6 @@ namespace PBS.Networking {
                             else if (effect.effectType == MoveEffectType.Substitute)
                             {
                                 bool canSetUp = true;
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.SetCloneModel(battle);
-
                                 int subHP =
                                     Mathf.FloorToInt(battle.GetPokemonHPByPercent(userPokemon, effect.GetFloat(0)));
                                 int HPLost =
@@ -8150,12 +8033,13 @@ namespace PBS.Networking {
                                         string textID = effect.GetString(2);
                                         textID = (textID == "DEFAULT") ? "move-substitute-already-default"
                                             : textID;
-                                        textEvent.Create(
-                                            textID: textID,
-                                            userPokemon: userPokemon,
-                                            targetPokemon: userPokemon,
-                                            moveID: moveData.ID);
-                                        SendEvent(textEvent);
+                                        SendEvent(new Battle.View.Events.MessageParameterized
+                                        {
+                                            messageCode = textID,
+                                            pokemonUserID = userPokemon.uniqueID,
+                                            pokemonTargetID = userPokemon.uniqueID,
+                                            moveID = moveData.ID
+                                        });
                                     }
                                 }
 
@@ -8166,12 +8050,13 @@ namespace PBS.Networking {
                                     string textID = effect.GetString(3);
                                     textID = (textID == "DEFAULT") ? "move-substitute-fail-default"
                                         : textID;
-                                    textEvent.Create(
-                                            textID: textID,
-                                            userPokemon: userPokemon,
-                                            targetPokemon: userPokemon,
-                                            moveID: moveData.ID);
-                                    SendEvent(textEvent);
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = textID,
+                                        pokemonUserID = userPokemon.uniqueID,
+                                        pokemonTargetID = userPokemon.uniqueID,
+                                        moveID = moveData.ID
+                                    });
                                 }
 
                                 // passed all checks, set up substitute
@@ -8193,14 +8078,13 @@ namespace PBS.Networking {
 
                                     string textID = effect.GetString(0);
                                     textID = (textID == "DEFAULT") ? "move-substitute-create-default" : textID;
-                                    BTLEvent_GameText gameText = new BTLEvent_GameText();
-                                    gameText.SetCloneModel(battle);
-                                    gameText.Create(
-                                        textID: textID,
-                                        userPokemon: userPokemon,
-                                        targetPokemon: userPokemon,
-                                        moveID: moveData.ID);
-                                    SendEvent(gameText);
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = textID,
+                                        pokemonUserID = userPokemon.uniqueID,
+                                        pokemonTargetID = userPokemon.uniqueID,
+                                        moveID = moveData.ID
+                                    });
                                 }
 
                                 effectSuccess = canSetUp;
@@ -8268,28 +8152,24 @@ namespace PBS.Networking {
                             }
 
                             string textID = effect.GetString(0);
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetBattleModel(battle);
-                            textEvent.Create(
-                                textID: textID,
-                                userPokemon: userPokemon,
-                                targetTeam: targetTeam,
-                                moveID: moveData.ID
-                                );
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = textID,
+                                pokemonUserID = userPokemon.uniqueID,
+                                teamID = targetTeam.teamPos,
+                                moveID = moveData.ID
+                            });
                         }
                         else if (!canSetupHazard && forceEffectDisplay)
                         {
                             string textID = effect.GetString(1);
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetBattleModel(battle);
-                            textEvent.Create(
-                                textID: textID,
-                                userPokemon: userPokemon,
-                                targetTeam: targetTeam,
-                                moveID: moveData.ID
-                                );
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = textID,
+                                pokemonUserID = userPokemon.uniqueID,
+                                teamID = targetTeam.teamPos,
+                                moveID = moveData.ID
+                            });
                         }
                         effectSuccess = canSetupHazard;
                     }
@@ -8342,16 +8222,13 @@ namespace PBS.Networking {
                                 {
                                     textID = hazeText.GetString(0);
                                 }
-
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.SetBattleModel(battle);
-                                textEvent.Create(
-                                    textID: textID,
-                                    targetTeam: targetTeam,
-                                    userPokemon: userPokemon,
-                                    moveID: moveData.ID
-                                    );
-                                SendEvent(textEvent);
+                                SendEvent(new Battle.View.Events.MessageParameterized
+                                {
+                                    messageCode = textID,
+                                    pokemonUserID = userPokemon.uniqueID,
+                                    teamID = targetTeam.teamPos,
+                                    moveID = moveData.ID
+                                });
                             }
                         }
 
@@ -8382,31 +8259,25 @@ namespace PBS.Networking {
 
                             string textID = effect.GetString(0);
                             textID = (textID == "DEFAULT") ? "move-reflect-default" : textID;
-
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetBattleModel(battle);
-                            textEvent.Create(
-                                textID: textID,
-                                userPokemon: userPokemon,
-                                targetTeam: targetTeam,
-                                moveID: moveData.ID
-                                );
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = textID,
+                                pokemonUserID = userPokemon.uniqueID,
+                                teamID = targetTeam.teamPos,
+                                moveID = moveData.ID
+                            });
                         }
                         else if (!canSetup && forceEffectDisplay)
                         {
                             string textID = effect.GetString(1);
                             textID = (textID == "DEFAULT") ? "move-reflect-fail" : textID;
-
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetBattleModel(battle);
-                            textEvent.Create(
-                                textID: textID,
-                                userPokemon: userPokemon,
-                                targetTeam: targetTeam,
-                                moveID: moveData.ID
-                                );
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = textID,
+                                pokemonUserID = userPokemon.uniqueID,
+                                teamID = targetTeam.teamPos,
+                                moveID = moveData.ID
+                            });
                         }
                         effectSuccess = canSetup;
                     }
@@ -8435,31 +8306,25 @@ namespace PBS.Networking {
 
                             string textID = effect.GetString(0);
                             textID = (textID == "DEFAULT") ? "move-safeguard-default" : textID;
-
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetBattleModel(battle);
-                            textEvent.Create(
-                                textID: textID,
-                                userPokemon: userPokemon,
-                                targetTeam: targetTeam,
-                                moveID: moveData.ID
-                                );
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = textID,
+                                pokemonUserID = userPokemon.uniqueID,
+                                teamID = targetTeam.teamPos,
+                                moveID = moveData.ID
+                            });
                         }
                         else if (!canSetup && forceEffectDisplay)
                         {
                             string textID = effect.GetString(1);
                             textID = (textID == "DEFAULT") ? "move-reflect-fail" : textID;
-
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetBattleModel(battle);
-                            textEvent.Create(
-                                textID: textID,
-                                userPokemon: userPokemon,
-                                targetTeam: targetTeam,
-                                moveID: moveData.ID
-                                );
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = textID,
+                                pokemonUserID = userPokemon.uniqueID,
+                                teamID = targetTeam.teamPos,
+                                moveID = moveData.ID
+                            });
                         }
                         effectSuccess = canSetup;
                     }
@@ -8599,15 +8464,12 @@ namespace PBS.Networking {
                             {
                                 textID = hazeText.GetString(0);
                             }
-
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetBattleModel(battle);
-                            textEvent.Create(
-                                textID: textID,
-                                userPokemon: userPokemon,
-                                moveID: moveData.ID
-                                );
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = textID,
+                                pokemonUserID = userPokemon.uniqueID,
+                                moveID = moveData.ID
+                            });
                         }
                     }
 
@@ -8621,7 +8483,10 @@ namespace PBS.Networking {
                         int paydayAmount = Mathf.FloorToInt(userPokemon.level * effect.GetFloat(0));
                         Trainer paydayTrainer = battle.GetPokemonOwner(userPokemon);
                         paydayTrainer.bProps.payDayMoney += paydayAmount;
-                        SendEvent(new BTLEvent_Message("Coins scattered everywhere! (" + paydayAmount + ")"));
+                        SendEvent(new Battle.View.Events.Message
+                        {
+                            message = "Coins scattered everywhere! (" + paydayAmount + ")"
+                        });
                     }
                     effectSuccess = true;
                 }
@@ -8850,24 +8715,21 @@ namespace PBS.Networking {
                                 abilities[k].isSuppressed = true;
                                 effectSuccess = true;
                                 PBPShowAbility(targetPokemon, abilities[k].data);
-
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.SetCloneModel(battle);
-                                textEvent.Create(
-                                    textID: coreEnforcer.displayText,
-                                    targetPokemon: targetPokemon,
-                                    abilityID: abilities[k].abilityID);
-                                SendEvent(textEvent);
+                                SendEvent(new Battle.View.Events.MessageParameterized
+                                {
+                                    messageCode = coreEnforcer.displayText,
+                                    pokemonTargetID = targetPokemon.uniqueID,
+                                    abilityID = abilities[k].abilityID
+                                });
                             }
                             else
                             {
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.SetCloneModel(battle);
-                                textEvent.Create(
-                                    textID: coreEnforcer.failText,
-                                    targetPokemon: targetPokemon,
-                                    abilityID: abilities[k].abilityID);
-                                SendEvent(textEvent);
+                                SendEvent(new Battle.View.Events.MessageParameterized
+                                {
+                                    messageCode = coreEnforcer.failText,
+                                    pokemonTargetID = targetPokemon.uniqueID,
+                                    abilityID = abilities[k].abilityID
+                                });
                             }
                         }
                     }
@@ -8886,15 +8748,13 @@ namespace PBS.Networking {
                             if (apply)
                             {
                                 targetItem.useable = false;
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.SetCloneModel(battle);
-                                textEvent.Create(
-                                    textID: effect.displayText,
-                                    userPokemon: userPokemon,
-                                    targetPokemon: targetPokemon,
-                                    itemID: targetItem.itemID
-                                    );
-                                SendEvent(textEvent);
+                                SendEvent(new Battle.View.Events.MessageParameterized
+                                {
+                                    messageCode = effect.displayText,
+                                    pokemonUserID = userPokemon.uniqueID,
+                                    pokemonTargetID = targetPokemon.uniqueID,
+                                    itemID = targetItem.itemID
+                                });
                             }
                         }
                     }
@@ -8916,15 +8776,13 @@ namespace PBS.Networking {
                             {
                                 targetPokemon.UnsetItem(targetItem);
                                 userPokemon.SetItem(targetItem);
-                            
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.Create(
-                                    textID: effect.displayText,
-                                    userPokemon: userPokemon,
-                                    targetPokemon: targetPokemon,
-                                    itemID: targetItem.data.ID
-                                    );
-                                SendEvent(textEvent);
+                                SendEvent(new Battle.View.Events.MessageParameterized
+                                {
+                                    messageCode = effect.displayText,
+                                    pokemonUserID = userPokemon.uniqueID,
+                                    pokemonTargetID = targetPokemon.uniqueID,
+                                    itemID = targetItem.itemID
+                                });
                             }
                         }
                     }
@@ -8940,14 +8798,12 @@ namespace PBS.Networking {
                         || effect.targetType == MoveEffectTargetType.Target)
                     {
                         targetPokemon.bProps.endure = effect.Clone();
-
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetCloneModel(battle);
-                        textEvent.Create(
-                            textID: effect.displayText,
-                            userPokemon: userPokemon,
-                            targetPokemon: targetPokemon);
-                        SendEvent(textEvent);
+                        SendEvent(new Battle.View.Events.MessageParameterized
+                        {
+                            messageCode = effect.displayText,
+                            pokemonUserID = userPokemon.uniqueID,
+                            pokemonTargetID = targetPokemon.uniqueID
+                        });
                     }
                 }
                 // Feint
@@ -8964,15 +8820,12 @@ namespace PBS.Networking {
                             if (apply)
                             {
                                 targetPokemon.bProps.protect = null;
-
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.SetCloneModel(battle);
-                                textEvent.Create(
-                                    textID: effect.displayText,
-                                    targetPokemon: targetPokemon,
-                                    userPokemon: userPokemon
-                                    );
-                                SendEvent(textEvent);
+                                SendEvent(new Battle.View.Events.MessageParameterized
+                                {
+                                    messageCode = effect.displayText,
+                                    pokemonUserID = userPokemon.uniqueID,
+                                    pokemonTargetID = targetPokemon.uniqueID
+                                });
                             }
                         }
                     }
@@ -9001,15 +8854,13 @@ namespace PBS.Networking {
 
                             if (protectionLifted && apply)
                             {
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.SetCloneModel(battle);
-                                textEvent.Create(
-                                    textID: effect.displayTextMatBlock,
-                                    targetPokemon: targetPokemon,
-                                    userPokemon: userPokemon,
-                                    targetTeam: targetTeam
-                                    );
-                                SendEvent(textEvent);
+                                SendEvent(new Battle.View.Events.MessageParameterized
+                                {
+                                    messageCode = effect.displayTextMatBlock,
+                                    pokemonUserID = userPokemon.uniqueID,
+                                    pokemonTargetID = targetPokemon.uniqueID,
+                                    teamID = targetTeam.teamPos
+                                });
                             }
                         }
                     }
@@ -9049,15 +8900,13 @@ namespace PBS.Networking {
                             if (apply)
                             {
                                 targetPokemon.UnsetItem(targetItem);
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.SetCloneModel(battle);
-                                textEvent.Create(
-                                    textID: effect.displayText,
-                                    userPokemon: userPokemon,
-                                    targetPokemon: targetPokemon,
-                                    itemID: targetItem.itemID
-                                    );
-                                SendEvent(textEvent);
+                                SendEvent(new Battle.View.Events.MessageParameterized
+                                {
+                                    messageCode = effect.displayText,
+                                    pokemonUserID = userPokemon.uniqueID,
+                                    pokemonTargetID = targetPokemon.uniqueID,
+                                    itemID = targetItem.itemID
+                                });
                             }
                         }
                     }
@@ -9073,26 +8922,25 @@ namespace PBS.Networking {
                         || effect.targetType == MoveEffectTargetType.Target)
                     {
                         targetPokemon.bProps.protect = effect.protect.Clone();
-
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetCloneModel(battle);
-                        textEvent.Create(
-                            textID: effect.protect.displayText,
-                            userPokemon: userPokemon,
-                            targetPokemon: targetPokemon);
-                        SendEvent(textEvent);
+                        SendEvent(new Battle.View.Events.MessageParameterized
+                        {
+                            messageCode = effect.protect.displayText,
+                            pokemonUserID = userPokemon.uniqueID,
+                            pokemonTargetID = targetPokemon.uniqueID,
+                            moveID = moveData.ID
+                        });
                     }
                     else if (effect.targetType == MoveEffectTargetType.SelfTeam
                         || effect.targetType == MoveEffectTargetType.Team)
                     {
                         targetTeam.bProps.matBlocks.Add(effect.protect.Clone());
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetCloneModel(battle);
-                        textEvent.Create(
-                            textID: effect.protect.displayText,
-                            userPokemon: userPokemon,
-                            targetTeam: targetTeam);
-                        SendEvent(textEvent);
+                        SendEvent(new Battle.View.Events.MessageParameterized
+                        {
+                            messageCode = effect.protect.displayText,
+                            pokemonUserID = userPokemon.uniqueID,
+                            teamID = targetTeam.teamPos,
+                            moveID = moveData.ID
+                        });
                     }
                 }
                 // Refresh
@@ -9172,10 +9020,12 @@ namespace PBS.Networking {
                             if (!healedAnyStatus 
                                 && refresh.forceEffectDisplay)
                             {
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.SetCloneModel(battle);
-                                textEvent.Create(textID: refresh.failText, targetPokemon: curPokemon, moveID: moveData.ID);
-                                SendEvent(textEvent);
+                                SendEvent(new Battle.View.Events.MessageParameterized
+                                {
+                                    messageCode = refresh.failText,
+                                    pokemonTargetID = curPokemon.uniqueID,
+                                    moveID = moveData.ID
+                                });
                             }
                         }
                     }
@@ -9575,27 +9425,23 @@ namespace PBS.Networking {
                     {
                         if (alreadyMinStats.Count > 0)
                         {
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetCloneModel(battle);
-                            textEvent.Create(
-                                textID: "stats-min",
-                                userPokemon: userPokemon,
-                                targetPokemon: targetPokemon,
-                                statList: alreadyMinStats.ToArray()
-                                );
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = "stats-min",
+                                pokemonUserID = userPokemon.uniqueID,
+                                pokemonTargetID = targetPokemon.uniqueID,
+                                statList = new List<PokemonStats>(alreadyMinStats)
+                            });
                         }
                         if (alreadyMaxStats.Count > 0)
                         {
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetCloneModel(battle);
-                            textEvent.Create(
-                                textID: "stats-max",
-                                userPokemon: userPokemon,
-                                targetPokemon: targetPokemon,
-                                statList: alreadyMaxStats.ToArray()
-                                );
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = "stats-max",
+                                pokemonUserID = userPokemon.uniqueID,
+                                pokemonTargetID = targetPokemon.uniqueID,
+                                statList = new List<PokemonStats>(alreadyMaxStats)
+                            });
                         }
                     }
                     if (hyperCutterStats.Count > 0 && forceFailureMessage)
@@ -9609,28 +9455,24 @@ namespace PBS.Networking {
                                     as EffectDatabase.AbilityEff.HyperCutter;
 
                                 PBPShowAbility(targetPokemon, abilities[i]);
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.SetCloneModel(battle);
-                                textEvent.Create(
-                                    textID: hyperCutter.displayText,
-                                    targetPokemon: targetPokemon,
-                                    statList: hyperCutterStats[abilities[i]].ToArray()
-                                    );
-                                SendEvent(textEvent);
+                                SendEvent(new Battle.View.Events.MessageParameterized
+                                {
+                                    messageCode = hyperCutter.displayText,
+                                    pokemonTargetID = targetPokemon.uniqueID,
+                                    statList = new List<PokemonStats>(hyperCutterStats[abilities[i]])
+                                });
                             }
                         }
                     }
                     if (minimizedStats.Count > 0 && apply)
                     {
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetCloneModel(battle);
-                        textEvent.Create(
-                            textID: "stats-minimize",
-                            userPokemon: userPokemon,
-                            targetPokemon: targetPokemon,
-                            statList: minimizedStats.ToArray()
-                            );
-                        SendEvent(textEvent);
+                        SendEvent(new Battle.View.Events.MessageParameterized
+                        {
+                            messageCode = "stats-minimize",
+                            pokemonUserID = userPokemon.uniqueID,
+                            pokemonTargetID = targetPokemon.uniqueID,
+                            statList = new List<PokemonStats>(minimizedStats)
+                        });
                     }
                     if (realStatModMap.Count > 0 && apply)
                     {
@@ -9648,28 +9490,24 @@ namespace PBS.Networking {
                                 : (curMod == -2) ? "stats-down2"
                                 : (curMod <= -3) ? "stats-down3"
                                 : null;
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetCloneModel(battle);
-                            textEvent.Create(
-                                textID: textID,
-                                userPokemon: userPokemon,
-                                targetPokemon: targetPokemon,
-                                statList: realStatModMap[curMod].ToArray()
-                                );
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = textID,
+                                pokemonUserID = userPokemon.uniqueID,
+                                pokemonTargetID = targetPokemon.uniqueID,
+                                statList = new List<PokemonStats>(realStatModMap[curMod])
+                            });
                         }
                     }
                     if (maximizedStats.Count > 0 && apply)
                     {
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetCloneModel(battle);
-                        textEvent.Create(
-                            textID: "stats-maximize",
-                            userPokemon: userPokemon,
-                            targetPokemon: targetPokemon,
-                            statList: maximizedStats.ToArray()
-                            );
-                        SendEvent(textEvent);
+                        SendEvent(new Battle.View.Events.MessageParameterized
+                        {
+                            messageCode = "stats-maximize",
+                            pokemonUserID = userPokemon.uniqueID,
+                            pokemonTargetID = targetPokemon.uniqueID,
+                            statList = new List<PokemonStats>(maximizedStats)
+                        });
                     }
 
                     // Defiant for any lowered stats
@@ -9965,13 +9803,11 @@ namespace PBS.Networking {
                                 statusBlockedFully = true;
                                 if (forceFailMessage)
                                 {
-                                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                    textEvent.SetCloneModel(battle);
-                                    textEvent.Create(
-                                        textID: blockStatus.blockText,
-                                        targetPokemon: targetPokemon
-                                        );
-                                    SendEvent(textEvent);
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = blockStatus.blockText,
+                                        pokemonTargetID = targetPokemon.uniqueID
+                                    });
                                 }
                             }
                         }
@@ -10039,15 +9875,13 @@ namespace PBS.Networking {
                                     if (forceFailMessage)
                                     {
                                         PBPShowAbility(curPokemon, ability);
-                                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                        textEvent.SetCloneModel(battle);
-                                        textEvent.Create(
-                                            textID: statusData.failTextID,
-                                            userPokemon: curPokemon,
-                                            targetPokemon: targetPokemon,
-                                            statusID: statusData.ID
-                                            );
-                                        SendEvent(textEvent);
+                                        SendEvent(new Battle.View.Events.MessageParameterized
+                                        {
+                                            messageCode = statusData.failTextID,
+                                            pokemonUserID = curPokemon.uniqueID,
+                                            pokemonTargetID = targetPokemon.uniqueID,
+                                            statusID = statusData.ID
+                                        });
                                     }
                                 }
                             }
@@ -10111,14 +9945,12 @@ namespace PBS.Networking {
                                 if (forceFailMessage)
                                 {
                                     PBPShowAbility(targetPokemon, ability);
-                                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                    textEvent.SetCloneModel(battle);
-                                    textEvent.Create(
-                                        textID: statusData.failTextID,
-                                        targetPokemon: targetPokemon,
-                                        statusID: statusData.ID
-                                        );
-                                    SendEvent(textEvent);
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = statusData.failTextID,
+                                        pokemonTargetID = targetPokemon.uniqueID,
+                                        statusID = statusData.ID
+                                    });
                                 }
                             }
                         }
@@ -10132,10 +9964,11 @@ namespace PBS.Networking {
                     statusBlockedFully = true;
                     if (forceFailMessage)
                     {
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetCloneModel(battle);
-                        textEvent.Create(textID: statusData.alreadyTextID, targetPokemon: targetPokemon);
-                        SendEvent(textEvent);
+                        SendEvent(new Battle.View.Events.MessageParameterized
+                        {
+                            messageCode = statusData.alreadyTextID,
+                            pokemonTargetID = targetPokemon.uniqueID
+                        });
                     }
                 }
 
@@ -10149,11 +9982,11 @@ namespace PBS.Networking {
                         if (forceFailMessage)
                         {
                             PBPShowAbility(targetPokemon, ability.data);
-
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetCloneModel(battle);
-                            textEvent.Create(textID: statusData.failTextID, targetPokemon: targetPokemon);
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = statusData.failTextID,
+                                pokemonTargetID = targetPokemon.uniqueID
+                            });
                         }
                     }
                 }
@@ -10177,11 +10010,11 @@ namespace PBS.Networking {
                                 {
                                     statusBlockedFully = true;
                                     PBPShowAbility(targetPokemon, ability);
-
-                                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                    textEvent.SetCloneModel(battle);
-                                    textEvent.Create(textID: statusData.failTextID, targetPokemon: targetPokemon);
-                                    SendEvent(textEvent);
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = statusData.failTextID,
+                                        pokemonTargetID = targetPokemon.uniqueID
+                                    });
                                 }
                             }
                         }
@@ -10208,13 +10041,14 @@ namespace PBS.Networking {
                                 statusBlockedFully = true;
                                 if (forceFailMessage)
                                 {
-                                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                    textEvent.SetCloneModel(battle);
                                     string textID = (newPriority.priority < oldPriority.priority) 
                                         ? oldPriority.negateTextID
                                         : statusData.failTextID;
-                                    textEvent.Create(textID: textID, targetPokemon: targetPokemon);
-                                    SendEvent(textEvent);
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = textID,
+                                        pokemonTargetID = targetPokemon.uniqueID
+                                    });
                                 }
                             }
                         }
@@ -10262,10 +10096,11 @@ namespace PBS.Networking {
                                 statusBlockedFully = true;
                                 if (forceFailMessage)
                                 {
-                                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                    textEvent.SetCloneModel(battle);
-                                    textEvent.Create(textID: statusData.failTextID, targetPokemon: targetPokemon);
-                                    SendEvent(textEvent);
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = statusData.failTextID,
+                                        pokemonTargetID = targetPokemon.uniqueID
+                                    });
                                 }
                             }
                         }
@@ -10307,20 +10142,14 @@ namespace PBS.Networking {
                             pokemon: targetPokemon,
                             statusID: statusData.ID,
                             turnsLeft: turnsLeft);
-                        BTLEvent_StatusCondition statusEvent = new BTLEvent_StatusCondition();
-                        statusEvent.SetBattleModel(battle);
-                        statusEvent.Create(targetPokemon, statusData.ID);
-                        SendEvent(statusEvent);
 
                         string inflictText = (applyOverwrite == "") ? condition.data.inflictTextID : applyOverwrite;
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetBattleModel(battle);
-                        textEvent.Create(
-                            textID: inflictText,
-                            userPokemon: userPokemon,
-                            targetPokemon: targetPokemon
-                            );
-                        SendEvent(textEvent);
+                        SendEvent(new Battle.View.Events.MessageParameterized
+                        {
+                            messageCode = inflictText,
+                            pokemonUserID = userPokemon.uniqueID,
+                            pokemonTargetID = targetPokemon.uniqueID
+                        });
                     }
                 }
 
@@ -10460,10 +10289,11 @@ namespace PBS.Networking {
                                 effectWasBlocked = true;
                                 if (forceFailMessage)
                                 {
-                                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                    textEvent.SetCloneModel(battle);
-                                    textEvent.Create(textID: aromaVeil.displayText, targetPokemon: targetPokemon);
-                                    SendEvent(textEvent);
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = aromaVeil.displayText,
+                                        pokemonTargetID = targetPokemon.uniqueID
+                                    });
                                 }
                                 break;
                             }
@@ -10485,10 +10315,11 @@ namespace PBS.Networking {
                         effectWasBlocked = true;
                         if (forceFailMessage)
                         {
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetCloneModel(battle);
-                            textEvent.Create(textID: oblivious.displayText, targetPokemon: targetPokemon);
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = oblivious.displayText,
+                                pokemonTargetID = targetPokemon.uniqueID
+                            });
                         }
                     }
                 }
@@ -10715,13 +10546,12 @@ namespace PBS.Networking {
                         success = false;
                         if (forceFailMessage)
                         {
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetCloneModel(battle);
-                            textEvent.Create(
-                                textID: isAlready ? volatileEffect.alreadyText : volatileEffect.failText,
-                                targetPokemon: targetPokemon
-                                );
-                            SendEvent(textEvent);
+                            string textID = isAlready ? volatileEffect.alreadyText : volatileEffect.failText;
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = textID,
+                                pokemonTargetID = targetPokemon.uniqueID
+                            });
                         }
                     }
                 }
@@ -17421,12 +17251,18 @@ namespace PBS.Networking {
                 synchronize = false
             });
 
+            SendEvent(new Battle.View.Events.PokemonChangeForm
+            {
+                pokemonUniqueID = pokemon.uniqueID,
+                preForm = prevForm,
+                postForm = toForm
+            });
             // TODO: More descriptive
             if (textEvent != null)
             {
                 SendEvent(textEvent);
             }
-            
+
             if (checkAbility)
             {
                 yield return StartCoroutine(PBPRunEnterAbilities(pokemon));
