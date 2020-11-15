@@ -2363,7 +2363,7 @@ namespace PBS.Networking {
                                 // send hit message
                                 SendEvent(new Battle.View.Events.Message
                                 {
-                                    message = "It hurt itself in its confusion"
+                                    message = "It hurt itself in its confusion!"
                                 });
 
                                 // deal damage
@@ -2432,16 +2432,10 @@ namespace PBS.Networking {
                                 ))
                             {
                                 // send paralysis message
-                                string hitTextID = effect.GetString(0);
-                                hitTextID = (hitTextID == "DEFAULT") ? "status-paralysis"
-                                    : hitTextID;
-                                BTLEvent_GameText gameText = new BTLEvent_GameText();
-                                gameText.SetBattleModel(battle);
-                                gameText.Create(
-                                    textID: hitTextID,
-                                    targetPokemon: userPokemon
-                                    );
-                                SendEvent(gameText);
+                                SendEvent(new Battle.View.Events.Message
+                                {
+                                    message = userPokemon.nickname + " is paralyzed. It can't move!"
+                                });
                                 moveSuccess = false;
                             }
                         }
@@ -2455,27 +2449,19 @@ namespace PBS.Networking {
                     if (infatuation != null)
                     {
                         Pokemon infatuator = battle.GetPokemonByID(infatuation.infatuator);
-                        BTLEvent_GameText moveTextEvent = new BTLEvent_GameText();
-                        moveTextEvent.SetCloneModel(battle);
-                        moveTextEvent.Create(
-                            textID: infatuation.moveText,
-                            userPokemon: infatuator,
-                            targetPokemon: userPokemon
-                            );
-                        SendEvent(moveTextEvent);
+                        SendEvent(new Battle.View.Events.Message
+                        {
+                            message = userPokemon.nickname + " is infatuated with " + infatuator.nickname + "!"
+                        });
 
                         // move fail
                         if (infatuation.moveFailChance >= Random.value)
                         {
                             moveSuccess = false;
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetCloneModel(battle);
-                            textEvent.Create(
-                                textID: infatuation.moveFailText,
-                                userPokemon: infatuator,
-                                targetPokemon: userPokemon
-                                );
-                            SendEvent(moveTextEvent);
+                            SendEvent(new Battle.View.Events.Message
+                            {
+                                message = userPokemon.nickname + " was immobilized by love!"
+                            });
                         }
                     }
                 }
@@ -2487,15 +2473,10 @@ namespace PBS.Networking {
                     if (imprisonPokemon != null)
                     {
                         moveSuccess = false;
-
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetCloneModel(battle);
-                        textEvent.Create(
-                            textID: imprisonPokemon.bProps.imprison.negateText,
-                            userPokemon: userPokemon,
-                            moveID: masterMoveData.ID
-                            );
-                        SendEvent(textEvent);
+                        SendEvent(new Battle.View.Events.Message
+                        {
+                            message = userPokemon.nickname + "'s " + masterMoveData.moveName + " is sealed! It can't use it!"
+                        });
                     }
                 }
 
@@ -2509,15 +2490,11 @@ namespace PBS.Networking {
                         if (!limiter.justInitialized || !limiter.effect.canUseMiddleOfTurn)
                         {
                             moveSuccess = false;
-
-                            BTLEvent_GameText gameText = new BTLEvent_GameText();
-                            gameText.SetCloneModel(battle);
-                            gameText.Create(
-                                textID: limiter.effect.attemptText,
-                                userPokemon: userPokemon,
-                                moveID: masterMoveData.ID
-                                );
-                            SendEvent(gameText);
+                            // TODO: Better messaging for each effect: Taunt, Torment, etc.
+                            SendEvent(new Battle.View.Events.Message
+                            {
+                                message = userPokemon.nickname + " was prevented from using " + masterMoveData.moveName + "!"
+                            });
                         }
                     }
                 }
@@ -2535,12 +2512,10 @@ namespace PBS.Networking {
                     moveSuccess = false;
                     userPokemon.bProps.truantTurns--;
                     PBPShowAbility(userPokemon, truantPair.ability);
-
-                    EffectDatabase.AbilityEff.Truant truant = truantPair.effect as EffectDatabase.AbilityEff.Truant;
-                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                    textEvent.SetCloneModel(battle);
-                    textEvent.Create(textID: truant.displayText, userPokemon: userPokemon);
-                    SendEvent(textEvent);
+                    SendEvent(new Battle.View.Events.Message
+                    {
+                        message = userPokemon.nickname + " is loafing around!"
+                    });
                 }
             }
 
@@ -2564,13 +2539,10 @@ namespace PBS.Networking {
                 
                         if (moveCancelled)
                         {
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetCloneModel(battle);
-                            textEvent.Create(
-                                textID: gravity.moveFailText,
-                                userPokemon: userPokemon,
-                                moveID: masterMoveData.ID);
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.Message
+                            {
+                                message = userPokemon.nickname + " can't use " + masterMoveData.moveName + " due to the intense gravity!"
+                            });
                         }
                         moveSuccess = !moveCancelled;
                     }
@@ -2585,19 +2557,10 @@ namespace PBS.Networking {
             {
                 MoveData focusPunchData = MoveDatabase.instance.GetMoveData(userPokemon.bProps.focusPunchMove);
                 MoveEffect focusPunch = focusPunchData.GetEffect(MoveEffectType.FocusPunch);
-
-                string textCodeID = focusPunch.GetString(1);
-                textCodeID = (textCodeID == "DEFAULT") ? "move-focuspunch-fail-default"
-                    : textCodeID;
-
-                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                textEvent.SetCloneModel(battle);
-                textEvent.Create(
-                    textID: textCodeID,
-                    userPokemon: userPokemon,
-                    moveID: focusPunchData.ID
-                    );
-                SendEvent(textEvent);
+                SendEvent(new Battle.View.Events.Message
+                {
+                    message = userPokemon.nickname + " lost its focus and couldn't move!"
+                });
 
                 moveSuccess = false;
                 moveExplicitlyFailed = true;
@@ -2609,28 +2572,23 @@ namespace PBS.Networking {
                 && masterMoveData.GetEffect(MoveEffectType.Struggle) != null
                 && !command.isFutureSightMove)
             {
-                BTLEvent_GameText gameText = new BTLEvent_GameText();
-                gameText.SetBattleModel(battle);
-                gameText.Create(
-                    textID: "move-struggle",
-                    userPokemon: userPokemon,
-                    moveID: masterMoveData.ID
-                    );
-                SendEvent(gameText);
+                SendEvent(new Battle.View.Events.Message
+                {
+                    message = userPokemon.nickname + " has no useable moves!"
+                });
             }
 
             // display Z-Move
             if (moveSuccess && usedZMove && !command.isFutureSightMove)
             {
-                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                textEvent.SetCloneModel(battle);
-                textEvent.Create(textID: "zmove-start", userPokemon: userPokemon);
-                SendEvent(textEvent);
-
-                BTLEvent_GameText textEvent2 = new BTLEvent_GameText();
-                textEvent2.SetCloneModel(battle);
-                textEvent2.Create(textID: "zmove-use", userPokemon: userPokemon);
-                SendEvent(textEvent2);
+                SendEvent(new Battle.View.Events.Message
+                {
+                    message = userPokemon.nickname + " surrounded itself with Z-Power!"
+                });
+                SendEvent(new Battle.View.Events.Message
+                {
+                    message = userPokemon.nickname + " unleashes its full-force Z-Move!"
+                });
 
                 // Set Z-Move used for trainer
                 Trainer trainer = battle.GetPokemonOwner(userPokemon);
@@ -2658,10 +2616,11 @@ namespace PBS.Networking {
                             EffectDatabase.AbilityEff.Protean protean =
                                 proteanData.GetEffectNew(AbilityEffectType.Protean) as EffectDatabase.AbilityEff.Protean;
 
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetCloneModel(battle);
-                            textEvent.Create(textID: protean.displayText, userPokemon: userPokemon, typeID: moveType);
-                            SendEvent(textEvent);
+                            TypeData proteanType = TypeDatabase.instance.GetTypeData(moveType);
+                            SendEvent(new Battle.View.Events.Message
+                            {
+                                message = userPokemon.nickname + " turned into the " + proteanType.typeName + "-type!"
+                            });
                         }
                     }
 
@@ -2704,10 +2663,11 @@ namespace PBS.Networking {
                         }
                     }
 
-                    BTLEvent_Move moveEvent = new BTLEvent_Move();
-                    moveEvent.SetBattleModel(Battle.CloneModel(battle));
-                    moveEvent.Create(userPokemon, masterMoveData.ID);
-                    SendEvent(moveEvent);
+                    SendEvent(new Battle.View.Events.PokemonMoveUse
+                    {
+                        pokemonUniqueID = userPokemon.nickname,
+                        moveID = masterMoveData.ID
+                    });
                     moveWasDisplayed = true;
                     tryToConsumePP = true;
 
@@ -2715,19 +2675,12 @@ namespace PBS.Networking {
                     if (magnitudeEffect_ != null && magnitudeLevel != null)
                     {
                         EffectDatabase.MoveEff.Magnitude magnitude = magnitudeEffect_ as EffectDatabase.MoveEff.Magnitude;
-
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetCloneModel(battle);
-                        textEvent.Create(
-                            textID: magnitude.displayText,
-                            userPokemon: userPokemon,
-                            moveID: masterMoveData.ID,
-                            intArgs: new List<int> { magnitudeLevel.level }
-                            );
-                        SendEvent(textEvent);
+                        SendEvent(new Battle.View.Events.Message
+                        {
+                            message = masterMoveData.moveName + " " + magnitudeLevel.level + "!"
+                        });
                     }
                 }
-
 
                 // set the last move used by the pokemon
                 if (command.displayMove)
@@ -3025,16 +2978,11 @@ namespace PBS.Networking {
                     if (command.iteration < attackTurns)
                     {
                         // send event
-                        string textID = multiTurnEffect.GetString(command.iteration - 1);
-                        textID = (textID == "DEFAULT") ? "move-default-charge"
-                            : textID;
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetBattleModel(Battle.CloneModel(battle));
-                        textEvent.Create(
-                            textID: textID,
-                            userPokemon: userPokemon
-                            );
-                        SendEvent(textEvent);
+                        // TODO: More descriptive charge text
+                        SendEvent(new Battle.View.Events.Message
+                        {
+                            message = userPokemon.nickname + " is charging its attack!"
+                        });
 
                         // Run Charge effects here
                         yield return StartCoroutine(ExecuteMoveEffects(
@@ -3146,29 +3094,19 @@ namespace PBS.Networking {
                             );
                         battle.AddFutureSightCommand(futureCommand);
 
-                        string textID = effect.GetString(0);
-                        textID = (textID == "DEFAULT") ? "move-futuresight-start-default" : textID;
-
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetCloneModel(battle);
-                        textEvent.Create(
-                            textID: textID,
-                            userPokemon: userPokemon,
-                            moveID: masterMoveData.ID
-                            );
-                        SendEvent(textEvent);
+                        // TODO: More descriptive text
+                        SendEvent(new Battle.View.Events.Message
+                        {
+                            message = userPokemon.nickname + " foresaw an attack!"
+                        });
                     }
                     else
                     {
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetCloneModel(battle);
-                        textEvent.Create(
-                            textID: "move-FAIL-default",
-                            userPokemon: userPokemon,
-                            moveID: masterMoveData.ID
-                            );
-                        SendEvent(textEvent);
                         moveExplicitlyFailed = true;
+                        SendEvent(new Battle.View.Events.Message
+                        {
+                            message = "But it failed!"
+                        });
                     }
                     moveSuccess = false;
                 }
@@ -3232,13 +3170,10 @@ namespace PBS.Networking {
                     else if (userPokemon.bProps.bideTurnsLeft > 0)
                     {
                         // send event
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetBattleModel(Battle.CloneModel(battle));
-                        textEvent.Create(
-                            textID: "move-bide-store-default",
-                            userPokemon: userPokemon
-                            );
-                        SendEvent(textEvent);
+                        SendEvent(new Battle.View.Events.Message
+                        {
+                            message = userPokemon.nickname + " is storing energy!"
+                        });
 
                         command.iteration++;
                         command.consumePP = false;
@@ -3251,13 +3186,10 @@ namespace PBS.Networking {
                     else
                     {
                         // send event
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetBattleModel(Battle.CloneModel(battle));
-                        textEvent.Create(
-                            textID: "move-bide-end-default",
-                            userPokemon: userPokemon
-                            );
-                        SendEvent(textEvent);
+                        SendEvent(new Battle.View.Events.Message
+                        {
+                            message = userPokemon.nickname + " unleashed the stored energy!"
+                        });
                     }
                 }
             }
@@ -3479,21 +3411,13 @@ namespace PBS.Networking {
                     // Fling
                     if (masterMoveData.GetEffect(MoveEffectType.Fling) != null)
                     {
-                        MoveEffect effect = masterMoveData.GetEffect(MoveEffectType.Fling);
-                        string textID = effect.GetString(0);
-                        textID = (textID == "DEFAULT") ? "move-fling-default" : textID;
-
                         Item item = battle.GetPokemonItemFiltered(userPokemon, ItemEffectType.Fling);
                         if (item != null)
                         {
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetCloneModel(battle);
-                            textEvent.Create(
-                                textID: textID,
-                                userPokemon: userPokemon,
-                                itemID: item.itemID
-                                );
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.Message
+                            {
+                                message = userPokemon.nickname + " flung its " + item.data.itemName + "!"
+                            });
                         }
                     }
 
@@ -3516,13 +3440,11 @@ namespace PBS.Networking {
                     MoveEffect effect = masterMoveData.GetEffect(MoveEffectType.FutureSight);
                     if (effect != null)
                     {
-                        string textID = effect.GetString(1);
-                        textID = (textID == "DEFAULT") ? "move-futuresight-attack-default" : textID;
-
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetCloneModel(battle);
-                        textEvent.Create(textID: textID, pokemonList: targetPokemon.ToArray(), moveID: masterMoveData.ID);
-                        SendEvent(textEvent);
+                        // TODO: More descriptive
+                        SendEvent(new Battle.View.Events.Message
+                        {
+                            message = "The target took the " + masterMoveData.moveName + " attack!"
+                        });
                     }
                 }
 
@@ -3764,13 +3686,10 @@ namespace PBS.Networking {
                                         )
                                     {
                                         curHitTeam.affectedByMove = false;
-                                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                        textEvent.SetCloneModel(battle);
-                                        textEvent.Create(
-                                            textID: protect.protectText,
-                                            userPokemon: userPokemon,
-                                            targetTeam: currentTeam);
-                                        SendEvent(textEvent);
+                                        SendEvent(new Battle.View.Events.PokemonMiscMatBlock
+                                        {
+                                            teamID = currentTeam.teamPos
+                                        });
                                     }
                                 }
                             }
@@ -3801,13 +3720,10 @@ namespace PBS.Networking {
                                             )
                                         {
                                             curHitTeam.affectedByMove = false;
-                                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                            textEvent.SetCloneModel(battle);
-                                            textEvent.Create(
-                                                textID: protect.protectText,
-                                                userPokemon: userPokemon,
-                                                targetTeam: currentTeam);
-                                            SendEvent(textEvent);
+                                            SendEvent(new Battle.View.Events.PokemonMiscMatBlock
+                                            {
+                                                teamID = currentTeam.teamPos
+                                            });
                                         }
                                     }
                                 }
@@ -3909,13 +3825,10 @@ namespace PBS.Networking {
                                             )
                                         {
                                             hitTarget.affectedByMove = false;
-                                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                            textEvent.SetCloneModel(battle);
-                                            textEvent.Create(
-                                                textID: protect.protectText,
-                                                userPokemon: userPokemon, 
-                                                targetPokemon: currentTarget);
-                                            SendEvent(textEvent);
+                                            SendEvent(new Battle.View.Events.PokemonMiscProtect
+                                            {
+                                                pokemonUniqueID = currentTarget.uniqueID
+                                            });
                                         }
                                     }
                                 }
@@ -3944,18 +3857,11 @@ namespace PBS.Networking {
                         {
                             if (hitTarget.effectiveness.GetTotalEffectiveness() == 0)
                             {
-                                Debug.Log("DEBUG - Raw Eff:" + hitTarget.effectiveness.rawEffectiveness);
                                 hitTarget.affectedByMove = false;
-
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.SetCloneModel(battle);
-                                textEvent.textID = (battle.IsSinglesBattle()) ? "move-noeffect-default" 
-                                    : "move-noeffect-multi-default";
-                                textEvent.Create(
-                                    userPokemon: userPokemon,
-                                    targetPokemon: currentTarget,
-                                    moveID: moveImpactData.ID);
-                                SendEvent(textEvent);
+                                SendEvent(new Battle.View.Events.Message
+                                {
+                                    message = "It had no effect" + (battle.IsSinglesBattle()? "" : " on " + currentTarget.nickname) + "..."
+                                });
                             }
                         }
 
@@ -4000,15 +3906,10 @@ namespace PBS.Networking {
                                 Item targetItem = battle.PBPGetHeldItem(currentTarget);
                                 if (targetItem != null)
                                 {
-                                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                    textEvent.SetCloneModel(battle);
-                                    textEvent.Create(
-                                        textID: poltergeist.displayText,
-                                        userPokemon: userPokemon,
-                                        targetPokemon: currentTarget,
-                                        itemID: targetItem.itemID
-                                        );
-                                    SendEvent(textEvent);
+                                    SendEvent(new Battle.View.Events.Message
+                                    {
+                                        message = userPokemon.nickname + " attacked using " + currentTarget.nickname + "'s " + targetItem.data.itemName + "!"
+                                    });
                                 }
                             }
 
@@ -4068,7 +3969,6 @@ namespace PBS.Networking {
                                             // Force effectiveness if the target will be affected
                                             if (affectedTypes.Count > 0)
                                             {
-                                                Debug.Log("DEBUG - STRONG WINDS ALTER");
                                                 for (int l = 0; l < affectedTypes.Count; l++)
                                                 {
                                                     hitTarget.effectiveness.SetType(
@@ -4080,15 +3980,11 @@ namespace PBS.Networking {
                                                 if (!strongWindsUsed.Contains(effect))
                                                 {
                                                     strongWindsUsed.Add(effect);
-
-                                                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                                    textEvent.SetCloneModel(battle);
-                                                    textEvent.Create(
-                                                        textID: effect.changeText,
-                                                        targetPokemon: currentTarget,
-                                                        typeIDs: affectedTypes.ToArray()
-                                                        );
-                                                    SendEvent(textEvent);
+                                                    // TODO: More descriptive
+                                                    SendEvent(new Battle.View.Events.Message
+                                                    {
+                                                        message = "The mysterious strong winds weakened the attack!"
+                                                    });
                                                 }
 
                                                 break;
@@ -4190,10 +4086,10 @@ namespace PBS.Networking {
                                         || hitTarget.protection != null)
                                     {
                                         damage = Mathf.FloorToInt(damage * 0.25f);
-                                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                        textEvent.SetCloneModel(battle);
-                                        textEvent.Create(textID: "zmove-protect", targetPokemon: currentTarget);
-                                        SendEvent(textEvent);
+                                        SendEvent(new Battle.View.Events.Message
+                                        {
+                                            message = currentTarget.nickname + " couldn't fully protect itself!"
+                                        });
                                     }
 
                                     // Substitute / Disguise / Ice Face Check
@@ -16526,12 +16422,10 @@ namespace PBS.Networking {
             )
         {
             battle.HealBattleSC(condition);
-
-            string healText = (overwriteText == "") ? condition.data.endTextID : overwriteText;
-            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-            textEvent.SetBattleModel(battle);
-            textEvent.Create(textID: healText, userPokemon: healerPokemon, battleStatusID: condition.statusID);
-            SendEvent(textEvent);
+            SendEvent(new Battle.View.Events.EnvironmentalConditionEnd
+            {
+                conditionID = condition.statusID
+            });
         
             // Forecast Check
             yield return StartCoroutine(PBPRunBCAbilityCheck());
@@ -16664,19 +16558,10 @@ namespace PBS.Networking {
 
                                     if (removedStats.Count > 0 && forceFailureMessage)
                                     {
-                                        string textID = mistEffect.GetString(0);
-                                        textID = (textID == "DEFAULT") ? "move-mist-protect" : textID;
-
-                                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                        textEvent.SetBattleModel(battle);
-                                        textEvent.Create(
-                                            textID: textID,
-                                            targetPokemon: targetPokemon,
-                                            targetTeam: targetTeam,
-                                            statList: removedStats.ToArray(),
-                                            moveID: safeguardData.ID
-                                            );
-                                        SendEvent(textEvent);
+                                        SendEvent(new Battle.View.Events.Message
+                                        {
+                                            message = "The mist prevents " + targetPokemon.nickname + "'s stats from being lowered!"
+                                        });
                                     }
                                 }
                             }
@@ -16722,16 +16607,12 @@ namespace PBS.Networking {
                     && apply)
                 {
                     bool tooHigh = modValue > 0;
-                    BTLEvent_GameText gameTextEvent = new BTLEvent_GameText();
-                    gameTextEvent.textID = (tooHigh) ? "stats-max"
-                        : "stats-min";
-                    gameTextEvent.SetBattleModel(battle);
-                    gameTextEvent.Create(
-                        userPokemon: userPokemon,
-                        targetPokemon: targetPokemon,
-                        statList: statsToModify.ToArray()
-                        );
-                    SendEvent(gameTextEvent);
+                    SendEvent(new Battle.View.Events.PokemonStatUnchangeable
+                    {
+                        pokemonUniqueID = targetPokemon.uniqueID,
+                        tooHigh = tooHigh,
+                        statsToMod = new List<PokemonStats>(statsToModify)
+                    });
                 }
             }
         
@@ -16775,7 +16656,8 @@ namespace PBS.Networking {
                 // create the stat change events
                 bool runAbility = false;
                 bool statsWereModded = false;
-                List<BTLEvent_StatStageMod> statStageEvents = new List<BTLEvent_StatStageMod>();
+                List<PBS.Battle.View.Events.PokemonStatChange> statStageEvents 
+                    = new List<PBS.Battle.View.Events.PokemonStatChange>();
                 for (int i = 0; i < statMods.Count; i++)
                 {
                     int mod = statMods[i];
@@ -16787,25 +16669,15 @@ namespace PBS.Networking {
                             runAbility = true;
                         }
                         // create stat event
-                        BTLEvent_StatStageMod statStageEvent = new BTLEvent_StatStageMod();
-                        statStageEvent.SetBattleModel(battle);
-                        statStageEvent.Create(
-                            targetPokemon,
-                            statModMap[mod],
-                            mod
-                            );
-                        statStageEvent.maximize = maximize;
-                        statStageEvent.minimize = minimize;
-
-                        // create accompanying text event
-                        BTLEvent_GameText gameTextEvent = new BTLEvent_GameText();
-                        gameTextEvent.SetBattleModel(battle);
-                        gameTextEvent.Create(
-                            userPokemon: userPokemon,
-                            targetPokemon: targetPokemon,
-                            statList: statModMap[mod].ToArray()
-                            );
-                        statStageEvent.gameText = gameTextEvent;
+                        PBS.Battle.View.Events.PokemonStatChange statStageEvent 
+                            = new PBS.Battle.View.Events.PokemonStatChange
+                            {
+                                pokemonUniqueID = targetPokemon.uniqueID,
+                                modValue = mod,
+                                maximize = maximize,
+                                minimize = minimize,
+                                statsToMod = new List<PokemonStats>(statModMap[mod])
+                            };
                         statStageEvents.Add(statStageEvent);
                     }
                 }
@@ -16813,36 +16685,16 @@ namespace PBS.Networking {
                 // run ability animations
                 if (runAbility)
                 {
-                    BTLEvent_Ability abilityEvent = new BTLEvent_Ability();
-                    abilityEvent.SetBattleModel(battle);
-                    abilityEvent.SetPokemon(targetPokemon);
-                    abilityEvent.abilityID = targetAbilityData.ID;
-                    SendEvent(abilityEvent);
+                    PBPShowAbility(pokemon: targetPokemon, abilityData: targetAbilityData);
                 }
 
                 // send message if stats were modded
                 if (statsWereModded)
                 {
-                    if (!string.IsNullOrEmpty(textCode)
-                        || textCode == null)
+                    // run individual stat stage events
+                    for (int i = 0; i < statStageEvents.Count; i++)
                     {
-                        // send one message
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetBattleModel(battle);
-                        textEvent.Create(
-                            textID: textCode,
-                            userPokemon: userPokemon,
-                            targetPokemon: targetPokemon
-                            );
-                        SendEvent(textEvent);
-                    }
-                    else
-                    {
-                        // run individual stat stage events
-                        for (int i = 0; i < statStageEvents.Count; i++)
-                        {
-                            SendEvent(statStageEvents[i]);
-                        }
+                        SendEvent(statStageEvents[i]);
                     }
                 }
             }
@@ -16935,17 +16787,10 @@ namespace PBS.Networking {
             // Anim / Text here
             if (apply)
             {
-                string textID = (consumeText == "") ? "item-consume-default" : consumeText;
-                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                textEvent.SetCloneModel(battle);
-                textEvent.Create(
-                    textID: textID,
-                    userPokemon: pokemon,
-                    targetPokemon: holderPokemon,
-                    itemID: item.itemID,
-                    typeID: typeID
-                    );
-                SendEvent(textEvent);
+                SendEvent(new Battle.View.Events.Message
+                {
+                    message = pokemon.nickname + " consumed its " + item.data.itemName + "!"
+                });
             }
 
             // Legacy
@@ -17078,15 +16923,10 @@ namespace PBS.Networking {
                                         PBPShowAbility(curAlly, symbiosisPair.ability);
                                         pokemon.SetItem(targetItem);
                                         curAlly.UnsetItem(targetItem);
-
-                                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                        textEvent.SetCloneModel(battle);
-                                        textEvent.Create(
-                                            textID: symbiosis.displayText,
-                                            userPokemon: curAlly,
-                                            targetPokemon: pokemon,
-                                            itemID: targetItem.itemID);
-                                        SendEvent(textEvent);
+                                        SendEvent(new Battle.View.Events.Message
+                                        {
+                                            message = curAlly.nickname + " passed one " + item.data.itemName + " to " + pokemon.nickname + "!"
+                                        });
                                     }
                                 }
                             }
@@ -17231,35 +17071,21 @@ namespace PBS.Networking {
                         int preHP = pokemon.currentHP;
                         int recoverableHP = pokemon.HPdifference;
 
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetCloneModel(battle);
                         if (recoverableHP == 0)
                         {
                             canRecover = false;
                             if (forceEffectDisplay)
                             {
-                                string textID = "pokemon-heal-fail";
-                                textEvent.Create(
-                                    textID: textID,
-                                    targetPokemon: pokemon
-                                    );
-                                SendEvent(textEvent);
+                                SendEvent(new Battle.View.Events.Message
+                                {
+                                    message = pokemon.nickname + " is already at maximum HP!"
+                                });
                             }
                         }
                         if (canRecover && apply)
                         {
                             int hpRecovered = battle.AddPokemonHP(pokemon, HPGain);
                             int postHP = pokemon.currentHP;
-
-                            string textID = effect.GetString(0);
-                            textID = (textID == "DEFAULT") ? 
-                                ((effect.effectType == ItemEffectType.Revive)? "pokemon-revive" : "pokemon-heal") 
-                                : textID;
-                            textEvent.Create(
-                                textID: textID,
-                                targetPokemon: pokemon
-                                );
-
                             yield return StartCoroutine(PBPChangePokemonHP(
                                 pokemon: pokemon,
                                 preHP: preHP,
@@ -17355,14 +17181,11 @@ namespace PBS.Networking {
                 userPokemon.bProps.rechargeTurns--;
             }
 
-            // send event
-            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-            textEvent.SetBattleModel(Battle.CloneModel(battle));
-            textEvent.Create(
-                textID: "move-recharge-default",
-                userPokemon: userPokemon
-                );
-            SendEvent(textEvent);
+            // send text event
+            SendEvent(new Battle.View.Events.Message
+            {
+                message = userPokemon.nickname + " is recharging!"
+            });
             yield return null;
         }
 
@@ -17422,11 +17245,12 @@ namespace PBS.Networking {
                 else
                 {
                     battle.TrainerWithdrawPokemon(trainer, withdrawPokemon);
-                    BTLEvent_Withdraw withdrawEvent = new BTLEvent_Withdraw();
-                    Battle withdrawModel = Battle.CloneModel(battle);
-                    withdrawEvent.SetBattleModel(withdrawModel);
-                    withdrawEvent.Create(trainer, withdrawPokemon);
-                    SendEvent(withdrawEvent);
+                    UpdateClients();
+                    SendEvent(new Battle.View.Events.TrainerWithdraw
+                    {
+                        playerID = trainer.playerID,
+                        pokemonUniqueIDs = new List<string> { withdrawPokemon.uniqueID }
+                    });
                     yield return StartCoroutine(UntiePokemon(withdrawPokemon));
                     battle.TrainerSwapPokemon(trainer, withdrawPokemon, sendPokemon);
                 }
@@ -17443,10 +17267,11 @@ namespace PBS.Networking {
                 }
 
                 // TODO: checks for actually sending out / ???
-                BTLEvent_SendOut sendOutEvent = new BTLEvent_SendOut();
-                sendOutEvent.SetCloneModel(battle);
-                sendOutEvent.Create(trainer, new List<Pokemon>() { sendPokemon });
-                SendEvent(sendOutEvent);
+                SendEvent(new Battle.View.Events.TrainerSendOut
+                {
+                    playerID = trainer.playerID,
+                    pokemonUniqueIDs = new List<string> { sendPokemon.uniqueID }
+                });
 
                 sendPokemon.bProps.actedThisTurn = true;
 
@@ -17471,12 +17296,11 @@ namespace PBS.Networking {
 
             // send out
             battle.TrainerSendPokemon(trainer, switchInPokemon, battlePos);
-            BTLEvent_SendOut sendInEvent = new BTLEvent_SendOut();
-            sendInEvent.SetCloneModel(battle);
-            sendInEvent.Create(
-                trainer,
-                new List<Pokemon>() { switchInPokemon });
-            SendEvent(sendInEvent);
+            SendEvent(new Battle.View.Events.TrainerSendOut
+            {
+                playerID = trainer.playerID,
+                pokemonUniqueIDs = new List<string> { switchInPokemon.uniqueID }
+            });
             switchInPokemon.bProps.actedThisTurn = true;
 
             yield return null;
@@ -17583,14 +17407,10 @@ namespace PBS.Networking {
                                 int postHP = pokemon.currentHP;
                                 string textID = dmgEffect.GetString(0);
 
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.SetBattleModel(battle);
-                                textEvent.Create(
-                                    textID: textID,
-                                    targetPokemon: pokemon,
-                                    moveID: moveData.ID
-                                    );
-
+                                SendEvent(new Battle.View.Events.Message
+                                {
+                                    message = pokemon.nickname + "was hurt by " + moveData.moveName +"!"
+                                });
                                 yield return StartCoroutine(PBPChangePokemonHP(
                                     pokemon: pokemon,
                                     preHP: preHP,
@@ -17598,7 +17418,6 @@ namespace PBS.Networking {
                                     postHP: postHP
                                     ));
 
-                                SendEvent(textEvent);
                                 yield return StartCoroutine(BattleFaintCheck(pokemon));
                             }
                         }
@@ -17708,36 +17527,22 @@ namespace PBS.Networking {
             Pokemon pokemon, 
             string toForm, 
             bool checkAbility = true,
-            string changeText = null,
-            BTLEvent_GameText textEvent = null)
+            string changeText = null)
         {
             // Send Load Event
-            BTLEvent_Load loadEvent = new BTLEvent_Load();
-            loadEvent.pokemonData = PokemonDatabase.instance.GetPokemonData(toForm);
-            SendEvent(loadEvent);
-
             string prevForm = pokemon.pokemonID;
             battle.PBPChangeForm(pokemon, toForm);
-
-            BTLEvent_ChangePokemon changeEvent = new BTLEvent_ChangePokemon();
-            changeEvent.SetCloneModel(battle);
-            changeEvent.Create(pokemon: pokemon, prePokemon: prevForm, postPokemon: pokemon.pokemonID);
-            SendEvent(changeEvent);
-
-            if (changeText != null)
+            SendEvent(new Battle.View.Events.ModelUpdate
             {
-                BTLEvent_GameText rawTextEvent = new BTLEvent_GameText();
-                rawTextEvent.SetCloneModel(battle);
-                rawTextEvent.Create(
-                    textID: changeText,
-                    userPokemon: pokemon
-                    );
-                SendEvent(rawTextEvent);
-            }
-            if (textEvent != null)
+                updateType = Battle.View.Events.ModelUpdate.UpdateType.LoadAssets,
+                synchronize = false
+            });
+
+            // TODO: More descriptive
+            SendEvent(new Battle.View.Events.Message
             {
-                SendEvent(textEvent);
-            }
+                message = pokemon.nickname + " changed form!"
+            });
             if (checkAbility)
             {
                 yield return StartCoroutine(PBPRunEnterAbilities(pokemon));
@@ -17836,19 +17641,11 @@ namespace PBS.Networking {
                     }
                 }
 
-                if (textID == "")
+                // TODO: More descriptive
+                SendEvent(new Battle.View.Events.Message
                 {
-                    textID = "move-forestscurse-loss";
-                }
-                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                textEvent.SetCloneModel(battle);
-                textEvent.Create(
-                    textID: textID,
-                    targetPokemon: pokemon,
-                    moveID: moveData.ID,
-                    typeIDs: removedTypes.ToArray()
-                    );
-                SendEvent(textEvent);
+                    message = "Types were added to " + pokemon.nickname +"!"
+                });
                 yield return null;
             }
         }
@@ -17908,11 +17705,10 @@ namespace PBS.Networking {
                         abilityShown = true;
                         PBPShowAbility(pokemon, abilityData);
                     }
-
-                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                    textEvent.SetCloneModel(battle);
-                    textEvent.Create(textID: airLock.displayText, userPokemon: pokemon);
-                    SendEvent(textEvent);
+                    SendEvent(new Battle.View.Events.Message
+                    {
+                        message = "The effects of weather were eliminated!"
+                    });
                 }
 
                 // Anticipation
@@ -17968,10 +17764,10 @@ namespace PBS.Networking {
                             abilityShown = true;
                             PBPShowAbility(pokemon, abilityData);
                         }
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetCloneModel(battle);
-                        textEvent.Create(textID: anticipation.displayText, userPokemon: pokemon);
-                        SendEvent(textEvent);
+                        SendEvent(new Battle.View.Events.Message
+                        {
+                            message = pokemon.nickname + " shuddered!"
+                        });
                     }
                 }
 
@@ -18031,13 +17827,10 @@ namespace PBS.Networking {
                             abilityShown = true;
                             PBPShowAbility(pokemon, abilityData);
                         }
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetCloneModel(battle);
-                        textEvent.Create(
-                            textID: forewarn.displayText, 
-                            userPokemon: pokemon, targetPokemon: forewarnPokemon[Random.Range(0, forewarnPokemon.Count)],
-                            moveID: strongestMove.ID);
-                        SendEvent(textEvent);
+                        SendEvent(new Battle.View.Events.Message
+                        {
+                            message = pokemon.nickname + " was alerted to " + showPokemon.nickname + "'s " + strongestMove.moveName + "!"
+                        });
                     }
                 }
 
@@ -18071,15 +17864,10 @@ namespace PBS.Networking {
                             Pokemon showPokemon = itemPokemon[i];
                             showPokemon.bProps.friskIdentified = true;
                             Item item = battle.PBPGetHeldItem(showPokemon);
-
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetCloneModel(battle);
-                            textEvent.Create(
-                                textID: frisk.displayText,
-                                userPokemon: pokemon,
-                                targetPokemon: showPokemon,
-                                itemID: item.itemID);
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.Message
+                            {
+                                message = pokemon.nickname + " frisked " + showPokemon.nickname + " and found one " + item.data.itemName + "!"
+                            });
                         }
                     }
                 }
@@ -18120,11 +17908,11 @@ namespace PBS.Networking {
                         abilityShown = true;
                         PBPShowAbility(pokemon, abilityData);
                     }
-
-                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                    textEvent.SetCloneModel(battle);
-                    textEvent.Create(textID: darkAura.displayText, userPokemon: pokemon, typeIDs: affectedTypes.ToArray());
-                    SendEvent(textEvent);
+                    // TODO: More descriptive
+                    SendEvent(new Battle.View.Events.Message
+                    {
+                        message = "All moves of a certain type are increased in power!"
+                    });
 
                 }
 
@@ -18222,15 +18010,11 @@ namespace PBS.Networking {
                                     affectedByIntimidate = false;
 
                                     PBPShowAbility(opposingPokemon[i], oppAbilities[k].data);
-
-                                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                    textEvent.SetCloneModel(battle);
-                                    textEvent.Create(
-                                        textID: intimidateBlock.displayText,
-                                        targetPokemon: opposingPokemon[i],
-                                        abilityID: abilityData.ID
-                                        );
-                                    SendEvent(textEvent);
+                                    SendEvent(new Battle.View.Events.MessagePokemon
+                                    {
+                                        postMessage = " was protected by " + oppAbilities[k].data.abilityName + "!",
+                                        pokemonUniqueIDs = new List<string> { opposingPokemon[i].uniqueID }
+                                    });
                                 }
                             }
                         }
@@ -18532,15 +18316,10 @@ namespace PBS.Networking {
                                     int damageDealt = battle.SubtractPokemonHP(targetPokemon, damage);
                                     int postHP = targetPokemon.currentHP;
 
-                                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                    textEvent.SetCloneModel(battle);
-                                    textEvent.Create(
-                                        textID: badDreams.displayText,
-                                        userPokemon: pokemon,
-                                        targetPokemon: targetPokemon,
-                                        abilityID: abilityData.ID
-                                        );
-
+                                    SendEvent(new Battle.View.Events.Message
+                                    {
+                                        message = targetPokemon.nickname + " was hurt due to " + pokemon.nickname + "'s " + ability.data.abilityName + "!"
+                                    });
                                     yield return StartCoroutine(PBPChangePokemonHP(
                                         pokemon: targetPokemon,
                                         preHP: preHP,
@@ -18575,11 +18354,10 @@ namespace PBS.Networking {
                             abilityShown = true;
                             PBPShowAbility(pokemon, abilityData);
                         }
-
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetCloneModel(battle);
-                        textEvent.Create(textID: ballFetch.displayText, userPokemon: pokemon, itemID: itemData.ID);
-                        SendEvent(textEvent);
+                        SendEvent(new Battle.View.Events.Message
+                        {
+                            message = pokemon.nickname + " retrieved one " + itemData.itemName + "!"
+                        });
                     }
                 }
 
@@ -18682,14 +18460,10 @@ namespace PBS.Networking {
                                     PBPShowAbility(pokemon, abilityData);
                                 }
                                 pokemon.SetItem(harvestItem);
-
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.Create(
-                                    textID: harvest.displayText,
-                                    userPokemon: pokemon,
-                                    itemID: harvestItem.itemID
-                                    );
-                                SendEvent(textEvent);
+                                SendEvent(new Battle.View.Events.Message
+                                {
+                                    message = pokemon.nickname + " harvested one " + harvestItem.data.itemName + "!"
+                                });
                             }
                         }
                     }
@@ -18715,11 +18489,10 @@ namespace PBS.Networking {
                                 PBPShowAbility(pokemon, ability);
                             }
                             pokemon.SetItem(pickupItem.Clone());
-
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.SetCloneModel(battle);
-                            textEvent.Create(textID: pickup.displayText, userPokemon: pokemon, itemID: pickupItem.data.ID);
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.Message
+                            {
+                                message = pokemon.nickname + " picked up one " + pickupItem.data.itemName + "!"
+                            });
                         }
                     }
                 }
@@ -18958,11 +18731,10 @@ namespace PBS.Networking {
                 if (apply)
                 {
                     PBPShowAbility(pokemon, ability);
-
-                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                    textEvent.SetCloneModel(battle);
-                    textEvent.Create(textID: auraBreak.displayText, userPokemon: pokemon);
-                    SendEvent(textEvent);
+                    SendEvent(new Battle.View.Events.Message
+                    {
+                        message = "The effects of aura abilities are reversed!"
+                    });
                 }
             }
 
@@ -19101,13 +18873,11 @@ namespace PBS.Networking {
                             {
                                 battle.SetPokemonTypes(pokemon, condition.types);
                                 PBPShowAbility(pokemon, ability);
-
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.Create(
-                                    textID: condition.displayText,
-                                    userPokemon: pokemon,
-                                    typeIDs: condition.types.ToArray());
-                                SendEvent(textEvent);
+                                SendEvent(new Battle.View.Events.MessagePokemon
+                                {
+                                    postMessage = " turned into new types!",
+                                    pokemonUniqueIDs = new List<string> { pokemon.uniqueID }
+                                });
                             }
                         }
                     }
@@ -19123,13 +18893,11 @@ namespace PBS.Networking {
                         {
                             battle.SetPokemonTypes(pokemon, originalTypes);
                             PBPShowAbility(pokemon, ability);
-
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                            textEvent.Create(
-                                textID: mimicry.revertText,
-                                userPokemon: pokemon,
-                                typeIDs: originalTypes.ToArray());
-                            SendEvent(textEvent);
+                            SendEvent(new Battle.View.Events.MessagePokemon
+                            {
+                                postMessage = " turned back into its original typing.",
+                                pokemonUniqueIDs = new List<string> { pokemon.uniqueID }
+                            });
                         }
                     }
                 }
@@ -19142,11 +18910,11 @@ namespace PBS.Networking {
                 if (apply)
                 {
                     PBPShowAbility(pokemon, ability);
-
-                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                    textEvent.SetCloneModel(battle);
-                    textEvent.Create(textID: moldBreaker.displayText, userPokemon: pokemon);
-                    SendEvent(textEvent);
+                    SendEvent(new Battle.View.Events.MessagePokemon
+                    {
+                        postMessage = " breaks the mold!",
+                        pokemonUniqueIDs = new List<string> { pokemon.uniqueID }
+                    });
                 }
             }
             // Moody
@@ -19197,11 +18965,10 @@ namespace PBS.Networking {
                 if (apply)
                 {
                     PBPShowAbility(pokemon, ability);
-
-                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                    textEvent.SetCloneModel(battle);
-                    textEvent.Create(textID: neutralizingGas.displayText, userPokemon: pokemon);
-                    SendEvent(textEvent);
+                    SendEvent(new Battle.View.Events.Message
+                    {
+                        message = "Abilities have been neutralized!"
+                    });
                 }
             }
             // Poison Heal
@@ -19256,11 +19023,11 @@ namespace PBS.Networking {
                 if (apply)
                 {
                     PBPShowAbility(pokemon, ability);
-
-                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                    textEvent.SetCloneModel(battle);
-                    textEvent.Create(textID: pressure.displayText, userPokemon: pokemon, abilityID: ability.data.ID);
-                    SendEvent(textEvent);
+                    SendEvent(new Battle.View.Events.MessagePokemon
+                    {
+                        postMessage = " is exerting its Pressure!",
+                        pokemonUniqueIDs = new List<string> { pokemon.uniqueID }
+                    });
                 }
             }
             // Screen Cleaner
@@ -19339,11 +19106,11 @@ namespace PBS.Networking {
                 if (apply)
                 {
                     PBPShowAbility(pokemon, ability);
-
-                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                    textEvent.SetCloneModel(battle);
-                    textEvent.Create(textID: slowStart.displayText, userPokemon: pokemon, abilityID: ability.data.ID);
-                    SendEvent(textEvent);
+                    SendEvent(new Battle.View.Events.MessagePokemon
+                    {
+                        postMessage = " has to get it going!",
+                        pokemonUniqueIDs = new List<string> { pokemon.uniqueID }
+                    });
                 }
             }
             // Speed Boost
@@ -19400,11 +19167,10 @@ namespace PBS.Networking {
                         Pokemon tracePokemon = traceablePokemon[Random.Range(0, traceablePokemon.Count)];
                         List<Pokemon.Ability> traceAbilities = battle.PBPGetAbilitiesGainable(tracePokemon);
                         PBPShowAbility(pokemon, ability);
-
-                        BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                        textEvent.SetCloneModel(battle);
-                        textEvent.Create(textID: trace.displayText, userPokemon: pokemon, targetPokemon: tracePokemon);
-                        SendEvent(textEvent);
+                        SendEvent(new Battle.View.Events.Message
+                        {
+                            message = pokemon.nickname + " traced " + tracePokemon.nickname + "'s ability!"
+                        });
 
                         yield return StartCoroutine(PBPRemoveAbility(pokemon: pokemon, ability: ability));
                         yield return StartCoroutine(PBPAddAbilities(pokemon: pokemon, abilities: traceAbilities));
@@ -19444,10 +19210,6 @@ namespace PBS.Networking {
                             if (apply)
                             {
                                 PBPShowAbility(pokemon, ability);
-                                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                                textEvent.SetCloneModel(battle);
-                                textEvent.Create(textID: zenMode.displayText, userPokemon: pokemon);
-
                                 yield return StartCoroutine(PBPChangeForm(
                                     pokemon: pokemon,
                                     toForm: zenMode.transformation.toForm
@@ -19551,18 +19313,12 @@ namespace PBS.Networking {
             MoveEffect effect = moveData.GetEffect(MoveEffectType.EntryHazard);
 
             team.bProps.entryHazards.Remove(entryHazard);
-
-            if (textID == "")
+            SendEvent(new Battle.View.Events.MessageTeam
             {
-                textID = effect.GetString(2);
-            }
-            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-            textEvent.SetCloneModel(battle);
-            textEvent.Create(
-                textID: textID,
-                targetTeam: team
-                );
-            SendEvent(textEvent);
+                preMessage = moveData.moveName + " was removed for ",
+                postMessage = "!",
+                teamID = team.teamPos
+            });
             yield return null;
         }
         public IEnumerator TBPRemoveReflectScreen(
@@ -19574,20 +19330,11 @@ namespace PBS.Networking {
             MoveEffect effect = moveData.GetEffect(MoveEffectType.Reflect);
 
             team.bProps.reflectScreens.Remove(reflectScreen);
-
-            if (textID == "")
+            SendEvent(new Battle.View.Events.MessageTeam
             {
-                textID = effect.GetString(2);
-                textID = (textID == "DEFAULT") ? "move-reflect-remove" : textID;
-            }
-            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-            textEvent.SetCloneModel(battle);
-            textEvent.Create(
-                textID: textID,
-                targetTeam: team,
-                moveID: moveData.ID
-                );
-            SendEvent(textEvent);
+                postMessage = "'s " + moveData.moveName + " wore off!",
+                teamID = team.teamPos
+            });
             yield return null;
         }
         public IEnumerator TBPRemoveSafeguard(
@@ -19599,20 +19346,11 @@ namespace PBS.Networking {
             MoveEffect effect = moveData.GetEffect(MoveEffectType.Safeguard);
 
             team.bProps.safeguards.Remove(safeguard);
-
-            if (textID == "")
+            SendEvent(new Battle.View.Events.MessageTeam
             {
-                textID = effect.GetString(2);
-                textID = (textID == "DEFAULT") ? "move-safeguard-remove" : textID;
-            }
-            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-            textEvent.SetCloneModel(battle);
-            textEvent.Create(
-                textID: textID,
-                targetTeam: team,
-                moveID: moveData.ID
-                );
-            SendEvent(textEvent);
+                postMessage = " is no longer protected by the mystical veil!",
+                teamID = team.teamPos
+            });
             yield return null;
         }
 
@@ -19746,16 +19484,10 @@ namespace PBS.Networking {
                 targetPokemon.bProps.inFlyState = false;
                 targetPokemon.bProps.inShadowForceState = false;
 
-                string textID = effect.GetString(1);
-                textID = (textID == "DEFAULT") ? "move-skydrop-free-default" : textID;
-
-                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                textEvent.SetCloneModel(battle);
-                textEvent.Create(
-                    textID: textID,
-                    targetPokemon: targetPokemon,
-                    moveID: moveData.ID);
-                SendEvent(textEvent);
+                SendEvent(new Battle.View.Events.Message
+                {
+                    message = targetPokemon.nickname + " was freed from " + moveData.moveName + "!"
+                });
             }
             yield return null;
         }
@@ -19775,16 +19507,10 @@ namespace PBS.Networking {
                 if (trainer.GetItemCount(item.itemID) == 0)
                 {
                     itemSuccess = false;
-
-                    string textID = "item-use-fail-ranout";
-                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                    textEvent.SetCloneModel(battle);
-                    textEvent.Create(
-                        textID: textID,
-                        itemID: item.itemID,
-                        trainer: trainer
-                        );
-                    SendEvent(textEvent);
+                    SendEvent(new Battle.View.Events.Message
+                    {
+                        message = trainer.name + " tried to use a " + item.data.itemName + ", but ran out!"
+                    });
                 }
             }
 
@@ -19814,15 +19540,11 @@ namespace PBS.Networking {
             {
                 if (itemPokemon.bProps.embargo != null && !item.data.HasTag(ItemTag.BypassEmbargo))
                 {
-                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                    textEvent.SetCloneModel(battle);
-                    textEvent.Create(
-                        textID: itemPokemon.bProps.embargo.effect.attemptText,
-                        userPokemon: itemPokemon,
-                        itemID: item.itemID
-                        );
-                    SendEvent(textEvent);
                     itemSuccess = false;
+                    SendEvent(new Battle.View.Events.Message
+                    {
+                        message = itemPokemon.nickname + " can't use " + item.data.itemName + " due to its embargo!"
+                    });
                 }
             }
 
@@ -19839,15 +19561,11 @@ namespace PBS.Networking {
             // run item effects if we satisfied all checks
             if (itemSuccess)
             {
-                string textID = "item-use";
-                BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                textEvent.SetCloneModel(battle);
-                textEvent.Create(
-                    textID: textID,
-                    itemID: item.itemID,
-                    trainer: trainer
-                    );
-                SendEvent(textEvent);
+                SendEvent(new Battle.View.Events.TrainerItemUse
+                {
+                    playerID = trainer.playerID,
+                    itemID = item.itemID
+                });
 
                 bool effectSuccess = false;
 
@@ -19929,19 +19647,12 @@ namespace PBS.Networking {
                 {
                     EffectDatabase.AbilityEff.RunAway runAway = 
                         runAwayAbility.data.GetEffectNew(AbilityEffectType.RunAway) as EffectDatabase.AbilityEff.RunAway;
-                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                    textEvent.SetCloneModel(battle);
-                    textEvent.Create(textID: runAway.displayText, userPokemon: runPokemon, abilityID: runAwayAbility.data.ID);
-                    SendEvent(textEvent);
+                    PBPShowAbility(pokemon: runPokemon, ability: runAwayAbility);
                 }
-                else
+                SendEvent(new Battle.View.Events.Message
                 {
-                    BTLEvent_GameText textEvent = new BTLEvent_GameText();
-                    textEvent.SetCloneModel(battle);
-                    textEvent.Create(textID: "pokemon-run", userPokemon: runPokemon);
-                    SendEvent(textEvent);
-                }
-
+                    message = runPokemon.nickname + " fled from battle!"
+                });
             
             }
             if (battle.IsPokemonOnFieldAndAble(runPokemon))

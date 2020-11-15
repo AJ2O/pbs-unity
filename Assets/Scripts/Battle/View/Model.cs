@@ -59,16 +59,19 @@ namespace PBS.Battle.View
 
         public PBS.Battle.View.Compact.Team GetMatchingTeam(PBS.Battle.View.Compact.Team searchTeam)
         {
+            return GetMatchingTeam(searchTeam.teamPos);
+        }
+        public PBS.Battle.View.Compact.Team GetMatchingTeam(int teamID)
+        {
             for (int i = 0; i < teams.Count; i++)
             {
-                if (teams[i].teamPos == searchTeam.teamPos)
+                if (teams[i].teamPos == teamID)
                 {
                     return teams[i];
                 }
             }
             return null;
         }
-
 
         // Pokemon
         public List<PBS.Battle.View.Compact.Pokemon> GetPokemonFromTeam(PBS.Battle.View.Compact.Team team)

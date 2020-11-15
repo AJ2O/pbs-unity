@@ -36,6 +36,24 @@ namespace PBS.Battle.View.Events
         public string messageCode;
         public string[] parameters;
     }
+    public class MessagePokemon : Base
+    {
+        public string preMessage = "";
+        public string postMessage = "";
+        public List<string> pokemonUniqueIDs;
+    }
+    public class MessageTrainer : Base
+    {
+        public string preMessage = "";
+        public string postMessage = "";
+        public List<int> playerIDs;
+    }
+    public class MessageTeam : Base
+    {
+        public string preMessage = "";
+        public string postMessage = "";
+        public int teamID;
+    }
 
     // Backend
     public class ModelUpdate : Base
@@ -61,7 +79,16 @@ namespace PBS.Battle.View.Events
     {
         public List<TrainerSendOut> sendEvents;
     }
-
+    public class TrainerWithdraw : Base
+    {
+        public int playerID;
+        public List<string> pokemonUniqueIDs;
+    }
+    public class TrainerItemUse : Base
+    {
+        public int playerID;
+        public string itemID;
+    }
 
     // Weather / Environmental Conditions
     public class EnvironmentalConditionStart : Base
@@ -123,14 +150,46 @@ namespace PBS.Battle.View.Events
     public class PokemonAbilityQuickDraw : PokemonAbilityActivate { }
 
     // Moves
+    public class PokemonMoveUse : Base
+    {
+        public string pokemonUniqueID;
+        public string moveID;
+    }
 
     // Stats
+    public class PokemonStatChange : Base
+    {
+        public string pokemonUniqueID;
+        public int modValue;
+        public bool runAnim = false;
+        public bool maximize = false;
+        public bool minimize = false;
+        public List<PokemonStats> statsToMod;
+    }
+    public class PokemonStatUnchangeable : Base
+    {
+        public string pokemonUniqueID;
+        public bool tooHigh;
+        public List<PokemonStats> statsToMod;
+    }
 
     // Items
     public class PokemonItemQuickClaw : Base
     {
         public string pokemonUniqueID;
         public string itemID;
+    }
+
+    // Status
+
+    // Misc Status
+    public class PokemonMiscProtect : Base
+    {
+        public string pokemonUniqueID;
+    }
+    public class PokemonMiscMatBlock : Base
+    {
+        public int teamID;
     }
 
 

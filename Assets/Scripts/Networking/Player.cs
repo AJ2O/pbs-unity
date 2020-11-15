@@ -145,7 +145,12 @@ namespace PBS.Networking {
                 // Messages
                 : (bEvent is PBS.Battle.View.Events.Message)? 
                 ExecuteEvent_Message(bEvent as PBS.Battle.View.Events.Message)
-
+                : (bEvent is PBS.Battle.View.Events.MessagePokemon)? 
+                ExecuteEvent_MessagePokemon(bEvent as PBS.Battle.View.Events.MessagePokemon)
+                : (bEvent is PBS.Battle.View.Events.MessageTrainer)? 
+                ExecuteEvent_MessageTrainer(bEvent as PBS.Battle.View.Events.MessageTrainer)
+                : (bEvent is PBS.Battle.View.Events.MessageTeam)? 
+                ExecuteEvent_MessageTeam(bEvent as PBS.Battle.View.Events.MessageTeam)
 
                 // Backend
                 : (bEvent is PBS.Battle.View.Events.ModelUpdate)? 
@@ -187,11 +192,26 @@ namespace PBS.Networking {
                 ExecuteEvent_PokemonAbilityActivate(bEvent as PBS.Battle.View.Events.PokemonAbilityActivate)
 
                 // Moves
+                : (bEvent is PBS.Battle.View.Events.PokemonMoveUse)? 
+                ExecuteEvent_PokemonMoveUse(bEvent as PBS.Battle.View.Events.PokemonMoveUse)
 
                 // Stats
+                : (bEvent is PBS.Battle.View.Events.PokemonStatChange)? 
+                ExecuteEvent_PokemonStatChange(bEvent as PBS.Battle.View.Events.PokemonStatChange)
+                : (bEvent is PBS.Battle.View.Events.PokemonStatUnchangeable)? 
+                ExecuteEvent_PokemonStatUnchangeable(bEvent as PBS.Battle.View.Events.PokemonStatUnchangeable)
 
                 // Items
+                : (bEvent is PBS.Battle.View.Events.PokemonItemQuickClaw)? 
+                ExecuteEvent_PokemonItemQuickClaw(bEvent as PBS.Battle.View.Events.PokemonItemQuickClaw)
 
+                // Status
+
+                // Misc
+                : (bEvent is PBS.Battle.View.Events.PokemonMiscProtect)? 
+                ExecuteEvent_PokemonMiscProtect(bEvent as PBS.Battle.View.Events.PokemonMiscProtect)
+                : (bEvent is PBS.Battle.View.Events.PokemonMiscMatBlock)? 
+                ExecuteEvent_PokemonMiscMatBlock(bEvent as PBS.Battle.View.Events.PokemonMiscMatBlock)
 
                 // Unhandled
 
@@ -298,7 +318,61 @@ namespace PBS.Networking {
             Debug.Log(bEvent.message);
             yield return null;
         }
+        /// <summary>
+        /// TODO: Use dialog box
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_MessagePokemon(PBS.Battle.View.Events.MessagePokemon bEvent)
+        {
+            List<PBS.Battle.View.Compact.Pokemon> pokemon = new List<Battle.View.Compact.Pokemon>();
+            for (int i = 0; i < bEvent.pokemonUniqueIDs.Count; i++)
+            {
+                pokemon.Add(myModel.GetMatchingPokemon(bEvent.pokemonUniqueIDs[i]));
+            }
+            string pokemonNames = GetPokemonNames(pokemon);
 
+            Debug.Log($"{bEvent.preMessage}{pokemonNames}{bEvent.postMessage}");
+            yield return null;
+        }
+        /// <summary>
+        /// TODO: Use dialog box
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_MessageTrainer(PBS.Battle.View.Events.MessageTrainer bEvent)
+        {
+            List<PBS.Battle.View.Compact.Trainer> trainers = new List<Battle.View.Compact.Trainer>();
+            for (int i = 0; i < bEvent.playerIDs.Count; i++)
+            {
+                trainers.Add(myModel.GetMatchingTrainer(bEvent.playerIDs[i]));
+            }
+            string trainerString = GetTrainerNames(trainers);
+
+            Debug.Log($"{bEvent.preMessage}{trainerString}{bEvent.postMessage}");
+            yield return null;
+        }
+        /// <summary>
+        /// TODO: Use dialog box
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_MessageTeam(PBS.Battle.View.Events.MessageTeam bEvent)
+        {
+            PBS.Battle.View.Compact.Team team = myModel.GetMatchingTeam(bEvent.teamID);
+            string teamString = (team.teamPos == myTeamPerspective.teamPos)? "The ally" : "The opposing";
+            if (myTrainer != null)
+            {
+                teamString = "Your";
+            };
+            if (string.IsNullOrEmpty(bEvent.preMessage))
+            {
+                teamString = teamString.ToLower();
+            }
+
+            Debug.Log($"{bEvent.preMessage}{teamString}{bEvent.postMessage}");
+            yield return null;
+        }
 
         // Backend
         /// <summary>
@@ -528,8 +602,40 @@ namespace PBS.Networking {
         }
 
         // Moves
+        public IEnumerator ExecuteEvent_PokemonMoveUse(PBS.Battle.View.Events.PokemonMoveUse bEvent)
+        {
+            PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
+            MoveData moveData = MoveDatabase.instance.GetMoveData(bEvent.moveID);
+            Debug.Log($"{pokemon.nickame} used {moveData.moveName}!");
+
+            yield return null;
+        }
 
         // Stats
+        public IEnumerator ExecuteEvent_PokemonStatChange(PBS.Battle.View.Events.PokemonStatChange bEvent)
+        {
+            PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
+            string statString = ConvertStatsToString(bEvent.statsToMod.ToArray());
+            string modString = (bEvent.maximize)? "was maximized!"
+                : (bEvent.minimize)? "was minimized!"
+                : (bEvent.modValue == 1) ? "rose!"
+                : (bEvent.modValue == 2) ? "harshly rose!"
+                : (bEvent.modValue >= 3) ? "drastically rose!"
+                : (bEvent.modValue == -1) ? "fell!"
+                : (bEvent.modValue == -2) ? "harshly fell!"
+                : (bEvent.modValue <= -3) ? "drastically fell!"
+                : "";
+            Debug.Log($"{pokemon.nickame}'s {statString} {modString}");
+            yield return null;
+        }
+        public IEnumerator ExecuteEvent_PokemonStatUnchangeable(PBS.Battle.View.Events.PokemonStatUnchangeable bEvent)
+        {
+            PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
+            string statString = ConvertStatsToString(bEvent.statsToMod.ToArray());
+            string modString = (bEvent.tooHigh)? "cannot go any higher!" : " cannot go any lower!";
+            Debug.Log($"{pokemon.nickame}'s {statString} {modString}");
+            yield return null;
+        }
 
         // Items
         public IEnumerator ExecuteEvent_PokemonItemQuickClaw(PBS.Battle.View.Events.PokemonItemQuickClaw bEvent)
@@ -541,6 +647,29 @@ namespace PBS.Networking {
             yield return null;
         }
 
+        // Status
+
+        // Misc
+        public IEnumerator ExecuteEvent_PokemonMiscProtect(PBS.Battle.View.Events.PokemonMiscProtect bEvent)
+        {
+            PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
+            Debug.Log($"{pokemon.nickame} protected itself!");
+
+            yield return null;
+        }
+        public IEnumerator ExecuteEvent_PokemonMiscMatBlock(PBS.Battle.View.Events.PokemonMiscMatBlock bEvent)
+        {
+            PBS.Battle.View.Compact.Team team = myModel.GetMatchingTeam(bEvent.teamID);
+            string teamString = (team.teamPos == myTeamPerspective.teamPos)? "The ally" : "The opposing";
+            if (myTrainer != null)
+            {
+                teamString = "Your";
+            };
+
+            Debug.Log($"{teamString} team is being protected!");
+
+            yield return null;
+        }
 
 
 
@@ -568,6 +697,48 @@ namespace PBS.Networking {
             for (int i = 0; i < trainers.Count; i++)
             {
                 text += (i == 0)? trainers[i].name : " and " + trainers[i].name;
+            }
+            return text;
+        }
+
+        private static string ConvertStatToString(PokemonStats stat, bool capitalize = true)
+        {
+            return (stat == PokemonStats.Attack) ? "Attack"
+                : (stat == PokemonStats.Defense) ? "Defense"
+                : (stat == PokemonStats.SpecialAttack) ? "Special Attack"
+                : (stat == PokemonStats.SpecialDefense) ? "Special Defense"
+                : (stat == PokemonStats.Speed) ? "Speed"
+                : (stat == PokemonStats.Accuracy) ? "Accuracy"
+                : (stat == PokemonStats.Evasion) ? "Evasion"
+                : "HP";
+        }
+        private static string ConvertStatsToString(PokemonStats[] statList, bool capitalize = true)
+        {
+            if (statList.Length == 7)
+            {
+                string s = "Stats";
+                s = (capitalize) ? s : s.ToLower();
+                return s;
+            }
+
+            string text = "";
+            if (statList.Length == 1)
+            {
+                return ConvertStatToString(statList[0], capitalize);
+            }
+            else if (statList.Length == 2)
+            {
+                return ConvertStatToString(statList[0], capitalize) 
+                    + " and " 
+                    + ConvertStatToString(statList[1], capitalize);
+            }
+            else
+            {
+                for (int i = 0; i < statList.Length; i++)
+                {
+                    text += (i == statList.Length - 1) ? "and " + ConvertStatToString(statList[i], capitalize) 
+                        : ConvertStatToString(statList[i], capitalize) + ", ";
+                }
             }
             return text;
         }

@@ -17,6 +17,9 @@ namespace PBS.Networking.CustomSerialization.Battle.View
         // Messages (101 - 199)
         const int MESSAGE = 101;
         const int MESSAGEPARAMETERIZED = 102;
+        const int MESSAGEPOKEMON = 103;
+        const int MESSAGETRAINER = 104;
+        const int MESSAGETEAM = 105;
 
 
         // Backend (201 - 299)
@@ -26,6 +29,8 @@ namespace PBS.Networking.CustomSerialization.Battle.View
         // Trainer Interactions (501 - 599)
         const int TRAINERSENDOUT = 501;
         const int TRAINERMULTISENDOUT = 502;
+        const int TRAINERWITHDRAW = 503;
+        const int TRAINERITEMUSE = 510;
 
 
         // Team Interactions (601 - 699)
@@ -51,13 +56,20 @@ namespace PBS.Networking.CustomSerialization.Battle.View
         const int POKEMONABILITYQUICKDRAW = 1250;
 
         // Moves (1301 - 1399)
+        const int POKEMONMOVEUSE = 1301;
 
         // Stats (1401 - 1499)
+        const int POKEMONSTATCHANGE = 1401;
+        const int POKEMONSTATUNCHANGEABLE = 1402;
 
         // Items (1501 - 1599)
         const int POKEMONITEMQUICKCLAW = 1550;
 
+        // Status
 
+        // Misc Status (2001 - 2099)
+        const int POKEMONMISCPROTECT = 2001;
+        const int POKEMONMISCMATBLOCK = 2002;
 
 
         public static void WriteBattleViewEvent(this NetworkWriter writer, PBS.Battle.View.Events.Base obj)
@@ -72,6 +84,27 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 writer.WriteInt32(MESSAGEPARAMETERIZED);
                 writer.WriteString(messageParameterized.messageCode);
                 writer.WriteArray(messageParameterized.parameters);
+            }
+            else if (obj is PBS.Battle.View.Events.MessagePokemon messagePokemon)
+            {
+                writer.WriteInt32(MESSAGEPOKEMON);
+                writer.WriteString(messagePokemon.preMessage);
+                writer.WriteString(messagePokemon.postMessage);
+                writer.WriteList(messagePokemon.pokemonUniqueIDs);
+            }
+            else if (obj is PBS.Battle.View.Events.MessageTrainer messageTrainer)
+            {
+                writer.WriteInt32(MESSAGETRAINER);
+                writer.WriteString(messageTrainer.preMessage);
+                writer.WriteString(messageTrainer.postMessage);
+                writer.WriteList(messageTrainer.playerIDs);
+            }
+            else if (obj is PBS.Battle.View.Events.MessageTeam messageTeam)
+            {
+                writer.WriteInt32(MESSAGETEAM);
+                writer.WriteString(messageTeam.preMessage);
+                writer.WriteString(messageTeam.postMessage);
+                writer.WriteInt32(messageTeam.teamID);
             }
 
 
@@ -106,6 +139,19 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 writer.WriteInt32(TRAINERMULTISENDOUT);
                 writer.WriteList(trainerMultiSendOut.sendEvents);
             }
+            else if (obj is PBS.Battle.View.Events.TrainerWithdraw trainerWithdraw)
+            {
+                writer.WriteInt32(TRAINERWITHDRAW);
+                writer.WriteInt32(trainerWithdraw.playerID);
+                writer.WriteList(trainerWithdraw.pokemonUniqueIDs);
+            }
+            else if (obj is PBS.Battle.View.Events.TrainerItemUse trainerItemUse)
+            {
+                writer.WriteInt32(TRAINERITEMUSE);
+                writer.WriteInt32(trainerItemUse.playerID);
+                writer.WriteString(trainerItemUse.itemID);
+            }
+
 
 
             else if (obj is PBS.Battle.View.Events.EnvironmentalConditionStart environmentalConditionStart)
@@ -145,6 +191,42 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 writer.WriteString(pokemonHealthRevive.pokemonUniqueID);
             }
 
+            else if (obj is PBS.Battle.View.Events.PokemonMoveUse pokemonMoveUse)
+            {
+                writer.WriteInt32(POKEMONMOVEUSE);
+                writer.WriteString(pokemonMoveUse.pokemonUniqueID);
+                writer.WriteString(pokemonMoveUse.moveID);
+            }
+
+            else if (obj is PBS.Battle.View.Events.PokemonStatChange pokemonStatChange)
+            {
+                writer.WriteInt32(POKEMONSTATCHANGE);
+                writer.WriteString(pokemonStatChange.pokemonUniqueID);
+                writer.WriteInt32(pokemonStatChange.modValue);
+                writer.WriteBoolean(pokemonStatChange.maximize);
+                writer.WriteBoolean(pokemonStatChange.minimize);
+
+                List<int> statInts = new List<int>();
+                for (int i = 0; i < pokemonStatChange.statsToMod.Count; i++)
+                {
+                    statInts.Add((int)pokemonStatChange.statsToMod[i]);
+                }
+                writer.WriteList(statInts);
+            }
+            else if (obj is PBS.Battle.View.Events.PokemonStatUnchangeable pokemonStatUnchangeable)
+            {
+                writer.WriteInt32(POKEMONSTATUNCHANGEABLE);
+                writer.WriteString(pokemonStatUnchangeable.pokemonUniqueID);
+                writer.WriteBoolean(pokemonStatUnchangeable.tooHigh);
+
+                List<int> statInts = new List<int>();
+                for (int i = 0; i < pokemonStatUnchangeable.statsToMod.Count; i++)
+                {
+                    statInts.Add((int)pokemonStatUnchangeable.statsToMod[i]);
+                }
+                writer.WriteList(statInts);
+            }
+
             else if (obj is PBS.Battle.View.Events.PokemonAbilityQuickDraw pokemonAbilityQuickDraw)
             {
                 writer.WriteInt32(POKEMONABILITYACTIVATE);
@@ -165,6 +247,17 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 writer.WriteString(pokemonItemQuickClaw.itemID);
             }
 
+            else if (obj is PBS.Battle.View.Events.PokemonMiscProtect pokemonMiscProtect)
+            {
+                writer.WriteInt32(POKEMONMISCPROTECT);
+                writer.WriteString(pokemonMiscProtect.pokemonUniqueID);
+            }
+            else if (obj is PBS.Battle.View.Events.PokemonMiscMatBlock pokemonMiscMatBlock)
+            {
+                writer.WriteInt32(POKEMONMISCMATBLOCK);
+                writer.WriteInt32(pokemonMiscMatBlock.teamID);
+            }
+
         }
 
         public static PBS.Battle.View.Events.Base ReadBattleViewEvent(this NetworkReader reader)
@@ -183,6 +276,7 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                         winningTeam = reader.ReadInt32()
                     };
 
+
                 case MESSAGE:
                     return new PBS.Battle.View.Events.Message
                     {
@@ -194,6 +288,28 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                         messageCode = reader.ReadString(),
                         parameters = reader.ReadArray<string>()
                     };
+                case MESSAGEPOKEMON:
+                    return new PBS.Battle.View.Events.MessagePokemon
+                    {
+                        preMessage = reader.ReadString(),
+                        postMessage = reader.ReadString(),
+                        pokemonUniqueIDs = reader.ReadList<string>()
+                    };
+                case MESSAGETRAINER:
+                    return new PBS.Battle.View.Events.MessageTrainer
+                    {
+                        preMessage = reader.ReadString(),
+                        postMessage = reader.ReadString(),
+                        playerIDs = reader.ReadList<int>()
+                    };
+                case MESSAGETEAM:
+                    return new PBS.Battle.View.Events.MessageTeam
+                    {
+                        preMessage = reader.ReadString(),
+                        postMessage = reader.ReadString(),
+                        teamID = reader.ReadInt32()
+                    };
+
 
                 case MODELUPDATE:
                     return new PBS.Battle.View.Events.ModelUpdate
@@ -202,6 +318,7 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                         synchronize = reader.ReadBoolean(),
                         model = reader.Read<PBS.Battle.View.Model>()
                     };
+
 
                 case TRAINERSENDOUT:
                     return new PBS.Battle.View.Events.TrainerSendOut
@@ -214,6 +331,18 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                     {
                         sendEvents = reader.ReadList<PBS.Battle.View.Events.TrainerSendOut>()
                     };
+                case TRAINERWITHDRAW:
+                    return new PBS.Battle.View.Events.TrainerWithdraw
+                    {
+                        playerID = reader.ReadInt32(),
+                        pokemonUniqueIDs = reader.ReadList<string>()
+                    };
+                case TRAINERITEMUSE:
+                    return new PBS.Battle.View.Events.TrainerItemUse
+                    {
+                        playerID = reader.ReadInt32(),
+                        itemID = reader.ReadString()
+                    };
 
                 case ENVIRONMENTALCONDITIONSTART:
                     return new PBS.Battle.View.Events.EnvironmentalConditionStart
@@ -225,6 +354,7 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                     {
                         conditionID = reader.ReadString()
                     };
+
 
                 case POKEMONHEALTHDAMAGE:
                     return new PBS.Battle.View.Events.PokemonHealthDamage
@@ -250,6 +380,13 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                     {
                         pokemonUniqueID = reader.ReadString()
                     };
+
+                case POKEMONMOVEUSE:
+                    return new PBS.Battle.View.Events.PokemonMoveUse
+                    {
+                        pokemonUniqueID = reader.ReadString()
+                    };
+
                 case POKEMONABILITYACTIVATE:
                     return new PBS.Battle.View.Events.PokemonAbilityActivate
                     {
@@ -262,11 +399,58 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                         pokemonUniqueID = reader.ReadString(),
                         abilityID = reader.ReadString()
                     };
+
+                case POKEMONSTATCHANGE:
+                    PBS.Battle.View.Events.PokemonStatChange statChange = new PBS.Battle.View.Events.PokemonStatChange
+                    {
+                        pokemonUniqueID = reader.ReadString(),
+                        modValue = reader.ReadInt32(),
+                        maximize = reader.ReadBoolean(),
+                        minimize = reader.ReadBoolean(),
+                        statsToMod = new List<PokemonStats>()
+                    };
+                    List<PokemonStats> statsToMod = new List<PokemonStats>();
+                    List<int> statInts = reader.ReadList<int>();
+                    for (int i = 0; i < statInts.Count; i++)
+                    {
+                        statsToMod.Add((PokemonStats)statInts[i]);
+                    }
+
+                    statChange.statsToMod.AddRange(statsToMod);
+                    return statChange;
+                case POKEMONSTATUNCHANGEABLE:
+                    PBS.Battle.View.Events.PokemonStatUnchangeable statUnchangeable = new PBS.Battle.View.Events.PokemonStatUnchangeable
+                    {
+                        pokemonUniqueID = reader.ReadString(),
+                        tooHigh = reader.ReadBoolean(),
+                        statsToMod = new List<PokemonStats>()
+                    };
+                    List<PokemonStats> statsToModUnchangeable = new List<PokemonStats>();
+                    List<int> statIntsUnchangeable = reader.ReadList<int>();
+                    for (int i = 0; i < statIntsUnchangeable.Count; i++)
+                    {
+                        statsToModUnchangeable.Add((PokemonStats)statIntsUnchangeable[i]);
+                    }
+
+                    statUnchangeable.statsToMod.AddRange(statsToModUnchangeable);
+                    return statUnchangeable;
+
                 case POKEMONITEMQUICKCLAW:
                     return new PBS.Battle.View.Events.PokemonItemQuickClaw
                     {
                         pokemonUniqueID = reader.ReadString(),
                         itemID = reader.ReadString()
+                    };
+
+                case POKEMONMISCPROTECT:
+                    return new PBS.Battle.View.Events.PokemonMiscProtect
+                    {
+                        pokemonUniqueID = reader.ReadString()
+                    };
+                case POKEMONMISCMATBLOCK:
+                    return new PBS.Battle.View.Events.PokemonMiscMatBlock
+                    {
+                        teamID = reader.ReadInt32()
                     };
 
                 default:
