@@ -805,10 +805,6 @@
       <Project>{0CAE6E42-52D9-A19D-46BE-AC7CCE47DAC3}</Project>
       <Name>Mirror.Components</Name>
     </ProjectReference>
-    <ProjectReference Include="Mirror.Examples.csproj">
-      <Project>{8B24F25A-4E43-BEB6-13C2-43677E7DDA2C}</Project>
-      <Name>Mirror.Examples</Name>
-    </ProjectReference>
     <ProjectReference Include="Mirror.CompilerSymbols.csproj">
       <Project>{C3FDB120-A85E-E432-18AE-D5A94DD0B5AD}</Project>
       <Name>Mirror.CompilerSymbols</Name>
@@ -821,17 +817,9 @@
       <Project>{EFDDE179-7367-84B2-4A78-9D1C9638C8C0}</Project>
       <Name>Telepathy</Name>
     </ProjectReference>
-    <ProjectReference Include="Mirror.Examples.Cloud.Pong.csproj">
-      <Project>{8A25F984-F962-A854-E53C-F9AA7D492E44}</Project>
-      <Name>Mirror.Examples.Cloud.Pong</Name>
-    </ProjectReference>
     <ProjectReference Include="Mirror.csproj">
       <Project>{D6032984-C510-B435-B085-889C5AFE0B27}</Project>
       <Name>Mirror</Name>
-    </ProjectReference>
-    <ProjectReference Include="Mirror.example.RigidbodyPhysics.csproj">
-      <Project>{709D87A0-6902-A7B2-57A0-8421BD575179}</Project>
-      <Name>Mirror.example.RigidbodyPhysics</Name>
     </ProjectReference>
     <ProjectReference Include="Mirror.Editor.csproj">
       <Project>{767CCF09-5E48-2129-5FC2-FC3A5E677686}</Project>
@@ -840,10 +828,6 @@
     <ProjectReference Include="kcp2k.csproj">
       <Project>{213FD7F0-B41C-9286-52C2-6FC46BCC98BE}</Project>
       <Name>kcp2k</Name>
-    </ProjectReference>
-    <ProjectReference Include="Mirror.Examples.Cloud.GUI.csproj">
-      <Project>{170FAC2C-577B-4182-C20B-D33F98595BED}</Project>
-      <Name>Mirror.Examples.Cloud.GUI</Name>
     </ProjectReference>
     <ProjectReference Include="SimpleWebTransport.csproj">
       <Project>{B29799E0-0E78-6784-059D-E2A51F086DAC}</Project>

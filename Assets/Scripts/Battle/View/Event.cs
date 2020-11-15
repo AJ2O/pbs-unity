@@ -34,7 +34,36 @@ namespace PBS.Battle.View.Events
     public class MessageParameterized : Base
     {
         public string messageCode;
-        public string[] parameters;
+        public int playerPerspectiveID = 0;
+        public int teamPerspectiveID = 0;
+
+        public string pokemonID = "";
+        public string pokemonUserID = "";
+        public string pokemonTargetID = "";
+        public List<string> pokemonListIDs = new List<string>();
+
+        public int trainerID = -1;
+
+        public int teamID = -1;
+
+        public string typeID = "";
+        public List<string> typeIDs = new List<string>();
+
+        public string moveID = "";
+        public List<string> moveIDs = new List<string>();
+
+        public string abilityID = "";
+        public List<string> abilityIDs = new List<string>();
+
+        public string itemID = "";
+        public List<string> itemIDs = new List<string>();
+
+        public string statusID = "";
+        public string statusTeamID = "";
+        public string statusEnvironmentID = "";
+
+        public List<int> intArgs = new List<int>();
+        public List<PokemonStats> statList = new List<PokemonStats>();
     }
     public class MessagePokemon : Base
     {
@@ -155,6 +184,7 @@ namespace PBS.Battle.View.Events
         public string pokemonUniqueID;
         public string moveID;
     }
+    public class PokemonMoveCelebrate : Base { }
 
     // Stats
     public class PokemonStatChange : Base

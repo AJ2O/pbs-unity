@@ -8,7 +8,7 @@ namespace PBS.Battle.View.Compact
     {
         public string uniqueID;
         public string pokemonID;
-        public string nickame;
+        public string nickname;
 
         public int teamPos;
         public int battlePos;
@@ -18,7 +18,7 @@ namespace PBS.Battle.View.Compact
         {
             uniqueID = obj.uniqueID;
             pokemonID = obj.pokemonID;
-            nickame = obj.nickname;
+            nickname = obj.nickname;
             teamPos = obj.teamPos;
             battlePos = obj.battlePos;
         }

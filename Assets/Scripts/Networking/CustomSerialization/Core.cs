@@ -12,7 +12,7 @@ namespace PBS.Networking.CustomSerialization
         {
             writer.WriteString(obj.uniqueID);
             writer.WriteString(obj.pokemonID);
-            writer.WriteString(obj.nickame);
+            writer.WriteString(obj.nickname);
             writer.WriteInt32(obj.teamPos);
             writer.WriteInt32(obj.battlePos);
         }
@@ -22,7 +22,7 @@ namespace PBS.Networking.CustomSerialization
             {
                 uniqueID = reader.ReadString(),
                 pokemonID = reader.ReadString(),
-                nickame = reader.ReadString(),
+                nickname = reader.ReadString(),
                 teamPos = reader.ReadInt32(),
                 battlePos = reader.ReadInt32()
             };

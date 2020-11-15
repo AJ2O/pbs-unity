@@ -54,6 +54,66 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-pokemon-}} is unable to battle!" },
                 }
                 ) },
+                
+        // TRAINER GENERAL
+        {"trainer-perspective-player",
+            new GameTextData(
+                ID: "team-perspective-player",
+                languageDict: new Dictionary<GameLanguages, string>
+                {
+                    { GameLanguages.English, "You" },
+                }
+                ) },
+        {"trainer-perspective-player-poss",
+            new GameTextData(
+                ID: "trainer-perspective-player-poss",
+                languageDict: new Dictionary<GameLanguages, string>
+                {
+                    { GameLanguages.English, "Your" },
+                }
+                ) },
+        {"trainer-perspective-ally",
+            new GameTextData(
+                ID: "trainer-perspective-player",
+                languageDict: new Dictionary<GameLanguages, string>
+                {
+                    { GameLanguages.English, "{{-trainer-name-}}" },
+                }
+                ) },
+        {"trainer-perspective-opposing",
+            new GameTextData(
+                ID: "trainer-perspective-opposing",
+                languageDict: new Dictionary<GameLanguages, string>
+                {
+                    { GameLanguages.English, "{{-trainer-name-}}" },
+                }
+                ) },
+        
+        // TEAM GENERAL
+        {"team-perspective-player",
+            new GameTextData(
+                ID: "team-perspective-player",
+                languageDict: new Dictionary<GameLanguages, string>
+                {
+                    { GameLanguages.English, "Your team" },
+                }
+                ) },
+        {"team-perspective-ally",
+            new GameTextData(
+                ID: "team-perspective-player",
+                languageDict: new Dictionary<GameLanguages, string>
+                {
+                    { GameLanguages.English, "The ally team" },
+                }
+                ) },
+        {"team-perspective-opposing",
+            new GameTextData(
+                ID: "team-perspective-opposing",
+                languageDict: new Dictionary<GameLanguages, string>
+                {
+                    { GameLanguages.English, "The opposing team" },
+                }
+                ) },
 
         // POKEMON GENERAL
 
@@ -2595,7 +2655,7 @@ public class GameTextDatabase
                 ) },
         {"move-uproar-sleep-default",
             new GameTextData(
-                ID: "status-uproar-start-default",
+                ID: "status-uproar-sleep-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
                     { GameLanguages.English, "{{-target-pokemon-}} can't fall asleep due to {{-user-pokemon-poss-}} uproar!" },

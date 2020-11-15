@@ -145,12 +145,15 @@ namespace PBS.Networking {
                 // Messages
                 : (bEvent is PBS.Battle.View.Events.Message)? 
                 ExecuteEvent_Message(bEvent as PBS.Battle.View.Events.Message)
+                : (bEvent is PBS.Battle.View.Events.MessageParameterized)? 
+                ExecuteEvent_MessageParameterized(bEvent as PBS.Battle.View.Events.MessageParameterized)
                 : (bEvent is PBS.Battle.View.Events.MessagePokemon)? 
                 ExecuteEvent_MessagePokemon(bEvent as PBS.Battle.View.Events.MessagePokemon)
                 : (bEvent is PBS.Battle.View.Events.MessageTrainer)? 
                 ExecuteEvent_MessageTrainer(bEvent as PBS.Battle.View.Events.MessageTrainer)
                 : (bEvent is PBS.Battle.View.Events.MessageTeam)? 
                 ExecuteEvent_MessageTeam(bEvent as PBS.Battle.View.Events.MessageTeam)
+
 
                 // Backend
                 : (bEvent is PBS.Battle.View.Events.ModelUpdate)? 
@@ -162,6 +165,10 @@ namespace PBS.Networking {
                 ExecuteEvent_TrainerSendOut(bEvent as PBS.Battle.View.Events.TrainerSendOut)
                 : (bEvent is PBS.Battle.View.Events.TrainerMultiSendOut)? 
                 ExecuteEvent_TrainerMultiSendOut(bEvent as PBS.Battle.View.Events.TrainerMultiSendOut)
+                : (bEvent is PBS.Battle.View.Events.TrainerWithdraw)? 
+                ExecuteEvent_TrainerWithdraw(bEvent as PBS.Battle.View.Events.TrainerWithdraw)
+                : (bEvent is PBS.Battle.View.Events.TrainerItemUse)? 
+                ExecuteEvent_TrainerItemUse(bEvent as PBS.Battle.View.Events.TrainerItemUse)
 
 
                 // Environmental Interactions
@@ -323,6 +330,16 @@ namespace PBS.Networking {
         /// </summary>
         /// <param name="bEvent"></param>
         /// <returns></returns>
+        public IEnumerator ExecuteEvent_MessageParameterized(PBS.Battle.View.Events.MessageParameterized bEvent)
+        {
+            Debug.Log(RenderMessage(bEvent));
+            yield return null;
+        }
+        /// <summary>
+        /// TODO: Use dialog box
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
         public IEnumerator ExecuteEvent_MessagePokemon(PBS.Battle.View.Events.MessagePokemon bEvent)
         {
             List<PBS.Battle.View.Compact.Pokemon> pokemon = new List<Battle.View.Compact.Pokemon>();
@@ -412,7 +429,7 @@ namespace PBS.Networking {
             for (int i = 0; i < bEvent.pokemonUniqueIDs.Count; i++)
             {
                 PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueIDs[i]);
-                pokemonNames += (i == 0)? pokemon.nickame : " and " + pokemon.nickame;
+                pokemonNames += (i == 0)? pokemon.nickname : " and " + pokemon.nickname;
             }
 
             if (IsTrainerPlayer(bEvent.playerID))
@@ -428,7 +445,6 @@ namespace PBS.Networking {
             Debug.Log(text);
             yield return null;
         }
-
         /// <summary>
         /// TODO: Description
         /// </summary>
@@ -497,7 +513,57 @@ namespace PBS.Networking {
 
             yield return null;
         }
+        /// <summary>
+        /// TODO: Description
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_TrainerWithdraw(PBS.Battle.View.Events.TrainerWithdraw bEvent)
+        {
+            string text = "";
+            string pokemonNames = "";
 
+            for (int i = 0; i < bEvent.pokemonUniqueIDs.Count; i++)
+            {
+                PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueIDs[i]);
+                pokemonNames += (i == 0)? pokemon.nickname : " and " + pokemon.nickname;
+            }
+
+            if (IsTrainerPlayer(bEvent.playerID))
+            {
+                text = "Come back, " + pokemonNames + "!";
+            }
+            else
+            {
+                PBS.Battle.View.Compact.Trainer trainer = myModel.GetMatchingTrainer(bEvent.playerID);
+                text = trainer.name + " withdrew " + pokemonNames + "!";
+            }
+
+            Debug.Log(text);
+            yield return null;
+        }
+        /// <summary>
+        /// TODO: Description
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_TrainerItemUse(PBS.Battle.View.Events.TrainerItemUse bEvent)
+        {
+            string text = "";
+            ItemData itemData = ItemDatabase.instance.GetItemData(bEvent.itemID);
+            if (IsTrainerPlayer(bEvent.playerID))
+            {
+                text = "You used one " + itemData.itemName + ".";
+            }
+            else
+            {
+                PBS.Battle.View.Compact.Trainer trainer = myModel.GetMatchingTrainer(bEvent.playerID);
+                text = trainer.name + " used one " + itemData.itemName + ".";
+            }
+
+            Debug.Log(text);
+            yield return null;
+        }
 
         // Environmental Interactions
         /// <summary>
@@ -541,11 +607,11 @@ namespace PBS.Networking {
             string text = "";
             if (IsPokemonOwnedByPlayer(pokemon))
             {
-                text = pokemon.nickame + " lost " + bEvent.damageDealt + " HP!";
+                text = pokemon.nickname + " lost " + bEvent.damageDealt + " HP!";
             }
             else
             {
-                text = pokemon.nickame = " lost HP!";
+                text = pokemon.nickname = " lost HP!";
             }
 
             Debug.Log(text);
@@ -560,11 +626,11 @@ namespace PBS.Networking {
             string text = "";
             if (IsPokemonOwnedByPlayer(pokemon))
             {
-                text = pokemon.nickame + " recovered " + bEvent.hpHealed + " HP!";
+                text = pokemon.nickname + " recovered " + bEvent.hpHealed + " HP!";
             }
             else
             {
-                text = pokemon.nickame = " recovered HP!";
+                text = pokemon.nickname = " recovered HP!";
             }
 
             Debug.Log(text);
@@ -573,13 +639,13 @@ namespace PBS.Networking {
         public IEnumerator ExecuteEvent_PokemonHealthFaint(PBS.Battle.View.Events.PokemonHealthFaint bEvent)
         {
             PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
-            Debug.Log($"{pokemon.nickame} fainted!");
+            Debug.Log($"{pokemon.nickname} fainted!");
             yield return null;
         }
         public IEnumerator ExecuteEvent_PokemonHealthRevive(PBS.Battle.View.Events.PokemonHealthRevive bEvent)
         {
             PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
-            Debug.Log($"{pokemon.nickame} was revived!");
+            Debug.Log($"{pokemon.nickname} was revived!");
             yield return null;
         }
 
@@ -588,7 +654,7 @@ namespace PBS.Networking {
         {
             PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
             AbilityData abilityData = AbilityDatabase.instance.GetAbilityData(bEvent.abilityID);
-            Debug.Log($"{pokemon.nickame}'s {abilityData.abilityName}");
+            Debug.Log($"{pokemon.nickname}'s {abilityData.abilityName}");
 
             yield return null;
         }
@@ -596,7 +662,7 @@ namespace PBS.Networking {
         {
             yield return StartCoroutine(ExecuteEvent_PokemonAbilityActivate(bEvent));
             PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
-            Debug.Log($"{pokemon.nickame} moved first!");
+            Debug.Log($"{pokemon.nickname} moved first!");
 
             yield return null;
         }
@@ -606,7 +672,16 @@ namespace PBS.Networking {
         {
             PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
             MoveData moveData = MoveDatabase.instance.GetMoveData(bEvent.moveID);
-            Debug.Log($"{pokemon.nickame} used {moveData.moveName}!");
+            Debug.Log($"{pokemon.nickname} used {moveData.moveName}!");
+
+            yield return null;
+        }
+        public IEnumerator ExecuteEvent_PokemonMoveCelebrate(PBS.Battle.View.Events.PokemonMoveCelebrate bEvent)
+        {
+            PBS.Battle.View.Compact.Trainer trainerToCelebrate = (myTrainer != null)? myTrainer
+                : myModel.GetTrainers()[0];
+
+            Debug.Log($"Congratulations {trainerToCelebrate.name}!");
 
             yield return null;
         }
@@ -625,7 +700,7 @@ namespace PBS.Networking {
                 : (bEvent.modValue == -2) ? "harshly fell!"
                 : (bEvent.modValue <= -3) ? "drastically fell!"
                 : "";
-            Debug.Log($"{pokemon.nickame}'s {statString} {modString}");
+            Debug.Log($"{pokemon.nickname}'s {statString} {modString}");
             yield return null;
         }
         public IEnumerator ExecuteEvent_PokemonStatUnchangeable(PBS.Battle.View.Events.PokemonStatUnchangeable bEvent)
@@ -633,7 +708,7 @@ namespace PBS.Networking {
             PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
             string statString = ConvertStatsToString(bEvent.statsToMod.ToArray());
             string modString = (bEvent.tooHigh)? "cannot go any higher!" : " cannot go any lower!";
-            Debug.Log($"{pokemon.nickame}'s {statString} {modString}");
+            Debug.Log($"{pokemon.nickname}'s {statString} {modString}");
             yield return null;
         }
 
@@ -642,7 +717,7 @@ namespace PBS.Networking {
         {
             PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
             ItemData itemData = ItemDatabase.instance.GetItemData(bEvent.itemID);
-            Debug.Log($"{pokemon.nickame}'s {itemData.itemName} activated!");
+            Debug.Log($"{pokemon.nickname}'s {itemData.itemName} activated!");
 
             yield return null;
         }
@@ -653,7 +728,7 @@ namespace PBS.Networking {
         public IEnumerator ExecuteEvent_PokemonMiscProtect(PBS.Battle.View.Events.PokemonMiscProtect bEvent)
         {
             PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
-            Debug.Log($"{pokemon.nickame} protected itself!");
+            Debug.Log($"{pokemon.nickname} protected itself!");
 
             yield return null;
         }
@@ -687,7 +762,7 @@ namespace PBS.Networking {
             string text = "";
             for (int i = 0; i < pokemon.Count; i++)
             {
-                text += (i == 0)? pokemon[i].nickame : " and " + pokemon[i].nickame;
+                text += (i == 0)? pokemon[i].nickname : " and " + pokemon[i].nickname;
             }
             return text;
         }
@@ -743,6 +818,207 @@ namespace PBS.Networking {
             return text;
         }
 
+        private string RenderMessageTrainer(int playerID, int teamPerspectiveID = -1, string baseString = "")
+        {
+            if (teamPerspectiveID == -1)
+            {
+                teamPerspectiveID = myTeamPerspective.teamPos;
+            }
+            PBS.Battle.View.Compact.Trainer trainer = myModel.GetMatchingTrainer(playerID);
+            GameTextData textData = 
+                (trainer.teamPos != teamPerspectiveID)? GameTextDatabase.instance.GetGameTextData("trainer-perspective-opposing")
+                : (myTrainer == null)? GameTextDatabase.instance.GetGameTextData("trainer-perspective-ally")
+                : GameTextDatabase.instance.GetGameTextData("trainer-perspective-player");
+
+            string replaceString = textData.languageDict[GameSettings.language];
+            string replaceStringPoss = replaceString;
+            if (!string.IsNullOrEmpty(baseString))
+            {
+                if (GameSettings.language == GameLanguages.English && IsTrainerPlayer(trainer))
+                {
+                    if (!baseString.StartsWith("{{-trainer-"))
+                    {
+                        replaceString = replaceString.ToLower();
+                        replaceStringPoss = replaceStringPoss.ToLower();
+                    }
+                }
+            }
+           
+            string newString = baseString;
+            newString = newString.Replace("{{-trainer-}}", replaceString);
+            newString = newString.Replace("{{-trainer-poss-}}", replaceStringPoss);
+
+            return newString;
+        }
+        private string RenderMessageTeam(int teamID, int teamPerspectiveID = -1, string baseString = "")
+        {
+            if (teamPerspectiveID == -1)
+            {
+                teamPerspectiveID = myTeamPerspective.teamPos;
+            }
+            PBS.Battle.View.Compact.Team team = myModel.GetMatchingTeam(teamID);
+            GameTextData textData = 
+                (team.teamPos != teamPerspectiveID)? GameTextDatabase.instance.GetGameTextData("team-perspective-opposing")
+                : (myTrainer == null)? GameTextDatabase.instance.GetGameTextData("team-perspective-ally")
+                : GameTextDatabase.instance.GetGameTextData("team-perspective-player");
+
+            string teamString = textData.languageDict[GameSettings.language];
+            if (!string.IsNullOrEmpty(baseString))
+            {
+                if (GameSettings.language == GameLanguages.English)
+                {
+                    if (!baseString.StartsWith("{{-target-team-"))
+                    {
+                        teamString = teamString.ToLower();
+                    }
+                }
+            }
+            string newString = baseString;
+            newString = newString.Replace("{{-target-team-}}", teamString);
+            newString = newString.Replace("{{-target-team-poss-}}", teamString
+                + (teamString.EndsWith("s") ? "'" : "'s")
+                );
+
+            return newString;
+        }
+        private string RenderMessage(PBS.Battle.View.Events.MessageParameterized message)
+        {
+            GameTextData textData = GameTextDatabase.instance.GetGameTextData(message.messageCode);
+            if (textData == null)
+            {
+                return "";
+            }
+            string baseString = textData.languageDict[GameSettings.language];
+            string newString = baseString;
+
+            PBS.Battle.View.Compact.Trainer trainerPerspective = 
+                (myTrainer == null)? myModel.GetMatchingTrainer(message.playerPerspectiveID)
+                : myTrainer;
+            PBS.Battle.View.Compact.Team teamPerspective = 
+                (myTeamPerspective == null)? myModel.GetMatchingTeam(message.teamPerspectiveID)
+                : myTeamPerspective;
+
+            // player
+            newString = newString.Replace("{{-player-name-}}", PlayerSave.instance.name);
+
+            if (!string.IsNullOrEmpty(message.pokemonID))
+            {
+                PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(message.pokemonID);
+                newString = newString.Replace("{{-pokemon-}}", pokemon.nickname);
+                newString = newString.Replace("{{-pokemon-poss-}}", pokemon.nickname
+                    + ((pokemon.nickname.EndsWith("s")) ? "'" : "'s")
+                    );
+            }
+            if (!string.IsNullOrEmpty(message.pokemonUserID))
+            {
+                PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(message.pokemonUserID);
+                newString = newString.Replace("{{-user-pokemon-}}", pokemon.nickname);
+                newString = newString.Replace("{{-user-pokemon-poss-}}", pokemon.nickname
+                    + ((pokemon.nickname.EndsWith("s")) ? "'" : "'s")
+                    );
+            }
+            if (!string.IsNullOrEmpty(message.pokemonTargetID))
+            {
+                PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(message.pokemonTargetID);
+                newString = newString.Replace("{{-target-pokemon-}}", pokemon.nickname);
+                newString = newString.Replace("{{-target-pokemon-poss-}}", pokemon.nickname
+                    + ((pokemon.nickname.EndsWith("s")) ? "'" : "'s")
+                    );
+            }
+            if (message.pokemonListIDs.Count > 0)
+            {
+                List<PBS.Battle.View.Compact.Pokemon> pokemonList = new List<Battle.View.Compact.Pokemon>();
+                for (int i = 0; i < message.pokemonListIDs.Count; i++)
+                {
+                    pokemonList.Add(myModel.GetMatchingPokemon(message.pokemonListIDs[i]));
+                }
+                string pokemonNameList = GetPokemonNames(pokemonList);
+                newString = newString.Replace("{{-pokemon-list-}}", pokemonNameList);
+            }
+
+            if (message.trainerID != 0)
+            {
+                newString = RenderMessageTrainer(message.trainerID, teamPerspective.teamPos, newString);
+            }
+            
+            if (message.teamID != 0)
+            {
+                newString = RenderMessageTeam(message.teamID, teamPerspective.teamPos, newString);
+            }
+
+            if (!string.IsNullOrEmpty(message.typeID))
+            {
+                TypeData typeData = TypeDatabase.instance.GetTypeData(message.typeID);
+                newString = newString.Replace("{{-type-name-}}", typeData.typeName + "-type");
+            }
+            if (message.typeIDs.Count > 0)
+            {
+                newString = newString.Replace("{{-type-list-}}", GameTextDatabase.ConvertTypesToString(message.typeIDs.ToArray()));
+            }
+
+            if (!string.IsNullOrEmpty(message.moveID))
+            {
+                MoveData moveData = MoveDatabase.instance.GetMoveData(message.moveID);
+                newString = newString.Replace("{{-move-name-}}", moveData.moveName);
+            }
+            if (message.moveIDs.Count > 0)
+            {
+                for (int i = 0; i < message.moveIDs.Count; i++)
+                {
+                    MoveData moveXData = MoveDatabase.instance.GetMoveData(message.moveIDs[i]);
+                    string partToReplace = "{{-move-name-" + i + "-}}";
+                    newString = newString.Replace(partToReplace, moveXData.moveName);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(message.abilityID))
+            {
+                AbilityData abilityData = AbilityDatabase.instance.GetAbilityData(message.abilityID);
+                newString = newString.Replace("{{-ability-name-}}", abilityData.abilityName);
+            }
+            if (message.abilityIDs.Count > 0)
+            {
+                for (int i = 0; i < message.abilityIDs.Count; i++)
+                {
+                    AbilityData abilityXData = AbilityDatabase.instance.GetAbilityData(message.abilityIDs[i]);
+                    string partToReplace = "{{-ability-name-" + i + "-}}";
+                    newString = newString.Replace(partToReplace, abilityXData.abilityName);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(message.itemID))
+            {
+                ItemData itemData = ItemDatabase.instance.GetItemData(message.itemID);
+                newString = newString.Replace("{{-item-name-}}", itemData.itemName);
+            }
+
+            if (!string.IsNullOrEmpty(message.statusID))
+            {
+                StatusPKData statusData = StatusPKDatabase.instance.GetStatusData(message.statusID);
+                newString = newString.Replace("{{-status-name-}}", statusData.conditionName);
+            }
+            if (!string.IsNullOrEmpty(message.statusTeamID))
+            {
+                StatusTEData statusData = StatusTEDatabase.instance.GetStatusData(message.statusTeamID);
+                newString = newString.Replace("{{-status-name-}}", statusData.conditionName);
+            }
+            if (!string.IsNullOrEmpty(message.statusEnvironmentID))
+            {
+                StatusBTLData statusData = StatusBTLDatabase.instance.GetStatusData(message.statusEnvironmentID);
+                newString = newString.Replace("{{-status-name-}}", statusData.conditionName);
+            }
+
+            // swapping substrings
+            for (int i = 0; i < message.intArgs.Count; i++)
+            {
+                string partToReplace = "{{-int-" + i + "-}}";
+                newString = newString.Replace(partToReplace, message.intArgs[i].ToString());
+            }
+
+
+
+            return newString;
+        }
     }
 }
 

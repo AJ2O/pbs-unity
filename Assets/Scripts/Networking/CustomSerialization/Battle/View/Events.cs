@@ -57,6 +57,7 @@ namespace PBS.Networking.CustomSerialization.Battle.View
 
         // Moves (1301 - 1399)
         const int POKEMONMOVEUSE = 1301;
+        const int POKEMONMOVECELEBRATE = 1350;
 
         // Stats (1401 - 1499)
         const int POKEMONSTATCHANGE = 1401;
@@ -83,7 +84,42 @@ namespace PBS.Networking.CustomSerialization.Battle.View
             {
                 writer.WriteInt32(MESSAGEPARAMETERIZED);
                 writer.WriteString(messageParameterized.messageCode);
-                writer.WriteArray(messageParameterized.parameters);
+                writer.WriteInt32(messageParameterized.playerPerspectiveID);
+                writer.WriteInt32(messageParameterized.teamPerspectiveID);
+
+                writer.WriteString(messageParameterized.pokemonID);
+                writer.WriteString(messageParameterized.pokemonUserID);
+                writer.WriteString(messageParameterized.pokemonTargetID);
+                writer.WriteList(messageParameterized.pokemonListIDs);
+
+                writer.WriteInt32(messageParameterized.trainerID);
+
+                writer.WriteInt32(messageParameterized.teamID);
+
+                writer.WriteString(messageParameterized.typeID);
+                writer.WriteList(messageParameterized.typeIDs);
+
+                writer.WriteString(messageParameterized.moveID);
+                writer.WriteList(messageParameterized.moveIDs);
+
+                writer.WriteString(messageParameterized.abilityID);
+                writer.WriteList(messageParameterized.abilityIDs);
+
+                writer.WriteString(messageParameterized.itemID);
+                writer.WriteList(messageParameterized.itemIDs);
+
+                writer.WriteString(messageParameterized.statusID);
+                writer.WriteString(messageParameterized.statusTeamID);
+                writer.WriteString(messageParameterized.statusEnvironmentID);
+
+                writer.WriteList(messageParameterized.intArgs);
+
+                List<int> statInts = new List<int>();
+                for (int i = 0; i < messageParameterized.statList.Count; i++)
+                {
+                    statInts.Add((int)messageParameterized.statList[i]);
+                }
+                writer.WriteList(statInts);
             }
             else if (obj is PBS.Battle.View.Events.MessagePokemon messagePokemon)
             {
@@ -197,6 +233,10 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 writer.WriteString(pokemonMoveUse.pokemonUniqueID);
                 writer.WriteString(pokemonMoveUse.moveID);
             }
+            else if (obj is PBS.Battle.View.Events.PokemonMoveCelebrate pokemonMoveCelebrate)
+            {
+                writer.WriteInt32(POKEMONMOVECELEBRATE);
+            }
 
             else if (obj is PBS.Battle.View.Events.PokemonStatChange pokemonStatChange)
             {
@@ -283,11 +323,49 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                         message = reader.ReadString()
                     };
                 case MESSAGEPARAMETERIZED:
-                    return new PBS.Battle.View.Events.MessageParameterized
+                    PBS.Battle.View.Events.MessageParameterized messageParameterized = new PBS.Battle.View.Events.MessageParameterized
                     {
                         messageCode = reader.ReadString(),
-                        parameters = reader.ReadArray<string>()
+                        playerPerspectiveID = reader.ReadInt32(),
+                        teamPerspectiveID = reader.ReadInt32(),
+
+                        pokemonID = reader.ReadString(),
+                        pokemonUserID = reader.ReadString(),
+                        pokemonTargetID = reader.ReadString(),
+                        pokemonListIDs = reader.ReadList<string>(),
+
+                        trainerID = reader.ReadInt32(),
+
+                        teamID = reader.ReadInt32(),
+                        
+                        typeID = reader.ReadString(),
+                        typeIDs = reader.ReadList<string>(),
+
+                        moveID = reader.ReadString(),
+                        moveIDs = reader.ReadList<string>(),
+
+                        abilityID = reader.ReadString(),
+                        abilityIDs = reader.ReadList<string>(),
+
+                        itemID = reader.ReadString(),
+                        itemIDs = reader.ReadList<string>(),
+
+                        statusID = reader.ReadString(),
+                        statusTeamID = reader.ReadString(),
+                        statusEnvironmentID = reader.ReadString(),
+
+                        intArgs = reader.ReadList<int>(),
                     };
+
+                    List<PokemonStats> messageParameterizedStatList = new List<PokemonStats>();
+                    List<int> messageParameterizedstatInts = reader.ReadList<int>();
+                    for (int i = 0; i < messageParameterizedstatInts.Count; i++)
+                    {
+                        messageParameterizedStatList.Add((PokemonStats)messageParameterizedstatInts[i]);
+                    }
+
+                    messageParameterized.statList.AddRange(messageParameterizedStatList);
+                    return messageParameterized;
                 case MESSAGEPOKEMON:
                     return new PBS.Battle.View.Events.MessagePokemon
                     {
@@ -385,6 +463,11 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                     return new PBS.Battle.View.Events.PokemonMoveUse
                     {
                         pokemonUniqueID = reader.ReadString()
+                    };
+                case POKEMONMOVECELEBRATE:
+                    return new PBS.Battle.View.Events.PokemonMoveCelebrate
+                    {
+
                     };
 
                 case POKEMONABILITYACTIVATE:
