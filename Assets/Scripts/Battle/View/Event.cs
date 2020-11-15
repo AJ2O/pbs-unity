@@ -97,6 +97,58 @@ namespace PBS.Battle.View.Events
         public Battle.View.Model model;
     }
 
+    // Command Prompts
+    public class CommandAgent
+    {
+        public class Moveslot
+        {
+            public string moveID;
+            public int PP;
+            public int maxPP;
+
+            public int basePower;
+            public float accuracy;
+
+            public bool useable = true;
+            public string failMessageCode = "";
+
+            public Moveslot() { }
+            public Moveslot(string moveID)
+            {
+                MoveData moveData = MoveDatabase.instance.GetMoveData(moveID);
+                this.moveID = moveID;
+                this.PP = moveData.PP;
+                this.maxPP = moveData.PP;
+                this.basePower = moveData.basePower;
+                this.accuracy = moveData.accuracy;
+            }
+        }
+
+        public string pokemonUniqueID;
+        public bool canMegaEvolve = false;
+        public bool canZMove = false;
+        public bool canDynamax = false;
+
+        public List<BattleCommandType> commandTypes;
+        public List<Moveslot> moveslots;
+        public List<Moveslot> zMoveSlots;
+        public List<Moveslot> dynamaxMoveSlots;
+    }
+    public class CommandGeneralPrompt : Base
+    {
+        public int playerID;
+        public bool canMegaEvolve;
+        public bool canZMove;
+        public bool canDynamax;
+
+        public List<string> items;
+        public List<CommandAgent> pokemonToCommand;
+    }
+    public class CommandReplacementPrompt : Base
+    {
+        public int playerID;
+        public int[] fillPositions;
+    }
 
     // Trainer Interactions
     public class TrainerSendOut : Base

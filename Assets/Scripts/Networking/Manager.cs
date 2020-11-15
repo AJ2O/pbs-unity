@@ -26,7 +26,7 @@ namespace PBS.Networking {
         /// <summary>
         /// Contains a mapping of connections for the players and their corresponding trainers.
         /// </summary>
-        Dictionary<int, Trainer> trainerConnections;
+        public Dictionary<int, Trainer> trainerConnections;
 
         // 1.
         public override void Start()
@@ -133,6 +133,7 @@ namespace PBS.Networking {
 
                 // Synchronize trainer to player
                 PBS.Networking.Player player = GetPlayer(trainer.playerID);
+                player.playerID = trainer.playerID;
                 player.RpcSyncTrainerToClient(new Battle.View.Compact.Trainer(trainer));
                 player.RpcSyncTeamPerspectiveToClient(new Battle.View.Compact.Team(team));
 

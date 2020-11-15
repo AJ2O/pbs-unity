@@ -12,8 +12,12 @@ namespace PBS.Networking {
         public bool isRunningBattle;
         Coroutine battleCoroutine;
         Coroutine waitCoroutine;
+
+        HashSet<int> waitConnections = new HashSet<int>();
         List<BattleCommand> allCommands = new List<BattleCommand>();
         List<BattleCommand> replaceCommands = new List<BattleCommand>();
+        List<BattleCommand> batonPassReplaceCommands = new List<BattleCommand>();
+        bool isBatonPassing = false;
         bool executedFormTransformations = false;
 
         public void InitializeComponents()
@@ -213,30 +217,48 @@ namespace PBS.Networking {
         private IEnumerator BattleCommandCycle()
         {
             allCommands = new List<BattleCommand>();
-
-            PBS.Battle.Core.Model turnModel = PBS.Battle.Core.Model.CloneModel(battle);
-            // TODO: Player commands
-            /*/ send command prompts to all player trainers
-            Trainer trainer = battle.GetTrainerWithID(GlobalVariables.playerID);
-            if (trainer != null)
+            UpdateClients();
+            
+            // send command prompts to all player trainers
+            List<int> playerIDs = new List<int>(PBS.Static.Master.instance.networkManager.trainerConnections.Keys);
+            for (int i = 0; i < playerIDs.Count; i++)
             {
-                List<Pokemon> commandablePokemon = battle.GetTrainerCommandablePokemon(trainer);
-                if (commandablePokemon.Count > 0)
+                int playerID = playerIDs[i];
+                Trainer trainer = battle.GetTrainerWithID(playerID);
+                if (trainer != null)
                 {
+                    List<PBS.Battle.View.Events.CommandAgent> pokemonAgents = battle.GetTrainerCommandableAgents(trainer);
+                    
                     // only send to trainers with commandable pokemon
-                    BTLEvent_PromptCommands commandPrompt = new BTLEvent_PromptCommands();
-                    commandPrompt.SetBattleModel(turnModel);
-                    commandPrompt.Create(trainer, commandablePokemon);
-                    SendEvent(commandPrompt, trainer.playerID);
+                    if (pokemonAgents.Count > 0)
+                    {
+                        List<string> items = new List<string>();
+                        for (int k = 0; k < trainer.items.Count; k++)
+                        {
+                            items.Add(trainer.items[k].itemID);
+                        }
+
+                        PBS.Battle.View.Events.CommandGeneralPrompt commandPrompt = new Battle.View.Events.CommandGeneralPrompt
+                        {
+                            playerID = playerID,
+                            canMegaEvolve = !trainer.bProps.usedMegaEvolution,
+                            canZMove = !trainer.bProps.usedZMove,
+                            canDynamax = !trainer.bProps.usedDynamax,
+                            items = items,
+                            pokemonToCommand = pokemonAgents
+                        };
+                        waitConnections.Add(playerID);
+                        SendEventToPlayer(commandPrompt, playerID);
+                    }
                 }
-            }*/
-        
+            }
+
             // wait for players to confirm commands
-            Debug.Log("Waiting for player");
+            Debug.Log("Waiting for players");
             yield return StartCoroutine(WaitForPlayer());
 
             // TODO: AI Commands
-            ai.UpdateModel(turnModel);
+            ai.UpdateModel(PBS.Battle.Core.Model.CloneModel(battle));
             SelectAICommands();
 
             // select all preset commands
@@ -1204,31 +1226,37 @@ namespace PBS.Networking {
                 PBS.Battle.Core.Model replaceModel = PBS.Battle.Core.Model.CloneModel(battle);
 
                 // query player for replacements
-                Trainer trainer = battle.GetTrainerWithID(GlobalVariables.playerID);
-                if (trainer != null)
+                List<int> playerIDs = new List<int>(PBS.Static.Master.instance.networkManager.playerConnections.Keys);
+                for (int i = 0; i < playerIDs.Count; i++)
                 {
-                    if (battle.IsTrainerAbleToBattle(trainer))
+                    int playerID = playerIDs[i];
+                    Trainer trainer = battle.GetTrainerWithID(playerID);
+                    if (trainer != null)
                     {
-                        List<int> emptyPositions = battle.GetEmptyTrainerControlPositions(trainer);
-                        if (emptyPositions.Count > 0)
+                        if (battle.IsTrainerAbleToBattle(trainer) && !trainer.IsAIControlled())
                         {
-                            List<Pokemon> availablePokemon =
-                                battle.GetTrainerFirstXAvailablePokemon(trainer, emptyPositions.Count);
-                            // prompt player
-                            if (availablePokemon.Count > 0)
+                            List<int> emptyPositions = battle.GetEmptyTrainerControlPositions(trainer);
+                            if (emptyPositions.Count > 0)
                             {
-                                stillReplace = true;
-                                BTLEvent_PromptReplace replacePrompt = new BTLEvent_PromptReplace();
-                                replacePrompt.SetBattleModel(replaceModel);
-                                replacePrompt.Create(
-                                    trainer,
-                                    emptyPositions.GetRange(0, availablePokemon.Count)
-                                    );
-                                SendEvent(replacePrompt, trainer.playerID);
+                                List<Pokemon> availablePokemon =
+                                    battle.GetTrainerFirstXAvailablePokemon(trainer, emptyPositions.Count);
+                                // prompt player
+                                if (availablePokemon.Count > 0)
+                                {
+                                    stillReplace = true;
+                                    PBS.Battle.View.Events.CommandReplacementPrompt replacePrompt = new Battle.View.Events.CommandReplacementPrompt
+                                    {
+                                        playerID = trainer.playerID,
+                                        fillPositions = emptyPositions.ToArray()
+                                    };
+                                    waitConnections.Add(playerID);
+                                    SendEventToPlayer(replacePrompt, trainer.playerID);
+                                }
                             }
                         }
                     }
                 }
+
                 // wait for player to confirm choices
                 yield return StartCoroutine(WaitForPlayer());
 
@@ -10717,8 +10745,6 @@ namespace PBS.Networking {
                         if (apply)
                         {
                             targetPokemon.bProps.perishSong = perishSong.Clone();
-
-                            BTLEvent_GameText textEvent = new BTLEvent_GameText();
                             SendEvent(new Battle.View.Events.MessageParameterized
                             {
                                 messageCode = perishSong.startText,
@@ -15222,17 +15248,19 @@ namespace PBS.Networking {
                 Pokemon.BattleProperties withdrawBProps 
                     = Pokemon.BattleProperties.Clone(withdrawPokemon.bProps, withdrawPokemon);
 
-                Battle updateModel = Battle.CloneModel(battle);
-                List<BattleCommand> replaceCommands = new List<BattleCommand>();
-                if (trainer.playerID == GlobalVariables.playerID)
+                PBS.Battle.Core.Model updateModel = PBS.Battle.Core.Model.CloneModel(battle);
+                batonPassReplaceCommands = new List<BattleCommand>();
+                if (!trainer.IsAIControlled())
                 {
-                    BTLEvent_PromptReplace replacePrompt = new BTLEvent_PromptReplace();
-                    replacePrompt.SetBattleModel(updateModel);
-                    replacePrompt.Create(trainer, new List<int> { position });
-                    SendEvent(replacePrompt, trainer.playerID);
+                    waitConnections.Add(trainer.playerID);
+                    SendEventToPlayer(new Battle.View.Events.CommandReplacementPrompt
+                    {
+                        playerID = trainer.playerID,
+                        fillPositions = new int[] { position }
+                    }, trainer.playerID);
                 
                     // wait for player to confirm choices
-                    yield return StartCoroutine(WaitForPlayer(replaceCommands));
+                    yield return StartCoroutine(WaitForPlayer());
                 }
                 else
                 {
@@ -15815,8 +15843,6 @@ namespace PBS.Networking {
             )
         {
             battle.HealStatusCondition(targetPokemon, condition);
-            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-
             string healText = (overwriteText == null) ? condition.data.healTextID
                 : overwriteText;
             SendEvent(new Battle.View.Events.MessageParameterized
@@ -15931,8 +15957,6 @@ namespace PBS.Networking {
             )
         {
             battle.HealTeamSC(targetTeam, condition);
-            BTLEvent_GameText textEvent = new BTLEvent_GameText();
-
             string healText = (overwriteText == null) ? condition.data.endTextID : overwriteText;
             SendEvent(new Battle.View.Events.MessageParameterized
             {
@@ -19385,16 +19409,16 @@ namespace PBS.Networking {
 
         // Sending / Receiving Player Commands / Events
         public void ReceiveCommands(
+            int playerID,
             List<BattleCommand> commands, 
-            bool isReplace = false,
-            List<BattleCommand> wantedCommandList = null)
+            bool isReplace = false)
         {
-            // Convert commands to instance battle commands, referencing battle model pokemon, items, trainers, etc.
             battle.ConvertToInstanceBattleCommands(commands);
 
-            if (wantedCommandList != null)
+            if (isBatonPassing)
             {
-                wantedCommandList.AddRange(commands);
+                batonPassReplaceCommands.AddRange(commands);
+                isBatonPassing = false;
             }
             else
             {
@@ -19407,35 +19431,47 @@ namespace PBS.Networking {
                     allCommands.AddRange(commands);
                 }
             }
+            
+            // Stop waiting for this player
+            waitConnections.Remove(playerID);
         }
-        public IEnumerator WaitForPlayer(List<BattleCommand> commandQueue = null)
+        public void ReceiveCommands(
+            int playerID,
+            List<PBS.Player.Command> commands, 
+            bool isReplace = false)
         {
-            // TODO: Come back and implement waiting for player commands
-            /*
-            while (true)
+            // Convert commands to instance battle commands, referencing battle model pokemon, items, trainers, etc.
+            List<BattleCommand> sanitizedCommands = battle.SanitizeCommands(commands);
+            if (isBatonPassing)
             {
-                // WIP
-                // queue up commands if waiting on commands
-                if (player.isSendingCommands)
+                batonPassReplaceCommands.AddRange(sanitizedCommands);
+                isBatonPassing = false;
+            }
+            else
+            {
+                if (isReplace)
                 {
-                    ReceiveCommands(player.GetCommandsToSend(), false, commandQueue);
+                    replaceCommands.AddRange(sanitizedCommands);
                 }
-                else if (player.isSendingReplacements)
+                else
                 {
-                    ReceiveCommands(player.GetCommandsToSend(), true, commandQueue);
+                    allCommands.AddRange(sanitizedCommands);
                 }
-
-                if (player.isFinishedEvents)
-                {
-                    break;
-                }
+            }
+            
+            // Stop waiting for this player
+            waitConnections.Remove(playerID);
+        }
+        public IEnumerator WaitForPlayer()
+        {
+            while (waitConnections.Count > 0)
+            {
                 yield return null;
-            }*/
-            yield return null;
+            }
         }
 
         // AI Commands / Events
-        public void SelectAICommands(List<BattleCommand> commandQueue = null)
+        public void SelectAICommands()
         {
             for (int i = 0; i < battle.teams.Count; i++)
             {
@@ -19451,7 +19487,7 @@ namespace PBS.Networking {
                                 trainer,
                                 commandablePokemon
                                 );
-                            ReceiveCommands(aiCommands, false, commandQueue);
+                            ReceiveCommands(trainer.playerID, aiCommands, false);
                         }
                     }
                 
@@ -19459,7 +19495,7 @@ namespace PBS.Networking {
             }
             ai.ResetSelf();
         }
-        public void SelectAIReplacements(List<BattleCommand> commandQueue = null)
+        public void SelectAIReplacements()
         {
             for (int i = 0; i < battle.teams.Count; i++)
             {
@@ -19481,7 +19517,7 @@ namespace PBS.Networking {
                                         trainer,
                                         emptyPositions.GetRange(0, availablePokemon.Count)
                                         );
-                                    ReceiveCommands(aiCommands, true, commandQueue);
+                                    ReceiveCommands(trainer.playerID, aiCommands, true);
                                 }
                             }
                         }

@@ -1588,44 +1588,6 @@ public class Pokemon
                     }
                 }
             }
-
-            /*List<ItemEffect> effects = item.data.GetEffects(ItemEffectType.FormChange);
-            for (int i = 0; i < effects.Count; i++)
-            {
-                string baseID = effects[i].GetString(0);
-                string toID = effects[i].GetString(1);
-
-                PokemonData basePokemonData = PokemonDatabase.instance.GetPokemonData(baseID);
-                PokemonData toPokemonData = PokemonDatabase.instance.GetPokemonData(toID);
-
-                // Validate if the pokemon is contained
-                if (pokemonID == baseID
-                    || pokemonID == toID
-                    || data.IsABaseID(baseID))
-                {
-                    bool canUse = true;
-
-                    // Arceus Plate = Multitype Check
-                    if (item.data.GetEffect(ItemEffectType.ArceusPlate) != null)
-                    {
-                        if (abilityData.GetEffect(AbilityEffectType.Multitype) == null)
-                        {
-                            canUse = false;
-                        }
-                    }
-
-                    if (canUse)
-                    {
-                        if (pokemonID != toID)
-                        {
-                            basePokemonID = toID;
-                            pokemonID = toID;
-                            bProps.ResetOverrides(this);
-                        }
-                    }
-                    break;
-                }
-            }*/
         }
 
     }
@@ -1649,6 +1611,10 @@ public class Pokemon
     {
         if (other == null) return false;
         return uniqueID == other.uniqueID;
+    }
+    public bool IsTheSameAs(string uniqueID)
+    {
+        return this.uniqueID == uniqueID;
     }
 
     // Health Methods

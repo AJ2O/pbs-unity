@@ -103,6 +103,10 @@ public class Trainer
     {
         return playerID == trainer.playerID;
     }
+    public bool IsTheSameAs(int playerID)
+    {
+        return this.playerID == playerID;
+    }
     public bool IsAIControlled()
     {
         return playerID < 0;

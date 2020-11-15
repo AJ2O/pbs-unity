@@ -536,6 +536,39 @@ namespace PBS.Battle.Core
                 }
             }
         }
+        public BattleCommand SanitizeCommand(PBS.Player.Command command)
+        {
+            return SanitizeCommands(new List<Player.Command> { command })[0];
+        }
+        public List<BattleCommand> SanitizeCommands(List<PBS.Player.Command> commands)
+        {
+            List<BattleCommand> sanitizedCommands = new List<BattleCommand>();
+            for (int i = 0; i < commands.Count; i++)
+            {
+                PBS.Player.Command curCommand = commands[i];
+                BattleCommand sanitizedCommand = BattleCommand.CreateFromPlayerCommand(curCommand);
+
+                if (curCommand.commandUser != null)
+                {
+                    sanitizedCommand.commandUser = GetBattleInstanceOfPokemon(curCommand.commandUser);
+                }
+                if (curCommand.switchInPokemon != null)
+                {
+                    sanitizedCommand.switchInPokemon = GetBattleInstanceOfPokemon(curCommand.switchInPokemon);
+                }
+                if (curCommand.switchingTrainer != 0)
+                {
+                    sanitizedCommand.switchingTrainer = GetBattleInstanceOfTrainer(curCommand.switchingTrainer);
+                }
+                if (curCommand.itemTrainer != 0)
+                {
+                    sanitizedCommand.itemTrainer = GetBattleInstanceOfTrainer(curCommand.itemTrainer);
+                }
+                
+                sanitizedCommands.Add(sanitizedCommand);
+            }
+            return sanitizedCommands;
+        }
         public void RecalibrateCommand(BattleCommand command)
         {
             if (command.commandType == BattleCommandType.Fight)
@@ -1076,18 +1109,18 @@ namespace PBS.Battle.Core
                     return allTrainers[i];
                 }
             }
-
-            /*for (int i = 0; i < this.teams.Count; i++)
+            return null;
+        }
+        public Trainer GetBattleInstanceOfTrainer(int playerID)
+        {
+            List<Trainer> allTrainers = GetTrainers();
+            for (int i = 0; i < allTrainers.Count; i++)
             {
-                for (int j = 0; j < this.teams[i].trainers.Count; j++)
+                if (allTrainers[i].IsTheSameAs(playerID))
                 {
-                    Trainer trainer = this.teams[i].trainers[j];
-                    if (trainer.IsTheSameAs(searchTrainer))
-                    {
-                        return trainer;
-                    }
+                    return allTrainers[i];
                 }
-            }*/
+            }
             return null;
         }
         public Pokemon GetBattleInstanceOfPokemon(Pokemon searchPokemon)
@@ -1102,11 +1135,34 @@ namespace PBS.Battle.Core
             }
             return null;
         }
+        public Pokemon GetBattleInstanceOfPokemon(string pokemonID)
+        {
+            List<Pokemon> allPokemon = GetPokemonFromAllTrainers();
+            for (int i = 0; i < allPokemon.Count; i++)
+            {
+                if (allPokemon[i].IsTheSameAs(pokemonID))
+                {
+                    return allPokemon[i];
+                }
+            }
+            return null;
+        }
         public BattleTeam GetBattleInstanceOfTeam(BattleTeam searchTeam)
         {
             for (int i = 0; i < teams.Count; i++)
             {
                 if (teams[i].teamPos == searchTeam.teamPos)
+                {
+                    return teams[i];
+                }
+            }
+            return null;
+        }
+        public BattleTeam GetBattleInstanceOfTeam(int teamID)
+        {
+            for (int i = 0; i < teams.Count; i++)
+            {
+                if (teams[i].teamPos == teamID)
                 {
                     return teams[i];
                 }
@@ -1340,6 +1396,148 @@ namespace PBS.Battle.Core
             }
 
             return commandablePokemon;
+        }
+        /// <summary>
+        /// Returns all of the Pokemon on the battlefield that the given trainer has control to give commands for.
+        /// </summary>
+        /// <param name="trainer"></param>
+        /// <returns></returns>
+        public List<PBS.Battle.View.Events.CommandAgent> GetTrainerCommandableAgents(Trainer trainer)
+        {
+            List<Pokemon> trainerPokemon = GetTrainerOnFieldPokemon(trainer);
+            List<PBS.Battle.View.Events.CommandAgent> agents = new List<PBS.Battle.View.Events.CommandAgent>();
+
+            for (int i = 0; i < trainerPokemon.Count; i++)
+            {
+                Pokemon pokemon = trainerPokemon[i];
+
+                // TODO: Run some checks
+                bool commandable = true;
+
+                // Two-Turn Attacks, Recharge Turns, etc.
+                if (pokemon.bProps.nextCommand != null)
+                {
+                    commandable = false;
+                }
+                if (pokemon.bProps.rechargeTurns > 0)
+                {
+                    commandable = false;
+                }
+
+                if (commandable)
+                {
+                    // Moves
+                    List<PBS.Battle.View.Events.CommandAgent.Moveslot> agentMoves 
+                        = new List<View.Events.CommandAgent.Moveslot>();
+                    List<PBS.Battle.View.Events.CommandAgent.Moveslot> agentZMoves 
+                        = new List<View.Events.CommandAgent.Moveslot>();
+                    List<PBS.Battle.View.Events.CommandAgent.Moveslot> agentMaxMoves 
+                        = new List<View.Events.CommandAgent.Moveslot>();
+                    List<Pokemon.Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
+
+                    // Z-Moves
+                    bool canZMove = false;
+                    for (int k = 0; k < moveslots.Count; k++)
+                    {
+                        MoveData moveData = MoveDatabase.instance.GetMoveData(moveslots[k].moveID);
+                        MoveData ZMoveData = GetPokemonZMoveData(pokemon, moveslots[k].moveID);
+                        MoveData maxMoveData = GetPokemonMaxMoveData(pokemon, moveData);
+
+                        if (ZMoveData != null)
+                        {
+                            canZMove = true;
+                            agentZMoves.Add(new View.Events.CommandAgent.Moveslot
+                            {
+                                moveID = ZMoveData.ID,
+                                PP = moveslots[k].PP,
+                                maxPP = moveslots[k].maxPP,
+
+                                basePower = ZMoveData.basePower,
+                                accuracy = ZMoveData.accuracy,
+
+                                useable = CanPokemonUseMove(pokemon, ZMoveData.ID)
+                            });
+                        }
+                        agentMoves.Add(new View.Events.CommandAgent.Moveslot
+                        {
+                            moveID = moveData.ID,
+                            PP = moveslots[k].PP,
+                            maxPP = moveslots[k].maxPP,
+
+                            basePower = moveData.basePower,
+                            accuracy = moveData.accuracy,
+
+                            useable = CanPokemonUseMove(pokemon, moveData.ID)
+                        });
+                        agentMaxMoves.Add(new View.Events.CommandAgent.Moveslot
+                        {
+                            moveID = maxMoveData.ID,
+                            PP = moveslots[k].PP,
+                            maxPP = moveslots[k].maxPP,
+
+                            basePower = maxMoveData.basePower,
+                            accuracy = maxMoveData.accuracy,
+
+                            useable = CanPokemonUseMove(pokemon, maxMoveData.ID)
+                        });
+                    }
+
+                    // Mega Evolution
+                    bool canMegaEvolve = false;
+                    Item item = pokemon.item;
+                    if (item != null)
+                    {
+                        EffectDatabase.ItemEff.ItemEffect formChangeItemEffect =
+                            PBPGetItemFormChangeEffect(pokemon, item);
+                        if (formChangeItemEffect != null)
+                        {
+                            if (formChangeItemEffect is EffectDatabase.ItemEff.MegaStone)
+                            {
+                                canMegaEvolve = true;
+                            }
+                            // Ultra Burst / Other form change items
+                            else
+                            {
+
+                            }
+                        }
+                    }
+
+                    // Dynamax
+                    bool canDynamax = true;
+
+                    // Set all parameters
+                    PBS.Battle.View.Events.CommandAgent agent = new View.Events.CommandAgent
+                    {
+                        pokemonUniqueID = pokemon.uniqueID,
+                        canMegaEvolve = canMegaEvolve,
+                        canZMove = canZMove,
+                        canDynamax = canDynamax,
+                        commandTypes = GetPokemonPossibleCommandTypes(pokemon),
+                        moveslots = agentMoves,
+                        zMoveSlots = agentZMoves,
+                        dynamaxMoveSlots = agentMaxMoves
+                    };
+
+                    bool addedPokemon = false;
+
+                    for (int k = 0; k < agents.Count; k++)
+                    {
+                        if (trainerPokemon[i].battlePos < pokemon.battlePos)
+                        {
+                            agents.Insert(k, agent);
+                            addedPokemon = true;
+                            break;
+                        }
+                    }
+                    if (!addedPokemon)
+                    {
+                        agents.Add(agent);
+                    }
+                }
+            }
+
+            return agents;
         }
         public List<Pokemon> ForceSendTrainerPokemon(Trainer trainer)
         {

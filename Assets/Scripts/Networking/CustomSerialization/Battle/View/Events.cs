@@ -25,6 +25,10 @@ namespace PBS.Networking.CustomSerialization.Battle.View
         // Backend (201 - 299)
         const int MODELUPDATE = 201;
 
+        // Command Prompts (301 -399)
+        const int COMMANDGENERALPROMPT = 301;
+        const int COMMANDREPLACEMENTPROMPT = 302;
+
 
         // Trainer Interactions (501 - 599)
         const int TRAINERSENDOUT = 501;
@@ -153,6 +157,24 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 writer.WriteInt32((int)modelUpdate.updateType);
                 writer.WriteBoolean(modelUpdate.synchronize);
                 writer.WriteBattleViewModel(modelUpdate.model);
+            }
+
+
+            else if (obj is PBS.Battle.View.Events.CommandGeneralPrompt commandGeneralPrompt)
+            {
+                writer.WriteInt32(COMMANDGENERALPROMPT);
+                writer.WriteInt32(commandGeneralPrompt.playerID);
+                writer.WriteBoolean(commandGeneralPrompt.canMegaEvolve);
+                writer.WriteBoolean(commandGeneralPrompt.canZMove);
+                writer.WriteBoolean(commandGeneralPrompt.canDynamax);
+                writer.WriteList(commandGeneralPrompt.items);
+                writer.WriteList(commandGeneralPrompt.pokemonToCommand);
+            }
+            else if (obj is PBS.Battle.View.Events.CommandReplacementPrompt commandReplacementPrompt)
+            {
+                writer.WriteInt32(COMMANDREPLACEMENTPROMPT);
+                writer.WriteInt32(commandReplacementPrompt.playerID);
+                writer.WriteArray(commandReplacementPrompt.fillPositions);
             }
 
 
@@ -421,6 +443,23 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                         model = reader.ReadBattleViewModel()
                     };
 
+                case COMMANDGENERALPROMPT:
+                    return new PBS.Battle.View.Events.CommandGeneralPrompt
+                    {
+                        playerID = reader.ReadInt32(),
+                        canMegaEvolve = reader.ReadBoolean(),
+                        canZMove = reader.ReadBoolean(),
+                        canDynamax = reader.ReadBoolean(),
+                        items = reader.ReadList<string>(),
+                        pokemonToCommand = reader.ReadList<PBS.Battle.View.Events.CommandAgent>()
+                    };
+                case COMMANDREPLACEMENTPROMPT:
+                    return new PBS.Battle.View.Events.CommandReplacementPrompt
+                    {
+                        playerID = reader.ReadInt32(),
+                        fillPositions = reader.ReadArray<int>()
+                    };
+
 
                 case TRAINERSENDOUT:
                     return new PBS.Battle.View.Events.TrainerSendOut
@@ -606,6 +645,65 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 criticalHit = reader.ReadBoolean(),
                 effectiveness = (float)reader.ReadDouble()
             };
+        }
+    
+        public static void WriteBattleViewEventCommandAgentMoveslot(this NetworkWriter writer, PBS.Battle.View.Events.CommandAgent.Moveslot obj)
+        {
+            writer.WriteString(obj.moveID);
+            writer.WriteInt32(obj.PP);
+            writer.WriteInt32(obj.maxPP);
+            writer.WriteInt32(obj.basePower);
+            writer.WriteDouble((double)obj.accuracy);
+        }
+        public static PBS.Battle.View.Events.CommandAgent.Moveslot ReadBattleViewEventCommandAgentMoveslot(this NetworkReader reader)
+        {
+            return new PBS.Battle.View.Events.CommandAgent.Moveslot
+            {
+                moveID = reader.ReadString(),
+                PP = reader.ReadInt32(),
+                maxPP = reader.ReadInt32(),
+                basePower = reader.ReadInt32(),
+                accuracy = (float)reader.ReadDouble()
+            };
+        }
+        public static void WriteBattleViewEventCommandAgent(this NetworkWriter writer, PBS.Battle.View.Events.CommandAgent obj)
+        {
+            writer.WriteString(obj.pokemonUniqueID);
+            writer.WriteBoolean(obj.canMegaEvolve);
+            writer.WriteBoolean(obj.canZMove);
+            writer.WriteBoolean(obj.canDynamax);
+            writer.WriteList(obj.moveslots);
+            writer.WriteList(obj.zMoveSlots);
+            writer.WriteList(obj.dynamaxMoveSlots);
+
+            List<int> commandInts = new List<int>();
+            for (int i = 0; i < obj.commandTypes.Count; i++)
+            {
+                commandInts.Add((int)obj.commandTypes[i]);
+            }
+            writer.WriteList(commandInts);
+        }
+        public static PBS.Battle.View.Events.CommandAgent ReadBattleViewEventCommandAgent(this NetworkReader reader)
+        {
+            PBS.Battle.View.Events.CommandAgent obj = new PBS.Battle.View.Events.CommandAgent
+            {
+                pokemonUniqueID = reader.ReadString(),
+                canMegaEvolve = reader.ReadBoolean(),
+                canZMove = reader.ReadBoolean(),
+                canDynamax = reader.ReadBoolean(),
+                moveslots = reader.ReadList<PBS.Battle.View.Events.CommandAgent.Moveslot>(),
+                zMoveSlots = reader.ReadList<PBS.Battle.View.Events.CommandAgent.Moveslot>(),
+                dynamaxMoveSlots = reader.ReadList<PBS.Battle.View.Events.CommandAgent.Moveslot>(),
+                commandTypes = new List<BattleCommandType>()
+            };
+
+            List<int> commandInts = reader.ReadList<int>();
+            for (int i = 0; i < obj.commandTypes.Count; i++)
+            {
+                obj.commandTypes.Add((BattleCommandType)commandInts[i]);
+            }
+
+            return obj;
         }
     }
 }

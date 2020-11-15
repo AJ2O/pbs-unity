@@ -112,6 +112,7 @@ public class BattleCommand
     public string itemID;
     public Trainer itemTrainer;
 
+    private BattleCommand() { }
     private BattleCommand(bool isExplicitlySelected = false)
     {
         commandType = BattleCommandType.None;
@@ -206,6 +207,40 @@ public class BattleCommand
         return command;
     }
 
+    public static BattleCommand CreateFromPlayerCommand(PBS.Player.Command playerCommand)
+    {
+        BattleCommand command = new BattleCommand();
+        command.commandType = playerCommand.commandType;
+        command.inProgress = playerCommand.inProgress;
+        command.completed = playerCommand.completed;
+        command.commandPriority = playerCommand.commandPriority;
+        command.iteration = playerCommand.iteration;
+        command.isExplicitlySelected = playerCommand.isExplicitlySelected;
+
+        command.moveID = playerCommand.moveID;
+        command.consumePP = playerCommand.consumePP;
+        command.targetPositions = playerCommand.targetPositions;
+        command.displayMove = playerCommand.displayMove;
+        command.forceOneHit = playerCommand.forceOneHit;
+        command.bypassRedirection = playerCommand.bypassRedirection;
+        command.bypassStatusInterrupt = playerCommand.bypassStatusInterrupt;
+        command.isDanceMove = playerCommand.isDanceMove;
+        command.isMoveCalled = playerCommand.isMoveCalled;
+        command.isMoveReflected = playerCommand.isMoveReflected;
+        command.isMoveHijacked = playerCommand.isMoveHijacked;
+        command.isFutureSightMove = playerCommand.isFutureSightMove;
+        command.isPursuitMove = playerCommand.isPursuitMove;
+        command.isMoveSnatched = playerCommand.isMoveSnatched;
+        command.isMagicCoatMove = playerCommand.isMagicCoatMove;
+
+        command.isMegaEvolving = playerCommand.isMegaEvolving;
+        command.isZMove = playerCommand.isZMove;
+        command.isDynamaxing = playerCommand.isDynamaxing;
+
+        command.switchPosition = playerCommand.switchPosition;
+
+        command.itemID = playerCommand.itemID;
+    }
 }
 
 public class BattleFutureSightCommand

@@ -8,9 +8,13 @@ namespace PBS.Networking {
     public class Player : NetworkBehaviour
     {
         // Player View
+        public int playerID;
         public PBS.Battle.View.Compact.Trainer myTrainer;
         public PBS.Battle.View.Compact.Team myTeamPerspective;
         public PBS.Battle.View.Model myModel;
+
+        // Player Controls
+        public PBS.Player.BattleControls controls;
 
         // Events
         bool isExecutingEvents = true;
@@ -105,6 +109,13 @@ namespace PBS.Networking {
             eventQueue.Add(bEvent);
         }
 
+        // 8.
+        [Command]
+        public void CmdSendCommands(List<PBS.Player.Command> commands, bool isReplacing = false)
+        {
+            PBS.Static.Master.instance.networkManager.battleCore.ReceiveCommands(playerID, commands, isReplacing);
+        }
+
         /// <summary>
         /// A continuous system that polls the server for events, adds them to the queue, and runs them for the player.
         /// </summary>
@@ -158,6 +169,13 @@ namespace PBS.Networking {
                 // Backend
                 : (bEvent is PBS.Battle.View.Events.ModelUpdate)? 
                 ExecuteEvent_ModelUpdate(bEvent as PBS.Battle.View.Events.ModelUpdate)
+
+
+                // Command Prompts
+                : (bEvent is PBS.Battle.View.Events.CommandGeneralPrompt)? 
+                ExecuteEvent_CommandGeneralPrompt(bEvent as PBS.Battle.View.Events.CommandGeneralPrompt)
+                : (bEvent is PBS.Battle.View.Events.CommandReplacementPrompt)? 
+                ExecuteEvent_CommandReplacementPrompt(bEvent as PBS.Battle.View.Events.CommandReplacementPrompt)
 
 
                 // Trainer Interactions
@@ -395,6 +413,7 @@ namespace PBS.Networking {
             yield return null;
         }
 
+
         // Backend
         /// <summary>
         /// TODO: Description
@@ -418,6 +437,30 @@ namespace PBS.Networking {
             }
         }
 
+
+        // Command Prompts
+        public IEnumerator ExecuteEvent_CommandGeneralPrompt(PBS.Battle.View.Events.CommandGeneralPrompt bEvent)
+        {
+            List<PBS.Player.Command> commands = new List<PBS.Player.Command>();
+            yield return StartCoroutine(controls.HandlePromptCommands(
+                bEvent: bEvent,
+                (result) =>
+                {
+                    commands = new List<PBS.Player.Command>(result);
+                }));
+            CmdSendCommands(commands, isReplacing: false);
+        }
+        public IEnumerator ExecuteEvent_CommandReplacementPrompt(PBS.Battle.View.Events.CommandReplacementPrompt bEvent)
+        {
+            List<PBS.Player.Command> commands = new List<PBS.Player.Command>();
+            yield return StartCoroutine(controls.HandlePromptReplace(
+                bEvent: bEvent,
+                (result) =>
+                {
+                    commands = new List<PBS.Player.Command>(result);
+                }));
+            CmdSendCommands(commands, isReplacing: true);
+        }
 
         // Trainer Interactions
         /// <summary>
