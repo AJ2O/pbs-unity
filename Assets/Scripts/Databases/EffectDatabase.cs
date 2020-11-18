@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace PBS.Databases
+{
+
+}
+
 public class EffectDatabase
 {
     //create an object of SingleObject
@@ -10490,7 +10495,8 @@ public class EffectDatabase
             public Yawn(
                 string statusID = null,
                 int turnsLeft = 0,
-                string startText = "status-yawn", string waitText = null
+                string startText = "status-yawn", 
+                string waitText = "status-yawn-wait"
                 )
                 : base(effectType: PokemonSEType.Yawn)
             {

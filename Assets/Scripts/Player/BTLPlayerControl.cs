@@ -363,7 +363,7 @@ public class BTLPlayerControl : MonoBehaviour
         for (int i = 0; i < bEvent.sendOutEvents.Length; i++)
         {
             BTLEvent_SendOut sendEvent = bEvent.sendOutEvents[i];
-            if (sendEvent.trainer.teamPos != view.teamPos)
+            if (sendEvent.trainer.teamID != view.teamPos)
             {
                 enemySendEvents.Add(sendEvent);
             }

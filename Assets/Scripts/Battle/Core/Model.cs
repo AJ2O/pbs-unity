@@ -66,7 +66,7 @@ namespace PBS.Battle.Core
                     this.teams.Add(teams[i]);
                     if (setPos)
                     {
-                        this.teams[i].SetTeamPos(i);
+                        this.teams[i].SetTeamPos(teams[i].teamID);
                     }
                 }
             }
@@ -181,7 +181,7 @@ namespace PBS.Battle.Core
             for (int i = 0; i < this.teams.Count; i++)
             {
                 BattleTeam team = this.teams[i];
-                str += "Team " + team.teamPos + ": ";
+                str += "Team " + team.teamID + ": ";
                 for (int j = 0; j < team.trainers.Count; j++) {
                     Trainer trainer = team.trainers[j];
                     str += trainer.name + " / ";
@@ -548,13 +548,17 @@ namespace PBS.Battle.Core
                 PBS.Player.Command curCommand = commands[i];
                 BattleCommand sanitizedCommand = BattleCommand.CreateFromPlayerCommand(curCommand);
 
-                if (curCommand.commandUser != null)
+                if (!string.IsNullOrEmpty(curCommand.commandUser))
                 {
                     sanitizedCommand.commandUser = GetBattleInstanceOfPokemon(curCommand.commandUser);
                 }
-                if (curCommand.switchInPokemon != null)
+                if (!string.IsNullOrEmpty(curCommand.switchInPokemon))
                 {
                     sanitizedCommand.switchInPokemon = GetBattleInstanceOfPokemon(curCommand.switchInPokemon);
+                }
+                if (curCommand.commandTrainer != 0)
+                {
+                    sanitizedCommand.commandTrainer = GetBattleInstanceOfTrainer(curCommand.commandTrainer);
                 }
                 if (curCommand.switchingTrainer != 0)
                 {
@@ -791,17 +795,21 @@ namespace PBS.Battle.Core
             List<BattleCommand> commands = new List<BattleCommand>();
             for (int i = 0; i < choices.Count; i++)
             {
-                if (CanChooseCommand(choices[i], committedCommmands))
+                if (CanChooseCommand(choices[i], committedCommmands).isQuerySuccessful)
                 {
                     commands.Add(choices[i]);
                 }
             }
             return commands;
         }
-        public bool CanChooseCommand(
+        public PBS.Battle.View.Events.MessageParameterized CanChooseCommand(
             BattleCommand attemptedCommand,
             IEnumerable<BattleCommand> committedCommands)
         {
+            PBS.Battle.View.Events.MessageParameterized response = new View.Events.MessageParameterized
+            {
+                isQueryResponse = true
+            };
             bool bypassChecks = false;
             bool commandSuccess = true;
             List<BattleCommand> setCommands = new List<BattleCommand>(committedCommands);
@@ -819,95 +827,333 @@ namespace PBS.Battle.Core
 
                 if (!bypassChecks)
                 {
+                    // Can't Mega-Evolve / Z-Move / Dynamax twice
+                    if (commandSuccess)
+                    {
+                        for (int i = 0; i < setCommands.Count; i++)
+                        {
+                            if (setCommands[i] != null)
+                            {
+                                if (setCommands[i].isMegaEvolving && attemptedCommand.isMegaEvolving)
+                                {
+                                    commandSuccess = false;
+                                    response.messageCode = "bpc-mega-already";
+                                    break;
+                                }
+                                else if (setCommands[i].isZMove && attemptedCommand.isZMove)
+                                {
+                                    commandSuccess = false;
+                                    response.messageCode = "bpc-zmove-already";
+                                    break;
+                                }
+                                else if (setCommands[i].isDynamaxing && attemptedCommand.isDynamaxing)
+                                {
+                                    commandSuccess = false;
+                                    response.messageCode = "bpc-dynamax-already";
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
                     // Imprison
                     if (commandSuccess)
                     {
                         Pokemon imprisonPokemon = PBPGetImprison(userPokemon, moveData);
                         if (imprisonPokemon != null)
                         {
-                            return false;
+                            commandSuccess = false;
+                            response.messageCode = imprisonPokemon.bProps.imprison.chooseText;
+                            response.pokemonUserID = userPokemon.uniqueID;
                         }
                     }
 
-                    // Move-Limiters (Disable, Heal Block, Taunt, Torment)
-                    if (IsPokemonMoveLimited(userPokemon, moveData))
+                    // Choiced Moves
+                    if (commandSuccess)
                     {
-                        return false;
+                        if (!string.IsNullOrEmpty(userPokemon.bProps.choiceMove)
+                            && IsPokemonChoiced(userPokemon))
+                        {
+                            bool bypassChoiceLock = moveData.HasTag(MoveTag.IgnoreChoiceLock);
+                            MoveData choiceMoveData = MoveDatabase.instance.GetMoveData(userPokemon.bProps.choiceMove);
+                            if (!bypassChoiceLock
+                                && (choiceMoveData.ID != moveData.ID))
+                            {
+                                commandSuccess = false;
+                                response.messageCode = "pokemon-choiced";
+                                response.moveID = choiceMoveData.ID;
+                                response.pokemonUserID = userPokemon.uniqueID;
+                            }
+                        }
+                    }
+
+                    // Limited Moves
+                    if (commandSuccess)
+                    {
+                        for (int i = 0; i < userPokemon.bProps.moveLimiters.Count && commandSuccess; i++)
+                        {
+                            Pokemon.BattleProperties.MoveLimiter moveLimiter =
+                                userPokemon.bProps.moveLimiters[i];
+                            EffectDatabase.StatusPKEff.MoveLimiting effect_ = moveLimiter.effect;
+
+                            string moveLimitID = moveData.ID;
+                        
+                            // Disable
+                            if (effect_ is EffectDatabase.StatusPKEff.Disable)
+                            {
+                                if (moveLimiter.affectedMoves.Contains(moveData.ID))
+                                {
+                                    commandSuccess = false;
+                                }
+                            }
+                            // Encore
+                            else if (effect_ is EffectDatabase.StatusPKEff.Encore)
+                            {
+                                if (!moveLimiter.affectedMoves.Contains(moveData.ID))
+                                {
+                                    commandSuccess = false;
+                                    moveLimitID = moveLimiter.GetMove();
+                                }
+                            }
+                            // Heal Block
+                            else if (effect_ is EffectDatabase.StatusPKEff.HealBlock)
+                            {
+                                if (IsHealingMove(moveData))
+                                {
+                                    commandSuccess = false;
+                                }
+                            }
+                            // Taunt
+                            else if (effect_ is EffectDatabase.StatusPKEff.Taunt)
+                            {
+                                EffectDatabase.StatusPKEff.Taunt taunt = effect_ as EffectDatabase.StatusPKEff.Taunt;
+                                if (taunt.category == MoveCategory.Status)
+                                {
+                                    commandSuccess = false;
+                                }
+                            }
+                            // Torment
+                            else if (effect_ is EffectDatabase.StatusPKEff.Torment)
+                            {
+                                if (moveLimiter.affectedMoves.Contains(moveData.ID))
+                                {
+                                    commandSuccess = false;
+                                }
+                            }
+
+                            if (!commandSuccess)
+                            {
+                                response.messageCode = effect_.attemptText;
+                                response.moveID = moveLimitID;
+                            }
+                        }
                     }
                 }
             }
             // party commands
             else if (attemptedCommand.commandType == BattleCommandType.Party
-                || attemptedCommand.commandType == BattleCommandType.PartyReplace
-                || attemptedCommand.commandType == BattleCommandType.Run)
+                || attemptedCommand.commandType == BattleCommandType.PartyReplace)
             {
                 // check if switching is possible
 
-                // can't switch out if trapped
-                if (attemptedCommand.commandType == BattleCommandType.Party)
+                // party-specfic restrictions
+                if (commandSuccess
+                    && attemptedCommand.commandType == BattleCommandType.Party)
                 {
-                    // TODO: trapping (Shadow Tag, Fire Spin, Block, No Retreat, Sky Drop, etc.)
-                
-                    // Block
-                    if (commandSuccess && !string.IsNullOrEmpty(userPokemon.bProps.blockMove))
+                    // Trapped
+                    if (commandSuccess)
                     {
-                        return false;
-                    }
+                        // Block
+                        if (commandSuccess && !string.IsNullOrEmpty(userPokemon.bProps.blockMove))
+                        {
+                            commandSuccess = false;
+                            Pokemon blockUser = GetFieldPokemonByID(userPokemon.bProps.blockPokemon);
+                            MoveData moveData = MoveDatabase.instance.GetMoveData(userPokemon.bProps.blockMove);
+                            MoveEffect effect = moveData.GetEffect(MoveEffectType.Block);
 
-                    // Bind
-                    if (!string.IsNullOrEmpty(userPokemon.bProps.bindMove))
-                    {
-                        return false;
-                    }
+                            string textCodeID = effect.GetString(2);
+                            textCodeID = (textCodeID == "DEFAULT") ? "move-block-trap-default"
+                                : textCodeID;
+                            response.messageCode = textCodeID;
+                            response.pokemonUserID = blockUser.uniqueID;
+                            response.pokemonTargetID = userPokemon.uniqueID;
+                            response.moveID = userPokemon.bProps.blockMove;
+                        }
 
-                    // Sky Drop
-                    if (!string.IsNullOrEmpty(userPokemon.bProps.skyDropMove))
-                    {
-                        return false;
+                        // Bind
+                        if (commandSuccess && !string.IsNullOrEmpty(userPokemon.bProps.bindMove))
+                        {
+                            commandSuccess = false;
+                            Pokemon bindUser = GetFieldPokemonByID(userPokemon.bProps.bindPokemon);
+                            MoveData moveData = MoveDatabase.instance.GetMoveData(userPokemon.bProps.bindMove);
+                            MoveEffect effect = moveData.GetEffect(MoveEffectType.Bind);
+
+                            string textCodeID = effect.GetString(3);
+                            textCodeID = (textCodeID == "DEFAULT") ? "move-bind-trap-default"
+                                : textCodeID;
+                            response.messageCode = textCodeID;
+                            response.pokemonUserID = bindUser.uniqueID;
+                            response.pokemonTargetID = userPokemon.uniqueID;
+                            response.moveID = userPokemon.bProps.bindMove;
+                        }
+
+                        // Sky Drop
+                        if (commandSuccess && !string.IsNullOrEmpty(userPokemon.bProps.skyDropMove))
+                        {
+                            commandSuccess = false;
+                            Pokemon trapUser = GetFieldPokemonByID(userPokemon.bProps.skyDropUser);
+                            MoveData moveData = MoveDatabase.instance.GetMoveData(userPokemon.bProps.skyDropMove);
+                            MoveEffect effect = moveData.GetEffect(MoveEffectType.SkyDrop);
+
+                            string textCodeID = effect.GetString(2);
+                            textCodeID = (textCodeID == "DEFAULT") ? "move-skydrop-trap-default"
+                                : textCodeID;
+                            response.messageCode = textCodeID;
+                            response.pokemonUserID = trapUser.uniqueID;
+                            response.pokemonTargetID = userPokemon.uniqueID;
+                            response.moveID = userPokemon.bProps.skyDropMove;
+                        }
+
+                        // Ingrain
+                        if (commandSuccess)
+                        {
+                            for (int i = 0; i < userPokemon.bProps.ingrainMoves.Count; i++)
+                            {
+                                MoveData ingrainData = MoveDatabase.instance.GetMoveData(
+                                    userPokemon.bProps.ingrainMoves[i]
+                                    );
+                                MoveEffect ingrainEffect = ingrainData.GetEffect(MoveEffectType.Ingrain);
+                                if (ingrainEffect.GetBool(0))
+                                {
+                                    commandSuccess = false;
+                                    response.messageCode = "pokemon-switch-ingrain";
+                                    response.pokemonUserID = userPokemon.uniqueID;
+                                    response.moveID = ingrainData.ID;
+                                    break;
+                                }
+                            }
+                        }
                     }
 
                     // TODO: Trapping Abilities (Arena Trap, Shadow Tag, etc.)
-                
-                    // Ingrain
                     if (commandSuccess)
                     {
-                        for (int i = 0; i < userPokemon.bProps.ingrainMoves.Count; i++)
+                        for (int i = 0; i < pokemonOnField.Count && commandSuccess; i++)
                         {
-                            MoveData ingrainData = MoveDatabase.instance.GetMoveData(
-                                userPokemon.bProps.ingrainMoves[i]
-                                );
-                            MoveEffect ingrainEffect = ingrainData.GetEffect(MoveEffectType.Ingrain);
-                            if (ingrainEffect.GetBool(0))
+                            Pokemon trapPokemon = pokemonOnField[i];
+                            AbilityData abilityData = 
+                                PBPGetAbilityDataWithEffect(trapPokemon, AbilityEffectType.ShadowTag);
+                            if (!trapPokemon.IsTheSameAs(userPokemon) && abilityData != null)
                             {
-                                return false;
+                                EffectDatabase.AbilityEff.AbilityEffect shadowTag_ = 
+                                    abilityData.GetEffectNew(AbilityEffectType.ShadowTag);
+                                EffectDatabase.AbilityEff.ShadowTag shadowTag = 
+                                    shadowTag_ as EffectDatabase.AbilityEff.ShadowTag;
+
+                                if (DoEffectFiltersPass(
+                                    filters: shadowTag.filters,
+                                    userPokemon: trapPokemon,
+                                    targetPokemon: userPokemon,
+                                    abilityData: abilityData
+                                    ))
+                                {
+                                    bool trapped = true;
+                                
+                                    // Shed Shell
+                                    if (trapped)
+                                    {
+                                        EffectDatabase.ItemEff.ItemEffect shedShell_ =
+                                            PBPGetItemEffect(userPokemon, ItemEffectType.ShedShell);
+                                        if (shedShell_ != null)
+                                        {
+                                            EffectDatabase.ItemEff.ShedShell shedShell = 
+                                                shedShell_ as EffectDatabase.ItemEff.ShedShell;
+                                            trapped = false;
+                                        }
+                                    }
+
+                                    // Immune to own ability
+                                    if (trapped 
+                                        && shadowTag.immuneToSelf)
+                                    {
+                                        AbilityData abilityData2 = PBPGetAbilityDataWithEffect(
+                                            userPokemon, 
+                                            AbilityEffectType.ShadowTag);
+                                        if (abilityData2 != null)
+                                        {
+                                            if (abilityData.ID == abilityData2.ID)
+                                            {
+                                                trapped = false;
+                                            }
+                                        }
+                                    }
+
+                                    // Arena Trap
+                                    if (trapped 
+                                        && shadowTag.arenaTrap 
+                                        && !PBPIsPokemonGrounded(userPokemon))
+                                    {
+                                        trapped = false;
+                                    }
+
+                                    // Must be adjacent
+                                    if (trapped
+                                        && shadowTag.mustBeAdjacent 
+                                        && !ArePokemonAdjacent(trapPokemon, userPokemon))
+                                    {
+                                        trapped = false;
+                                    }
+                                
+                                    if (trapped)
+                                    {
+                                        commandSuccess = false;
+                                        response.messageCode = shadowTag.displayText;
+                                        response.pokemonUserID = trapPokemon.uniqueID;
+                                        response.pokemonTargetID = userPokemon.uniqueID;
+                                        response.abilityID = abilityData.ID;
+                                    }
+                                }
                             }
                         }
                     }
                 }
 
                 // can't switch in fainted pokemon
-                if (IsPokemonFainted(attemptedCommand.switchInPokemon))
+                if (commandSuccess
+                    && IsPokemonFainted(attemptedCommand.switchInPokemon))
                 {
-                    return false;
+                    commandSuccess = false;
+                    response.messageCode = "bpc-switch-unable";
+                    response.pokemonID = attemptedCommand.switchInPokemon.uniqueID;
                 }
 
                 // can't switch in on-field pokemon
-                if (IsPokemonOnField(attemptedCommand.switchInPokemon))
+                if (commandSuccess 
+                    && IsPokemonOnField(attemptedCommand.switchInPokemon))
                 {
-                    return false;
+                    commandSuccess = false;
+                    response.messageCode = "bpc-switch-already";
+                    response.pokemonID = attemptedCommand.switchInPokemon.uniqueID;
                 }
 
                 // can't switch in a pokemon already committed to switch in
-                for (int i = 0; i < setCommands.Count; i++)
+                if (commandSuccess)
                 {
-                    if (setCommands[i] != null)
+                    // can't switch in a pokemon already committed to switch in
+                    for (int i = 0; i < setCommands.Count; i++)
                     {
-                        Pokemon otherPokemon = setCommands[i].switchInPokemon;
-                        if (otherPokemon != null)
+                        if (setCommands[i] != null)
                         {
-                            if (otherPokemon.IsTheSameAs(attemptedCommand.switchInPokemon))
+                            Pokemon otherPokemon = setCommands[i].switchInPokemon;
+                            if (otherPokemon != null)
                             {
-                                return false;
+                                if (otherPokemon.IsTheSameAs(attemptedCommand.switchInPokemon))
+                                {
+                                    commandSuccess = false;
+                                    response.messageCode = "bpc-switch-already-switch";
+                                    response.pokemonID = attemptedCommand.switchInPokemon.uniqueID;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -920,6 +1166,7 @@ namespace PBS.Battle.Core
                 Trainer itemTrainer = attemptedCommand.itemTrainer;
                 ItemData itemData = ItemDatabase.instance.GetItemData(attemptedCommand.itemID);
 
+                response.messageCode = "item-use-fail";
                 // Make sure the trainer has enough of the items in their inventory
                 if (commandSuccess)
                 {
@@ -939,6 +1186,9 @@ namespace PBS.Battle.Core
                     if (itemCount <= 0)
                     {
                         commandSuccess = false;
+                        response.messageCode = "item-use-fail-notenough";
+                        response.pokemonUserID = itemPokemon.uniqueID;
+                        response.itemID = itemData.ID;
                     }
                 }
 
@@ -947,20 +1197,22 @@ namespace PBS.Battle.Core
                 {
                     if (IsPokemonFainted(itemPokemon))
                     {
-                    
                         // check items that can be used on fainted pokemon
                         if (itemData.GetEffect(ItemEffectType.Revive) == null)
                         {
                             commandSuccess = false;
+                            response.pokemonUserID = itemPokemon.uniqueID;
+                            response.itemID = itemData.ID;
                         }
                     }
                     else
                     {
-                    
                         // check items that can only be used on fainted pokemon
                         if (itemData.GetEffect(ItemEffectType.Revive) != null)
                         {
                             commandSuccess = false;
+                            response.pokemonUserID = itemPokemon.uniqueID;
+                            response.itemID = itemData.ID;
                         }
                     }
                 }
@@ -968,10 +1220,12 @@ namespace PBS.Battle.Core
                 // Embargo
                 if (commandSuccess)
                 {
-                    if (itemPokemon.bProps.embargo != null
-                        && !itemData.HasTag(ItemTag.BypassEmbargo))
+                    if (itemPokemon.bProps.embargo != null && !itemData.HasTag(ItemTag.BypassEmbargo))
                     {
                         commandSuccess = false;
+                        response.messageCode = itemPokemon.bProps.embargo.effect.attemptText;
+                        response.pokemonUserID = itemPokemon.uniqueID;
+                        response.itemID = itemData.ID;
                     }
                 }
 
@@ -982,74 +1236,89 @@ namespace PBS.Battle.Core
                         && !IsPokemonOnField(itemPokemon))
                     {
                         commandSuccess = false;
+                        response.messageCode = "item-use-fail-battle";
+                        response.pokemonUserID = itemPokemon.uniqueID;
+                        response.itemID = itemData.ID;
                     }
                 }
-
             }
             // run commands
             else if (attemptedCommand.commandType == BattleCommandType.Run)
             {
-                // TODO: trapping (Shadow Tag, Fire Spin, Block, No Retreat, Sky Drop, etc.)
-
-                // trainer battle
-                if (!battleSettings.isWildBattle)
-                {
-                    return false;
-                }
-
-                EffectDatabase.AbilityEff.AbilityEffect runAway_ =
-                    PBPGetAbilityEffect(userPokemon, AbilityEffectType.RunAway);
-                EffectDatabase.AbilityEff.RunAway runAway = (runAway_ == null) ? null :
-                    runAway_ as EffectDatabase.AbilityEff.RunAway;
-
-                // Block
-                if (commandSuccess 
-                    && !string.IsNullOrEmpty(userPokemon.bProps.blockMove)
-                    && runAway == null)
-                {
-                    return false;
-                }
-
-                // Bind
-                if (!string.IsNullOrEmpty(userPokemon.bProps.bindMove) && runAway == null)
-                {
-                    return false;
-                }
-
-                // Sky Drop
-                if (!string.IsNullOrEmpty(userPokemon.bProps.skyDropMove))
-                {
-                    return false;
-                }
+                response.messageCode = "pokemon-run-trap";
+                response.pokemonUserID = userPokemon.uniqueID;
 
                 // Trapped
-                StatusCondition trapStatus = GetTrapStatusCondition(attemptedCommand.commandUser);
-                if (commandSuccess 
-                    && trapStatus != null
-                    && runAway == null)
+                if (commandSuccess)
                 {
-                    return false;
-                }
+                    EffectDatabase.AbilityEff.AbilityEffect runAway_ = 
+                        PBPGetAbilityEffect(userPokemon, AbilityEffectType.RunAway);
+                    EffectDatabase.AbilityEff.RunAway runAway = (runAway_ == null) ? null :
+                        runAway_ as EffectDatabase.AbilityEff.RunAway;
 
-                // Ingrain
-                if (commandSuccess && runAway == null)
-                {
-                    for (int i = 0; i < userPokemon.bProps.ingrainMoves.Count; i++)
+                    // trainer battle
+                    if (!battleSettings.isWildBattle)
                     {
-                        MoveData ingrainData = MoveDatabase.instance.GetMoveData(
-                            userPokemon.bProps.ingrainMoves[i]
-                            );
-                        MoveEffect ingrainEffect = ingrainData.GetEffect(MoveEffectType.Ingrain);
-                        if (ingrainEffect.GetBool(0))
+                        commandSuccess = false;
+                        response.messageCode = "bpc-run-trainer";
+                    }
+
+                    // Block
+                    if (commandSuccess 
+                        && !string.IsNullOrEmpty(userPokemon.bProps.blockMove)
+                        && runAway == null)
+                    {
+                        commandSuccess = false;
+                    }
+
+                    // Bind
+                    if (commandSuccess 
+                        && !string.IsNullOrEmpty(userPokemon.bProps.bindMove)
+                        && runAway == null)
+                    {
+                        commandSuccess = false;
+                    }
+
+                    // Sky Drop
+                    if (commandSuccess && !string.IsNullOrEmpty(userPokemon.bProps.skyDropMove))
+                    {
+                        commandSuccess = false;
+                    }
+
+                    // Trapped
+                    StatusCondition trapStatus = GetTrapStatusCondition(attemptedCommand.commandUser);
+                    if (commandSuccess 
+                        && trapStatus != null
+                        && runAway == null)
+                    {
+                        commandSuccess = false;
+                    }
+
+                    // Ingrain
+                    if (commandSuccess && runAway == null)
+                    {
+                        for (int i = 0; i < userPokemon.bProps.ingrainMoves.Count; i++)
                         {
-                            return false;
+                            MoveData ingrainData = MoveDatabase.instance.GetMoveData(
+                                userPokemon.bProps.ingrainMoves[i]);
+                            MoveEffect ingrainEffect = ingrainData.GetEffect(MoveEffectType.Ingrain);
+                            if (ingrainEffect.GetBool(0))
+                            {
+                                commandSuccess = false;
+                                response.messageCode = "pokemon-run-ingrain";
+                                response.pokemonUserID = userPokemon.uniqueID;
+                                response.moveID = ingrainData.ID;
+                                break;
+                            }
                         }
                     }
                 }
 
                 // TODO: Trapping Abilities (Arena Trap, Shadow Tag, etc.)
             }
-            return commandSuccess;
+
+            response.isQuerySuccessful = commandSuccess;
+            return response;
         }
 
         // Future Sight Commands
@@ -1151,7 +1420,7 @@ namespace PBS.Battle.Core
         {
             for (int i = 0; i < teams.Count; i++)
             {
-                if (teams[i].teamPos == searchTeam.teamPos)
+                if (teams[i].teamID == searchTeam.teamID)
                 {
                     return teams[i];
                 }
@@ -1162,7 +1431,7 @@ namespace PBS.Battle.Core
         {
             for (int i = 0; i < teams.Count; i++)
             {
-                if (teams[i].teamPos == teamID)
+                if (teams[i].teamID == teamID)
                 {
                     return teams[i];
                 }
@@ -1175,7 +1444,7 @@ namespace PBS.Battle.Core
         {
             for (int i = 0; i < teams.Count; i++)
             {
-                if (teams[i].teamPos == teamPos)
+                if (teams[i].teamID == teamPos)
                 {
                     return teams[i];
                 }
@@ -1187,7 +1456,7 @@ namespace PBS.Battle.Core
             List<BattleTeam> enemyTeams = new List<BattleTeam>();
             for (int i = 0; i < teams.Count; i++)
             {
-                if (teams[i].teamPos != teamPos)
+                if (teams[i].teamID != teamPos)
                 {
                     enemyTeams.Add(teams[i]);
                 }
@@ -1201,13 +1470,13 @@ namespace PBS.Battle.Core
                 return GetTeamFromPosition(pokemon.teamPos);
             }
             Trainer trainer = GetPokemonOwner(pokemon);
-            return GetTeamFromPosition(trainer.teamPos);
+            return GetTeamFromPosition(trainer.teamID);
         }
         public BattleTeam GetTeamFromPosition(int teamPos)
         {
             for (int i = 0; i < teams.Count; i++)
             {
-                if (teams[i].teamPos == teamPos)
+                if (teams[i].teamID == teamPos)
                 {
                     return teams[i];
                 }
@@ -1458,6 +1727,21 @@ namespace PBS.Battle.Core
                                 useable = CanPokemonUseMove(pokemon, ZMoveData.ID)
                             });
                         }
+                        else
+                        {
+                            agentZMoves.Add(new View.Events.CommandAgent.Moveslot
+                            {
+                                moveID = moveData.ID,
+                                PP = moveslots[k].PP,
+                                maxPP = moveslots[k].maxPP,
+
+                                basePower = moveData.basePower,
+                                accuracy = moveData.accuracy,
+
+                                hide = true,
+                                useable = CanPokemonUseMove(pokemon, moveData.ID)
+                            });
+                        }
                         agentMoves.Add(new View.Events.CommandAgent.Moveslot
                         {
                             moveID = moveData.ID,
@@ -1548,7 +1832,7 @@ namespace PBS.Battle.Core
             for (int i = 0; i < availablePokemon.Count; i++)
             {
                 sentPokemon.Add(availablePokemon[i]);
-                sentPokemon[i].teamPos = trainer.teamPos;
+                sentPokemon[i].teamPos = trainer.teamID;
                 sentPokemon[i].battlePos = emptyPositions[i];
                 this.pokemonOnField.Add(sentPokemon[i]);
             }
@@ -1568,7 +1852,7 @@ namespace PBS.Battle.Core
             for (int j = 0; j < pokemonOnField.Count; j++)
             {
                 Pokemon pokemon = pokemonOnField[j];
-                if (pokemon.teamPos == trainer.teamPos
+                if (pokemon.teamPos == trainer.teamID
                     && positions.Contains(pokemon.battlePos))
                 {
                     positions.Remove(pokemon.battlePos);
@@ -1637,7 +1921,7 @@ namespace PBS.Battle.Core
         }
         public void TrainerSendPokemon(Trainer trainer, Pokemon pokemon, int emptyPos)
         {
-            pokemon.teamPos = trainer.teamPos;
+            pokemon.teamPos = trainer.teamID;
             pokemon.battlePos = emptyPos;
             pokemon.bProps.switchedIn = true;
             AddPokemonToField(pokemon);
@@ -1714,7 +1998,7 @@ namespace PBS.Battle.Core
         }
         public bool ArePokemonAndTrainerSameTeam(Pokemon pokemon, Trainer trainer)
         {
-            return pokemon.teamPos == trainer.teamPos;
+            return pokemon.teamPos == trainer.teamID;
         }
 
         // Pokemon: Field / Positioning Methods
@@ -1826,7 +2110,7 @@ namespace PBS.Battle.Core
             List<BattlePosition> battlePositions = new List<BattlePosition>();
             for (int i = 0; i < teams.Count; i++)
             {
-                int teamPos = teams[i].teamPos;
+                int teamPos = teams[i].teamID;
                 for (int j = 0; j < teams[i].trainers.Count; j++)
                 {
                     for (int k = 0; k < teams[i].trainers[j].controlPos.Length; k++)
@@ -1863,7 +2147,7 @@ namespace PBS.Battle.Core
         {
             for (int i = 0; i < teams.Count; i++)
             {
-                if (teams[i].teamPos != pokemon.teamPos)
+                if (teams[i].teamID != pokemon.teamPos)
                 {
                     return teams[i];
                 }

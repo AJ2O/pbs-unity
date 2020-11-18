@@ -7,8 +7,9 @@ namespace PBS.Player
     public class Command
     {
         // General
-        public BattleCommandType commandType;
-        public string commandUser;
+        public BattleCommandType commandType = BattleCommandType.None;
+        public string commandUser = "";
+        public int commandTrainer = 0;
         public bool inProgress = false;
         public bool completed = false;
         public int commandPriority = 0;
@@ -18,7 +19,7 @@ namespace PBS.Player
         // Move
         public string moveID;
         public bool consumePP = true;
-        public BattlePosition[] targetPositions;
+        public BattlePosition[] targetPositions = new BattlePosition[0];
         public bool displayMove = true;
         public bool forceOneHit = false;
         public bool bypassRedirection = false;
@@ -37,13 +38,13 @@ namespace PBS.Player
         public bool isDynamaxing = false;
 
         // Switch
-        public int switchPosition;
-        public int switchingTrainer;
-        public string switchInPokemon;
+        public int switchPosition = 0;
+        public int switchingTrainer = 0;
+        public string switchInPokemon = "";
 
         // Item
-        public string itemID;
-        public int itemTrainer;
+        public string itemID = "";
+        public int itemTrainer = 0;
 
         public Command(bool isExplicitlySelected = false)
         {
@@ -53,6 +54,7 @@ namespace PBS.Player
 
         public static Command CreateMoveCommand(
             string commandUser,
+            int commandTrainer,
             string moveID,
             List<BattlePosition> targetPositions,
             bool isExplicitlySelected = false,
@@ -61,6 +63,7 @@ namespace PBS.Player
             bool isDynamaxing = false)
         {
             Command command = new Command(isExplicitlySelected);
+            command.commandTrainer = commandTrainer;
             command.commandType = BattleCommandType.Fight;
             command.commandUser = commandUser;
             command.moveID = moveID;
@@ -81,6 +84,7 @@ namespace PBS.Player
             bool isExplicitlySelected = false)
         {
             Command command = new Command(isExplicitlySelected);
+            command.commandTrainer = trainer;
             command.commandType = BattleCommandType.Party;
             command.switchPosition = switchPosition;
             command.switchingTrainer = trainer;
@@ -96,6 +100,7 @@ namespace PBS.Player
             bool isExplicitlySelected = false)
         {
             Command command = new Command(isExplicitlySelected);
+            command.commandTrainer = trainer;
             command.commandType = BattleCommandType.PartyReplace;
             command.switchPosition = switchPosition;
             command.switchingTrainer = trainer;
@@ -121,6 +126,7 @@ namespace PBS.Player
             bool isExplicitlySelected = false)
         {
             Command command = new Command(isExplicitlySelected);
+            command.commandTrainer = trainer;
             command.commandType = BattleCommandType.Bag;
             command.itemID = itemID;
             command.commandUser = itemPokemon;
@@ -130,10 +136,12 @@ namespace PBS.Player
 
         public static Command CreateRunCommand(
             string commandUser,
+            int commandTrainer,
             bool isExplicitlySelected = false
             )
         {
             Command command = new Command(isExplicitlySelected);
+            command.commandTrainer = commandTrainer;
             command.commandType = BattleCommandType.Run;
             command.commandUser = commandUser;
             return command;

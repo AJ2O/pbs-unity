@@ -43,7 +43,7 @@ public class Testing : MonoBehaviour
         StartCoroutine(btlManager.StartBattle(battleSettings, teams));
     }
 
-    public Trainer CreateTrainer(string trainerName)
+    public static Trainer CreateTrainer(string trainerName)
     {
 
         // party
@@ -258,7 +258,7 @@ public class Testing : MonoBehaviour
             );
         return trainer;
     }
-    public Trainer CreateTrainer2(string trainerName)
+    public static Trainer CreateTrainer2(string trainerName)
     {
         // party
         List<Pokemon> party = new List<Pokemon>();
@@ -308,7 +308,7 @@ public class Testing : MonoBehaviour
             }
             );
 
-        party.AddRange(new List<Pokemon> { pokemon1, pokemon2, pokemon3 });
+        party.AddRange(new List<Pokemon> { pokemon1, pokemon2, pokemon3, morpeko });
 
         // items
         List<Item> items = new List<Item>();
@@ -346,10 +346,17 @@ public class Testing : MonoBehaviour
         items.AddRange(new List<Item>
         {
             new Item("potion"),
+            new Item("potion"),
+            new Item("potion"),
             new Item("antidote"),
+            new Item("oranberry"),
             new Item("sitrusberry"),
             new Item("xattack"),
-            new Item("xspeed")
+            new Item("xdefense"),
+            new Item("xspatk"),
+            new Item("xspdef"),
+            new Item("xspeed"),
+            new Item("xaccuracy")
         });
         switch (teamNo)
         {
@@ -364,10 +371,10 @@ public class Testing : MonoBehaviour
                         natureID: "hardy",
                         moveslots: new Pokemon.Moveslot[]
                         {
-                            new Pokemon.Moveslot("karatechop"),
+                            new Pokemon.Moveslot("uturn"),
                             new Pokemon.Moveslot("forestscurse"),
                             new Pokemon.Moveslot("roost"),
-                            new Pokemon.Moveslot("tackle"),
+                            new Pokemon.Moveslot("explosion"),
                         },
                         //nonVolatileStatus: new StatusCondition("burn"),
                         abilityNo: 1,
@@ -378,7 +385,7 @@ public class Testing : MonoBehaviour
                     new Pokemon(
                         pokemonID: "charmander",
                         level: 15,
-                        hpPercent: 1f,
+                        hpPercent: 0.75f,
                         natureID: "adamant",
                         moveslots: new Pokemon.Moveslot[]
                         {
@@ -417,7 +424,7 @@ public class Testing : MonoBehaviour
                         moveslots: new Pokemon.Moveslot[]
                         {
                             new Pokemon.Moveslot("knockoff"),
-                            new Pokemon.Moveslot("dragondance"),
+                            new Pokemon.Moveslot("uturn"),
                             new Pokemon.Moveslot("roost"),
                             new Pokemon.Moveslot("naturesmadness"),
                         },
@@ -441,8 +448,8 @@ public class Testing : MonoBehaviour
                             GMaxForm: "blastoise-gmax",
                             GMaxMove: "gmaxcannonade",
                             moveType: "water"
-                            ),
-                        item: new Item("blastoisinite")
+                            )//,
+                        //item: new Item("blastoisinite")
                         )
                 });
                 break;

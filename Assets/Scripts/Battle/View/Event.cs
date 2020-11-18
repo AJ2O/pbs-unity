@@ -34,12 +34,47 @@ namespace PBS.Battle.View.Events
     public class MessageParameterized : Base
     {
         public string messageCode;
+        public bool isQueryResponse = false;
+        public bool isQuerySuccessful = true;
         public int playerPerspectiveID = 0;
         public int teamPerspectiveID = 0;
 
-        public string pokemonID = "";
-        public string pokemonUserID = "";
-        public string pokemonTargetID = "";
+        private string p_pokemonID = "";
+        public string pokemonID
+        {
+            get
+            {
+                return p_pokemonID;
+            }
+            set
+            {
+                p_pokemonID = (string.IsNullOrEmpty(value))? "" : value;
+            }
+        }
+        private string p_pokemonUserID = "";
+        public string pokemonUserID
+        {
+            get
+            {
+                return p_pokemonUserID;
+            }
+            set
+            {
+                p_pokemonUserID = (string.IsNullOrEmpty(value))? "" : value;
+            }
+        }
+        private string p_pokemonTargetID = "";
+        public string pokemonTargetID
+        {
+            get
+            {
+                return p_pokemonTargetID;
+            }
+            set
+            {
+                p_pokemonTargetID = (string.IsNullOrEmpty(value))? "" : value;
+            }
+        }
         public List<string> pokemonListIDs = new List<string>();
 
         public int trainerID = -1;
@@ -102,15 +137,18 @@ namespace PBS.Battle.View.Events
     {
         public class Moveslot
         {
-            public string moveID;
-            public int PP;
-            public int maxPP;
+            public string moveID = "";
+            public int PP = 0;
+            public int maxPP = 0;
 
-            public int basePower;
-            public float accuracy;
+            public int basePower = 0;
+            public float accuracy = 0;
 
             public bool useable = true;
+            public bool hide = false;
             public string failMessageCode = "";
+
+            public List<List<BattlePosition>> possibleTargets = new List<List<BattlePosition>>();
 
             public Moveslot() { }
             public Moveslot(string moveID)
@@ -128,6 +166,7 @@ namespace PBS.Battle.View.Events
         public bool canMegaEvolve = false;
         public bool canZMove = false;
         public bool canDynamax = false;
+        public bool isDynamaxed = false;
 
         public List<BattleCommandType> commandTypes;
         public List<Moveslot> moveslots;
@@ -172,14 +211,6 @@ namespace PBS.Battle.View.Events
     }
 
     // Weather / Environmental Conditions
-    public class EnvironmentalConditionStart : Base
-    {
-        public string conditionID;
-    }
-    public class EnvironmentalConditionEnd : Base
-    {
-        public string conditionID;
-    }
 
 
     // --- Pokemon Interactions ---
@@ -203,6 +234,7 @@ namespace PBS.Battle.View.Events
         public string pokemonUniqueID;
         public int preHP;
         public int postHP;
+        public int maxHP;
         public int damageDealt
         {
             get
@@ -216,6 +248,7 @@ namespace PBS.Battle.View.Events
         public string pokemonUniqueID;
         public int preHP;
         public int postHP;
+        public int maxHP;
         public int hpHealed
         {
             get
@@ -239,7 +272,6 @@ namespace PBS.Battle.View.Events
         public string pokemonUniqueID;
         public string abilityID;
     }
-    public class PokemonAbilityQuickDraw : PokemonAbilityActivate { }
 
     // Moves
     public class PokemonMoveUse : Base
@@ -254,14 +286,23 @@ namespace PBS.Battle.View.Events
         public bool affectedByMove = false;
         public bool missed = false;
         public bool criticalHit = false;
+        public int preHP;
+        public int postHP;
+        public int maxHP;
+        public int damageDealt;
         public float effectiveness = 1f;
 
         public PokemonMoveHitTarget() { }
         public PokemonMoveHitTarget(BattleHitTarget hitTarget)
         {
             pokemonUniqueID = hitTarget.pokemon.uniqueID;
+            affectedByMove = hitTarget.affectedByMove;
             missed = hitTarget.missed;
             criticalHit = hitTarget.criticalHit;
+            preHP = hitTarget.preHP;
+            postHP = hitTarget.postHP;
+            maxHP = hitTarget.pokemon.maxHP;
+            damageDealt = hitTarget.damageDealt;
             effectiveness = hitTarget.effectiveness.GetTotalEffectiveness();
         }
     }
@@ -272,8 +313,6 @@ namespace PBS.Battle.View.Events
         public int currentHit = 1;
         public List<PokemonMoveHitTarget> hitTargets;
     }
-    
-    public class PokemonMoveCelebrate : Base { }
 
     // Stats
     public class PokemonStatChange : Base
@@ -293,11 +332,6 @@ namespace PBS.Battle.View.Events
     }
 
     // Items
-    public class PokemonItemQuickClaw : Base
-    {
-        public string pokemonUniqueID;
-        public string itemID;
-    }
 
     // Status
 

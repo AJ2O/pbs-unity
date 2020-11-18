@@ -11,9 +11,13 @@ namespace PBS.Networking {
         /// </summary>
         public Core battleCore;
         /// <summary>
-        /// The amount of players needed to start the battle.
+        /// The amount of human players needed to start the battle.
         /// </summary>
         public int requiredPlayers = 1;
+        /// <summary>
+        /// The difference between this and requiredPlayers is how many AI trainers there will be.
+        /// </summary>
+        public int totalPlayers = 2;
         /// <summary>
         /// The settings that will be applied to the initiated battle.
         /// </summary>
@@ -51,7 +55,7 @@ namespace PBS.Networking {
 
         public void AddPlayer(NetworkConnection conn, PBS.Networking.Player player)
         {
-            playerConnections.Add(conn.connectionId, player);
+            playerConnections.Add(conn.connectionId + 1, player);
         }
         public void AddTrainer(NetworkConnection conn)
         {
@@ -62,8 +66,8 @@ namespace PBS.Networking {
             }
             else if (trainerConnections.Count < requiredPlayers)
             {
-                trainer.playerID = conn.connectionId;
-                trainerConnections.Add(conn.connectionId, trainer);
+                trainer.playerID = conn.connectionId + 1;
+                trainerConnections.Add(trainer.playerID, trainer);
                 Debug.Log("Added player " + trainer.name + "!");
 
                 // 5.
@@ -116,32 +120,57 @@ namespace PBS.Networking {
         {
             // Create teams using trainerConnections
             List<BattleTeam> teams = new List<BattleTeam>();
-            List<Trainer> allTrainers = new List<Trainer>(trainerConnections.Values);
+            List<Trainer> humanTrainers = new List<Trainer>(trainerConnections.Values);
+
+            // Configure AI Trainers
+            List<Trainer> aiTrainers = new List<Trainer>();
+            int aiTrainerCount = Mathf.Max(totalPlayers - requiredPlayers, 0);
+            Debug.Log($"Adding {aiTrainerCount} AI trainers...");
+            for (int i = 0; i < aiTrainerCount; i++)
+            {
+                Trainer trainer = Testing.CreateTrainer2("AI " + i);
+                trainer.playerID = -1 - i;
+                aiTrainers.Add(trainer);
+            }
 
             // TODO: More battle configurations than single or double
             BattleTeam.TeamMode teamMode = (battleSettings.battleType == BattleType.Single) ? BattleTeam.TeamMode.Single
                 : BattleTeam.TeamMode.Double;
+            
+            List<Trainer> allTrainers = new List<Trainer>();
+            allTrainers.AddRange(humanTrainers);
+            allTrainers.AddRange(aiTrainers);
+            int midpoint = allTrainers.Count / 2;
+
+            BattleTeam team1 = new BattleTeam(
+                teamID: 1,
+                trainers: allTrainers.GetRange(0, midpoint),
+                teamMode: teamMode
+                );
+            BattleTeam team2 = new BattleTeam(
+                teamID: 2,
+                trainers: allTrainers.GetRange(midpoint, allTrainers.Count - midpoint),
+                teamMode: teamMode
+                );
+            teams.Add(team1);
+            teams.Add(team2);
 
             // TODO: More than 2 trainers
-            for (int i = 0; i < allTrainers.Count && i < 2; i++)
+            for (int i = 0; i < humanTrainers.Count; i++)
             {
-                Trainer trainer = allTrainers[i];
-                BattleTeam team = new BattleTeam(
-                    teamMode: teamMode,
-                    trainers: new List<Trainer> { trainer }
-                    );
+                Trainer trainer = humanTrainers[i];
+                BattleTeam team = (trainer.teamID == team1.teamID)? team1 : team2;
 
-                // Synchronize trainer to player
+                // Synchronize trainer & team to player
                 PBS.Networking.Player player = GetPlayer(trainer.playerID);
                 player.playerID = trainer.playerID;
                 player.RpcSyncTrainerToClient(new Battle.View.Compact.Trainer(trainer));
                 player.RpcSyncTeamPerspectiveToClient(new Battle.View.Compact.Team(team));
-
-                teams.Add(team);
             }
 
             // Start Battle Core
             Debug.Log("Starting Battle! (From Network Manager)");
+            Debug.Log($"{team1.trainers.Count} vs. {team2.trainers.Count}");
             StartCoroutine(battleCore.StartBattle(battleSettings: battleSettings, teams: teams));
         }
 

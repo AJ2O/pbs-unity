@@ -57,7 +57,7 @@ public class BTLView : MonoBehaviour
                 Trainer trainer = battleModel.teams[i].trainers[j];
                 if (trainer.playerID == playerID)
                 {
-                    teamPos = trainer.teamPos;
+                    teamPos = trainer.teamID;
                     isSpectator = false;
                     return;
                 }
@@ -66,7 +66,7 @@ public class BTLView : MonoBehaviour
 
         // if you're a spectator, view a random team
         isSpectator = true;
-        teamPos = battleModel.teams[Random.Range(0, battleModel.teams.Count)].teamPos;
+        teamPos = battleModel.teams[Random.Range(0, battleModel.teams.Count)].teamID;
     }
     public void SetPlayerID(int playerID)
     {
@@ -202,7 +202,7 @@ public class BTLView : MonoBehaviour
         List<Trainer> allTrainers = battleModel.GetTrainers();
         for (int i = 0; i < allTrainers.Count; i++)
         {
-            if (allTrainers[i].teamPos != teamPos)
+            if (allTrainers[i].teamID != teamPos)
             {
                 enemyTrainers.Add(allTrainers[i]);
             }
@@ -287,7 +287,7 @@ public class BTLView : MonoBehaviour
                 else
                 {
                     // Player wins
-                    if (winningTeam.teamPos == teamPos) 
+                    if (winningTeam.teamID == teamPos) 
                     {
                         string text = "You defeated " + GetTrainerNames(losingTrainers) + "!";
                         yield return StartCoroutine(battleUI.DrawText(text));
@@ -870,7 +870,7 @@ public class BTLView : MonoBehaviour
     public ViewPerspective GetPerspective(Pokemon pokemon)
     {
         Trainer trainer = battleModel.GetPokemonOwner(pokemon);
-        if (trainer.teamPos != teamPos)
+        if (trainer.teamID != teamPos)
         {
             return ViewPerspective.Enemy;
         }

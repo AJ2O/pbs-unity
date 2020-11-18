@@ -179,7 +179,7 @@ public class Battle
         for (int i = 0; i < this.teams.Count; i++)
         {
             BattleTeam team = this.teams[i];
-            str += "Team " + team.teamPos + ": ";
+            str += "Team " + team.teamID + ": ";
             for (int j = 0; j < team.trainers.Count; j++) {
                 Trainer trainer = team.trainers[j];
                 str += trainer.name + " / ";
@@ -1104,7 +1104,7 @@ public class Battle
     {
         for (int i = 0; i < teams.Count; i++)
         {
-            if (teams[i].teamPos == searchTeam.teamPos)
+            if (teams[i].teamID == searchTeam.teamID)
             {
                 return teams[i];
             }
@@ -1117,7 +1117,7 @@ public class Battle
     {
         for (int i = 0; i < teams.Count; i++)
         {
-            if (teams[i].teamPos == teamPos)
+            if (teams[i].teamID == teamPos)
             {
                 return teams[i];
             }
@@ -1129,7 +1129,7 @@ public class Battle
         List<BattleTeam> enemyTeams = new List<BattleTeam>();
         for (int i = 0; i < teams.Count; i++)
         {
-            if (teams[i].teamPos != teamPos)
+            if (teams[i].teamID != teamPos)
             {
                 enemyTeams.Add(teams[i]);
             }
@@ -1143,13 +1143,13 @@ public class Battle
             return GetTeamFromPosition(pokemon.teamPos);
         }
         Trainer trainer = GetPokemonOwner(pokemon);
-        return GetTeamFromPosition(trainer.teamPos);
+        return GetTeamFromPosition(trainer.teamID);
     }
     public BattleTeam GetTeamFromPosition(int teamPos)
     {
         for (int i = 0; i < teams.Count; i++)
         {
-            if (teams[i].teamPos == teamPos)
+            if (teams[i].teamID == teamPos)
             {
                 return teams[i];
             }
@@ -1348,7 +1348,7 @@ public class Battle
         for (int i = 0; i < availablePokemon.Count; i++)
         {
             sentPokemon.Add(availablePokemon[i]);
-            sentPokemon[i].teamPos = trainer.teamPos;
+            sentPokemon[i].teamPos = trainer.teamID;
             sentPokemon[i].battlePos = emptyPositions[i];
             this.pokemonOnField.Add(sentPokemon[i]);
         }
@@ -1368,7 +1368,7 @@ public class Battle
         for (int j = 0; j < pokemonOnField.Count; j++)
         {
             Pokemon pokemon = pokemonOnField[j];
-            if (pokemon.teamPos == trainer.teamPos
+            if (pokemon.teamPos == trainer.teamID
                 && positions.Contains(pokemon.battlePos))
             {
                 positions.Remove(pokemon.battlePos);
@@ -1437,7 +1437,7 @@ public class Battle
     }
     public void TrainerSendPokemon(Trainer trainer, Pokemon pokemon, int emptyPos)
     {
-        pokemon.teamPos = trainer.teamPos;
+        pokemon.teamPos = trainer.teamID;
         pokemon.battlePos = emptyPos;
         pokemon.bProps.switchedIn = true;
         AddPokemonToField(pokemon);
@@ -1514,7 +1514,7 @@ public class Battle
     }
     public bool ArePokemonAndTrainerSameTeam(Pokemon pokemon, Trainer trainer)
     {
-        return pokemon.teamPos == trainer.teamPos;
+        return pokemon.teamPos == trainer.teamID;
     }
 
     // Pokemon: Field / Positioning Methods
@@ -1626,7 +1626,7 @@ public class Battle
         List<BattlePosition> battlePositions = new List<BattlePosition>();
         for (int i = 0; i < teams.Count; i++)
         {
-            int teamPos = teams[i].teamPos;
+            int teamPos = teams[i].teamID;
             for (int j = 0; j < teams[i].trainers.Count; j++)
             {
                 for (int k = 0; k < teams[i].trainers[j].controlPos.Length; k++)
@@ -1663,7 +1663,7 @@ public class Battle
     {
         for (int i = 0; i < teams.Count; i++)
         {
-            if (teams[i].teamPos != pokemon.teamPos)
+            if (teams[i].teamID != pokemon.teamPos)
             {
                 return teams[i];
             }

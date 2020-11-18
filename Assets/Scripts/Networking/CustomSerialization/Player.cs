@@ -11,6 +11,7 @@ namespace PBS.Networking.CustomSerialization
         {
             writer.WriteInt32((int)obj.commandType);
             writer.WriteString(obj.commandUser);
+            writer.WriteInt32(obj.commandTrainer);
             writer.WriteBoolean(obj.inProgress);
             writer.WriteBoolean(obj.completed);
             writer.WriteInt32(obj.commandPriority);
@@ -49,6 +50,7 @@ namespace PBS.Networking.CustomSerialization
             {
                 commandType = (BattleCommandType)reader.ReadInt32(),
                 commandUser = reader.ReadString(),
+                commandTrainer = reader.ReadInt32(),
                 inProgress = reader.ReadBoolean(),
                 completed = reader.ReadBoolean(),
                 commandPriority = reader.ReadInt32(),

@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace PBS.Databases
+{
+
+}
+
 public class AbilityDatabase
 {
     //create an object of SingleObject

@@ -76,6 +76,7 @@ public class BattleCommand
     // General
     public BattleCommandType commandType;
     public Pokemon commandUser;
+    public Trainer commandTrainer;
     public bool inProgress = false;
     public bool completed = false;
     public int commandPriority = 0;
@@ -240,6 +241,7 @@ public class BattleCommand
         command.switchPosition = playerCommand.switchPosition;
 
         command.itemID = playerCommand.itemID;
+        return command;
     }
 }
 

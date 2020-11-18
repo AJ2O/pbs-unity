@@ -11,7 +11,7 @@ public class BattleTeam
     }
 
     // General
-    public int teamPos;
+    public int teamID;
     public TeamMode teamMode;
 
     // Trainers
@@ -24,17 +24,18 @@ public class BattleTeam
     public BattleTeam(
         TeamMode teamMode = TeamMode.Single,
         List<Trainer> trainers = null,
-        int teamPos = 0,
+        int teamID = 0,
         bool setupControl = true)
     {
         this.teamMode = teamMode;
-        this.teamPos = teamPos;
+        this.teamID = teamID;
         this.trainers = new List<Trainer>();
         if (trainers != null)
         {
             this.trainers.AddRange(trainers);
             if (setupControl)
             {
+                SetTeamPos(this.teamID);
                 SetUpTrainerControl();
             }
         }
@@ -54,7 +55,7 @@ public class BattleTeam
         BattleTeam cloneTeam = new BattleTeam(
             teamMode: original.teamMode,
             trainers: trainers,
-            teamPos: original.teamPos,
+            teamID: original.teamID,
             setupControl: false
             );
         cloneTeam.bProps = BattleTeamProperties.Clone(original.bProps);
@@ -63,10 +64,10 @@ public class BattleTeam
     
     public void SetTeamPos(int pos)
     {
-        teamPos = pos;
+        teamID = pos;
         for (int i = 0; i < trainers.Count; i++)
         {
-            trainers[i].teamPos = pos;
+            trainers[i].teamID = pos;
         }
     }
 

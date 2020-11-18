@@ -15,6 +15,13 @@ namespace PBS.Networking.CustomSerialization
             writer.WriteString(obj.nickname);
             writer.WriteInt32(obj.teamPos);
             writer.WriteInt32(obj.battlePos);
+            writer.WriteInt32(obj.currentHP);
+            writer.WriteInt32(obj.maxHP);
+            writer.WriteBoolean(obj.isFainted);
+            writer.WriteInt32(obj.level);
+            writer.WriteInt32((int)obj.gender);
+            writer.WriteString(obj.nonVolatileStatus);
+            writer.WriteInt32((int)obj.dynamaxState);
         }
         public static PBS.Battle.View.Compact.Pokemon ReadBattleViewCompactPokemon(this NetworkReader reader)
         {
@@ -24,7 +31,14 @@ namespace PBS.Networking.CustomSerialization
                 pokemonID = reader.ReadString(),
                 nickname = reader.ReadString(),
                 teamPos = reader.ReadInt32(),
-                battlePos = reader.ReadInt32()
+                battlePos = reader.ReadInt32(),
+                currentHP = reader.ReadInt32(),
+                maxHP = reader.ReadInt32(),
+                isFainted = reader.ReadBoolean(),
+                level = reader.ReadInt32(),
+                gender = (PokemonGender)reader.ReadInt32(),
+                nonVolatileStatus = reader.ReadString(),
+                dynamaxState = (Pokemon.DynamaxState)reader.ReadInt32()
             };
         }
 
@@ -37,6 +51,7 @@ namespace PBS.Networking.CustomSerialization
             writer.WriteInt32(obj.teamPos);
             writer.WriteList(obj.party);
             writer.WriteList(obj.items);
+            writer.WriteList(obj.controlPos);
         }
         public static PBS.Battle.View.Compact.Trainer ReadBattleViewCompactTrainer(this NetworkReader reader)
         {
@@ -46,7 +61,8 @@ namespace PBS.Networking.CustomSerialization
                 playerID = reader.ReadInt32(),
                 teamPos = reader.ReadInt32(),
                 party = reader.ReadList<PBS.Battle.View.Compact.Pokemon>(),
-                items = reader.ReadList<string>()
+                items = reader.ReadList<string>(),
+                controlPos = reader.ReadList<int>()
             };
         }
 
@@ -68,14 +84,16 @@ namespace PBS.Networking.CustomSerialization
         // Battle Team
         public static void WriteBattleViewCompactTeam(this NetworkWriter writer, PBS.Battle.View.Compact.Team obj)
         {
-            writer.WriteInt32(obj.teamPos);
+            writer.WriteInt32(obj.teamID);
+            writer.WriteInt32((int)obj.teamMode);
             writer.WriteList(obj.trainers);
         }
         public static PBS.Battle.View.Compact.Team ReadBattleViewCompactTeam(this NetworkReader reader)
         {
             return new PBS.Battle.View.Compact.Team
             {
-                teamPos = reader.ReadInt32(),
+                teamID = reader.ReadInt32(),
+                teamMode = (PBS.Battle.Enums.TeamMode)reader.ReadInt32(),
                 trainers = reader.ReadList<PBS.Battle.View.Compact.Trainer>()
             };
         }

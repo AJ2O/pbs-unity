@@ -1,6 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+namespace PBS.Databases
+{
+
+}
+
 public class ItemDatabase
 {
     //create an object of SingleObject

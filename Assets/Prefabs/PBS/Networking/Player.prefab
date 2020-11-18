@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7698249296698725266}
   - component: {fileID: 1917708358845339625}
   - component: {fileID: 4626192833182395912}
+  - component: {fileID: 7096743757927641120}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -62,3 +63,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 1
   syncInterval: 0.1
+  playerID: 0
+  battleUI: {fileID: 0}
+  sceneCanvas: {fileID: 0}
+  controls: {fileID: 7096743757927641120}
+--- !u!114 &7096743757927641120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727982243462099950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e8e824c7bab9dc4f9a703bdff073283, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 4626192833182395912}
+  battleUI: {fileID: 0}
+  sceneCanvas: {fileID: 0}
+  isSendingCommands: 0
+  isSendingReplacements: 0

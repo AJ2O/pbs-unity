@@ -16,6 +16,7 @@ namespace PBS.Battle.View
         public Model() { }
         public Model(PBS.Battle.Core.Model obj)
         {
+            settings = obj.battleSettings;
             teams = new List<Compact.Team>();
             for (int i = 0; i < obj.teams.Count; i++)
             {
@@ -24,8 +25,20 @@ namespace PBS.Battle.View
         }
 
         // Matching methods
+        public PBS.Battle.View.Compact.Pokemon GetMatchingPokemon(PBS.Battle.View.Events.CommandAgent agent)
+        {
+            if (agent == null)
+            {
+                return null;
+            }
+            return GetMatchingPokemon(agent.pokemonUniqueID);
+        }
         public PBS.Battle.View.Compact.Pokemon GetMatchingPokemon(PBS.Battle.View.Compact.Pokemon searchPokemon)
         {
+            if (searchPokemon == null)
+            {
+                return null;
+            }
             return GetMatchingPokemon(searchPokemon.uniqueID);
         }
         public PBS.Battle.View.Compact.Pokemon GetMatchingPokemon(string uniqueID)
@@ -38,6 +51,7 @@ namespace PBS.Battle.View
                     return allPokemon[i];
                 }
             }
+            Debug.LogWarning("Couldn't find pokemon with ID " + uniqueID);
             return null;
         }
         
@@ -55,24 +69,27 @@ namespace PBS.Battle.View
                     return allTrainers[i];
                 }
             }
+            Debug.LogWarning("Couldn't find player with ID " + playerID);
             return null;
         }
 
         public PBS.Battle.View.Compact.Team GetMatchingTeam(PBS.Battle.View.Compact.Team searchTeam)
         {
-            return GetMatchingTeam(searchTeam.teamPos);
+            return GetMatchingTeam(searchTeam.teamID);
         }
         public PBS.Battle.View.Compact.Team GetMatchingTeam(int teamID)
         {
             for (int i = 0; i < teams.Count; i++)
             {
-                if (teams[i].teamPos == teamID)
+                if (teams[i].teamID == teamID)
                 {
                     return teams[i];
                 }
             }
+            Debug.LogWarning("Couldn't find team with ID " + teamID);
             return null;
         }
+
 
         // Pokemon
         public List<PBS.Battle.View.Compact.Pokemon> GetPokemonFromTeam(PBS.Battle.View.Compact.Team team)
@@ -92,6 +109,48 @@ namespace PBS.Battle.View
                 allPokemon.AddRange(GetPokemonFromTeam(teams[i]));
             }
             return allPokemon;
+        }
+        public bool IsPokemonOnField(PBS.Battle.View.Compact.Pokemon pokemon)
+        {
+            return pokemon.battlePos >= 0;
+        }
+        public BattlePosition GetPokemonPosition(PBS.Battle.View.Compact.Pokemon pokemon)
+        {
+            return new BattlePosition(teamPos: pokemon.teamPos, battlePos: pokemon.battlePos);
+        }
+        public BattlePosition GetPokemonPosition(PBS.Battle.View.Events.CommandAgent pokemon)
+        {
+            return GetPokemonPosition(GetMatchingPokemon(pokemon.pokemonUniqueID));
+        }
+        public List<BattlePosition> GetAllBattlePositions() 
+        {
+            List<BattlePosition> battlePositions = new List<BattlePosition>();
+            for (int i = 0; i < teams.Count; i++)
+            {
+                int teamPos = teams[i].teamID;
+                for (int j = 0; j < teams[i].trainers.Count; j++)
+                {
+                    for (int k = 0; k < teams[i].trainers[j].controlPos.Count; k++)
+                    {
+                        int battlePos = teams[i].trainers[j].controlPos[k];
+                        battlePositions.Add(new BattlePosition(teamPos, battlePos));
+                    }
+                }
+            }
+            return battlePositions;
+        }
+        public PBS.Battle.View.Compact.Pokemon GetPokemonAtPosition(BattlePosition position)
+        {
+            List<PBS.Battle.View.Compact.Pokemon> allPokemon = GetPokemonFromAllTrainers();
+            for (int i = 0; i < allPokemon.Count; i++)
+            {
+                if (allPokemon[i].teamPos == position.teamPos
+                    && allPokemon[i].battlePos == position.battlePos)
+                {
+                    return allPokemon[i];
+                }
+            }
+            return null;
         }
 
 
@@ -165,7 +224,7 @@ namespace PBS.Battle.View
         {
             for (int i = 0; i < teams.Count; i++)
             {
-                if (teams[i].teamPos == trainer.teamPos)
+                if (teams[i].teamID == trainer.teamPos)
                 {
                     return teams[i];
                 }
@@ -182,7 +241,7 @@ namespace PBS.Battle.View
             List<PBS.Battle.View.Compact.Team> enemyTeams = new List<PBS.Battle.View.Compact.Team>();
             for (int i = 0; i < teams.Count; i++)
             {
-                if (teams[i].teamPos != team.teamPos)
+                if (teams[i].teamID != team.teamID)
                 {
                     enemyTeams.Add(teams[i]);
                 }

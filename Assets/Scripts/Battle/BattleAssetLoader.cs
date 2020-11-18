@@ -131,6 +131,7 @@ public class BattleAssetLoader : MonoBehaviour
         bool useBack = false,
         BTLSCN_Pokemon scnPokemon = null,
         BTLSCN_PokemonBW scnPokemonBW = null,
+        PBS.Battle.View.Scene.Entities.Pokemon scnPokemonNew = null,
         Image imagePokemon = null
         )
     {
@@ -138,7 +139,7 @@ public class BattleAssetLoader : MonoBehaviour
         yield return StartCoroutine(LegacyLoadPokemon(
             data: pokemonData,
             useicon: useicon, useFront: useFront, useBack: useBack,
-            scnPokemon: scnPokemon, scnPokemonBW: scnPokemonBW,
+            scnPokemon: scnPokemon, scnPokemonBW: scnPokemonBW, scnPokemonNew: scnPokemonNew,
             imagePokemon: imagePokemon
             ));
     }
@@ -150,6 +151,7 @@ public class BattleAssetLoader : MonoBehaviour
         bool useBack = false,
         BTLSCN_Pokemon scnPokemon = null,
         BTLSCN_PokemonBW scnPokemonBW = null,
+        PBS.Battle.View.Scene.Entities.Pokemon scnPokemonNew = null,
         Image imagePokemon = null)
     {
         PokemonData pokemonData = (pokemon.bProps.illusion != null) ?
@@ -157,7 +159,7 @@ public class BattleAssetLoader : MonoBehaviour
         yield return StartCoroutine(LegacyLoadPokemon(
             data: pokemonData,
             useicon: useicon, useFront: useFront, useBack: useBack,
-            scnPokemon: scnPokemon, scnPokemonBW: scnPokemonBW,
+            scnPokemon: scnPokemon, scnPokemonBW: scnPokemonBW, scnPokemonNew: scnPokemonNew,
             imagePokemon: imagePokemon
             ));
     }
@@ -167,6 +169,7 @@ public class BattleAssetLoader : MonoBehaviour
         bool useBack = false,
         BTLSCN_Pokemon scnPokemon = null,
         BTLSCN_PokemonBW scnPokemonBW = null,
+        PBS.Battle.View.Scene.Entities.Pokemon scnPokemonNew = null,
         Image imagePokemon = null)
     {
         // sprite loading
@@ -189,6 +192,7 @@ public class BattleAssetLoader : MonoBehaviour
                         spritePath: iconSprite,
                         scnPokemon: scnPokemon,
                         scnPokemonBW: scnPokemonBW,
+                        scnPokemonNew: scnPokemonNew,
                         imagePokemon: imagePokemon
                         );
                 }
@@ -200,6 +204,7 @@ public class BattleAssetLoader : MonoBehaviour
                 spritePath: iconSprite,
                 scnPokemon: scnPokemon, 
                 scnPokemonBW: scnPokemonBW, 
+                scnPokemonNew: scnPokemonNew,
                 imagePokemon: imagePokemon
                 );
         }
@@ -219,6 +224,7 @@ public class BattleAssetLoader : MonoBehaviour
                         spritePath: frontSprite,
                         scnPokemon: scnPokemon,
                         scnPokemonBW: scnPokemonBW,
+                        scnPokemonNew: scnPokemonNew,
                         imagePokemon: imagePokemon
                         );
                 }
@@ -230,6 +236,7 @@ public class BattleAssetLoader : MonoBehaviour
                 spritePath: frontSprite,
                 scnPokemon: scnPokemon,
                 scnPokemonBW: scnPokemonBW,
+                scnPokemonNew: scnPokemonNew,
                 imagePokemon: imagePokemon
                 );
         }
@@ -249,6 +256,7 @@ public class BattleAssetLoader : MonoBehaviour
                         spritePath: backSprite,
                         scnPokemon: scnPokemon,
                         scnPokemonBW: scnPokemonBW,
+                        scnPokemonNew: scnPokemonNew,
                         imagePokemon: imagePokemon
                         );
                 }
@@ -260,6 +268,7 @@ public class BattleAssetLoader : MonoBehaviour
                 spritePath: backSprite,
                 scnPokemon: scnPokemon,
                 scnPokemonBW: scnPokemonBW,
+                scnPokemonNew: scnPokemonNew,
                 imagePokemon: imagePokemon
                 );
         }
@@ -268,6 +277,7 @@ public class BattleAssetLoader : MonoBehaviour
         string spritePath,
         BTLSCN_Pokemon scnPokemon = null,
         BTLSCN_PokemonBW scnPokemonBW = null,
+        PBS.Battle.View.Scene.Entities.Pokemon scnPokemonNew = null,
         Image imagePokemon = null)
     {
         if (scnPokemon != null)
@@ -278,6 +288,11 @@ public class BattleAssetLoader : MonoBehaviour
         {
             scnPokemonBW.spriteRenderer.sprite = loadedPokemonSprites[spritePath];
             scnPokemonBW.shadowRenderer.sprite = loadedPokemonSprites[spritePath];
+        }
+        if (scnPokemonNew != null)
+        {
+            scnPokemonNew.spriteRenderer.sprite = loadedPokemonSprites[spritePath];
+            scnPokemonNew.shadowRenderer.sprite = loadedPokemonSprites[spritePath];
         }
         if (imagePokemon != null)
         {

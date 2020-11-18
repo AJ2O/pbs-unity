@@ -1,6 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+namespace PBS.Databases
+{
+
+}
+
 public class GameTextDatabase
 {
     //create an object of SingleObject
@@ -54,6 +59,46 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-pokemon-}} is unable to battle!" },
                 }
                 ) },
+        {"bpc-switch-already",
+            new GameTextData(
+                ID: "bpc-switch-already",
+                languageDict: new Dictionary<GameLanguages, string>
+                {
+                    { GameLanguages.English, "{{-pokemon-}} is already in battle!" },
+                }
+                ) },
+        {"bpc-switch-already-switch",
+            new GameTextData(
+                ID: "bpc-switch-already-switch",
+                languageDict: new Dictionary<GameLanguages, string>
+                {
+                    { GameLanguages.English, "{{-pokemon-}} is already switching in!" },
+                }
+                ) },
+        {"bpc-mega-already",
+            new GameTextData(
+                ID: "bpc-mega-already",
+                languageDict: new Dictionary<GameLanguages, string>
+                {
+                    { GameLanguages.English, "You are already Mega-Evolving another Pokémon!" },
+                }
+                ) },
+        {"bpc-zmove-already",
+            new GameTextData(
+                ID: "bpc-zmove-already",
+                languageDict: new Dictionary<GameLanguages, string>
+                {
+                    { GameLanguages.English, "You are already using a Z-Move!" },
+                }
+                ) },
+        {"bpc-dynamax-already",
+            new GameTextData(
+                ID: "bpc-dynamax-already",
+                languageDict: new Dictionary<GameLanguages, string>
+                {
+                    { GameLanguages.English, "You are already Dynamaxing with another Pokémon!" },
+                }
+                ) },
                 
         // TRAINER GENERAL
         {"trainer-perspective-player",
@@ -100,7 +145,7 @@ public class GameTextDatabase
                 ) },
         {"team-perspective-ally",
             new GameTextData(
-                ID: "team-perspective-player",
+                ID: "team-perspective-ally",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
                     { GameLanguages.English, "The ally team" },
@@ -174,7 +219,7 @@ public class GameTextDatabase
                 ID: "pokemon-dynamax",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
-                    { GameLanguages.English, "{{-user-pokemon-}} is reacting to {{-trainer-poss-LC-}} {{-item-name-}}!" },
+                    { GameLanguages.English, "{{-user-pokemon-}} is reacting to {{-trainer-poss-}} {{-item-name-}}!" },
                 }
                 ) },
         {"pokemon-dynamax-wild",
@@ -199,6 +244,15 @@ public class GameTextDatabase
                 languageDict: new Dictionary<GameLanguages, string>
                 {
                     { GameLanguages.English, "{{-user-pokemon-}} returned to regular size!" },
+                }
+                ) },
+                
+        {"pokemon-faint",
+            new GameTextData(
+                ID: "pokemon-faint",
+                languageDict: new Dictionary<GameLanguages, string>
+                {
+                    { GameLanguages.English, "{{-target-pokemon-}} fainted!" },
                 }
                 ) },
                 
@@ -3883,7 +3937,7 @@ public class GameTextDatabase
                 ID: "team-status-mist-test",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
-                    { GameLanguages.English, "The mist prevented {{-target-team-}}'s {{-stat-types-LC-}} from being lowered!" },
+                    { GameLanguages.English, "The mist prevented {{-target-team-}}'s {{-stat-types-}} from being lowered!" },
                 }
                 ) },
 

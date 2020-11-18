@@ -11,6 +11,8 @@ namespace PBS.Static
         public static Master instance;
 
         public PBS.Networking.Manager networkManager;
+        public PBS.Battle.View.UI.Canvas ui;
+        public PBS.Battle.View.Scene.Canvas scene;
 
         void Awake()
         {

@@ -11,7 +11,7 @@ public class Trainer
 {
     // General
     public string name;
-    public int teamPos;
+    public int teamID;
     public bool isWildPokemon;
     public Item megaRing;
     public Item ZRing;
@@ -42,7 +42,7 @@ public class Trainer
     {
         this.name = name;
         this.playerID = playerID;
-        this.teamPos = teamPos;
+        this.teamID = teamPos;
 
         this.party = new List<Pokemon>();
         if (party != null)
@@ -81,7 +81,7 @@ public class Trainer
 
         Trainer cloneTrainer = new Trainer(
             name: name,
-            playerID: playerID, teamPos: teamPos,
+            playerID: playerID, teamPos: teamID,
             isWildPokemon: isWildPokemon,
             party: partyPokemon,
             items: trainerItems,
@@ -92,7 +92,7 @@ public class Trainer
             );
 
         // battle
-        cloneTrainer.teamPos = teamPos;
+        cloneTrainer.teamID = teamID;
         cloneTrainer.controlPos = controlPos;
         cloneTrainer.bProps = bProps.Clone(cloneTrainer);
         return cloneTrainer;
