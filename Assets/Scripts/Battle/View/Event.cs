@@ -22,6 +22,7 @@ namespace PBS.Battle.View.Events
         public int winningTeam;
     }
 
+
     // Messages
 
     /// <summary>
@@ -77,9 +78,9 @@ namespace PBS.Battle.View.Events
         }
         public List<string> pokemonListIDs = new List<string>();
 
-        public int trainerID = -1;
+        public int trainerID = 0;
 
-        public int teamID = -1;
+        public int teamID = 0;
 
         public string typeID = "";
         public List<string> typeIDs = new List<string>();
@@ -119,18 +120,75 @@ namespace PBS.Battle.View.Events
         public int teamID;
     }
 
+
     // Backend
     public class ModelUpdate : Base
     {
-        public enum UpdateType
-        {
-            None,
-            LoadAssets
-        }
-        public UpdateType updateType;
-        public bool synchronize = true;
-        public Battle.View.Model model;
+        public bool loadAssets = false;
     }
+    public class ModelUpdateLoadAssets : Base
+    {
+
+    }
+    public class ModelUpdatePokemon : Base
+    {
+        public bool loadAsset = false;
+        public View.Compact.Pokemon pokemon;
+    }
+    public class ModelUpdateTrainer : Base
+    {
+        public bool loadAsset = false;
+        public string name = "";
+        public int playerID = 0;
+        public int teamID = 0;
+        public List<string> party = new List<string>();
+        public List<string> items = new List<string>();
+        public List<int> controlPos = new List<int>();
+
+        public ModelUpdateTrainer() { }
+        public ModelUpdateTrainer(Trainer trainer, bool loadAsset = false)
+        {
+            this.loadAsset = loadAsset;
+            name = trainer.name;
+            playerID = trainer.playerID;
+            teamID = trainer.teamID;
+
+            for (int i = 0; i < trainer.party.Count; i++)
+            {
+                party.Add(trainer.party[i].uniqueID);
+            }
+            for (int i = 0; i < trainer.items.Count; i++)
+            {
+                items.Add(trainer.items[i].itemID);
+            }
+            for (int i = 0; i < trainer.controlPos.Length; i++)
+            {
+                controlPos.Add(trainer.controlPos[i]);
+            }
+        }
+    }
+    public class ModelUpdateTeam : Base
+    {
+        public bool loadAsset = false;
+        public int teamID = 0;
+        public Battle.Enums.TeamMode teamMode = Battle.Enums.TeamMode.Single;
+        public List<int> trainers = new List<int>();
+
+        public ModelUpdateTeam() { }
+        public ModelUpdateTeam(BattleTeam obj, bool loadAsset = false)
+        {
+            this.loadAsset = loadAsset;
+            teamID = obj.teamID;
+            teamMode = (obj.teamMode == BattleTeam.TeamMode.Single)? Battle.Enums.TeamMode.Single
+                : (obj.teamMode == BattleTeam.TeamMode.Double)? Battle.Enums.TeamMode.Double
+                : Battle.Enums.TeamMode.Triple;
+            for (int i = 0; i < obj.trainers.Count; i++)
+            {
+                trainers.Add(obj.trainers[i].playerID);
+            }
+        }
+    }
+
 
     // Command Prompts
     public class CommandAgent
@@ -188,6 +246,7 @@ namespace PBS.Battle.View.Events
         public int playerID;
         public int[] fillPositions;
     }
+
 
     // Trainer Interactions
     public class TrainerSendOut : Base
@@ -334,16 +393,6 @@ namespace PBS.Battle.View.Events
     // Items
 
     // Status
-
-    // Misc
-    public class PokemonMiscProtect : Base
-    {
-        public string pokemonUniqueID;
-    }
-    public class PokemonMiscMatBlock : Base
-    {
-        public int teamID;
-    }
 
 
 }

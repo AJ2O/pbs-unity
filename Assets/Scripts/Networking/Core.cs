@@ -39,7 +39,7 @@ namespace PBS.Networking {
             List<PBS.Networking.Player> playerObjs = PBS.Static.Master.instance.networkManager.GetAllPlayers();
             for (int i = 0; i < playerObjs.Count; i++)
             {
-                playerObjs[i].TargetReceiveEvent(bEvent);
+                SendEventToPlayer(bEvent, playerObjs[i].playerID);
             }
         }
         public void SendEventToPlayer(PBS.Battle.View.Events.Base bEvent, int playerID)
@@ -47,7 +47,8 @@ namespace PBS.Networking {
             PBS.Networking.Player playerObj = PBS.Static.Master.instance.networkManager.GetPlayer(playerID);
             if (playerObj != null)
             {
-                playerObj.TargetReceiveEvent(bEvent);
+                NetworkIdentity opponentIdentity = playerObj.GetComponent<NetworkIdentity>();
+                playerObj.TargetReceiveEvent(opponentIdentity.connectionToClient, bEvent);
             }
         }
         public void SendEvents(List<PBS.Battle.View.Events.Base> bEvents)
@@ -57,13 +58,58 @@ namespace PBS.Networking {
                 SendEvent(bEvents[i]);
             }
         }
+        public void InitializeClients(bool loadAssets = true)
+        {
+            UpdateClients(true, true, true, true);
+            if (loadAssets)
+            {
+                SendEvent(new Battle.View.Events.ModelUpdate());
+            }
+        }
         public void UpdateClients()
         {
-            SendEvent(new PBS.Battle.View.Events.ModelUpdate 
-            { 
-                model = new PBS.Battle.View.Model(battle), 
-                updateType = PBS.Battle.View.Events.ModelUpdate.UpdateType.None 
-            });
+            UpdateClients(updateTeam: true, updateTrainer: true, updatePokemon: true);
+        }
+        public void UpdateClients(
+            bool updateTeam = false,
+            bool updateTrainer = false,
+            bool updatePokemon = false,
+            bool loadAsset = false
+            )
+        {
+            // Send all teams
+            if (updateTeam)
+            {
+                List<BattleTeam> teams = new List<BattleTeam>(battle.teams);
+                for (int i = 0; i < teams.Count; i++)
+                {
+                    SendEvent(new Battle.View.Events.ModelUpdateTeam(teams[i], loadAsset));
+                }
+            }
+
+            // Send all trainers
+            if (updateTrainer)
+            {
+                List<Trainer> trainers = battle.GetTrainers();
+                for (int i = 0; i < trainers.Count; i++)
+                {
+                    SendEvent(new Battle.View.Events.ModelUpdateTrainer(trainers[i], loadAsset));
+                }
+            }
+
+            // Send all pokemon
+            if (updatePokemon)
+            {
+                List<Pokemon> pokemon = battle.GetPokemonFromAllTrainers();
+                for (int i = 0; i < pokemon.Count; i++)
+                {
+                    SendEvent(new Battle.View.Events.ModelUpdatePokemon
+                    {
+                        pokemon = new Battle.View.Compact.Pokemon(pokemon[i]),
+                        loadAsset = loadAsset
+                    });
+                }
+            }
         }
 
         // Player Queries
@@ -80,7 +126,8 @@ namespace PBS.Networking {
             PBS.Networking.Player playerObj = PBS.Static.Master.instance.networkManager.GetPlayer(playerID);
             if (playerObj != null)
             {
-                playerObj.TargetReceiveQueryResponse(response);
+                NetworkIdentity opponentIdentity = playerObj.GetComponent<NetworkIdentity>();
+                playerObj.TargetReceiveQueryResponse(opponentIdentity.connectionToClient, response);
             }
         }
 
@@ -93,11 +140,7 @@ namespace PBS.Networking {
             battle = new Battle.Core.Model(battleSettings: battleSettings, turns: 0, teams: teams);
 
             // load assets on player clients
-            SendEvent(new PBS.Battle.View.Events.ModelUpdate 
-            { 
-                model = new PBS.Battle.View.Model(battle), 
-                updateType = PBS.Battle.View.Events.ModelUpdate.UpdateType.LoadAssets 
-            });
+            InitializeClients();
 
             // send start message
             SendEvent(new PBS.Battle.View.Events.StartBattle());
@@ -887,9 +930,11 @@ namespace PBS.Networking {
                             {
                                 string textID = effect.GetString(1);
                                 textID = (textID == "DEFAULT") ? "move-ingrain-heal" : textID;
-                                SendEvent(new Battle.View.Events.Message
+                                SendEvent(new Battle.View.Events.MessageParameterized
                                 {
-                                    message = currentTarget + " absorbed nutrients with its roots!"
+                                    messageCode = textID,
+                                    pokemonTargetID = currentTarget.uniqueID,
+                                    moveID = moveData.ID
                                 });
 
                                 yield return StartCoroutine(PBPChangePokemonHP(
@@ -3853,8 +3898,10 @@ namespace PBS.Networking {
                                         )
                                     {
                                         curHitTeam.affectedByMove = false;
-                                        SendEvent(new Battle.View.Events.PokemonMiscMatBlock
+                                        SendEvent(new Battle.View.Events.MessageParameterized
                                         {
+                                            messageCode = protect.protectText,
+                                            pokemonUserID = userPokemon.uniqueID,
                                             teamID = currentTeam.teamID
                                         });
                                     }
@@ -3887,8 +3934,10 @@ namespace PBS.Networking {
                                             )
                                         {
                                             curHitTeam.affectedByMove = false;
-                                            SendEvent(new Battle.View.Events.PokemonMiscMatBlock
+                                            SendEvent(new Battle.View.Events.MessageParameterized
                                             {
+                                                messageCode = protect.protectText,
+                                                pokemonUserID = userPokemon.uniqueID,
                                                 teamID = currentTeam.teamID
                                             });
                                         }
@@ -3992,9 +4041,12 @@ namespace PBS.Networking {
                                             )
                                         {
                                             hitTarget.affectedByMove = false;
-                                            SendEvent(new Battle.View.Events.PokemonMiscProtect
+                                            SendEvent(new Battle.View.Events.MessageParameterized
                                             {
-                                                pokemonUniqueID = currentTarget.uniqueID
+                                                messageCode = protect.protectText,
+                                                pokemonUserID = userPokemon.uniqueID,
+                                                pokemonTargetID = currentTarget.uniqueID,
+                                                teamID = currentTeam.teamID
                                             });
                                         }
                                     }
@@ -4262,14 +4314,15 @@ namespace PBS.Networking {
                                         || hitTarget.protection != null)
                                     {
                                         damage = Mathf.FloorToInt(damage * 0.25f);
-                                        SendEvent(new Battle.View.Events.Message
+                                        SendEvent(new Battle.View.Events.MessageParameterized
                                         {
-                                            message = currentTarget.nickname + " couldn't fully protect itself!"
+                                            messageCode = "zmove-protect",
+                                            pokemonTargetID = currentTarget.uniqueID
                                         });
                                     }
 
                                     // Substitute / Disguise / Ice Face Check
-                                    if (!bypassSubstitute && !string.IsNullOrEmpty(currentTarget.bProps.substituteMove))
+                                    if (!bypassSubstitute)
                                     {
                                         // Substitute
                                         if (directHit && !string.IsNullOrEmpty(currentTarget.bProps.substituteMove))
@@ -4304,8 +4357,6 @@ namespace PBS.Networking {
                                                 }
                                             }
                                         }
-                                    
-                                    
                                     }
 
                                     // Only reduce pokemon HP on a direct hit
@@ -4500,9 +4551,13 @@ namespace PBS.Networking {
                                 );
 
                             battle.AddWishCommand(wishCommand);
-                            SendEvent(new Battle.View.Events.Message
+                            string textID = effect.GetString(0);
+                            textID = (textID == "DEFAULT") ? "move-wish-start" : textID;
+                            SendEvent(new Battle.View.Events.MessageParameterized
                             {
-                                message = userPokemon.nickname + " made a wish!"
+                                messageCode = textID,
+                                pokemonUserID = userPokemon.uniqueID,
+                                moveID = masterMoveData.ID
                             });
                         }
 
@@ -5195,9 +5250,14 @@ namespace PBS.Networking {
 
                                 MoveData destinyBond = MoveDatabase.instance.GetMoveData(currentTarget.destinyBondMove);
                                 MoveEffect effect = destinyBond.GetEffect(MoveEffectType.DestinyBond);
-                                SendEvent(new Battle.View.Events.Message
+                                string textID = effect.GetString(1);
+                                textID = (textID == "DEFAULT") ? "move-destinybond-success-default" : textID;
+
+                                SendEvent(new Battle.View.Events.MessageParameterized
                                 {
-                                    message = userPokemon.nickname + " took its attacker down with it!"
+                                    messageCode = textID,
+                                    pokemonUserID = currentTarget.pokemon.uniqueID,
+                                    pokemonTargetID = userPokemon.uniqueID
                                 });
 
                                 int preHP = userPokemon.currentHP;
@@ -5998,10 +6058,13 @@ namespace PBS.Networking {
                             int damageDealt = battle.SubtractPokemonHP(userPokemon, damage);
                             int postHP = userPokemon.currentHP;
                             string textCodeID = jumpKickEffect.GetString(0);
+                            textCodeID = (textCodeID == "DEFAULT") ? "move-jumpkick-fail-default" : textCodeID;
 
-                            SendEvent(new Battle.View.Events.Message
+                            SendEvent(new Battle.View.Events.MessageParameterized
                             {
-                                message = userPokemon.nickname + " kept going and crashed!"
+                                messageCode = textCodeID,
+                                pokemonUserID = userPokemon.uniqueID,
+                                moveID = masterMoveData.ID
                             });
                             yield return StartCoroutine(PBPChangePokemonHP(
                                 pokemon: userPokemon,
@@ -11327,6 +11390,7 @@ namespace PBS.Networking {
                     {
                         messageCode = effect.displayText,
                         pokemonListIDs = pokemonIDs,
+                        teamID = team.teamID,
                         statusTeamID = statusData.ID
                     });
                     for (int i = 0; i < dmgEvents.Count; i++)
@@ -11515,7 +11579,7 @@ namespace PBS.Networking {
                     SendEvent(new Battle.View.Events.MessageParameterized
                     {
                         messageCode = inflictText,
-                        pokemonUserID = userPokemon.uniqueID
+                        pokemonUserID = (userPokemon == null)? "" : userPokemon.uniqueID
                     });
 
                     yield return StartCoroutine(ExecuteBattleSEsByTiming(
@@ -12121,7 +12185,13 @@ namespace PBS.Networking {
                         {
                             EffectDatabase.AbilityEff.FlameBody flameBody = 
                                 flameBody_ as EffectDatabase.AbilityEff.FlameBody;
-                            if (Random.value <= flameBody.chance)
+                            if (Random.value <= flameBody.chance
+                                && battle.DoEffectFiltersPass(
+                                    filters: flameBody.filters,
+                                    userPokemon: currentTarget.pokemon,
+                                    targetPokemon: userPokemon,
+                                    moveData: moveData
+                                    ))
                             {
                                 EffectDatabase.General.InflictStatus inflictStatus = flameBody.inflictStatus;
 
@@ -15695,14 +15765,14 @@ namespace PBS.Networking {
             PBS.Battle.View.Events.MessageParameterized defaultFail = new PBS.Battle.View.Events.MessageParameterized
             {
                 messageCode = statusData.failTextID,
-                pokemonUserID = userPokemon.uniqueID,
+                pokemonUserID = (userPokemon == null)? "" : userPokemon.uniqueID,
                 pokemonTargetID = targetPokemon.uniqueID,
                 statusID = statusID
             };
             PBS.Battle.View.Events.MessageParameterized defaultAlready = new PBS.Battle.View.Events.MessageParameterized
             {
                 messageCode = statusData.alreadyTextID,
-                pokemonUserID = userPokemon.uniqueID,
+                pokemonUserID = (userPokemon == null)? "" : userPokemon.uniqueID,
                 pokemonTargetID = targetPokemon.uniqueID,
                 statusID = statusID
             };
@@ -15970,7 +16040,7 @@ namespace PBS.Networking {
                     SendEvent(new Battle.View.Events.MessageParameterized
                     {
                         messageCode = inflictText,
-                        pokemonUserID = userPokemon.uniqueID,
+                        pokemonUserID = (userPokemon == null)? "" : userPokemon.uniqueID,
                         pokemonTargetID = targetPokemon.uniqueID
                     });
                 }
@@ -16111,7 +16181,7 @@ namespace PBS.Networking {
                 SendEvent(new Battle.View.Events.MessageParameterized
                 {
                     messageCode = inflictText,
-                    pokemonUserID = userPokemon.uniqueID,
+                    pokemonUserID = (userPokemon == null)? "" : userPokemon.uniqueID,
                     teamID = targetTeam.teamID,
                     statusTeamID = condition.statusID
                 });
@@ -16292,7 +16362,7 @@ namespace PBS.Networking {
                         SendEvent(new Battle.View.Events.MessageParameterized
                         {
                             messageCode = priorityBlock.GetString(0),
-                            pokemonUserID = userPokemon.nickname,
+                            pokemonUserID = (userPokemon == null)? "" : userPokemon.uniqueID,
                             statusID = higherPriorityCondition.statusID
                         });
                     }
@@ -16309,7 +16379,7 @@ namespace PBS.Networking {
                 SendEvent(new Battle.View.Events.MessageParameterized
                 {
                     messageCode = inflictText,
-                    pokemonUserID = userPokemon.nickname,
+                    pokemonUserID = (userPokemon == null)? "" : userPokemon.nickname,
                     statusID = condition.statusID
                 });
 
@@ -16468,9 +16538,15 @@ namespace PBS.Networking {
 
                                     if (removedStats.Count > 0 && forceFailureMessage)
                                     {
-                                        SendEvent(new Battle.View.Events.Message
+                                        string textID = mistEffect.GetString(0);
+                                        textID = (textID == "DEFAULT") ? "move-mist-protect" : textID;
+                                        SendEvent(new Battle.View.Events.MessageParameterized
                                         {
-                                            message = "The mist prevents " + targetPokemon.nickname + "'s stats from being lowered!"
+                                            messageCode = textID,
+                                            pokemonTargetID = targetPokemon.uniqueID,
+                                            teamID = targetTeam.teamID,
+                                            moveID = safeguardData.ID,
+                                            statList = new List<PokemonStats>(removedStats)
                                         });
                                     }
                                 }
@@ -16697,9 +16773,14 @@ namespace PBS.Networking {
             // Anim / Text here
             if (apply)
             {
-                SendEvent(new Battle.View.Events.Message
+                string textID = (consumeText == "") ? "item-consume-default" : consumeText;
+                SendEvent(new Battle.View.Events.MessageParameterized
                 {
-                    message = pokemon.nickname + " consumed its " + item.data.itemName + "!"
+                    messageCode = textID,
+                    pokemonUserID = pokemon.uniqueID,
+                    pokemonTargetID = holderPokemon.uniqueID,
+                    itemID = item.itemID,
+                    typeID = typeID
                 });
             }
 
@@ -16833,9 +16914,12 @@ namespace PBS.Networking {
                                         PBPShowAbility(curAlly, symbiosisPair.ability);
                                         pokemon.SetItem(targetItem);
                                         curAlly.UnsetItem(targetItem);
-                                        SendEvent(new Battle.View.Events.Message
+                                        SendEvent(new Battle.View.Events.MessageParameterized
                                         {
-                                            message = curAlly.nickname + " passed one " + item.data.itemName + " to " + pokemon.nickname + "!"
+                                            messageCode = symbiosis.displayText,
+                                            pokemonUserID = curAlly.uniqueID,
+                                            pokemonTargetID = pokemon.uniqueID,
+                                            itemID = targetItem.itemID
                                         });
                                     }
                                 }
@@ -16986,9 +17070,10 @@ namespace PBS.Networking {
                             canRecover = false;
                             if (forceEffectDisplay)
                             {
-                                SendEvent(new Battle.View.Events.Message
+                                SendEvent(new Battle.View.Events.MessageParameterized
                                 {
-                                    message = pokemon.nickname + " is already at maximum HP!"
+                                    messageCode = "pokemon-heal-fail",
+                                    pokemonTargetID = pokemon.uniqueID
                                 });
                             }
                         }
@@ -17092,9 +17177,10 @@ namespace PBS.Networking {
             }
 
             // send text event
-            SendEvent(new Battle.View.Events.Message
+            SendEvent(new Battle.View.Events.MessageParameterized
             {
-                message = userPokemon.nickname + " is recharging!"
+                messageCode = "move-recharge-default",
+                pokemonUserID = userPokemon.uniqueID
             });
             yield return null;
         }
@@ -17318,9 +17404,11 @@ namespace PBS.Networking {
                                 int postHP = pokemon.currentHP;
                                 string textID = dmgEffect.GetString(0);
 
-                                SendEvent(new Battle.View.Events.Message
+                                SendEvent(new Battle.View.Events.MessageParameterized
                                 {
-                                    message = pokemon.nickname + "was hurt by " + moveData.moveName +"!"
+                                    messageCode = textID,
+                                    pokemonTargetID = pokemon.uniqueID,
+                                    moveID = moveData.ID
                                 });
                                 yield return StartCoroutine(PBPChangePokemonHP(
                                     pokemon: pokemon,
@@ -17444,12 +17532,7 @@ namespace PBS.Networking {
             // Send Load Event
             string prevForm = pokemon.pokemonID;
             battle.PBPChangeForm(pokemon, toForm);
-            SendEvent(new Battle.View.Events.ModelUpdate
-            {
-                model = new PBS.Battle.View.Model(battle),
-                updateType = Battle.View.Events.ModelUpdate.UpdateType.LoadAssets,
-                synchronize = false
-            });
+            UpdateClients(updatePokemon: true, loadAsset: true);
 
             SendEvent(new Battle.View.Events.PokemonChangeForm
             {
@@ -17561,10 +17644,16 @@ namespace PBS.Networking {
                     }
                 }
 
-                // TODO: More descriptive
-                SendEvent(new Battle.View.Events.Message
+                if (textID == "")
                 {
-                    message = "Types were added to " + pokemon.nickname +"!"
+                    textID = "move-forestscurse-loss";
+                }
+                SendEvent(new Battle.View.Events.MessageParameterized
+                {
+                    messageCode = textID,
+                    pokemonUserID = pokemon.uniqueID,
+                    moveID = moveData.ID,
+                    typeIDs = new List<string>(removedTypes)
                 });
                 yield return null;
             }
@@ -17625,9 +17714,10 @@ namespace PBS.Networking {
                         abilityShown = true;
                         PBPShowAbility(pokemon, abilityData);
                     }
-                    SendEvent(new Battle.View.Events.Message
+                    SendEvent(new Battle.View.Events.MessageParameterized
                     {
-                        message = airLock.displayText
+                        messageCode = airLock.displayText,
+                        pokemonUserID = pokemon.uniqueID
                     });
                 }
 
@@ -17684,9 +17774,10 @@ namespace PBS.Networking {
                             abilityShown = true;
                             PBPShowAbility(pokemon, abilityData);
                         }
-                        SendEvent(new Battle.View.Events.Message
+                        SendEvent(new Battle.View.Events.MessageParameterized
                         {
-                            message = pokemon.nickname + " shuddered!"
+                            messageCode = anticipation.displayText,
+                            pokemonUserID = pokemon.uniqueID
                         });
                     }
                 }
@@ -17747,9 +17838,12 @@ namespace PBS.Networking {
                             abilityShown = true;
                             PBPShowAbility(pokemon, abilityData);
                         }
-                        SendEvent(new Battle.View.Events.Message
+                        SendEvent(new Battle.View.Events.MessageParameterized
                         {
-                            message = pokemon.nickname + " was alerted to its opponent's " + strongestMove.moveName + "!"
+                            messageCode = forewarn.displayText,
+                            pokemonUserID = pokemon.uniqueID, 
+                            pokemonTargetID = forewarnPokemon[Random.Range(0, forewarnPokemon.Count)].uniqueID,
+                            moveID = strongestMove.ID
                         });
                     }
                 }
@@ -17784,9 +17878,12 @@ namespace PBS.Networking {
                             Pokemon showPokemon = itemPokemon[i];
                             showPokemon.bProps.friskIdentified = true;
                             Item item = battle.PBPGetHeldItem(showPokemon);
-                            SendEvent(new Battle.View.Events.Message
+                            SendEvent(new Battle.View.Events.MessageParameterized
                             {
-                                message = pokemon.nickname + " frisked " + showPokemon.nickname + " and found one " + item.data.itemName + "!"
+                                messageCode = frisk.displayText,
+                                pokemonUserID = pokemon.uniqueID,
+                                pokemonTargetID = showPokemon.uniqueID,
+                                itemID = item.itemID
                             });
                         }
                     }
@@ -17829,9 +17926,11 @@ namespace PBS.Networking {
                         PBPShowAbility(pokemon, abilityData);
                     }
                     // TODO: More descriptive
-                    SendEvent(new Battle.View.Events.Message
+                    SendEvent(new Battle.View.Events.MessageParameterized
                     {
-                        message = "All moves of a certain type are increased in power!"
+                        messageCode = darkAura.displayText,
+                        pokemonUserID = pokemon.uniqueID,
+                        typeIDs = new List<string>(affectedTypes)
                     });
 
                 }
@@ -17930,10 +18029,11 @@ namespace PBS.Networking {
                                     affectedByIntimidate = false;
 
                                     PBPShowAbility(opposingPokemon[i], oppAbilities[k].data);
-                                    SendEvent(new Battle.View.Events.MessagePokemon
+                                    SendEvent(new Battle.View.Events.MessageParameterized
                                     {
-                                        postMessage = " was protected by " + oppAbilities[k].data.abilityName + "!",
-                                        pokemonUniqueIDs = new List<string> { opposingPokemon[i].uniqueID }
+                                        messageCode = intimidateBlock.displayText,
+                                        pokemonTargetID = opposingPokemon[i].uniqueID,
+                                        abilityID = ability.abilityID
                                     });
                                 }
                             }
@@ -18425,10 +18525,6 @@ namespace PBS.Networking {
                                 itemID = pickupItem.itemID,
                                 abilityID = ability.abilityID
                             });
-                            SendEvent(new Battle.View.Events.Message
-                            {
-                                message = pokemon.nickname + " picked up one " + pickupItem.data.itemName + "!"
-                            });
                         }
                     }
                 }
@@ -18667,9 +18763,11 @@ namespace PBS.Networking {
                 if (apply)
                 {
                     PBPShowAbility(pokemon, ability);
-                    SendEvent(new Battle.View.Events.Message
+                    SendEvent(new Battle.View.Events.MessageParameterized
                     {
-                        message = "The effects of aura abilities are reversed!"
+                        messageCode = auraBreak.displayText,
+                        pokemonUserID = pokemon.uniqueID,
+                        abilityID = ability.abilityID
                     });
                 }
             }
@@ -18809,10 +18907,11 @@ namespace PBS.Networking {
                             {
                                 battle.SetPokemonTypes(pokemon, condition.types);
                                 PBPShowAbility(pokemon, ability);
-                                SendEvent(new Battle.View.Events.MessagePokemon
+                                SendEvent(new Battle.View.Events.MessageParameterized
                                 {
-                                    postMessage = " turned into new types!",
-                                    pokemonUniqueIDs = new List<string> { pokemon.uniqueID }
+                                    messageCode = condition.displayText,
+                                    pokemonUserID = pokemon.uniqueID,
+                                    typeIDs = new List<string>(condition.types)
                                 });
                             }
                         }
@@ -18829,10 +18928,11 @@ namespace PBS.Networking {
                         {
                             battle.SetPokemonTypes(pokemon, originalTypes);
                             PBPShowAbility(pokemon, ability);
-                            SendEvent(new Battle.View.Events.MessagePokemon
+                            SendEvent(new Battle.View.Events.MessageParameterized
                             {
-                                postMessage = " turned back into its original typing.",
-                                pokemonUniqueIDs = new List<string> { pokemon.uniqueID }
+                                messageCode = mimicry.revertText,
+                                pokemonUserID = pokemon.uniqueID,
+                                typeIDs = new List<string>(originalTypes)
                             });
                         }
                     }
@@ -18846,10 +18946,10 @@ namespace PBS.Networking {
                 if (apply)
                 {
                     PBPShowAbility(pokemon, ability);
-                    SendEvent(new Battle.View.Events.MessagePokemon
+                    SendEvent(new Battle.View.Events.MessageParameterized
                     {
-                        postMessage = " breaks the mold!",
-                        pokemonUniqueIDs = new List<string> { pokemon.uniqueID }
+                        messageCode = moldBreaker.displayText,
+                        pokemonUserID = pokemon.uniqueID
                     });
                 }
             }
@@ -18901,9 +19001,10 @@ namespace PBS.Networking {
                 if (apply)
                 {
                     PBPShowAbility(pokemon, ability);
-                    SendEvent(new Battle.View.Events.Message
+                    SendEvent(new Battle.View.Events.MessageParameterized
                     {
-                        message = "Abilities have been neutralized!"
+                        messageCode = neutralizingGas.displayText,
+                        pokemonUserID = pokemon.uniqueID
                     });
                 }
             }
@@ -18959,10 +19060,11 @@ namespace PBS.Networking {
                 if (apply)
                 {
                     PBPShowAbility(pokemon, ability);
-                    SendEvent(new Battle.View.Events.MessagePokemon
+                    SendEvent(new Battle.View.Events.MessageParameterized
                     {
-                        postMessage = " is exerting its Pressure!",
-                        pokemonUniqueIDs = new List<string> { pokemon.uniqueID }
+                        messageCode = pressure.displayText,
+                        pokemonUserID = pokemon.uniqueID,
+                        abilityID = ability.abilityID
                     });
                 }
             }
@@ -19042,10 +19144,11 @@ namespace PBS.Networking {
                 if (apply)
                 {
                     PBPShowAbility(pokemon, ability);
-                    SendEvent(new Battle.View.Events.MessagePokemon
+                    SendEvent(new Battle.View.Events.MessageParameterized
                     {
-                        postMessage = " has to get it going!",
-                        pokemonUniqueIDs = new List<string> { pokemon.uniqueID }
+                        messageCode = slowStart.displayText,
+                        pokemonUserID = pokemon.uniqueID,
+                        abilityID = ability.abilityID
                     });
                 }
             }
@@ -19103,9 +19206,11 @@ namespace PBS.Networking {
                         Pokemon tracePokemon = traceablePokemon[Random.Range(0, traceablePokemon.Count)];
                         List<Pokemon.Ability> traceAbilities = battle.PBPGetAbilitiesGainable(tracePokemon);
                         PBPShowAbility(pokemon, ability);
-                        SendEvent(new Battle.View.Events.Message
+                        SendEvent(new Battle.View.Events.MessageParameterized
                         {
-                            message = pokemon.nickname + " traced " + tracePokemon.nickname + "'s ability!"
+                            messageCode = trace.displayText,
+                            pokemonUserID = pokemon.uniqueID,
+                            pokemonTargetID = tracePokemon.uniqueID
                         });
 
                         yield return StartCoroutine(PBPRemoveAbility(pokemon: pokemon, ability: ability));
@@ -19250,11 +19355,16 @@ namespace PBS.Networking {
             MoveEffect effect = moveData.GetEffect(MoveEffectType.EntryHazard);
 
             team.bProps.entryHazards.Remove(entryHazard);
-            SendEvent(new Battle.View.Events.MessageTeam
+            if (textID == "")
             {
-                preMessage = moveData.moveName + " was removed for ",
-                postMessage = "!",
-                teamID = team.teamID
+                textID = effect.GetString(2);
+            }
+
+            SendEvent(new Battle.View.Events.MessageParameterized
+            {
+                messageCode = textID,
+                teamID = team.teamID,
+                moveID = moveData.ID
             });
             yield return null;
         }
@@ -19267,10 +19377,17 @@ namespace PBS.Networking {
             MoveEffect effect = moveData.GetEffect(MoveEffectType.Reflect);
 
             team.bProps.reflectScreens.Remove(reflectScreen);
-            SendEvent(new Battle.View.Events.MessageTeam
+            if (textID == "")
             {
-                postMessage = "'s " + moveData.moveName + " wore off!",
-                teamID = team.teamID
+                textID = effect.GetString(2);
+                textID = (textID == "DEFAULT") ? "move-reflect-remove" : textID;
+            }
+
+            SendEvent(new Battle.View.Events.MessageParameterized
+            {
+                messageCode = textID,
+                teamID = team.teamID,
+                moveID = moveData.ID
             });
             yield return null;
         }
@@ -19283,10 +19400,17 @@ namespace PBS.Networking {
             MoveEffect effect = moveData.GetEffect(MoveEffectType.Safeguard);
 
             team.bProps.safeguards.Remove(safeguard);
-            SendEvent(new Battle.View.Events.MessageTeam
+            if (textID == "")
             {
-                postMessage = " is no longer protected by the mystical veil!",
-                teamID = team.teamID
+                textID = effect.GetString(2);
+                textID = (textID == "DEFAULT") ? "move-safeguard-remove" : textID;
+            }
+
+            SendEvent(new Battle.View.Events.MessageParameterized
+            {
+                messageCode = textID,
+                teamID = team.teamID,
+                moveID = moveData.ID
             });
             yield return null;
         }
@@ -19421,9 +19545,14 @@ namespace PBS.Networking {
                 targetPokemon.bProps.inFlyState = false;
                 targetPokemon.bProps.inShadowForceState = false;
 
-                SendEvent(new Battle.View.Events.Message
+                string textID = effect.GetString(1);
+                textID = (textID == "DEFAULT") ? "move-skydrop-free-default" : textID;
+
+                SendEvent(new Battle.View.Events.MessageParameterized
                 {
-                    message = targetPokemon.nickname + " was freed from " + moveData.moveName + "!"
+                    messageCode = textID,
+                    pokemonTargetID = targetPokemon.uniqueID,
+                    moveID = moveData.ID
                 });
             }
             yield return null;
@@ -19444,9 +19573,11 @@ namespace PBS.Networking {
                 if (trainer.GetItemCount(item.itemID) == 0)
                 {
                     itemSuccess = false;
-                    SendEvent(new Battle.View.Events.Message
+                    SendEvent(new Battle.View.Events.MessageParameterized
                     {
-                        message = trainer.name + " tried to use a " + item.data.itemName + ", but ran out!"
+                        messageCode = "item-fail-run-out",
+                        itemID = item.itemID,
+                        trainerID = trainer.playerID
                     });
                 }
             }
@@ -19478,9 +19609,11 @@ namespace PBS.Networking {
                 if (itemPokemon.bProps.embargo != null && !item.data.HasTag(ItemTag.BypassEmbargo))
                 {
                     itemSuccess = false;
-                    SendEvent(new Battle.View.Events.Message
+                    SendEvent(new Battle.View.Events.MessageParameterized
                     {
-                        message = itemPokemon.nickname + " can't use " + item.data.itemName + " due to its embargo!"
+                        messageCode = itemPokemon.bProps.embargo.effect.attemptText,
+                        pokemonUserID = itemPokemon.uniqueID,
+                        itemID = item.itemID
                     });
                 }
             }
@@ -19586,9 +19719,10 @@ namespace PBS.Networking {
                         runAwayAbility.data.GetEffectNew(AbilityEffectType.RunAway) as EffectDatabase.AbilityEff.RunAway;
                     PBPShowAbility(pokemon: runPokemon, ability: runAwayAbility);
                 }
-                SendEvent(new Battle.View.Events.Message
+                SendEvent(new Battle.View.Events.MessageParameterized
                 {
-                    message = runPokemon.nickname + " fled from battle!"
+                    messageCode = "pokemon-run",
+                    pokemonUserID = runPokemon.uniqueID
                 });
             
             }

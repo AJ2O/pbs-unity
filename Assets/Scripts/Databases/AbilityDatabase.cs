@@ -1698,7 +1698,13 @@ public class AbilityDatabase
                         damage: new EffectDatabase.General.Damage(
                             mode: EffectDatabase.General.Damage.DamageMode.MaxHPPercent,
                             value: 1f/8
-                            )
+                            ),
+                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        {
+                            new EffectDatabase.Filter.MoveCheck(
+                                moveTags: new MoveTag[] { MoveTag.MakesContact }
+                                ),
+                        }
                         ),
                 }
                 ) },
@@ -2942,7 +2948,13 @@ public class AbilityDatabase
                         damage: new EffectDatabase.General.Damage(
                             mode: EffectDatabase.General.Damage.DamageMode.MaxHPPercent,
                             value: 1f/8
-                            )
+                            ),
+                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        {
+                            new EffectDatabase.Filter.MoveCheck(
+                                moveTags: new MoveTag[] { MoveTag.MakesContact }
+                                ),
+                        }
                         ),
                 }
                 ) },

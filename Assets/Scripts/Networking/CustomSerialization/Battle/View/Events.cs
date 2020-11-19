@@ -24,6 +24,9 @@ namespace PBS.Networking.CustomSerialization.Battle.View
 
         // Backend (201 - 299)
         const int MODELUPDATE = 201;
+        const int MODELUPDATEPOKEMON = 202;
+        const int MODELUPDATETRAINER = 203;
+        const int MODELUPDATETEAM = 204;
 
         // Command Prompts (301 -399)
         const int COMMANDGENERALPROMPT = 301;
@@ -65,14 +68,6 @@ namespace PBS.Networking.CustomSerialization.Battle.View
         // Stats (1401 - 1499)
         const int POKEMONSTATCHANGE = 1401;
         const int POKEMONSTATUNCHANGEABLE = 1402;
-
-        // Items (1501 - 1599)
-
-        // Status
-
-        // Misc Status (2001 - 2099)
-        const int POKEMONMISCPROTECT = 2001;
-        const int POKEMONMISCMATBLOCK = 2002;
 
 
         public static void WriteBattleViewEvent(this NetworkWriter writer, PBS.Battle.View.Events.Base obj)
@@ -151,9 +146,32 @@ namespace PBS.Networking.CustomSerialization.Battle.View
             else if (obj is PBS.Battle.View.Events.ModelUpdate modelUpdate)
             {
                 writer.WriteInt32(MODELUPDATE);
-                writer.WriteInt32((int)modelUpdate.updateType);
-                writer.WriteBoolean(modelUpdate.synchronize);
-                writer.WriteBattleViewModel(modelUpdate.model);
+                writer.WriteBoolean(modelUpdate.loadAssets);
+            }
+            else if (obj is PBS.Battle.View.Events.ModelUpdatePokemon modelUpdatePokemon)
+            {
+                writer.WriteInt32(MODELUPDATEPOKEMON);
+                writer.WriteBoolean(modelUpdatePokemon.loadAsset);
+                writer.WriteBattleViewCompactPokemon(modelUpdatePokemon.pokemon);
+            }
+            else if (obj is PBS.Battle.View.Events.ModelUpdateTrainer modelUpdateTrainer)
+            {
+                writer.WriteInt32(MODELUPDATETRAINER);
+                writer.WriteBoolean(modelUpdateTrainer.loadAsset);
+                writer.WriteString(modelUpdateTrainer.name);
+                writer.WriteInt32(modelUpdateTrainer.playerID);
+                writer.WriteInt32(modelUpdateTrainer.teamID);
+                writer.WriteList(modelUpdateTrainer.party);
+                writer.WriteList(modelUpdateTrainer.items);
+                writer.WriteList(modelUpdateTrainer.controlPos);
+            }
+            else if (obj is PBS.Battle.View.Events.ModelUpdateTeam modelUpdateTeam)
+            {
+                writer.WriteInt32(MODELUPDATETEAM);
+                writer.WriteBoolean(modelUpdateTeam.loadAsset);
+                writer.WriteInt32(modelUpdateTeam.teamID);
+                writer.WriteInt32((int)modelUpdateTeam.teamMode);
+                writer.WriteList(modelUpdateTeam.trainers);
             }
 
 
@@ -302,18 +320,6 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 writer.WriteString(pokemonAbilityActivate.pokemonUniqueID);
                 writer.WriteString(pokemonAbilityActivate.abilityID);
             }
-
-            else if (obj is PBS.Battle.View.Events.PokemonMiscProtect pokemonMiscProtect)
-            {
-                writer.WriteInt32(POKEMONMISCPROTECT);
-                writer.WriteString(pokemonMiscProtect.pokemonUniqueID);
-            }
-            else if (obj is PBS.Battle.View.Events.PokemonMiscMatBlock pokemonMiscMatBlock)
-            {
-                writer.WriteInt32(POKEMONMISCMATBLOCK);
-                writer.WriteInt32(pokemonMiscMatBlock.teamID);
-            }
-
         }
         public static PBS.Battle.View.Events.Base ReadBattleViewEvent(this NetworkReader reader)
         {
@@ -409,9 +415,32 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 case MODELUPDATE:
                     return new PBS.Battle.View.Events.ModelUpdate
                     {
-                        updateType = (PBS.Battle.View.Events.ModelUpdate.UpdateType)reader.ReadInt32(),
-                        synchronize = reader.ReadBoolean(),
-                        model = reader.ReadBattleViewModel()
+                        loadAssets = reader.ReadBoolean()
+                    };
+                case MODELUPDATEPOKEMON:
+                    return new PBS.Battle.View.Events.ModelUpdatePokemon
+                    {
+                        loadAsset = reader.ReadBoolean(),
+                        pokemon = reader.ReadBattleViewCompactPokemon()
+                    };
+                case MODELUPDATETRAINER:
+                    return new PBS.Battle.View.Events.ModelUpdateTrainer
+                    {
+                        loadAsset = reader.ReadBoolean(),
+                        name = reader.ReadString(),
+                        playerID = reader.ReadInt32(),
+                        teamID = reader.ReadInt32(),
+                        party = reader.ReadList<string>(),
+                        items = reader.ReadList<string>(),
+                        controlPos = reader.ReadList<int>()
+                    };
+                case MODELUPDATETEAM:
+                    return new PBS.Battle.View.Events.ModelUpdateTeam
+                    {
+                        loadAsset = reader.ReadBoolean(),
+                        teamID = reader.ReadInt32(),
+                        teamMode = (PBS.Battle.Enums.TeamMode)reader.ReadInt32(),
+                        trainers = reader.ReadList<int>()
                     };
 
                 case COMMANDGENERALPROMPT:
@@ -537,6 +566,7 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                     }
                     statChange.statsToMod.AddRange(statsToMod);
                     return statChange;
+
                 case POKEMONSTATUNCHANGEABLE:
                     PBS.Battle.View.Events.PokemonStatUnchangeable statUnchangeable = new PBS.Battle.View.Events.PokemonStatUnchangeable
                     {
@@ -552,17 +582,6 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                     }
                     statUnchangeable.statsToMod.AddRange(statsToModUnchangeable);
                     return statUnchangeable;
-
-                case POKEMONMISCPROTECT:
-                    return new PBS.Battle.View.Events.PokemonMiscProtect
-                    {
-                        pokemonUniqueID = reader.ReadString()
-                    };
-                case POKEMONMISCMATBLOCK:
-                    return new PBS.Battle.View.Events.PokemonMiscMatBlock
-                    {
-                        teamID = reader.ReadInt32()
-                    };
 
                 default:
                     throw new System.Exception($"Invalid event type {type}");

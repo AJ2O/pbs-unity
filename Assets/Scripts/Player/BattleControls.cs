@@ -46,8 +46,8 @@ namespace PBS.Player
             controlBagCR,
             controlBagTargetCR;
         private bool waitCRActive = false;
-        PBS.Battle.View.Events.CommandGeneralPrompt commandPromptEvent;
-        private PBS.Battle.View.Events.CommandAgent commandPokemon;
+        Battle.View.Events.CommandGeneralPrompt commandPromptEvent;
+        private PBS.Battle.View.Events.CommandAgent commandAgent;
         private PBS.Battle.View.Compact.Trainer commandTrainer;
         private Command playerCommand;
         private Command[] committedCommands;
@@ -69,7 +69,7 @@ namespace PBS.Player
         // Fight
         private bool choosingFight;
         private bool forceMove;
-        private List<PBS.Battle.View.Events.CommandAgent.Moveslot> moveslots;
+        private List<Battle.View.Events.CommandAgent.Moveslot> moveslots;
         private int moveIndex;
         private bool canMegaEvolve, chooseMegaEvolve;
         private bool canZMove, chooseZMove;
@@ -78,7 +78,7 @@ namespace PBS.Player
 
         // Fight Target
         private bool choosingFightTarget;
-        private PBS.Battle.View.Events.CommandAgent.Moveslot selectedMoveslot;
+        private Battle.View.Events.CommandAgent.Moveslot selectedMoveslot;
         private List<List<BattlePosition>> moveTargets;
         private int moveTargetIndex;
 
@@ -86,7 +86,7 @@ namespace PBS.Player
         private bool choosingParty;
         private bool forceSwitch;
         private bool forceReplace;
-        private List<PBS.Battle.View.Compact.Pokemon> partySlots;
+        private List<Battle.View.Compact.Pokemon> partySlots;
         private int partyIndex;
         private int switchPosition;
 
@@ -105,7 +105,6 @@ namespace PBS.Player
         {
             _controls = new Controls();
             SwitchControlContext(ControlContext.None);
-            SetControls();
         }
 
         private void OnEnable()
@@ -117,7 +116,7 @@ namespace PBS.Player
             _controls.Disable();
         }
 
-        // Debug Controls
+        // Controls
 
         public void SetControls()
         {
@@ -283,8 +282,8 @@ namespace PBS.Player
             PBS.Battle.View.Events.CommandGeneralPrompt bEvent,
             Action<Command[]> callback)
         {
-            this.commandPromptEvent = bEvent;
-            PBS.Battle.View.Compact.Trainer trainer = battleModel.GetMatchingTrainer(bEvent.playerID);
+            commandPromptEvent = bEvent;
+            Battle.View.Compact.Trainer trainer = battleModel.GetMatchingTrainer(bEvent.playerID);
             committedCommands = new Command[bEvent.pokemonToCommand.Count];
 
             List<PBS.Battle.View.Events.CommandAgent> pokemonToControl 
@@ -355,7 +354,6 @@ namespace PBS.Player
                     setCommands: committedCommands,
                     forceSwitch: forceSwitch));
                 yield return controlCommandCR;
-                //Legacy_SwitchControlContext(ControlContext.None);
                 SwitchControlContext(ControlContext.None);
 
                 // go back a pokemon if we clicked back
@@ -381,7 +379,7 @@ namespace PBS.Player
             Command[] setCommands)
         {
             PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(agent);
-            commandPokemon = agent;
+            commandAgent = agent;
             commandTrainer = trainer;
             committedCommands = (setCommands == null) ? new Command[0] : setCommands;
 
@@ -418,7 +416,6 @@ namespace PBS.Player
                 yield return null;
             }
 
-            //Legacy_SwitchControlContext(ControlContext.None);
             SwitchControlContext(ControlContext.None);
         }
 
@@ -428,8 +425,7 @@ namespace PBS.Player
             Command[] setCommands,
             List<BattleExtraCommand> commandList)
         {
-            PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(agent);
-            commandPokemon = agent;
+            commandAgent = agent;
             commandTrainer = trainer;
             committedCommands = (setCommands == null) ? new Command[0] : setCommands;
 
@@ -444,7 +440,6 @@ namespace PBS.Player
 
             // set the controls and ui elements
             choosingExtraCommand = true;
-            //Legacy_SwitchControlContext(ControlContext.PartyCommand);
             SwitchControlContext(ControlContext.PartyCommand);
 
             battleUI.SwitchPanel(PBS.Battle.View.Enums.Panel.PartyCommand);
@@ -464,14 +459,14 @@ namespace PBS.Player
             bool forceMove = false)
         {
             PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(agent);
-            commandPokemon = agent;
+            commandAgent = agent;
             commandTrainer = trainer;
             committedCommands = (setCommands == null) ? new Command[0] : setCommands;
             this.forceMove = forceMove;
 
             // set the viable moves for this pokemon
             moveslots = (agent.isDynamaxed)?  new List<Battle.View.Events.CommandAgent.Moveslot>(agent.dynamaxMoveSlots)
-                : new List<PBS.Battle.View.Events.CommandAgent.Moveslot>(agent.moveslots);
+                : new List<Battle.View.Events.CommandAgent.Moveslot>(agent.moveslots);
             bool anyUseable = false;
             for (int i = 0; i < moveslots.Count; i++)
             {
@@ -484,7 +479,7 @@ namespace PBS.Player
             // if there's no useable moves, show struggle option
             if (!anyUseable)
             {
-                moveslots = new List<PBS.Battle.View.Events.CommandAgent.Moveslot> { new PBS.Battle.View.Events.CommandAgent.Moveslot("struggle") };
+                moveslots = new List<PBS.Battle.View.Events.CommandAgent.Moveslot> { new Battle.View.Events.CommandAgent.Moveslot("struggle") };
             }
             else
             {
@@ -524,7 +519,6 @@ namespace PBS.Player
             moveIndex = 0;
 
             choosingFight = true;
-            //Legacy_SwitchControlContext(ControlContext.Fight);
             SwitchControlContext(ControlContext.Fight);
 
             battleUI.SetMoves(
@@ -535,7 +529,7 @@ namespace PBS.Player
                 canDynamax: canDynamax,
                 choosingZMove: chooseZMove,
                 choosingMaxMove: chooseDynamax || pokemon.dynamaxState != Pokemon.DynamaxState.None);
-            battleUI.SwitchPanel(PBS.Battle.View.Enums.Panel.Fight);
+            battleUI.SwitchPanel(Battle.View.Enums.Panel.Fight);
             battleUI.SwitchSelectedMoveTo(
                 pokemon: pokemon, 
                 selected: moveIndex, 
@@ -557,7 +551,7 @@ namespace PBS.Player
             )
         {
             PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(agent);
-            commandPokemon = agent;
+            commandAgent = agent;
             commandTrainer = trainer;
             this.selectedMoveslot = selectedMoveslot;
             committedCommands = (setCommands == null) ? new Command[0] : setCommands;
@@ -598,8 +592,7 @@ namespace PBS.Player
             bool forceSwitch = false
             )
         {
-            PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(agent);
-            commandPokemon = agent;
+            commandAgent = agent;
             commandTrainer = trainer;
             committedCommands = (setCommands == null) ? new Command[0] : setCommands;
             this.forceSwitch = forceSwitch;
@@ -628,8 +621,7 @@ namespace PBS.Player
             PBS.Battle.View.Compact.Trainer trainer
             )
         {
-            PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(agent);
-            commandPokemon = agent;
+            commandAgent = agent;
             commandTrainer = trainer;
 
             itemPockets = new List<ItemBattlePocket>
@@ -664,7 +656,7 @@ namespace PBS.Player
             )
         {
             PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(agent);
-            commandPokemon = agent;
+            commandAgent = agent;
             commandTrainer = trainer;
             committedCommands = (setCommands == null) ? new Command[0] : setCommands;
 
@@ -707,129 +699,12 @@ namespace PBS.Player
             }
         }
 
-        // GENERAL MENU
-        private object GetMenuSelectMap(int rows, int columns, bool accountForBack, List<object> list)
-        {
-            object[,] map = new object[rows, columns];
-            int start = accountForBack ? 1 : 0;
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    if (i == 0 && accountForBack)
-                    {
-                        map[i, j] = null;
-                    }
-                    else
-                    {
-                        if (start >= list.Count)
-                        {
-                            map[i, j] = null;
-                        }
-                        else
-                        {
-                            map[i, j] = list[start];
-                        }
-                        start++;
-                    }
-                }
-            }
-            return map;
-        }
-        private int[] GetMenuSelectXYPos(object selected, object[,] map)
-        {
-            for (int i = 0; i < map.GetLength(0); i++)
-            {
-                for (int j = 0; j < map.GetLength(1); j++)
-                {
-                    if (map[i, j] == selected)
-                    {
-                        return new int[] { i, j };
-                    }
-                }
-            }
-
-            return new int[] { -1, -1 };
-        }
-
 
         // COMMAND MENU
-        private void NavigateCommandMenuVertical(InputAction.CallbackContext obj)
-        {
-            int addIndex = Mathf.RoundToInt(obj.ReadValue<Vector2>().y);
-            NavigateCommandMenu(addIndex);
-        }
         private void NavigateCommandMenuHorizontal(InputAction.CallbackContext obj)
         {
             int addIndex = Mathf.RoundToInt(obj.ReadValue<Vector2>().x);
             NavigateCommandMenu(addIndex);
-        }
-        private void NavigateCommandMenuQuad(InputAction.CallbackContext obj)
-        {
-            int scrollX = Mathf.RoundToInt(obj.ReadValue<Vector2>().x);
-            int scrollY = -Mathf.RoundToInt(obj.ReadValue<Vector2>().y);
-
-            if (scrollX != 0 || scrollY != 0)
-            {
-                bool accountForBack = commandTypes.Contains(BattleCommandType.Back);
-                int rows = accountForBack ? 3 : 2;
-                int columns = 2;
-                BattleCommandType[,] cmdMap = GetCommandTypeMap(rows, columns, accountForBack);
-
-                int newPos = commandIndex;
-                int[] curPos = GetCommandXYPos(commandTypes[commandIndex], cmdMap);
-                if (curPos[0] != -1)
-                {
-                    int newRow = (curPos[0] + scrollY) % rows;
-                    if (newRow < 0) newRow += rows;
-
-                    int newColumn = (curPos[1] + scrollX) % columns;
-                    if (newColumn < 0) newColumn += columns;
-
-                    BattleCommandType nextCmd = cmdMap[newRow, newColumn];
-                    if (nextCmd != BattleCommandType.None)
-                    {
-                        newPos = commandTypes.IndexOf(nextCmd);
-                    }
-                }
-                NavigateCommandMenu(newPos - commandIndex);
-            }
-        }
-        private BattleCommandType[,] GetCommandTypeMap(int rows, int columns, bool accountForBack)
-        {
-            BattleCommandType[,] map = new BattleCommandType[rows, columns];
-            int commandStart = accountForBack ? 1 : 0;
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    if (i == 0 && accountForBack)
-                    {
-                        map[i, j] = (j == 0) ? BattleCommandType.Back : BattleCommandType.None;
-                    }
-                    else
-                    {
-                        map[i, j] = commandTypes[commandStart];
-                        commandStart++;
-                    }
-                }
-            }
-            return map;
-        }
-        private int[] GetCommandXYPos(BattleCommandType commandType, BattleCommandType[,] map)
-        {
-            for (int i = 0; i < map.GetLength(0); i++)
-            {
-                for (int j = 0; j < map.GetLength(1); j++)
-                {
-                    if (map[i,j] == commandType)
-                    {
-                        return new int[] { i, j };
-                    }
-                }
-            }
-
-            return new int[] { -1, -1 };
         }
         private void NavigateCommandMenu(int scrollAmount)
         {
@@ -868,11 +743,11 @@ namespace PBS.Player
             }
             else
             {
-                PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(commandPokemon.pokemonUniqueID);
+                Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
                 if (commandType == BattleCommandType.Fight)
                 {
                     controlFightCR = StartCoroutine(ControlPromptFight(
-                        commandPokemon,
+                        commandAgent,
                         commandTrainer,
                         committedCommands,
                         forceMove
@@ -881,7 +756,7 @@ namespace PBS.Player
                 else if (commandType == BattleCommandType.Party)
                 {
                     controlPartyCR = StartCoroutine(ControlPromptParty(
-                        commandPokemon,
+                        commandAgent,
                         commandTrainer,
                         committedCommands,
                         forceSwitch
@@ -890,7 +765,7 @@ namespace PBS.Player
                 else if (commandType == BattleCommandType.Bag)
                 {
                     controlBagPocketCR = StartCoroutine(ControlPromptBagPocket(
-                        commandPokemon,
+                        commandAgent,
                         commandTrainer
                         ));
                 }
@@ -935,11 +810,6 @@ namespace PBS.Player
 
 
         // FIGHT MENU
-        private void NavigateFightMenuVertical(InputAction.CallbackContext obj)
-        {
-            int addIndex = Mathf.RoundToInt(obj.ReadValue<Vector2>().y);
-            NavigateFightMenu(addIndex);
-        }
         private void NavigateFightMenuQuad(InputAction.CallbackContext obj)
         {
             int scrollX = Mathf.RoundToInt(obj.ReadValue<Vector2>().x);
@@ -1021,7 +891,7 @@ namespace PBS.Player
                 {
                     moveIndex += moveslots.Count;
                 }
-                PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(commandPokemon.pokemonUniqueID);
+                PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
                 battleUI.SwitchSelectedMoveTo(
                     pokemon: pokemon,
                     selected: moveIndex,
@@ -1060,15 +930,15 @@ namespace PBS.Player
                 = new List<Battle.View.Events.CommandAgent.Moveslot>();
             if (chooseZMove)
             {
-                selectedMoveslots = new List<Battle.View.Events.CommandAgent.Moveslot>(commandPokemon.zMoveSlots);
+                selectedMoveslots = new List<Battle.View.Events.CommandAgent.Moveslot>(commandAgent.zMoveSlots);
             }
             else if (chooseDynamax)
             {
-                selectedMoveslots = new List<Battle.View.Events.CommandAgent.Moveslot>(commandPokemon.dynamaxMoveSlots);
+                selectedMoveslots = new List<Battle.View.Events.CommandAgent.Moveslot>(commandAgent.dynamaxMoveSlots);
             }
             else
             {
-                selectedMoveslots = new List<Battle.View.Events.CommandAgent.Moveslot>(commandPokemon.moveslots);
+                selectedMoveslots = new List<Battle.View.Events.CommandAgent.Moveslot>(commandAgent.moveslots);
             }
 
             // set the viable moves for this pokemon
@@ -1087,7 +957,7 @@ namespace PBS.Player
                 moveslots = new List<PBS.Battle.View.Events.CommandAgent.Moveslot> { new PBS.Battle.View.Events.CommandAgent.Moveslot("struggle") };
             }
 
-            PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(commandPokemon.pokemonUniqueID);
+            PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
             battleUI.SetMoves(
                 pokemon: pokemon,
                 moveslots: moveslots,
@@ -1127,7 +997,7 @@ namespace PBS.Player
             // create command
             else
             {
-                PBS.Battle.View.Events.CommandAgent.Moveslot choice = moveslots[moveIndex];
+                PBS.Battle.View.Events.CommandAgent.Moveslot choice = this.commandAgent.moveslots[moveIndex];
                 bool validMove = true;
                 if (chooseZMove)
                 {
@@ -1141,7 +1011,7 @@ namespace PBS.Player
                 if (validMove)
                 {
                     // if auto-target (ex. Singles), we're done here
-                    PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(commandPokemon.pokemonUniqueID);
+                    PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
                     if (battleModel.settings.battleType == BattleType.Single)
                     {
                         Command attemptedCommand = Command.CreateMoveCommand(
@@ -1179,7 +1049,7 @@ namespace PBS.Player
                     else
                     {
                         controlFightTargetCR = StartCoroutine(ControlPromptFieldTarget(
-                            commandPokemon,
+                            commandAgent,
                             commandTrainer,
                             choice,
                             committedCommands));
@@ -1206,7 +1076,6 @@ namespace PBS.Player
                 chooseZMove = false;
                 chooseDynamax = false;
 
-                //Legacy_SwitchControlContext(ControlContext.Command);
                 SwitchControlContext(ControlContext.Command);
                 battleUI.SwitchPanel(PBS.Battle.View.Enums.Panel.Command);
                 battleUI.SwitchSelectedCommandTo(commandTypes[commandIndex]);
@@ -1234,7 +1103,7 @@ namespace PBS.Player
                 {
                     moveTargetIndex += moveTargets.Count;
                 }
-                battleUI.SwitchSelectedMoveTargetsTo(battleModel, battleModel.GetPokemonPosition(commandPokemon), moveTargetIndex, moveTargets);
+                battleUI.SwitchSelectedMoveTargetsTo(battleModel, battleModel.GetPokemonPosition(commandAgent), moveTargetIndex, moveTargets);
             }
         }
         private void SelectFieldTargetMenu(InputAction.CallbackContext obj)
@@ -1269,7 +1138,7 @@ namespace PBS.Player
 
                 if (validMove)
                 {
-                    PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(commandPokemon.pokemonUniqueID);
+                    PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
                     Command attemptedCommand = Command.CreateMoveCommand(
                         commandUser: pokemon.uniqueID,
                         commandTrainer: commandTrainer.playerID,
@@ -1314,7 +1183,7 @@ namespace PBS.Player
                 playerCommand = null;
                 choosingFightTarget = false;
 
-                PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(commandPokemon.pokemonUniqueID);
+                PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
                 SwitchControlContext(ControlContext.Fight);
                 battleUI.SwitchPanel(PBS.Battle.View.Enums.Panel.Fight);
                 battleUI.SwitchSelectedMoveTo(
@@ -1328,11 +1197,6 @@ namespace PBS.Player
 
 
         // PARTY MENU
-        private void NavigatePartyMenuVertical(InputAction.CallbackContext obj)
-        {
-            int addIndex = Mathf.RoundToInt(obj.ReadValue<Vector2>().y);
-            NavigatePartyMenu(addIndex);
-        }
         private void NavigatePartyMenuQuad(InputAction.CallbackContext obj)
         {
             int scrollX = Mathf.RoundToInt(obj.ReadValue<Vector2>().x);
@@ -1453,7 +1317,7 @@ namespace PBS.Player
                 if (selectedItem == null)
                 {
                     controlPartyCommandCR = StartCoroutine(ControlPromptCommandExtra(
-                    commandPokemon,
+                    commandAgent,
                     commandTrainer,
                     committedCommands,
                     new List<BattleExtraCommand>
@@ -1509,7 +1373,6 @@ namespace PBS.Player
 
                 if (selectedItem == null)
                 {
-                    //Legacy_SwitchControlContext(ControlContext.Command);
                     SwitchControlContext(ControlContext.Command);
                     battleUI.SwitchPanel(PBS.Battle.View.Enums.Panel.Command);
                     battleUI.SwitchSelectedCommandTo(commandTypes[commandIndex]);
@@ -1517,7 +1380,6 @@ namespace PBS.Player
                 else
                 {
                     selectedItem = null;
-                    //Legacy_SwitchControlContext(ControlContext.Bag);
                     SwitchControlContext(ControlContext.Bag);
                     battleUI.SwitchPanel(PBS.Battle.View.Enums.Panel.BagItem);
                 }
@@ -1600,7 +1462,7 @@ namespace PBS.Player
                             isExplicitlySelected: true)
                         :
                         Command.CreateSwitchCommand(
-                            commandUser: commandPokemon.pokemonUniqueID,
+                            commandUser: commandAgent.pokemonUniqueID,
                             switchPosition: switchPosition,
                             trainer: commandTrainer.playerID,
                             switchInPokemon: choice.uniqueID,
@@ -1642,7 +1504,6 @@ namespace PBS.Player
             {
                 choosingExtraCommand = false;
 
-                //Legacy_SwitchControlContext(ControlContext.Party);
                 SwitchControlContext(ControlContext.Party);
                 battleUI.SwitchPanel(PBS.Battle.View.Enums.Panel.Party);
                 battleUI.SwitchSelectedPartyMemberTo(partySlots[partyIndex]);
@@ -1651,11 +1512,6 @@ namespace PBS.Player
 
 
         // BAG POCKET MENU
-        private void NavigateBagPocketMenu(InputAction.CallbackContext obj)
-        {
-            int addIndex = Mathf.RoundToInt(obj.ReadValue<Vector2>().y);
-            NavigateBagPocketMenu(addIndex);
-        }
         private void NavigateBagPocketMenuQuad(InputAction.CallbackContext obj)
         {
             int scrollX = Mathf.RoundToInt(obj.ReadValue<Vector2>().x);
@@ -1757,7 +1613,7 @@ namespace PBS.Player
             {
                 ItemBattlePocket pocketType = itemPockets[itemPocketIndex];
                 controlBagCR = StartCoroutine(ControlPromptBag(
-                    commandPokemon,
+                    commandAgent,
                     commandTrainer,
                     pocketType,
                     committedCommands
@@ -1780,7 +1636,6 @@ namespace PBS.Player
                 playerCommand = null;
                 choosingBagPocket = false;
 
-                //Legacy_SwitchControlContext(ControlContext.Command);
                 SwitchControlContext(ControlContext.Command);
                 battleUI.SwitchPanel(PBS.Battle.View.Enums.Panel.Command);
                 battleUI.SwitchSelectedCommandTo(commandTypes[commandIndex]);
@@ -2014,7 +1869,7 @@ namespace PBS.Player
             {
                 selectedItem = itemSlots[itemOffset + itemIndex];
                 controlPartyCR = StartCoroutine(ControlPromptParty(
-                    commandPokemon,
+                    commandAgent,
                     commandTrainer,
                     committedCommands
                     ));
@@ -2033,7 +1888,6 @@ namespace PBS.Player
             playerCommand = null;
             choosingItem = false;
 
-            //Legacy_SwitchControlContext(ControlContext.BagPocket);
             SwitchControlContext(ControlContext.BagPocket);
             battleUI.SwitchPanel(PBS.Battle.View.Enums.Panel.Bag);
             battleUI.SwitchSelectedBagPocketTo(itemPockets[itemPocketIndex]);

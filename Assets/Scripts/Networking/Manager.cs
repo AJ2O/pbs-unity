@@ -59,8 +59,13 @@ namespace PBS.Networking {
         }
         public void AddTrainer(NetworkConnection conn)
         {
-            Trainer trainer = Testing.CreateTrainerUsingTeamNo();
-            if (trainerConnections.ContainsKey(conn.connectionId))
+            int debugMod = trainerConnections.Count % 2;
+
+            Trainer trainer = Testing.CreateTrainerUsingTeamNo(
+                trainerName: (debugMod == 0)? "Red" : "Blue",
+                teamNo: (debugMod == 0)? 1 : 2
+                );
+            if (trainerConnections.ContainsKey(conn.connectionId + 1))
             {
                 Debug.LogWarning("A player with ID " + conn.connectionId + " is trying to join, but is already in the battle!");
             }
@@ -163,9 +168,11 @@ namespace PBS.Networking {
 
                 // Synchronize trainer & team to player
                 PBS.Networking.Player player = GetPlayer(trainer.playerID);
+                NetworkIdentity networkIdentity = player.GetComponent<NetworkIdentity>();
+
                 player.playerID = trainer.playerID;
-                player.RpcSyncTrainerToClient(new Battle.View.Compact.Trainer(trainer));
-                player.RpcSyncTeamPerspectiveToClient(new Battle.View.Compact.Team(team));
+                player.TargetSyncTrainerToClient(networkIdentity.connectionToClient, new Battle.View.Compact.Trainer(trainer));
+                player.TargetSyncTeamPerspectiveToClient(networkIdentity.connectionToClient, new Battle.View.Compact.Team(team));
             }
 
             // Start Battle Core

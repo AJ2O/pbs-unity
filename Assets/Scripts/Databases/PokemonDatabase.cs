@@ -507,7 +507,7 @@ public class PokemonDatabase
                 height: 1.8f, weight: 20.5f,
                 yOffset2DNear: 0.25f, yOffset2DFar: 0.25f,
                 types: new List<string> { "electric", "fairy" },
-                abilities: new List<string> { "deltastream" },
+                abilities: new List<string> { "electricsurge" },
                 baseHP: 70, baseATK: 115, baseDEF: 85, baseSPA: 95, baseSPD: 75, baseSPE: 130,
                 tags: new PokemonTag[]
                 {

@@ -793,6 +793,9 @@
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
       <HintPath>C:/Users/Owner/workspace/Projects/pbs-unity/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="NewResolutionDialog">
+      <HintPath>C:/Users/Owner/workspace/Projects/pbs-unity/Library/ScriptAssemblies/NewResolutionDialog.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
       <HintPath>C:/Users/Owner/workspace/Projects/pbs-unity/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>

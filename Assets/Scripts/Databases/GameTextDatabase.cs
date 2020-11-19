@@ -119,7 +119,7 @@ public class GameTextDatabase
                 ) },
         {"trainer-perspective-ally",
             new GameTextData(
-                ID: "trainer-perspective-player",
+                ID: "trainer-perspective-ally",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
                     { GameLanguages.English, "{{-trainer-name-}}" },

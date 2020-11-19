@@ -610,6 +610,31 @@ namespace PBS.Battle.View.UI
             return text;
         }
 
+        public static string ConvertTypesToString(List<string> typeIDs)
+        {
+            string names = "";
+            if (typeIDs.Count == 1)
+            {
+                return TypeDatabase.instance.GetTypeData(typeIDs[0]).typeName + "-type";
+            }
+            else if (typeIDs.Count == 2)
+            {
+                return TypeDatabase.instance.GetTypeData(typeIDs[0]).typeName 
+                    + "- and " 
+                    + TypeDatabase.instance.GetTypeData(typeIDs[1]).typeName + "-type";
+            }
+            else
+            {
+                for (int i = 0; i < typeIDs.Count; i++)
+                {
+                    names += (i == typeIDs.Count - 1) ?
+                        "and " + TypeDatabase.instance.GetTypeData(typeIDs[i]).typeName + "-type" :
+                        TypeDatabase.instance.GetTypeData(typeIDs[i]).typeName + "-, ";
+                }
+            }
+            return names;
+        }
+
         public static string RenderMessageTrainer(
             int playerID, 
             PBS.Battle.View.Model myModel,
@@ -713,7 +738,9 @@ namespace PBS.Battle.View.UI
             if (!string.IsNullOrEmpty(message.pokemonID))
             {
                 PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(message.pokemonID);
+                PokemonData pokemonData = PokemonDatabase.instance.GetPokemonData(pokemon.pokemonID);
                 newString = newString.Replace("{{-pokemon-}}", pokemon.nickname);
+                newString = newString.Replace("{{-pokemon-form-}}", pokemonData.formName);
                 newString = newString.Replace("{{-pokemon-poss-}}", pokemon.nickname
                     + ((pokemon.nickname.EndsWith("s")) ? "'" : "'s")
                     );
@@ -721,7 +748,9 @@ namespace PBS.Battle.View.UI
             if (!string.IsNullOrEmpty(message.pokemonUserID))
             {
                 PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(message.pokemonUserID);
+                PokemonData pokemonData = PokemonDatabase.instance.GetPokemonData(pokemon.pokemonID);
                 newString = newString.Replace("{{-user-pokemon-}}", pokemon.nickname);
+                newString = newString.Replace("{{-user-pokemon-form-}}", pokemonData.formName);
                 newString = newString.Replace("{{-user-pokemon-poss-}}", pokemon.nickname
                     + ((pokemon.nickname.EndsWith("s")) ? "'" : "'s")
                     );
@@ -729,7 +758,9 @@ namespace PBS.Battle.View.UI
             if (!string.IsNullOrEmpty(message.pokemonTargetID))
             {
                 PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(message.pokemonTargetID);
+                PokemonData pokemonData = PokemonDatabase.instance.GetPokemonData(pokemon.pokemonID);
                 newString = newString.Replace("{{-target-pokemon-}}", pokemon.nickname);
+                newString = newString.Replace("{{-target-pokemon-form-}}", pokemonData.formName);
                 newString = newString.Replace("{{-target-pokemon-poss-}}", pokemon.nickname
                     + ((pokemon.nickname.EndsWith("s")) ? "'" : "'s")
                     );

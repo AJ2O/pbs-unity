@@ -38,6 +38,22 @@ namespace PBS.Battle.View.Compact
             nonVolatileStatus = (obj.nonVolatileStatus == null)? "" : obj.nonVolatileStatus.statusID;
             dynamaxState = obj.dynamaxState;
         }
+
+        public void Update(Pokemon obj)
+        {
+            uniqueID = obj.uniqueID;
+            pokemonID = obj.pokemonID;
+            nickname = obj.nickname;
+            teamPos = obj.teamPos;
+            battlePos = obj.battlePos;
+            currentHP = obj.currentHP;
+            maxHP = obj.maxHP;
+            isFainted = obj.isFainted;
+            level = obj.level;
+            gender = obj.gender;
+            nonVolatileStatus = obj.nonVolatileStatus;
+            dynamaxState = obj.dynamaxState;
+        }
     }
 
     public class Trainer
@@ -46,6 +62,7 @@ namespace PBS.Battle.View.Compact
         public int playerID;
         public int teamPos;
         public List<Compact.Pokemon> party;
+        public List<string> partyIDs = new List<string>();
         public List<string> items;
         public List<int> controlPos;
 
@@ -70,6 +87,18 @@ namespace PBS.Battle.View.Compact
 
             controlPos = new List<int>(obj.controlPos);
         }
+
+        public Pokemon GetPokemon(string uniqueID)
+        {
+            for (int i = 0; i < party.Count; i++)
+            {
+                if (party[i].uniqueID == uniqueID)
+                {
+                    return party[i];
+                }
+            }
+            return null;
+        }
     }
 
     public class Team
@@ -77,6 +106,7 @@ namespace PBS.Battle.View.Compact
         public int teamID;
         public Battle.Enums.TeamMode teamMode;
         public List<Compact.Trainer> trainers;
+        public List<int> playerIDs = new List<int>();
 
         public Team() { }
         public Team(global::BattleTeam obj)
@@ -90,6 +120,18 @@ namespace PBS.Battle.View.Compact
             {
                 trainers.Add(new Trainer(obj.trainers[i]));
             }
+        }
+
+        public Compact.Trainer GetTrainer(int playerID)
+        {
+            for (int i = 0; i < trainers.Count; i++)
+            {
+                if (trainers[i].playerID == playerID)
+                {
+                    return trainers[i];
+                }
+            }
+            return null;
         }
     }
 }

@@ -1157,6 +1157,34 @@ public class MoveDatabase
                 }
                 ) },
 
+        // Close Combat
+        {"closecombat",
+            new MoveData(
+                ID: "closecombat",
+                moveName: "Close Combat",
+                moveType: "fighting",
+                category: MoveCategory.Physical,
+                targetType: MoveTargetType.Adjacent,
+                basePower: 120, PP: 5,
+
+                moveTags: new MoveTag[]
+                {
+                    MoveTag.MakesContact,
+                },
+
+                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                {
+                    new EffectDatabase.MoveEff.StatStageMod(
+                        statStageMod: new EffectDatabase.General.StatStageMod(
+                            DEFMod: -1, SPDMod: -1
+                            ),
+                        timing: MoveEffectTiming.AfterTargetImpact,
+                        occurrence: MoveEffectOccurrence.Once,
+                        targetType: MoveEffectTargetType.Self
+                        ),
+                }
+                ) },
+
         // Comet Punch
         {"cometpunch",
             new MoveData(
@@ -7672,6 +7700,34 @@ public class MoveDatabase
                 effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
                 {
                     new EffectDatabase.MoveEff.SuckerPunch(),
+                }
+                ) },
+
+        // Superpower
+        {"superpower",
+            new MoveData(
+                ID: "superpower",
+                moveName: "Superpower",
+                moveType: "fighting",
+                category: MoveCategory.Physical,
+                targetType: MoveTargetType.Adjacent,
+                basePower: 120, PP: 5,
+
+                moveTags: new MoveTag[]
+                {
+                    MoveTag.MakesContact,
+                },
+
+                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                {
+                    new EffectDatabase.MoveEff.StatStageMod(
+                        statStageMod: new EffectDatabase.General.StatStageMod(
+                            ATKMod: -1, DEFMod: -1
+                            ),
+                        timing: MoveEffectTiming.AfterTargetImpact,
+                        occurrence: MoveEffectOccurrence.Once,
+                        targetType: MoveEffectTargetType.Self
+                        ),
                 }
                 ) },
 

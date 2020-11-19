@@ -61,9 +61,12 @@ namespace PBS.Networking {
         /// </summary>
         public void SetComponents()
         {
+            UpdateModel(new Battle.View.Model());
+
             // UI
             this.battleUI = PBS.Static.Master.instance.ui;
             this.controls.battleUI = this.battleUI;
+            this.controls.SetControls();
 
             // Scene
             this.sceneCanvas = PBS.Static.Master.instance.scene;
@@ -78,11 +81,11 @@ namespace PBS.Networking {
             }
             return false;
         }
-        public bool IsTrainerPlayer(PBS.Battle.View.Compact.Trainer trainer)
+        public bool IsTrainerPlayer(Battle.View.Compact.Trainer trainer)
         {
             return IsTrainerPlayer(trainer.playerID);
         }
-        public bool IsPokemonOwnedByPlayer(PBS.Battle.View.Compact.Pokemon pokemon)
+        public bool IsPokemonOwnedByPlayer(Battle.View.Compact.Pokemon pokemon)
         {
             if (myTrainer != null)
             {
@@ -99,29 +102,29 @@ namespace PBS.Networking {
         [Command]
         public void CmdSyncTrainerToServer()
         {
-            PBS.Static.Master.instance.networkManager.AddPlayer(this.connectionToClient, this);
-            PBS.Static.Master.instance.networkManager.AddTrainer(this.connectionToClient);
+            Static.Master.instance.networkManager.AddPlayer(this.connectionToClient, this);
+            Static.Master.instance.networkManager.AddTrainer(this.connectionToClient);
         }
-        [ClientRpc]
-        public void RpcSyncTrainerToClient(PBS.Battle.View.Compact.Trainer trainer)
+        [TargetRpc]
+        public void TargetSyncTrainerToClient(NetworkConnection target, Battle.View.Compact.Trainer trainer)
         {
             myTrainer = trainer;
             playerID = myTrainer.playerID;
         }
-        [ClientRpc]
-        public void RpcSyncTeamPerspectiveToClient(PBS.Battle.View.Compact.Team perspective)
+        [TargetRpc]
+        public void TargetSyncTeamPerspectiveToClient(NetworkConnection target, Battle.View.Compact.Team perspective)
         {
             myTeamPerspective = perspective;
         }
 
         // 7.
         [TargetRpc]
-        public void TargetReceiveEvent(PBS.Battle.View.Events.Base bEvent)
+        public void TargetReceiveEvent(NetworkConnection target, Battle.View.Events.Base bEvent)
         {
             eventQueue.Add(bEvent);
         }
         [TargetRpc]
-        public void TargetReceiveQueryResponse(PBS.Battle.View.Events.MessageParameterized bEvent)
+        public void TargetReceiveQueryResponse(NetworkConnection target, Battle.View.Events.MessageParameterized bEvent)
         {
             queryResponse = bEvent;
         }
@@ -214,6 +217,12 @@ namespace PBS.Networking {
                 // Backend
                 : (bEvent is PBS.Battle.View.Events.ModelUpdate)? 
                 ExecuteEvent_ModelUpdate(bEvent as PBS.Battle.View.Events.ModelUpdate)
+                : (bEvent is PBS.Battle.View.Events.ModelUpdatePokemon)? 
+                ExecuteEvent_ModelUpdatePokemon(bEvent as PBS.Battle.View.Events.ModelUpdatePokemon)
+                : (bEvent is PBS.Battle.View.Events.ModelUpdateTrainer)? 
+                ExecuteEvent_ModelUpdateTrainer(bEvent as PBS.Battle.View.Events.ModelUpdateTrainer)
+                : (bEvent is PBS.Battle.View.Events.ModelUpdateTeam)? 
+                ExecuteEvent_ModelUpdateTeam(bEvent as PBS.Battle.View.Events.ModelUpdateTeam)
 
 
                 // Command Prompts
@@ -271,17 +280,6 @@ namespace PBS.Networking {
                 : (bEvent is PBS.Battle.View.Events.PokemonStatUnchangeable)? 
                 ExecuteEvent_PokemonStatUnchangeable(bEvent as PBS.Battle.View.Events.PokemonStatUnchangeable)
 
-                // Items
-
-                // Status
-
-                // Misc
-                : (bEvent is PBS.Battle.View.Events.PokemonMiscProtect)? 
-                ExecuteEvent_PokemonMiscProtect(bEvent as PBS.Battle.View.Events.PokemonMiscProtect)
-                : (bEvent is PBS.Battle.View.Events.PokemonMiscMatBlock)? 
-                ExecuteEvent_PokemonMiscMatBlock(bEvent as PBS.Battle.View.Events.PokemonMiscMatBlock)
-
-                // Unhandled
 
                 : ExecuteEvent_Unhandled(bEvent)
                 );
@@ -449,6 +447,11 @@ namespace PBS.Networking {
 
 
         // Backend
+        public void UpdateModel(Battle.View.Model model)
+        {
+            myModel = model;
+            controls.battleModel = model;
+        }
         /// <summary>
         /// TODO: Description
         /// </summary>
@@ -457,19 +460,120 @@ namespace PBS.Networking {
         public IEnumerator ExecuteEvent_ModelUpdate(PBS.Battle.View.Events.ModelUpdate bEvent)
         {
             // Update references in the model
-            myModel = bEvent.model;
-            controls.battleModel = bEvent.model;
+            yield return StartCoroutine(BattleAssetLoader.instance.LoadBattleAssets(myModel));
+            UpdateModel(myModel);
+        }
+        /// <summary>
+        /// TODO: Description
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_ModelUpdatePokemon(PBS.Battle.View.Events.ModelUpdatePokemon bEvent)
+        {
+            // Update references in the model
+            bool isInModel = false;
 
-            switch (bEvent.updateType)
+            for (int i = 0; i < myModel.teams.Count && !isInModel; i++)
             {
-                case Battle.View.Events.ModelUpdate.UpdateType.LoadAssets:
-                    Debug.Log("Loading battle assets...");
-                    yield return StartCoroutine(BattleAssetLoader.instance.LoadBattleAssets(bEvent.model));
-                    break;
+                Battle.View.Compact.Team team = myModel.teams[i];
+                for (int k = 0; k < team.trainers.Count && !isInModel; k++)
+                {
+                    Battle.View.Compact.Trainer trainer = team.trainers[k];
+                    if (trainer.partyIDs.Contains(bEvent.pokemon.uniqueID))
+                    {
+                        Battle.View.Compact.Pokemon pokemon = trainer.GetPokemon(bEvent.pokemon.uniqueID);
+                        if (pokemon != null)
+                        {
+                            isInModel = true;
+                            pokemon.Update(bEvent.pokemon);
+                        }
 
-                default:
-                    break;
+                        if (!isInModel)
+                        {
+                            pokemon = bEvent.pokemon;
+                            trainer.party.Add(bEvent.pokemon);
+                        }
+                        yield return StartCoroutine(BattleAssetLoader.instance.LoadPokemon(pokemon));
+                    }
+                }
             }
+            UpdateModel(myModel);
+        }
+        /// <summary>
+        /// TODO: Description
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_ModelUpdateTrainer(PBS.Battle.View.Events.ModelUpdateTrainer bEvent)
+        {
+            // Update references in the model
+            bool isInModel = false;
+
+            for (int i = 0; i < myModel.teams.Count && !isInModel; i++)
+            {
+                Battle.View.Compact.Team team = myModel.teams[i];
+                if (team.teamID == bEvent.teamID)
+                {
+                    Battle.View.Compact.Trainer trainer = team.GetTrainer(bEvent.playerID);
+                    if (trainer != null)
+                    {
+                        isInModel = true;
+                        trainer.partyIDs = new List<string>(bEvent.party);
+                    }
+
+                    if (!isInModel)
+                    {
+                        isInModel = true;
+                        trainer = new Battle.View.Compact.Trainer
+                        {
+                            name = bEvent.name,
+                            playerID = bEvent.playerID,
+                            teamPos = bEvent.teamID,
+                            party = new List<Battle.View.Compact.Pokemon>(),
+                            partyIDs = new List<string>(bEvent.party),
+                            items = new List<string>(bEvent.items),
+                            controlPos = new List<int>(bEvent.controlPos)
+                        };
+                        team.trainers.Add(trainer);
+                    }
+                    yield return StartCoroutine(BattleAssetLoader.instance.LoadTrainer(trainer));
+                }
+            }
+            UpdateModel(myModel);
+        }
+        /// <summary>
+        /// TODO: Description
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_ModelUpdateTeam(PBS.Battle.View.Events.ModelUpdateTeam bEvent)
+        {
+            // Update references in the model
+            bool isInModel = false;
+
+            for (int i = 0; i < myModel.teams.Count && !isInModel; i++)
+            {
+                Battle.View.Compact.Team team = myModel.teams[i];
+                if (team.teamID == bEvent.teamID)
+                {
+                    isInModel = true;
+                    team.playerIDs = new List<int>(bEvent.trainers);
+                }
+            }
+
+            if (!isInModel)
+            {
+                Battle.View.Compact.Team team = new Battle.View.Compact.Team
+                {
+                    teamID = bEvent.teamID,
+                    teamMode = bEvent.teamMode,
+                    trainers = new List<Battle.View.Compact.Trainer>(),
+                    playerIDs = new List<int>(bEvent.trainers)
+                };
+                myModel.teams.Add(team);
+            }
+            UpdateModel(myModel);
+            yield return null;
         }
 
 
@@ -496,6 +600,7 @@ namespace PBS.Networking {
                 }));
             CmdSendCommandsReplace(commands);
         }
+
 
         // Trainer Interactions
         /// <summary>
@@ -701,6 +806,7 @@ namespace PBS.Networking {
             yield return null;
         }
 
+
         // Damage / Health
         public IEnumerator ExecuteEvent_Helper_PokemonHealthChange(
             PBS.Battle.View.Compact.Pokemon pokemon,
@@ -731,7 +837,7 @@ namespace PBS.Networking {
             }
             else
             {
-                text = pokemon.nickname = " lost HP!";
+                text = pokemon.nickname + " lost HP!";
             }
             Debug.Log(text);
 
@@ -755,7 +861,7 @@ namespace PBS.Networking {
             }
             else
             {
-                text = pokemon.nickname = " recovered HP!";
+                text = pokemon.nickname + " recovered HP!";
             }
             Debug.Log(text);
 
@@ -1147,28 +1253,6 @@ namespace PBS.Networking {
         // Items
 
         // Status
-
-        // Misc
-        public IEnumerator ExecuteEvent_PokemonMiscProtect(PBS.Battle.View.Events.PokemonMiscProtect bEvent)
-        {
-            PBS.Battle.View.Compact.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
-            Debug.Log($"{pokemon.nickname} protected itself!");
-
-            yield return null;
-        }
-        public IEnumerator ExecuteEvent_PokemonMiscMatBlock(PBS.Battle.View.Events.PokemonMiscMatBlock bEvent)
-        {
-            PBS.Battle.View.Compact.Team team = myModel.GetMatchingTeam(bEvent.teamID);
-            string teamString = (team.teamID == myTeamPerspective.teamID)? "The ally" : "The opposing";
-            if (myTrainer != null)
-            {
-                teamString = "Your";
-            };
-
-            Debug.Log($"{teamString} team is being protected!");
-
-            yield return null;
-        }
 
 
 
