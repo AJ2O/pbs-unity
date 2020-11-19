@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Enums.Battle;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -39,23 +40,23 @@ namespace PBS.Battle.View.Scene
         // Scene Pokemon
         public Entities.Pokemon DrawPokemon(
             Battle.View.Compact.Pokemon pokemon,
-            Battle.Enums.TeamMode teamMode,
+            TeamMode teamMode,
             bool isNear)
         {
             // get spawn position
             Transform spawnPos = this.transform;
             switch (teamMode)
             {
-                case Battle.Enums.TeamMode.Single:
+                case TeamMode.Single:
                     spawnPos = (isNear) ? spawnNearSingle : spawnFarSingle;
                     break;
 
-                case Battle.Enums.TeamMode.Double:
+                case TeamMode.Double:
                     spawnPos = (pokemon.battlePos == 0) ? (isNear ? spawnNearDouble0 : spawnFarDouble0)
                         : isNear ? spawnNearDouble1 : spawnFarDouble1;
                     break;
 
-                case Battle.Enums.TeamMode.Triple:
+                case TeamMode.Triple:
                     spawnPos = (pokemon.battlePos == 0) ? (isNear ? spawnNearTriple0 : spawnFarTriple0)
                         : (pokemon.battlePos == 1) ? (isNear ? spawnNearTriple1 : spawnFarTriple1)
                         : isNear ? spawnNearTriple2 : spawnFarTriple2;

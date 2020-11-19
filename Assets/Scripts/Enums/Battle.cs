@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PBS.Battle.Enums
+namespace PBS.Enums.Battle
 {
     public enum TeamMode
     {

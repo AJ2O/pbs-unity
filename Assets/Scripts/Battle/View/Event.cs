@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Enums.Battle;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -171,7 +172,7 @@ namespace PBS.Battle.View.Events
     {
         public bool loadAsset = false;
         public int teamID = 0;
-        public Battle.Enums.TeamMode teamMode = Battle.Enums.TeamMode.Single;
+        public TeamMode teamMode = TeamMode.Single;
         public List<int> trainers = new List<int>();
 
         public ModelUpdateTeam() { }
@@ -179,9 +180,9 @@ namespace PBS.Battle.View.Events
         {
             this.loadAsset = loadAsset;
             teamID = obj.teamID;
-            teamMode = (obj.teamMode == BattleTeam.TeamMode.Single)? Battle.Enums.TeamMode.Single
-                : (obj.teamMode == BattleTeam.TeamMode.Double)? Battle.Enums.TeamMode.Double
-                : Battle.Enums.TeamMode.Triple;
+            teamMode = (obj.teamMode == BattleTeam.TeamMode.Single)? TeamMode.Single
+                : (obj.teamMode == BattleTeam.TeamMode.Double)? TeamMode.Double
+                : TeamMode.Triple;
             for (int i = 0; i < obj.trainers.Count; i++)
             {
                 trainers.Add(obj.trainers[i].playerID);

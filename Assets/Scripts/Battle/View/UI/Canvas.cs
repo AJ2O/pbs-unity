@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Enums.Battle;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -258,7 +259,7 @@ namespace PBS.Battle.View.UI
         }
 
         // HUD
-        public HUD.PokemonHUD DrawPokemonHUD(PBS.Battle.View.Compact.Pokemon pokemon, PBS.Battle.Enums.TeamMode teamMode, bool isNear)
+        public HUD.PokemonHUD DrawPokemonHUD(PBS.Battle.View.Compact.Pokemon pokemon, TeamMode teamMode, bool isNear)
         {
             return HUDPanel.DrawPokemonHUD(pokemon, teamMode, isNear);
         }

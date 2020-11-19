@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Battle;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,11 +7,11 @@ namespace PBS.AI
 {
     public class Battle
     {
-        PBS.Battle.Core.Model model;
+        Model model;
         List<BattleCommand> committedCommands;
         int switchPosition;
 
-        public void UpdateModel(PBS.Battle.Core.Model battleModel)
+        public void UpdateModel(Model battleModel)
         {
             this.model = battleModel;
         }

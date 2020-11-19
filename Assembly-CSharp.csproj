@@ -68,7 +68,6 @@
     <Compile Include="Assets\Scripts\AI\Battle.cs" />
     <Compile Include="Assets\Scripts\AssetLoader.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleUtilityClasses.cs" />
-    <Compile Include="Assets\Scripts\Battle\Enums.cs" />
     <Compile Include="Assets\Scripts\Battle\Main\Model.cs" />
     <Compile Include="Assets\Scripts\Battle\OLD\BTLAIControl.cs" />
     <Compile Include="Assets\Scripts\Battle\OLD\BTLCamera.cs" />
@@ -129,14 +128,6 @@
     <Compile Include="Assets\Scripts\Battle\View\UI\Panels\Party\Party.cs" />
     <Compile Include="Assets\Scripts\Battle\View\UI\Panels\Party\PartyButton.cs" />
     <Compile Include="Assets\Scripts\Controls.cs" />
-    <Compile Include="Assets\Scripts\Core\BattleCondition.cs" />
-    <Compile Include="Assets\Scripts\Core\BattleTeam.cs" />
-    <Compile Include="Assets\Scripts\Core\Item.cs" />
-    <Compile Include="Assets\Scripts\Core\PlayerSave.cs" />
-    <Compile Include="Assets\Scripts\Core\Pokemon.cs" />
-    <Compile Include="Assets\Scripts\Core\StatusCondition.cs" />
-    <Compile Include="Assets\Scripts\Core\TeamCondition.cs" />
-    <Compile Include="Assets\Scripts\Core\Trainer.cs" />
     <Compile Include="Assets\Scripts\Data\AbilityData.cs" />
     <Compile Include="Assets\Scripts\Data\BattleConditionData.cs" />
     <Compile Include="Assets\Scripts\Data\GameTextData.cs" />
@@ -158,6 +149,15 @@
     <Compile Include="Assets\Scripts\Databases\StatusPKDatabase.cs" />
     <Compile Include="Assets\Scripts\Databases\StatusTEDatabase.cs" />
     <Compile Include="Assets\Scripts\Databases\TypeDatabase.cs" />
+    <Compile Include="Assets\Scripts\Enums\Battle.cs" />
+    <Compile Include="Assets\Scripts\Main\BattleCondition.cs" />
+    <Compile Include="Assets\Scripts\Main\BattleTeam.cs" />
+    <Compile Include="Assets\Scripts\Main\Item.cs" />
+    <Compile Include="Assets\Scripts\Main\PlayerSave.cs" />
+    <Compile Include="Assets\Scripts\Main\Pokemon.cs" />
+    <Compile Include="Assets\Scripts\Main\StatusCondition.cs" />
+    <Compile Include="Assets\Scripts\Main\TeamCondition.cs" />
+    <Compile Include="Assets\Scripts\Main\Trainer.cs" />
     <Compile Include="Assets\Scripts\Master.cs" />
     <Compile Include="Assets\Scripts\Networking\Core.cs" />
     <Compile Include="Assets\Scripts\Networking\CustomSerialization\Battle\Core.cs" />
@@ -169,33 +169,33 @@
     <Compile Include="Assets\Scripts\Networking\Player.cs" />
     <Compile Include="Assets\Scripts\Player\BattleControls.cs" />
     <Compile Include="Assets\Scripts\Player\Command.cs" />
+    <Compile Include="Assets\Scripts\Testing\Testing.cs" />
     <Compile Include="Assets\Scripts\Utility\CustomEnums.cs" />
     <Compile Include="Assets\Scripts\Utility\GameEffect.cs" />
     <Compile Include="Assets\Scripts\Utility\GameSettings.cs" />
     <Compile Include="Assets\Scripts\Utility\GlobalVariables.cs" />
-    <Compile Include="Assets\Scripts\_Debug\Testing.cs" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
-    <None Include="Assets\Mirror\Version.txt" />
-    <None Include="Assets\Mirror\Readme.txt" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
-    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
-    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
-    <None Include="Assets\Mirror\Notice.txt" />
-    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
-    <None Include="Assets\Mirror\Plugins\Mono.Cecil\License.txt" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
-    <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
+    <None Include="Assets\External Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
+    <None Include="Assets\External Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\External Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\External Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\External Assets\Mirror\Version.txt" />
+    <None Include="Assets\External Assets\Mirror\Readme.txt" />
+    <None Include="Assets\External Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\External Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\External Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\External Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\External Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\External Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\External Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\External Assets\Mirror\Notice.txt" />
+    <None Include="Assets\External Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\External Assets\Mirror\Plugins\Mono.Cecil\License.txt" />
+    <None Include="Assets\External Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\External Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\External Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\External Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+    <None Include="Assets\External Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\External Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -380,16 +380,16 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.0f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="Mono.CecilX">
-      <HintPath>C:/Users/Owner/workspace/Projects/pbs-unity/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.dll</HintPath>
+      <HintPath>C:/Users/Owner/workspace/Projects/pbs-unity/Assets/External Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.dll</HintPath>
     </Reference>
     <Reference Include="Mono.CecilX.Mdb">
-      <HintPath>C:/Users/Owner/workspace/Projects/pbs-unity/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Mdb.dll</HintPath>
+      <HintPath>C:/Users/Owner/workspace/Projects/pbs-unity/Assets/External Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Mdb.dll</HintPath>
     </Reference>
     <Reference Include="Mono.CecilX.Pdb">
-      <HintPath>C:/Users/Owner/workspace/Projects/pbs-unity/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Pdb.dll</HintPath>
+      <HintPath>C:/Users/Owner/workspace/Projects/pbs-unity/Assets/External Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Pdb.dll</HintPath>
     </Reference>
     <Reference Include="Mono.CecilX.Rocks">
-      <HintPath>C:/Users/Owner/workspace/Projects/pbs-unity/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Rocks.dll</HintPath>
+      <HintPath>C:/Users/Owner/workspace/Projects/pbs-unity/Assets/External Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Rocks.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.0f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

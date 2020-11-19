@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Battle;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -63,7 +64,7 @@ public class BattleAssetLoader : MonoBehaviour
         yield return null;
     }
     
-    public IEnumerator LoadBattleAssets(PBS.Battle.Core.Model battle)
+    public IEnumerator LoadBattleAssets(Model battle)
     {
         float startTime = Time.time;
         for (int i = 0; i < battle.teams.Count; i++)

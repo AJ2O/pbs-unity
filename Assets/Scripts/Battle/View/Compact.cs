@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Enums.Battle;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -104,7 +105,7 @@ namespace PBS.Battle.View.Compact
     public class Team
     {
         public int teamID;
-        public Battle.Enums.TeamMode teamMode;
+        public TeamMode teamMode;
         public List<Compact.Trainer> trainers;
         public List<int> playerIDs = new List<int>();
 
@@ -112,9 +113,9 @@ namespace PBS.Battle.View.Compact
         public Team(global::BattleTeam obj)
         {
             teamID = obj.teamID;
-            teamMode = (obj.teamMode == BattleTeam.TeamMode.Single)? Battle.Enums.TeamMode.Single
-                : (obj.teamMode == BattleTeam.TeamMode.Double)? Battle.Enums.TeamMode.Double
-                : Battle.Enums.TeamMode.Triple;
+            teamMode = (obj.teamMode == BattleTeam.TeamMode.Single)? TeamMode.Single
+                : (obj.teamMode == BattleTeam.TeamMode.Double)? TeamMode.Double
+                : TeamMode.Triple;
             trainers = new List<Trainer>();
             for (int i = 0; i < obj.trainers.Count; i++)
             {

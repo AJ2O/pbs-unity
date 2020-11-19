@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using PBS.Enums.Battle;
 
 namespace PBS.Networking.CustomSerialization
 {
@@ -93,7 +94,7 @@ namespace PBS.Networking.CustomSerialization
             return new PBS.Battle.View.Compact.Team
             {
                 teamID = reader.ReadInt32(),
-                teamMode = (PBS.Battle.Enums.TeamMode)reader.ReadInt32(),
+                teamMode = (TeamMode)reader.ReadInt32(),
                 trainers = reader.ReadList<PBS.Battle.View.Compact.Trainer>()
             };
         }

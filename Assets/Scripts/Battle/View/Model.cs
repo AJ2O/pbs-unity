@@ -14,7 +14,7 @@ namespace PBS.Battle.View
         public List<PBS.Battle.View.Compact.Team> teams = new List<Compact.Team>();
 
         public Model() { }
-        public Model(PBS.Battle.Core.Model obj)
+        public Model(Battle.Model obj)
         {
             settings = obj.battleSettings;
             teams = new List<Compact.Team>();

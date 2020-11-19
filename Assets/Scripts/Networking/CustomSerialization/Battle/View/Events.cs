@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using PBS.Enums.Battle;
 
 namespace PBS.Networking.CustomSerialization.Battle.View
 {
@@ -320,6 +321,11 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 writer.WriteString(pokemonAbilityActivate.pokemonUniqueID);
                 writer.WriteString(pokemonAbilityActivate.abilityID);
             }
+
+            else
+            {
+                writer.WriteInt32(BASE);
+            }
         }
         public static PBS.Battle.View.Events.Base ReadBattleViewEvent(this NetworkReader reader)
         {
@@ -439,7 +445,7 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                     {
                         loadAsset = reader.ReadBoolean(),
                         teamID = reader.ReadInt32(),
-                        teamMode = (PBS.Battle.Enums.TeamMode)reader.ReadInt32(),
+                        teamMode = (TeamMode)reader.ReadInt32(),
                         trainers = reader.ReadList<int>()
                     };
 

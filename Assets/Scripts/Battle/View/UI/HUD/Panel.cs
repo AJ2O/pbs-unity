@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Enums.Battle;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -71,24 +72,24 @@ namespace PBS.Battle.View.UI.HUD
 
         // Setting HUD Parameters
         public Transform GetPokemonHUDSpawnPosition(
-            PBS.Battle.View.Compact.Pokemon pokemon, 
-            PBS.Battle.Enums.TeamMode teamMode,
+            PBS.Battle.View.Compact.Pokemon pokemon,
+            TeamMode teamMode,
             bool isNear)
         {
             // get spawn position
             Transform spawnPos = null;
             switch (teamMode)
             {
-                case Battle.Enums.TeamMode.Single:
+                case TeamMode.Single:
                     spawnPos = isNear ? pokemonHUDSpawnNearSingle : pokemonHUDSpawnFarSingle;
                     break;
 
-                case Battle.Enums.TeamMode.Double:
+                case TeamMode.Double:
                     spawnPos = (pokemon.battlePos == 0) ? (isNear ? pokemonHUDSpawnNearDouble0 : pokemonHUDSpawnFarDouble0)
                         : isNear ? pokemonHUDSpawnNearDouble1 : pokemonHUDSpawnFarDouble1;
                     break;
 
-                case Battle.Enums.TeamMode.Triple:
+                case TeamMode.Triple:
                     spawnPos = (pokemon.battlePos == 0) ? (isNear ? pokemonHUDSpawnNearTriple0 : pokemonHUDSpawnFarTriple0)
                         : (pokemon.battlePos == 1) ? (isNear ? pokemonHUDSpawnNearTriple1 : pokemonHUDSpawnFarTriple1)
                         : isNear ? pokemonHUDSpawnNearTriple2 : pokemonHUDSpawnFarTriple2;
@@ -148,7 +149,7 @@ namespace PBS.Battle.View.UI.HUD
         // Drawing HUD
         public HUD.PokemonHUD DrawPokemonHUD(
             PBS.Battle.View.Compact.Pokemon pokemon,
-            PBS.Battle.Enums.TeamMode teamMode,
+            TeamMode teamMode,
             bool isNear)
         {
             // get spawn position
@@ -164,12 +165,12 @@ namespace PBS.Battle.View.UI.HUD
                 HUD.PokemonHUD pokemonHUD = Instantiate(pokemonHUDPrefab, spawnPos.position, Quaternion.identity, spawnPos);
                 pokemonHUD.pokemonUniqueID = pokemon.uniqueID;
                 pokemonHUD.hpObj.gameObject.SetActive(isNear
-                    && (teamMode == Battle.Enums.TeamMode.Single
-                        || teamMode == Battle.Enums.TeamMode.Double));
+                    && (teamMode == TeamMode.Single
+                        || teamMode == TeamMode.Double));
                 // set EXP bar
                 pokemonHUD.expObj.SetActive(isNear
-                    && (teamMode == Battle.Enums.TeamMode.Single
-                        || teamMode == Battle.Enums.TeamMode.Double));
+                    && (teamMode == TeamMode.Single
+                        || teamMode == TeamMode.Double));
                 pokemonHUDs.Add(pokemonHUD);
 
                 UpdatePokemonHUD(

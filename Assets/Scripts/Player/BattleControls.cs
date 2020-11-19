@@ -499,7 +499,8 @@ namespace PBS.Player
                     && commandPromptEvent.canZMove
                     && agent.canZMove
                     && !canMegaEvolve 
-                    && !canDynamax)
+                    && !canDynamax
+                    && !agent.isDynamaxed)
                 {
                     canZMove = true;
                 }
@@ -514,6 +515,7 @@ namespace PBS.Player
                     canDynamax = true;
                 }
             }
+            chooseDynamax = commandAgent.isDynamaxed;
 
             // set the initial move index
             moveIndex = 0;
@@ -528,14 +530,14 @@ namespace PBS.Player
                 canZMove: canZMove,
                 canDynamax: canDynamax,
                 choosingZMove: chooseZMove,
-                choosingMaxMove: chooseDynamax || pokemon.dynamaxState != Pokemon.DynamaxState.None);
+                choosingMaxMove: chooseDynamax);
             battleUI.SwitchPanel(Battle.View.Enums.Panel.Fight);
             battleUI.SwitchSelectedMoveTo(
                 pokemon: pokemon, 
                 selected: moveIndex, 
                 choosingSpecial: chooseMegaEvolve || chooseZMove || chooseDynamax,
                 choosingZMove: chooseZMove,
-                choosingMaxMove: chooseDynamax || pokemon.dynamaxState != Pokemon.DynamaxState.None);
+                choosingMaxMove: chooseDynamax);
 
             while (choosingFight)
             {
@@ -897,7 +899,7 @@ namespace PBS.Player
                     selected: moveIndex,
                     choosingSpecial: chooseMegaEvolve || chooseZMove || chooseDynamax,
                     choosingZMove: chooseZMove,
-                    choosingMaxMove: chooseDynamax || pokemon.dynamaxState != Pokemon.DynamaxState.None);
+                    choosingMaxMove: chooseDynamax);
             }
         }
 
@@ -965,7 +967,7 @@ namespace PBS.Player
                 canZMove: canZMove,
                 canDynamax: canDynamax,
                 choosingZMove: chooseZMove,
-                choosingMaxMove: chooseDynamax || pokemon.dynamaxState != Pokemon.DynamaxState.None);
+                choosingMaxMove: chooseDynamax);
 
             if (moveIndex >= 0)
             {
@@ -974,7 +976,7 @@ namespace PBS.Player
                     selected: moveIndex,
                     choosingSpecial: chooseMegaEvolve || chooseZMove || chooseDynamax,
                     choosingZMove: chooseZMove,
-                    choosingMaxMove: chooseDynamax || pokemon.dynamaxState != Pokemon.DynamaxState.None);
+                    choosingMaxMove: chooseDynamax);
             }
         }
 
@@ -997,11 +999,12 @@ namespace PBS.Player
             // create command
             else
             {
+                PBS.Battle.View.Events.CommandAgent.Moveslot rawChoice = this.moveslots[moveIndex];
                 PBS.Battle.View.Events.CommandAgent.Moveslot choice = this.commandAgent.moveslots[moveIndex];
                 bool validMove = true;
                 if (chooseZMove)
                 {
-                    if (choice.hide)
+                    if (rawChoice.hide)
                     {
                         validMove = false;
                         StartCoroutine(battleUI.DrawTextInstant("This move cannot use Z-Power!", undrawOnFinish: true));
@@ -1040,7 +1043,7 @@ namespace PBS.Player
                                     selected: moveIndex,
                                     choosingSpecial: chooseMegaEvolve || chooseZMove || chooseDynamax,
                                     choosingZMove: chooseZMove,
-                                    choosingMaxMove: chooseDynamax || pokemon.dynamaxState != Pokemon.DynamaxState.None);
+                                    choosingMaxMove: chooseDynamax);
                             }
                             waitCRActive = false;
                         }));
@@ -1051,7 +1054,7 @@ namespace PBS.Player
                         controlFightTargetCR = StartCoroutine(ControlPromptFieldTarget(
                             commandAgent,
                             commandTrainer,
-                            choice,
+                            moveslots[moveIndex],
                             committedCommands));
                     }
                 }
@@ -1127,9 +1130,10 @@ namespace PBS.Player
             else
             {
                 bool validMove = true;
+                PBS.Battle.View.Events.CommandAgent.Moveslot rawChoice = this.moveslots[moveIndex];
                 if (chooseZMove)
                 {
-                    if (string.IsNullOrEmpty(selectedMoveslot.moveID))
+                    if (rawChoice.hide)
                     {
                         validMove = false;
                         StartCoroutine(battleUI.DrawTextInstant("This move cannot use Z-Power!", undrawOnFinish: true));
@@ -1142,7 +1146,7 @@ namespace PBS.Player
                     Command attemptedCommand = Command.CreateMoveCommand(
                         commandUser: pokemon.uniqueID,
                         commandTrainer: commandTrainer.playerID,
-                        moveID: selectedMoveslot.moveID,
+                        moveID: commandAgent.moveslots[moveIndex].moveID,
                         targetPositions: moveTargets[moveTargetIndex],
                         isExplicitlySelected: true,
                         isMegaEvolving: chooseMegaEvolve,
@@ -1191,7 +1195,7 @@ namespace PBS.Player
                     selected: moveIndex,
                     choosingSpecial: chooseMegaEvolve || chooseZMove || chooseDynamax,
                     choosingZMove: chooseZMove,
-                    choosingMaxMove: chooseDynamax || pokemon.dynamaxState != Pokemon.DynamaxState.None);
+                    choosingMaxMove: chooseDynamax);
             }
         }
 

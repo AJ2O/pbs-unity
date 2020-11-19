@@ -6602,6 +6602,22 @@ public class MoveDatabase
                 }
                 ) },
 
+        // Shadow Sneak
+        {"shadowsneak",
+            new MoveData(
+                ID: "shadowsneak",
+                moveName: "Shadow Sneak",
+                moveType: "ghost",
+                category: MoveCategory.Physical,
+                targetType: MoveTargetType.Adjacent,
+                basePower: 40, accuracy: 1.0f, PP: 30, priority: 1,
+
+                moveTags: new MoveTag[]
+                {
+                    MoveTag.MakesContact,
+                }
+                ) },
+
         // Shell Side Arm
         {"shellsidearm",
             new MoveData(

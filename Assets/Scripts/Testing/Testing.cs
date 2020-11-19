@@ -308,7 +308,17 @@ public class Testing : MonoBehaviour
             }
             );
 
-        party.AddRange(new List<Pokemon> { pokemon1, pokemon2, pokemon3, morpeko });
+        Pokemon mimikyu = new Pokemon(
+            pokemonID: "mimikyu",
+            level: 5,
+            natureID: "bold",
+            moveslots: new Pokemon.Moveslot[]
+            {
+                new Pokemon.Moveslot("shadowsneak"),
+            }
+            );
+
+        party.AddRange(new List<Pokemon> { mimikyu, pokemon1, pokemon2, pokemon3, morpeko });
 
         // items
         List<Item> items = new List<Item>();
@@ -389,7 +399,7 @@ public class Testing : MonoBehaviour
                         natureID: "adamant",
                         moveslots: new Pokemon.Moveslot[]
                         {
-                            new Pokemon.Moveslot("flamethrower"),
+                            new Pokemon.Moveslot("taunt"),
                             new Pokemon.Moveslot("yawn"),
                             new Pokemon.Moveslot("tackle"),
                             new Pokemon.Moveslot("aurawheel", PPUps: GameSettings.pkmnMaxPPUps),
@@ -477,7 +487,7 @@ public class Testing : MonoBehaviour
                         level: 15,
                         moveslots: new Pokemon.Moveslot[]
                         {
-                            new Pokemon.Moveslot("thunderpunch"),
+                            new Pokemon.Moveslot("firepunch"),
                             new Pokemon.Moveslot("thousandwaves"),
                             new Pokemon.Moveslot("stealthrock"),
                             new Pokemon.Moveslot("batonpass")
@@ -496,11 +506,10 @@ public class Testing : MonoBehaviour
                         {
                             new Pokemon.Moveslot("uturn"),
                             new Pokemon.Moveslot("forestscurse"),
-                            new Pokemon.Moveslot("roost"),
+                            new Pokemon.Moveslot("poltergeist"),
                             new Pokemon.Moveslot("leechseed"),
                         },
                         //nonVolatileStatus: new StatusCondition("burn"),
-                        abilityNo: 1,
                         isHiddenAbility: true
                         ),
 

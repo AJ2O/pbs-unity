@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using PBS.Battle;
 
-namespace PBS.Networking {
+namespace PBS.Networking
+{
 
     public class Core : NetworkBehaviour
     {
-        [HideInInspector] public PBS.Battle.Core.Model battle;
+        [HideInInspector] public Model battle;
         [HideInInspector] public PBS.AI.Battle ai;
         public bool isRunningBattle;
         Coroutine battleCoroutine;
@@ -137,7 +139,7 @@ namespace PBS.Networking {
             List<BattleTeam> teams)
         {
             InitializeComponents();
-            battle = new Battle.Core.Model(battleSettings: battleSettings, turns: 0, teams: teams);
+            battle = new PBS.Battle.Model(battleSettings: battleSettings, turns: 0, teams: teams);
 
             // load assets on player clients
             InitializeClients();
@@ -318,7 +320,7 @@ namespace PBS.Networking {
             yield return StartCoroutine(WaitForPlayer());
 
             // TODO: AI Commands
-            ai.UpdateModel(PBS.Battle.Core.Model.CloneModel(battle));
+            ai.UpdateModel(Model.CloneModel(battle));
             SelectAICommands();
 
             // select all preset commands
@@ -1319,7 +1321,7 @@ namespace PBS.Networking {
                 iterations++;
                 stillReplace = false;
                 replaceCommands = new List<BattleCommand>();
-                PBS.Battle.Core.Model replaceModel = PBS.Battle.Core.Model.CloneModel(battle);
+                Model replaceModel = Model.CloneModel(battle);
                 UpdateClients();
 
                 // query player for replacements
@@ -2197,6 +2199,7 @@ namespace PBS.Networking {
                             moveID: encoreData.ID,
                             command: command,
                             hit: 1);
+                        baseMoveID = masterMoveData.ID;
                         if (oldCategory != masterMoveData.category)
                         {
                             command.targetPositions = battle.GetMoveAutoTargets(userPokemon, masterMoveData).ToArray();
@@ -2214,6 +2217,13 @@ namespace PBS.Networking {
             bool displayMove = true;
             bool tryToConsumePP = false;
             bool moveWasDisplayed = false;
+            MoveData baseMoveData = battle.GetPokemonMoveData(
+                userPokemon: userPokemon,
+                moveID: baseMoveID,
+                command: command,
+                overrideZMove: true,
+                overrideMaxMove: true,
+                hit: 1);
 
             // some cases where we don't want the move to be displayed
 
@@ -3057,7 +3067,7 @@ namespace PBS.Networking {
                     int PPLost = battle.GetPPConsumed(
                         userPokemon: userPokemon,
                         targetPokemon: targetPokemon,
-                        moveData: masterMoveData
+                        moveData: baseMoveData
                         );
                 }
             }
@@ -5079,6 +5089,12 @@ namespace PBS.Networking {
                                         changeText: disguise.displayText,
                                         checkAbility: false
                                         ));
+
+                                    SendEvent(new Battle.View.Events.MessageParameterized
+                                    {
+                                        messageCode = disguise.displayText,
+                                        pokemonTargetID = currentTarget.pokemon.uniqueID
+                                    });
 
                                     // Lose health
                                     if (disguise.hpLossPercent > 0)
@@ -15485,7 +15501,7 @@ namespace PBS.Networking {
                 Pokemon.BattleProperties withdrawBProps 
                     = Pokemon.BattleProperties.Clone(withdrawPokemon.bProps, withdrawPokemon);
 
-                PBS.Battle.Core.Model updateModel = PBS.Battle.Core.Model.CloneModel(battle);
+                Model updateModel = Model.CloneModel(battle);
                 batonPassReplaceCommands = new List<BattleCommand>();
                 UpdateClients();
                 if (!trainer.IsAIControlled())

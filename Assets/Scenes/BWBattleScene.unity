@@ -617,7 +617,7 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs: []
   battleCore: {fileID: 1109572307}
-  requiredPlayers: 2
+  requiredPlayers: 1
   totalPlayers: 2
   battleSettings:
     battleType: 0

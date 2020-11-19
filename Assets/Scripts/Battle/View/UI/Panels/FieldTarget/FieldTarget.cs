@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Enums.Battle;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -83,16 +84,16 @@ namespace PBS.Battle.View.UI.Panels
             Panels.FieldTargetButton curBtn =
 
                 // singles battle
-                (team.teamMode == Battle.Enums.TeamMode.Single) ? (isAlly ? targetBtnNearSingle : targetBtnFarSingle)
+                (team.teamMode == TeamMode.Single) ? (isAlly ? targetBtnNearSingle : targetBtnFarSingle)
 
                 // doubles battle
-                : (team.teamMode == Battle.Enums.TeamMode.Double) ?
+                : (team.teamMode == TeamMode.Double) ?
                     (isAlly ?
                         ((position.battlePos == 0) ? targetBtnNearDouble0 : targetBtnNearDouble1)
                         : ((position.battlePos == 0) ? targetBtnFarDouble0 : targetBtnFarDouble1))
 
                 // triples battle
-                : (team.teamMode == Battle.Enums.TeamMode.Triple) ?
+                : (team.teamMode == TeamMode.Triple) ?
                     (isAlly ?
                         ((position.battlePos == 0) ? targetBtnNearTriple0
                             : (position.battlePos == 1) ? targetBtnNearTriple1 : targetBtnNearTriple2)
