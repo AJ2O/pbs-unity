@@ -49,7 +49,25 @@ public class StatusPKData
     }
 
     // Tags
-    public HashSet<PokemonSTag> statusTags { get; set; }
+    private bool combineBaseTags;
+    private HashSet<PokemonSTag> p_tags { get; set; }
+    public HashSet<PokemonSTag> statusTags 
+    {
+        get
+        {
+            if (combineBaseTags && !string.IsNullOrEmpty(baseID))
+            {
+                HashSet<PokemonSTag> unionTags = new HashSet<PokemonSTag>(p_tags);
+                unionTags.UnionWith(StatusPKDatabase.instance.GetStatusData(baseID).statusTags);
+                return unionTags;
+            }
+            return p_tags;
+        }
+        private set
+        {
+            p_tags = value;
+        } 
+    }
     // Status Condition Effects
     public PokemonCEff[] conditionEffects { get; private set; }
 
@@ -87,7 +105,7 @@ public class StatusPKData
         string failTextID = null,
         EffectDatabase.General.DefaultTurns defaultTurns = null,
 
-        IEnumerable<PokemonSTag> statusTags = null,
+        bool combineBaseTags = false, IEnumerable<PokemonSTag> statusTags = null,
         PokemonCEff[] conditionEffects = null,
 
         bool combineBaseEffects = false, EffectDatabase.StatusPKEff.PokemonSE[] effectsNew = null)
@@ -103,11 +121,9 @@ public class StatusPKData
 
         this.defaultTurns = (defaultTurns == null) ? null : defaultTurns.Clone();
 
-        this.statusTags = new HashSet<PokemonSTag>();
-        if (statusTags != null)
-        {
-            this.statusTags.UnionWith(statusTags);
-        }
+        this.combineBaseTags = combineBaseTags;
+        this.statusTags = (statusTags == null) ? new HashSet<PokemonSTag>() : new HashSet<PokemonSTag>(statusTags);
+
         this.conditionEffects = (conditionEffects == null) ? new PokemonCEff[0] 
             : new PokemonCEff[conditionEffects.Length];
         if (conditionEffects != null)
@@ -138,7 +154,9 @@ public class StatusPKData
             ID: ID,
             baseID: baseID,
             conditionName: conditionName,
+            shortName: shortName,
             inflictTextID: inflictTextID,
+            alreadyTextID: alreadyTextID,
             healTextID: healTextID,
             failTextID: failTextID,
 

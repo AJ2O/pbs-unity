@@ -1641,16 +1641,12 @@ namespace PBS.Player
             {
                 return;
             }
-            // Only leave if we're able to
-            if (itemPockets.Contains(ItemBattlePocket.None))
-            {
-                playerCommand = null;
-                choosingBagPocket = false;
+            playerCommand = null;
+            choosingBagPocket = false;
 
-                SwitchControlContext(ControlContext.Command);
-                battleUI.SwitchPanel(PBS.Battle.View.Enums.Panel.Command);
-                battleUI.SwitchSelectedCommandTo(commandTypes[commandIndex]);
-            }
+            SwitchControlContext(ControlContext.Command);
+            battleUI.SwitchPanel(PBS.Battle.View.Enums.Panel.Command);
+            battleUI.SwitchSelectedCommandTo(commandTypes[commandIndex]);
         }
 
 

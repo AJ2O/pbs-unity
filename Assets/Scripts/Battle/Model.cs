@@ -928,7 +928,7 @@ namespace PBS.Battle
                             else if (effect_ is EffectDatabase.StatusPKEff.Taunt)
                             {
                                 EffectDatabase.StatusPKEff.Taunt taunt = effect_ as EffectDatabase.StatusPKEff.Taunt;
-                                if (taunt.category == MoveCategory.Status)
+                                if (taunt.category == moveData.category)
                                 {
                                     commandSuccess = false;
                                 }
@@ -4165,7 +4165,7 @@ namespace PBS.Battle
             }
             return scs;
         }
-        public Pokemon.Ability PBPGetComatoseSCAbility(Pokemon pokemon)
+        public Pokemon.Ability PBPGetComatoseSCAbility(Pokemon pokemon, string statusID)
         {
             List<Pokemon.Ability> abilities = PBPGetAbilities(pokemon);
 
@@ -4174,9 +4174,16 @@ namespace PBS.Battle
                 Pokemon.Ability ability = abilities[i];
                 List<EffectDatabase.AbilityEff.AbilityEffect> comatose_ =
                     ability.data.GetEffectsNew(AbilityEffectType.Comatose);
-                if (comatose_ != null)
+                for (int k = 0; k < comatose_.Count; k++)
                 {
-                    return ability;
+                    EffectDatabase.AbilityEff.Comatose comatose =
+                        comatose_[k] as EffectDatabase.AbilityEff.Comatose;
+                    StatusPKData statusData = StatusPKDatabase.instance.GetStatusData(comatose.statusID);
+                    if (statusData.IsABaseID(statusID)
+                        || statusData.ID == statusID)
+                    {
+                        return ability;
+                    }
                 }
             }
             return null;

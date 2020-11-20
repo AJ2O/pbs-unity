@@ -63,7 +63,7 @@ public class StatusPKDatabase
                 
                 effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
                 {
-                    new EffectDatabase.StatusPKEff.NonVolatile(),
+                    new EffectDatabase.StatusPKEff.NonVolatile(priority: 0),
                 }
                 ) },
 
@@ -116,10 +116,10 @@ public class StatusPKDatabase
                 ID: "freeze",
                 conditionName: "Freeze",
                 shortName: "FRZ",
-                inflictTextID: "status-inflict-freeze",
-                healTextID: "status-heal-freeze",
-                alreadyTextID: "status-already-freeze",
-                failTextID: "status-fail-freeze",
+                inflictTextID: "status-freeze-start",
+                healTextID: "status-freeze-heal",
+                alreadyTextID: "status-freeze-already",
+                failTextID: "status-freeze-fail",
 
                 defaultTurns: new EffectDatabase.General.DefaultTurns(turns: -1),
                 statusTags: new PokemonSTag[]
@@ -151,10 +151,10 @@ public class StatusPKDatabase
                 ID: "paralysis",
                 conditionName: "Paralysis",
                 shortName: "PRZ",
-                inflictTextID: "status-inflict-paralysis",
-                healTextID: "status-heal-paralysis",
-                alreadyTextID: "status-already-paralysis",
-                failTextID: "status-fail-paralysis",
+                inflictTextID: "status-paralysis-start",
+                healTextID: "status-paralysis-end",
+                alreadyTextID: "status-paralysis-already",
+                failTextID: "status-paralysis-fail",
 
                 defaultTurns: new EffectDatabase.General.DefaultTurns(turns: -1),
                 statusTags: new PokemonSTag[]
@@ -225,36 +225,24 @@ public class StatusPKDatabase
         // Toxic / Badly Poisoned
         {"poison2",
             new StatusPKData(
-                ID: "poison2", baseID: "poison",
-                conditionName: "Severe Poison", shortName: "TXC",
-                inflictTextID: "status-inflict-poison2",
-                healTextID: "status-heal-poison",
-                alreadyTextID: "status-already-poison",
-                failTextID: "status-fail-poison",
+                ID: "poison2", 
+                baseID: "poison",
+                conditionName: "Toxic Poison", shortName: "TXC",
+                inflictTextID: "status-toxic-start",
+                healTextID: "status-poison-end",
+                alreadyTextID: "status-poison-already",
+                failTextID: "status-poison-fail",
 
                 defaultTurns: new EffectDatabase.General.DefaultTurns(turns: -1),
-                statusTags: new PokemonSTag[]
-                {
-                    PokemonSTag.NonVolatile,
-                    PokemonSTag.TurnsDecreaseOnEnd,
-                },
+
+                combineBaseTags: true,
+                combineBaseEffects: true,
                 effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
                 {
-                    new EffectDatabase.StatusPKEff.NonVolatile(),
                     new EffectDatabase.StatusPKEff.HPLoss(
                         displayText: "status-poison-hploss",
                         hpLossPercent: 1f/16,
                         toxicStack: true
-                        ),
-                    new EffectDatabase.StatusPKEff.TypeImmunity(
-                        filters: new EffectDatabase.Filter.FilterEffect[]
-                        {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Pokemon,
-                                types: new string[] { "poison", "steel" },
-                                invert: true
-                                ),
-                        }
                         ),
                 }
                 ) },
@@ -264,10 +252,10 @@ public class StatusPKDatabase
             new StatusPKData(
                 ID: "sleep",
                 conditionName: "Sleep", shortName: "SLP",
-                inflictTextID: "status-inflict-sleep",
-                healTextID: "status-heal-sleep",
-                alreadyTextID: "status-already-sleep",
-                failTextID: "status-fail-sleep",
+                inflictTextID: "status-sleep-start",
+                healTextID: "status-sleep-end",
+                alreadyTextID: "status-sleep-already",
+                failTextID: "status-sleep-fail",
 
                 defaultTurns: new EffectDatabase.General.DefaultTurns(useTurnRange: true, lowestTurns: 1, highestTurns: 3),
                 statusTags: new PokemonSTag[]

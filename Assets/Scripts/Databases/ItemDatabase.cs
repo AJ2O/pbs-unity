@@ -133,7 +133,7 @@ public class ItemDatabase
                 {
                     new ItemEffect(
                         ItemEffectType.HealStatus,
-                        stringParams: new string[]{ "burn", "confusion", "freeze", "paralysis", "poison", "sleep" }
+                        stringParams: new string[]{ "burn", "confusion", "freeze", "paralysis", "poison", "poison2", "sleep" }
                         ),
                     new ItemEffect(
                         ItemEffectType.TriggerOnStatus,

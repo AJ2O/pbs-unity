@@ -318,7 +318,7 @@ public class Testing : MonoBehaviour
             }
             );
 
-        party.AddRange(new List<Pokemon> { mimikyu, pokemon1, pokemon2, pokemon3, morpeko });
+        party.AddRange(new List<Pokemon> { pokemon3, pokemon1, pokemon2, morpeko });
 
         // items
         List<Item> items = new List<Item>();
@@ -411,22 +411,21 @@ public class Testing : MonoBehaviour
                         item: new Item("wacanberry")
                         ),
 
-                    /*new Pokemon(
-                        pokemonID: "squirtle",
+                    new Pokemon(
+                        pokemonID: "hoopa-confined",
                         level: 15,
-                        hpPercent: 0.75f,
-                        natureID: "sassy",
+                        hpPercent: 1f,
+                        natureID: "timid",
                         moveslots: new Pokemon.Moveslot[]
                         {
-                            new Pokemon.Moveslot("watergun"),
                             new Pokemon.Moveslot("karatechop"),
-                            new Pokemon.Moveslot("healingwish"),
-                            new Pokemon.Moveslot("protect"),
-                        },
-                        nonVolatileStatus: new StatusCondition("paralysis")
-                        ),*/
+                            new Pokemon.Moveslot("raindance2"),
+                            new Pokemon.Moveslot("destinybond"),
+                            new Pokemon.Moveslot("hyperspacehole"),
+                        }
+                        ),
 
-                    /*new Pokemon(
+                    new Pokemon(
                         pokemonID: "tapukoko",
                         level: 15,
                         hpPercent: 1f,
@@ -439,7 +438,7 @@ public class Testing : MonoBehaviour
                             new Pokemon.Moveslot("naturesmadness"),
                         },
                         item: new Item("tapuniumz")
-                        ),*/
+                        ),
 
                     new Pokemon(
                         pokemonID: "blastoise",
@@ -513,7 +512,7 @@ public class Testing : MonoBehaviour
                         //nonVolatileStatus: new StatusCondition("burn")
                         ),
 
-                    /*new Pokemon(
+                    new Pokemon(
                         pokemonID: "charmander",
                         level: 15,
                         hpPercent: 0.75f,
@@ -530,7 +529,7 @@ public class Testing : MonoBehaviour
                         isHiddenAbility: true,
 
                         item: new Item("wacanberry")
-                        ),*/
+                        ),
 
                     new Pokemon(
                         pokemonID: "blastoise",
@@ -561,9 +560,9 @@ public class Testing : MonoBehaviour
                             new Pokemon.Moveslot("relicsong"),
                         }
                         //item: new Item("psychiumz")
-                        )
+                        ),
 
-                    /*new Pokemon(
+                    new Pokemon(
                         pokemonID: "greninja-battlebond",
                         level: 15,
                         hpPercent: 1f,
@@ -574,7 +573,7 @@ public class Testing : MonoBehaviour
                             new Pokemon.Moveslot("liquidation"),
                             new Pokemon.Moveslot("recover"),
                             new Pokemon.Moveslot("icebeam"),
-                        })*/
+                        })
                 });
                 break;
 

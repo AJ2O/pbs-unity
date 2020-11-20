@@ -3619,7 +3619,7 @@ public class AbilityDatabase
                                 moveTags: new MoveTag[] { MoveTag.MakesContact }
                                 )
                         },
-                        chance: 0.3f
+                        chance: 1f
                         ),
                 }
                 ) },

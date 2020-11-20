@@ -3273,17 +3273,17 @@ public class GameTextDatabase
                 ) },
 
         // Burn
-        {"status-burn-inflict",
+        {"status-burn-start",
             new GameTextData(
-                ID: "status-burn-inflict",
+                ID: "status-burn-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
                     { GameLanguages.English, "{{-target-pokemon-}} was burned!" },
                 }
                 ) },
-        {"statu-burn-heal",
+        {"statu-burn-end",
             new GameTextData(
-                ID: "status-burn-heal",
+                ID: "status-burn-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
                     { GameLanguages.English, "{{-target-pokemon-}} was healed from its burn!" },
@@ -3323,17 +3323,17 @@ public class GameTextDatabase
                 ) },
 
         // Freeze
-        {"status-inflict-freeze",
+        {"status-freeze-start",
             new GameTextData(
-                ID: "status-inflict-freeze",
+                ID: "status-freeze-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
                     { GameLanguages.English, "{{-target-pokemon-}} was frozen solid!" },
                 }
                 ) },
-        {"status-heal-freeze",
+        {"status-freeze-end",
             new GameTextData(
-                ID: "status-heal-freeze",
+                ID: "status-freeze-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
                     { GameLanguages.English, "{{-target-pokemon-}} thawed out!" },
@@ -3347,9 +3347,9 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-poss-}} {{-item-name-}} thawed it out." },
                 }
                 ) },
-        {"status-fail-freeze",
+        {"status-freeze-fail",
             new GameTextData(
-                ID: "status-fail-freeze",
+                ID: "status-freeze-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
                     { GameLanguages.English, "{{-target-pokemon-}} cannot be frozen!" },
@@ -3357,17 +3357,17 @@ public class GameTextDatabase
                 ) },
 
         // Paralysis
-        {"status-inflict-paralysis",
+        {"status-paralysis-start",
             new GameTextData(
-                ID: "status-inflict-paralysis",
+                ID: "status-paralysis-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
                     { GameLanguages.English, "{{-target-pokemon-}} was paralyzed!" },
                 }
                 ) },
-        {"status-heal-paralysis",
+        {"status-paralysis-end",
             new GameTextData(
-                ID: "status-heal-paralysis",
+                ID: "status-paralysis-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
                     { GameLanguages.English, "{{-target-pokemon-}} was healed from its paralysis!" },
@@ -3381,17 +3381,17 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-poss-}} {{-item-name-}} cured it of its paralysis." },
                 }
                 ) },
-        {"status-already-paralysis",
+        {"status-paralysis-already",
             new GameTextData(
-                ID: "status-already-paralysis",
+                ID: "status-paralysis-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
                     { GameLanguages.English, "{{-target-pokemon-}} is already paralyzed." },
                 }
                 ) },
-        {"status-fail-paralysis",
+        {"status-paralysis-fail",
             new GameTextData(
-                ID: "status-fail-paralysis",
+                ID: "status-paralysis-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
                     { GameLanguages.English, "{{-target-pokemon-}} cannot be paralyzed!" },
@@ -3449,17 +3449,17 @@ public class GameTextDatabase
                 ) },
 
         // Sleep
-        {"status-inflict-sleep",
+        {"status-sleep-start",
             new GameTextData(
-                ID: "status-inflict-sleep",
+                ID: "status-sleep-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
                     { GameLanguages.English, "{{-target-pokemon-}} fell asleep!" },
                 }
                 ) },
-        {"status-heal-sleep",
+        {"status-sleep-end",
             new GameTextData(
-                ID: "status-heal-sleep",
+                ID: "status-sleep-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
                     { GameLanguages.English, "{{-target-pokemon-}} woke up!" },
@@ -3473,17 +3473,17 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-poss-}} {{-item-name-}} woke it up!" },
                 }
                 ) },
-        {"status-already-sleep",
+        {"status-sleep-already",
             new GameTextData(
-                ID: "status-already-sleep",
+                ID: "status-sleep-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
                     { GameLanguages.English, "{{-target-pokemon-}} is already asleep." },
                 }
                 ) },
-        {"status-fail-sleep",
+        {"status-sleep-fail",
             new GameTextData(
-                ID: "status-fail-sleep",
+                ID: "status-sleep-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
                     { GameLanguages.English, "{{-target-pokemon-}} cannot be put to sleep!" },
@@ -3491,9 +3491,9 @@ public class GameTextDatabase
                 ) },
 
         // Toxic
-        {"status-inflict-poison2",
+        {"status-toxic-start",
             new GameTextData(
-                ID: "status-inflict-poison2",
+                ID: "status-toxic-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
                     { GameLanguages.English, "{{-target-pokemon-}} was badly poisoned!" },

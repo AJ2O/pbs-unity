@@ -10179,6 +10179,7 @@ namespace PBS.Networking
                                     statusBlockedFully = true;
                                     if (forceFailMessage)
                                     {
+                                        Debug.Log("Limber teammate");
                                         PBPShowAbility(curPokemon, ability);
                                         SendEvent(new Battle.View.Events.MessageParameterized
                                         {
@@ -10249,6 +10250,7 @@ namespace PBS.Networking
                                 statusBlockedFully = true;
                                 if (forceFailMessage)
                                 {
+                                    Debug.Log("Limber self");
                                     PBPShowAbility(targetPokemon, ability);
                                     SendEvent(new Battle.View.Events.MessageParameterized
                                     {
@@ -10280,13 +10282,14 @@ namespace PBS.Networking
                 // Can't overwrite Comatose
                 if (!statusBlockedFully)
                 {
-                    Pokemon.Ability ability = battle.PBPGetComatoseSCAbility(targetPokemon);
+                    Pokemon.Ability ability = battle.PBPGetComatoseSCAbility(targetPokemon, statusData.ID);
                     if (ability != null)
                     {
                         statusBlockedFully = true;
                         if (forceFailMessage)
                         {
                             PBPShowAbility(targetPokemon, ability.data);
+                            Debug.Log("Comatose self");
                             SendEvent(new Battle.View.Events.MessageParameterized
                             {
                                 messageCode = statusData.failTextID,
@@ -10315,6 +10318,7 @@ namespace PBS.Networking
                                 {
                                     statusBlockedFully = true;
                                     PBPShowAbility(targetPokemon, ability);
+                                    Debug.Log("Shields down self");
                                     SendEvent(new Battle.View.Events.MessageParameterized
                                     {
                                         messageCode = statusData.failTextID,
@@ -10341,7 +10345,7 @@ namespace PBS.Networking
                         {
                             EffectDatabase.StatusPKEff.NonVolatile oldPriority =
                                 oldPriority_ as EffectDatabase.StatusPKEff.NonVolatile;
-                            if (newPriority.priority <= oldPriority.priority)
+                            if (newPriority.priority < oldPriority.priority)
                             {
                                 statusBlockedFully = true;
                                 if (forceFailMessage)
@@ -10447,6 +10451,7 @@ namespace PBS.Networking
                             pokemon: targetPokemon,
                             statusID: statusData.ID,
                             turnsLeft: turnsLeft);
+                        UpdateClients(updatePokemon: true);
 
                         string inflictText = (applyOverwrite == "") ? condition.data.inflictTextID : applyOverwrite;
                         SendEvent(new Battle.View.Events.MessageParameterized
@@ -12311,12 +12316,12 @@ namespace PBS.Networking
                                     if (flameBody.perishBody && inflictSuccess)
                                     {
                                         yield return StartCoroutine(ApplySC(
-                                        inflictStatus: inflictStatus,
-                                        targetPokemon: currentTarget.pokemon,
-                                        userPokemon: currentTarget.pokemon,
-                                        forceFailMessage: true,
-                                        callback: (result) => { }
-                                        ));
+                                            inflictStatus: inflictStatus,
+                                            targetPokemon: currentTarget.pokemon,
+                                            userPokemon: currentTarget.pokemon,
+                                            forceFailMessage: true,
+                                            callback: (result) => { }
+                                            ));
                                     }
                                 }
                             }
@@ -16174,8 +16179,8 @@ namespace PBS.Networking
             )
         {
             battle.HealStatusCondition(targetPokemon, condition);
-            string healText = (overwriteText == null) ? condition.data.healTextID
-                : overwriteText;
+            string healText = (overwriteText == null) ? condition.data.healTextID : overwriteText;
+            UpdateClients(updatePokemon: true);
             SendEvent(new Battle.View.Events.MessageParameterized
             {
                 messageCode = healText,
@@ -19728,7 +19733,6 @@ namespace PBS.Networking
                 });
 
                 bool effectSuccess = false;
-
                 yield return StartCoroutine(ApplyItemEffects(
                     pokemon: itemPokemon,
                     item: item,
