@@ -361,6 +361,7 @@ public class Testing : MonoBehaviour
             new Item("antidote"),
             new Item("oranberry"),
             new Item("sitrusberry"),
+            new Item("lumberry"),
             new Item("xattack"),
             new Item("xdefense"),
             new Item("xspatk"),
@@ -410,7 +411,7 @@ public class Testing : MonoBehaviour
                         item: new Item("wacanberry")
                         ),
 
-                    new Pokemon(
+                    /*new Pokemon(
                         pokemonID: "squirtle",
                         level: 15,
                         hpPercent: 0.75f,
@@ -423,9 +424,9 @@ public class Testing : MonoBehaviour
                             new Pokemon.Moveslot("protect"),
                         },
                         nonVolatileStatus: new StatusCondition("paralysis")
-                        ),
+                        ),*/
 
-                    new Pokemon(
+                    /*new Pokemon(
                         pokemonID: "tapukoko",
                         level: 15,
                         hpPercent: 1f,
@@ -438,7 +439,7 @@ public class Testing : MonoBehaviour
                             new Pokemon.Moveslot("naturesmadness"),
                         },
                         item: new Item("tapuniumz")
-                        ),
+                        ),*/
 
                     new Pokemon(
                         pokemonID: "blastoise",
@@ -512,7 +513,7 @@ public class Testing : MonoBehaviour
                         //nonVolatileStatus: new StatusCondition("burn")
                         ),
 
-                    new Pokemon(
+                    /*new Pokemon(
                         pokemonID: "charmander",
                         level: 15,
                         hpPercent: 0.75f,
@@ -529,7 +530,7 @@ public class Testing : MonoBehaviour
                         isHiddenAbility: true,
 
                         item: new Item("wacanberry")
-                        ),
+                        ),*/
 
                     new Pokemon(
                         pokemonID: "blastoise",
@@ -560,9 +561,9 @@ public class Testing : MonoBehaviour
                             new Pokemon.Moveslot("relicsong"),
                         }
                         //item: new Item("psychiumz")
-                        ),
+                        )
 
-                    new Pokemon(
+                    /*new Pokemon(
                         pokemonID: "greninja-battlebond",
                         level: 15,
                         hpPercent: 1f,
@@ -573,7 +574,7 @@ public class Testing : MonoBehaviour
                             new Pokemon.Moveslot("liquidation"),
                             new Pokemon.Moveslot("recover"),
                             new Pokemon.Moveslot("icebeam"),
-                        })
+                        })*/
                 });
                 break;
 

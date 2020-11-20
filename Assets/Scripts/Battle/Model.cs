@@ -3379,7 +3379,7 @@ namespace PBS.Battle
             else if (moveLimiter.effect is EffectDatabase.StatusPKEff.Taunt)
             {
                 EffectDatabase.StatusPKEff.Taunt taunt = moveLimiter.effect as EffectDatabase.StatusPKEff.Taunt;
-                if (taunt.category == MoveCategory.Status)
+                if (taunt.category == moveData.category)
                 {
                     return true;
                 }

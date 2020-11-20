@@ -656,6 +656,10 @@ namespace PBS.Battle.View.UI
                 : GameTextDatabase.instance.GetGameTextData("trainer-perspective-player");
 
             string replaceString = textData.languageDict[GameSettings.language];
+            if (replaceString == "{{-trainer-}}")
+            {
+                replaceString = trainer.name;
+            }
             string replaceStringPoss = replaceString;
             if (!string.IsNullOrEmpty(baseString))
             {
