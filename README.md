@@ -1,7 +1,31 @@
 # Pokemon Battle Simulator in Unity (pbs-unity)
 
+## Update - 2020.11.19
+Came back to this project for some small updates and to more formally open-source it.
+
+- Integrated the Mirror Package: https://github.com/vis2k/Mirror to enable PvP functionality.
+
+- Created a ZenHub Board for this project to better organize issues and epics. To see it, just install the browser extension here: https://www.zenhub.com/extension, and you should see the "ZenHub" tab listed beside "Pull Requests".
+
+- Code cleanup and asset folder reorganization. This will be an ongoing project, with issues going under this epic: https://github.com/AJ2O/pbs-unity/issues/11
+
 ## Overview
-This was a short project I worked on and off for about 4 months, and it simulates the Pokemon battling system for the 8th generation. It works for Single and Double battles, and uses a human-controlled player vs. the CPU. The focus of the project was solely the battle system, so there is no overworld or exploration component. Furthermore, most of the present game data such as Pokemon, items, moves, abilities, etc. are placeholders used to test the wide range of mechanics. The underlying system is in place for users to add their own game data to the project however, but I haven't documented it fully as of yet.
+This was a short project I worked on and off for about 4 months, and it simulates the Pokemon battling system for the 8th generation. The focus of the project was solely the battle system, so there is no overworld or exploration component. Furthermore, most of the present game data such as Pokemon, items, moves, abilities, etc. are placeholders used to test the wide range of mechanics. The underlying system is in place for users to add their own game data to the project.
+
+## Notable Features
+- Here's a short demo: <<demo-link-coming-soon>>
+- Single & Double Battles
+- P v. P, P v. AI
+- Mega Evolution, Z-Moves, Dynamax & Gigantamax
+- Most Moves & Abilities
+- Status (non-volatile & volatile), weather, terrain conditions
+- Entry Hazards
+- Some items
+- More... 
+
+## Notable Missing Features
+- Audio, will be captured by this epic: https://github.com/AJ2O/pbs-unity/issues/20
+
 
 ## How To Play
 Make sure you select the scene 'BWBattleScene' in Assets/Scenes, and click the Play button at the top of the Editor.
@@ -15,98 +39,28 @@ The scene can also be played by building the project.
 - **Z**: Trigger special command (Mega Evolution, Dynamax, or Z-Move)
 
 ## IMPORTANT: Game Data
-Game data entails Pokemon, types, moves, abilities, items, statuses, environmental conditions, etc, and each of these has its own class and associated database where their properties are meant to be stored. **MOST GAME DATA ARE PLACEHOLDERS.** They are not fully implemented and not meant to be used in a release. The databases are in-memory dictionaries for quick testing, but for a release, an external method of storing data (SQL, XML, etc.) is highly recommended.
-
-## Battle Flow (Simplified)
-The Pokemon battle flow is implemented, and here's a simplified run-down of how it works.
-1. Battle initiates between two players
-2. Players can choose commands for each of their controlled Pokemon (Moves, Switching, Items, Run, etc.)
-3. All Commands are executed in proper order
-4. If any Pokemon faint at the end of the turn, its player is prompted to replace it
-5. If a player runs out of Pokemon, they lose, and the battle is over. If not, return to step 2
-
-For those more familiar with the system, examples of more complex events are also implemented in the battle flow:
-- Mega Evolution / Dynamax triggers
-- Quick Claw / Quick Draw triggers
-- Beak Blast / Focus Punch / Shell Trap prompts
-- Switching mid-turn via U-Turn, Emergency Exit, etc.
-- Pursuit triggering before switch-out
-- Instruct forcing moves
-- Dancer triggering after eligible moves (correctly does not execute for moves already triggered by Dancer)
-- Future Sight / Doom Desire execution at the end of allotted turns
-- Wish / Lunar Dance activating at the end of the turn
-- Zen Mode / Schooling / Power Construct changing forms at HP-thresholds
-- ... many, many others
-
-## Move Mechanics
-Most moves have synonymous counterparts differing only in simple metrics such as type, power, or accuracy. So I focused on implementing moves having different effects, and the counterparts can easily be added afterwards with a simple clone and attribute value change. Nearly every move effect is implemented, and here are a few examples:
-
-- Almost all damage modifiers
-  - ... too many to list
-- Damage Overrides
-  - ex. Counter, Dragon Rage, Seismic Toss, etc.
-- Multi-turn attacks and associated invulnerabilites if applicable 
-  - ex. Dig, Fly, Phantom Force, Sky Drop (both parties)
-- Attacks needing recharge turns
-- Most healing effects
-  - ex. Aromatherapy, Recover, Roost (and grounding associated)
-- Most item-manipulation effects
-  - ex. Covet, Knock Off, Recycle, etc.
-- Stat manipulation effects
-  - ex. Leer, Power Swap, Belly Drum, etc.
-- Type manipulation
-  - ex. Burn Up, Judgement, Soak, Weather Ball
-- Environment manipulation
-  - ex. Gravity, Sunny Day, Trick Room, Wonder Room, etc.
-- Teleport
-- Relic Song
-- Flying Press
-- False Swipe
-- G-Max Moves
-- Z-Moves
-- ... many, many others
-
-Many of these were implemented using a legacy move effect class (that still works), but I was working on a new class to enhance how effects are defined. Both classes work in the system, but the new effect class is much improved.
-
-## Ability Mechanics
-All ability mechanics have been implemented up until the Crown Tundra DLC (don't think I missed any). Some notables include:
-- Form-Changing
-  - ex. Forecast, Hunger Switch, Multitype, Zen Mode, etc.
-- Environment-Changing
-  - ex. Drought, Primordial Sea, Psychic Terrain
-  - Note: Easy to set custom environments, such as an ability that initiates Gravity, or Magic Room
-- Stat Manipulation
-  - ex. Intimidate, Justified, Moody, Rattled
-- Type Properties
-  - ex. Corrosion, Pixilate, Scrappy, etc.
-- Multihit Overrides
-  - ex. Parental Bond, Skill Link, etc.
-- ... many, many others
-
-## Item Mechanics
-Most item effects are unimplimented, but the basics are present, and the others can easily be implemented following the same route as moves and abilities. Some notables implemented include:
-- Healing
-  - ex. Potion, Antidote, Lum Berry (and activation trigger), etc.
-- Form-Changing
-  - ex. Arceus Plates, Griseous Orbs, Genesect Drives, Mega Stones, etc.
-- Damage modifiers
-  - ex. Charcoal, Mind Plate, etc.
-- Type Berries
-  - ex. Chilan Berry, Occa Berry, etc.
-  
-## Status Conditions, Team, & Environment
-All non-volatile status conditions are implemented and most volatile status conditions. Some of the status effects are in the enhanced effect class, and some are in the legacy effect class. 
-The same is true for team conditions (ex. Stealth Rock, G-Max Wildfire) and environmental conditions (weather, terrain, rooms, etc.).
+Game data entails Pokemon, types, moves, abilities, items, statuses, environmental conditions (weather, terrain), and each of these has its own class and associated database where their properties are meant to be stored. **MOST GAME DATA ARE PLACEHOLDERS.** They are not fully implemented and not meant to be used in a release. The databases are in-memory dictionaries for quick testing, but in the future these should be formal databases (SQL most likely).
 
 ## Customizability
-I tried to make all my game data as customizable and plug-and-play as possible. It's easy to modify or create new moves, abilities, items, status conditions, weather, terrain, and effects from pre-existing ones, **without modifying the battle system at all**. It's up to the user to populate the databases with whatever content they need, and it should all fit into the battle system seamlessly. This is a really cool feature to play around with, I'm reachable if a user needs assistance knowing how it all works. For example,  without modifying the battle code at all, the following can be achieved or changed:
-  - 'Heavy Rain' extending 'Rain' (simply adding new effects on top of Rain)
-  - 'Toxic' extend from 'Poison' (1 additional damage stacking effect)
-  - 'Blaze' and 'Overgrow' differ by one property value (type affected)
-  - Forms added or removed from 'Forecast' and will trigger based on the weather (or terrain, rooms, if you so choose)
-  - The HP thresholds on Power Construct-like abilities
-  - Parental Bond hits and damage scaling
+All the game data classes are designed to be customizable and allow for easy plug-and-play of new features (moves, abilities, items, status conditions, weather, etc.). It is even possible to build new features using old ones as a base. For example, I was able to create the following features without much battle code editing:
+  - 'Heavy Rain' extends from 'Rain' (simply adding new effects on top of Rain)
+  - 'Toxic' extends from 'Poison' (1 additional damage stacking effect)
+  - 'Blaze' and 'Overgrow' differ by one property value (the type affected)
+  - 'Parental Bond' can have more hits, and scale damage differently
   - ... many, many more
 
+# Looking for Contributors
+### Anyone can contribute to this huge project, and contributors will be needed!
+You can contribute by:
+- Opening issues for missing features
+- Working on open issues
+- Reporting bugs
+- Suggestions for improvement and optimization
+- Any other way you can think of
+
+Any small contribution helps! Here are some smaller issues you can get started on: https://github.com/AJ2O/pbs-unity/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22
+
 # Final Notes
-Most of the code isn't documented as well as I'd like, and it has some legacy code, but I figured it'd be better if it was put up publicly than deleted. It was a short, fun project that I worked on, but I'm probably not coming back to it. If anyone else wants to work on it, I hope my prototype can help you out, and good luck! If you need help with learning what the code does, I am reachable to help you out.
+- Most of the code isn't documented as well as I'd like, and that work will be captured by this epic: https://github.com/AJ2O/pbs-unity/issues/9 
+- There is some legacy code, and that will generally be phased out, captured by this epic: https://github.com/AJ2O/pbs-unity/issues/11
+- If you need help with learning what certain parts of code does, I am reachable for help!
