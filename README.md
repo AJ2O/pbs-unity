@@ -53,9 +53,9 @@ The scene can also be played by building the project.
 ### To change battle settings:
 - On the Scene Hierarchy, go to **PBS -> Network Manager**
 - There should be an expandable **Battle Settings** attribute
--- **Required Players** are the amount of human players needed to start a battle
--- **Total Players** are the amount of players in the battle. The amount of AI Players = Total - Required
--- Currently only tested with P v. P, and P v. AI
+  - **Required Players** are the amount of human players needed to start a battle
+  - **Total Players** are the amount of players in the battle. The amount of AI Players = Total - Required
+  - Currently only tested with P v. P, and P v. AI
 
 ## IMPORTANT: Game Data
 Game data entails Pokemon, types, moves, abilities, items, statuses, environmental conditions (weather, terrain), and each of these has its own class and associated database where their properties are meant to be stored. **MOST GAME DATA ARE PLACEHOLDERS.** They are not fully implemented and not meant to be used in a release. The databases are in-memory dictionaries for quick testing, but in the future these should be formal databases (SQL most likely).
