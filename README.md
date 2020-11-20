@@ -2,11 +2,8 @@
 
 ## Update - 2020.11.20
 Came back to this project for some small updates and to more formally open-source it.
-
 - Integrated the [Mirror Package](https://github.com/vis2k/Mirror) to enable PvP functionality.
-
 - Created a ZenHub Board for this project to better organize issues and epics. To see it, just install the [ZenHub browser extension](https://www.zenhub.com/extension), and you should see the "ZenHub" tab listed beside "Pull Requests".
-
 - Code cleanup and asset folder reorganization. This will be an ongoing project, with issues going under [this epic](https://github.com/AJ2O/pbs-unity/issues/11)
 
 ## Overview
@@ -24,7 +21,7 @@ This was a short project I worked on and off for about 4 months, and it simulate
   </tr>
 </table>
 
-### Youtube Link
+### Wifi Battle Demo
 [![Youtube Link](https://img.youtube.com/vi/AqeltOmgfMQ/0.jpg)](https://www.youtube.com/watch?v=AqeltOmgfMQ)
 
 ## Notable Features
@@ -82,9 +79,9 @@ You can contribute by:
 - Suggestions for improvement and optimization
 - Any other way you can think of
 
-Any small contribution helps! Here are some [smaller issues](https://github.com/AJ2O/pbs-unity/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) you can help with.
+Any small contribution helps! Here are some [smaller issues](https://github.com/AJ2O/pbs-unity/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) I've noted that anyone can help out with.
 
 # Final Notes
 - Most of the code isn't documented as well as I'd like, and that work will be captured by [this epic](https://github.com/AJ2O/pbs-unity/issues/9) 
-- There is some legacy code, and that will generally be phased out, captured by this epic: [this epic](https://github.com/AJ2O/pbs-unity/issues/11)
-- If you need help with learning what certain parts of code does, just hit up the [Discord](https://discord.com/invite/nNApAGQ).
+- There is some legacy code, and that will generally be phased out, captured by [this epic](https://github.com/AJ2O/pbs-unity/issues/11)
+- If you need help with learning what certain parts of code does, just hit up the [Discord](https://discord.com/invite/nNApAGQ)
