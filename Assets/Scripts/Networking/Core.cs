@@ -19,7 +19,7 @@ namespace PBS.Networking
         List<BattleCommand> allCommands = new List<BattleCommand>();
         List<BattleCommand> replaceCommands = new List<BattleCommand>();
         List<BattleCommand> batonPassReplaceCommands = new List<BattleCommand>();
-        bool isBatonPassing = false;
+        bool executingBatonPass = false;
         bool executedFormTransformations = false;
 
         public void InitializeComponents()
@@ -107,7 +107,7 @@ namespace PBS.Networking
                 {
                     SendEvent(new Battle.View.Events.ModelUpdatePokemon
                     {
-                        pokemon = new Battle.View.Compact.Pokemon(pokemon[i]),
+                        pokemon = new Battle.View.WifiFriendly.Pokemon(pokemon[i]),
                         loadAsset = loadAsset
                     });
                 }
@@ -115,21 +115,54 @@ namespace PBS.Networking
         }
 
         // Player Queries
-        public void ReceiveCommandQuery(PBS.Player.Command command, List<PBS.Player.Command> committedCommands)
+        public void ReceiveQuery(PBS.Player.Query.QueryBase query, int playerID)
         {
-            int playerID = command.commandTrainer;
-            PBS.Battle.View.Events.MessageParameterized response = battle.CanChooseCommand(
-                attemptedCommand: battle.SanitizeCommand(command),
-                committedCommands: battle.SanitizeCommands(committedCommands));
+            PBS.Player.Query.QueryResponseBase response;
+
+            if (query is PBS.Player.Query.MoveTarget moveTarget)
+            {
+                Pokemon pokemon = battle.GetBattleInstanceOfPokemon(moveTarget.pokemonUniqueID);
+                response = new PBS.Player.Query.MoveTargetResponse
+                {
+                    possibleTargets = battle.GetMovePossibleTargets(pokemon, MoveDatabase.instance.GetMoveData(moveTarget.moveID))
+                };
+            }
+            // default
+            else
+            {
+                response = new PBS.Player.Query.QueryResponseBase
+                {
+
+                };
+            }
+
             SendQueryResponse(response, playerID);
         }
-        public void SendQueryResponse(PBS.Battle.View.Events.MessageParameterized response, int playerID)
+        public void SendQueryResponse(PBS.Player.Query.QueryResponseBase response, int playerID)
         {
             PBS.Networking.Player playerObj = PBS.Static.Master.instance.networkManager.GetPlayer(playerID);
             if (playerObj != null)
             {
                 NetworkIdentity opponentIdentity = playerObj.GetComponent<NetworkIdentity>();
                 playerObj.TargetReceiveQueryResponse(opponentIdentity.connectionToClient, response);
+            }
+        }
+
+        public void ReceiveCommandQuery(PBS.Player.Command command, List<PBS.Player.Command> committedCommands)
+        {
+            int playerID = command.commandTrainer;
+            PBS.Battle.View.Events.MessageParameterized response = battle.CanChooseCommand(
+                attemptedCommand: battle.SanitizeCommand(command),
+                committedCommands: battle.SanitizeCommands(committedCommands));
+            SendCommandQueryResponse(response, playerID);
+        }
+        public void SendCommandQueryResponse(PBS.Battle.View.Events.MessageParameterized response, int playerID)
+        {
+            PBS.Networking.Player playerObj = PBS.Static.Master.instance.networkManager.GetPlayer(playerID);
+            if (playerObj != null)
+            {
+                NetworkIdentity opponentIdentity = playerObj.GetComponent<NetworkIdentity>();
+                playerObj.TargetReceiveQueryMessageResponse(opponentIdentity.connectionToClient, response);
             }
         }
 
@@ -303,6 +336,7 @@ namespace PBS.Networking
                         PBS.Battle.View.Events.CommandGeneralPrompt commandPrompt = new Battle.View.Events.CommandGeneralPrompt
                         {
                             playerID = playerID,
+                            multiTargetSelection = !battle.IsSinglesBattle(),
                             canMegaEvolve = !trainer.bProps.usedMegaEvolution,
                             canZMove = !trainer.bProps.usedZMove,
                             canDynamax = !trainer.bProps.usedDynamax,
@@ -713,29 +747,32 @@ namespace PBS.Networking
                 List<Pokemon> allPokemon = battle.GetPokemonBySpeed(battle.pokemonOnField);
                 for (int i = 0; i < allPokemon.Count; i++)
                 {
-                    List<StatusCondition> conditions = battle.GetAllPokemonFilteredStatus(
-                        allPokemon[i], 
-                        PokemonSEType.HPLoss);
+                    Pokemon pokemon = allPokemon[i];
+                    List<StatusCondition> conditions = battle.GetPokemonStatusConditions(pokemon);
                     for (int k = 0; k < conditions.Count; k++)
                     {
-                        PokemonCEff effect = conditions[k].data.GetEffect(PokemonSEType.HPLoss);
-                        if (effect.effectTiming == PokemonSETiming.EndOfTurn)
+                        EffectDatabase.StatusPKEff.PokemonSE effect_ = conditions[k].data.GetEffectNew(PokemonSEType.HPLoss);
+                        if (effect_ != null)
                         {
-                            // heal when no turns left
-                            if (conditions[k].turnsLeft == 0)
+                            if (effect_.timing == PokemonSETiming.EndOfTurn)
                             {
-                                yield return StartCoroutine(HealPokemonSC(
-                                    targetPokemon: allPokemon[i],
-                                    condition: conditions[k]
-                                    ));
-                            }
-                            else
-                            {
-                                yield return StartCoroutine(ApplyStatusEffect(
-                                    effect,
-                                    conditions[k],
-                                    allPokemon[i]
-                                    ));
+                                // heal when no turns left
+                                if (conditions[k].turnsLeft == 0)
+                                {
+                                    yield return StartCoroutine(HealPokemonSC(
+                                        targetPokemon: pokemon,
+                                        condition: conditions[k]
+                                        ));
+                                }
+                                // deal damage
+                                else
+                                {
+                                    yield return StartCoroutine(ExecutePokemonSE(
+                                        effect_: effect_,
+                                        pokemon: pokemon,
+                                        condition: conditions[k]
+                                        ));
+                                }
                             }
                         }
                     }
@@ -10660,6 +10697,11 @@ namespace PBS.Networking
                                         affectedMoves: new string[] { targetPokemon.bProps.lastMove }
                                         );
                                 targetPokemon.bProps.moveLimiters.Add(limiter);
+                                SendEvent(new Battle.View.Events.MessageParameterized
+                                {
+                                    messageCode = effect.startText,
+                                    pokemonTargetID = targetPokemon.uniqueID
+                                });
                             }
                         }
                         // Encore
@@ -10712,6 +10754,11 @@ namespace PBS.Networking
                                         affectedMoves: new string[] { targetPokemon.bProps.lastMove }
                                         );
                                 targetPokemon.bProps.moveLimiters.Add(limiter);
+                                SendEvent(new Battle.View.Events.MessageParameterized
+                                {
+                                    messageCode = effect.startText,
+                                    pokemonTargetID = targetPokemon.uniqueID
+                                });
                             }
                         }
                         // Heal Block
@@ -10736,6 +10783,11 @@ namespace PBS.Networking
                                         turnsLeft: effect.defaultTurns.GetTurns()
                                         );
                                 targetPokemon.bProps.moveLimiters.Add(limiter);
+                                SendEvent(new Battle.View.Events.MessageParameterized
+                                {
+                                    messageCode = effect.startText,
+                                    pokemonTargetID = targetPokemon.uniqueID
+                                });
                             }
                         }
                         // Taunt
@@ -10760,6 +10812,11 @@ namespace PBS.Networking
                                         turnsLeft: effect.defaultTurns.GetTurns()
                                         );
                                 targetPokemon.bProps.moveLimiters.Add(limiter);
+                                SendEvent(new Battle.View.Events.MessageParameterized
+                                {
+                                    messageCode = effect.startText,
+                                    pokemonTargetID = targetPokemon.uniqueID
+                                });
                             }
                         }
                         // Torment
@@ -10784,6 +10841,11 @@ namespace PBS.Networking
                                         turnsLeft: effect.defaultTurns.GetTurns()
                                         );
                                 targetPokemon.bProps.moveLimiters.Add(limiter);
+                                SendEvent(new Battle.View.Events.MessageParameterized
+                                {
+                                    messageCode = effect.startText,
+                                    pokemonTargetID = targetPokemon.uniqueID
+                                });
                             }
                         }
                     }
@@ -10806,6 +10868,11 @@ namespace PBS.Networking
                                     turnsLeft: effect.defaultTurns.GetTurns()
                                     );
                             targetPokemon.bProps.embargo = embargo;
+                            SendEvent(new Battle.View.Events.MessageParameterized
+                            {
+                                messageCode = effect.startText,
+                                pokemonTargetID = targetPokemon.uniqueID
+                            });
                         }
                     }
 
@@ -11066,9 +11133,10 @@ namespace PBS.Networking
         public IEnumerator ExecutePokemonSE(
             EffectDatabase.StatusPKEff.PokemonSE effect_,
             Pokemon pokemon,
-            StatusPKData statusData
+            StatusCondition condition
             )
         {
+            StatusPKData statusData = condition.data;
             if (!battle.IsPokemonFainted(pokemon))
             {
                 List<Pokemon.Ability> abilities = battle.PBPGetAbilities(pokemon);
@@ -11118,7 +11186,13 @@ namespace PBS.Networking
 
                         if (applyDamage)
                         {
-                            int damage = battle.GetPokemonHPByPercent(pokemon, effect.hpLossPercent);
+                            float toxicMultiplier = 1f;
+                            if (effect.toxicStack)
+                            {
+                                toxicMultiplier *= condition.turnsActive;
+                            }
+                            int damage = battle.GetPokemonHPByPercent(pokemon, effect.hpLossPercent * toxicMultiplier);
+                            // Toxic effect
                             if (damage > 0)
                             {
                                 SendEvent(new Battle.View.Events.MessageParameterized
@@ -15500,8 +15574,9 @@ namespace PBS.Networking
                 int position = withdrawPokemon.battlePos;
                 Pokemon.BattleProperties withdrawBProps 
                     = Pokemon.BattleProperties.Clone(withdrawPokemon.bProps, withdrawPokemon);
-
                 Model updateModel = Model.CloneModel(battle);
+
+                executingBatonPass = true;
                 batonPassReplaceCommands = new List<BattleCommand>();
                 UpdateClients();
                 if (!trainer.IsAIControlled())
@@ -15519,7 +15594,7 @@ namespace PBS.Networking
                 else
                 {
                     ai.UpdateModel(updateModel);
-                    replaceCommands = ai.GetReplacementsByPrompt(trainer, new List<int> { position }); 
+                    batonPassReplaceCommands = ai.GetReplacementsByPrompt(trainer, new List<int> { position }); 
                 }
 
                 battle.TrainerWithdrawPokemon(trainer, withdrawPokemon);
@@ -15531,12 +15606,13 @@ namespace PBS.Networking
                 });
                 yield return StartCoroutine(UntiePokemon(withdrawPokemon));
 
-                Pokemon switchInPokemon = replaceCommands[0].switchInPokemon;
+                Pokemon switchInPokemon = batonPassReplaceCommands[0].switchInPokemon;
                 battle.TrainerSwapPokemon(trainer, withdrawPokemon, switchInPokemon);
-                UpdateClients();
-            
+                executingBatonPass = false;
+
                 // send out
                 battle.TrainerSendPokemon(trainer, switchInPokemon, position);
+                UpdateClients();
                 SendEvent(new Battle.View.Events.TrainerSendOut
                 {
                     playerID = trainer.playerID,
@@ -15551,9 +15627,7 @@ namespace PBS.Networking
 
                 // Switch-in events (ex. abilities, stealth rock)
                 yield return StartCoroutine(ApplyToPokemonSwitchInEvents(switchInPokemon));
-
             }
-
             callback(success);
             yield return null;
         }
@@ -17277,6 +17351,7 @@ namespace PBS.Networking
                 {
                     battle.TrainerSendPokemon(trainer, sendPokemon, emptyPositions[0]);
                 }
+                UpdateClients();
 
                 // TODO: checks for actually sending out / ???
                 SendEvent(new Battle.View.Events.TrainerSendOut
@@ -17288,7 +17363,6 @@ namespace PBS.Networking
                 sendPokemon.bProps.actedThisTurn = true;
 
                 yield return StartCoroutine(ApplyToPokemonSwitchInEvents(sendPokemon));
-                yield return null;
             }
         }
 
@@ -19758,10 +19832,10 @@ namespace PBS.Networking
         {
             battle.ConvertToInstanceBattleCommands(commands);
 
-            if (isBatonPassing)
+            if (executingBatonPass)
             {
                 batonPassReplaceCommands.AddRange(commands);
-                isBatonPassing = false;
+                executingBatonPass = false;
             }
             else
             {
@@ -19785,10 +19859,10 @@ namespace PBS.Networking
         {
             // Convert commands to instance battle commands, referencing battle model pokemon, items, trainers, etc.
             List<BattleCommand> sanitizedCommands = battle.SanitizeCommands(commands);
-            if (isBatonPassing)
+            if (executingBatonPass)
             {
                 batonPassReplaceCommands.AddRange(sanitizedCommands);
-                isBatonPassing = false;
+                executingBatonPass = false;
             }
             else
             {

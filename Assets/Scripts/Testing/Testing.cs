@@ -300,7 +300,7 @@ public class Testing : MonoBehaviour
 
         Pokemon morpeko = new Pokemon(
             pokemonID: "morpeko",
-            level: 5,
+            level: 10,
             natureID: "modest",
             moveslots: new Pokemon.Moveslot[]
             {
@@ -310,7 +310,7 @@ public class Testing : MonoBehaviour
 
         Pokemon mimikyu = new Pokemon(
             pokemonID: "mimikyu",
-            level: 5,
+            level: 10,
             natureID: "bold",
             moveslots: new Pokemon.Moveslot[]
             {
@@ -508,9 +508,8 @@ public class Testing : MonoBehaviour
                             new Pokemon.Moveslot("forestscurse"),
                             new Pokemon.Moveslot("poltergeist"),
                             new Pokemon.Moveslot("leechseed"),
-                        },
-                        //nonVolatileStatus: new StatusCondition("burn"),
-                        isHiddenAbility: true
+                        }
+                        //nonVolatileStatus: new StatusCondition("burn")
                         ),
 
                     new Pokemon(

@@ -515,7 +515,12 @@ public class AbilityDatabase
                             statusType: StatusType.Pokemon,
                             statusID: "disable"
                             ),
-                        triggerTags: new MoveTag[] { MoveTag.MakesContact },
+                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        {
+                            new EffectDatabase.Filter.MoveCheck(
+                                moveTags: new MoveTag[] { MoveTag.MakesContact }
+                                )
+                        },
                         chance: 0.3f
                         ),
                 }
@@ -533,7 +538,12 @@ public class AbilityDatabase
                             statusType: StatusType.Pokemon,
                             statusID: "infatuation"
                             ),
-                        triggerTags: new MoveTag[] { MoveTag.MakesContact },
+                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        {
+                            new EffectDatabase.Filter.MoveCheck(
+                                moveTags: new MoveTag[] { MoveTag.MakesContact }
+                                )
+                        },
                         chance: 0.3f
                         ),
                 }
@@ -844,7 +854,12 @@ public class AbilityDatabase
                                 chance: 1f / 3
                                 ),
                         },
-                        triggerTags: new MoveTag[] { MoveTag.MakesContact },
+                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        {
+                            new EffectDatabase.Filter.MoveCheck(
+                                moveTags: new MoveTag[] { MoveTag.MakesContact }
+                                )
+                        },
                         chance: 0.3f
                         ),
                 }
@@ -918,7 +933,12 @@ public class AbilityDatabase
                             statusType: StatusType.Pokemon,
                             statusID: "burn"
                             ),
-                        triggerTags: new MoveTag[] { MoveTag.MakesContact },
+                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        {
+                            new EffectDatabase.Filter.MoveCheck(
+                                moveTags: new MoveTag[] { MoveTag.MakesContact }
+                                )
+                        },
                         chance: 0.3f
                         ),
                 }
@@ -2401,7 +2421,12 @@ public class AbilityDatabase
                             statusID: "perishsong"
                             ),
                         perishBody: true,
-                        triggerTags: new MoveTag[] { MoveTag.MakesContact }
+                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        {
+                            new EffectDatabase.Filter.MoveCheck(
+                                moveTags: new MoveTag[] { MoveTag.MakesContact }
+                                )
+                        }
                         ),
                 }
                 ) },
@@ -2496,7 +2521,12 @@ public class AbilityDatabase
                             statusType: StatusType.Pokemon,
                             statusID: "poison"
                             ),
-                        triggerTags: new MoveTag[] { MoveTag.MakesContact },
+                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        {
+                            new EffectDatabase.Filter.MoveCheck(
+                                moveTags: new MoveTag[] { MoveTag.MakesContact }
+                                )
+                        },
                         chance: 0.3f
                         ),
                 }
@@ -3583,7 +3613,12 @@ public class AbilityDatabase
                             statusType: StatusType.Pokemon,
                             statusID: "paralysis"
                             ),
-                        triggerTags: new MoveTag[] { MoveTag.MakesContact },
+                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        {
+                            new EffectDatabase.Filter.MoveCheck(
+                                moveTags: new MoveTag[] { MoveTag.MakesContact }
+                                )
+                        },
                         chance: 0.3f
                         ),
                 }

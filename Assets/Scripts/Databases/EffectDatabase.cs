@@ -4878,7 +4878,8 @@ public class EffectDatabase
             {
                 for (int i = 0; i < disguiseForms.Count; i++)
                 {
-                    if (disguiseForms[i].IsPokemonAPreForm(pokemon))
+                    if (disguiseForms[i].IsPokemonAPreForm(pokemon)
+                        && !disguiseForms[i].IsPokemonAToForm(pokemon))
                     {
                         return disguiseForms[i];
                     }

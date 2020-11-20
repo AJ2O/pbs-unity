@@ -30,7 +30,7 @@ namespace PBS.Battle.View.UI.Panels
         }
 
         public void SetMoves(
-            PBS.Battle.View.Compact.Pokemon pokemon, 
+            PBS.Battle.View.WifiFriendly.Pokemon pokemon, 
             List<PBS.Battle.View.Events.CommandAgent.Moveslot> moveList,
             bool canMegaEvolve, bool canZMove = false, bool canDynamax = false,
             bool choosingZMove = false, bool choosingMaxMove = false)
@@ -104,7 +104,7 @@ namespace PBS.Battle.View.UI.Panels
             }
         }
         public void SetMoveButton(
-            PBS.Battle.View.Compact.Pokemon pokemon, 
+            PBS.Battle.View.WifiFriendly.Pokemon pokemon, 
             PBS.Battle.View.Events.CommandAgent.Moveslot moveslot,
             Panels.FightButton moveBtn,
             bool choosingZMove = false, bool choosingMaxMove = false)

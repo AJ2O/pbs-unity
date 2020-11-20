@@ -6,10 +6,10 @@ using PBS.Enums.Battle;
 
 namespace PBS.Networking.CustomSerialization
 {
-    public static class Core
+    public static class Main
     {
         // Pokemon
-        public static void WriteBattleViewCompactPokemon(this NetworkWriter writer, PBS.Battle.View.Compact.Pokemon obj)
+        public static void WriteBattleViewCompactPokemon(this NetworkWriter writer, PBS.Battle.View.WifiFriendly.Pokemon obj)
         {
             writer.WriteString(obj.uniqueID);
             writer.WriteString(obj.pokemonID);
@@ -24,9 +24,9 @@ namespace PBS.Networking.CustomSerialization
             writer.WriteString(obj.nonVolatileStatus);
             writer.WriteInt32((int)obj.dynamaxState);
         }
-        public static PBS.Battle.View.Compact.Pokemon ReadBattleViewCompactPokemon(this NetworkReader reader)
+        public static PBS.Battle.View.WifiFriendly.Pokemon ReadBattleViewCompactPokemon(this NetworkReader reader)
         {
-            return new PBS.Battle.View.Compact.Pokemon
+            return new PBS.Battle.View.WifiFriendly.Pokemon
             {
                 uniqueID = reader.ReadString(),
                 pokemonID = reader.ReadString(),
@@ -45,7 +45,7 @@ namespace PBS.Networking.CustomSerialization
 
 
         // Trainer
-        public static void WriteBattleViewCompactTrainer(this NetworkWriter writer, PBS.Battle.View.Compact.Trainer obj)
+        public static void WriteBattleViewCompactTrainer(this NetworkWriter writer, PBS.Battle.View.WifiFriendly.Trainer obj)
         {
             writer.WriteString(obj.name);
             writer.WriteInt32(obj.playerID);
@@ -54,14 +54,14 @@ namespace PBS.Networking.CustomSerialization
             writer.WriteList(obj.items);
             writer.WriteList(obj.controlPos);
         }
-        public static PBS.Battle.View.Compact.Trainer ReadBattleViewCompactTrainer(this NetworkReader reader)
+        public static PBS.Battle.View.WifiFriendly.Trainer ReadBattleViewCompactTrainer(this NetworkReader reader)
         {
-            return new PBS.Battle.View.Compact.Trainer
+            return new PBS.Battle.View.WifiFriendly.Trainer
             {
                 name = reader.ReadString(),
                 playerID = reader.ReadInt32(),
                 teamPos = reader.ReadInt32(),
-                party = reader.ReadList<PBS.Battle.View.Compact.Pokemon>(),
+                party = reader.ReadList<PBS.Battle.View.WifiFriendly.Pokemon>(),
                 items = reader.ReadList<string>(),
                 controlPos = reader.ReadList<int>()
             };
@@ -83,19 +83,19 @@ namespace PBS.Networking.CustomSerialization
 
 
         // Battle Team
-        public static void WriteBattleViewCompactTeam(this NetworkWriter writer, PBS.Battle.View.Compact.Team obj)
+        public static void WriteBattleViewCompactTeam(this NetworkWriter writer, PBS.Battle.View.WifiFriendly.Team obj)
         {
             writer.WriteInt32(obj.teamID);
             writer.WriteInt32((int)obj.teamMode);
             writer.WriteList(obj.trainers);
         }
-        public static PBS.Battle.View.Compact.Team ReadBattleViewCompactTeam(this NetworkReader reader)
+        public static PBS.Battle.View.WifiFriendly.Team ReadBattleViewCompactTeam(this NetworkReader reader)
         {
-            return new PBS.Battle.View.Compact.Team
+            return new PBS.Battle.View.WifiFriendly.Team
             {
                 teamID = reader.ReadInt32(),
                 teamMode = (TeamMode)reader.ReadInt32(),
-                trainers = reader.ReadList<PBS.Battle.View.Compact.Trainer>()
+                trainers = reader.ReadList<PBS.Battle.View.WifiFriendly.Trainer>()
             };
         }
 

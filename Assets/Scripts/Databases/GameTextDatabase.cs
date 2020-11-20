@@ -122,7 +122,7 @@ public class GameTextDatabase
                 ID: "trainer-perspective-ally",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
-                    { GameLanguages.English, "{{-trainer-name-}}" },
+                    { GameLanguages.English, "{{-trainer-}}" },
                 }
                 ) },
         {"trainer-perspective-opposing",
@@ -130,7 +130,7 @@ public class GameTextDatabase
                 ID: "trainer-perspective-opposing",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
-                    { GameLanguages.English, "{{-trainer-name-}}" },
+                    { GameLanguages.English, "{{-trainer-}}" },
                 }
                 ) },
         
@@ -304,7 +304,7 @@ public class GameTextDatabase
                 ID: "pokemon-megaevolve",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
-                    { GameLanguages.English, "{{-user-pokemon-}} is reacting to {{-trainer-}}'s {{-item-name-}}!" },
+                    { GameLanguages.English, "{{-user-pokemon-}} is reacting to {{-trainer-poss-}} {{-item-name-}}!" },
                 }
                 ) },
         {"pokemon-megaevolve-form",

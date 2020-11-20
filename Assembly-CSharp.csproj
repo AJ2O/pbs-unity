@@ -66,9 +66,8 @@
   <ItemGroup>
     <Compile Include="Assets\AutoShadows.cs" />
     <Compile Include="Assets\Scripts\AI\Battle.cs" />
-    <Compile Include="Assets\Scripts\AssetLoader.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleUtilityClasses.cs" />
-    <Compile Include="Assets\Scripts\Battle\Main\Model.cs" />
+    <Compile Include="Assets\Scripts\Battle\Model.cs" />
     <Compile Include="Assets\Scripts\Battle\OLD\BTLAIControl.cs" />
     <Compile Include="Assets\Scripts\Battle\OLD\BTLCamera.cs" />
     <Compile Include="Assets\Scripts\Battle\OLD\BTLEvent.cs" />
@@ -102,7 +101,6 @@
     <Compile Include="Assets\Scripts\Battle\UI\Button\BTLUI_ButtonCmdExtra.cs" />
     <Compile Include="Assets\Scripts\Battle\UI\Button\BTLUI_ButtonFieldTarget.cs" />
     <Compile Include="Assets\Scripts\Battle\UI\Button\BTLUI_ButtonTxt.cs" />
-    <Compile Include="Assets\Scripts\Battle\View\Compact.cs" />
     <Compile Include="Assets\Scripts\Battle\View\Enums.cs" />
     <Compile Include="Assets\Scripts\Battle\View\Event.cs" />
     <Compile Include="Assets\Scripts\Battle\View\Model.cs" />
@@ -127,6 +125,7 @@
     <Compile Include="Assets\Scripts\Battle\View\UI\Panels\Fight\FightButton.cs" />
     <Compile Include="Assets\Scripts\Battle\View\UI\Panels\Party\Party.cs" />
     <Compile Include="Assets\Scripts\Battle\View\UI\Panels\Party\PartyButton.cs" />
+    <Compile Include="Assets\Scripts\Battle\View\WifiFriendly.cs" />
     <Compile Include="Assets\Scripts\Controls.cs" />
     <Compile Include="Assets\Scripts\Data\AbilityData.cs" />
     <Compile Include="Assets\Scripts\Data\BattleConditionData.cs" />
@@ -160,15 +159,17 @@
     <Compile Include="Assets\Scripts\Main\Trainer.cs" />
     <Compile Include="Assets\Scripts\Master.cs" />
     <Compile Include="Assets\Scripts\Networking\Core.cs" />
-    <Compile Include="Assets\Scripts\Networking\CustomSerialization\Battle\Core.cs" />
+    <Compile Include="Assets\Scripts\Networking\CustomSerialization\Battle\Utility.cs" />
     <Compile Include="Assets\Scripts\Networking\CustomSerialization\Battle\View\Events.cs" />
-    <Compile Include="Assets\Scripts\Networking\CustomSerialization\Core.cs" />
-    <Compile Include="Assets\Scripts\Networking\CustomSerialization\Player.cs" />
+    <Compile Include="Assets\Scripts\Networking\CustomSerialization\Main.cs" />
+    <Compile Include="Assets\Scripts\Networking\CustomSerialization\Player\Command.cs" />
+    <Compile Include="Assets\Scripts\Networking\CustomSerialization\Player\Query.cs" />
     <Compile Include="Assets\Scripts\Networking\Manager.cs" />
     <Compile Include="Assets\Scripts\Networking\ManagerHUD.cs" />
     <Compile Include="Assets\Scripts\Networking\Player.cs" />
     <Compile Include="Assets\Scripts\Player\BattleControls.cs" />
     <Compile Include="Assets\Scripts\Player\Command.cs" />
+    <Compile Include="Assets\Scripts\Player\Query.cs" />
     <Compile Include="Assets\Scripts\Testing\Testing.cs" />
     <Compile Include="Assets\Scripts\Utility\CustomEnums.cs" />
     <Compile Include="Assets\Scripts\Utility\GameEffect.cs" />

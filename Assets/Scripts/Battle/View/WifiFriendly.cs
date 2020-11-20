@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PBS.Battle.View.Compact
+namespace PBS.Battle.View.WifiFriendly
 {
     public class Pokemon
     {
@@ -62,7 +62,7 @@ namespace PBS.Battle.View.Compact
         public string name;
         public int playerID;
         public int teamPos;
-        public List<Compact.Pokemon> party;
+        public List<WifiFriendly.Pokemon> party;
         public List<string> partyIDs = new List<string>();
         public List<string> items;
         public List<int> controlPos;
@@ -106,7 +106,7 @@ namespace PBS.Battle.View.Compact
     {
         public int teamID;
         public TeamMode teamMode;
-        public List<Compact.Trainer> trainers;
+        public List<WifiFriendly.Trainer> trainers;
         public List<int> playerIDs = new List<int>();
 
         public Team() { }
@@ -123,7 +123,7 @@ namespace PBS.Battle.View.Compact
             }
         }
 
-        public Compact.Trainer GetTrainer(int playerID)
+        public WifiFriendly.Trainer GetTrainer(int playerID)
         {
             for (int i = 0; i < trainers.Count; i++)
             {

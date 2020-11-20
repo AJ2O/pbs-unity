@@ -102,24 +102,6 @@ namespace PBS.Battle.View.Events
         public List<int> intArgs = new List<int>();
         public List<PokemonStats> statList = new List<PokemonStats>();
     }
-    public class MessagePokemon : Base
-    {
-        public string preMessage = "";
-        public string postMessage = "";
-        public List<string> pokemonUniqueIDs;
-    }
-    public class MessageTrainer : Base
-    {
-        public string preMessage = "";
-        public string postMessage = "";
-        public List<int> playerIDs;
-    }
-    public class MessageTeam : Base
-    {
-        public string preMessage = "";
-        public string postMessage = "";
-        public int teamID;
-    }
 
 
     // Backend
@@ -134,7 +116,7 @@ namespace PBS.Battle.View.Events
     public class ModelUpdatePokemon : Base
     {
         public bool loadAsset = false;
-        public View.Compact.Pokemon pokemon;
+        public View.WifiFriendly.Pokemon pokemon;
     }
     public class ModelUpdateTrainer : Base
     {
@@ -235,6 +217,7 @@ namespace PBS.Battle.View.Events
     public class CommandGeneralPrompt : Base
     {
         public int playerID;
+        public bool multiTargetSelection;
         public bool canMegaEvolve;
         public bool canZMove;
         public bool canDynamax;

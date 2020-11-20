@@ -18,7 +18,7 @@ namespace PBS.Battle.View.UI.Panels
             runBtn;
         public BTLUI_Button backBtn;
 
-        public void SetCommands(PBS.Battle.View.Compact.Pokemon pokemon, IEnumerable<BattleCommandType> commandList)
+        public void SetCommands(PBS.Battle.View.WifiFriendly.Pokemon pokemon, IEnumerable<BattleCommandType> commandList)
         {
             HashSet<BattleCommandType> commandSet = new HashSet<BattleCommandType>(commandList);
             fightBtn.gameObject.SetActive(commandSet.Contains(BattleCommandType.Fight));
@@ -69,7 +69,7 @@ namespace PBS.Battle.View.UI.Panels
             backBtn.SelectSelf();
         }
 
-        public void PromptPokemon(PBS.Battle.View.Compact.Pokemon pokemon)
+        public void PromptPokemon(PBS.Battle.View.WifiFriendly.Pokemon pokemon)
         {
             promptText.text = "What will " + pokemon.nickname + " do?";
         }

@@ -48,7 +48,7 @@ namespace PBS.Player
         private bool waitCRActive = false;
         Battle.View.Events.CommandGeneralPrompt commandPromptEvent;
         private PBS.Battle.View.Events.CommandAgent commandAgent;
-        private PBS.Battle.View.Compact.Trainer commandTrainer;
+        private PBS.Battle.View.WifiFriendly.Trainer commandTrainer;
         private Command playerCommand;
         private Command[] committedCommands;
     
@@ -86,7 +86,7 @@ namespace PBS.Player
         private bool choosingParty;
         private bool forceSwitch;
         private bool forceReplace;
-        private List<Battle.View.Compact.Pokemon> partySlots;
+        private List<Battle.View.WifiFriendly.Pokemon> partySlots;
         private int partyIndex;
         private int switchPosition;
 
@@ -264,7 +264,7 @@ namespace PBS.Player
             moveTargets = new List<List<BattlePosition>>();
             moveTargetIndex = 0;
 
-            partySlots = new List<PBS.Battle.View.Compact.Pokemon>();
+            partySlots = new List<PBS.Battle.View.WifiFriendly.Pokemon>();
             partyIndex = 0;
             forceSwitch = false;
             forceReplace = false;
@@ -283,7 +283,7 @@ namespace PBS.Player
             Action<Command[]> callback)
         {
             commandPromptEvent = bEvent;
-            Battle.View.Compact.Trainer trainer = battleModel.GetMatchingTrainer(bEvent.playerID);
+            Battle.View.WifiFriendly.Trainer trainer = battleModel.GetMatchingTrainer(bEvent.playerID);
             committedCommands = new Command[bEvent.pokemonToCommand.Count];
 
             List<PBS.Battle.View.Events.CommandAgent> pokemonToControl 
@@ -296,7 +296,7 @@ namespace PBS.Player
 
                 playerCommand = null;
                 committedCommands[i] = null;
-                PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(pokemonToControl[i].pokemonUniqueID);
+                PBS.Battle.View.WifiFriendly.Pokemon pokemon = battleModel.GetMatchingPokemon(pokemonToControl[i].pokemonUniqueID);
                 switchPosition = pokemon.battlePos;
 
                 SetDefaultPromptVars();
@@ -328,7 +328,7 @@ namespace PBS.Player
             PBS.Battle.View.Events.CommandReplacementPrompt bEvent,
             Action<Command[]> callback)
         {
-            PBS.Battle.View.Compact.Trainer trainer = battleModel.GetMatchingTrainer(bEvent.playerID);
+            PBS.Battle.View.WifiFriendly.Trainer trainer = battleModel.GetMatchingTrainer(bEvent.playerID);
             int[] fillPositions = bEvent.fillPositions;
             committedCommands = new Command[bEvent.fillPositions.Length];
 
@@ -339,7 +339,7 @@ namespace PBS.Player
                 committedCommands[i] = null;
 
                 // set Default Values
-                partySlots = new List<PBS.Battle.View.Compact.Pokemon>();
+                partySlots = new List<PBS.Battle.View.WifiFriendly.Pokemon>();
                 partyIndex = 0;
                 switchPosition = fillPositions[i];
                 forceSwitch = true;
@@ -374,11 +374,11 @@ namespace PBS.Player
 
         private IEnumerator ControlPromptCommand(
             PBS.Battle.View.Events.CommandAgent agent, 
-            PBS.Battle.View.Compact.Trainer trainer, 
+            PBS.Battle.View.WifiFriendly.Trainer trainer, 
             int pokemonIndex, 
             Command[] setCommands)
         {
-            PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(agent);
+            PBS.Battle.View.WifiFriendly.Pokemon pokemon = battleModel.GetMatchingPokemon(agent);
             commandAgent = agent;
             commandTrainer = trainer;
             committedCommands = (setCommands == null) ? new Command[0] : setCommands;
@@ -421,7 +421,7 @@ namespace PBS.Player
 
         private IEnumerator ControlPromptCommandExtra(
             PBS.Battle.View.Events.CommandAgent agent, 
-            PBS.Battle.View.Compact.Trainer trainer,
+            PBS.Battle.View.WifiFriendly.Trainer trainer,
             Command[] setCommands,
             List<BattleExtraCommand> commandList)
         {
@@ -454,11 +454,11 @@ namespace PBS.Player
 
         public IEnumerator ControlPromptFight(
             PBS.Battle.View.Events.CommandAgent agent, 
-            PBS.Battle.View.Compact.Trainer trainer,
+            PBS.Battle.View.WifiFriendly.Trainer trainer,
             Command[] setCommands,
             bool forceMove = false)
         {
-            PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(agent);
+            PBS.Battle.View.WifiFriendly.Pokemon pokemon = battleModel.GetMatchingPokemon(agent);
             commandAgent = agent;
             commandTrainer = trainer;
             committedCommands = (setCommands == null) ? new Command[0] : setCommands;
@@ -547,19 +547,26 @@ namespace PBS.Player
 
         public IEnumerator ControlPromptFieldTarget(
             PBS.Battle.View.Events.CommandAgent agent,
-            PBS.Battle.View.Compact.Trainer trainer,
+            PBS.Battle.View.WifiFriendly.Trainer trainer,
             PBS.Battle.View.Events.CommandAgent.Moveslot selectedMoveslot,
             Command[] setCommands = null
             )
         {
-            PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(agent);
+            PBS.Battle.View.WifiFriendly.Pokemon pokemon = battleModel.GetMatchingPokemon(agent);
             commandAgent = agent;
             commandTrainer = trainer;
             this.selectedMoveslot = selectedMoveslot;
             committedCommands = (setCommands == null) ? new Command[0] : setCommands;
 
             // get the possible targets for the given move
-            moveTargets = new List<List<BattlePosition>>(selectedMoveslot.possibleTargets);
+            yield return StartCoroutine(player.RunQueryResponsePollingSystem(
+                new Query.MoveTarget
+                { 
+                    pokemonUniqueID = commandAgent.pokemonUniqueID,
+                    moveID = selectedMoveslot.moveID
+                }));
+            Query.MoveTargetResponse response = player.queryResponse as Query.MoveTargetResponse;
+            moveTargets = new List<List<BattlePosition>>(response.possibleTargets);
             moveTargets.Insert(0, null);
 
             // set the initial move index
@@ -568,9 +575,9 @@ namespace PBS.Player
                 moveTargetIndex = 0;
             }
             // do not default to "Back" command if possible
-            if (moveTargets[moveTargetIndex] == null && moveTargets.Count > 0)
+            if (moveTargets[moveTargetIndex] == null && moveTargets.Count > 1)
             {
-                moveTargetIndex++;
+                moveTargetIndex = 1;
             }
 
             choosingFightTarget = true;
@@ -589,7 +596,7 @@ namespace PBS.Player
 
         public IEnumerator ControlPromptParty(
             PBS.Battle.View.Events.CommandAgent agent,
-            PBS.Battle.View.Compact.Trainer trainer,
+            PBS.Battle.View.WifiFriendly.Trainer trainer,
             Command[] setCommands = null,
             bool forceSwitch = false
             )
@@ -600,7 +607,7 @@ namespace PBS.Player
             this.forceSwitch = forceSwitch;
 
             // set the possible party pokemon that can switch in
-            partySlots = new List<PBS.Battle.View.Compact.Pokemon>(commandTrainer.party);
+            partySlots = new List<PBS.Battle.View.WifiFriendly.Pokemon>(commandTrainer.party);
 
             // set the initial party index
             partyIndex = 0;
@@ -620,7 +627,7 @@ namespace PBS.Player
 
         public IEnumerator ControlPromptBagPocket(
             PBS.Battle.View.Events.CommandAgent agent,
-            PBS.Battle.View.Compact.Trainer trainer
+            PBS.Battle.View.WifiFriendly.Trainer trainer
             )
         {
             commandAgent = agent;
@@ -652,12 +659,12 @@ namespace PBS.Player
 
         public IEnumerator ControlPromptBag(
             PBS.Battle.View.Events.CommandAgent agent,
-            PBS.Battle.View.Compact.Trainer trainer,
+            PBS.Battle.View.WifiFriendly.Trainer trainer,
             ItemBattlePocket pocket,
             Command[] setCommands = null
             )
         {
-            PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(agent);
+            PBS.Battle.View.WifiFriendly.Pokemon pokemon = battleModel.GetMatchingPokemon(agent);
             commandAgent = agent;
             commandTrainer = trainer;
             committedCommands = (setCommands == null) ? new Command[0] : setCommands;
@@ -745,7 +752,7 @@ namespace PBS.Player
             }
             else
             {
-                Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
+                Battle.View.WifiFriendly.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
                 if (commandType == BattleCommandType.Fight)
                 {
                     controlFightCR = StartCoroutine(ControlPromptFight(
@@ -893,7 +900,7 @@ namespace PBS.Player
                 {
                     moveIndex += moveslots.Count;
                 }
-                PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
+                PBS.Battle.View.WifiFriendly.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
                 battleUI.SwitchSelectedMoveTo(
                     pokemon: pokemon,
                     selected: moveIndex,
@@ -959,7 +966,7 @@ namespace PBS.Player
                 moveslots = new List<PBS.Battle.View.Events.CommandAgent.Moveslot> { new PBS.Battle.View.Events.CommandAgent.Moveslot("struggle") };
             }
 
-            PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
+            PBS.Battle.View.WifiFriendly.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
             battleUI.SetMoves(
                 pokemon: pokemon,
                 moveslots: moveslots,
@@ -1014,8 +1021,8 @@ namespace PBS.Player
                 if (validMove)
                 {
                     // if auto-target (ex. Singles), we're done here
-                    PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
-                    if (battleModel.settings.battleType == BattleType.Single)
+                    PBS.Battle.View.WifiFriendly.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
+                    if (!commandPromptEvent.multiTargetSelection)
                     {
                         Command attemptedCommand = Command.CreateMoveCommand(
                             commandUser: pokemon.uniqueID,
@@ -1142,7 +1149,7 @@ namespace PBS.Player
 
                 if (validMove)
                 {
-                    PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
+                    PBS.Battle.View.WifiFriendly.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
                     Command attemptedCommand = Command.CreateMoveCommand(
                         commandUser: pokemon.uniqueID,
                         commandTrainer: commandTrainer.playerID,
@@ -1187,7 +1194,7 @@ namespace PBS.Player
                 playerCommand = null;
                 choosingFightTarget = false;
 
-                PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
+                PBS.Battle.View.WifiFriendly.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
                 SwitchControlContext(ControlContext.Fight);
                 battleUI.SwitchPanel(PBS.Battle.View.Enums.Panel.Fight);
                 battleUI.SwitchSelectedMoveTo(
@@ -1317,7 +1324,7 @@ namespace PBS.Player
             else
             {
                 // no selected item
-                PBS.Battle.View.Compact.Pokemon choice = partySlots[partyIndex];
+                PBS.Battle.View.WifiFriendly.Pokemon choice = partySlots[partyIndex];
                 if (selectedItem == null)
                 {
                     controlPartyCommandCR = StartCoroutine(ControlPromptCommandExtra(
@@ -1438,7 +1445,7 @@ namespace PBS.Player
                 return;
             }
             BattleExtraCommand commandType = extraCommands[extraCommandIndex];
-            PBS.Battle.View.Compact.Pokemon choice = partySlots[partyIndex];
+            PBS.Battle.View.WifiFriendly.Pokemon choice = partySlots[partyIndex];
 
             // Exit Commands
             if (commandType == BattleExtraCommand.Cancel)
@@ -1913,15 +1920,15 @@ namespace PBS.Player
                 }
             }
 
-            yield return StartCoroutine(player.RunQueryResponsePollingSystem(attemptedCommand, previousCommands));
-            if (player.queryResponse != null)
+            yield return StartCoroutine(player.RunCommandQueryResponsePollingSystem(attemptedCommand, previousCommands));
+            if (player.queryMessageResponse != null)
             {
-                commandSuccess = player.queryResponse.isQuerySuccessful;
-                if (!player.queryResponse.isQuerySuccessful)
+                commandSuccess = player.queryMessageResponse.isQuerySuccessful;
+                if (!player.queryMessageResponse.isQuerySuccessful)
                 {
                     yield return StartCoroutine(battleUI.DrawText(
                         PBS.Battle.View.UI.Canvas.RenderMessage(
-                            message: player.queryResponse,
+                            message: player.queryMessageResponse,
                             myModel: battleModel,
                             myPlayerID: player.playerID,
                             myTrainer: player.myTrainer,

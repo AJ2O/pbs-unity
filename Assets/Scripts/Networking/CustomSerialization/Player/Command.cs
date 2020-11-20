@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-namespace PBS.Networking.CustomSerialization
+namespace PBS.Networking.CustomSerialization.Player
 {
-    public static class Player
+    public static class Main
     {
         public static void WritePlayerCommand(this NetworkWriter writer, PBS.Player.Command obj)
         {

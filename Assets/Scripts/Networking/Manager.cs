@@ -171,8 +171,8 @@ namespace PBS.Networking {
                 NetworkIdentity networkIdentity = player.GetComponent<NetworkIdentity>();
 
                 player.playerID = trainer.playerID;
-                player.TargetSyncTrainerToClient(networkIdentity.connectionToClient, new Battle.View.Compact.Trainer(trainer));
-                player.TargetSyncTeamPerspectiveToClient(networkIdentity.connectionToClient, new Battle.View.Compact.Team(team));
+                player.TargetSyncTrainerToClient(networkIdentity.connectionToClient, new Battle.View.WifiFriendly.Trainer(trainer));
+                player.TargetSyncTeamPerspectiveToClient(networkIdentity.connectionToClient, new Battle.View.WifiFriendly.Team(team));
             }
 
             // Start Battle Core

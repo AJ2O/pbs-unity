@@ -101,10 +101,10 @@ public class BattleAssetLoader : MonoBehaviour
         {
             for (int k = 0; k < battle.teams[i].trainers.Count; k++)
             {
-                PBS.Battle.View.Compact.Trainer trainer = battle.teams[i].trainers[k];
+                PBS.Battle.View.WifiFriendly.Trainer trainer = battle.teams[i].trainers[k];
 
                 // load pokemon assets
-                List<PBS.Battle.View.Compact.Pokemon> party = trainer.party;
+                List<PBS.Battle.View.WifiFriendly.Pokemon> party = trainer.party;
                 for (int j = 0; j < party.Count; j++)
                 {
                     yield return StartCoroutine(LoadPokemon(party[j]));
@@ -126,7 +126,7 @@ public class BattleAssetLoader : MonoBehaviour
 
     // ---POKEMON---
     public IEnumerator LoadPokemon(
-        PBS.Battle.View.Compact.Pokemon pokemon,
+        PBS.Battle.View.WifiFriendly.Pokemon pokemon,
         bool useicon = false,
         bool useFront = false,
         bool useBack = false,
@@ -303,7 +303,7 @@ public class BattleAssetLoader : MonoBehaviour
 
     // ---TRAINERS---
     
-    public IEnumerator LoadTrainer(PBS.Battle.View.Compact.Trainer trainer)
+    public IEnumerator LoadTrainer(PBS.Battle.View.WifiFriendly.Trainer trainer)
     {
         yield return null;
     }

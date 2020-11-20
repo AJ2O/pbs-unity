@@ -18,9 +18,6 @@ namespace PBS.Networking.CustomSerialization.Battle.View
         // Messages (101 - 199)
         const int MESSAGE = 101;
         const int MESSAGEPARAMETERIZED = 102;
-        const int MESSAGEPOKEMON = 103;
-        const int MESSAGETRAINER = 104;
-        const int MESSAGETEAM = 105;
 
 
         // Backend (201 - 299)
@@ -121,27 +118,6 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                 }
                 writer.WriteList(statInts);
             }
-            else if (obj is PBS.Battle.View.Events.MessagePokemon messagePokemon)
-            {
-                writer.WriteInt32(MESSAGEPOKEMON);
-                writer.WriteString(messagePokemon.preMessage);
-                writer.WriteString(messagePokemon.postMessage);
-                writer.WriteList(messagePokemon.pokemonUniqueIDs);
-            }
-            else if (obj is PBS.Battle.View.Events.MessageTrainer messageTrainer)
-            {
-                writer.WriteInt32(MESSAGETRAINER);
-                writer.WriteString(messageTrainer.preMessage);
-                writer.WriteString(messageTrainer.postMessage);
-                writer.WriteList(messageTrainer.playerIDs);
-            }
-            else if (obj is PBS.Battle.View.Events.MessageTeam messageTeam)
-            {
-                writer.WriteInt32(MESSAGETEAM);
-                writer.WriteString(messageTeam.preMessage);
-                writer.WriteString(messageTeam.postMessage);
-                writer.WriteInt32(messageTeam.teamID);
-            }
 
 
             else if (obj is PBS.Battle.View.Events.ModelUpdate modelUpdate)
@@ -180,6 +156,7 @@ namespace PBS.Networking.CustomSerialization.Battle.View
             {
                 writer.WriteInt32(COMMANDGENERALPROMPT);
                 writer.WriteInt32(commandGeneralPrompt.playerID);
+                writer.WriteBoolean(commandGeneralPrompt.multiTargetSelection);
                 writer.WriteBoolean(commandGeneralPrompt.canMegaEvolve);
                 writer.WriteBoolean(commandGeneralPrompt.canZMove);
                 writer.WriteBoolean(commandGeneralPrompt.canDynamax);
@@ -395,27 +372,6 @@ namespace PBS.Networking.CustomSerialization.Battle.View
 
                     messageParameterized.statList.AddRange(messageParameterizedStatList);
                     return messageParameterized;
-                case MESSAGEPOKEMON:
-                    return new PBS.Battle.View.Events.MessagePokemon
-                    {
-                        preMessage = reader.ReadString(),
-                        postMessage = reader.ReadString(),
-                        pokemonUniqueIDs = reader.ReadList<string>()
-                    };
-                case MESSAGETRAINER:
-                    return new PBS.Battle.View.Events.MessageTrainer
-                    {
-                        preMessage = reader.ReadString(),
-                        postMessage = reader.ReadString(),
-                        playerIDs = reader.ReadList<int>()
-                    };
-                case MESSAGETEAM:
-                    return new PBS.Battle.View.Events.MessageTeam
-                    {
-                        preMessage = reader.ReadString(),
-                        postMessage = reader.ReadString(),
-                        teamID = reader.ReadInt32()
-                    };
 
 
                 case MODELUPDATE:
@@ -449,10 +405,12 @@ namespace PBS.Networking.CustomSerialization.Battle.View
                         trainers = reader.ReadList<int>()
                     };
 
+
                 case COMMANDGENERALPROMPT:
                     return new PBS.Battle.View.Events.CommandGeneralPrompt
                     {
                         playerID = reader.ReadInt32(),
+                        multiTargetSelection = reader.ReadBoolean(),
                         canMegaEvolve = reader.ReadBoolean(),
                         canZMove = reader.ReadBoolean(),
                         canDynamax = reader.ReadBoolean(),

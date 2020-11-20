@@ -26,6 +26,10 @@ namespace PBS.Static
             }
         }
 
-        
+        private void Start()
+        {
+            Screen.SetResolution(640, 360, false);
+        }
+
     }
 }

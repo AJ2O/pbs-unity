@@ -54,7 +54,7 @@ namespace PBS.Battle.View.UI.HUD
         }
 
         // HUD Activity
-        public void SetPokemonHUDActive(PBS.Battle.View.Compact.Pokemon pokemon, bool active)
+        public void SetPokemonHUDActive(PBS.Battle.View.WifiFriendly.Pokemon pokemon, bool active)
         {
             HUD.PokemonHUD pokemonHUD = GetPokemonHUD(pokemon);
             if (pokemonHUD != null)
@@ -72,7 +72,7 @@ namespace PBS.Battle.View.UI.HUD
 
         // Setting HUD Parameters
         public Transform GetPokemonHUDSpawnPosition(
-            PBS.Battle.View.Compact.Pokemon pokemon,
+            PBS.Battle.View.WifiFriendly.Pokemon pokemon,
             TeamMode teamMode,
             bool isNear)
         {
@@ -97,7 +97,7 @@ namespace PBS.Battle.View.UI.HUD
             }
             return spawnPos;
         }
-        public HUD.PokemonHUD GetPokemonHUD(PBS.Battle.View.Compact.Pokemon pokemon)
+        public HUD.PokemonHUD GetPokemonHUD(PBS.Battle.View.WifiFriendly.Pokemon pokemon)
         {
             for (int i = 0; i < pokemonHUDs.Count; i++)
             {
@@ -109,7 +109,7 @@ namespace PBS.Battle.View.UI.HUD
             return null;
         }
         public void UpdatePokemonHUD(
-            PBS.Battle.View.Compact.Pokemon pokemon,
+            PBS.Battle.View.WifiFriendly.Pokemon pokemon,
             string nickname = "",
             PokemonGender gender = PokemonGender.Genderless,
             int level = 1,
@@ -148,7 +148,7 @@ namespace PBS.Battle.View.UI.HUD
 
         // Drawing HUD
         public HUD.PokemonHUD DrawPokemonHUD(
-            PBS.Battle.View.Compact.Pokemon pokemon,
+            PBS.Battle.View.WifiFriendly.Pokemon pokemon,
             TeamMode teamMode,
             bool isNear)
         {
@@ -184,7 +184,7 @@ namespace PBS.Battle.View.UI.HUD
                 return pokemonHUD;
             }
         }
-        public bool UndrawPokemonHUD(PBS.Battle.View.Compact.Pokemon pokemon)
+        public bool UndrawPokemonHUD(PBS.Battle.View.WifiFriendly.Pokemon pokemon)
         {
             HUD.PokemonHUD pokemonHUD = GetPokemonHUD(pokemon);
             if (pokemonHUD != null)
@@ -198,7 +198,7 @@ namespace PBS.Battle.View.UI.HUD
 
         // Animation
         public IEnumerator AnimatePokemonHUDHPChange(
-            PBS.Battle.View.Compact.Pokemon pokemon,
+            PBS.Battle.View.WifiFriendly.Pokemon pokemon,
             int preHP, 
             int postHP, 
             int maxHP,

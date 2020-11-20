@@ -78,7 +78,7 @@ namespace PBS.Battle.View.UI.Panels
             int teamPerspective, 
             PBS.Battle.View.Model battleModel)
         {
-            PBS.Battle.View.Compact.Team team = battleModel.GetMatchingTeam(position.teamPos);
+            PBS.Battle.View.WifiFriendly.Team team = battleModel.GetMatchingTeam(position.teamPos);
             bool isAlly = (teamPerspective == position.teamPos);
 
             Panels.FieldTargetButton curBtn =
@@ -115,7 +115,7 @@ namespace PBS.Battle.View.UI.Panels
             for (int i = 0; i < allPositions.Count; i++)
             {
                 BattlePosition curPos = allPositions[i];
-                PBS.Battle.View.Compact.Team team = battleModel.GetMatchingTeam(curPos.teamPos);
+                PBS.Battle.View.WifiFriendly.Team team = battleModel.GetMatchingTeam(curPos.teamPos);
                 bool isAlly = (teamPos == curPos.teamPos);
 
                 Panels.FieldTargetButton curBtn = GetFieldTargetButton(
@@ -137,7 +137,7 @@ namespace PBS.Battle.View.UI.Panels
             Panels.FieldTargetButton btn)
         {
             btn.position = position;
-            PBS.Battle.View.Compact.Pokemon pokemon = battleModel.GetPokemonAtPosition(position);
+            PBS.Battle.View.WifiFriendly.Pokemon pokemon = battleModel.GetPokemonAtPosition(position);
 
             btn.RefreshSelf(active: pokemon != null);
             if (pokemon != null)

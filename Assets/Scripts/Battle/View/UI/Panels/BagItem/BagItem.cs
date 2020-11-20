@@ -27,7 +27,7 @@ namespace PBS.Battle.View.UI.Panels
             backBtn.itemID = "";
         }
 
-        public void SetItems(PBS.Battle.View.Compact.Trainer trainer, List<Item> list, int offset)
+        public void SetItems(PBS.Battle.View.WifiFriendly.Trainer trainer, List<Item> list, int offset)
         {
             bagBtn1.itemID = null;
             bagBtn2.itemID = null;
@@ -58,7 +58,7 @@ namespace PBS.Battle.View.UI.Panels
             int currentPage = (offset / maxItemCount) + 1;
             pageText.text = "Page " + currentPage + " / " + totalPages;
         }
-        public void SetItemButton(PBS.Battle.View.Compact.Trainer trainer, Item item, Panels.BagItemButton button)
+        public void SetItemButton(PBS.Battle.View.WifiFriendly.Trainer trainer, Item item, Panels.BagItemButton button)
         {
             button.nameTxt.text = item.data.itemName;
             int itemCount = 0;

@@ -32,11 +32,11 @@ namespace PBS.Battle.View.UI.Panels
         }
 
         // Party Screen
-        public void SetParty(List<PBS.Battle.View.Compact.Pokemon> party, Item item = null)
+        public void SetParty(List<PBS.Battle.View.WifiFriendly.Pokemon> party, Item item = null)
         {
             for (int i = 0; i < party.Count; i++)
             {
-                PBS.Battle.View.Compact.Pokemon pokemon = party[i];
+                PBS.Battle.View.WifiFriendly.Pokemon pokemon = party[i];
                 Panels.PartyButton curBtn = (i == 0) ? party1Btn
                     : (i == 1) ? party2Btn
                     : (i == 2) ? party3Btn
@@ -57,7 +57,7 @@ namespace PBS.Battle.View.UI.Panels
             if (party.Count < 1) party1Btn.gameObject.SetActive(false);
         }
         public void SetPartyButton(
-            PBS.Battle.View.Compact.Pokemon pokemon, 
+            PBS.Battle.View.WifiFriendly.Pokemon pokemon, 
 
             Panels.PartyButton button)
         {

@@ -602,7 +602,7 @@ MonoBehaviour:
   runInBackground: 1
   autoStartServerBuild: 1
   showDebugMessages: 0
-  serverTickRate: 30
+  serverTickRate: 92
   offlineScene: 
   onlineScene: 
   transport: {fileID: 25127937}
@@ -617,10 +617,10 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs: []
   battleCore: {fileID: 1109572307}
-  requiredPlayers: 1
+  requiredPlayers: 2
   totalPlayers: 2
   battleSettings:
-    battleType: 0
+    battleType: 1
     isWildBattle: 0
     isInverse: 0
     canMegaEvolve: 1

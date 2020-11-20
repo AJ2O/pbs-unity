@@ -39,7 +39,7 @@ namespace PBS.Battle.View.Scene
 
         // Scene Pokemon
         public Entities.Pokemon DrawPokemon(
-            Battle.View.Compact.Pokemon pokemon,
+            Battle.View.WifiFriendly.Pokemon pokemon,
             TeamMode teamMode,
             bool isNear)
         {
