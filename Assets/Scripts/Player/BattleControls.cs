@@ -6,17 +6,41 @@ using UnityEngine.InputSystem;
 
 namespace PBS.Player
 {
+    /// <summary>
+    /// This class handles everything related to player input during battle. This means navigating the different
+    /// menus and selecting battle commands.
+    /// </summary>
     public class BattleControls : MonoBehaviour
     {
-        // Model
+        #region Battle Model
+        /// <summary>
+        /// This is the current battle state. The controls need to know the current state
+        /// to determine what commands are legal or illegal for the player.
+        /// </summary>
         public PBS.Battle.View.Model battleModel;
+        /// <summary>
+        /// A reference to the player object. Selected commands are sent through the player object to be executed
+        /// in the battle.
+        /// </summary>
         public PBS.Networking.Player player;
+        #endregion
 
-        // Components
+        #region Visual Components
+        /// <summary>
+        /// A reference to the UI that is shown to the player.
+        /// </summary>
         public PBS.Battle.View.UI.Canvas battleUI;
+        
+        /// <summary>
+        /// A reference to the visual representation of the battle, shown to the player.
+        /// </summary>
         public Battle.View.Scene.Canvas sceneCanvas;
+        #endregion
 
-        // Controller
+        #region Controller
+        /// <summary>
+        /// The control context determines what menu the player is currently interacting with.
+        /// </summary>
         public enum ControlContext
         {
             None,
@@ -30,76 +54,170 @@ namespace PBS.Player
             Bag,
             BagTarget
         }
+        
+        /// <summary>
+        /// The underlying literal controls that are accessible.
+        /// </summary>
         private Controls _controls;
+        
+        /// <summary>
+        /// The current control context. See <seealso cref="ControlContext"/>.
+        /// </summary>
         private ControlContext context;
+        
+        /// <summary>
+        /// While true, the player's input is ignored.
+        /// </summary>
         private bool lockControls = false;
 
-        private Coroutine
-            waitCR,
-            controlCommandCR,
-            controlExtraCommandCR,
-            controlFightCR,
-            controlFightTargetCR,
-            controlPartyCR,
-            controlPartyCommandCR,
-            controlBagPocketCR,
-            controlBagCR,
-            controlBagTargetCR;
+        /// <summary>
+        /// This coroutine
+        /// </summary>
+        private Coroutine controlCommandCR;
+        /// <summary>
+        /// A flag to indicate that a Coroutine (such as dialog) is currently running, so temporarily
+        /// ignore the player's input.
+        /// </summary>
         private bool waitCRActive = false;
-        Battle.View.Events.CommandGeneralPrompt commandPromptEvent;
-        private PBS.Battle.View.Events.CommandAgent commandAgent;
-        private PBS.Battle.View.WifiFriendly.Trainer commandTrainer;
-        private Command playerCommand;
-        private Command[] committedCommands;
-    
-        [HideInInspector] public bool isSendingCommands = false;
-        [HideInInspector] public bool isSendingReplacements = false;
-        [HideInInspector] public Command[] commandsToBeSent;
+        #endregion
 
-        // Command
+        #region Commands
+        /// <summary>
+        /// The current command prompt for the player. The command prompt determines which pokemon the player
+        /// can actually select commands for.
+        /// </summary>
+        Battle.View.Events.CommandGeneralPrompt commandPromptEvent;
+        
+        /// <summary>
+        /// The pokemon that is currently having its command selected.
+        /// </summary>
+        private PBS.Battle.View.Events.CommandAgent commandAgent;
+
+        /// <summary>
+        /// The trainer in-battle that the player is currently selecting commands for.
+        /// </summary>
+        private PBS.Battle.View.WifiFriendly.Trainer commandTrainer;
+        
+        /// <summary>
+        /// The command that is currently being constructed to be added to <seealso cref="committedCommands"/>
+        /// </summary>
+        private Command playerCommand;
+        /// <summary>
+        /// The list of commands the player has recently committed to. Once all commands are committed, this is
+        /// sent to <seealso cref="player"/>.
+        /// </summary>
+        private Command[] committedCommands;
+        
+
+        #region General Commands
+        /// <summary>
+        /// A flag to indicate that the player is currently choosing a command.
+        /// </summary>
         private bool choosingCommand;
+        
+        /// <summary>
+        /// The list of possible commands available for the <seealso cref="commandAgent"/>.
+        /// </summary>
         private List<BattleCommandType> commandTypes;
+
+        /// <summary>
+        /// The currently highlighted command in <seealso cref="commandTypes"/>. If -1, the
+        /// player is on the back button.
+        /// </summary>
         private int commandIndex = 0;
+        #endregion
 
         // Command Extra
         private bool choosingExtraCommand;
         private List<BattleExtraCommand> extraCommands;
         private int extraCommandIndex = 0;
 
-        // Fight
+        #region Fight
+        /// <summary>
+        /// A flag to indicate that the player is currently selecting a move.
+        /// </summary>
         private bool choosingFight;
+        
+        /// <summary>
+        /// If true, the player is forced to select a move, and cannot back out into other commands.
+        /// </summary>
         private bool forceMove;
+        
+        /// <summary>
+        /// The moves available for selection for <seealso cref="commandAgent"/>.
+        /// </summary>
         private List<Battle.View.Events.CommandAgent.Moveslot> moveslots;
-        private int moveIndex;
-        private bool canMegaEvolve, chooseMegaEvolve;
-        private bool canZMove, chooseZMove;
-        private bool canDynamax, chooseDynamax;
-        private bool canFormChange; // Ultra-Burst
 
-        // Fight Target
+        /// <summary>
+        /// The currently highlighted move in <seealso cref="moveslots"/>.
+        /// </summary>
+        private int moveIndex;
+
+        /// <summary>
+        /// If true, the <seealso cref="commandAgent"/> has the option to mega-evolve this turn.
+        /// </summary>
+        private bool canMegaEvolve;
+        /// <summary>
+        /// If true, the <seealso cref="commandAgent"/> has selected to mega-evolve this turn.
+        /// </summary>
+        private bool chooseMegaEvolve;
+
+        /// <summary>
+        /// If true, the <seealso cref="commandAgent"/> has the option to use a Z-Move this turn.
+        /// </summary>
+        private bool canZMove;
+        /// <summary>
+        /// If true, the <seealso cref="commandAgent"/> has selected to use a Z-Move this turn.
+        /// </summary>
+        private bool chooseZMove;
+
+        /// <summary>
+        /// If true, the <seealso cref="commandAgent"/> has the option to Dynamax this turn.
+        /// </summary>
+        private bool canDynamax;
+        /// <summary>
+        /// If true, the <seealso cref="commandAgent"/> has selected to Dynamax this turn.
+        /// </summary>
+        private bool chooseDynamax;
+
+        /// <summary>
+        /// If true, <seealso cref="commandAgent"/> has the option to undergo a custom form-change this turn.
+        /// ex: Ultra-Burst
+        /// </summary>
+        private bool canFormChange;
+        #endregion
+
+        #region Fight Target
         private bool choosingFightTarget;
         private Battle.View.Events.CommandAgent.Moveslot selectedMoveslot;
         private List<List<BattlePosition>> moveTargets;
         private int moveTargetIndex;
+        #endregion
 
-        // Party
+        #region Party
         private bool choosingParty;
         private bool forceSwitch;
         private bool forceReplace;
         private List<Battle.View.WifiFriendly.Pokemon> partySlots;
         private int partyIndex;
         private int switchPosition;
+        #endregion
 
-        // Bag
+        #region Bag Pockets
         private bool choosingBagPocket;
         private List<ItemBattlePocket> itemPockets;
         private int itemPocketIndex;
-
+        #endregion
+        
+        #region Items
         private bool choosingItem;
         private List<Item> itemSlots;
         private int itemOffset;
         private int itemIndex;
         private Item selectedItem;
+        #endregion
+
+        #endregion
 
         private void Awake()
         {
@@ -755,7 +873,7 @@ namespace PBS.Player
                 Battle.View.WifiFriendly.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
                 if (commandType == BattleCommandType.Fight)
                 {
-                    controlFightCR = StartCoroutine(ControlPromptFight(
+                    StartCoroutine(ControlPromptFight(
                         commandAgent,
                         commandTrainer,
                         committedCommands,
@@ -764,7 +882,7 @@ namespace PBS.Player
                 }
                 else if (commandType == BattleCommandType.Party)
                 {
-                    controlPartyCR = StartCoroutine(ControlPromptParty(
+                    StartCoroutine(ControlPromptParty(
                         commandAgent,
                         commandTrainer,
                         committedCommands,
@@ -773,7 +891,7 @@ namespace PBS.Player
                 }
                 else if (commandType == BattleCommandType.Bag)
                 {
-                    controlBagPocketCR = StartCoroutine(ControlPromptBagPocket(
+                    StartCoroutine(ControlPromptBagPocket(
                         commandAgent,
                         commandTrainer
                         ));
@@ -786,7 +904,7 @@ namespace PBS.Player
                         isExplicitlySelected: true);
 
                     waitCRActive = true;
-                    waitCR = StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) =>
+                    StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) =>
                     {
                         if (success)
                         {
@@ -1035,7 +1153,7 @@ namespace PBS.Player
                             isDynamaxing: chooseDynamax);
 
                         waitCRActive = true;
-                        waitCR = StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) =>
+                        StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) =>
                         {
                             if (success)
                             {
@@ -1058,7 +1176,7 @@ namespace PBS.Player
                     // we have to specifically choose the target
                     else
                     {
-                        controlFightTargetCR = StartCoroutine(ControlPromptFieldTarget(
+                        StartCoroutine(ControlPromptFieldTarget(
                             commandAgent,
                             commandTrainer,
                             moveslots[moveIndex],
@@ -1160,7 +1278,7 @@ namespace PBS.Player
                         isZMove: chooseZMove,
                         isDynamaxing: chooseDynamax);
                     waitCRActive = true;
-                    waitCR = StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) =>
+                    StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) =>
                     {
                         if (success)
                         {
@@ -1327,18 +1445,18 @@ namespace PBS.Player
                 PBS.Battle.View.WifiFriendly.Pokemon choice = partySlots[partyIndex];
                 if (selectedItem == null)
                 {
-                    controlPartyCommandCR = StartCoroutine(ControlPromptCommandExtra(
-                    commandAgent,
-                    commandTrainer,
-                    committedCommands,
-                    new List<BattleExtraCommand>
-                    {
-                        BattleExtraCommand.Summary,
-                        BattleExtraCommand.Switch,
-                        BattleExtraCommand.Moves,
-                        BattleExtraCommand.Cancel
-                    }
-                    ));
+                    StartCoroutine(ControlPromptCommandExtra(
+                        commandAgent,
+                        commandTrainer,
+                        committedCommands,
+                        new List<BattleExtraCommand>
+                        {
+                            BattleExtraCommand.Summary,
+                            BattleExtraCommand.Switch,
+                            BattleExtraCommand.Moves,
+                            BattleExtraCommand.Cancel
+                        }
+                        ));
                 }
                 // try to use the item on the pokemon
                 else
@@ -1350,7 +1468,7 @@ namespace PBS.Player
                         isExplicitlySelected: true);
 
                     waitCRActive = true;
-                    waitCR = StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) =>
+                    StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) =>
                     {
                         if (success)
                         {
@@ -1480,7 +1598,7 @@ namespace PBS.Player
                             isExplicitlySelected: true);
 
                     waitCRActive = true;
-                    waitCR = StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) => 
+                    StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) => 
                     {
                         if (success)
                         {
@@ -1623,7 +1741,7 @@ namespace PBS.Player
             else
             {
                 ItemBattlePocket pocketType = itemPockets[itemPocketIndex];
-                controlBagCR = StartCoroutine(ControlPromptBag(
+                StartCoroutine(ControlPromptBag(
                     commandAgent,
                     commandTrainer,
                     pocketType,
@@ -1875,7 +1993,7 @@ namespace PBS.Player
             else
             {
                 selectedItem = itemSlots[itemOffset + itemIndex];
-                controlPartyCR = StartCoroutine(ControlPromptParty(
+                StartCoroutine(ControlPromptParty(
                     commandAgent,
                     commandTrainer,
                     committedCommands
