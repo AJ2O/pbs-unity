@@ -68,7 +68,7 @@ namespace PBS.Networking {
             // UI
             this.battleUI = PBS.Static.Master.instance.ui;
             this.controls.battleUI = this.battleUI;
-            this.controls.SetControls();
+            this.controls.EnableQuickAdvanceDialog();
 
             // Scene
             this.sceneCanvas = PBS.Static.Master.instance.scene;
