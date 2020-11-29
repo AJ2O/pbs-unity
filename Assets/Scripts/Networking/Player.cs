@@ -5,26 +5,70 @@ using Mirror;
 
 namespace PBS.Networking { 
 
+    /// <summary>
+    /// This class handles interaction between the client and server.
+    /// On the server, this handles sending commands and queries to the server.
+    /// On the client, this handles receiving events and displaying them for the player.
+    /// </summary>
     public class Player : NetworkBehaviour
     {
-        // Player View
+        #region Attributes
+        /// <summary>
+        /// The ID of this player. If the player is spectating, this value is 0.
+        /// </summary>
         public int playerID = 0;
+        /// <summary>
+        /// The in-battle representation of this player's trainer.
+        /// </summary>
         public Battle.View.WifiFriendly.Trainer myTrainer;
+        /// <summary>
+        /// Battle events will be displayed to this player according to this team's perspective.
+        /// </summary>
         public Battle.View.WifiFriendly.Team myTeamPerspective;
+        /// <summary>
+        /// The model of the battle that the player sees.
+        /// </summary>
         public Battle.View.Model myModel;
+        /// <summary>
+        /// UI display.
+        /// </summary>
         public Battle.View.UI.Canvas battleUI;
+        /// <summary>
+        /// Scene display.
+        /// </summary>
         public Battle.View.Scene.Canvas sceneCanvas;
 
-        // Player Controls
+        /// <summary>
+        /// The controls component for the player.
+        /// </summary>
         public PBS.Player.BattleControls controls;
 
         // Events
+        /// <summary>
+        /// If true, this player is currently executing battle events. Battle events run by one at a time.
+        /// </summary>
         bool isExecutingEvents = true;
+        /// <summary>
+        /// The coroutine handling the execution of events.
+        /// </summary>
         Coroutine eventExecutor;
+        /// <summary>
+        /// The queue of events the player needs to run.
+        /// </summary>
         List<PBS.Battle.View.Events.Base> eventQueue;
+        /// <summary>
+        /// If true, the player is waiting for a response from the server.
+        /// </summary>
         bool isWaitingForResponse = false;
+        /// <summary>
+        /// A potential response message from the server.
+        /// </summary>
         public PBS.Battle.View.Events.MessageParameterized queryMessageResponse;
+        /// <summary>
+        /// A potential query response from the server.
+        /// </summary>
         public PBS.Player.Query.QueryResponseBase queryResponse;
+        #endregion
 
         private void Awake()
         {
@@ -35,9 +79,48 @@ namespace PBS.Networking {
             queryResponse = null;
         }
 
+        #region Player Convenience Checks
         /// <summary>
-        /// TODO: Initialize view perspective here
+        /// Returns true if the given playerID matches this player's.
         /// </summary>
+        /// <param name="playerID">The playerID to check.</param>
+        /// <returns></returns>
+        public bool IsTrainerPlayer(int playerID)
+        {
+            if (myTrainer != null)
+            {
+                return playerID == myTrainer.playerID;
+            }
+            return false;
+        }
+        /// <summary>
+        /// Returns true if the given trainer represents this player.
+        /// </summary>
+        /// <param name="trainer">The trainer to check.</param>
+        /// <returns></returns>
+        public bool IsTrainerPlayer(Battle.View.WifiFriendly.Trainer trainer)
+        {
+            return IsTrainerPlayer(trainer.playerID);
+        }
+        /// <summary>
+        /// Returns true if the given pokemon is owned by the player.
+        /// </summary>
+        /// <param name="pokemon">The pokemon to check.</param>
+        /// <returns></returns>
+        public bool IsPokemonOwnedByPlayer(Battle.View.WifiFriendly.Pokemon pokemon)
+        {
+            if (myTrainer != null)
+            {
+                PBS.Battle.View.WifiFriendly.Trainer ownerTrainer = myModel.GetTrainer(pokemon);
+                if (ownerTrainer != null)
+                {
+                    return ownerTrainer.playerID == myTrainer.playerID;
+                }
+            }
+            return false;
+        }
+        #endregion
+
         public override void OnStartLocalPlayer()
         {
             base.OnStartLocalPlayer();
@@ -56,63 +139,52 @@ namespace PBS.Networking {
             StartCoroutine(RunEventPollingSystem());
         }
 
+        #region Server/Client Interaction
         // 3.
-        [Client]
         /// <summary>
-        /// TODO: Initialize this player's view here
+        /// Initializes the components of this object.
         /// </summary>
+        [Client]
         public void SetComponents()
         {
             UpdateModel(new Battle.View.Model());
 
             // UI
-            this.battleUI = PBS.Static.Master.instance.ui;
+            this.battleUI = Static.Master.instance.ui;
             this.controls.battleUI = this.battleUI;
-            this.controls.SetControls();
+            this.controls.EnableQuickAdvanceDialog();
 
             // Scene
-            this.sceneCanvas = PBS.Static.Master.instance.scene;
+            this.sceneCanvas =  Static.Master.instance.scene;
             this.controls.sceneCanvas = this.sceneCanvas;
         }
 
-        public bool IsTrainerPlayer(int playerID)
-        {
-            if (myTrainer != null)
-            {
-                return playerID == myTrainer.playerID;
-            }
-            return false;
-        }
-        public bool IsTrainerPlayer(Battle.View.WifiFriendly.Trainer trainer)
-        {
-            return IsTrainerPlayer(trainer.playerID);
-        }
-        public bool IsPokemonOwnedByPlayer(Battle.View.WifiFriendly.Pokemon pokemon)
-        {
-            if (myTrainer != null)
-            {
-                PBS.Battle.View.WifiFriendly.Trainer ownerTrainer = myModel.GetTrainer(pokemon);
-                if (ownerTrainer != null)
-                {
-                    return ownerTrainer.playerID == myTrainer.playerID;
-                }
-            }
-            return false;
-        }
-
         // 4.
+        /// <summary>
+        /// Synchronizes this player's trainer to the server.
+        /// </summary>
         [Command]
         public void CmdSyncTrainerToServer()
         {
             Static.Master.instance.networkManager.AddPlayer(this.connectionToClient, this);
             Static.Master.instance.networkManager.AddTrainer(this.connectionToClient);
         }
+        /// <summary>
+        /// Synchronizes the server's trainer representation to the client.
+        /// </summary>
+        /// <param name="target">The targeted player to send this command to.</param>
+        /// <param name="trainer">The server's version of the trainer sent to the client.</param>
         [TargetRpc]
         public void TargetSyncTrainerToClient(NetworkConnection target, Battle.View.WifiFriendly.Trainer trainer)
         {
             myTrainer = trainer;
             playerID = myTrainer.playerID;
         }
+        /// <summary>
+        /// Synchronizes the server's team representation to the client.
+        /// </summary>
+        /// <param name="target">The player to send this command to.</param>
+        /// <param name="perspective">The server's version of the team sent to the client.</param>
         [TargetRpc]
         public void TargetSyncTeamPerspectiveToClient(NetworkConnection target, Battle.View.WifiFriendly.Team perspective)
         {
@@ -120,16 +192,31 @@ namespace PBS.Networking {
         }
 
         // 7.
+        /// <summary>
+        /// Sends an event to the client for the player to enqueue.
+        /// </summary>
+        /// <param name="target">The player to send this event to.</param>
+        /// <param name="bEvent">The event to be queued.</param>
         [TargetRpc]
         public void TargetReceiveEvent(NetworkConnection target, Battle.View.Events.Base bEvent)
         {
             eventQueue.Add(bEvent);
         }
+        /// <summary>
+        /// Sends a message response to the client to be displayed.
+        /// </summary>
+        /// <param name="target">The player to send this event to.</param>
+        /// <param name="bEvent">The message event.</param>
         [TargetRpc]
         public void TargetReceiveQueryMessageResponse(NetworkConnection target, Battle.View.Events.MessageParameterized bEvent)
         {
             queryMessageResponse = bEvent;
         }
+        /// <summary>
+        /// Sends a query response to the client to be displayed.
+        /// </summary>
+        /// <param name="target">The player to send this event to.</param>
+        /// <param name="response">The query response.</param>
         [TargetRpc]
         public void TargetReceiveQueryResponse(NetworkConnection target, PBS.Player.Query.QueryResponseBase response)
         {
@@ -137,29 +224,48 @@ namespace PBS.Networking {
         }
 
         // 8.
+        /// <summary>
+        /// Sends player commands to the server.
+        /// </summary>
+        /// <param name="commands"></param>
         [Command]
         public void CmdSendCommands(List<PBS.Player.Command> commands)
         {
-            PBS.Static.Master.instance.networkManager.battleCore.ReceiveCommands(playerID, commands, false);
+            Static.Master.instance.networkManager.battleCore.ReceiveCommands(playerID, commands, false);
         }
+        /// <summary>
+        /// Sends player replacement commands to the server.
+        /// </summary>
+        /// <param name="commands"></param>
         [Command]
         public void CmdSendCommandsReplace(List<PBS.Player.Command> commands)
         {
-            PBS.Static.Master.instance.networkManager.battleCore.ReceiveCommands(playerID, commands, true);
+            Static.Master.instance.networkManager.battleCore.ReceiveCommands(playerID, commands, true);
         }
+        /// <summary>
+        /// Sends a player query to the server.
+        /// </summary>
+        /// <param name="query"></param>
         [Command]
         public void CmdSendQuery(PBS.Player.Query.QueryBase query)
         {
-            PBS.Static.Master.instance.networkManager.battleCore.ReceiveQuery(query, playerID);
+            Static.Master.instance.networkManager.battleCore.ReceiveQuery(query, playerID);
         }
+        /// <summary>
+        /// Sends a player's command query to the server.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="committedCommands"></param>
         [Command]
         public void CmdSendCommmandQuery(PBS.Player.Command command, List<PBS.Player.Command> committedCommands)
         {
-            PBS.Static.Master.instance.networkManager.battleCore.ReceiveCommandQuery(
+            Static.Master.instance.networkManager.battleCore.ReceiveCommandQuery(
                 command: command,
                 committedCommands: committedCommands);
         }
+        #endregion
 
+        #region Event Polling and Execution
         /// <summary>
         /// A continuous system that polls the server for events, adds them to the queue, and runs them for the player.
         /// </summary>
@@ -180,6 +286,11 @@ namespace PBS.Networking {
                 yield return null;
             }
         }
+        /// <summary>
+        /// Sends a query to the server and waits for a response in <seealso cref="queryResponse"/>.
+        /// </summary>
+        /// <param name="query">The query to send.</param>
+        /// <returns></returns>
         public IEnumerator RunQueryResponsePollingSystem(PBS.Player.Query.QueryBase query)
         {
             isWaitingForResponse = true;
@@ -194,6 +305,13 @@ namespace PBS.Networking {
                 yield return null;
             }
         }
+        /// <summary>
+        /// Sends a potential command to the server and waits for a validity response in 
+        /// <seealso cref="queryMessageResponse"/>.
+        /// </summary>
+        /// <param name="command">The command to check for validity.</param>
+        /// <param name="committedCommands">The commands the player has already committed to.</param>
+        /// <returns></returns>
         public IEnumerator RunCommandQueryResponsePollingSystem(
             PBS.Player.Command command,
             List<PBS.Player.Command> committedCommands)
@@ -306,22 +424,22 @@ namespace PBS.Networking {
 
             yield return null;
         }
+        #endregion
 
         // Unhandled Events
-        public IEnumerator ExecuteEvent_Unhandled(PBS.Battle.View.Events.Base bEvent)
+        public IEnumerator ExecuteEvent_Unhandled(Battle.View.Events.Base bEvent)
         {
             Debug.LogWarning("Received unknown event type");
             yield return null;
         }
 
-
-        // Battle Phases
+        #region Battle Phases
         /// <summary>
-        /// TODO: Description
+        /// Displays the event for starting the battle.
         /// </summary>
         /// <param name="bEvent"></param>
         /// <returns></returns>
-        public IEnumerator ExecuteEvent_StartBattle(PBS.Battle.View.Events.StartBattle bEvent)
+        public IEnumerator ExecuteEvent_StartBattle(Battle.View.Events.StartBattle bEvent)
         {
             // Get Ally Trainers
             string allyString = "";
@@ -349,11 +467,11 @@ namespace PBS.Networking {
             yield return StartCoroutine(battleUI.DrawText($"{allyString}{challengeString}{enemyString}{endString}"));
         }
         /// <summary>
-        /// TODO: Description
+        /// Displays the event for finishing the battle.
         /// </summary>
         /// <param name="bEvent"></param>
         /// <returns></returns>
-        public IEnumerator ExecuteEvent_EndBattle(PBS.Battle.View.Events.EndBattle bEvent)
+        public IEnumerator ExecuteEvent_EndBattle(Battle.View.Events.EndBattle bEvent)
         {
             string text = "";
             if (bEvent.winningTeam < 0)
@@ -386,11 +504,11 @@ namespace PBS.Networking {
             }
             yield return StartCoroutine(battleUI.DrawText(text));
         }
+        #endregion
 
-
-        // Messages
+        #region Messages
         /// <summary>
-        /// TODO: Use dialog box
+        /// Displays the given message to the player.
         /// </summary>
         /// <param name="bEvent"></param>
         /// <returns></returns>
@@ -399,11 +517,11 @@ namespace PBS.Networking {
             yield return StartCoroutine(battleUI.DrawText(bEvent.message));
         }
         /// <summary>
-        /// TODO: Use dialog box
+        /// Parses the given event message and displays it to the player.
         /// </summary>
         /// <param name="bEvent"></param>
         /// <returns></returns>
-        public IEnumerator ExecuteEvent_MessageParameterized(PBS.Battle.View.Events.MessageParameterized bEvent)
+        public IEnumerator ExecuteEvent_MessageParameterized(Battle.View.Events.MessageParameterized bEvent)
         {
             yield return StartCoroutine(battleUI.DrawText(
                 Battle.View.UI.Canvas.RenderMessage(
@@ -415,16 +533,21 @@ namespace PBS.Networking {
                     )
                 ));
         }
+        #endregion
 
-
-        // Backend
+        #region Model/Backend Updates
+        /// <summary>
+        /// Sets <seealso cref="myModel"/> to this value, and does the same for attached components such as 
+        /// for <seealso cref="controls"/>.
+        /// </summary>
+        /// <param name="model"></param>
         public void UpdateModel(Battle.View.Model model)
         {
             myModel = model;
             controls.battleModel = model;
         }
         /// <summary>
-        /// TODO: Description
+        /// Updates references and loads all assets defined in the event, related to the whole battle.
         /// </summary>
         /// <param name="bEvent"></param>
         /// <returns></returns>
@@ -435,7 +558,7 @@ namespace PBS.Networking {
             UpdateModel(myModel);
         }
         /// <summary>
-        /// TODO: Description
+        /// Updates references and loads all assets defined in the event, related to pokemon.
         /// </summary>
         /// <param name="bEvent"></param>
         /// <returns></returns>
@@ -471,7 +594,7 @@ namespace PBS.Networking {
             UpdateModel(myModel);
         }
         /// <summary>
-        /// TODO: Description
+        /// Updates references and loads all assets defined in the event, related to trainers.
         /// </summary>
         /// <param name="bEvent"></param>
         /// <returns></returns>
@@ -513,7 +636,7 @@ namespace PBS.Networking {
             UpdateModel(myModel);
         }
         /// <summary>
-        /// TODO: Description
+        /// Updates references and loads all assets defined in the event, related to teams.
         /// </summary>
         /// <param name="bEvent"></param>
         /// <returns></returns>
@@ -546,10 +669,15 @@ namespace PBS.Networking {
             UpdateModel(myModel);
             yield return null;
         }
+        #endregion
 
-
-        // Command Prompts
-        public IEnumerator ExecuteEvent_CommandGeneralPrompt(PBS.Battle.View.Events.CommandGeneralPrompt bEvent)
+        #region Command Prompts
+        /// <summary>
+        /// Prompts the player to select commands according to the event definition.
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_CommandGeneralPrompt(Battle.View.Events.CommandGeneralPrompt bEvent)
         {
             List<PBS.Player.Command> commands = new List<PBS.Player.Command>();
             yield return StartCoroutine(controls.HandlePromptCommands(
@@ -560,7 +688,12 @@ namespace PBS.Networking {
                 }));
             CmdSendCommands(commands);
         }
-        public IEnumerator ExecuteEvent_CommandReplacementPrompt(PBS.Battle.View.Events.CommandReplacementPrompt bEvent)
+        /// <summary>
+        /// Prompts the player to replace pokemon according to the event definition.
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_CommandReplacementPrompt(Battle.View.Events.CommandReplacementPrompt bEvent)
         {
             List<PBS.Player.Command> commands = new List<PBS.Player.Command>();
             yield return StartCoroutine(controls.HandlePromptReplace(
@@ -571,28 +704,28 @@ namespace PBS.Networking {
                 }));
             CmdSendCommandsReplace(commands);
         }
+        #endregion
 
-
-        // Trainer Interactions
+        #region Trainer Interactions
         /// <summary>
-        /// TODO: Description
+        /// Displays an event for a trainer sending out pokemon to the field.
         /// </summary>
         /// <param name="bEvent"></param>
         /// <returns></returns>
-        public IEnumerator ExecuteEvent_TrainerSendOut(PBS.Battle.View.Events.TrainerSendOut bEvent)
+        public IEnumerator ExecuteEvent_TrainerSendOut(Battle.View.Events.TrainerSendOut bEvent)
         {
             string text = "";
             string pokemonNames = "";
-            List<PBS.Battle.View.WifiFriendly.Pokemon> pokemon = new List<Battle.View.WifiFriendly.Pokemon>();
+            List<Battle.View.WifiFriendly.Pokemon> pokemon = new List<Battle.View.WifiFriendly.Pokemon>();
 
             for (int i = 0; i < bEvent.pokemonUniqueIDs.Count; i++)
             {
-                PBS.Battle.View.WifiFriendly.Pokemon curPokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueIDs[i]);
+                Battle.View.WifiFriendly.Pokemon curPokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueIDs[i]);
                 pokemon.Add(curPokemon);
             }
             pokemonNames = GetPokemonNames(pokemon);
 
-            PBS.Battle.View.WifiFriendly.Trainer trainer = myModel.GetMatchingTrainer(bEvent.playerID);
+            Battle.View.WifiFriendly.Trainer trainer = myModel.GetMatchingTrainer(bEvent.playerID);
             if (IsTrainerPlayer(bEvent.playerID))
             {
                 text = "You sent out " + pokemonNames + "!";
@@ -605,32 +738,32 @@ namespace PBS.Networking {
             // Draw
             for (int i = 0; i < pokemon.Count; i++)
             {
-                PBS.Battle.View.WifiFriendly.Pokemon curPokemon = pokemon[i];
+                Battle.View.WifiFriendly.Pokemon curPokemon = pokemon[i];
                 battleUI.DrawPokemonHUD(curPokemon, myTeamPerspective.teamMode, myTeamPerspective.teamID == trainer.teamPos);
                 sceneCanvas.DrawPokemon(curPokemon, myTeamPerspective.teamMode, myTeamPerspective.teamID == trainer.teamPos);
             }
             yield return StartCoroutine(battleUI.DrawText(text));
         }
         /// <summary>
-        /// TODO: Description
+        /// Displays an event for trainers sending out their pokemon at the same time.
         /// </summary>
         /// <param name="bEvent"></param>
         /// <returns></returns>
-        public IEnumerator ExecuteEvent_TrainerMultiSendOut(PBS.Battle.View.Events.TrainerMultiSendOut bEvent)
+        public IEnumerator ExecuteEvent_TrainerMultiSendOut(Battle.View.Events.TrainerMultiSendOut bEvent)
         {
-            List<PBS.Battle.View.Events.TrainerSendOut> enemySendEvents 
-                = new List<PBS.Battle.View.Events.TrainerSendOut>();
-            List<PBS.Battle.View.Events.TrainerSendOut> allySendEvents 
-                = new List<PBS.Battle.View.Events.TrainerSendOut>();
-            List<PBS.Battle.View.Events.TrainerSendOut> spectatorSendEvents 
-                = new List<PBS.Battle.View.Events.TrainerSendOut>();
-            PBS.Battle.View.Events.TrainerSendOut playerSendEvent = null;
+            List<Battle.View.Events.TrainerSendOut> enemySendEvents 
+                = new List<Battle.View.Events.TrainerSendOut>();
+            List<Battle.View.Events.TrainerSendOut> allySendEvents 
+                = new List<Battle.View.Events.TrainerSendOut>();
+            List<Battle.View.Events.TrainerSendOut> spectatorSendEvents 
+                = new List<Battle.View.Events.TrainerSendOut>();
+            Battle.View.Events.TrainerSendOut playerSendEvent = null;
 
             for (int i = 0; i < bEvent.sendEvents.Count; i++)
             {
-                PBS.Battle.View.Events.TrainerSendOut sendEvent = bEvent.sendEvents[i];
-                PBS.Battle.View.WifiFriendly.Trainer trainer = myModel.GetMatchingTrainer(sendEvent.playerID);
-                PBS.Battle.View.WifiFriendly.Team perspective = myModel.GetTeamOfTrainer(trainer);
+                Battle.View.Events.TrainerSendOut sendEvent = bEvent.sendEvents[i];
+                Battle.View.WifiFriendly.Trainer trainer = myModel.GetMatchingTrainer(sendEvent.playerID);
+                Battle.View.WifiFriendly.Team perspective = myModel.GetTeamOfTrainer(trainer);
 
                 if (myTrainer == null)
                 {
@@ -680,19 +813,19 @@ namespace PBS.Networking {
             yield return null;
         }
         /// <summary>
-        /// TODO: Description
+        /// Displays an event for the trainer withdrawing an on-field pokemon.
         /// </summary>
         /// <param name="bEvent"></param>
         /// <returns></returns>
-        public IEnumerator ExecuteEvent_TrainerWithdraw(PBS.Battle.View.Events.TrainerWithdraw bEvent)
+        public IEnumerator ExecuteEvent_TrainerWithdraw(Battle.View.Events.TrainerWithdraw bEvent)
         {
             string text = "";
             string pokemonNames = "";
 
-            List<PBS.Battle.View.WifiFriendly.Pokemon> pokemon = new List<Battle.View.WifiFriendly.Pokemon>();
+            List<Battle.View.WifiFriendly.Pokemon> pokemon = new List<Battle.View.WifiFriendly.Pokemon>();
             for (int i = 0; i < bEvent.pokemonUniqueIDs.Count; i++)
             {
-                PBS.Battle.View.WifiFriendly.Pokemon curPokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueIDs[i]);
+                Battle.View.WifiFriendly.Pokemon curPokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueIDs[i]);
                 pokemon.Add(curPokemon);
             }
             pokemonNames = GetPokemonNames(pokemon);
@@ -703,25 +836,25 @@ namespace PBS.Networking {
             }
             else
             {
-                PBS.Battle.View.WifiFriendly.Trainer trainer = myModel.GetMatchingTrainer(bEvent.playerID);
+                Battle.View.WifiFriendly.Trainer trainer = myModel.GetMatchingTrainer(bEvent.playerID);
                 text = trainer.name + " withdrew " + pokemonNames + "!";
             }
 
             // Undraw
             for (int i = 0; i < pokemon.Count; i++)
             {
-                PBS.Battle.View.WifiFriendly.Pokemon curPokemon = pokemon[i];
+                Battle.View.WifiFriendly.Pokemon curPokemon = pokemon[i];
                 battleUI.UndrawPokemonHUD(curPokemon);
                 sceneCanvas.UndrawPokemon(curPokemon.uniqueID);
             }
             yield return StartCoroutine(battleUI.DrawText(text));
         }
         /// <summary>
-        /// TODO: Description
+        /// Displays an event for the trainer using an item.
         /// </summary>
         /// <param name="bEvent"></param>
         /// <returns></returns>
-        public IEnumerator ExecuteEvent_TrainerItemUse(PBS.Battle.View.Events.TrainerItemUse bEvent)
+        public IEnumerator ExecuteEvent_TrainerItemUse(Battle.View.Events.TrainerItemUse bEvent)
         {
             string text = "";
             ItemData itemData = ItemDatabase.instance.GetItemData(bEvent.itemID);
@@ -731,27 +864,26 @@ namespace PBS.Networking {
             }
             else
             {
-                PBS.Battle.View.WifiFriendly.Trainer trainer = myModel.GetMatchingTrainer(bEvent.playerID);
+                Battle.View.WifiFriendly.Trainer trainer = myModel.GetMatchingTrainer(bEvent.playerID);
                 text = trainer.name + " used one " + itemData.itemName + ".";
             }
             yield return StartCoroutine(battleUI.DrawText(text));
         }
+        #endregion
 
-        // Environmental Interactions
-
-
-        // --- Pokemon Interactions ---
+        #region Pokemon Interactions
 
         // General
         /// <summary>
-        /// TODO: Description, Animation
+        /// Displays an event for a Pokemon changing form. This also includes Transform, Mega-Evolution 
+        /// and Gigantamaxing.
         /// </summary>
-        /// <param name="bEvent"></param>
+        /// <param name="bEvent">The form change event.</param>
         /// <returns></returns>
-        public IEnumerator ExecuteEvent_PokemonChangeForm(PBS.Battle.View.Events.PokemonChangeForm bEvent)
+        public IEnumerator ExecuteEvent_PokemonChangeForm(Battle.View.Events.PokemonChangeForm bEvent)
         {
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
-            PBS.Battle.View.WifiFriendly.Trainer trainer = myModel.GetTrainer(pokemon);
+            Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
+            Battle.View.WifiFriendly.Trainer trainer = myModel.GetTrainer(pokemon);
 
             PokemonData preFormData = PokemonDatabase.instance.GetPokemonData(bEvent.preForm);
             PokemonData postFormData = PokemonDatabase.instance.GetPokemonData(bEvent.postForm);
@@ -769,18 +901,31 @@ namespace PBS.Networking {
 
             yield return null;
         }
-        public IEnumerator ExecuteEvent_PokemonSwitchPosition(PBS.Battle.View.Events.PokemonSwitchPosition bEvent)
+        /// <summary>
+        /// Displays an event for two pokemon switching their positions in battle (ex. Ally Switch).
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_PokemonSwitchPosition(Battle.View.Events.PokemonSwitchPosition bEvent)
         {
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon1 = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID1);
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon2 = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID2);
+            Battle.View.WifiFriendly.Pokemon pokemon1 = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID1);
+            Battle.View.WifiFriendly.Pokemon pokemon2 = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID2);
             Debug.Log($"{pokemon1.nickname} and {pokemon2.nickname} switched places!");
             yield return null;
         }
 
 
         // Damage / Health
+        /// <summary>
+        /// Animates an HP change for a pokemon.
+        /// </summary>
+        /// <param name="pokemon">The pokemon for which HP should be changed.</param>
+        /// <param name="preHP">The amount of HP before modification.</param>
+        /// <param name="postHP">The amount of HP after modification.</param>
+        /// <param name="maxHP">The pokemon's maximum HP.</param>
+        /// <returns></returns>
         public IEnumerator ExecuteEvent_Helper_PokemonHealthChange(
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon,
+            Battle.View.WifiFriendly.Pokemon pokemon,
             int preHP,
             int postHP,
             int maxHP)
@@ -795,9 +940,14 @@ namespace PBS.Networking {
                 ));
             yield return new WaitForSeconds(0.25f);
         }
-        public IEnumerator ExecuteEvent_PokemonHealthDamage(PBS.Battle.View.Events.PokemonHealthDamage bEvent)
+        /// <summary>
+        /// Displays an event for a pokemon taking damage.
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_PokemonHealthDamage(Battle.View.Events.PokemonHealthDamage bEvent)
         {
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
+            Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
             int preHP = bEvent.preHP;
             int postHP = bEvent.postHP;
 
@@ -819,7 +969,12 @@ namespace PBS.Networking {
                 maxHP: bEvent.maxHP
                 ));
         }
-        public IEnumerator ExecuteEvent_PokemonHealthHeal(PBS.Battle.View.Events.PokemonHealthHeal bEvent)
+        /// <summary>
+        /// Displays an event for a pokemon being healed.
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_PokemonHealthHeal(Battle.View.Events.PokemonHealthHeal bEvent)
         {
             PBS.Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
             int preHP = bEvent.preHP;
@@ -843,7 +998,12 @@ namespace PBS.Networking {
                 maxHP: bEvent.maxHP
                 ));
         }
-        public IEnumerator ExecuteEvent_PokemonHealthFaint(PBS.Battle.View.Events.PokemonHealthFaint bEvent)
+        /// <summary>
+        /// Displays an event for a pokemon fainting.
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_PokemonHealthFaint(Battle.View.Events.PokemonHealthFaint bEvent)
         {
             PBS.Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
             yield return StartCoroutine(battleUI.DrawText(PBS.Battle.View.UI.Canvas.RenderMessage(
@@ -862,13 +1022,23 @@ namespace PBS.Networking {
             battleUI.UndrawPokemonHUD(pokemon);
             sceneCanvas.UndrawPokemon(pokemon.uniqueID);
         }
-        public IEnumerator ExecuteEvent_PokemonHealthRevive(PBS.Battle.View.Events.PokemonHealthRevive bEvent)
+        /// <summary>
+        /// Displays an event for a pokemon being revived.
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_PokemonHealthRevive(Battle.View.Events.PokemonHealthRevive bEvent)
         {
             PBS.Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
             yield return StartCoroutine(battleUI.DrawText($"{pokemon.nickname} was revived!"));
         }
 
         // Abilities
+        /// <summary>
+        /// Displays an ability being activated or used.
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
         public IEnumerator ExecuteEvent_PokemonAbilityActivate(PBS.Battle.View.Events.PokemonAbilityActivate bEvent)
         {
             PBS.Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
@@ -885,6 +1055,11 @@ namespace PBS.Networking {
         }
 
         // Moves
+        /// <summary>
+        /// Displays a move being used.
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
         public IEnumerator ExecuteEvent_PokemonMoveUse(PBS.Battle.View.Events.PokemonMoveUse bEvent)
         {
             PBS.Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
@@ -898,13 +1073,18 @@ namespace PBS.Networking {
             string pokemonName = PBS.Battle.View.UI.Canvas.GetPokemonName(pokemon, myModel);
             yield return StartCoroutine(battleUI.DrawText($"{prefix}{pokemon.nickname} used {moveData.moveName}!"));
         }
-        public IEnumerator ExecuteEvent_PokemonMoveHit(PBS.Battle.View.Events.PokemonMoveHit bEvent)
+        /// <summary>
+        /// Displays a single hit of a move.
+        /// </summary>
+        /// <param name="bEvent">The event defining how targets were struck during this hit.</param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_PokemonMoveHit(Battle.View.Events.PokemonMoveHit bEvent)
         {
-            PBS.Battle.View.WifiFriendly.Pokemon userPokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
+            Battle.View.WifiFriendly.Pokemon userPokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
             MoveData moveData = MoveDatabase.instance.GetMoveData(bEvent.moveID);
-            List<PBS.Battle.View.Events.PokemonMoveHitTarget> hitTargets = bEvent.hitTargets;
+            List<Battle.View.Events.PokemonMoveHitTarget> hitTargets = bEvent.hitTargets;
 
-            List<PBS.Battle.View.WifiFriendly.Pokemon> missedPokemon = new List<PBS.Battle.View.WifiFriendly.Pokemon>();
+            List<Battle.View.WifiFriendly.Pokemon> missedPokemon = new List<Battle.View.WifiFriendly.Pokemon>();
             for (int i = 0; i < hitTargets.Count; i++)
             {
                 if (hitTargets[i].missed)
@@ -923,30 +1103,30 @@ namespace PBS.Networking {
                 }
                 else
                 {
-                    List<PBS.Battle.View.WifiFriendly.Pokemon> enemyDodgers = FilterPokemonByPerspective(missedPokemon, PBS.Battle.View.Enums.ViewPerspective.Enemy);
+                    List<Battle.View.WifiFriendly.Pokemon> enemyDodgers = FilterPokemonByPerspective(missedPokemon, Battle.View.Enums.ViewPerspective.Enemy);
                     if (enemyDodgers.Count > 0) 
                     {
-                        string text = GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Enemy) 
+                        string text = GetPrefix(Battle.View.Enums.ViewPerspective.Enemy) 
                             + GetPokemonNames(enemyDodgers) 
                             + " avoided the " 
                             + ((bEvent.currentHit == 1) ? "attack" : "hit") + "!";
                         yield return StartCoroutine(battleUI.DrawText(text));
                     }
 
-                    List<PBS.Battle.View.WifiFriendly.Pokemon> allyDodgers = FilterPokemonByPerspective(missedPokemon, PBS.Battle.View.Enums.ViewPerspective.Ally);
+                    List<Battle.View.WifiFriendly.Pokemon> allyDodgers = FilterPokemonByPerspective(missedPokemon, Battle.View.Enums.ViewPerspective.Ally);
                     if (allyDodgers.Count > 0)
                     {
-                        string text = GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Ally)
+                        string text = GetPrefix(Battle.View.Enums.ViewPerspective.Ally)
                             + GetPokemonNames(allyDodgers)
                             + " avoided the "
                             + ((bEvent.currentHit == 1) ? "attack" : "hit") + "!";
                         yield return StartCoroutine(battleUI.DrawText(text));
                     }
 
-                    List<PBS.Battle.View.WifiFriendly.Pokemon> playerDodgers = FilterPokemonByPerspective(missedPokemon, PBS.Battle.View.Enums.ViewPerspective.Player);
+                    List<Battle.View.WifiFriendly.Pokemon> playerDodgers = FilterPokemonByPerspective(missedPokemon, Battle.View.Enums.ViewPerspective.Player);
                     if (playerDodgers.Count > 0)
                     {
-                        string text = GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Player)
+                        string text = GetPrefix(Battle.View.Enums.ViewPerspective.Player)
                             + GetPokemonNames(playerDodgers)
                             + " avoided the "
                             + ((bEvent.currentHit == 1) ? "attack" : "hit") + "!";
@@ -963,7 +1143,7 @@ namespace PBS.Networking {
             }
 
             // display immune pokemon
-            List<PBS.Battle.View.WifiFriendly.Pokemon> immunePokemon = new List<PBS.Battle.View.WifiFriendly.Pokemon>();
+            List<Battle.View.WifiFriendly.Pokemon> immunePokemon = new List<Battle.View.WifiFriendly.Pokemon>();
             for (int i = 0; i < hitTargets.Count; i++)
             {
                 if (hitTargets[i].affectedByMove && hitTargets[i].effectiveness == 0)
@@ -982,31 +1162,31 @@ namespace PBS.Networking {
                 {
                     string prefixTxt = "It had no effect on ";
 
-                    List<PBS.Battle.View.WifiFriendly.Pokemon> enemyImmune = FilterPokemonByPerspective(immunePokemon, PBS.Battle.View.Enums.ViewPerspective.Enemy);
+                    List<Battle.View.WifiFriendly.Pokemon> enemyImmune = FilterPokemonByPerspective(immunePokemon, Battle.View.Enums.ViewPerspective.Enemy);
                     if (enemyImmune.Count > 0)
                     {
                         string text = prefixTxt
-                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Enemy, true)
+                            + GetPrefix(Battle.View.Enums.ViewPerspective.Enemy, true)
                             + GetPokemonNames(enemyImmune, true)
                             + "...";
                         yield return StartCoroutine(battleUI.DrawText(text));
                     }
 
-                    List<PBS.Battle.View.WifiFriendly.Pokemon> allyImmune = FilterPokemonByPerspective(immunePokemon, PBS.Battle.View.Enums.ViewPerspective.Ally);
+                    List<Battle.View.WifiFriendly.Pokemon> allyImmune = FilterPokemonByPerspective(immunePokemon, Battle.View.Enums.ViewPerspective.Ally);
                     if (allyImmune.Count > 0)
                     {
                         string text = prefixTxt
-                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Ally, true)
+                            + GetPrefix(Battle.View.Enums.ViewPerspective.Ally, true)
                             + GetPokemonNames(allyImmune, true)
                             + "...";
                         yield return StartCoroutine(battleUI.DrawText(text));
                     }
 
-                    List<PBS.Battle.View.WifiFriendly.Pokemon> playerImmune = FilterPokemonByPerspective(immunePokemon, PBS.Battle.View.Enums.ViewPerspective.Player);
+                    List<Battle.View.WifiFriendly.Pokemon> playerImmune = FilterPokemonByPerspective(immunePokemon, Battle.View.Enums.ViewPerspective.Player);
                     if (playerImmune.Count > 0)
                     {
                         string text = prefixTxt
-                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Player, true)
+                            + GetPrefix(Battle.View.Enums.ViewPerspective.Player, true)
                             + GetPokemonNames(playerImmune, true)
                             + "...";
                         yield return StartCoroutine(battleUI.DrawText(text));
@@ -1019,8 +1199,8 @@ namespace PBS.Networking {
             // TODO: Come back to edit HP Bars
             for (int i = 0; i < hitTargets.Count; i++)
             {
-                PBS.Battle.View.Events.PokemonMoveHitTarget curTarget = hitTargets[i];
-                PBS.Battle.View.WifiFriendly.Pokemon curPokemon = myModel.GetMatchingPokemon(curTarget.pokemonUniqueID);
+                Battle.View.Events.PokemonMoveHitTarget curTarget = hitTargets[i];
+                Battle.View.WifiFriendly.Pokemon curPokemon = myModel.GetMatchingPokemon(curTarget.pokemonUniqueID);
                 if (curTarget.affectedByMove && curTarget.damageDealt >= 0)
                 {
                     Coroutine cr = StartCoroutine(ExecuteEvent_Helper_PokemonHealthChange(
@@ -1038,14 +1218,14 @@ namespace PBS.Networking {
             }
 
             // Critical Hits / Effectiveness
-            List<PBS.Battle.View.WifiFriendly.Pokemon> criticalTargets = new List<PBS.Battle.View.WifiFriendly.Pokemon>();
-            List<PBS.Battle.View.WifiFriendly.Pokemon> superEffTargets = new List<PBS.Battle.View.WifiFriendly.Pokemon>();
-            List<PBS.Battle.View.WifiFriendly.Pokemon> nveEffTargets = new List<PBS.Battle.View.WifiFriendly.Pokemon>();
+            List<Battle.View.WifiFriendly.Pokemon> criticalTargets = new List<Battle.View.WifiFriendly.Pokemon>();
+            List<Battle.View.WifiFriendly.Pokemon> superEffTargets = new List<Battle.View.WifiFriendly.Pokemon>();
+            List<Battle.View.WifiFriendly.Pokemon> nveEffTargets = new List<Battle.View.WifiFriendly.Pokemon>();
     
             for (int i = 0; i < hitTargets.Count; i++)
             {
-                PBS.Battle.View.Events.PokemonMoveHitTarget curTarget = hitTargets[i];
-                PBS.Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(curTarget.pokemonUniqueID);
+                Battle.View.Events.PokemonMoveHitTarget curTarget = hitTargets[i];
+                Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(curTarget.pokemonUniqueID);
                 if (curTarget.affectedByMove)
                 {
                     if (curTarget.criticalHit)
@@ -1072,7 +1252,7 @@ namespace PBS.Networking {
                 else
                 {
                     string prefixTxt = "It was a critical hit on ";
-                    List<PBS.Battle.View.WifiFriendly.Pokemon> enemyPokemon = FilterPokemonByPerspective(criticalTargets, PBS.Battle.View.Enums.ViewPerspective.Enemy);
+                    List<Battle.View.WifiFriendly.Pokemon> enemyPokemon = FilterPokemonByPerspective(criticalTargets, Battle.View.Enums.ViewPerspective.Enemy);
                     if (enemyPokemon.Count > 0)
                     {
                         string text = prefixTxt
@@ -1082,21 +1262,21 @@ namespace PBS.Networking {
                         yield return StartCoroutine(battleUI.DrawText(text));
                     }
 
-                    List<PBS.Battle.View.WifiFriendly.Pokemon> allyPokemon = FilterPokemonByPerspective(criticalTargets, PBS.Battle.View.Enums.ViewPerspective.Ally);
+                    List<Battle.View.WifiFriendly.Pokemon> allyPokemon = FilterPokemonByPerspective(criticalTargets, Battle.View.Enums.ViewPerspective.Ally);
                     if (allyPokemon.Count > 0)
                     {
                         string text = prefixTxt
-                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Ally, true)
+                            + GetPrefix(Battle.View.Enums.ViewPerspective.Ally, true)
                             + GetPokemonNames(allyPokemon)
                             + "!";
                         yield return StartCoroutine(battleUI.DrawText(text));
                     }
 
-                    List<PBS.Battle.View.WifiFriendly.Pokemon> playerPokemon = FilterPokemonByPerspective(criticalTargets, PBS.Battle.View.Enums.ViewPerspective.Player);
+                    List<Battle.View.WifiFriendly.Pokemon> playerPokemon = FilterPokemonByPerspective(criticalTargets, Battle.View.Enums.ViewPerspective.Player);
                     if (playerPokemon.Count > 0)
                     {
                         string text = prefixTxt
-                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Player, true)
+                            + GetPrefix(Battle.View.Enums.ViewPerspective.Player, true)
                             + GetPokemonNames(playerPokemon)
                             + "!";
                         yield return StartCoroutine(battleUI.DrawText(text));
@@ -1113,31 +1293,31 @@ namespace PBS.Networking {
                 else
                 {
                     string prefixTxt = "It was super-effective on ";
-                    List<PBS.Battle.View.WifiFriendly.Pokemon> enemyPokemon = FilterPokemonByPerspective(superEffTargets, PBS.Battle.View.Enums.ViewPerspective.Enemy);
+                    List<Battle.View.WifiFriendly.Pokemon> enemyPokemon = FilterPokemonByPerspective(superEffTargets, Battle.View.Enums.ViewPerspective.Enemy);
                     if (enemyPokemon.Count > 0)
                     {
                         string text = prefixTxt
-                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Enemy, true)
+                            + GetPrefix(Battle.View.Enums.ViewPerspective.Enemy, true)
                             + GetPokemonNames(enemyPokemon)
                             + "!";
                         yield return StartCoroutine(battleUI.DrawText(text));
                     }
 
-                    List<PBS.Battle.View.WifiFriendly.Pokemon> allyPokemon = FilterPokemonByPerspective(superEffTargets, PBS.Battle.View.Enums.ViewPerspective.Ally);
+                    List<Battle.View.WifiFriendly.Pokemon> allyPokemon = FilterPokemonByPerspective(superEffTargets, Battle.View.Enums.ViewPerspective.Ally);
                     if (allyPokemon.Count > 0)
                     {
                         string text = prefixTxt
-                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Ally, true)
+                            + GetPrefix(Battle.View.Enums.ViewPerspective.Ally, true)
                             + GetPokemonNames(allyPokemon)
                             + "!";
                         yield return StartCoroutine(battleUI.DrawText(text));
                     }
 
-                    List<PBS.Battle.View.WifiFriendly.Pokemon> playerPokemon = FilterPokemonByPerspective(superEffTargets, PBS.Battle.View.Enums.ViewPerspective.Player);
+                    List<Battle.View.WifiFriendly.Pokemon> playerPokemon = FilterPokemonByPerspective(superEffTargets, Battle.View.Enums.ViewPerspective.Player);
                     if (playerPokemon.Count > 0)
                     {
                         string text = prefixTxt
-                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Player, true)
+                            + GetPrefix(Battle.View.Enums.ViewPerspective.Player, true)
                             + GetPokemonNames(playerPokemon)
                             + "!";
                         yield return StartCoroutine(battleUI.DrawText(text));
@@ -1154,31 +1334,31 @@ namespace PBS.Networking {
                 else
                 {
                     string prefixTxt = "It was not very effective on ";
-                    List<PBS.Battle.View.WifiFriendly.Pokemon> enemyPokemon = FilterPokemonByPerspective(nveEffTargets, PBS.Battle.View.Enums.ViewPerspective.Enemy);
+                    List<Battle.View.WifiFriendly.Pokemon> enemyPokemon = FilterPokemonByPerspective(nveEffTargets, Battle.View.Enums.ViewPerspective.Enemy);
                     if (enemyPokemon.Count > 0)
                     {
                         string text = prefixTxt
-                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Enemy, true)
+                            + GetPrefix(Battle.View.Enums.ViewPerspective.Enemy, true)
                             + GetPokemonNames(enemyPokemon)
                             + ".";
                         yield return StartCoroutine(battleUI.DrawText(text));
                     }
 
-                    List<PBS.Battle.View.WifiFriendly.Pokemon> allyPokemon = FilterPokemonByPerspective(nveEffTargets, PBS.Battle.View.Enums.ViewPerspective.Ally);
+                    List<Battle.View.WifiFriendly.Pokemon> allyPokemon = FilterPokemonByPerspective(nveEffTargets, Battle.View.Enums.ViewPerspective.Ally);
                     if (allyPokemon.Count > 0)
                     {
                         string text = prefixTxt
-                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Ally, true)
+                            + GetPrefix(Battle.View.Enums.ViewPerspective.Ally, true)
                             + GetPokemonNames(allyPokemon)
                             + ".";
                         yield return StartCoroutine(battleUI.DrawText(text));
                     }
 
-                    List<PBS.Battle.View.WifiFriendly.Pokemon> playerPokemon = FilterPokemonByPerspective(nveEffTargets, PBS.Battle.View.Enums.ViewPerspective.Player);
+                    List<Battle.View.WifiFriendly.Pokemon> playerPokemon = FilterPokemonByPerspective(nveEffTargets, Battle.View.Enums.ViewPerspective.Player);
                     if (playerPokemon.Count > 0)
                     {
                         string text = prefixTxt
-                            + GetPrefix(PBS.Battle.View.Enums.ViewPerspective.Player, true)
+                            + GetPrefix(Battle.View.Enums.ViewPerspective.Player, true)
                             + GetPokemonNames(playerPokemon)
                             + ".";
                         yield return StartCoroutine(battleUI.DrawText(text));
@@ -1188,10 +1368,15 @@ namespace PBS.Networking {
         }
 
         // Stats
-        public IEnumerator ExecuteEvent_PokemonStatChange(PBS.Battle.View.Events.PokemonStatChange bEvent)
+        /// <summary>
+        /// Displays a stat stage modification event.
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_PokemonStatChange(Battle.View.Events.PokemonStatChange bEvent)
         {
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
-            string statString = PBS.Battle.View.UI.Canvas.ConvertStatsToString(bEvent.statsToMod.ToArray());
+            Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
+            string statString = Battle.View.UI.Canvas.ConvertStatsToString(bEvent.statsToMod.ToArray());
             string modString = (bEvent.maximize)? "was maximized!"
                 : (bEvent.minimize)? "was minimized!"
                 : (bEvent.modValue == 1) ? "rose!"
@@ -1201,17 +1386,22 @@ namespace PBS.Networking {
                 : (bEvent.modValue == -2) ? "harshly fell!"
                 : (bEvent.modValue <= -3) ? "drastically fell!"
                 : "";
-            string prefix = PBS.Battle.View.UI.Canvas.GetPrefix(
+            string prefix = Battle.View.UI.Canvas.GetPrefix(
                 pokemon: pokemon, 
                 myModel: myModel, 
                 teamPerspectiveID: myTeamPerspective.teamID,
                 myPlayerID: playerID);
-            string pokemonName = PBS.Battle.View.UI.Canvas.GetPokemonName(pokemon, myModel);
+            string pokemonName = Battle.View.UI.Canvas.GetPokemonName(pokemon, myModel);
             yield return StartCoroutine(battleUI.DrawText($"{prefix}{pokemon.nickname}'s {statString} {modString}"));
         }
-        public IEnumerator ExecuteEvent_PokemonStatUnchangeable(PBS.Battle.View.Events.PokemonStatUnchangeable bEvent)
+        /// <summary>
+        /// Displays a stat stage modification failure event.
+        /// </summary>
+        /// <param name="bEvent"></param>
+        /// <returns></returns>
+        public IEnumerator ExecuteEvent_PokemonStatUnchangeable(Battle.View.Events.PokemonStatUnchangeable bEvent)
         {
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
+            Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
             string statString = ConvertStatsToString(bEvent.statsToMod.ToArray());
             string modString = (bEvent.tooHigh)? "cannot go any higher!" : " cannot go any lower!";
             yield return StartCoroutine(battleUI.DrawText($"{pokemon.nickname}'s {statString} {modString}"));
@@ -1220,19 +1410,10 @@ namespace PBS.Networking {
         // Items
 
         // Status
+        #endregion
 
-
-
-
-
-
-
-
-
-
-
-        // Helpers
-        public PBS.Battle.View.Enums.ViewPerspective GetPerspective(PBS.Battle.View.WifiFriendly.Pokemon pokemon)
+        #region To Be Legacy
+        public PBS.Battle.View.Enums.ViewPerspective GetPerspective(Battle.View.WifiFriendly.Pokemon pokemon)
         {
             PBS.Battle.View.WifiFriendly.Trainer trainer = myModel.GetTrainer(pokemon);
             PBS.Battle.View.WifiFriendly.Team team = myModel.GetTeamOfTrainer(trainer);
@@ -1580,6 +1761,7 @@ namespace PBS.Networking {
 
             return newString;
         }
+        #endregion
     }
 }
 

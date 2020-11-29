@@ -6,17 +6,42 @@ using UnityEngine.InputSystem;
 
 namespace PBS.Player
 {
+    /// <summary>
+    /// This class handles everything related to player input during battle. This includes navigating the different
+    /// menus and selecting battle commands.
+    /// </summary>
     public class BattleControls : MonoBehaviour
     {
-        // Model
+        #region Attributes
+        #region Battle Model
+        /// <summary>
+        /// This is the current battle state. The controls need to know the current state
+        /// to determine what commands are legal or illegal for the player.
+        /// </summary>
         public PBS.Battle.View.Model battleModel;
+        /// <summary>
+        /// A reference to the player object. Selected commands are sent through the player object to be executed
+        /// in the battle.
+        /// </summary>
         public PBS.Networking.Player player;
+        #endregion
 
-        // Components
+        #region Visual Components
+        /// <summary>
+        /// A reference to the UI that is shown to the player.
+        /// </summary>
         public PBS.Battle.View.UI.Canvas battleUI;
+        
+        /// <summary>
+        /// A reference to the visual representation of the battle, shown to the player.
+        /// </summary>
         public Battle.View.Scene.Canvas sceneCanvas;
+        #endregion
 
-        // Controller
+        #region Controller
+        /// <summary>
+        /// The control context determines what menu the player is currently interacting with.
+        /// </summary>
         public enum ControlContext
         {
             None,
@@ -30,76 +55,235 @@ namespace PBS.Player
             Bag,
             BagTarget
         }
+        
+        /// <summary>
+        /// The underlying literal controls that are accessible.
+        /// </summary>
         private Controls _controls;
+        
+        /// <summary>
+        /// The current control context. See <seealso cref="ControlContext"/>.
+        /// </summary>
         private ControlContext context;
+        
+        /// <summary>
+        /// While true, the player's input is ignored.
+        /// </summary>
         private bool lockControls = false;
 
-        private Coroutine
-            waitCR,
-            controlCommandCR,
-            controlExtraCommandCR,
-            controlFightCR,
-            controlFightTargetCR,
-            controlPartyCR,
-            controlPartyCommandCR,
-            controlBagPocketCR,
-            controlBagCR,
-            controlBagTargetCR;
+        /// <summary>
+        /// This coroutine
+        /// </summary>
+        private Coroutine controlCommandCR;
+        /// <summary>
+        /// A flag to indicate that a Coroutine (such as dialog) is currently running, so temporarily
+        /// ignore the player's input.
+        /// </summary>
         private bool waitCRActive = false;
+        #endregion
+
+        #region Commands
+        /// <summary>
+        /// The current command prompt for the player. The command prompt determines which pokemon the player
+        /// can actually select commands for.
+        /// </summary>
         Battle.View.Events.CommandGeneralPrompt commandPromptEvent;
+        
+        /// <summary>
+        /// The pokemon that is currently having its command selected.
+        /// </summary>
         private PBS.Battle.View.Events.CommandAgent commandAgent;
+
+        /// <summary>
+        /// The trainer in-battle that the player is currently selecting commands for.
+        /// </summary>
         private PBS.Battle.View.WifiFriendly.Trainer commandTrainer;
+        
+        /// <summary>
+        /// The command that is currently being constructed to be added to <seealso cref="committedCommands"/>
+        /// </summary>
         private Command playerCommand;
+        /// <summary>
+        /// The list of commands the player has recently committed to. Once all commands are committed, this is
+        /// sent to <seealso cref="player"/>.
+        /// </summary>
         private Command[] committedCommands;
-    
-        [HideInInspector] public bool isSendingCommands = false;
-        [HideInInspector] public bool isSendingReplacements = false;
-        [HideInInspector] public Command[] commandsToBeSent;
+        
 
-        // Command
+        #region General Commands
+        /// <summary>
+        /// A flag to indicate that the player is currently choosing a command.
+        /// </summary>
         private bool choosingCommand;
+        
+        /// <summary>
+        /// The list of possible commands available for the <seealso cref="commandAgent"/>.
+        /// </summary>
         private List<BattleCommandType> commandTypes;
+
+        /// <summary>
+        /// The currently highlighted command in <seealso cref="commandTypes"/>. If -1, the
+        /// player is on the back button.
+        /// </summary>
         private int commandIndex = 0;
+        #endregion
 
-        // Command Extra
+        #region Custom Commands
+        /// <summary>
+        /// A flag to indicate that the player is currently on a custom command menu.
+        /// </summary>
         private bool choosingExtraCommand;
+        /// <summary>
+        /// The list of possible custom commands available.
+        /// </summary>
         private List<BattleExtraCommand> extraCommands;
+        /// <summary>
+        /// The currently highlighted custom command in <seealso cref="extraCommands"/>.
+        /// </summary>
         private int extraCommandIndex = 0;
+        #endregion
 
-        // Fight
+        #region Fight
+        /// <summary>
+        /// A flag to indicate that the player is currently selecting a move.
+        /// </summary>
         private bool choosingFight;
+        
+        /// <summary>
+        /// If true, the player is forced to select a move, and cannot back out into other commands.
+        /// </summary>
         private bool forceMove;
+        
+        /// <summary>
+        /// The moves available for selection for <seealso cref="commandAgent"/>.
+        /// </summary>
         private List<Battle.View.Events.CommandAgent.Moveslot> moveslots;
+
+        /// <summary>
+        /// The currently highlighted move in <seealso cref="moveslots"/>.
+        /// </summary>
         private int moveIndex;
-        private bool canMegaEvolve, chooseMegaEvolve;
-        private bool canZMove, chooseZMove;
-        private bool canDynamax, chooseDynamax;
-        private bool canFormChange; // Ultra-Burst
 
-        // Fight Target
+        /// <summary>
+        /// If true, the <seealso cref="commandAgent"/> has the option to mega-evolve this turn.
+        /// </summary>
+        private bool canMegaEvolve;
+        /// <summary>
+        /// If true, the <seealso cref="commandAgent"/> has selected to mega-evolve this turn.
+        /// </summary>
+        private bool chooseMegaEvolve;
+
+        /// <summary>
+        /// If true, the <seealso cref="commandAgent"/> has the option to use a Z-Move this turn.
+        /// </summary>
+        private bool canZMove;
+        /// <summary>
+        /// If true, the <seealso cref="commandAgent"/> has selected to use a Z-Move this turn.
+        /// </summary>
+        private bool chooseZMove;
+
+        /// <summary>
+        /// If true, the <seealso cref="commandAgent"/> has the option to Dynamax this turn.
+        /// </summary>
+        private bool canDynamax;
+        /// <summary>
+        /// If true, the <seealso cref="commandAgent"/> has selected to Dynamax this turn.
+        /// </summary>
+        private bool chooseDynamax;
+
+        /// <summary>
+        /// If true, <seealso cref="commandAgent"/> has the option to undergo a custom form-change this turn.
+        /// ex: Ultra-Burst
+        /// </summary>
+        private bool canFormChange;
+        #endregion
+
+        #region Fight Target
+        /// <summary>
+        /// A flag to indicate that the player is currently choosing targets for <seealso cref="selectedMoveslot"/>.
+        /// </summary>
         private bool choosingFightTarget;
+        /// <summary>
+        /// The selected move for which the player is choosing targets.
+        /// </summary>
         private Battle.View.Events.CommandAgent.Moveslot selectedMoveslot;
+        /// <summary>
+        /// The possible groups of targets for <seealso cref="selectedMoveslot"/>.
+        /// </summary>
         private List<List<BattlePosition>> moveTargets;
+        /// <summary>
+        /// The currently highlight move targets in <seealso cref="moveTargets"/>.
+        /// </summary>
         private int moveTargetIndex;
+        #endregion
 
-        // Party
+        #region Party
+        /// <summary>
+        /// A flag to indicate that the player is currently in the party menu.
+        /// </summary>
         private bool choosingParty;
+        /// <summary>
+        /// If true, the player is forced to switch to a party member (ex. after Baton Pass).
+        /// </summary>
         private bool forceSwitch;
+        /// <summary>
+        /// If true, the player is forced to send in a party member (ex. after a pokemon faints).
+        /// </summary>
         private bool forceReplace;
+        /// <summary>
+        /// The list of party members for the player to select.
+        /// </summary>
         private List<Battle.View.WifiFriendly.Pokemon> partySlots;
+        /// <summary>
+        /// The currently highlighted party member in <seealso cref="partySlots"/>.
+        /// </summary>
         private int partyIndex;
+        /// <summary>
+        /// The in-battle position of a pokemon meaning to switch out.
+        /// </summary>
         private int switchPosition;
+        #endregion
 
-        // Bag
+        #region Bag Pockets
+        /// <summary>
+        /// A flag to indicate that the player is currently selecting a bag pocket/category.
+        /// </summary>
         private bool choosingBagPocket;
+        /// <summary>
+        /// The possible bag pockets the player has to choose from.
+        /// </summary>
         private List<ItemBattlePocket> itemPockets;
+        /// <summary>
+        /// The currently highlighted pocket in <seealso cref="itemPockets"/>.
+        /// </summary>
         private int itemPocketIndex;
-
+        #endregion
+        
+        #region Items
+        /// <summary>
+        /// A flag to indicate that the player is currently selecting an item in a bag pocket.
+        /// </summary>
         private bool choosingItem;
+        /// <summary>
+        /// The list of items to select from.
+        /// </summary>
         private List<Item> itemSlots;
+        /// <summary>
+        /// The offset index to display items from <seealso cref="itemSlots"/>.
+        /// </summary>
         private int itemOffset;
+        /// <summary>
+        /// The currently highlight item in <seealso cref="itemSlots"/>.
+        /// </summary>
         private int itemIndex;
+        /// <summary>
+        /// The currently selected item to be used (ex. on a party member).
+        /// </summary>
         private Item selectedItem;
+        #endregion
+
+        #endregion
+        #endregion
 
         private void Awake()
         {
@@ -107,6 +291,7 @@ namespace PBS.Player
             SwitchControlContext(ControlContext.None);
         }
 
+        #region Control Defaults
         private void OnEnable()
         {
             _controls.Enable();
@@ -116,25 +301,40 @@ namespace PBS.Player
             _controls.Disable();
         }
 
-        // Controls
-
-        public void SetControls()
+        /// <summary>
+        /// Allows for scrolling dialog to instantly fill when "Select" is pressed.
+        /// </summary>
+        public void EnableQuickAdvanceDialog()
         {
             _controls.BattleDialog.Select.performed += (obj) =>
             {
                 battleUI.dialog.advancedDialogPressed = true;
             };
         }
+        /// <summary>
+        /// A check that determines if the player's input is currently locked, meaning it is ignored.
+        /// </summary>
+        /// <returns></returns>
         public bool AreControlsLocked()
         {
             return lockControls || waitCRActive;
         }
+        /// <summary>
+        /// Locks the player's controls for a moment, allowing menus to animate before the player can select again.
+        /// </summary>
+        /// <param name="waitTime">The amount of time in seconds to wait.</param>
+        /// <returns></returns>
         public IEnumerator DelayControls(float waitTime = 0.02f)
         {
             lockControls = true;
             yield return new WaitForSeconds(waitTime);
             lockControls = false;
         }
+        /// <summary>
+        /// Switches the current control context to one of <seealso cref="ControlContext"/>.
+        /// </summary>
+        /// <param name="newContext">The context to switch to.</param>
+        /// <param name="delayControls">If true, the player's input is locked for a moment.</param>
         public void SwitchControlContext(ControlContext newContext, bool delayControls = true)
         {
             // Delay new control input
@@ -184,9 +384,9 @@ namespace PBS.Player
                     break;
 
                 case ControlContext.Bag:
-                    _controls.BattleMenuBagItem.Cancel.performed -= CancelBagMenu;
-                    _controls.BattleMenuBagItem.Select.performed -= SelectBagMenu;
-                    _controls.BattleMenuBagItem.Move.performed -= NavigateBagMenuQuad;
+                    _controls.BattleMenuBagItem.Cancel.performed -= CancelItemMenu;
+                    _controls.BattleMenuBagItem.Select.performed -= SelectItemMenu;
+                    _controls.BattleMenuBagItem.Move.performed -= NavigateItemMenuQuad;
                     break;
 
                 default:
@@ -235,16 +435,18 @@ namespace PBS.Player
                     break;
 
                 case ControlContext.Bag:
-                    _controls.BattleMenuBagItem.Cancel.performed += CancelBagMenu;
-                    _controls.BattleMenuBagItem.Select.performed += SelectBagMenu;
-                    _controls.BattleMenuBagItem.Move.performed += NavigateBagMenuQuad;
+                    _controls.BattleMenuBagItem.Cancel.performed += CancelItemMenu;
+                    _controls.BattleMenuBagItem.Select.performed += SelectItemMenu;
+                    _controls.BattleMenuBagItem.Move.performed += NavigateItemMenuQuad;
                     break;
 
                 default:
                     break;
             }
         }
-
+        /// <summary>
+        /// Sets the default command variables when a pokemon is prompted.
+        /// </summary>
         private void SetDefaultPromptVars()
         {
             // set Default Values
@@ -277,9 +479,18 @@ namespace PBS.Player
             itemOffset = 0;
             selectedItem = null;
         }
+        #endregion
 
+        #region Command Prompts
+
+        /// <summary>
+        /// Gives the player control to select commands according to the prompt event. Callbacks the selected commands.
+        /// </summary>
+        /// <param name="bEvent">Determines how command selection will be executed.</param>
+        /// <param name="callback">The selected commands from this prompt.</param>
+        /// <returns></returns>
         public IEnumerator HandlePromptCommands(
-            PBS.Battle.View.Events.CommandGeneralPrompt bEvent,
+            Battle.View.Events.CommandGeneralPrompt bEvent,
             Action<Command[]> callback)
         {
             commandPromptEvent = bEvent;
@@ -324,8 +535,15 @@ namespace PBS.Player
             callback(committedCommands);
         }
 
+        /// <summary>
+        /// Gives the player control to replace on-field pokemon according to the prompt event. Callbacks the selected
+        /// replacement commands.
+        /// </summary>
+        /// <param name="bEvent">Determines how replacement will be executed.</param>
+        /// <param name="callback">The selected commands from this prompt.</param>
+        /// <returns></returns>
         public IEnumerator HandlePromptReplace(
-            PBS.Battle.View.Events.CommandReplacementPrompt bEvent,
+            Battle.View.Events.CommandReplacementPrompt bEvent,
             Action<Command[]> callback)
         {
             PBS.Battle.View.WifiFriendly.Trainer trainer = battleModel.GetMatchingTrainer(bEvent.playerID);
@@ -372,13 +590,22 @@ namespace PBS.Player
             callback(committedCommands);
         }
 
+        /// <summary>
+        /// Gives the player control to select a command category.
+        /// </summary>
+        /// <param name="agent">The pokemon to select the category for.</param>
+        /// <param name="trainer">The in-game trainer that the player is controlling.</param>
+        /// <param name="pokemonIndex">The amount of previous pokemon who the player already selected commands for.
+        /// </param>
+        /// <param name="setCommands">The commands already committed to by the player.</param>
+        /// <returns></returns>
         private IEnumerator ControlPromptCommand(
-            PBS.Battle.View.Events.CommandAgent agent, 
-            PBS.Battle.View.WifiFriendly.Trainer trainer, 
+            Battle.View.Events.CommandAgent agent, 
+            Battle.View.WifiFriendly.Trainer trainer, 
             int pokemonIndex, 
             Command[] setCommands)
         {
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon = battleModel.GetMatchingPokemon(agent);
+            Battle.View.WifiFriendly.Pokemon pokemon = battleModel.GetMatchingPokemon(agent);
             commandAgent = agent;
             commandTrainer = trainer;
             committedCommands = (setCommands == null) ? new Command[0] : setCommands;
@@ -419,9 +646,17 @@ namespace PBS.Player
             SwitchControlContext(ControlContext.None);
         }
 
+        /// <summary>
+        /// Gives the player control to select a custom command category.
+        /// </summary>
+        /// <param name="agent">The pokemon to select the category for.</param>
+        /// <param name="trainer">The in-game trainer that the player is controlling.</param>
+        /// <param name="setCommands">The commands already committed to by the player.</param>
+        /// <param name="commandList">The custom commands availble to select from.</param>
+        /// <returns></returns>
         private IEnumerator ControlPromptCommandExtra(
-            PBS.Battle.View.Events.CommandAgent agent, 
-            PBS.Battle.View.WifiFriendly.Trainer trainer,
+            Battle.View.Events.CommandAgent agent, 
+            Battle.View.WifiFriendly.Trainer trainer,
             Command[] setCommands,
             List<BattleExtraCommand> commandList)
         {
@@ -452,13 +687,21 @@ namespace PBS.Player
             }
         }
 
+        /// <summary>
+        /// Gives the player control to select a Fight command.
+        /// </summary>
+        /// <param name="agent">The pokemon to select the category for.</param>
+        /// <param name="trainer">The in-game trainer that the player is controlling.</param>
+        /// <param name="setCommands">The commands already committed to by the player.</param>
+        /// <param name="forceMove">Sets <seealso cref="forceMove"/> to this value.</param>
+        /// <returns></returns>
         public IEnumerator ControlPromptFight(
-            PBS.Battle.View.Events.CommandAgent agent, 
-            PBS.Battle.View.WifiFriendly.Trainer trainer,
+            Battle.View.Events.CommandAgent agent, 
+            Battle.View.WifiFriendly.Trainer trainer,
             Command[] setCommands,
             bool forceMove = false)
         {
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon = battleModel.GetMatchingPokemon(agent);
+            Battle.View.WifiFriendly.Pokemon pokemon = battleModel.GetMatchingPokemon(agent);
             commandAgent = agent;
             commandTrainer = trainer;
             committedCommands = (setCommands == null) ? new Command[0] : setCommands;
@@ -545,10 +788,18 @@ namespace PBS.Player
             }
         }
 
+        /// <summary>
+        /// Gives the player control to select move targets.
+        /// </summary>
+        /// <param name="agent">The pokemon to select the category for.</param>
+        /// <param name="trainer">The in-game trainer that the player is controlling.</param>
+        /// <param name="selectedMoveslot">Sets <seealso cref="selectedMoveslot"/> to this value.</param>
+        /// <param name="setCommands">The commands already committed to by the player.</param>
+        /// <returns></returns>
         public IEnumerator ControlPromptFieldTarget(
-            PBS.Battle.View.Events.CommandAgent agent,
-            PBS.Battle.View.WifiFriendly.Trainer trainer,
-            PBS.Battle.View.Events.CommandAgent.Moveslot selectedMoveslot,
+            Battle.View.Events.CommandAgent agent,
+            Battle.View.WifiFriendly.Trainer trainer,
+            Battle.View.Events.CommandAgent.Moveslot selectedMoveslot,
             Command[] setCommands = null
             )
         {
@@ -594,9 +845,17 @@ namespace PBS.Player
             }
         }
 
+        /// <summary>
+        /// Gives the player control to select in the given trainer's party.
+        /// </summary>
+        /// <param name="agent">The pokemon to select the category for.</param>
+        /// <param name="trainer">The in-game trainer that the player is controlling.</param>
+        /// <param name="setCommands">The commands already committed to by the player.</param>
+        /// <param name="forceSwitch">Sets <seealso cref="forceSwitch"/> to this value.</param>
+        /// <returns></returns>
         public IEnumerator ControlPromptParty(
-            PBS.Battle.View.Events.CommandAgent agent,
-            PBS.Battle.View.WifiFriendly.Trainer trainer,
+            Battle.View.Events.CommandAgent agent,
+            Battle.View.WifiFriendly.Trainer trainer,
             Command[] setCommands = null,
             bool forceSwitch = false
             )
@@ -625,9 +884,15 @@ namespace PBS.Player
             }
         }
 
+        /// <summary>
+        /// Gives the player control to select within the given trainer's bag pockets.
+        /// </summary>
+        /// <param name="agent">The pokemon to select the category for.</param>
+        /// <param name="trainer">The in-game trainer that the player is controlling.</param>
+        /// <returns></returns>
         public IEnumerator ControlPromptBagPocket(
-            PBS.Battle.View.Events.CommandAgent agent,
-            PBS.Battle.View.WifiFriendly.Trainer trainer
+            Battle.View.Events.CommandAgent agent,
+            Battle.View.WifiFriendly.Trainer trainer
             )
         {
             commandAgent = agent;
@@ -657,6 +922,14 @@ namespace PBS.Player
             }
         }
 
+        /// <summary>
+        /// Gives the player control to select items from the given trainer's bag in the given pocket.
+        /// </summary>
+        /// <param name="agent">The pokemon to select the category for.</param>
+        /// <param name="trainer">The in-game trainer that the player is controlling.</param>
+        /// <param name="pocket">The selected pocket to select items from.</param>
+        /// <param name="setCommands">The commands already committed to by the player.</param>
+        /// <returns></returns>
         public IEnumerator ControlPromptBag(
             PBS.Battle.View.Events.CommandAgent agent,
             PBS.Battle.View.WifiFriendly.Trainer trainer,
@@ -707,14 +980,24 @@ namespace PBS.Player
                 yield return null;
             }
         }
+        #endregion
 
+        #region Menu Navigation
 
-        // COMMAND MENU
+        #region Command Menu
+        /// <summary>
+        /// Handles horizontal navigation of the command menu.
+        /// </summary>
+        /// <param name="obj"></param>
         private void NavigateCommandMenuHorizontal(InputAction.CallbackContext obj)
         {
             int addIndex = Mathf.RoundToInt(obj.ReadValue<Vector2>().x);
             NavigateCommandMenu(addIndex);
         }
+        /// <summary>
+        /// Handles navigation of the command menu in general.
+        /// </summary>
+        /// <param name="scrollAmount">The amount by which to shift <seealso cref="commandIndex"/>.</param>
         private void NavigateCommandMenu(int scrollAmount)
         {
             if (AreControlsLocked())
@@ -732,11 +1015,17 @@ namespace PBS.Player
                 battleUI.SwitchSelectedCommandTo(commandTypes[commandIndex]);
             }
         }
-    
+        /// <summary>
+        /// Handles command selection triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
         private void SelectCommandMenu(InputAction.CallbackContext obj)
         {
             SelectCommandMenu();
         }
+        /// <summary>
+        /// Handles command selection in general.
+        /// </summary>
         private void SelectCommandMenu()
         {
             if (AreControlsLocked())
@@ -755,7 +1044,7 @@ namespace PBS.Player
                 Battle.View.WifiFriendly.Pokemon pokemon = battleModel.GetMatchingPokemon(commandAgent.pokemonUniqueID);
                 if (commandType == BattleCommandType.Fight)
                 {
-                    controlFightCR = StartCoroutine(ControlPromptFight(
+                    StartCoroutine(ControlPromptFight(
                         commandAgent,
                         commandTrainer,
                         committedCommands,
@@ -764,7 +1053,7 @@ namespace PBS.Player
                 }
                 else if (commandType == BattleCommandType.Party)
                 {
-                    controlPartyCR = StartCoroutine(ControlPromptParty(
+                    StartCoroutine(ControlPromptParty(
                         commandAgent,
                         commandTrainer,
                         committedCommands,
@@ -773,7 +1062,7 @@ namespace PBS.Player
                 }
                 else if (commandType == BattleCommandType.Bag)
                 {
-                    controlBagPocketCR = StartCoroutine(ControlPromptBagPocket(
+                    StartCoroutine(ControlPromptBagPocket(
                         commandAgent,
                         commandTrainer
                         ));
@@ -786,7 +1075,7 @@ namespace PBS.Player
                         isExplicitlySelected: true);
 
                     waitCRActive = true;
-                    waitCR = StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) =>
+                    StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) =>
                     {
                         if (success)
                         {
@@ -798,10 +1087,17 @@ namespace PBS.Player
                 }
             }
         }
+        /// <summary>
+        /// Handles command cancellation triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
         private void CancelCommandMenu(InputAction.CallbackContext obj)
         {
             CancelCommandMenu();
         }
+        /// <summary>
+        /// Handles command selection in general.
+        /// </summary>
         private void CancelCommandMenu()
         {
             if (AreControlsLocked())
@@ -815,10 +1111,13 @@ namespace PBS.Player
                 choosingCommand = false;
             }
         }
+        #endregion
 
-
-
-        // FIGHT MENU
+        #region Fight Menu
+        /// <summary>
+        /// Handles navigation of the fight menu triggered by 4-directional InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
         private void NavigateFightMenuQuad(InputAction.CallbackContext obj)
         {
             int scrollX = Mathf.RoundToInt(obj.ReadValue<Vector2>().x);
@@ -886,6 +1185,10 @@ namespace PBS.Player
                 }
             }
         }
+        /// <summary>
+        /// Handles navigation of the fight menu in general.
+        /// </summary>
+        /// <param name="scrollAmount">The amount by which to shift <seealso cref="moveIndex"/>.</param>
         private void NavigateFightMenu(int scrollAmount)
         {
             if (AreControlsLocked())
@@ -909,11 +1212,17 @@ namespace PBS.Player
                     choosingMaxMove: chooseDynamax);
             }
         }
-
+        /// <summary>
+        /// Handles selection of special fight options (ex. Mega Evolution, Z-Moves) triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
         private void SelectFightSpecial(InputAction.CallbackContext obj)
         {
             SelectFightSpecial();
         }
+        /// <summary>
+        /// Handles selection of special fight options (ex. Mega Evolution, Z-Moves) in general.
+        /// </summary>
         private void SelectFightSpecial()
         {
             if (AreControlsLocked())
@@ -986,11 +1295,17 @@ namespace PBS.Player
                     choosingMaxMove: chooseDynamax);
             }
         }
-
+        /// <summary>
+        /// Handles move selection triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
         private void SelectFightMenu(InputAction.CallbackContext obj)
         {
             SelectFightMenu();
         }
+        /// <summary>
+        /// Handles move selection in general.
+        /// </summary>
         private void SelectFightMenu()
         {
             if (AreControlsLocked())
@@ -1035,7 +1350,7 @@ namespace PBS.Player
                             isDynamaxing: chooseDynamax);
 
                         waitCRActive = true;
-                        waitCR = StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) =>
+                        StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) =>
                         {
                             if (success)
                             {
@@ -1058,7 +1373,7 @@ namespace PBS.Player
                     // we have to specifically choose the target
                     else
                     {
-                        controlFightTargetCR = StartCoroutine(ControlPromptFieldTarget(
+                        StartCoroutine(ControlPromptFieldTarget(
                             commandAgent,
                             commandTrainer,
                             moveslots[moveIndex],
@@ -1067,10 +1382,17 @@ namespace PBS.Player
                 }
             }
         }
+        /// <summary>
+        /// Handles move cancellation triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
         private void CancelFightMenu(InputAction.CallbackContext obj)
         {
             CancelFightMenu();
         }
+        /// <summary>
+        /// Handles move cancellation in general.
+        /// </summary>
         private void CancelFightMenu()
         {
             if (AreControlsLocked())
@@ -1091,14 +1413,22 @@ namespace PBS.Player
                 battleUI.SwitchSelectedCommandTo(commandTypes[commandIndex]);
             }
         }
+        #endregion
 
-
-        // FIELD TARGETING MENU
+        #region Field Targeting Menu
+        /// <summary>
+        /// Handles navigation of the field targeting menu triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
         private void NavigateFieldTargetMenu(InputAction.CallbackContext obj)
         {
             int addIndex = Mathf.RoundToInt(obj.ReadValue<Vector2>().x);
             NavigateFightTargetMenu(addIndex);
         }
+        /// <summary>
+        /// Handles navigation of the field targeting menu in general.
+        /// </summary>
+        /// <param name="scrollAmount">The amount by which to shift <seealso cref="moveTargetIndex"/> by.</param>
         private void NavigateFightTargetMenu(int scrollAmount)
         {
             if (AreControlsLocked())
@@ -1116,10 +1446,17 @@ namespace PBS.Player
                 battleUI.SwitchSelectedMoveTargetsTo(battleModel, battleModel.GetPokemonPosition(commandAgent), moveTargetIndex, moveTargets);
             }
         }
+        /// <summary>
+        /// Handles selection in the field targeting menu triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
         private void SelectFieldTargetMenu(InputAction.CallbackContext obj)
         {
             SelectFightTargetMenu();
         }
+        /// <summary>
+        /// Handles selection in the field targeting menu in general.
+        /// </summary>
         private void SelectFightTargetMenu()
         {
             if (AreControlsLocked())
@@ -1160,7 +1497,7 @@ namespace PBS.Player
                         isZMove: chooseZMove,
                         isDynamaxing: chooseDynamax);
                     waitCRActive = true;
-                    waitCR = StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) =>
+                    StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) =>
                     {
                         if (success)
                         {
@@ -1178,10 +1515,17 @@ namespace PBS.Player
                 }
             }
         }
+        /// <summary>
+        /// Handles target cancellation triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
         private void CancelFieldTargetMenu(InputAction.CallbackContext obj)
         {
             CancelFieldTargetMenu();
         }
+        /// <summary>
+        /// Handles target cancellation in general.
+        /// </summary>
         private void CancelFieldTargetMenu()
         {
             if (AreControlsLocked())
@@ -1205,9 +1549,13 @@ namespace PBS.Player
                     choosingMaxMove: chooseDynamax);
             }
         }
+        #endregion
 
-
-        // PARTY MENU
+        #region Party Menu
+        /// <summary>
+        /// Handles 4-directional navigation in the party menu triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
         private void NavigatePartyMenuQuad(InputAction.CallbackContext obj)
         {
             int scrollX = Mathf.RoundToInt(obj.ReadValue<Vector2>().x);
@@ -1281,6 +1629,11 @@ namespace PBS.Player
                 }
             }
         }
+        /// <summary>
+        /// Handles navigation in the party menu in general.
+        /// </summary>
+        /// <param name="scrollAmount">The amount by which to shift <seealso cref="partyIndex"/> by.</param>
+        /// <param name="skipBackButton">If true, the back button is skipped over.</param>
         private void NavigatePartyMenu(int scrollAmount, bool skipBackButton = false)
         {
             if (AreControlsLocked())
@@ -1304,11 +1657,17 @@ namespace PBS.Player
                 battleUI.SwitchSelectedPartyMemberTo(partySlots[partyIndex]);
             }
         }
-    
+        /// <summary>
+        /// Handles selection in the party menu triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
         private void SelectPartyMenu(InputAction.CallbackContext obj)
         {
             SelectPartyMenu();
         }
+        /// <summary>
+        /// Handles selection in the party menu in general.
+        /// </summary>
         private void SelectPartyMenu()
         {
             if (AreControlsLocked())
@@ -1327,18 +1686,18 @@ namespace PBS.Player
                 PBS.Battle.View.WifiFriendly.Pokemon choice = partySlots[partyIndex];
                 if (selectedItem == null)
                 {
-                    controlPartyCommandCR = StartCoroutine(ControlPromptCommandExtra(
-                    commandAgent,
-                    commandTrainer,
-                    committedCommands,
-                    new List<BattleExtraCommand>
-                    {
-                        BattleExtraCommand.Summary,
-                        BattleExtraCommand.Switch,
-                        BattleExtraCommand.Moves,
-                        BattleExtraCommand.Cancel
-                    }
-                    ));
+                    StartCoroutine(ControlPromptCommandExtra(
+                        commandAgent,
+                        commandTrainer,
+                        committedCommands,
+                        new List<BattleExtraCommand>
+                        {
+                            BattleExtraCommand.Summary,
+                            BattleExtraCommand.Switch,
+                            BattleExtraCommand.Moves,
+                            BattleExtraCommand.Cancel
+                        }
+                        ));
                 }
                 // try to use the item on the pokemon
                 else
@@ -1350,7 +1709,7 @@ namespace PBS.Player
                         isExplicitlySelected: true);
 
                     waitCRActive = true;
-                    waitCR = StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) =>
+                    StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) =>
                     {
                         if (success)
                         {
@@ -1366,10 +1725,17 @@ namespace PBS.Player
             
             }
         }
+        /// <summary>
+        /// Handles party menu cancellation triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
         private void CancelPartyMenu(InputAction.CallbackContext obj)
         {
             CancelPartyMenu();
         }
+        /// <summary>
+        /// Handles party menu cancellation in general.
+        /// </summary>
         private void CancelPartyMenu()
         {
             if (AreControlsLocked())
@@ -1397,8 +1763,11 @@ namespace PBS.Player
             }
         }
 
-
         // PARTY COMMAND MENU
+        /// <summary>
+        /// Handles navigation in the party command menu triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
         private void NavigatePartyCommandMenu(InputAction.CallbackContext obj)
         {
             int addIndexX = Mathf.RoundToInt(obj.ReadValue<Vector2>().x);
@@ -1417,6 +1786,10 @@ namespace PBS.Player
                 battleUI.SwitchSelectedPartyCommandTo(extraCommands[extraCommandIndex]);
             }
         }
+        /// <summary>
+        /// Handles navigation in the party command menu in general.
+        /// </summary>
+        /// <param name="scrollAmount"></param>
         private void NavigatePartyCommandMenu(int scrollAmount)
         {
             if (AreControlsLocked())
@@ -1434,10 +1807,17 @@ namespace PBS.Player
                 battleUI.SwitchSelectedPartyCommandTo(extraCommands[extraCommandIndex]);
             }
         }
+        /// <summary>
+        /// Handles selection in the party command menu triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
         private void SelectPartyCommandMenu(InputAction.CallbackContext obj)
         {
             SelectPartyCommandMenu();
         }
+        /// <summary>
+        /// Handles selection in the party command menu in general.
+        /// </summary>
         private void SelectPartyCommandMenu()
         {
             if (AreControlsLocked())
@@ -1480,7 +1860,7 @@ namespace PBS.Player
                             isExplicitlySelected: true);
 
                     waitCRActive = true;
-                    waitCR = StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) => 
+                    StartCoroutine(AttemptCommand(attemptedCommand, committedCommands, (success) => 
                     {
                         if (success)
                         {
@@ -1500,10 +1880,17 @@ namespace PBS.Player
                 }
             }
         }
+        /// <summary>
+        /// Handles party command cancellation triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
         private void CancelPartyCommandMenu(InputAction.CallbackContext obj)
         {
             CancelPartyCommandMenu();
         }
+        /// <summary>
+        /// Handles party command cancellation in general.
+        /// </summary>
         private void CancelPartyCommandMenu()
         {
             if (AreControlsLocked())
@@ -1520,9 +1907,13 @@ namespace PBS.Player
                 battleUI.SwitchSelectedPartyMemberTo(partySlots[partyIndex]);
             }
         }
+        #endregion
 
-
-        // BAG POCKET MENU
+        #region Bag Pocket Menu
+        /// <summary>
+        /// Handles 4-directional navigation in the bag pocket menu triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
         private void NavigateBagPocketMenuQuad(InputAction.CallbackContext obj)
         {
             int scrollX = Mathf.RoundToInt(obj.ReadValue<Vector2>().x);
@@ -1586,6 +1977,10 @@ namespace PBS.Player
                 }
             }
         }
+        /// <summary>
+        /// Handles navigation in the bag pocket menu in general.
+        /// </summary>
+        /// <param name="scrollAmount"></param>
         private void NavigateBagPocketMenu(int scrollAmount)
         {
             if (AreControlsLocked())
@@ -1603,11 +1998,17 @@ namespace PBS.Player
                 battleUI.SwitchSelectedBagPocketTo(itemPockets[itemPocketIndex]);
             }
         }
-    
+        /// <summary>
+        /// Handles selection in the bag pocket menu triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
         private void SelectBagPocketMenu(InputAction.CallbackContext obj)
         {
             SelectBagPocketMenu();
         }
+        /// <summary>
+        /// Handles selection in the bag pocket menu in general.
+        /// </summary>
         private void SelectBagPocketMenu()
         {
             if (AreControlsLocked())
@@ -1623,7 +2024,7 @@ namespace PBS.Player
             else
             {
                 ItemBattlePocket pocketType = itemPockets[itemPocketIndex];
-                controlBagCR = StartCoroutine(ControlPromptBag(
+                StartCoroutine(ControlPromptBag(
                     commandAgent,
                     commandTrainer,
                     pocketType,
@@ -1631,10 +2032,17 @@ namespace PBS.Player
                     ));
             }
         }
+        /// <summary>
+        /// Handles bag pocket cancellation triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
         private void CancelBagPocketMenu(InputAction.CallbackContext obj)
         {
             CancelBagPocketMenu();
         }
+        /// <summary>
+        /// Handles bag pocket cancellation in general.
+        /// </summary>
         private void CancelBagPocketMenu()
         {
             if (AreControlsLocked())
@@ -1648,11 +2056,14 @@ namespace PBS.Player
             battleUI.SwitchPanel(PBS.Battle.View.Enums.Panel.Command);
             battleUI.SwitchSelectedCommandTo(commandTypes[commandIndex]);
         }
+        #endregion
 
-
-
-        // BAG MENU
-        private void NavigateBagMenuQuad(InputAction.CallbackContext obj)
+        #region Item Menu
+        /// <summary>
+        /// Handles 4-directional navigation in the item menu triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
+        private void NavigateItemMenuQuad(InputAction.CallbackContext obj)
         {
             int scrollX = Mathf.RoundToInt(obj.ReadValue<Vector2>().x);
             int scrollY = Mathf.RoundToInt(obj.ReadValue<Vector2>().y);
@@ -1830,11 +2241,16 @@ namespace PBS.Player
                     }
                     
                     itemOffset = nextOffset;
-                    NavigateBagMenu(newIndex: newIndex, changePage: scrollLeft || scrollRight);
+                    NavigateItemMenu(newIndex: newIndex, changePage: scrollLeft || scrollRight);
                 }
             }
         }
-        private void NavigateBagMenu(int newIndex, bool changePage = false)
+        /// <summary>
+        /// Handles navigation in the item menu in general.
+        /// </summary>
+        /// <param name="newIndex">The new item position to highlight.</param>
+        /// <param name="changePage">If true, the item page will be different from the previous page.</param>
+        private void NavigateItemMenu(int newIndex, bool changePage = false)
         {
             if (AreControlsLocked())
             {
@@ -1855,11 +2271,18 @@ namespace PBS.Player
                 battleUI.SwitchSelectedItemTo(itemSlots[itemOffset + itemIndex]);
             }
         }
-        private void SelectBagMenu(InputAction.CallbackContext obj)
+        /// <summary>
+        /// Handles item selection triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
+        private void SelectItemMenu(InputAction.CallbackContext obj)
         {
-            SelectBagMenu();
+            SelectItemMenu();
         }
-        private void SelectBagMenu()
+        /// <summary>
+        /// Handles item selection in general.
+        /// </summary>
+        private void SelectItemMenu()
         {
             if (AreControlsLocked())
             {
@@ -1869,24 +2292,31 @@ namespace PBS.Player
             // exit to bag pockets
             if (itemIndex < 0)
             {
-                CancelBagMenu();
+                CancelItemMenu();
             }
             // choose the pokemon to use the item on
             else
             {
                 selectedItem = itemSlots[itemOffset + itemIndex];
-                controlPartyCR = StartCoroutine(ControlPromptParty(
+                StartCoroutine(ControlPromptParty(
                     commandAgent,
                     commandTrainer,
                     committedCommands
                     ));
             }
         }
-        private void CancelBagMenu(InputAction.CallbackContext obj)
+        /// <summary>
+        /// Handles item cancellation triggered by InputActions.
+        /// </summary>
+        /// <param name="obj"></param>
+        private void CancelItemMenu(InputAction.CallbackContext obj)
         {
-            CancelBagMenu();
+            CancelItemMenu();
         }
-        private void CancelBagMenu()
+        /// <summary>
+        /// Handles item cancellation in general.
+        /// </summary>
+        private void CancelItemMenu()
         {
             if (AreControlsLocked())
             {
@@ -1899,7 +2329,18 @@ namespace PBS.Player
             battleUI.SwitchPanel(PBS.Battle.View.Enums.Panel.Bag);
             battleUI.SwitchSelectedBagPocketTo(itemPockets[itemPocketIndex]);
         }
+        #endregion
 
+        #endregion
+
+        #region Command Validation
+        /// <summary>
+        /// Verifies that the selected command can be selected.
+        /// </summary>
+        /// <param name="attemptedCommand">The command to be checked for validity.</param>
+        /// <param name="setCommands">The already committed commands by the player.</param>
+        /// <param name="callback">The validity of the command.</param>
+        /// <returns></returns>
         private IEnumerator AttemptCommand(
             Command attemptedCommand, 
             Command[] setCommands,
@@ -1935,5 +2376,6 @@ namespace PBS.Player
 
             callback(commandSuccess);
         }
+        #endregion
     }
 }
