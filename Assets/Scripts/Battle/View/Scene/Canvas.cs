@@ -5,21 +5,43 @@ using UnityEngine;
 
 namespace PBS.Battle.View.Scene
 {
+    /// <summary>
+    /// This canvas handles orchestrating the battle scene and its components. This includes drawing the background,
+    /// pokemon, trainers, and other on-field conponents.
+    /// </summary>
     public class Canvas : MonoBehaviour
     {
-        // General
+        #region Attributes
+        /// <summary>
+        /// The main camera displaying the scene canvas.
+        /// </summary>
         [Header("Camera")]
         public Scene.BattleCamera mainCamera;
 
+        /// <summary>
+        /// The base pokemon object used to spawn into view when a pokemon joins the battle.
+        /// </summary>
         [Header("Prefabs")]
         public Entities.Pokemon pokemonPrefab;
 
+        /// <summary>
+        /// The root location of the ally team.
+        /// </summary>
         [Header("Team Spawns")]
         public Transform spawnTeamNear;
+        /// <summary>
+        /// The root location of the opposing team.
+        /// </summary>
         public Transform spawnTeamFar;
 
+        /// <summary>
+        /// The root location of a pokemon depending on the perspective of the player, and the battle type.
+        /// </summary>
         [Header("Pokemon Spawns")]
         public Transform spawnNearSingle;
+        /// <summary>
+        /// The root location of a pokemon depending on the perspective of the player, and the battle type.
+        /// </summary>
         public Transform spawnFarSingle,
 
             spawnNearDouble0,
@@ -35,9 +57,21 @@ namespace PBS.Battle.View.Scene
             spawnFarTriple2;
 
         // Scene Objects
-        [HideInInspector] public List<Entities.Pokemon> scnPokemon = new List<Entities.Pokemon>();
+        /// <summary>
+        /// A list of all pokemon currently on the canvas.
+        /// </summary>
+        [HideInInspector] 
+        public List<Entities.Pokemon> scnPokemon = new List<Entities.Pokemon>();
+        #endregion
 
-        // Scene Pokemon
+        #region Pokemon
+        /// <summary>
+        /// Draws the given pokemon on the canvas.
+        /// </summary>
+        /// <param name="pokemon">The pokemon to be drawn.</param>
+        /// <param name="teamMode">The pokemon's team's battle type for reference.</param>
+        /// <param name="isNear">If true, this pokemon is drawn as being part of the ally team.</param>
+        /// <returns></returns>
         public Entities.Pokemon DrawPokemon(
             Battle.View.WifiFriendly.Pokemon pokemon,
             TeamMode teamMode,
@@ -89,6 +123,11 @@ namespace PBS.Battle.View.Scene
             scnPokemon.Add(newScnPokemon);
             return newScnPokemon;
         }
+        /// <summary>
+        /// Removes the given pokemon from the canvas.
+        /// </summary>
+        /// <param name="pokemonUniqueID">The ID of the pokemon to remove.</param>
+        /// <returns></returns>
         public bool UndrawPokemon(string pokemonUniqueID)
         {
             Entities.Pokemon oldScnPokemon = GetSCNPokemon(pokemonUniqueID);
@@ -100,6 +139,11 @@ namespace PBS.Battle.View.Scene
             }
             return false;
         }
+        /// <summary>
+        /// Returns the scene object reference for the given pokemon.
+        /// </summary>
+        /// <param name="pokemonUniqueID">The ID of the pokemon to get the scene object for.</param>
+        /// <returns></returns>
         public Entities.Pokemon GetSCNPokemon(string pokemonUniqueID)
         {
             for (int i = 0; i < scnPokemon.Count; i++)
@@ -111,5 +155,6 @@ namespace PBS.Battle.View.Scene
             }
             return null;
         }
+        #endregion
     }
 }
