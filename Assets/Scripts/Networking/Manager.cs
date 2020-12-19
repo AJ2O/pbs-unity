@@ -9,18 +9,22 @@ namespace PBS.Networking {
         /// <summary>
         /// Mediates interactions between players and the battle instance.
         /// </summary>
+        [Tooltip("Mediates interactions between players and the battle.")]
         public Core battleCore;
         /// <summary>
         /// The amount of human players needed to start the battle.
         /// </summary>
-        public int requiredPlayers = 1;
+        [Tooltip("The amount of human players needed to start the battle.")]
+        public int humanTrainers = 1;
         /// <summary>
-        /// The difference between this and requiredPlayers is how many AI trainers there will be.
+        /// The difference between this and "Human Trainers" is how many AI trainers there will be.
         /// </summary>
-        public int totalPlayers = 2;
+        [Tooltip("The difference between this and \"Human Trainers\" is how many AI trainers there will be.")]
+        public int totalTrainers = 2;
         /// <summary>
-        /// The settings that will be applied to the initiated battle.
+        /// The settings that will be applied to the battle.
         /// </summary>
+        [Tooltip("The settings that will be applied to the battle.")]
         public BattleSettings battleSettings;
         
         /// <summary>
@@ -69,7 +73,7 @@ namespace PBS.Networking {
             {
                 Debug.LogWarning("A player with ID " + conn.connectionId + " is trying to join, but is already in the battle!");
             }
-            else if (trainerConnections.Count < requiredPlayers)
+            else if (trainerConnections.Count < humanTrainers)
             {
                 trainer.playerID = conn.connectionId + 1;
                 trainerConnections.Add(trainer.playerID, trainer);
@@ -77,7 +81,7 @@ namespace PBS.Networking {
 
                 // 5.
                 // Start battle if we have enough trainers
-                if (trainerConnections.Count == requiredPlayers)
+                if (trainerConnections.Count == humanTrainers)
                 {
                     StartBattle();
                 }
@@ -129,7 +133,7 @@ namespace PBS.Networking {
 
             // Configure AI Trainers
             List<Trainer> aiTrainers = new List<Trainer>();
-            int aiTrainerCount = Mathf.Max(totalPlayers - requiredPlayers, 0);
+            int aiTrainerCount = Mathf.Max(totalTrainers - this.humanTrainers, 0);
             Debug.Log($"Adding {aiTrainerCount} AI trainers...");
             for (int i = 0; i < aiTrainerCount; i++)
             {
