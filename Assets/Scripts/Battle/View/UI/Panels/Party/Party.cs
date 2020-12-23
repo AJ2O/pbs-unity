@@ -11,13 +11,13 @@ namespace PBS.Battle.View.UI.Panels
         public GameObject commandPanel;
 
         [Header("Buttons")]
-        public Panels.PartyButton party1Btn;
-        public Panels.PartyButton party2Btn,
+        public PartyButton party1Btn;
+        public PartyButton party2Btn,
             party3Btn,
             party4Btn,
             party5Btn,
             party6Btn;
-        public Panels.PartyButton backBtn;
+        public PartyButton backBtn;
         public BTLUI_Button summaryBtn,
             switchBtn,
             movesBtn,
@@ -32,12 +32,12 @@ namespace PBS.Battle.View.UI.Panels
         }
 
         // Party Screen
-        public void SetParty(List<PBS.Battle.View.WifiFriendly.Pokemon> party, Item item = null)
+        public void SetParty(List<WifiFriendly.Pokemon> party)
         {
             for (int i = 0; i < party.Count; i++)
             {
-                PBS.Battle.View.WifiFriendly.Pokemon pokemon = party[i];
-                Panels.PartyButton curBtn = (i == 0) ? party1Btn
+                WifiFriendly.Pokemon pokemon = party[i];
+                PartyButton curBtn = (i == 0) ? party1Btn
                     : (i == 1) ? party2Btn
                     : (i == 2) ? party3Btn
                     : (i == 3) ? party4Btn
@@ -57,9 +57,9 @@ namespace PBS.Battle.View.UI.Panels
             if (party.Count < 1) party1Btn.gameObject.SetActive(false);
         }
         public void SetPartyButton(
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon, 
+            WifiFriendly.Pokemon pokemon, 
 
-            Panels.PartyButton button)
+            PartyButton button)
         {
             button.nameTxt.text = pokemon.nickname;
 
@@ -105,7 +105,7 @@ namespace PBS.Battle.View.UI.Panels
 
         public void HighlightPokemon(string pokemonUniqueID)
         {
-            Panels.PartyButton selectedBtn = null;
+            PartyButton selectedBtn = null;
 
             if (party1Btn.pokemonUniqueID == pokemonUniqueID)
             {

@@ -528,7 +528,7 @@ namespace PBS.Player
                 {
                     committedCommands[i] = playerCommand;
                 }
-                battleUI.UnsetPanels();
+                battleUI.HidePanels();
             }
             battleUI.SwitchPanel(PBS.Battle.View.Enums.Panel.None);
             this.commandPromptEvent = null;
@@ -875,7 +875,7 @@ namespace PBS.Player
             SwitchControlContext(ControlContext.Party);
 
             battleUI.SwitchPanel(PBS.Battle.View.Enums.Panel.Party);
-            battleUI.SetParty(partySlots, forceSwitch, selectedItem);
+            battleUI.SetParty(partySlots, forceSwitch);
             battleUI.SwitchSelectedPartyMemberTo(partySlots[partyIndex]);
 
             while (choosingParty)
@@ -2264,7 +2264,7 @@ namespace PBS.Player
                     battleUI.SetItems(
                         trainer: commandTrainer,
                         pocket: itemPockets[itemPocketIndex],
-                        list: itemSlots,
+                        items: itemSlots,
                         offset: itemOffset
                         );
                 }

@@ -6,22 +6,39 @@ using UnityEngine.UI;
 
 namespace PBS.Battle.View.UI
 {
+    /// <summary>
+    /// The canvas handles orchestrating the battle UI and its components. This includes the command selection UI,
+    /// dialog boxes, health bars, and other UI components.
+    /// </summary>
     public class Canvas : MonoBehaviour
     {
         #region Attributes
         [Header("Panels")]
+        [Tooltip("The battle command UI panel.")]
         public Panels.Command cmdPanel;
+        [Tooltip("The move selection UI panel.")]
         public Panels.Fight fightPanel;
+        [Tooltip("The move targeting UI panel.")]
         public Panels.FieldTarget fieldTargetPanel;
+        [Tooltip("The party member UI panel.")]
         public Panels.Party partyPanel;
+        [Tooltip("The bag pocket UI panel.")]
         public Panels.Bag bagPanel;
+        [Tooltip("The items UI panel.")]
         public Panels.BagItem bagItemPanel;
+        [Tooltip("The HUD UI panel.")]
         public HUD.Panel HUDPanel;
 
-        [Header("Dialog")]
+        [Tooltip("The dialog box.")]
         public Dialog dialog;
 
-        [HideInInspector] public PBS.Battle.View.Enums.Panel panelType;
+        /// <summary>
+        /// The currently selected panel type.
+        /// </summary>
+        [HideInInspector] public Enums.Panel panelType;
+        /// <summary>
+        /// The currently drawn panel on the UI.
+        /// </summary>
         [HideInInspector] public Panels.BasePanel currentPanel;
         #endregion
 
@@ -36,13 +53,17 @@ namespace PBS.Battle.View.UI
         {
             panelType = PBS.Battle.View.Enums.Panel.None;
             SwitchPanel(panelType);
-            UnsetPanels();
+            HidePanels();
             dialog.gameObject.SetActive(true);
             dialog.ClearBox();
         }
         #endregion
 
-        // Panel Management
+        #region Panel Management
+        /// <summary>
+        /// Switches the UI panel to the selected panel.
+        /// </summary>
+        /// <param name="newPanel">The panel to switch to.</param>
         public void SwitchPanel(Enums.Panel newPanel)
         {
             panelType = newPanel;
@@ -98,28 +119,51 @@ namespace PBS.Battle.View.UI
                 panelType == PBS.Battle.View.Enums.Panel.None 
                 || panelType == PBS.Battle.View.Enums.Panel.Command);
         }
-        public void UnsetPanels()
+        /// <summary>
+        /// Hides all currently displayed UI panels.
+        /// </summary>
+        public void HidePanels()
         {
             cmdPanel.gameObject.SetActive(false);
             fightPanel.gameObject.SetActive(false);
             fieldTargetPanel.gameObject.SetActive(false);
             partyPanel.gameObject.SetActive(false);
             bagPanel.gameObject.SetActive(false);
-            SwitchPanel(PBS.Battle.View.Enums.Panel.None);
+            SwitchPanel(Enums.Panel.None);
         }
 
-        // Command Panel
+        #region Command Panel
+        /// <summary>
+        /// Sets the available commands for the given Pokemon in the UI.
+        /// </summary>
+        /// <param name="pokemon">The pokemon for whom to display commands.</param>
+        /// <param name="commandList">The commands to be displayed.</param>
         public void SetCommands(WifiFriendly.Pokemon pokemon, IEnumerable<BattleCommandType> commandList)
         {
             HashSet<BattleCommandType> commandSet = new HashSet<BattleCommandType>(commandList);
             cmdPanel.SetCommands(pokemon, commandList);
         }
+        /// <summary>
+        /// Switch to displaying the selected command.
+        /// </summary>
+        /// <param name="commandType"></param>
         public void SwitchSelectedCommandTo(BattleCommandType commandType)
         {
             cmdPanel.HighlightCommand(commandType);
         }
+        #endregion
 
-        // Fight Panel
+        #region Fight Panel
+        /// <summary>
+        /// Sets the available moves for the given Pokemon in the UI.
+        /// </summary>
+        /// <param name="pokemon">The Pokemon for whom to display moves.</param>
+        /// <param name="moveslots">The list of moves to display.</param>
+        /// <param name="canMegaEvolve">If true, the UI displays the option to mega-evolve.</param>
+        /// <param name="canZMove">If true, the UI displays the option to use Z-moves.</param>
+        /// <param name="canDynamax">If true, the UI displays the option to dynamax.</param>
+        /// <param name="choosingZMove">If true, the UI displays the user as currently selecting a Z-move.</param>
+        /// <param name="choosingMaxMove">If true, the UI displays the user as currently selecting a max move.</param>
         public void SetMoves(
             WifiFriendly.Pokemon pokemon, 
             List<Events.CommandAgent.Moveslot> moveslots, 
@@ -143,6 +187,14 @@ namespace PBS.Battle.View.UI
                 canMegaEvolve: canMegaEvolve, canZMove: canZMove, canDynamax: canDynamax,
                 choosingZMove: choosingZMove, choosingMaxMove: choosingMaxMove);
         }
+        /// <summary>
+        /// Switch to displaying the selected move.
+        /// </summary>
+        /// <param name="pokemon">The Pokemon for whom to display moves.</param>
+        /// <param name="selected">The index of the selected move.</param>
+        /// <param name="choosingSpecial">If true, the UI displays the user as currently selecting a special action.</param>
+        /// <param name="choosingZMove">If true, the UI displays the user as currently selecting a Z-move.</param>
+        /// <param name="choosingMaxMove">If true, the UI displays the user as currently selecting a max move.</param>
         public void SwitchSelectedMoveTo(
             WifiFriendly.Pokemon pokemon, 
             int selected, 
@@ -158,16 +210,32 @@ namespace PBS.Battle.View.UI
                 fightPanel.specialBtn.UnselectSelf();
             }
         }
+        /// <summary>
+        /// Switch to displaying the back button on the Fight UI.
+        /// </summary>
         public void SwitchSelectedMoveToBack()
         {
             fightPanel.HighlightBackButton();
         }
+        #endregion
 
-        // Field Targeting Panel
+        #region Field Targeting Panel
+        /// <summary>
+        /// Sets the UI components for displaying move targets.
+        /// </summary>
+        /// <param name="model">The battle model to evaluate.</param>
+        /// <param name="teamPos">The team perspective to use.</param>
         public void SetFieldTargets(Model model, int teamPos)
         {
             fieldTargetPanel.SetFieldTargets(teamPos: teamPos, battleModel: model);
         }
+        /// <summary>
+        /// Switches to displaying the selected target group.
+        /// </summary>
+        /// <param name="model">The battle model to evaluate.</param>
+        /// <param name="userPos">The position of the user Pokemon.</param>
+        /// <param name="chooseIndex">The selected target group.</param>
+        /// <param name="choices">The list of possible target groups.</param>
         public void SwitchSelectedMoveTargetsTo(
             Model model,
             BattlePosition userPos,
@@ -184,11 +252,17 @@ namespace PBS.Battle.View.UI
                 fieldTargetPanel.HighlightFieldTargets(userPos, choice);
             }
         }
+        #endregion
 
-        // Party Panel
-        public void SetParty(List<WifiFriendly.Pokemon> pokemon, bool forceSwitch = false, Item item = null)
+        #region Party Panel
+        /// <summary>
+        /// Sets the UI components for displaying party members.
+        /// </summary>
+        /// <param name="pokemon">The list of party members to display.</param>
+        /// <param name="forceSwitch">If true, display on the UI that this Pokemon is forced to switch.</param>
+        public void SetParty(List<WifiFriendly.Pokemon> pokemon, bool forceSwitch = false)
         {
-            List<PBS.Battle.View.WifiFriendly.Pokemon> filteredPokemon = new List<PBS.Battle.View.WifiFriendly.Pokemon>();
+            List<WifiFriendly.Pokemon> filteredPokemon = new List<WifiFriendly.Pokemon>();
             for (int i = 0; i < pokemon.Count; i++)
             {
                 if (pokemon[i] != null)
@@ -197,66 +271,113 @@ namespace PBS.Battle.View.UI
                 }
             }
 
-            partyPanel.SetParty(party: filteredPokemon, item: item);
+            partyPanel.SetParty(party: filteredPokemon);
             partyPanel.backBtn.gameObject.SetActive(!forceSwitch);
         }
+        /// <summary>
+        /// Switch to displaying the selected party member.
+        /// </summary>
+        /// <param name="selected">The selected party member.</param>
         public void SwitchSelectedPartyMemberTo(WifiFriendly.Pokemon selected)
         {
             partyPanel.HighlightPokemon(selected.uniqueID);
         }
+        /// <summary>
+        /// Switch to displaying the back button on the Party UI.
+        /// </summary>
         public void SwitchSelectedPartyMemberToBack()
         {
             partyPanel.HighlightBackButton();
         }
+        #endregion
 
-        // Party Commands
+        #region Party Commands
+        /// <summary>
+        /// Sets the UI components for displaying party commands.
+        /// </summary>
+        /// <param name="pokemon">The party member to display commands for.</param>
+        /// <param name="commands">The party commands to display.</param>
         public void SetPartyCommands(WifiFriendly.Pokemon pokemon, List<BattleExtraCommand> commands)
         {
             partyPanel.SetCommands(commands);
         }
+        /// <summary>
+        /// Switch to displaying the selected party command.
+        /// </summary>
+        /// <param name="selected">The selected party command.</param>
         public void SwitchSelectedPartyCommandTo(BattleExtraCommand selected)
         {
             partyPanel.HighlightCommand(selected);
         }
+        #endregion
 
-        // Bag Panel
+        #region Bag Panel
+        /// <summary>
+        /// Sets the UI componenets for displaying bag pockets.
+        /// </summary>
+        /// <param name="list">The bag pockets to display.</param>
         public void SetBagPockets(List<ItemBattlePocket> list)
         {
             bagPanel.SetPockets(list);
         }
+        /// <summary>
+        /// Switch to displaying the selected bag pocket.
+        /// </summary>
+        /// <param name="selected">The selected bag pocket.</param>
         public void SwitchSelectedBagPocketTo(ItemBattlePocket selected)
         {
             bagPanel.HighlightPocket(selected);
         }
+        /// <summary>
+        /// Switch to displaying the back button on the Bag Pocket UI.
+        /// </summary>
         public void SwitchSelectedBagPocketToBack()
         {
             bagPanel.HighlightBackButton();
         }
+        #endregion
 
-        // Bag Item Panel
-        public void SetItems(WifiFriendly.Trainer trainer, ItemBattlePocket pocket, List<Item> list, int offset)
+        #region Bag Item Panel
+        /// <summary>
+        /// Sets the UI components for displaying items.
+        /// </summary>
+        /// <param name="trainer">The trainer for whom the items are displayed for.</param>
+        /// <param name="pocket">The bag pocket the items are in.</param>
+        /// <param name="items">The list of items in the bag pocket.</param>
+        /// <param name="offset">The offset in the item list to display items.</param>
+        public void SetItems(WifiFriendly.Trainer trainer, ItemBattlePocket pocket, List<Item> items, int offset)
         {
             List<Item> filteredItems = new List<Item>();
-            for (int i = 0; i < list.Count; i++)
+            for (int i = 0; i < items.Count; i++)
             {
-                if (list[i] != null)
+                if (items[i] != null)
                 {
-                    filteredItems.Add(list[i]);
+                    filteredItems.Add(items[i]);
                 }
             }
             bagItemPanel.SetItems(trainer, filteredItems, offset);
             bagItemPanel.backBtn.gameObject.SetActive(true);
         }
+        /// <summary>
+        /// Switch to displaying the selected item.
+        /// </summary>
+        /// <param name="selected">The item to select.</param>
         public void SwitchSelectedItemTo(Item selected)
         {
             bagItemPanel.HighlightButton(selected.itemID);
         }
+        /// <summary>
+        /// Switch to displaying the back button on the Bag UI.
+        /// </summary>
         public void SwitchSelectedItemToBack()
         {
             bagItemPanel.HighlightBackButton();
         }
+        #endregion
 
-        // HUD
+        #endregion
+
+        #region HUD
         public HUD.PokemonHUD DrawPokemonHUD(WifiFriendly.Pokemon pokemon, TeamMode teamMode, bool isNear)
         {
             return HUDPanel.DrawPokemonHUD(pokemon, teamMode, isNear);
@@ -294,6 +415,7 @@ namespace PBS.Battle.View.UI
                 timeSpan: timeSpan
                 ));
         }
+        #endregion
 
         #region Dialog
 
