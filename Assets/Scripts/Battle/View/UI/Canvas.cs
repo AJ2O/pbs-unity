@@ -8,6 +8,7 @@ namespace PBS.Battle.View.UI
 {
     public class Canvas : MonoBehaviour
     {
+        #region Attributes
         [Header("Panels")]
         public Panels.Command cmdPanel;
         public Panels.Fight fightPanel;
@@ -22,7 +23,9 @@ namespace PBS.Battle.View.UI
 
         [HideInInspector] public PBS.Battle.View.Enums.Panel panelType;
         [HideInInspector] public Panels.BasePanel currentPanel;
+        #endregion
 
+        #region Unity
         void Awake()
         {
             currentPanel = null;
@@ -37,15 +40,10 @@ namespace PBS.Battle.View.UI
             dialog.gameObject.SetActive(true);
             dialog.ClearBox();
         }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
+        #endregion
 
         // Panel Management
-        public void SwitchPanel(PBS.Battle.View.Enums.Panel newPanel)
+        public void SwitchPanel(Enums.Panel newPanel)
         {
             panelType = newPanel;
             if (currentPanel != null)
@@ -111,7 +109,7 @@ namespace PBS.Battle.View.UI
         }
 
         // Command Panel
-        public void SetCommands(PBS.Battle.View.WifiFriendly.Pokemon pokemon, IEnumerable<BattleCommandType> commandList)
+        public void SetCommands(WifiFriendly.Pokemon pokemon, IEnumerable<BattleCommandType> commandList)
         {
             HashSet<BattleCommandType> commandSet = new HashSet<BattleCommandType>(commandList);
             cmdPanel.SetCommands(pokemon, commandList);
@@ -123,8 +121,8 @@ namespace PBS.Battle.View.UI
 
         // Fight Panel
         public void SetMoves(
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon, 
-            List<PBS.Battle.View.Events.CommandAgent.Moveslot> moveslots, 
+            WifiFriendly.Pokemon pokemon, 
+            List<Events.CommandAgent.Moveslot> moveslots, 
             bool canMegaEvolve, bool canZMove = false, bool canDynamax = false,
             bool choosingZMove = false, bool choosingMaxMove = false)
         {
@@ -146,7 +144,7 @@ namespace PBS.Battle.View.UI
                 choosingZMove: choosingZMove, choosingMaxMove: choosingMaxMove);
         }
         public void SwitchSelectedMoveTo(
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon, 
+            WifiFriendly.Pokemon pokemon, 
             int selected, 
             bool choosingSpecial, bool choosingZMove, bool choosingMaxMove)
         {
@@ -166,12 +164,12 @@ namespace PBS.Battle.View.UI
         }
 
         // Field Targeting Panel
-        public void SetFieldTargets(PBS.Battle.View.Model model, int teamPos)
+        public void SetFieldTargets(Model model, int teamPos)
         {
             fieldTargetPanel.SetFieldTargets(teamPos: teamPos, battleModel: model);
         }
         public void SwitchSelectedMoveTargetsTo(
-            PBS.Battle.View.Model model,
+            Model model,
             BattlePosition userPos,
             int chooseIndex,
             List<List<BattlePosition>> choices)
@@ -188,7 +186,7 @@ namespace PBS.Battle.View.UI
         }
 
         // Party Panel
-        public void SetParty(List<PBS.Battle.View.WifiFriendly.Pokemon> pokemon, bool forceSwitch = false, Item item = null)
+        public void SetParty(List<WifiFriendly.Pokemon> pokemon, bool forceSwitch = false, Item item = null)
         {
             List<PBS.Battle.View.WifiFriendly.Pokemon> filteredPokemon = new List<PBS.Battle.View.WifiFriendly.Pokemon>();
             for (int i = 0; i < pokemon.Count; i++)
@@ -202,7 +200,7 @@ namespace PBS.Battle.View.UI
             partyPanel.SetParty(party: filteredPokemon, item: item);
             partyPanel.backBtn.gameObject.SetActive(!forceSwitch);
         }
-        public void SwitchSelectedPartyMemberTo(PBS.Battle.View.WifiFriendly.Pokemon selected)
+        public void SwitchSelectedPartyMemberTo(WifiFriendly.Pokemon selected)
         {
             partyPanel.HighlightPokemon(selected.uniqueID);
         }
@@ -212,7 +210,7 @@ namespace PBS.Battle.View.UI
         }
 
         // Party Commands
-        public void SetPartyCommands(PBS.Battle.View.WifiFriendly.Pokemon pokemon, List<BattleExtraCommand> commands)
+        public void SetPartyCommands(WifiFriendly.Pokemon pokemon, List<BattleExtraCommand> commands)
         {
             partyPanel.SetCommands(commands);
         }
@@ -236,7 +234,7 @@ namespace PBS.Battle.View.UI
         }
 
         // Bag Item Panel
-        public void SetItems(PBS.Battle.View.WifiFriendly.Trainer trainer, ItemBattlePocket pocket, List<Item> list, int offset)
+        public void SetItems(WifiFriendly.Trainer trainer, ItemBattlePocket pocket, List<Item> list, int offset)
         {
             List<Item> filteredItems = new List<Item>();
             for (int i = 0; i < list.Count; i++)
@@ -259,25 +257,25 @@ namespace PBS.Battle.View.UI
         }
 
         // HUD
-        public HUD.PokemonHUD DrawPokemonHUD(PBS.Battle.View.WifiFriendly.Pokemon pokemon, TeamMode teamMode, bool isNear)
+        public HUD.PokemonHUD DrawPokemonHUD(WifiFriendly.Pokemon pokemon, TeamMode teamMode, bool isNear)
         {
             return HUDPanel.DrawPokemonHUD(pokemon, teamMode, isNear);
         }
-        public bool UndrawPokemonHUD(PBS.Battle.View.WifiFriendly.Pokemon pokemon)
+        public bool UndrawPokemonHUD(WifiFriendly.Pokemon pokemon)
         {
             return HUDPanel.UndrawPokemonHUD(pokemon);
         }
 
-        public HUD.PokemonHUD GetPokemonHUD(PBS.Battle.View.WifiFriendly.Pokemon pokemon)
+        public HUD.PokemonHUD GetPokemonHUD(WifiFriendly.Pokemon pokemon)
         {
             return HUDPanel.GetPokemonHUD(pokemon);
         }
-        public void UpdatePokemonHUD(PBS.Battle.View.WifiFriendly.Pokemon pokemon)
+        public void UpdatePokemonHUD(WifiFriendly.Pokemon pokemon)
         {
             HUDPanel.UpdatePokemonHUD(pokemon);
         }
 
-        public void SetPokemonHUDActive(PBS.Battle.View.WifiFriendly.Pokemon pokemon, bool active)
+        public void SetPokemonHUDActive(WifiFriendly.Pokemon pokemon, bool active)
         {
             HUDPanel.SetPokemonHUDActive(pokemon, active);
         }
@@ -286,7 +284,7 @@ namespace PBS.Battle.View.UI
             HUDPanel.SetPokemonHUDsActive(active);
         }
 
-        public IEnumerator AnimatePokemonHUDHPChange(PBS.Battle.View.WifiFriendly.Pokemon pokemon, int preHP, int postHP, int maxHP, float timeSpan = 1f)
+        public IEnumerator AnimatePokemonHUDHPChange(WifiFriendly.Pokemon pokemon, int preHP, int postHP, int maxHP, float timeSpan = 1f)
         {
             yield return StartCoroutine(HUDPanel.AnimatePokemonHUDHPChange(
                 pokemon: pokemon,
@@ -297,7 +295,11 @@ namespace PBS.Battle.View.UI
                 ));
         }
 
-        // Dialog
+        #region Dialog
+
+        /// <summary>
+        /// Removes the dialog box from view.
+        /// </summary>
         public void UndrawDialogBox()
         {
             dialog.dialogBox.gameObject.SetActive(false);
@@ -397,15 +399,31 @@ namespace PBS.Battle.View.UI
                 UndrawDialogBox();
             }
         }
+        #endregion
 
-        // Message Rendering
-        public static string GetPokemonName(PBS.Battle.View.WifiFriendly.Pokemon pokemon, PBS.Battle.View.Model myModel)
+        #region In-Game Text Rendering
+
+        #region Names
+        /// <summary>
+        /// Returns the display name of the given pokemon in the given battle.
+        /// </summary>
+        /// <param name="pokemon">The pokemon whose name to retrieve.</param>
+        /// <param name="myModel">The battle model to evaluate.</param>
+        /// <returns></returns>
+        public static string GetPokemonName(WifiFriendly.Pokemon pokemon, Model myModel)
         {
             return GetPokemonNames(new List<PBS.Battle.View.WifiFriendly.Pokemon> { pokemon }, myModel);
         }
-        public static string GetPokemonNames(List<PBS.Battle.View.WifiFriendly.Pokemon> pokemonList, PBS.Battle.View.Model myModel, bool orConjunct = false)
+        /// <summary>
+        /// Returns the display names of the given pokemon in the given battle.
+        /// </summary>
+        /// <param name="pokemonList">The pokemon whose names will be retrieved.</param>
+        /// <param name="myModel">The battle model to evaluate.</param>
+        /// <param name="conjunct">Whether to use "Or" (True) or "And" (False).</param>
+        /// <returns></returns>
+        public static string GetPokemonNames(List<WifiFriendly.Pokemon> pokemonList, Model myModel, bool conjunct = false)
         {
-            string conjunct = (orConjunct) ? "or" : "and";
+            string conjunctString = (conjunct) ? "or" : "and";
 
             string names = "";
             if (pokemonList.Count == 1)
@@ -414,20 +432,25 @@ namespace PBS.Battle.View.UI
             }
             else if (pokemonList.Count == 2)
             {
-                return pokemonList[0].nickname + " " + conjunct + " " + pokemonList[1].nickname;
+                return pokemonList[0].nickname + " " + conjunctString + " " + pokemonList[1].nickname;
             }
             else
             {
                 for (int i = 0; i < pokemonList.Count; i++)
                 {
                     names += (i == pokemonList.Count - 1) ?
-                        conjunct + " " + pokemonList[i].nickname :
+                        conjunctString + " " + pokemonList[i].nickname :
                         pokemonList[i].nickname + ", ";
                 }
             }
             return names;
         }
-        public static string GetTrainerNames(List<PBS.Battle.View.WifiFriendly.Trainer> trainers, PBS.Battle.View.Model myModel)
+        /// <summary>
+        /// Returns the display names for the given trainers.
+        /// </summary>
+        /// <param name="trainers">The trainers whose names will be retrieved.</param>
+        /// <returns></returns>
+        public static string GetTrainerNames(List<WifiFriendly.Trainer> trainers)
         {
             string text = "";
             for (int i = 0; i < trainers.Count; i++)
@@ -436,40 +459,59 @@ namespace PBS.Battle.View.UI
             }
             return text;
         }
+        #endregion
 
-        public static PBS.Battle.View.Enums.ViewPerspective GetPerspective(
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon,
-            PBS.Battle.View.Model myModel,
+        #region View Perspective
+        /// <summary>
+        /// Returns the view perspective on the given pokemon.
+        /// </summary>
+        /// <param name="pokemon">The pokemon for whom to retrieve perspective on.</param>
+        /// <param name="myModel">The battle model to evaluate.</param>
+        /// <param name="teamPerspectiveID">The team for whom to retrieve the perspective on.</param>
+        /// <param name="myPlayerID">The player for whom to retrieve the perspective on.</param>
+        /// <returns></returns>
+        public static Enums.ViewPerspective GetPerspective(
+            WifiFriendly.Pokemon pokemon,
+            Model myModel,
             int teamPerspectiveID = -1,
             int myPlayerID = 0)
         {
-            PBS.Battle.View.WifiFriendly.Trainer trainer = myModel.GetTrainer(pokemon);
-            PBS.Battle.View.WifiFriendly.Team team = myModel.GetTeamOfTrainer(trainer);
+            WifiFriendly.Trainer trainer = myModel.GetTrainer(pokemon);
+            WifiFriendly.Team team = myModel.GetTeamOfTrainer(trainer);
             if (team.teamID != teamPerspectiveID)
             {
-                return PBS.Battle.View.Enums.ViewPerspective.Enemy;
+                return Enums.ViewPerspective.Enemy;
             }
             else
             {
                 if (myPlayerID == 0)
                 {
-                    return PBS.Battle.View.Enums.ViewPerspective.Ally;
+                    return Enums.ViewPerspective.Ally;
                 }
-                return PBS.Battle.View.Enums.ViewPerspective.Player;
+                return Enums.ViewPerspective.Player;
             }
         }
-        public static List<PBS.Battle.View.WifiFriendly.Pokemon> FilterPokemonByPerspective(
-            List<PBS.Battle.View.WifiFriendly.Pokemon> pokemon,
-            PBS.Battle.View.Enums.ViewPerspective viewPerspective,
-            PBS.Battle.View.Model myModel,
+        /// <summary>
+        /// Returns the view perspective on the given pokemon.
+        /// </summary>
+        /// <param name="pokemon">The pokemon for whom to retrieve perspective on.</param>
+        /// <param name="viewPerspective">The pokemon for whom to retrieve perspective on.</param>
+        /// <param name="myModel">The battle model to evaluate.</param>
+        /// <param name="teamPerspectiveID">The team for whom to retrieve the perspective on.</param>
+        /// <param name="myPlayerID">The player for whom to retrieve the perspective on.</param>
+        /// <returns></returns>
+        public static List<WifiFriendly.Pokemon> FilterPokemonByPerspective(
+            List<WifiFriendly.Pokemon> pokemon,
+            Enums.ViewPerspective viewPerspective,
+            Model myModel,
             int teamPerspectiveID = -1,
             int myPlayerID = 0
             )
         {
-            List<PBS.Battle.View.WifiFriendly.Pokemon> filteredPokemon = new List<PBS.Battle.View.WifiFriendly.Pokemon>();
+            List<WifiFriendly.Pokemon> filteredPokemon = new List<WifiFriendly.Pokemon>();
             for (int i = 0; i < pokemon.Count; i++)
             {
-                PBS.Battle.View.Enums.ViewPerspective perspective = GetPerspective(
+                Enums.ViewPerspective perspective = GetPerspective(
                     pokemon: pokemon[i],
                     myModel: myModel,
                     teamPerspectiveID: teamPerspectiveID,
@@ -481,16 +523,20 @@ namespace PBS.Battle.View.UI
             }
             return filteredPokemon;
         }
-
+        /// <summary>
+        /// Returns text dependent on the given view perspective.
+        /// </summary>
+        /// <param name="viewPerspective">The given view perspective.</param>
+        /// <param name="myModel">The battle model to evaluate.</param>
+        /// <param name="lowercase">If true, the text is forced to lowercase.</param>
+        /// <returns></returns>
         public static string GetPrefix(
-            PBS.Battle.View.Enums.ViewPerspective viewPerspective,
-            PBS.Battle.View.Model myModel,
-            int teamPerspectiveID = -1,
-            int myPlayerID = 0,
+            Enums.ViewPerspective viewPerspective,
+            Model myModel,
             bool lowercase = false)
         {
-            string prefix = (viewPerspective == PBS.Battle.View.Enums.ViewPerspective.Ally) ? "The ally "
-                : (viewPerspective == PBS.Battle.View.Enums.ViewPerspective.Enemy) ? 
+            string prefix = (viewPerspective == Enums.ViewPerspective.Ally) ? "The ally "
+                : (viewPerspective == Enums.ViewPerspective.Enemy) ? 
                     (myModel.settings.isWildBattle? "The wild " : "The foe's ")
                 : "";
             if (lowercase)
@@ -500,15 +546,24 @@ namespace PBS.Battle.View.UI
 
             return prefix;
         }
+        /// <summary>
+        ///  Returns prefix text dependent on the given pokemon.
+        /// </summary>
+        /// <param name="pokemon">The pokemon for whom to retrieve prefix text on.</param>
+        /// <param name="myModel">The battle model to evaluate.</param>
+        /// <param name="teamPerspectiveID">The team for whom to retrieve the perspective on.</param>
+        /// <param name="myPlayerID">The player for whom to retrieve the perspective on.</param>
+        /// <param name="lowercase">If true, the text is forced to lowercase.</param>
+        /// <returns></returns>
         public static string GetPrefix(
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon,
-            PBS.Battle.View.Model myModel,
+            WifiFriendly.Pokemon pokemon,
+            Model myModel,
             int teamPerspectiveID = -1,
             int myPlayerID = 0,
-            bool capitalize = true)
+            bool lowercase = false)
         {
             string text = "";
-            PBS.Battle.View.WifiFriendly.Trainer trainer = myModel.GetTrainer(pokemon);
+            WifiFriendly.Trainer trainer = myModel.GetTrainer(pokemon);
             if (pokemon.teamPos != teamPerspectiveID)
             {
                 text = "The opposing ";
@@ -523,55 +578,25 @@ namespace PBS.Battle.View.UI
                     }
                 }
             }
-            if (!capitalize)
+            if (lowercase)
             {
                 text = text.ToLower();
                 text = " " + text;
             }
             return text;
         }
+        #endregion
 
-        public string GetPokemonName(PBS.Battle.View.WifiFriendly.Pokemon pokemon)
-        {
-            return GetPokemonNames(new List<PBS.Battle.View.WifiFriendly.Pokemon> { pokemon });
-        }
-        public string GetPokemonNames(List<PBS.Battle.View.WifiFriendly.Pokemon> pokemonList, bool orConjunct = false)
-        {
-            string conjunct = (orConjunct) ? "or" : "and";
-
-            string names = "";
-            if (pokemonList.Count == 1)
-            {
-                return pokemonList[0].nickname;
-            }
-            else if (pokemonList.Count == 2)
-            {
-                return pokemonList[0].nickname + " " + conjunct + " " + pokemonList[1].nickname;
-            }
-            else
-            {
-                for (int i = 0; i < pokemonList.Count; i++)
-                {
-                    names += (i == pokemonList.Count - 1) ?
-                        conjunct + " " + pokemonList[i].nickname :
-                        pokemonList[i].nickname + ", ";
-                }
-            }
-            return names;
-        }
-        public string GetTrainerNames(List<PBS.Battle.View.WifiFriendly.Trainer> trainers)
-        {
-            string text = "";
-            for (int i = 0; i < trainers.Count; i++)
-            {
-                text += (i == 0)? trainers[i].name : " and " + trainers[i].name;
-            }
-            return text;
-        }
-
+        #region Message Rendering
+        /// <summary>
+        /// Returns the text-name of the given stat.
+        /// </summary>
+        /// <param name="stat">The stat whose name to retrieve.</param>
+        /// <param name="capitalize">If true, all letters are capitalized.</param>
+        /// <returns></returns>
         public static string ConvertStatToString(PokemonStats stat, bool capitalize = true)
         {
-            return (stat == PokemonStats.Attack) ? "Attack"
+            string statString = (stat == PokemonStats.Attack) ? "Attack"
                 : (stat == PokemonStats.Defense) ? "Defense"
                 : (stat == PokemonStats.SpecialAttack) ? "Special Attack"
                 : (stat == PokemonStats.SpecialDefense) ? "Special Defense"
@@ -579,7 +604,18 @@ namespace PBS.Battle.View.UI
                 : (stat == PokemonStats.Accuracy) ? "Accuracy"
                 : (stat == PokemonStats.Evasion) ? "Evasion"
                 : "HP";
+            if (capitalize)
+            {
+                statString = statString.ToUpper();
+            }
+            return statString;
         }
+        /// <summary>
+        /// Returns the text-names of the given stats.
+        /// </summary>
+        /// <param name="statList">The stats whos names to retrieve.</param>
+        /// <param name="capitalize">If true, all letters are capitalized.</param>
+        /// <returns></returns>
         public static string ConvertStatsToString(PokemonStats[] statList, bool capitalize = true)
         {
             if (statList.Length == 7)
@@ -610,7 +646,11 @@ namespace PBS.Battle.View.UI
             }
             return text;
         }
-
+        /// <summary>
+        /// Returns the text-names of the given types.
+        /// </summary>
+        /// <param name="typeIDs">The types to retrieve the names of.</param>
+        /// <returns></returns>
         public static string ConvertTypesToString(List<string> typeIDs)
         {
             string names = "";
@@ -636,22 +676,34 @@ namespace PBS.Battle.View.UI
             return names;
         }
 
+        /// <summary>
+        /// Returns formatted text for the given trainer.
+        /// </summary>
+        /// <param name="playerID">The ID of the trainer to evaluate.</param>
+        /// <param name="myModel">The battle model to evaluate.</param>
+        /// <param name="teamPerspectiveID">The team for whom to retrieve the perspective on.</param>
+        /// <param name="baseString">A base string to format, given the trainer.</param>
+        /// <param name="myPlayerID">The ID of the player for whom the text is evaluated for.</param>
+        /// <param name="myTrainer">The ID of the trainer for whom the text is evaluated for.</param>
+        /// <param name="myTeamPerspective">The team for whom the text is evaluated for.</param>
+        /// <returns></returns>
         public static string RenderMessageTrainer(
             int playerID, 
-            PBS.Battle.View.Model myModel,
+            Model myModel,
             int teamPerspectiveID = -1, 
             string baseString = "",
             int myPlayerID = 0,
-            PBS.Battle.View.WifiFriendly.Trainer myTrainer = null,
-            PBS.Battle.View.WifiFriendly.Team myTeamPerspective = null)
+            WifiFriendly.Trainer myTrainer = null,
+            WifiFriendly.Team myTeamPerspective = null)
         {
             if (teamPerspectiveID == -1)
             {
                 teamPerspectiveID = myTeamPerspective.teamID;
             }
-            PBS.Battle.View.WifiFriendly.Trainer trainer = myModel.GetMatchingTrainer(playerID);
+            WifiFriendly.Trainer trainer = myModel.GetMatchingTrainer(playerID);
             GameTextData textData = 
-                (trainer.teamPos != teamPerspectiveID)? GameTextDatabase.instance.GetGameTextData("trainer-perspective-opposing")
+                (trainer.teamPos != teamPerspectiveID)? 
+                GameTextDatabase.instance.GetGameTextData("trainer-perspective-opposing")
                 : (myTrainer == null)? GameTextDatabase.instance.GetGameTextData("trainer-perspective-ally")
                 : GameTextDatabase.instance.GetGameTextData("trainer-perspective-player");
 
@@ -687,13 +739,23 @@ namespace PBS.Battle.View.UI
 
             return newString;
         }
+        /// <summary>
+        /// Returns formatted text for the given team.
+        /// </summary>
+        /// <param name="teamID">The ID of the team to evaluate.</param>
+        /// <param name="teamPerspectiveID">The team for whom to retrieve the perspective on.</param>
+        /// <param name="baseString">A base string to format, given the trainer.</param>
+        /// <param name="myPlayerID">The ID of the player for whom the text is evaluated for.</param>
+        /// <param name="myTrainer">The ID of the trainer for whom the text is evaluated for.</param>
+        /// <param name="myTeamPerspective">The team for whom the text is evaluated for.</param>
+        /// <returns></returns>
         public static string RenderMessageTeam(
             int teamID,
             int teamPerspectiveID = -1, 
             string baseString = "",
             int myPlayerID = 0,
-            PBS.Battle.View.WifiFriendly.Trainer myTrainer = null,
-            PBS.Battle.View.WifiFriendly.Team myTeamPerspective = null)
+            WifiFriendly.Trainer myTrainer = null,
+            WifiFriendly.Team myTeamPerspective = null)
         {
             if (teamPerspectiveID == -1)
             {
@@ -723,12 +785,21 @@ namespace PBS.Battle.View.UI
 
             return newString;
         }
+        /// <summary>
+        /// Returns formatted text given a text-code.
+        /// </summary>
+        /// <param name="message">The message code.</param>
+        /// <param name="myModel">The battle model to evaluate.</param>
+        /// <param name="myPlayerID">The ID of the player for whom the text is evaluated for.</param>
+        /// <param name="myTrainer">The ID of the trainer for whom the text is evaluated for.</param>
+        /// <param name="myTeamPerspective">The team for whom the text is evaluated for.</param>
+        /// <returns></returns>
         public static string RenderMessage(
-            PBS.Battle.View.Events.MessageParameterized message,
-            PBS.Battle.View.Model myModel,
+            Events.MessageParameterized message,
+            Model myModel,
             int myPlayerID = 0,
-            PBS.Battle.View.WifiFriendly.Trainer myTrainer = null,
-            PBS.Battle.View.WifiFriendly.Team myTeamPerspective = null)
+            WifiFriendly.Trainer myTrainer = null,
+            WifiFriendly.Team myTeamPerspective = null)
         {
             GameTextData textData = GameTextDatabase.instance.GetGameTextData(message.messageCode);
             if (textData == null)
@@ -738,10 +809,10 @@ namespace PBS.Battle.View.UI
             string baseString = textData.languageDict[GameSettings.language];
             string newString = baseString;
 
-            PBS.Battle.View.WifiFriendly.Trainer trainerPerspective = 
+            WifiFriendly.Trainer trainerPerspective = 
                 (myTrainer == null)? myModel.GetMatchingTrainer(message.playerPerspectiveID)
                 : myTrainer;
-            PBS.Battle.View.WifiFriendly.Team teamPerspective = 
+            WifiFriendly.Team teamPerspective = 
                 (myTeamPerspective == null)? myModel.GetMatchingTeam(message.teamPerspectiveID)
                 : myTeamPerspective;
 
@@ -750,7 +821,7 @@ namespace PBS.Battle.View.UI
 
             if (!string.IsNullOrEmpty(message.pokemonID))
             {
-                PBS.Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(message.pokemonID);
+                WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(message.pokemonID);
                 PokemonData pokemonData = PokemonDatabase.instance.GetPokemonData(pokemon.pokemonID);
                 newString = newString.Replace("{{-pokemon-}}", pokemon.nickname);
                 newString = newString.Replace("{{-pokemon-form-}}", pokemonData.formName);
@@ -760,7 +831,7 @@ namespace PBS.Battle.View.UI
             }
             if (!string.IsNullOrEmpty(message.pokemonUserID))
             {
-                PBS.Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(message.pokemonUserID);
+                WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(message.pokemonUserID);
                 PokemonData pokemonData = PokemonDatabase.instance.GetPokemonData(pokemon.pokemonID);
                 newString = newString.Replace("{{-user-pokemon-}}", pokemon.nickname);
                 newString = newString.Replace("{{-user-pokemon-form-}}", pokemonData.formName);
@@ -770,7 +841,7 @@ namespace PBS.Battle.View.UI
             }
             if (!string.IsNullOrEmpty(message.pokemonTargetID))
             {
-                PBS.Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(message.pokemonTargetID);
+                WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(message.pokemonTargetID);
                 PokemonData pokemonData = PokemonDatabase.instance.GetPokemonData(pokemon.pokemonID);
                 newString = newString.Replace("{{-target-pokemon-}}", pokemon.nickname);
                 newString = newString.Replace("{{-target-pokemon-form-}}", pokemonData.formName);
@@ -780,7 +851,7 @@ namespace PBS.Battle.View.UI
             }
             if (message.pokemonListIDs.Count > 0)
             {
-                List<PBS.Battle.View.WifiFriendly.Pokemon> pokemonList = new List<Battle.View.WifiFriendly.Pokemon>();
+                List<WifiFriendly.Pokemon> pokemonList = new List<Battle.View.WifiFriendly.Pokemon>();
                 for (int i = 0; i < message.pokemonListIDs.Count; i++)
                 {
                     pokemonList.Add(myModel.GetMatchingPokemon(message.pokemonListIDs[i]));
@@ -899,6 +970,9 @@ namespace PBS.Battle.View.UI
 
             return newString;
         }
+        #endregion
+
+        #endregion
     }
 }
 
