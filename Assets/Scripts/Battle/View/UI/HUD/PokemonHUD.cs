@@ -1,10 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace PBS.Battle.View.UI.HUD
 {
+    /// <summary>
+    /// This component handles the HUD block of a Pokemon. This includes its name, gender,
+    /// level, health, experience points, etc.
+    /// </summary>
     public class PokemonHUD : MonoBehaviour
     {
         [Header("Text")]
@@ -23,6 +25,9 @@ namespace PBS.Battle.View.UI.HUD
             hpMed,
             hpLow;
 
+        /// <summary>
+        /// The unique ID of the Pokemon that this HUD block is associated with.
+        /// </summary>
         public string pokemonUniqueID;
     }
 }

@@ -5,18 +5,31 @@ using UnityEngine.UI;
 
 namespace PBS.Battle.View.UI
 {
+    /// <summary>
+    /// This component handles drawing and formatting text into UI text boxes.
+    /// </summary>
     public class Dialog : MonoBehaviour
     {
+        #region Attributes
         [Header("Components")]
+        [Tooltip("The dialog box background.")]
         public Image dialogBox;
+        [Tooltip("The UI text element.")]
         public Text dialogBoxText;
 
         [Header("Settings")]
+        [Tooltip("The rate at which characters are drawn per second.")]
         public float charPerSec = 60f;
-        public float scrollSpeed = 0.1f;
+        [Tooltip("The maximum number of lines that can be drawn in this dialog box.")]
         public int defaultDialogLines = 2;
-        public bool advancedDialogPressed = false;
+        [HideInInspector] public bool advancedDialogPressed = false;
+        #endregion
 
+        #region Dialog Box
+        /// <summary>
+        /// Displays the dialog box.
+        /// </summary>
+        /// <param name="clearOnDraw">If true, clears any existing dialog text.</param>
         public void DrawBox(bool clearOnDraw = true)
         {
             dialogBox.gameObject.SetActive(true);
@@ -25,15 +38,31 @@ namespace PBS.Battle.View.UI
                 ClearBox();
             }
         }
+        /// <summary>
+        /// Removes the dialog box.
+        /// </summary>
         public void UndrawBox()
         {
             dialogBox.gameObject.SetActive(false);
         }
+        /// <summary>
+        /// Clears the dialog box text.
+        /// </summary>
         public void ClearBox()
         {
             dialogBoxText.text = "";
         }
+        #endregion
 
+        #region Drawing Text on the UI
+        /// <summary>
+        /// Draws text into the specified dialog box.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="undrawOnFinish"></param>
+        /// <param name="textBox"></param>
+        /// <param name="lines"></param>
+        /// <returns></returns>
         public IEnumerator DrawText(string text, bool undrawOnFinish = false, Text textBox = null, int lines = -1)
         {
             yield return StartCoroutine(DrawText(
@@ -43,7 +72,19 @@ namespace PBS.Battle.View.UI
                 textBox: textBox,
                 lines: lines));
         }
-        public IEnumerator DrawTextInstant(string text, bool undrawOnFinish = false, Text textBox = null, int lines = -1)
+        /// <summary>
+        /// Draws text into the specified dialog box with all characters at the same time.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="undrawOnFinish"></param>
+        /// <param name="textBox"></param>
+        /// <param name="lines"></param>
+        /// <returns></returns>
+        public IEnumerator DrawTextInstant(
+            string text, 
+            bool undrawOnFinish = false, 
+            Text textBox = null, 
+            int lines = -1)
         {
             yield return StartCoroutine(DrawText(
                 text: text, 
@@ -52,7 +93,23 @@ namespace PBS.Battle.View.UI
                 textBox: textBox,
                 lines: lines));
         }
-        public IEnumerator DrawText(string text, float time, float lockedTime, bool undrawOnFinish = false, Text textBox = null, int lines = -1)
+        /// <summary>
+        /// Draws text into the specified dialog box.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="time"></param>
+        /// <param name="lockedTime"></param>
+        /// <param name="undrawOnFinish"></param>
+        /// <param name="textBox"></param>
+        /// <param name="lines"></param>
+        /// <returns></returns>
+        public IEnumerator DrawText(
+            string text, 
+            float time, 
+            float lockedTime, 
+            bool undrawOnFinish = false, 
+            Text textBox = null, 
+            int lines = -1)
         {
             yield return StartCoroutine(DrawText(
                 text: text, 
@@ -64,7 +121,19 @@ namespace PBS.Battle.View.UI
                 textBox: textBox,
                 lines: lines));
         }
-
+        /// <summary>
+        /// Draws text into the specified dialog box.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="secPerChar"></param>
+        /// <param name="time"></param>
+        /// <param name="lockedTime"></param>
+        /// <param name="silent"></param>
+        /// <param name="hold"></param>
+        /// <param name="undrawOnFinish"></param>
+        /// <param name="textBox"></param>
+        /// <param name="lines"></param>
+        /// <returns></returns>
         public IEnumerator DrawText(
             string text,
             float secPerChar,
@@ -77,7 +146,7 @@ namespace PBS.Battle.View.UI
             int lines = -1
             )
         {
-            yield return StartCoroutine(DrawRenderedText(
+            yield return StartCoroutine(DrawTextCustom(
                 text: text,
                 secPerChar: secPerChar,
                 time: time,
@@ -95,7 +164,24 @@ namespace PBS.Battle.View.UI
                 ));
         }
 
-        private IEnumerator DrawRenderedText(
+        /// <summary>
+        /// Draws text into the specified dialog box, with full customization.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="secPerChar"></param>
+        /// <param name="time"></param>
+        /// <param name="lockedTime"></param>
+        /// <param name="silent"></param>
+        /// <param name="hold"></param>
+        /// <param name="undrawOnFinish"></param>
+        /// <param name="textBox"></param>
+        /// <param name="lines"></param>
+        /// <param name="capitalize"></param>
+        /// <param name="bold"></param>
+        /// <param name="italic"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        private IEnumerator DrawTextCustom(
             string text,
             float secPerChar,
             float time = 2f,
@@ -205,7 +291,7 @@ namespace PBS.Battle.View.UI
             if (splitPoint == -1)
             {
                 textBox.text = "";
-                yield return StartCoroutine(DrawTextNew(
+                yield return StartCoroutine(DrawRenderedText(
                     text: textToDraw,
                     secPerChar: secPerChar,
                     textBox: textBox,
@@ -242,7 +328,19 @@ namespace PBS.Battle.View.UI
             }
         }
 
-        private IEnumerator DrawTextNew(
+        /// <summary>
+        /// Renders and draws text into the specified dialog box.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="secPerChar"></param>
+        /// <param name="textBox"></param>
+        /// <param name="charsToDraw"></param>
+        /// <param name="capitalize"></param>
+        /// <param name="bold"></param>
+        /// <param name="italic"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        private IEnumerator DrawRenderedText(
             string text,
             float secPerChar,
             Text textBox,
@@ -316,7 +414,18 @@ namespace PBS.Battle.View.UI
                 i += skippedChars;
             }
         }
+        #endregion
 
+        #region Render/Format Text
+        /// <summary>
+        /// Returns rendered string to draw on a text box.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="capitalize"></param>
+        /// <param name="bold"></param>
+        /// <param name="italic"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
         private string GetRenderedText(
             string text,
             bool capitalize = false,
@@ -378,6 +487,11 @@ namespace PBS.Battle.View.UI
             return drawnText;
         }
 
+        /// <summary>
+        /// Returns formatted characters to be drawn.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static string GetFilteredText(
             string text
             )
@@ -425,6 +539,15 @@ namespace PBS.Battle.View.UI
             return drawnText;
         }
 
+        /// <summary>
+        /// Returns a formatted character to be drawn.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="capitalize"></param>
+        /// <param name="bold"></param>
+        /// <param name="italic"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
         public static string GetDrawnCharacter(
             string text,
             bool capitalize = false,
@@ -460,6 +583,13 @@ namespace PBS.Battle.View.UI
             return builtText;
         }
 
+        /// <summary>
+        /// Returns the index at which the string can fit into the specified dialog box.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="textBox"></param>
+        /// <param name="lines"></param>
+        /// <returns></returns>
         public int getOverflowPoint(
             string message, 
             Text textBox = null,
@@ -488,6 +618,7 @@ namespace PBS.Battle.View.UI
             }
             return -1;
         }
+        #endregion
     }
 }
 

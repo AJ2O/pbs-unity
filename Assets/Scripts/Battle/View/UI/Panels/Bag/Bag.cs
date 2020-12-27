@@ -5,8 +5,12 @@ using UnityEngine.UI;
 
 namespace PBS.Battle.View.UI.Panels
 {
+    /// <summary>
+    /// This component handles the UI menu for Bag Pocket selection.
+    /// </summary>
     public class Bag : BasePanel
     {
+        #region Attributes
         [Header("Buttons")]
         public BTLUI_Button bagBtnHealth;
         public BTLUI_Button bagBtnPokeballs,
@@ -16,7 +20,14 @@ namespace PBS.Battle.View.UI.Panels
 
         [Header("Text")]
         public Text promptText;
+        #endregion
 
+        #region Pockets
+
+        /// <summary>
+        /// Displays the buttons associated with the given bag pockets.
+        /// </summary>
+        /// <param name="battlePockets"></param>
         public void SetPockets(List<ItemBattlePocket> battlePockets)
         {
             bagBtnHealth.gameObject.SetActive(battlePockets.Contains(ItemBattlePocket.HPRestore));
@@ -31,6 +42,10 @@ namespace PBS.Battle.View.UI.Panels
             backBtn.gameObject.SetActive(true);
         }
 
+        /// <summary>
+        /// Highlights the given pocket on the UI, and unhighlights the rest.
+        /// </summary>
+        /// <param name="battlePocket">The pocket to highlight.</param>
         public void HighlightPocket(ItemBattlePocket battlePocket)
         {
             bagBtnHealth.UnselectSelf();
@@ -65,6 +80,9 @@ namespace PBS.Battle.View.UI.Panels
                     break;
             }
         }
+        /// <summary>
+        /// Highlights the back button on the UI.
+        /// </summary>
         public void HighlightBackButton()
         {
             bagBtnHealth.UnselectSelf();
@@ -75,5 +93,6 @@ namespace PBS.Battle.View.UI.Panels
             backBtn.SelectSelf();
             promptText.text = "Go back to commands.";
         }
+        #endregion
     }
 }

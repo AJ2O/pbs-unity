@@ -5,38 +5,53 @@ using UnityEngine.UI;
 
 namespace PBS.Battle.View.UI.Panels
 {
+    /// <summary>
+    /// This component handles the UI menu for item selection.
+    /// </summary>
     public class BagItem : BasePanel
     {
+        #region Attributes
         [Header("Buttons")]
-        public Panels.BagItemButton bagBtn1;
-        public Panels.BagItemButton bagBtn2,
+        public BagItemButton bagBtn1;
+        public BagItemButton bagBtn2,
             bagBtn3,
             bagBtn4;
-        public Panels.BagItemButton scrollRightBtn,
+        public BagItemButton scrollRightBtn,
             scrollLeftBtn;
-        public Panels.BagItemButton backBtn;
+        public BagItemButton backBtn;
 
         [Header("Text")]
         public Text promptText;
         public Text pageText;
 
+        [Tooltip("The maximum amount of items to display on-screen.")]
         public int maxItemCount = 4;
+        #endregion
 
+        #region Unity
         private void Awake()
         {
             backBtn.itemID = "";
         }
+        #endregion
 
-        public void SetItems(PBS.Battle.View.WifiFriendly.Trainer trainer, List<Item> list, int offset)
+        #region Items
+        /// <summary>
+        /// Sets the items to be displayed on this component.
+        /// </summary>
+        /// <param name="trainer">The trainer who owns the given items.</param>
+        /// <param name="list">The list of items.</param>
+        /// <param name="offset">The offset in the item list to start displaying items.</param>
+        public void SetItems(WifiFriendly.Trainer trainer, List<Item> list, int offset)
         {
             bagBtn1.itemID = null;
             bagBtn2.itemID = null;
             bagBtn3.itemID = null;
             bagBtn4.itemID = null;
-            for (int i = offset; i < offset + 4 && i < list.Count; i++)
+            for (int i = offset; i < offset + maxItemCount && i < list.Count; i++)
             {
                 Item item = list[i];
-                Panels.BagItemButton curBtn = ((i - offset) == 0) ? bagBtn1
+                BagItemButton curBtn = ((i - offset) == 0) ? bagBtn1
                     : ((i - offset) == 1) ? bagBtn2
                     : ((i - offset) == 2) ? bagBtn3
                     : ((i - offset) == 3) ? bagBtn4
@@ -48,7 +63,7 @@ namespace PBS.Battle.View.UI.Panels
                 }
             }
 
-            int itemButtonCount = Mathf.Min(4, list.Count - offset);
+            int itemButtonCount = Mathf.Min(maxItemCount, list.Count - offset);
             if (itemButtonCount < 4) bagBtn4.gameObject.SetActive(false);
             if (itemButtonCount < 3) bagBtn3.gameObject.SetActive(false);
             if (itemButtonCount < 2) bagBtn2.gameObject.SetActive(false);
@@ -58,7 +73,13 @@ namespace PBS.Battle.View.UI.Panels
             int currentPage = (offset / maxItemCount) + 1;
             pageText.text = "Page " + currentPage + " / " + totalPages;
         }
-        public void SetItemButton(PBS.Battle.View.WifiFriendly.Trainer trainer, Item item, Panels.BagItemButton button)
+        /// <summary>
+        /// Associates the given item with the given button.
+        /// </summary>
+        /// <param name="trainer">The trainer who owns the given item.</param>
+        /// <param name="item">The item to associate.</param>
+        /// <param name="button">The button to associate.</param>
+        public void SetItemButton(WifiFriendly.Trainer trainer, Item item, BagItemButton button)
         {
             button.nameTxt.text = item.data.itemName;
             int itemCount = 0;
@@ -88,9 +109,13 @@ namespace PBS.Battle.View.UI.Panels
             button.UnselectSelf();
         }
 
+        /// <summary>
+        /// Highlights the button with the matching item ID, and unhighlights the rest.
+        /// </summary>
+        /// <param name="itemID">The ID of the item to match.</param>
         public void HighlightButton(string itemID)
         {
-            Panels.BagItemButton selectedBtn = null;
+            BagItemButton selectedBtn = null;
             scrollLeftBtn.UnselectSelf();
             scrollRightBtn.UnselectSelf();
 
@@ -150,6 +175,9 @@ namespace PBS.Battle.View.UI.Panels
                 promptText.text = "Choose an item.";
             }
         }
+        /// <summary>
+        /// Highlights the back button on the UI.
+        /// </summary>
         public void HighlightBackButton()
         {
             bagBtn1.UnselectSelf();
@@ -160,5 +188,6 @@ namespace PBS.Battle.View.UI.Panels
             backBtn.SelectSelf();
             promptText.text = "Go back to commands.";
         }
+        #endregion
     }
 }

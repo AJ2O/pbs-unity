@@ -5,10 +5,15 @@ using UnityEngine;
 
 namespace PBS.Battle.View.UI.HUD
 {
+    /// <summary>
+    /// This component handles HUD elements on the battle UI.
+    /// </summary>
     public class Panel : MonoBehaviour
     {
+        #region Attributes
         [Header("Pokemon HUD")]
-        public HUD.PokemonHUD pokemonHUDPrefab;
+        [Tooltip("The preset for Pokemon Health HUD elements.")]
+        public PokemonHUD pokemonHUDPrefab;
         public GameObject pokemonHUDNearRoot,
             pokemonHUDFarRoot;
         public Transform
@@ -26,7 +31,7 @@ namespace PBS.Battle.View.UI.HUD
             pokemonHUDSpawnFarTriple0,
             pokemonHUDSpawnFarTriple1,
             pokemonHUDSpawnFarTriple2;
-        [HideInInspector] public List<HUD.PokemonHUD> pokemonHUDs = new List<HUD.PokemonHUD>();
+        [HideInInspector] public List<PokemonHUD> pokemonHUDs = new List<PokemonHUD>();
 
         // WIP
         [Header("Party HUD")]
@@ -41,27 +46,40 @@ namespace PBS.Battle.View.UI.HUD
             partyHUDSpawnNearTriple,
             partyHUDSpawnFarTriple;
         [HideInInspector] public List<GameObject> partyHUDs = new List<GameObject>();
+        #endregion
 
         private void Awake()
         {
             ClearSelf();
         }
 
+        /// <summary>
+        /// Clears Pokemon and Party HUD elements.
+        /// </summary>
         public void ClearSelf()
         {
-            pokemonHUDs = new List<HUD.PokemonHUD>();
+            pokemonHUDs = new List<PokemonHUD>();
             partyHUDs = new List<GameObject>();
         }
 
-        // HUD Activity
-        public void SetPokemonHUDActive(PBS.Battle.View.WifiFriendly.Pokemon pokemon, bool active)
+        #region Pokemon HUD
+        /// <summary>
+        /// Displays or hides the HUD box associated with the given Pokemon.
+        /// </summary>
+        /// <param name="pokemon"></param>
+        /// <param name="active"></param>
+        public void SetPokemonHUDActive(WifiFriendly.Pokemon pokemon, bool active)
         {
-            HUD.PokemonHUD pokemonHUD = GetPokemonHUD(pokemon);
+            PokemonHUD pokemonHUD = GetPokemonHUD(pokemon);
             if (pokemonHUD != null)
             {
                 pokemonHUD.gameObject.SetActive(active);
             }
         }
+        /// <summary>
+        /// Displays or hides all Pokemon HUD boxes.
+        /// </summary>
+        /// <param name="active"></param>
         public void SetPokemonHUDsActive(bool active)
         {
             for (int i = 0; i < pokemonHUDs.Count; i++)
@@ -70,9 +88,15 @@ namespace PBS.Battle.View.UI.HUD
             }
         }
 
-        // Setting HUD Parameters
+        /// <summary>
+        /// Returns the root position of the given Pokemon.
+        /// </summary>
+        /// <param name="pokemon"></param>
+        /// <param name="teamMode"></param>
+        /// <param name="isNear"></param>
+        /// <returns></returns>
         public Transform GetPokemonHUDSpawnPosition(
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon,
+            WifiFriendly.Pokemon pokemon,
             TeamMode teamMode,
             bool isNear)
         {
@@ -97,7 +121,12 @@ namespace PBS.Battle.View.UI.HUD
             }
             return spawnPos;
         }
-        public HUD.PokemonHUD GetPokemonHUD(PBS.Battle.View.WifiFriendly.Pokemon pokemon)
+        /// <summary>
+        /// Returns the HUD box associated with the given Pokemon.
+        /// </summary>
+        /// <param name="pokemon"></param>
+        /// <returns></returns>
+        public PokemonHUD GetPokemonHUD(WifiFriendly.Pokemon pokemon)
         {
             for (int i = 0; i < pokemonHUDs.Count; i++)
             {
@@ -108,8 +137,18 @@ namespace PBS.Battle.View.UI.HUD
             }
             return null;
         }
+        /// <summary>
+        /// Updates the HUD box associated with the given Pokemon with the given statistics.
+        /// </summary>
+        /// <param name="pokemon"></param>
+        /// <param name="nickname"></param>
+        /// <param name="gender"></param>
+        /// <param name="level"></param>
+        /// <param name="nonVolatileStatusID"></param>
+        /// <param name="currentHP"></param>
+        /// <param name="maxHP"></param>
         public void UpdatePokemonHUD(
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon,
+            WifiFriendly.Pokemon pokemon,
             string nickname = "",
             PokemonGender gender = PokemonGender.Genderless,
             int level = 1,
@@ -117,7 +156,7 @@ namespace PBS.Battle.View.UI.HUD
             int currentHP = 1,
             int maxHP = 1)
         {
-            HUD.PokemonHUD pokemonHUD = GetPokemonHUD(pokemon);
+            PokemonHUD pokemonHUD = GetPokemonHUD(pokemon);
             if (pokemonHUD != null)
             {
                 pokemonHUD.nameTxt.text = nickname;
@@ -146,9 +185,15 @@ namespace PBS.Battle.View.UI.HUD
             }
         }
 
-        // Drawing HUD
-        public HUD.PokemonHUD DrawPokemonHUD(
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon,
+        /// <summary>
+        /// Spawns a HUD box associated with the given Pokemon.
+        /// </summary>
+        /// <param name="pokemon"></param>
+        /// <param name="teamMode"></param>
+        /// <param name="isNear"></param>
+        /// <returns></returns>
+        public PokemonHUD DrawPokemonHUD(
+            WifiFriendly.Pokemon pokemon,
             TeamMode teamMode,
             bool isNear)
         {
@@ -162,7 +207,7 @@ namespace PBS.Battle.View.UI.HUD
             else
             {
                 // draw pokemon HUD
-                HUD.PokemonHUD pokemonHUD = Instantiate(pokemonHUDPrefab, spawnPos.position, Quaternion.identity, spawnPos);
+                PokemonHUD pokemonHUD = Instantiate(pokemonHUDPrefab, spawnPos.position, Quaternion.identity, spawnPos);
                 pokemonHUD.pokemonUniqueID = pokemon.uniqueID;
                 pokemonHUD.hpObj.gameObject.SetActive(isNear
                     && (teamMode == TeamMode.Single
@@ -184,9 +229,14 @@ namespace PBS.Battle.View.UI.HUD
                 return pokemonHUD;
             }
         }
-        public bool UndrawPokemonHUD(PBS.Battle.View.WifiFriendly.Pokemon pokemon)
+        /// <summary>
+        /// Hides the HUD box associated with the given Pokemon.
+        /// </summary>
+        /// <param name="pokemon"></param>
+        /// <returns></returns>
+        public bool UndrawPokemonHUD(WifiFriendly.Pokemon pokemon)
         {
-            HUD.PokemonHUD pokemonHUD = GetPokemonHUD(pokemon);
+            PokemonHUD pokemonHUD = GetPokemonHUD(pokemon);
             if (pokemonHUD != null)
             {
                 pokemonHUDs.Remove(pokemonHUD);
@@ -195,16 +245,17 @@ namespace PBS.Battle.View.UI.HUD
             }
             return false;
         }
+        #endregion
 
-        // Animation
+        #region Animation
         public IEnumerator AnimatePokemonHUDHPChange(
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon,
+            WifiFriendly.Pokemon pokemon,
             int preHP, 
             int postHP, 
             int maxHP,
             float timeSpan = 1f)
         {
-            HUD.PokemonHUD pokemonHUD = GetPokemonHUD(pokemon);
+            PokemonHUD pokemonHUD = GetPokemonHUD(pokemon);
             if (pokemonHUD != null)
             {
                 float preValue = pokemonHUD.hpBar.fillAmount;
@@ -244,6 +295,7 @@ namespace PBS.Battle.View.UI.HUD
                 yield return null;
             }
         }
+        #endregion
     }
 }
 

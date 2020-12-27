@@ -6,11 +6,15 @@ using UnityEngine.UI;
 
 namespace PBS.Battle.View.UI.Panels
 {
+    /// <summary>
+    /// This component handles the UI menu for field target selection.
+    /// </summary>
     public class FieldTarget : BasePanel
     {
+        #region Attributes
         [Header("Buttons")]
-        public Panels.FieldTargetButton targetBtnNearSingle;
-        public Panels.FieldTargetButton targetBtnFarSingle,
+        public FieldTargetButton targetBtnNearSingle;
+        public FieldTargetButton targetBtnFarSingle,
 
             targetBtnNearDouble0,
             targetBtnNearDouble1,
@@ -23,48 +27,65 @@ namespace PBS.Battle.View.UI.Panels
             targetBtnFarTriple0,
             targetBtnFarTriple1,
             targetBtnFarTriple2;
-        List<Panels.FieldTargetButton> activeTargetBtns;
+        List<FieldTargetButton> activeTargetBtns;
         public BTLUI_Button backBtn;
 
         [Header("Text")]
         public Text promptText;
+        #endregion
 
+        #region Unity
         private void Awake()
         {
             ClearSelf();
         }
+        #endregion
 
+        #region Button Components
+        /// <summary>
+        /// Clears the components of this panel.
+        /// </summary>
         public override void ClearSelf()
         {
             base.ClearSelf();
-            activeTargetBtns = new List<Panels.FieldTargetButton>();
+            activeTargetBtns = new List<FieldTargetButton>();
             CleanAllButtons();
             HideAllButtons();
         }
 
+        /// <summary>
+        /// Hides all field target buttons on the panel.
+        /// </summary>
         public void HideAllButtons()
         {
-            List<Panels.FieldTargetButton> allBtns = GetAllFieldTargetButtons();
+            List<FieldTargetButton> allBtns = GetAllFieldTargetButtons();
             for (int i = 0; i < allBtns.Count; i++)
             {
-                Panels.FieldTargetButton curBtn = allBtns[i];
+                FieldTargetButton curBtn = allBtns[i];
                 curBtn.UnselectSelf();
                 curBtn.gameObject.SetActive(false);
             }
         }
+        /// <summary>
+        /// Removes components of all buttons on this panel.
+        /// </summary>
         public void CleanAllButtons()
         {
-            List<Panels.FieldTargetButton> allBtns = GetAllFieldTargetButtons();
+            List<FieldTargetButton> allBtns = GetAllFieldTargetButtons();
             for (int i = 0; i < allBtns.Count; i++)
             {
-                Panels.FieldTargetButton curBtn = allBtns[i];
+                FieldTargetButton curBtn = allBtns[i];
                 curBtn.RefreshSelf();
                 curBtn.position = null;
             }
         }
-        public List<Panels.FieldTargetButton> GetAllFieldTargetButtons()
+        /// <summary>
+        /// Returns all field target buttons on this panel.
+        /// </summary>
+        /// <returns></returns>
+        public List<FieldTargetButton> GetAllFieldTargetButtons()
         {
-            List<Panels.FieldTargetButton> allBtns = new List<Panels.FieldTargetButton>
+            List<FieldTargetButton> allBtns = new List<FieldTargetButton>
             {
                 targetBtnNearSingle, targetBtnFarSingle,
                 targetBtnNearDouble0, targetBtnNearDouble1, targetBtnFarDouble0, targetBtnFarDouble1,
@@ -73,15 +94,19 @@ namespace PBS.Battle.View.UI.Panels
             };
             return allBtns;
         }
-        public Panels.FieldTargetButton GetFieldTargetButton(
-            BattlePosition position, 
-            int teamPerspective, 
-            PBS.Battle.View.Model battleModel)
+        /// <summary>
+        /// Return a field target button to be associated with the given battle position.
+        /// </summary>
+        /// <param name="position">The battle position to use for association.</param>
+        /// <param name="teamPerspective">The team persepctive used to determine the button to return.</param>
+        /// <param name="battleModel">The model used to determine the button to return.</param>
+        /// <returns></returns>
+        public FieldTargetButton GetFieldTargetButton(BattlePosition position, int teamPerspective, Model battleModel)
         {
-            PBS.Battle.View.WifiFriendly.Team team = battleModel.GetMatchingTeam(position.teamPos);
+            WifiFriendly.Team team = battleModel.GetMatchingTeam(position.teamPos);
             bool isAlly = (teamPerspective == position.teamPos);
 
-            Panels.FieldTargetButton curBtn =
+            FieldTargetButton curBtn =
 
                 // singles battle
                 (team.teamMode == TeamMode.Single) ? (isAlly ? targetBtnNearSingle : targetBtnFarSingle)
@@ -102,12 +127,17 @@ namespace PBS.Battle.View.UI.Panels
                 : null;
             return curBtn;
         }
+        #endregion
 
-        public void SetFieldTargets(
-            int teamPos, 
-            PBS.Battle.View.Model battleModel)
+        #region Field Targets
+        /// <summary>
+        /// Sets the field targets to display on this panel.
+        /// </summary>
+        /// <param name="teamPerspective">The team perspective used to determine the layout of buttons.</param>
+        /// <param name="battleModel">The model used to determine which buttons to display.</param>
+        public void SetFieldTargets(int teamPerspective, Model battleModel)
         {
-            activeTargetBtns = new List<Panels.FieldTargetButton>();
+            activeTargetBtns = new List<FieldTargetButton>();
             HideAllButtons();
             CleanAllButtons();
 
@@ -115,12 +145,10 @@ namespace PBS.Battle.View.UI.Panels
             for (int i = 0; i < allPositions.Count; i++)
             {
                 BattlePosition curPos = allPositions[i];
-                PBS.Battle.View.WifiFriendly.Team team = battleModel.GetMatchingTeam(curPos.teamPos);
-                bool isAlly = (teamPos == curPos.teamPos);
 
-                Panels.FieldTargetButton curBtn = GetFieldTargetButton(
+                FieldTargetButton curBtn = GetFieldTargetButton(
                     position: curPos,
-                    teamPerspective: teamPos,
+                    teamPerspective: teamPerspective,
                     battleModel: battleModel);
 
                 if (curBtn != null)
@@ -131,13 +159,16 @@ namespace PBS.Battle.View.UI.Panels
                 }
             }
         }
-        public void CreateFieldTargetBtn(
-            BattlePosition position, 
-            PBS.Battle.View.Model battleModel, 
-            Panels.FieldTargetButton btn)
+        /// <summary>
+        /// Associates the given battle position with the given field target button.
+        /// </summary>
+        /// <param name="position">The position to associate.</param>
+        /// <param name="battleModel">Used to determine the pokemon associated with the given position.</param>
+        /// <param name="btn">The button to associate.</param>
+        public void CreateFieldTargetBtn(BattlePosition position, Model battleModel, FieldTargetButton btn)
         {
             btn.position = position;
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon = battleModel.GetPokemonAtPosition(position);
+            WifiFriendly.Pokemon pokemon = battleModel.GetPokemonAtPosition(position);
 
             btn.RefreshSelf(active: pokemon != null);
             if (pokemon != null)
@@ -182,16 +213,21 @@ namespace PBS.Battle.View.UI.Panels
                 }
             }
         }
-
+        
+        /// <summary>
+        /// Highlights the selected battle positions, but unhighlights the rest.
+        /// </summary>
+        /// <param name="userPos">The position of the move user Pokemon.</param>
+        /// <param name="targetPositions">The battle positions to highlight.</param>
         public void HighlightFieldTargets(BattlePosition userPos, List<BattlePosition> targetPositions)
         {
             backBtn.UnselectSelf();
             promptText.text = "Choose a target by scrolling left or right.";
-            List<Panels.FieldTargetButton> fieldTargetBtns = activeTargetBtns;
+            List<FieldTargetButton> fieldTargetBtns = activeTargetBtns;
             for (int i = 0; i < fieldTargetBtns.Count; i++)
             {
                 bool posWasTargeted = false;
-                Panels.FieldTargetButton curBtn = fieldTargetBtns[i];
+                FieldTargetButton curBtn = fieldTargetBtns[i];
                 BattlePosition curPos = fieldTargetBtns[i].position;
 
                 for (int k = 0; k < targetPositions.Count; k++)
@@ -217,9 +253,12 @@ namespace PBS.Battle.View.UI.Panels
                 }
             }
         }
+        /// <summary>
+        /// Highlights the back button on the UI.
+        /// </summary>
         public void HighlightBackButton()
         {
-            List<Panels.FieldTargetButton> allBtns = GetAllFieldTargetButtons();
+            List<FieldTargetButton> allBtns = GetAllFieldTargetButtons();
             for (int i = 0; i < allBtns.Count; i++)
             {
                 allBtns[i].UnselectSelf();
@@ -227,5 +266,6 @@ namespace PBS.Battle.View.UI.Panels
             backBtn.SelectSelf();
             promptText.text = "Go back to Move select.";
         }
+        #endregion
     }
 }
