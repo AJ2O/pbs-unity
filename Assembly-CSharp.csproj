@@ -113,7 +113,6 @@
     <Compile Include="Assets\Scripts\Battle\View\UI\HUD\Panel.cs" />
     <Compile Include="Assets\Scripts\Battle\View\UI\HUD\PokemonHUD.cs" />
     <Compile Include="Assets\Scripts\Battle\View\UI\Panels\Bag\Bag.cs" />
-    <Compile Include="Assets\Scripts\Battle\View\UI\Panels\Bag\BagButton.cs" />
     <Compile Include="Assets\Scripts\Battle\View\UI\Panels\BagItem\BagItem.cs" />
     <Compile Include="Assets\Scripts\Battle\View\UI\Panels\BagItem\BagItemButton.cs" />
     <Compile Include="Assets\Scripts\Battle\View\UI\Panels\BaseButton.cs" />
