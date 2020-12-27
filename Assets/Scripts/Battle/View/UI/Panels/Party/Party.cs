@@ -5,8 +5,12 @@ using UnityEngine.UI;
 
 namespace PBS.Battle.View.UI.Panels
 {
+    /// <summary>
+    /// This component handles the UI menu for party member selection.
+    /// </summary>
     public class Party : BasePanel
     {
+        #region Attributes
         [Header("Panels")]
         public GameObject commandPanel;
 
@@ -25,13 +29,20 @@ namespace PBS.Battle.View.UI.Panels
 
         [Header("Text")]
         public Text promptText;
+        #endregion
 
+        #region Unity
         private void Awake()
         {
             backBtn.pokemonUniqueID = "";
         }
+        #endregion
 
-        // Party Screen
+        #region Party
+        /// <summary>
+        /// Sets the party members to be displayed on this panel.
+        /// </summary>
+        /// <param name="party">The list of party members to be displayed.</param>
         public void SetParty(List<WifiFriendly.Pokemon> party)
         {
             for (int i = 0; i < party.Count; i++)
@@ -56,10 +67,12 @@ namespace PBS.Battle.View.UI.Panels
             if (party.Count < 2) party2Btn.gameObject.SetActive(false);
             if (party.Count < 1) party1Btn.gameObject.SetActive(false);
         }
-        public void SetPartyButton(
-            WifiFriendly.Pokemon pokemon, 
-
-            PartyButton button)
+        /// <summary>
+        /// Associates the given Pokemon with the given party member button.
+        /// </summary>
+        /// <param name="pokemon">The Pokemon to associate.</param>
+        /// <param name="button">The button to associate.</param>
+        public void SetPartyButton(WifiFriendly.Pokemon pokemon, PartyButton button)
         {
             button.nameTxt.text = pokemon.nickname;
 
@@ -103,6 +116,10 @@ namespace PBS.Battle.View.UI.Panels
             button.UnselectSelf();
         }
 
+        /// <summary>
+        /// Highlights the button matching the given pokemon's ID, and unhighlights the rest.
+        /// </summary>
+        /// <param name="pokemonUniqueID"></param>
         public void HighlightPokemon(string pokemonUniqueID)
         {
             PartyButton selectedBtn = null;
@@ -168,6 +185,9 @@ namespace PBS.Battle.View.UI.Panels
                 promptText.text = "Choose a Pokémon.";
             }
         }
+        /// <summary>
+        /// Highlights the back button on the UI.
+        /// </summary>
         public void HighlightBackButton()
         {
             party1Btn.UnselectSelf();
@@ -180,8 +200,13 @@ namespace PBS.Battle.View.UI.Panels
             backBtn.SelectSelf();
             promptText.text = "Go back to commands.";
         }
+        #endregion
 
-        // Party Commands
+        #region Party Commands
+        /// <summary>
+        /// Sets the party commands to be displayed.
+        /// </summary>
+        /// <param name="commandList">The list of party commands to be displayed.</param>
         public void SetCommands(List<BattleExtraCommand> commandList)
         {
             HashSet<BattleExtraCommand> commandSet = new HashSet<BattleExtraCommand>(commandList);
@@ -191,6 +216,10 @@ namespace PBS.Battle.View.UI.Panels
             cancelBtn.gameObject.SetActive(commandSet.Contains(BattleExtraCommand.Cancel));
         }
 
+        /// <summary>
+        /// Highlights the given command type, and unhighlights the rest.
+        /// </summary>
+        /// <param name="commandType"></param>
         public void HighlightCommand(BattleExtraCommand commandType)
         {
             UnselectAllCommandButtons();
@@ -220,6 +249,9 @@ namespace PBS.Battle.View.UI.Panels
                     break;
             }
         }
+        /// <summary>
+        /// Unhighlights all party command buttons.
+        /// </summary>
         public void UnselectAllCommandButtons()
         {
             summaryBtn.UnselectSelf();
@@ -227,5 +259,6 @@ namespace PBS.Battle.View.UI.Panels
             movesBtn.UnselectSelf();
             cancelBtn.UnselectSelf();
         }
+        #endregion
     }
 }

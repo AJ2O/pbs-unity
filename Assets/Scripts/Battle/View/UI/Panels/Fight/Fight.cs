@@ -5,15 +5,19 @@ using UnityEngine.UI;
 
 namespace PBS.Battle.View.UI.Panels
 {
+    /// <summary>
+    /// This component handles the UI menu for move selection.
+    /// </summary>
     public class Fight : BasePanel
     {
+        #region Attributes
         [Header("Buttons")]
-        public Panels.FightButton move1Btn;
-        public Panels.FightButton move2Btn,
+        public FightButton move1Btn;
+        public FightButton move2Btn,
             move3Btn,
             move4Btn;
         public BTLUI_ButtonTxt specialBtn;
-        public Panels.FightButton backBtn;
+        public FightButton backBtn;
 
         [Header("Text")]
         public Text promptText;
@@ -23,35 +27,39 @@ namespace PBS.Battle.View.UI.Panels
         public Sprite fightMegaIcon,
             fightZMoveIcon,
             fightDynamaxIcon;
+        #endregion
 
+        #region Unity
         private void Awake()
         {
             backBtn.moveID = "";
         }
+        #endregion
 
+        #region Moves
+        /// <summary>
+        /// Sets the move buttons to be displayed on this panel.
+        /// </summary>
+        /// <param name="moveList">The list of moveslots to display.</param>
+        /// <param name="canMegaEvolve">If true, enables the Mega-Evolve icon.</param>
+        /// <param name="canZMove">If true, enables the Z-Move icon.</param>
+        /// <param name="canDynamax">If true, enables the Dynamax icon.</param>
         public void SetMoves(
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon, 
-            List<PBS.Battle.View.Events.CommandAgent.Moveslot> moveList,
-            bool canMegaEvolve, bool canZMove = false, bool canDynamax = false,
-            bool choosingZMove = false, bool choosingMaxMove = false)
+            List<Events.CommandAgent.Moveslot> moveList,
+            bool canMegaEvolve, bool canZMove = false, bool canDynamax = false)
         {
             // Set each move button
             for (int i = 0; i < moveList.Count; i++)
             {
-                PBS.Battle.View.Events.CommandAgent.Moveslot moveslot = moveList[i];
-                Panels.FightButton curBtn = (i == 0) ? move1Btn
+                Events.CommandAgent.Moveslot moveslot = moveList[i];
+                FightButton curBtn = (i == 0) ? move1Btn
                     : (i == 1) ? move2Btn
                     : (i == 2) ? move3Btn
                     : (i == 3) ? move4Btn
                     : null;
                 if (curBtn != null)
                 {
-                    SetMoveButton(
-                        pokemon: pokemon,
-                        moveslot: moveslot,
-                        choosingZMove: choosingZMove,
-                        choosingMaxMove: choosingMaxMove,
-                        moveBtn: curBtn);
+                    SetMoveButton(moveslot: moveslot, moveBtn: curBtn);
                 }
             }
 
@@ -103,11 +111,12 @@ namespace PBS.Battle.View.UI.Panels
                 specialIcon.gameObject.SetActive(false);
             }
         }
-        public void SetMoveButton(
-            PBS.Battle.View.WifiFriendly.Pokemon pokemon, 
-            PBS.Battle.View.Events.CommandAgent.Moveslot moveslot,
-            Panels.FightButton moveBtn,
-            bool choosingZMove = false, bool choosingMaxMove = false)
+        /// <summary>
+        /// Associates the given moveslot with the given button.
+        /// </summary>
+        /// <param name="moveslot">The moveslot to associate.</param>
+        /// <param name="moveBtn">The button to associate.</param>
+        public void SetMoveButton(Events.CommandAgent.Moveslot moveslot, FightButton moveBtn)
         {
             MoveData moveData = MoveDatabase.instance.GetMoveData(moveslot.moveID);
             moveBtn.moveslot = moveslot;
@@ -115,7 +124,7 @@ namespace PBS.Battle.View.UI.Panels
             if (!moveslot.hide)
             {
                 TypeData typeData = TypeDatabase.instance.GetTypeData(moveData.moveType);
-                Color typeColor = Color.clear;
+                Color typeColor;
                 ColorUtility.TryParseHtmlString(typeData.typeColor, out typeColor);
 
                 moveBtn.moveTxt.text = moveData.moveName;
@@ -136,9 +145,13 @@ namespace PBS.Battle.View.UI.Panels
             moveBtn.UnselectSelf();
         }
 
+        /// <summary>
+        /// Highlights the button matching the given index, and unhighlights the rest.
+        /// </summary>
+        /// <param name="moveIndex">The move index to match.</param>
         public void HighlightMove(int moveIndex)
         {
-            Panels.FightButton selectedBtn = null;
+            FightButton selectedBtn = null;
 
             if (moveIndex == 0)
             {
@@ -201,11 +214,17 @@ namespace PBS.Battle.View.UI.Panels
             }
 
         }
+        /// <summary>
+        /// Highlights the special fight button (Mega, Z-Move, Dynamax, etc.) on the UI.
+        /// </summary>
         public void HighlightSpecialButton()
         {
             specialBtn.SelectSelf();
             promptText.text = "";
         }
+        /// <summary>
+        /// Highlights the back button on the UI.
+        /// </summary>
         public void HighlightBackButton()
         {
             move1Btn.UnselectSelf();
@@ -216,5 +235,6 @@ namespace PBS.Battle.View.UI.Panels
             backBtn.SelectSelf();
             promptText.text = "Go back to commands.";
         }
+        #endregion
     }
 }

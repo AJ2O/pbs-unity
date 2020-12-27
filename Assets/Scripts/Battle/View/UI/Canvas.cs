@@ -170,11 +170,11 @@ namespace PBS.Battle.View.UI
             bool canMegaEvolve, bool canZMove = false, bool canDynamax = false,
             bool choosingZMove = false, bool choosingMaxMove = false)
         {
-            List<PBS.Battle.View.Events.CommandAgent.Moveslot> filteredMoveslots 
-                = new List<PBS.Battle.View.Events.CommandAgent.Moveslot>(moveslots);
+            List<Events.CommandAgent.Moveslot> filteredMoveslots 
+                = new List<Events.CommandAgent.Moveslot>(moveslots);
             for (int i = 0; i < filteredMoveslots.Count; i++)
             {
-                PBS.Battle.View.Events.CommandAgent.Moveslot moveslot = filteredMoveslots[i];
+                Events.CommandAgent.Moveslot moveslot = filteredMoveslots[i];
                 if (moveslot == null)
                 {
                     filteredMoveslots.RemoveAt(i);
@@ -182,10 +182,8 @@ namespace PBS.Battle.View.UI
                 }
             }
             fightPanel.SetMoves(
-                pokemon: pokemon,
                 moveList: filteredMoveslots,
-                canMegaEvolve: canMegaEvolve, canZMove: canZMove, canDynamax: canDynamax,
-                choosingZMove: choosingZMove, choosingMaxMove: choosingMaxMove);
+                canMegaEvolve: canMegaEvolve, canZMove: canZMove, canDynamax: canDynamax);
         }
         /// <summary>
         /// Switch to displaying the selected move.
@@ -227,7 +225,7 @@ namespace PBS.Battle.View.UI
         /// <param name="teamPos">The team perspective to use.</param>
         public void SetFieldTargets(Model model, int teamPos)
         {
-            fieldTargetPanel.SetFieldTargets(teamPos: teamPos, battleModel: model);
+            fieldTargetPanel.SetFieldTargets(teamPerspective: teamPos, battleModel: model);
         }
         /// <summary>
         /// Switches to displaying the selected target group.

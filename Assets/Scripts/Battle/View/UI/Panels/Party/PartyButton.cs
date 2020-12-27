@@ -1,10 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace PBS.Battle.View.UI.Panels
 {
+    /// <summary>
+    /// This component handles displaying a party member on the <seealso cref="Party"/> panel.
+    /// </summary>
     public class PartyButton : BaseButton
     {
         [Header("Text")]

@@ -54,7 +54,7 @@ namespace PBS.Battle.View.UI
         }
         #endregion
 
-        #region Drawing Text
+        #region Drawing Text on the UI
         /// <summary>
         /// Draws text into the specified dialog box.
         /// </summary>
