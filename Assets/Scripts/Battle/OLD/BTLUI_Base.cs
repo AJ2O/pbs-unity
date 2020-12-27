@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Main.Pokemon;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -51,13 +52,13 @@ public class BTLUI_Base : MonoBehaviour
     // Fight Panel
     public virtual void SetMoves(
         Pokemon pokemon,
-        List<Pokemon.Moveslot> moveslots,
+        List<Moveslot> moveslots,
         bool canMegaEvolve, bool canZMove = false, bool canDynamax = false,
         bool choosingZMove = false, bool choosingMaxMove = false)
     { }
     public virtual void SwitchSelectedMoveTo(
         Pokemon pokemon,
-        Pokemon.Moveslot selected,
+        Moveslot selected,
         bool choosingSpecial, bool choosingZMove, bool choosingMaxMove)
     { }
 

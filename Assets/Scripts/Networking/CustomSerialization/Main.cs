@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using PBS.Enums.Battle;
+using PBS.Main.Pokemon;
 
 namespace PBS.Networking.CustomSerialization
 {

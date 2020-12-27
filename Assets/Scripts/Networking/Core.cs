@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using PBS.Battle;
+using PBS.Main.Pokemon;
 
 namespace PBS.Networking
 {
@@ -4876,7 +4877,7 @@ namespace PBS.Networking
                         if (enablerPokemon != null)
                         {
                             userPokemon.bProps.mimicBaseMove = moveHitData.ID;
-                            userPokemon.bProps.mimicMoveslot = new Pokemon.Moveslot(enablerPokemon.bProps.lastMove);
+                            userPokemon.bProps.mimicMoveslot = new Moveslot(enablerPokemon.bProps.lastMove);
                             SendEvent(new Battle.View.Events.MessageParameterized
                             {
                                 messageCode = "move-mimic-success-default",
@@ -4915,7 +4916,7 @@ namespace PBS.Networking
                             textID = (textID == "DEFAULT") ? "move-sketch-success-default" : textID;
 
                             userPokemon.bProps.sketchBaseMove = moveHitData.ID;
-                            userPokemon.bProps.sketchMoveslot = new Pokemon.Moveslot(enablerPokemon.bProps.lastMove);
+                            userPokemon.bProps.sketchMoveslot = new Moveslot(enablerPokemon.bProps.lastMove);
                             SendEvent(new Battle.View.Events.MessageParameterized
                             {
                                 messageCode = textID,
@@ -11987,7 +11988,7 @@ namespace PBS.Networking
                                 }
                             }
                             // Next Command
-                            PokemonSavedCommand command = pokemon.bProps.nextCommand;
+                            Pokemon.PokemonSavedCommand command = pokemon.bProps.nextCommand;
                             if (command != null)
                             {
                                 MoveData moveData = MoveDatabase.instance.GetMoveData(command.moveID);
@@ -17826,7 +17827,7 @@ namespace PBS.Networking
 
                     for (int i = 0; i < opposingPokemon.Count && !showAnticipation; i++)
                     {
-                        List<Pokemon.Moveslot> moveslots = battle.GetPokemonBattleMoveslots(opposingPokemon[i]);
+                        List<Moveslot> moveslots = battle.GetPokemonBattleMoveslots(opposingPokemon[i]);
                         bool foundMove = false;
                         for (int k = 0; k < moveslots.Count && !foundMove; k++)
                         {
@@ -17890,7 +17891,7 @@ namespace PBS.Networking
 
                     for (int i = 0; i < opposingPokemon.Count; i++)
                     {
-                        List<Pokemon.Moveslot> moveslots = battle.GetPokemonBattleMoveslots(opposingPokemon[i]);
+                        List<Moveslot> moveslots = battle.GetPokemonBattleMoveslots(opposingPokemon[i]);
                         bool foundMove = false;
                         for (int k = 0; k < moveslots.Count && !foundMove; k++)
                         {

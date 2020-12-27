@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Main.Pokemon;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -4844,7 +4845,7 @@ public class BTLManager : MonoBehaviour
                     if (enablerPokemon != null)
                     {
                         userPokemon.bProps.mimicBaseMove = moveHitData.ID;
-                        userPokemon.bProps.mimicMoveslot = new Pokemon.Moveslot(enablerPokemon.bProps.lastMove);
+                        userPokemon.bProps.mimicMoveslot = new Moveslot(enablerPokemon.bProps.lastMove);
 
                         BTLEvent_GameText textEvent = new BTLEvent_GameText();
                         textEvent.SetCloneModel(battle);
@@ -4886,7 +4887,7 @@ public class BTLManager : MonoBehaviour
                         textID = (textID == "DEFAULT") ? "move-sketch-success-default" : textID;
 
                         userPokemon.bProps.sketchBaseMove = moveHitData.ID;
-                        userPokemon.bProps.sketchMoveslot = new Pokemon.Moveslot(enablerPokemon.bProps.lastMove);
+                        userPokemon.bProps.sketchMoveslot = new Moveslot(enablerPokemon.bProps.lastMove);
 
                         BTLEvent_GameText textEvent = new BTLEvent_GameText();
                         textEvent.SetCloneModel(battle);
@@ -12087,7 +12088,7 @@ public class BTLManager : MonoBehaviour
                             }
                         }
                         // Next Command
-                        PokemonSavedCommand command = pokemon.bProps.nextCommand;
+                        Pokemon.PokemonSavedCommand command = pokemon.bProps.nextCommand;
                         if (command != null)
                         {
                             MoveData moveData = MoveDatabase.instance.GetMoveData(command.moveID);
@@ -18083,7 +18084,7 @@ public class BTLManager : MonoBehaviour
 
                 for (int i = 0; i < opposingPokemon.Count && !showAnticipation; i++)
                 {
-                    List<Pokemon.Moveslot> moveslots = battle.GetPokemonBattleMoveslots(opposingPokemon[i]);
+                    List<Moveslot> moveslots = battle.GetPokemonBattleMoveslots(opposingPokemon[i]);
                     bool foundMove = false;
                     for (int k = 0; k < moveslots.Count && !foundMove; k++)
                     {
@@ -18146,7 +18147,7 @@ public class BTLManager : MonoBehaviour
 
                 for (int i = 0; i < opposingPokemon.Count; i++)
                 {
-                    List<Pokemon.Moveslot> moveslots = battle.GetPokemonBattleMoveslots(opposingPokemon[i]);
+                    List<Moveslot> moveslots = battle.GetPokemonBattleMoveslots(opposingPokemon[i]);
                     bool foundMove = false;
                     for (int k = 0; k < moveslots.Count && !foundMove; k++)
                     {

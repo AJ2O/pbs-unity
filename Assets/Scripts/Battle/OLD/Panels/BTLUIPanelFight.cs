@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Main.Pokemon;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,14 +26,14 @@ public class BTLUIPanelFight : BTLUIPanel
     public void SetMoves(
         Battle battle, 
         Pokemon pokemon, 
-        List<Pokemon.Moveslot> moveList,
+        List<Moveslot> moveList,
         bool canMegaEvolve, bool canZMove = false, bool canDynamax = false,
         bool choosingZMove = false, bool choosingMaxMove = false)
     {
         // Set each move button
         for (int i = 0; i < moveList.Count; i++)
         {
-            Pokemon.Moveslot moveslot = moveList[i];
+            Moveslot moveslot = moveList[i];
             BTLUI_ButtonFight curBtn = (i == 0) ? move1Btn
                 : (i == 1) ? move2Btn
                 : (i == 2) ? move3Btn
@@ -101,7 +102,7 @@ public class BTLUIPanelFight : BTLUIPanel
     public void SetMoveButton(
         Battle battle, 
         Pokemon pokemon, 
-        Pokemon.Moveslot moveslot,
+        Moveslot moveslot,
         BTLUI_ButtonFight moveBtn,
         bool choosingZMove = false, bool choosingMaxMove = false)
     {
@@ -142,7 +143,7 @@ public class BTLUIPanelFight : BTLUIPanel
         moveBtn.UnselectSelf();
     }
 
-    public void HighlightMove(Pokemon.Moveslot moveslot)
+    public void HighlightMove(Moveslot moveslot)
     {
         BTLUI_ButtonFight selectedBtn = null;
 

@@ -153,6 +153,9 @@
     <Compile Include="Assets\Scripts\Main\Item.cs" />
     <Compile Include="Assets\Scripts\Main\PlayerSave.cs" />
     <Compile Include="Assets\Scripts\Main\Pokemon.cs" />
+    <Compile Include="Assets\Scripts\Main\Pokemon\DynamaxProperties.cs" />
+    <Compile Include="Assets\Scripts\Main\Pokemon\Moveslot.cs" />
+    <Compile Include="Assets\Scripts\Main\Pokemon\TransformProperties.cs" />
     <Compile Include="Assets\Scripts\Main\StatusCondition.cs" />
     <Compile Include="Assets\Scripts\Main\TeamCondition.cs" />
     <Compile Include="Assets\Scripts\Main\Trainer.cs" />

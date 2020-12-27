@@ -1,4 +1,5 @@
 ﻿using PBS.Battle;
+using PBS.Main.Pokemon;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -114,7 +115,7 @@ namespace PBS.AI
             List<Pokemon> otherCommandablePokemon)
         {
             List<BattleCommand> commands = new List<BattleCommand>();
-            List<Pokemon.Moveslot> useableMoves = model.GetPokemonUseableMoves(pokemon);
+            List<Moveslot> useableMoves = model.GetPokemonUseableMoves(pokemon);
             if (useableMoves.Count == 0)
             {
                 // Struggle

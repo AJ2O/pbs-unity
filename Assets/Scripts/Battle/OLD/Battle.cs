@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PBS.Main.Pokemon;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Battle
@@ -2348,7 +2349,7 @@ public class Battle
     }
     public void ReplenishPokemonPP(Pokemon pokemon)
     {
-        List<Pokemon.Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
+        List<Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
         for (int i = 0; i < moveslots.Count; i++)
         {
             moveslots[i].PP = moveslots[i].maxPP;
@@ -2694,12 +2695,12 @@ public class Battle
     }
 
     // Pokemon: Command Methods
-    public List<Pokemon.Moveslot> GetPokemonBattleMoveslots(Pokemon pokemon)
+    public List<Moveslot> GetPokemonBattleMoveslots(Pokemon pokemon)
     {
-        List<Pokemon.Moveslot> moveslots = new List<Pokemon.Moveslot>();
+        List<Moveslot> moveslots = new List<Moveslot>();
 
         // Transform moves
-        Pokemon.Moveslot[] moveslotSet;
+        Moveslot[] moveslotSet;
         if (pokemon.bProps.tProps != null)
         {
             moveslotSet = pokemon.bProps.tProps.moveslots;
@@ -2712,7 +2713,7 @@ public class Battle
 
         for (int i = 0; i < moveslotSet.Length; i++)
         {
-            Pokemon.Moveslot curSlot = moveslotSet[i];
+            Moveslot curSlot = moveslotSet[i];
             if (curSlot != null)
             {
                 bool moveAdded = false;
@@ -2752,7 +2753,7 @@ public class Battle
         {
             return true;
         }
-        List<Pokemon.Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
+        List<Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
         for (int i = 0; i < moveslots.Count; i++)
         {
             if (moveslots[i].moveID == moveID)
@@ -2764,7 +2765,7 @@ public class Battle
     }
     public int GetPokemonMovePP(Pokemon pokemon, string moveID)
     {
-        List<Pokemon.Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
+        List<Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
         for (int i = 0; i < moveslots.Count; i++)
         {
             if (moveslots[i].moveID == moveID)
@@ -2815,7 +2816,7 @@ public class Battle
 
         return true;
     }
-    public bool DoesMoveslotHaveEnoughPP(Pokemon pokemon, Pokemon.Moveslot moveslot)
+    public bool DoesMoveslotHaveEnoughPP(Pokemon pokemon, Moveslot moveslot)
     {
         // TODO: real checks
         return moveslot.PP > 0;
@@ -2907,10 +2908,10 @@ public class Battle
 
         return false;
     }
-    public List<Pokemon.Moveslot> GetPokemonUseableMoves(Pokemon pokemon)
+    public List<Moveslot> GetPokemonUseableMoves(Pokemon pokemon)
     {
-        List<Pokemon.Moveslot> moveslots = new List<Pokemon.Moveslot>();
-        List<Pokemon.Moveslot> moveset = GetPokemonBattleMoveslots(pokemon);
+        List<Moveslot> moveslots = new List<Moveslot>();
+        List<Moveslot> moveset = GetPokemonBattleMoveslots(pokemon);
         for (int i = 0; i < moveset.Count; i++)
         {
             if (DoesMoveslotHaveEnoughPP(pokemon, pokemon.moveslots[i])
@@ -2923,7 +2924,7 @@ public class Battle
     }
     public BattleCommand GetStruggleCommand(Pokemon pokemon, bool isPlayer = false)
     {
-        Pokemon.Moveslot struggleMove = new Pokemon.Moveslot("struggle");
+        Moveslot struggleMove = new Moveslot("struggle");
         BattleCommand struggleCommand = BattleCommand.CreateMoveCommand(
             pokemon,
             struggleMove.moveID,
@@ -3072,7 +3073,7 @@ public class Battle
         // Reset overridden values
         transformPokemon.bProps.ResetOverrides(transformPokemon);
 
-        transformPokemon.bProps.tProps = new Pokemon.TransformProperties(targetPokemon);
+        transformPokemon.bProps.tProps = new TransformProperties(targetPokemon);
         transformPokemon.bProps.ATKStage = targetPokemon.bProps.ATKStage;
         transformPokemon.bProps.DEFStage = targetPokemon.bProps.DEFStage;
         transformPokemon.bProps.SPAStage = targetPokemon.bProps.SPAStage;
@@ -8373,7 +8374,7 @@ public class Battle
             {
                 for (int k = 0; k < team.trainers[i].party.Count; k++)
                 {
-                    List<Pokemon.Moveslot> moveslots = team.trainers[i].party[k].GetMoveset();
+                    List<Moveslot> moveslots = team.trainers[i].party[k].GetMoveset();
                     for (int j = 0; j < moveslots.Count; j++)
                     {
                         if (moveslots[j] != null)
@@ -8401,7 +8402,7 @@ public class Battle
     public List<string> GetPokemonSleepTalkMoves(Pokemon pokemon)
     {
         List<string> moves = new List<string>();
-        List<Pokemon.Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
+        List<Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
         for (int i = 0; i < moveslots.Count; i++)
         {
             MoveData moveData = MoveDatabase.instance.GetMoveData(moveslots[i].moveID);
