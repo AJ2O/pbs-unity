@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using PBS.Databases;
+using PBS.Data;
 
 namespace PBS.Networking
 {
@@ -1692,7 +1693,7 @@ namespace PBS.Networking
 
             if (!string.IsNullOrEmpty(message.typeID))
             {
-                TypeData typeData = ElementalTypes.instance.GetTypeData(message.typeID);
+                Data.ElementalType typeData = Databases.ElementalTypes.instance.GetTypeData(message.typeID);
                 newString = newString.Replace("{{-type-name-}}", typeData.typeName + "-type");
             }
             if (message.typeIDs.Count > 0)

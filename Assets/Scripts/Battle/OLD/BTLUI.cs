@@ -9,6 +9,7 @@ using PBS.Main.Pokemon;
 using PBS.Main.Trainer;
 using PBS.Main.Team;
 using PBS.Databases;
+using PBS.Data;
 
 public class BTLUI : MonoBehaviour
 {
@@ -524,7 +525,7 @@ public class BTLUI : MonoBehaviour
             {
                 if (moveData != null)
                 {
-                    TypeData typeData = ElementalTypes.instance.GetTypeData(moveData.moveType);
+                    PBS.Data.ElementalType typeData = PBS.Databases.ElementalTypes.instance.GetTypeData(moveData.moveType);
                     promptString += "\\c" + typeData.typeColor + "\\" + typeData.typeName + "\\c.\\";
                     promptString += "\nPP: " + btn.moveslot.PP + " / " + btn.moveslot.maxPP;
                 }

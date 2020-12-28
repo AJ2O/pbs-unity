@@ -3,271 +3,246 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemData
+namespace PBS.Data
 {
-    // General
-    public string ID { get; set; }
-    public string baseID { get; private set; }
-    private string p_itemName;
-    public string itemName
+    public class ItemData
     {
-        get
+        // General
+        public string ID { get; set; }
+        public string baseID { get; private set; }
+        private string p_itemName;
+        public string itemName
         {
-            if (string.IsNullOrEmpty(p_itemName) && !string.IsNullOrEmpty(baseID))
+            get
             {
-                return Items.instance.GetItemData(baseID).itemName;
+                if (string.IsNullOrEmpty(p_itemName) && !string.IsNullOrEmpty(baseID))
+                {
+                    return Items.instance.GetItemData(baseID).itemName;
+                }
+                return p_itemName;
             }
-            return p_itemName;
-        }
-        private set
-        {
-            p_itemName = value;
-        }
-    }
-    public ItemPocket pocket { get; set; }
-    public ItemBattlePocket battlePocket { get; set; }
-
-    // Aesthetics
-    private bool useBaseAesthetic;
-    
-    private string p_displayID;
-    public string displayID
-    {
-        get
-        {
-            if (useBaseAesthetic && !string.IsNullOrEmpty(baseID))
+            private set
             {
-                return Pokemon.instance.GetPokemonData(baseID).displayID;
+                p_itemName = value;
             }
-            return string.IsNullOrEmpty(p_displayID) ? ID : p_displayID;
         }
-        private set
+        public ItemPocket pocket { get; set; }
+        public ItemBattlePocket battlePocket { get; set; }
+
+        // Aesthetics
+        private bool useBaseAesthetic;
+
+        private string p_displayID;
+        public string displayID
         {
-            p_displayID = value;
-        }
-    }
-    
-    private string p_bagDisplayID;
-    public string bagDisplayID
-    {
-        get
-        {
-            if (useBaseAesthetic && !string.IsNullOrEmpty(baseID))
+            get
             {
-                return Items.instance.GetItemData(baseID).bagDisplayID;
+                if (useBaseAesthetic && !string.IsNullOrEmpty(baseID))
+                {
+                    return Pokemon.instance.GetPokemonData(baseID).displayID;
+                }
+                return string.IsNullOrEmpty(p_displayID) ? ID : p_displayID;
             }
-            return string.IsNullOrEmpty(p_bagDisplayID) ? p_displayID : p_bagDisplayID;
-        }
-        private set
-        {
-            p_bagDisplayID = value;
-        }
-    }
-
-    // Tags
-    private bool combineBaseTags;
-    private HashSet<ItemTag> p_tags { get; set; }
-    public HashSet<ItemTag> tags
-    {
-        get
-        {
-            if (combineBaseTags && !string.IsNullOrEmpty(baseID))
+            private set
             {
-                HashSet<ItemTag> unionTags = new HashSet<ItemTag>(p_tags);
-                unionTags.UnionWith(Items.instance.GetItemData(baseID).tags);
-                return unionTags;
+                p_displayID = value;
             }
-            return p_tags;
         }
-        set
-        {
-            p_tags = value;
-        }
-    }
 
-    // Move Effects
-    public ItemEffect[] effects { get; private set; }
-
-    // New Effects
-    private bool combineBaseEffects;
-    private List<PBS.Databases.Effects.Items.ItemEffect> p_effectsNew { get; set; }
-    public List<PBS.Databases.Effects.Items.ItemEffect> effectsNew
-    {
-        get
+        private string p_bagDisplayID;
+        public string bagDisplayID
         {
-            if (combineBaseEffects && !string.IsNullOrEmpty(baseID))
+            get
             {
-                List<PBS.Databases.Effects.Items.ItemEffect> unionEffects = new List<PBS.Databases.Effects.Items.ItemEffect>();
-                unionEffects.AddRange(p_effectsNew);
-                unionEffects.AddRange(Items.instance.GetItemData(baseID).effectsNew);
-                return unionEffects;
+                if (useBaseAesthetic && !string.IsNullOrEmpty(baseID))
+                {
+                    return Items.instance.GetItemData(baseID).bagDisplayID;
+                }
+                return string.IsNullOrEmpty(p_bagDisplayID) ? p_displayID : p_bagDisplayID;
             }
-            return p_effectsNew;
+            private set
+            {
+                p_bagDisplayID = value;
+            }
         }
-        private set
+
+        // Tags
+        private bool combineBaseTags;
+        private HashSet<ItemTag> p_tags { get; set; }
+        public HashSet<ItemTag> tags
         {
-            p_effectsNew = value;
+            get
+            {
+                if (combineBaseTags && !string.IsNullOrEmpty(baseID))
+                {
+                    HashSet<ItemTag> unionTags = new HashSet<ItemTag>(p_tags);
+                    unionTags.UnionWith(Items.instance.GetItemData(baseID).tags);
+                    return unionTags;
+                }
+                return p_tags;
+            }
+            set
+            {
+                p_tags = value;
+            }
         }
-    }
 
-    // Constructor
-    public ItemData(string ID,
-        string baseID = null,
-        string itemName = null,
-        ItemPocket pocket = ItemPocket.None,
-        ItemBattlePocket battlePocket = ItemBattlePocket.None,
+        // Move Effects
+        public ItemEffect[] effects { get; private set; }
 
-        bool useBaseAesthetic = false, string displayID = null, string bagDisplayID = null,
-
-        bool combineBaseTags = false,
-        IEnumerable<ItemTag> tags = null,
-        ItemEffect[] effects = null,
-
-        bool combineBaseEffects = false,
-        PBS.Databases.Effects.Items.ItemEffect[] effectsNew = null)
-    {
-        this.ID = ID;
-        this.baseID = baseID;
-        this.itemName = itemName;
-        this.pocket = pocket;
-        this.battlePocket = battlePocket;
-
-        this.useBaseAesthetic = useBaseAesthetic;
-        this.displayID = displayID;
-        this.bagDisplayID = bagDisplayID;
-
-        this.combineBaseTags = combineBaseTags;
-        this.tags = new HashSet<ItemTag>();
-        if (tags != null)
+        // New Effects
+        private bool combineBaseEffects;
+        private List<Databases.Effects.Items.ItemEffect> p_effectsNew { get; set; }
+        public List<Databases.Effects.Items.ItemEffect> effectsNew
         {
-            this.tags.UnionWith(tags);
+            get
+            {
+                if (combineBaseEffects && !string.IsNullOrEmpty(baseID))
+                {
+                    List<Databases.Effects.Items.ItemEffect> unionEffects = new List<Databases.Effects.Items.ItemEffect>();
+                    unionEffects.AddRange(p_effectsNew);
+                    unionEffects.AddRange(Items.instance.GetItemData(baseID).effectsNew);
+                    return unionEffects;
+                }
+                return p_effectsNew;
+            }
+            private set
+            {
+                p_effectsNew = value;
+            }
         }
 
-        this.effects = (effects == null) ? new ItemEffect[0] : new ItemEffect[effects.Length];
-        if (effects != null)
+        // Constructor
+        public ItemData(string ID,
+            string baseID = null,
+            string itemName = null,
+            ItemPocket pocket = ItemPocket.None,
+            ItemBattlePocket battlePocket = ItemBattlePocket.None,
+
+            bool useBaseAesthetic = false, string displayID = null, string bagDisplayID = null,
+
+            bool combineBaseTags = false,
+            IEnumerable<ItemTag> tags = null,
+            ItemEffect[] effects = null,
+
+            bool combineBaseEffects = false,
+            Databases.Effects.Items.ItemEffect[] effectsNew = null)
+        {
+            this.ID = ID;
+            this.baseID = baseID;
+            this.itemName = itemName;
+            this.pocket = pocket;
+            this.battlePocket = battlePocket;
+
+            this.useBaseAesthetic = useBaseAesthetic;
+            this.displayID = displayID;
+            this.bagDisplayID = bagDisplayID;
+
+            this.combineBaseTags = combineBaseTags;
+            this.tags = new HashSet<ItemTag>();
+            if (tags != null)
+            {
+                this.tags.UnionWith(tags);
+            }
+
+            this.effects = effects == null ? new ItemEffect[0] : new ItemEffect[effects.Length];
+            if (effects != null)
+            {
+                for (int i = 0; i < effects.Length; i++)
+                {
+                    this.effects[i] = ItemEffect.Clone(effects[i]);
+                }
+            }
+
+            this.combineBaseEffects = combineBaseEffects;
+            this.effectsNew = new List<Databases.Effects.Items.ItemEffect>();
+            if (effectsNew != null)
+            {
+                List<Databases.Effects.Items.ItemEffect> addableEffects = new List<Databases.Effects.Items.ItemEffect>();
+                for (int i = 0; i < effectsNew.Length; i++)
+                {
+                    addableEffects.Add(effectsNew[i].Clone());
+                }
+                this.effectsNew = addableEffects;
+            }
+        }
+
+        public bool HasTag(ItemTag tag)
+        {
+            return tags.Contains(tag);
+        }
+
+        public ItemEffect GetEffect(ItemEffectType effectType)
         {
             for (int i = 0; i < effects.Length; i++)
             {
-                this.effects[i] = ItemEffect.Clone(effects[i]);
+                if (effects[i].effectType == effectType)
+                {
+                    return effects[i];
+                }
             }
+            return null;
         }
 
-        this.combineBaseEffects = combineBaseEffects;
-        this.effectsNew = new List<PBS.Databases.Effects.Items.ItemEffect>();
-        if (effectsNew != null)
+        public List<ItemEffect> GetEffects(ItemEffectType effectType)
         {
-            List<PBS.Databases.Effects.Items.ItemEffect> addableEffects = new List<PBS.Databases.Effects.Items.ItemEffect>();
-            for (int i = 0; i < effectsNew.Length; i++)
+            List<ItemEffect> effects = new List<ItemEffect>();
+            for (int i = 0; i < this.effects.Length; i++)
             {
-                addableEffects.Add(effectsNew[i].Clone());
+                if (this.effects[i].effectType == effectType)
+                {
+                    effects.Add(this.effects[i]);
+                }
             }
-            this.effectsNew = addableEffects;
+            return effects;
         }
-    }
 
-    public bool HasTag(ItemTag tag)
-    {
-        return tags.Contains(tag);
-    }
-
-    public ItemEffect GetEffect(ItemEffectType effectType)
-    {
-        for (int i = 0; i < effects.Length; i++)
+        public List<Databases.Effects.Items.ItemEffect> GetEffectsNew(ItemEffectType effectType)
         {
-            if (effects[i].effectType == effectType)
+            List<Databases.Effects.Items.ItemEffect> effects = new List<Databases.Effects.Items.ItemEffect>();
+            for (int i = 0; i < effectsNew.Count; i++)
             {
-                return effects[i];
+                if (effectsNew[i].effectType == effectType)
+                {
+                    effects.Add(effectsNew[i]);
+                }
             }
+            return effects;
         }
-        return null;
-    }
-
-    public List<ItemEffect> GetEffects(ItemEffectType effectType)
-    {
-        List<ItemEffect> effects = new List<ItemEffect>();
-        for (int i = 0; i < this.effects.Length; i++)
+        public Databases.Effects.Items.ItemEffect GetEffectNew(ItemEffectType effectType)
         {
-            if (this.effects[i].effectType == effectType)
+            for (int i = 0; i < effectsNew.Count; i++)
             {
-                effects.Add(this.effects[i]);
+                if (effectsNew[i].effectType == effectType)
+                {
+                    return effectsNew[i];
+                }
             }
+            return null;
         }
-        return effects;
-    }
-
-    public List<PBS.Databases.Effects.Items.ItemEffect> GetEffectsNew(ItemEffectType effectType)
-    {
-        List<PBS.Databases.Effects.Items.ItemEffect> effects = new List<PBS.Databases.Effects.Items.ItemEffect>();
-        for (int i = 0; i < effectsNew.Count; i++)
+        public List<Databases.Effects.Items.ItemEffect> GetEffectsOnConsume()
         {
-            if (effectsNew[i].effectType == effectType)
+            List<Databases.Effects.Items.ItemEffect> consumeEffects = new List<Databases.Effects.Items.ItemEffect>();
+            for (int i = 0; i < effectsNew.Count; i++)
             {
-                effects.Add(effectsNew[i]);
+                if (effectsNew[i].applyOnConsume)
+                {
+                    consumeEffects.Add(effectsNew[i]);
+                }
             }
+            return consumeEffects;
         }
-        return effects;
-    }
-    public PBS.Databases.Effects.Items.ItemEffect GetEffectNew(ItemEffectType effectType)
-    {
-        for (int i = 0; i < effectsNew.Count; i++)
+        public List<Databases.Effects.Items.ItemEffect> GetEffectsOnUse()
         {
-            if (effectsNew[i].effectType == effectType)
+            List<Databases.Effects.Items.ItemEffect> useEffects = new List<Databases.Effects.Items.ItemEffect>();
+            for (int i = 0; i < effectsNew.Count; i++)
             {
-                return effectsNew[i];
+                if (effectsNew[i].applyOnUse)
+                {
+                    useEffects.Add(effectsNew[i]);
+                }
             }
+            return useEffects;
         }
-        return null;
-    }
-    public List<PBS.Databases.Effects.Items.ItemEffect> GetEffectsOnConsume()
-    {
-        List<PBS.Databases.Effects.Items.ItemEffect> consumeEffects = new List<PBS.Databases.Effects.Items.ItemEffect>();
-        for (int i = 0; i < effectsNew.Count; i++)
-        {
-            if (effectsNew[i].applyOnConsume)
-            {
-                consumeEffects.Add(effectsNew[i]);
-            }
-        }
-        return consumeEffects;
-    }
-    public List<PBS.Databases.Effects.Items.ItemEffect> GetEffectsOnUse()
-    {
-        List<PBS.Databases.Effects.Items.ItemEffect> useEffects = new List<PBS.Databases.Effects.Items.ItemEffect>();
-        for (int i = 0; i < effectsNew.Count; i++)
-        {
-            if (effectsNew[i].applyOnUse)
-            {
-                useEffects.Add(effectsNew[i]);
-            }
-        }
-        return useEffects;
-    }
-}
-
-public class ItemEffect : GameEffect
-{
-    public ItemEffectType effectType { get; set; }
-
-    // Constructor
-    public ItemEffect(
-        ItemEffectType effectType,
-        bool[] boolParams = null,
-        float[] floatParams = null,
-        string[] stringParams = null
-        ) : base(boolParams, floatParams, stringParams)
-    {
-        this.effectType = effectType;
-    }
-
-    // Clone
-    public static ItemEffect Clone(ItemEffect original)
-    {
-        ItemEffect cloneEffect = new ItemEffect(
-            effectType: original.effectType,
-            boolParams: original.boolParams,
-            floatParams: original.floatParams,
-            stringParams: original.stringParams
-            );
-        return cloneEffect;
     }
 }

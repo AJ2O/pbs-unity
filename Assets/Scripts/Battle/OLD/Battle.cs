@@ -1,4 +1,5 @@
-﻿using PBS.Databases;
+﻿using PBS.Data;
+using PBS.Databases;
 using PBS.Main.Pokemon;
 using PBS.Main.Team;
 using PBS.Main.Trainer;
@@ -3729,7 +3730,7 @@ public class Battle
         {
             for (int i = 0; i < pokemonTypes.Count; i++)
             {
-                TypeData typeData = ElementalTypes.instance.GetTypeData(pokemonTypes[i]);
+                PBS.Data.ElementalType typeData = PBS.Databases.ElementalTypes.instance.GetTypeData(pokemonTypes[i]);
                 if (typeData.HasTag(TypeTag.Airborne))
                 {
                     pokemonTypes.Remove(typeData.ID);
@@ -3800,7 +3801,7 @@ public class Battle
             // airborne types (ex. Flying)
             for (int i = 0; i < types.Count; i++)
             {
-                TypeData typeData = ElementalTypes.instance.GetTypeData(types[i]);
+                PBS.Data.ElementalType typeData = PBS.Databases.ElementalTypes.instance.GetTypeData(types[i]);
                 if (typeData.HasTag(TypeTag.Airborne))
                 {
                     return false;
@@ -4275,7 +4276,7 @@ public class Battle
         for (int i = 0; i < checkTypes.Count; i++)
         {
             string curTypeCheck = checkTypes[i];
-            TypeData typeData = ElementalTypes.instance.GetTypeData(curTypeCheck);
+            PBS.Data.ElementalType typeData = PBS.Databases.ElementalTypes.instance.GetTypeData(curTypeCheck);
 
             bool typeContained = false;
             for (int k = 0; k < containerTypes.Count; k++)
@@ -4353,7 +4354,7 @@ public class Battle
         for (int i = 0; i < targetTypes.Count; i++)
         {
             float curEffectiveness = 1f;
-            TypeData typeData = ElementalTypes.instance.GetTypeData(targetTypes[i]);
+            PBS.Data.ElementalType typeData = PBS.Databases.ElementalTypes.instance.GetTypeData(targetTypes[i]);
             // skip overwritten types
             if (overwrittenTypes.Contains(typeData.ID))
             {
@@ -4367,7 +4368,7 @@ public class Battle
             // Loop through offensive types
             for (int k = 0; k < offensiveTypes.Count; k++)
             {
-                TypeData offensiveTypeData = ElementalTypes.instance.GetTypeData(offensiveTypes[k]);
+                PBS.Data.ElementalType offensiveTypeData = PBS.Databases.ElementalTypes.instance.GetTypeData(offensiveTypes[k]);
                 for (int j = 0; j < resistances.Count; j++)
                 {
                     string curType = resistances[j];
@@ -4545,7 +4546,7 @@ public class Battle
             List<string> effectTypes = new List<string>(flyingPressEffects[i].stringParams);
             if (effectTypes.Contains("ALL"))
             {
-                effectTypes = ElementalTypes.instance.GetAllTypes();
+                effectTypes = PBS.Databases.ElementalTypes.instance.GetAllTypes();
             }
 
             // Bypass Resistance
@@ -4586,7 +4587,7 @@ public class Battle
             List<string> effectTypes = new List<string>(freezeDryEffects[i].stringParams);
             if (effectTypes.Contains("ALL"))
             {
-                effectTypes = ElementalTypes.instance.GetAllTypes();
+                effectTypes = PBS.Databases.ElementalTypes.instance.GetAllTypes();
             }
             
             // Types that resist this move
@@ -4611,7 +4612,7 @@ public class Battle
         for (int i = 0; i < targetTypes.Count; i++)
         {
             float curEffectiveness = 1f;
-            TypeData typeData = ElementalTypes.instance.GetTypeData(targetTypes[i]);
+            PBS.Data.ElementalType typeData = PBS.Databases.ElementalTypes.instance.GetTypeData(targetTypes[i]);
 
             bool skipTypeCheck = false;
 
@@ -4669,7 +4670,7 @@ public class Battle
             List<string> effectTypes = new List<string>(flyingPressEffects[i].stringParams);
             if (effectTypes.Contains("ALL"))
             {
-                effectTypes = ElementalTypes.instance.GetAllTypes();
+                effectTypes = PBS.Databases.ElementalTypes.instance.GetAllTypes();
             }
 
             offensiveTypes.AddRange(effectTypes);
@@ -4702,7 +4703,7 @@ public class Battle
 
         for (int i = 0; i < typeIDs.Count; i++)
         {
-            TypeData typeData = ElementalTypes.instance.GetTypeData(typeIDs[i]);
+            PBS.Data.ElementalType typeData = PBS.Databases.ElementalTypes.instance.GetTypeData(typeIDs[i]);
             if (inverse && allowInverse)
             {
                 types.AddRange(typeData.weaknesses);
@@ -4739,7 +4740,7 @@ public class Battle
 
         for (int i = 0; i < typeIDs.Count; i++)
         {
-            TypeData typeData = ElementalTypes.instance.GetTypeData(typeIDs[i]);
+            PBS.Data.ElementalType typeData = PBS.Databases.ElementalTypes.instance.GetTypeData(typeIDs[i]);
             if (inverse && allowInverse)
             {
                 types.AddRange(typeData.resistances);
@@ -4784,7 +4785,7 @@ public class Battle
 
         for (int i = 0; i < typeIDs.Count; i++)
         {
-            TypeData typeData = ElementalTypes.instance.GetTypeData(typeIDs[i]);
+            PBS.Data.ElementalType typeData = PBS.Databases.ElementalTypes.instance.GetTypeData(typeIDs[i]);
             bool addImmunities = true;
 
             // Foresight / Odor Sleuth / Miracle Eye
@@ -4922,7 +4923,7 @@ public class Battle
             }
             else
             {
-                TypeData typeData = ElementalTypes.instance.GetTypeData(moveData.moveType);
+                PBS.Data.ElementalType typeData = PBS.Databases.ElementalTypes.instance.GetTypeData(moveData.moveType);
                 maxMoveData = Moves.instance.GetMoveData(typeData.maxMove);
             }
             if (maxMoveData.basePower <= 0)
@@ -5047,7 +5048,7 @@ public class Battle
                 List<string> possibleTypes = new List<string>(hiddenPower.types);
                 if (possibleTypes.Contains("ALL"))
                 {
-                    possibleTypes = ElementalTypes.instance.GetAllTypes();
+                    possibleTypes = PBS.Databases.ElementalTypes.instance.GetAllTypes();
                 }
                 int hpBit = userPokemon.ivHP % 2;
                 int atkBit = userPokemon.ivATK % 2;
@@ -5062,7 +5063,7 @@ public class Battle
                 string newMoveType = possibleTypes[typeValue];
 
                 moveType = newMoveType;
-                Debug.Log("DEBUG - Hidden Power Type: " + ElementalTypes.instance.GetTypeData(newMoveType).typeName);
+                Debug.Log((object)("DEBUG - Hidden Power Type: " + PBS.Databases.ElementalTypes.instance.GetTypeData(newMoveType).typeName));
             }
             if (hiddenPower.calculateDamage)
             {
@@ -5424,7 +5425,7 @@ public class Battle
         for (int i = 0; i < bConditions.Count; i++)
         {
             BattleCondition bCond = bConditions[i];
-            TypeData moveTypeData = ElementalTypes.instance.GetTypeData(moveType);
+            PBS.Data.ElementalType moveTypeData = PBS.Databases.ElementalTypes.instance.GetTypeData(moveType);
 
             PBS.Databases.Effects.BattleStatuses.BattleSE ionDeluge_ = bCond.data.GetEffectNew(BattleSEType.IonDeluge);
             if (ionDeluge_ != null)
@@ -6928,7 +6929,7 @@ public class Battle
         Team userTeam = GetTeam(userPokemon);
         Team targetTeam = GetTeam(targetPokemon);
         List<PBS.Main.Pokemon.Pokemon> onFieldEnemyPokemon = GetAllyPokemon(targetPokemon);
-        TypeData moveTypeData = ElementalTypes.instance.GetTypeData(moveData.moveType);
+        PBS.Data.ElementalType moveTypeData = PBS.Databases.ElementalTypes.instance.GetTypeData(moveData.moveType);
         string moveType = moveData.moveType;
 
         // get base move damage

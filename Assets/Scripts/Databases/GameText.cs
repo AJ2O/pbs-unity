@@ -1,4 +1,5 @@
-﻿using PBS.Main.Pokemon;
+﻿using PBS.Data;
+using PBS.Main.Pokemon;
 using PBS.Main.Team;
 using PBS.Main.Trainer;
 using System.Collections.Generic;
@@ -4651,16 +4652,16 @@ namespace PBS.Databases
 
             // set core variables
             string newString = baseString;
-            TypeData typeData = typeID == null ? null : ElementalTypes.instance.GetTypeData(typeID);
-            MoveData moveData = moveID == null ? null : Moves.instance.GetMoveData(moveID);
-            AbilityData abilityData = abilityID == null ? null : Abilities.instance.GetAbilityData(abilityID);
-            ItemData itemData = itemID == null ? null : Items.instance.GetItemData(itemID);
-            StatusPKData statusData = statusID == null ? null
-                : PokemonStatuses.instance.GetStatusData(statusID);
-            StatusTEData teamStatusData = teamStatusID == null ? null
-                : TeamStatuses.instance.GetStatusData(teamStatusID);
-            StatusBTLData battleStatusData = battleStatusID == null ? null
-                : BattleStatuses.instance.GetStatusData(battleStatusID);
+            Data.ElementalType typeData = typeID == null ? null : Databases.ElementalTypes.instance.GetTypeData(typeID);
+            Data.MoveData moveData = moveID == null ? null : Databases.Moves.instance.GetMoveData(moveID);
+            Data.AbilityData abilityData = abilityID == null ? null : Databases.Abilities.instance.GetAbilityData(abilityID);
+            Data.ItemData itemData = itemID == null ? null : Databases.Items.instance.GetItemData(itemID);
+            Data.StatusPKData statusData = statusID == null ? null
+                : Databases.PokemonStatuses.instance.GetStatusData(statusID);
+            Data.StatusTEData teamStatusData = teamStatusID == null ? null
+                : Databases.TeamStatuses.instance.GetStatusData(teamStatusID);
+            Data.StatusBTLData battleStatusData = battleStatusID == null ? null
+                : Databases.BattleStatuses.instance.GetStatusData(battleStatusID);
 
             // swapping substrings
             intArgs = intArgs == null ? new List<int>() : intArgs;

@@ -7,6 +7,7 @@ using PBS.Main.Pokemon;
 using PBS.Main.Trainer;
 using PBS.Main.Team;
 using PBS.Databases;
+using PBS.Data;
 
 namespace PBS.Networking
 {
@@ -6828,7 +6829,7 @@ namespace PBS.Networking
                                     if (removableTypes.Contains("ALL"))
                                     {
                                         allTypes = true;
-                                        removableTypes = ElementalTypes.instance.GetAllTypes();
+                                        removableTypes = Databases.ElementalTypes.instance.GetAllTypes();
                                     }
 
                                     List<string> typesRemoved = new List<string>();
@@ -6977,7 +6978,7 @@ namespace PBS.Networking
                                 if (forestsCurseTypes.Contains("ALL"))
                                 {
                                     allTypes = true;
-                                    forestsCurseTypes = ElementalTypes.instance.GetAllTypes();
+                                    forestsCurseTypes = Databases.ElementalTypes.instance.GetAllTypes();
                                 }
 
                                 bool replaceForestsCurse = !effect.GetBool(0);
@@ -7555,7 +7556,7 @@ namespace PBS.Networking
                                     if (soakTypes.Contains("ALL"))
                                     {
                                         allTypes = true;
-                                        soakTypes = ElementalTypes.instance.GetAllTypes();
+                                        soakTypes = Databases.ElementalTypes.instance.GetAllTypes();
                                     }
 
                                     // Only record success if there actually types to be set
@@ -7941,7 +7942,7 @@ namespace PBS.Networking
                                     if (removableTypes.Contains("ALL"))
                                     {
                                         allTypes = true;
-                                        removableTypes = ElementalTypes.instance.GetAllTypes();
+                                        removableTypes = Databases.ElementalTypes.instance.GetAllTypes();
                                     }
 
                                     List<string> typesRemoved = new List<string>();
@@ -8051,7 +8052,7 @@ namespace PBS.Networking
                                 if (forestsCurseTypes.Contains("ALL"))
                                 {
                                     allTypes = true;
-                                    forestsCurseTypes = ElementalTypes.instance.GetAllTypes();
+                                    forestsCurseTypes = Databases.ElementalTypes.instance.GetAllTypes();
                                 }
 
                                 bool replaceForestsCurse = !effect.GetBool(0);
@@ -8292,7 +8293,7 @@ namespace PBS.Networking
                                     if (soakTypes.Contains("ALL"))
                                     {
                                         allTypes = true;
-                                        soakTypes = ElementalTypes.instance.GetAllTypes();
+                                        soakTypes = Databases.ElementalTypes.instance.GetAllTypes();
                                     }
 
                                     // Only record success if there actually types to be set
@@ -10947,7 +10948,7 @@ namespace PBS.Networking
                     List<string> affectedTypes = new List<string>(identified.types);
                     if (affectedTypes.Contains("ALL"))
                     {
-                        affectedTypes = ElementalTypes.instance.GetAllTypes();
+                        affectedTypes = Databases.ElementalTypes.instance.GetAllTypes();
                     }
 
                     bool fail = false;
@@ -13803,7 +13804,7 @@ namespace PBS.Networking
             // Desolate Land / Primordial Sea 
             if (!failure)
             {
-                TypeData moveTypeData = ElementalTypes.instance.GetTypeData(moveData.moveType);
+                Data.ElementalType moveTypeData = Databases.ElementalTypes.instance.GetTypeData(moveData.moveType);
                 List<BattleCondition> bConditions = battle.BBPGetSCs();
                 for (int i = 0; i < bConditions.Count; i++)
                 {
@@ -17450,7 +17451,7 @@ namespace PBS.Networking
                     List<string> pokemonTypes = battle.PBPGetTypes(pokemon);
                     for (int i = 0; i < pokemonTypes.Count; i++)
                     {
-                        TypeData typeData = ElementalTypes.instance.GetTypeData(pokemonTypes[i]);
+                        Data.ElementalType typeData = Databases.ElementalTypes.instance.GetTypeData(pokemonTypes[i]);
                         TypeEffect removeEffect = typeData.GetEffect(TypeEffectType.RemoveEntryHazard);
                         if (removeEffect != null)
                         {

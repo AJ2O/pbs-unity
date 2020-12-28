@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PBS.Data;
+using System.Collections.Generic;
 
 namespace PBS.Databases.Effects.Filter
 {

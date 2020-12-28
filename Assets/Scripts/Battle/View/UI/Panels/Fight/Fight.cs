@@ -1,4 +1,5 @@
-﻿using PBS.Databases;
+﻿using PBS.Data;
+using PBS.Databases;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -124,7 +125,7 @@ namespace PBS.Battle.View.UI.Panels
 
             if (!moveslot.hide)
             {
-                TypeData typeData = ElementalTypes.instance.GetTypeData(moveData.moveType);
+                Data.ElementalType typeData = Databases.ElementalTypes.instance.GetTypeData(moveData.moveType);
                 Color typeColor;
                 ColorUtility.TryParseHtmlString(typeData.typeColor, out typeColor);
 
@@ -202,7 +203,7 @@ namespace PBS.Battle.View.UI.Panels
                 else
                 {
                     MoveData moveData = Moves.instance.GetMoveData(selectedBtn.moveID);
-                    TypeData typeData = ElementalTypes.instance.GetTypeData(moveData.moveType);
+                    Data.ElementalType typeData = Databases.ElementalTypes.instance.GetTypeData(moveData.moveType);
                     Color typeColor = Color.clear;
                     ColorUtility.TryParseHtmlString(typeData.typeColor, out typeColor);
                     string moveText = "<color=" + typeData.typeColor + ">" + typeData.typeName + "</color>\n";

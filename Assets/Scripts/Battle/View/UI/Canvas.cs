@@ -1,4 +1,5 @@
-﻿using PBS.Databases;
+﻿using PBS.Data;
+using PBS.Databases;
 using PBS.Enums.Battle;
 using System.Collections;
 using System.Collections.Generic;
@@ -777,21 +778,21 @@ namespace PBS.Battle.View.UI
             string names = "";
             if (typeIDs.Count == 1)
             {
-                return ElementalTypes.instance.GetTypeData(typeIDs[0]).typeName + "-type";
+                return Databases.ElementalTypes.instance.GetTypeData(typeIDs[0]).typeName + "-type";
             }
             else if (typeIDs.Count == 2)
             {
-                return ElementalTypes.instance.GetTypeData(typeIDs[0]).typeName 
+                return Databases.ElementalTypes.instance.GetTypeData(typeIDs[0]).typeName 
                     + "- and " 
-                    + ElementalTypes.instance.GetTypeData(typeIDs[1]).typeName + "-type";
+                    + Databases.ElementalTypes.instance.GetTypeData(typeIDs[1]).typeName + "-type";
             }
             else
             {
                 for (int i = 0; i < typeIDs.Count; i++)
                 {
                     names += (i == typeIDs.Count - 1) ?
-                        "and " + ElementalTypes.instance.GetTypeData(typeIDs[i]).typeName + "-type" :
-                        ElementalTypes.instance.GetTypeData(typeIDs[i]).typeName + "-, ";
+                        "and " + Databases.ElementalTypes.instance.GetTypeData(typeIDs[i]).typeName + "-type" :
+                        Databases.ElementalTypes.instance.GetTypeData(typeIDs[i]).typeName + "-, ";
                 }
             }
             return names;
@@ -1008,7 +1009,7 @@ namespace PBS.Battle.View.UI
 
             if (!string.IsNullOrEmpty(message.typeID))
             {
-                TypeData typeData = ElementalTypes.instance.GetTypeData(message.typeID);
+                Data.ElementalType typeData = Databases.ElementalTypes.instance.GetTypeData(message.typeID);
                 newString = newString.Replace("{{-type-name-}}", typeData.typeName + "-type");
             }
             if (message.typeIDs.Count > 0)

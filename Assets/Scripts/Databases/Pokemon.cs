@@ -1,4 +1,5 @@
-﻿using PBS.Main.Pokemon;
+﻿using PBS.Data;
+using PBS.Main.Pokemon;
 using System.Collections.Generic;
 using UnityEngine;
 

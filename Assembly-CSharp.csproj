@@ -128,14 +128,15 @@
     <Compile Include="Assets\Scripts\Controls.cs" />
     <Compile Include="Assets\Scripts\Data\AbilityData.cs" />
     <Compile Include="Assets\Scripts\Data\BattleConditionData.cs" />
+    <Compile Include="Assets\Scripts\Data\ElementalType.cs" />
     <Compile Include="Assets\Scripts\Data\GameTextData.cs" />
     <Compile Include="Assets\Scripts\Data\ItemData.cs" />
+    <Compile Include="Assets\Scripts\Data\LegacyData.cs" />
     <Compile Include="Assets\Scripts\Data\MoveData.cs" />
-    <Compile Include="Assets\Scripts\Data\NatureData.cs" />
     <Compile Include="Assets\Scripts\Data\PokemonData.cs" />
+    <Compile Include="Assets\Scripts\Data\PokemonNature.cs" />
     <Compile Include="Assets\Scripts\Data\StatusConditionData.cs" />
     <Compile Include="Assets\Scripts\Data\TeamConditionData.cs" />
-    <Compile Include="Assets\Scripts\Data\TypeData.cs" />
     <Compile Include="Assets\Scripts\Databases\Abilities.cs" />
     <Compile Include="Assets\Scripts\Databases\BattleStatuses.cs" />
     <Compile Include="Assets\Scripts\Databases\Effects\Abilities.cs" />

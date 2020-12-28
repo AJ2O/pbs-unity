@@ -1,4 +1,5 @@
-﻿using PBS.Databases;
+﻿using PBS.Data;
+using PBS.Databases;
 using PBS.Main.Pokemon;
 using PBS.Main.Team;
 using PBS.Main.Trainer;
@@ -6841,7 +6842,7 @@ public class BTLManager : MonoBehaviour
                                 if (removableTypes.Contains("ALL"))
                                 {
                                     allTypes = true;
-                                    removableTypes = ElementalTypes.instance.GetAllTypes();
+                                    removableTypes = PBS.Databases.ElementalTypes.instance.GetAllTypes();
                                 }
 
                                 List<string> typesRemoved = new List<string>();
@@ -7003,7 +7004,7 @@ public class BTLManager : MonoBehaviour
                             if (forestsCurseTypes.Contains("ALL"))
                             {
                                 allTypes = true;
-                                forestsCurseTypes = ElementalTypes.instance.GetAllTypes();
+                                forestsCurseTypes = PBS.Databases.ElementalTypes.instance.GetAllTypes();
                             }
 
                             bool replaceForestsCurse = !effect.GetBool(0);
@@ -7618,7 +7619,7 @@ public class BTLManager : MonoBehaviour
                                 if (soakTypes.Contains("ALL"))
                                 {
                                     allTypes = true;
-                                    soakTypes = ElementalTypes.instance.GetAllTypes();
+                                    soakTypes = PBS.Databases.ElementalTypes.instance.GetAllTypes();
                                 }
 
                                 // Only record success if there actually types to be set
@@ -8009,7 +8010,7 @@ public class BTLManager : MonoBehaviour
                                 if (removableTypes.Contains("ALL"))
                                 {
                                     allTypes = true;
-                                    removableTypes = ElementalTypes.instance.GetAllTypes();
+                                    removableTypes = PBS.Databases.ElementalTypes.instance.GetAllTypes();
                                 }
 
                                 List<string> typesRemoved = new List<string>();
@@ -8128,7 +8129,7 @@ public class BTLManager : MonoBehaviour
                             if (forestsCurseTypes.Contains("ALL"))
                             {
                                 allTypes = true;
-                                forestsCurseTypes = ElementalTypes.instance.GetAllTypes();
+                                forestsCurseTypes = PBS.Databases.ElementalTypes.instance.GetAllTypes();
                             }
 
                             bool replaceForestsCurse = !effect.GetBool(0);
@@ -8376,7 +8377,7 @@ public class BTLManager : MonoBehaviour
                                 if (soakTypes.Contains("ALL"))
                                 {
                                     allTypes = true;
-                                    soakTypes = ElementalTypes.instance.GetAllTypes();
+                                    soakTypes = PBS.Databases.ElementalTypes.instance.GetAllTypes();
                                 }
 
                                 // Only record success if there actually types to be set
@@ -11054,7 +11055,7 @@ public class BTLManager : MonoBehaviour
                 List<string> affectedTypes = new List<string>(identified.types);
                 if (affectedTypes.Contains("ALL"))
                 {
-                    affectedTypes = ElementalTypes.instance.GetAllTypes();
+                    affectedTypes = PBS.Databases.ElementalTypes.instance.GetAllTypes();
                 }
 
                 bool fail = false;
@@ -13940,7 +13941,7 @@ public class BTLManager : MonoBehaviour
         // Desolate Land / Primordial Sea 
         if (!failure)
         {
-            TypeData moveTypeData = ElementalTypes.instance.GetTypeData(moveData.moveType);
+            PBS.Data.ElementalType moveTypeData = PBS.Databases.ElementalTypes.instance.GetTypeData(moveData.moveType);
             List<BattleCondition> bConditions = battle.BBPGetSCs();
             for (int i = 0; i < bConditions.Count; i++)
             {
@@ -17692,7 +17693,7 @@ public class BTLManager : MonoBehaviour
                 List<string> pokemonTypes = battle.PBPGetTypes(pokemon);
                 for (int i = 0; i < pokemonTypes.Count; i++)
                 {
-                    TypeData typeData = ElementalTypes.instance.GetTypeData(pokemonTypes[i]);
+                    PBS.Data.ElementalType typeData = PBS.Databases.ElementalTypes.instance.GetTypeData(pokemonTypes[i]);
                     TypeEffect removeEffect = typeData.GetEffect(TypeEffectType.RemoveEntryHazard);
                     if (removeEffect != null)
                     {

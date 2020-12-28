@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Data;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,162 +28,162 @@ namespace PBS.Databases
         }
 
         // Database
-        private Dictionary<string, NatureData> database = new Dictionary<string, NatureData>
+        private Dictionary<string, PokemonNature> database = new Dictionary<string, PokemonNature>
     {
         // neutral nature
         {"hardy",
-            new NatureData(
+            new PokemonNature(
                 ID: "hardy",
                 natureName: "Hardy")},
 
         {"docile",
-            new NatureData(
+            new PokemonNature(
                 ID: "docile",
                 natureName: "Docile")},
 
         {"serious",
-            new NatureData(
+            new PokemonNature(
                 ID: "serious",
                 natureName: "Serious")},
 
         {"bashful",
-            new NatureData(
+            new PokemonNature(
                 ID: "bashful",
                 natureName: "Bashful")},
 
         {"quirky",
-            new NatureData(
+            new PokemonNature(
                 ID: "quirky",
                 natureName: "Quirky")},
 
         // + ATK
         {"lonely",
-            new NatureData(
+            new PokemonNature(
                 ID: "lonely",
                 natureName: "Lonely",
                 ATKMod: 1.1f, DEFMod: 0.9f)},
 
         {"brave",
-            new NatureData(
+            new PokemonNature(
                 ID: "brave",
                 natureName: "Brave",
                 ATKMod: 1.1f, SPEMod: 0.9f)},
 
         {"adamant",
-            new NatureData(
+            new PokemonNature(
                 ID: "adamant",
                 natureName: "Adamant",
                 ATKMod: 1.1f, SPEMod: 0.9f)},
 
         {"naughty",
-            new NatureData(
+            new PokemonNature(
                 ID: "naughty",
                 natureName: "Naughty",
                 ATKMod: 1.1f, SPEMod: 0.9f)},
 
         // + DEF
         {"bold",
-            new NatureData(
+            new PokemonNature(
                 ID: "bold",
                 natureName: "Bold",
                 DEFMod: 1.1f, ATKMod: 0.9f)},
 
         {"relaxed",
-            new NatureData(
+            new PokemonNature(
                 ID: "relaxed",
                 natureName: "Relaxed",
                 DEFMod: 1.1f, SPEMod: 0.9f)},
 
         {"impish",
-            new NatureData(
+            new PokemonNature(
                 ID: "impish",
                 natureName: "Impish",
                 DEFMod: 1.1f, SPEMod: 0.9f)},
 
         {"lax",
-            new NatureData(
+            new PokemonNature(
                 ID: "lax",
                 natureName: "Lax",
                 DEFMod: 1.1f, SPDMod: 0.9f)},
 
         // + SPA
         {"modest",
-            new NatureData(
+            new PokemonNature(
                 ID: "modest",
                 natureName: "Modest",
                 SPAMod: 1.1f, ATKMod: 0.9f)},
 
         {"mild",
-            new NatureData(
+            new PokemonNature(
                 ID: "mild",
                 natureName: "Mild",
                 SPAMod: 1.1f, DEFMod: 0.9f)},
 
         {"quiet",
-            new NatureData(
+            new PokemonNature(
                 ID: "quiet",
                 natureName: "Quiet",
                 SPAMod: 1.1f, SPEMod: 0.9f)},
 
         {"rash",
-            new NatureData(
+            new PokemonNature(
                 ID: "rash",
                 natureName: "Rash",
                 SPAMod: 1.1f, SPDMod: 0.9f)},
 
         // + SPD
         {"calm",
-            new NatureData(
+            new PokemonNature(
                 ID: "calm",
                 natureName: "Calm",
                 SPDMod: 1.1f, ATKMod: 0.9f)},
 
         {"gentle",
-            new NatureData(
+            new PokemonNature(
                 ID: "gentle",
                 natureName: "Gentle",
                 SPDMod: 1.1f, DEFMod: 0.9f)},
 
         {"sassy",
-            new NatureData(
+            new PokemonNature(
                 ID: "sassy",
                 natureName: "Sassy",
                 SPDMod: 1.1f, SPEMod: 0.9f)},
 
         {"careful",
-            new NatureData(
+            new PokemonNature(
                 ID: "careful",
                 natureName: "Careful",
                 SPDMod: 1.1f, SPAMod: 0.9f)},
 
         // + SPE
         {"timid",
-            new NatureData(
+            new PokemonNature(
                 ID: "timid",
                 natureName: "Timid",
                 SPEMod: 1.1f, ATKMod: 0.9f)},
 
         {"hasty",
-            new NatureData(
+            new PokemonNature(
                 ID: "hasty",
                 natureName: "Hasty",
                 SPEMod: 1.1f, DEFMod: 0.9f)},
 
         {"jolly",
-            new NatureData(
+            new PokemonNature(
                 ID: "jolly",
                 natureName: "Jolly",
                 SPEMod: 1.1f, SPAMod: 0.9f)},
 
         {"naive",
-            new NatureData(
+            new PokemonNature(
                 ID: "naive",
                 natureName: "Naive",
                 SPEMod: 1.1f, SPDMod: 0.9f)},
 
     };
 
-        public NatureData GetNatureData(string ID)
+        public PokemonNature GetNatureData(string ID)
         {
             if (database.ContainsKey(ID))
             {
@@ -191,7 +192,7 @@ namespace PBS.Databases
             Debug.LogWarning("Could not find Pokemon with ID: " + ID);
             return database[""];
         }
-        public NatureData GetRandomNature()
+        public PokemonNature GetRandomNature()
         {
             List<string> allNatures = new List<string>(database.Keys);
             return GetNatureData(allNatures[Random.Range(0, allNatures.Count)]);

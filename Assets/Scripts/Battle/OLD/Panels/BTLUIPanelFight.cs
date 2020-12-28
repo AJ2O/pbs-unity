@@ -1,4 +1,5 @@
-﻿using PBS.Databases;
+﻿using PBS.Data;
+using PBS.Databases;
 using PBS.Main.Pokemon;
 using System.Collections;
 using System.Collections.Generic;
@@ -118,7 +119,7 @@ public class BTLUIPanelFight : BTLUIPanel
         }
         if (moveData != null)
         {
-            TypeData typeData = ElementalTypes.instance.GetTypeData(moveData.moveType);
+            PBS.Data.ElementalType typeData = PBS.Databases.ElementalTypes.instance.GetTypeData(moveData.moveType);
             Color typeColor = Color.clear;
             ColorUtility.TryParseHtmlString(typeData.typeColor, out typeColor);
 
@@ -199,7 +200,7 @@ public class BTLUIPanelFight : BTLUIPanel
             backBtn.UnselectSelf();
 
             MoveData moveData = selectedBtn.moveData;
-            TypeData typeData = ElementalTypes.instance.GetTypeData(moveData.moveType);
+            PBS.Data.ElementalType typeData = PBS.Databases.ElementalTypes.instance.GetTypeData(moveData.moveType);
             Color typeColor = Color.clear;
             ColorUtility.TryParseHtmlString(typeData.typeColor, out typeColor);
             string moveText = "<color=" + typeData.typeColor + ">" + typeData.typeName + "</color>\n";
