@@ -493,7 +493,7 @@ public class BTLUI : MonoBehaviour
         btn.image.color = select ? btn.colorSel : btn.colorUnsel;
         btn.moveTxt.color = select ? colorTxtSel : colorTxtUnsel;
 
-        MoveData moveData = (btn.moveslot == null) ? null : Moves.instance.GetMoveData(btn.moveslot.moveID);
+        Move moveData = (btn.moveslot == null) ? null : Moves.instance.GetMoveData(btn.moveslot.moveID);
         if (moveData != null)
         {
             if (ZMove)

@@ -823,11 +823,11 @@ namespace PBS.Battle.View.UI
                 teamPerspectiveID = myTeamPerspective.teamID;
             }
             WifiFriendly.Trainer trainer = myModel.GetMatchingTrainer(playerID);
-            GameTextData textData = 
+            PBS.Data.GameText textData = 
                 (trainer.teamPos != teamPerspectiveID)? 
-                GameText.instance.GetGameTextData("trainer-perspective-opposing")
-                : (myTrainer == null)? GameText.instance.GetGameTextData("trainer-perspective-ally")
-                : GameText.instance.GetGameTextData("trainer-perspective-player");
+                PBS.Databases.GameText.instance.GetGameTextData("trainer-perspective-opposing")
+                : (myTrainer == null)? PBS.Databases.GameText.instance.GetGameTextData("trainer-perspective-ally")
+                : PBS.Databases.GameText.instance.GetGameTextData("trainer-perspective-player");
 
             string replaceString = textData.languageDict[GameSettings.language];
             if (replaceString == "{{-trainer-}}")
@@ -883,10 +883,10 @@ namespace PBS.Battle.View.UI
             {
                 teamPerspectiveID = myTeamPerspective.teamID;
             }
-            GameTextData textData = 
-                (teamID != teamPerspectiveID)? GameText.instance.GetGameTextData("team-perspective-opposing")
-                : (myTrainer == null)? GameText.instance.GetGameTextData("team-perspective-ally")
-                : GameText.instance.GetGameTextData("team-perspective-player");
+            PBS.Data.GameText textData = 
+                (teamID != teamPerspectiveID)? PBS.Databases.GameText.instance.GetGameTextData("team-perspective-opposing")
+                : (myTrainer == null)? PBS.Databases.GameText.instance.GetGameTextData("team-perspective-ally")
+                : PBS.Databases.GameText.instance.GetGameTextData("team-perspective-player");
 
             string teamString = textData.languageDict[GameSettings.language];
             if (!string.IsNullOrEmpty(baseString))
@@ -923,7 +923,7 @@ namespace PBS.Battle.View.UI
             WifiFriendly.Trainer myTrainer = null,
             WifiFriendly.Team myTeamPerspective = null)
         {
-            GameTextData textData = GameText.instance.GetGameTextData(message.messageCode);
+            PBS.Data.GameText textData = PBS.Databases.GameText.instance.GetGameTextData(message.messageCode);
             if (textData == null)
             {
                 return "";
@@ -944,7 +944,7 @@ namespace PBS.Battle.View.UI
             if (!string.IsNullOrEmpty(message.pokemonID))
             {
                 WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(message.pokemonID);
-                PokemonData pokemonData = Pokemon.instance.GetPokemonData(pokemon.pokemonID);
+                PBS.Data.Pokemon pokemonData = PBS.Databases.Pokemon.instance.GetPokemonData(pokemon.pokemonID);
                 newString = newString.Replace("{{-pokemon-}}", pokemon.nickname);
                 newString = newString.Replace("{{-pokemon-form-}}", pokemonData.formName);
                 newString = newString.Replace("{{-pokemon-poss-}}", pokemon.nickname
@@ -954,7 +954,7 @@ namespace PBS.Battle.View.UI
             if (!string.IsNullOrEmpty(message.pokemonUserID))
             {
                 WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(message.pokemonUserID);
-                PokemonData pokemonData = Pokemon.instance.GetPokemonData(pokemon.pokemonID);
+                PBS.Data.Pokemon pokemonData = PBS.Databases.Pokemon.instance.GetPokemonData(pokemon.pokemonID);
                 newString = newString.Replace("{{-user-pokemon-}}", pokemon.nickname);
                 newString = newString.Replace("{{-user-pokemon-form-}}", pokemonData.formName);
                 newString = newString.Replace("{{-user-pokemon-poss-}}", pokemon.nickname
@@ -964,7 +964,7 @@ namespace PBS.Battle.View.UI
             if (!string.IsNullOrEmpty(message.pokemonTargetID))
             {
                 WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(message.pokemonTargetID);
-                PokemonData pokemonData = Pokemon.instance.GetPokemonData(pokemon.pokemonID);
+                PBS.Data.Pokemon pokemonData = PBS.Databases.Pokemon.instance.GetPokemonData(pokemon.pokemonID);
                 newString = newString.Replace("{{-target-pokemon-}}", pokemon.nickname);
                 newString = newString.Replace("{{-target-pokemon-form-}}", pokemonData.formName);
                 newString = newString.Replace("{{-target-pokemon-poss-}}", pokemon.nickname
@@ -1014,19 +1014,19 @@ namespace PBS.Battle.View.UI
             }
             if (message.typeIDs.Count > 0)
             {
-                newString = newString.Replace("{{-type-list-}}", GameText.ConvertTypesToString(message.typeIDs.ToArray()));
+                newString = newString.Replace("{{-type-list-}}", PBS.Databases.GameText.ConvertTypesToString(message.typeIDs.ToArray()));
             }
 
             if (!string.IsNullOrEmpty(message.moveID))
             {
-                MoveData moveData = Moves.instance.GetMoveData(message.moveID);
+                Move moveData = Moves.instance.GetMoveData(message.moveID);
                 newString = newString.Replace("{{-move-name-}}", moveData.moveName);
             }
             if (message.moveIDs.Count > 0)
             {
                 for (int i = 0; i < message.moveIDs.Count; i++)
                 {
-                    MoveData moveXData = Moves.instance.GetMoveData(message.moveIDs[i]);
+                    Move moveXData = Moves.instance.GetMoveData(message.moveIDs[i]);
                     string partToReplace = "{{-move-name-" + i + "-}}";
                     newString = newString.Replace(partToReplace, moveXData.moveName);
                 }
@@ -1034,14 +1034,14 @@ namespace PBS.Battle.View.UI
 
             if (!string.IsNullOrEmpty(message.abilityID))
             {
-                AbilityData abilityData = Abilities.instance.GetAbilityData(message.abilityID);
+                Ability abilityData = Abilities.instance.GetAbilityData(message.abilityID);
                 newString = newString.Replace("{{-ability-name-}}", abilityData.abilityName);
             }
             if (message.abilityIDs.Count > 0)
             {
                 for (int i = 0; i < message.abilityIDs.Count; i++)
                 {
-                    AbilityData abilityXData = Abilities.instance.GetAbilityData(message.abilityIDs[i]);
+                    Ability abilityXData = Abilities.instance.GetAbilityData(message.abilityIDs[i]);
                     string partToReplace = "{{-ability-name-" + i + "-}}";
                     newString = newString.Replace(partToReplace, abilityXData.abilityName);
                 }
@@ -1049,23 +1049,23 @@ namespace PBS.Battle.View.UI
 
             if (!string.IsNullOrEmpty(message.itemID))
             {
-                ItemData itemData = Items.instance.GetItemData(message.itemID);
+                PBS.Data.Item itemData = Items.instance.GetItemData(message.itemID);
                 newString = newString.Replace("{{-item-name-}}", itemData.itemName);
             }
 
             if (!string.IsNullOrEmpty(message.statusID))
             {
-                StatusPKData statusData = PokemonStatuses.instance.GetStatusData(message.statusID);
+                PokemonStatus statusData = PokemonStatuses.instance.GetStatusData(message.statusID);
                 newString = newString.Replace("{{-status-name-}}", statusData.conditionName);
             }
             if (!string.IsNullOrEmpty(message.statusTeamID))
             {
-                StatusTEData statusData = TeamStatuses.instance.GetStatusData(message.statusTeamID);
+                TeamStatus statusData = TeamStatuses.instance.GetStatusData(message.statusTeamID);
                 newString = newString.Replace("{{-team-status-name-}}", statusData.conditionName);
             }
             if (!string.IsNullOrEmpty(message.statusEnvironmentID))
             {
-                StatusBTLData statusData = BattleStatuses.instance.GetStatusData(message.statusEnvironmentID);
+                BattleStatus statusData = BattleStatuses.instance.GetStatusData(message.statusEnvironmentID);
                 newString = newString.Replace("{{-battle-status-name-}}", statusData.conditionName);
             }
 

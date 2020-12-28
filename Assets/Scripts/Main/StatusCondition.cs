@@ -9,7 +9,7 @@ public class StatusCondition
     public string statusID;
     public int turnsActive;
     public int turnsLeft;
-    public StatusPKData data
+    public PokemonStatus data
     {
         get
         {

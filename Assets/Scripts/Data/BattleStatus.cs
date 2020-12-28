@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PBS.Data
 {
-    public class StatusBTLData
+    public class BattleStatus
     {
         public string ID { get; private set; }
         public string baseID { get; private set; }
@@ -180,7 +180,7 @@ namespace PBS.Data
         }
 
         // Constructor
-        public StatusBTLData(
+        public BattleStatus(
             string ID,
             string baseID = null,
             string conditionName = null,
@@ -231,9 +231,9 @@ namespace PBS.Data
         }
 
         // Clone
-        public StatusBTLData Clone()
+        public BattleStatus Clone()
         {
-            StatusBTLData cloneData = new StatusBTLData(
+            BattleStatus cloneData = new BattleStatus(
                 ID: ID,
                 baseID: baseID,
                 conditionName: conditionName,
@@ -261,7 +261,7 @@ namespace PBS.Data
             }
             if (baseID != null)
             {
-                StatusBTLData baseData = BattleStatuses.instance.GetStatusData(baseID);
+                BattleStatus baseData = BattleStatuses.instance.GetStatusData(baseID);
                 return baseData.IsABaseID(tryBaseID);
             }
             return false;

@@ -27,17 +27,17 @@ namespace PBS.Databases
         }
 
         // Database
-        private Dictionary<string, MoveData> database = new Dictionary<string, MoveData>
+        private Dictionary<string, Move> database = new Dictionary<string, Move>
     {
         // Null / Placeholder
         {"",
-            new MoveData(
+            new Move(
                 ID: ""
                 ) },
 
         // Struggle
         {"struggle",
-            new MoveData(
+            new Move(
                 ID: "struggle",
                 moveName: "Struggle",
                 moveType: "normal",
@@ -78,7 +78,7 @@ namespace PBS.Databases
 
         // Growl2
         {"growl2",
-            new MoveData(
+            new Move(
                 ID: "growl2",
                 moveName: "Growl2",
                 moveType: "normal",
@@ -116,7 +116,7 @@ namespace PBS.Databases
 
         // Heavy Rain Dance
         {"raindance2",
-            new MoveData(
+            new Move(
                 ID: "raindance2",
                 moveName: "Heavy Rain Dance",
                 moveType: "water",
@@ -145,7 +145,7 @@ namespace PBS.Databases
 
         // Delta Stream
         {"deltastream",
-            new MoveData(
+            new Move(
                 ID: "deltastream",
                 moveName: "Delta Stream",
                 moveType: "flying",
@@ -174,7 +174,7 @@ namespace PBS.Databases
 
         // Hyperspace Hole 2
         {"hyperspacehole2",
-            new MoveData(
+            new Move(
                 ID: "hyperspacehole2",
                 moveName: "Minispace Hole",
                 moveType: "psychic",
@@ -210,7 +210,7 @@ namespace PBS.Databases
 
         // Absorb
         {"absorb",
-            new MoveData(
+            new Move(
                 ID: "absorb",
                 moveName: "Absorb",
                 moveType: "grass",
@@ -226,7 +226,7 @@ namespace PBS.Databases
 
         // Acid
         {"acid",
-            new MoveData(
+            new Move(
                 ID: "acid",
                 moveName: "Acid",
                 moveType: "poison",
@@ -253,7 +253,7 @@ namespace PBS.Databases
 
         // After You
         {"afteryou",
-            new MoveData(
+            new Move(
                 ID: "afteryou",
                 moveName: "After You",
                 moveType: "normal",
@@ -279,7 +279,7 @@ namespace PBS.Databases
 
         // Ally Switch
         {"allyswitch",
-            new MoveData(
+            new Move(
                 ID: "allyswitch",
                 moveName: "Ally Switch",
                 moveType: "psychic",
@@ -303,7 +303,7 @@ namespace PBS.Databases
 
         // Anchor Shot
         {"anchorshot",
-            new MoveData(
+            new Move(
                 ID: "anchorshot",
                 moveName: "Anchor Shot",
                 moveType: "steel",
@@ -329,7 +329,7 @@ namespace PBS.Databases
 
         // Aqua Ring
         {"aquaring",
-            new MoveData(
+            new Move(
                 ID: "aquaring",
                 moveName: "Aqua Ring",
                 moveType: "water",
@@ -357,7 +357,7 @@ namespace PBS.Databases
 
         // Aromatherapy
         {"aromatherapy",
-            new MoveData(
+            new Move(
                 ID: "aromatherapy",
                 moveName: "Aromatherapy",
                 moveType: "grass",
@@ -394,7 +394,7 @@ namespace PBS.Databases
 
         // Assist
         {"assist",
-            new MoveData(
+            new Move(
                 ID: "assist",
                 moveName: "Assist",
                 moveType: "normal",
@@ -419,7 +419,7 @@ namespace PBS.Databases
 
         // Attract
         {"attract",
-            new MoveData(
+            new Move(
                 ID: "attract",
                 moveName: "Attract",
                 moveType: "normal",
@@ -450,7 +450,7 @@ namespace PBS.Databases
 
         // Aura Wheel
         {"aurawheel",
-            new MoveData(
+            new Move(
                 ID: "aurawheel",
                 moveName: "Aura Wheel",
                 moveType: "electric",
@@ -490,7 +490,7 @@ namespace PBS.Databases
 
         // Aurora Beam
         {"aurorabeam",
-            new MoveData(
+            new Move(
                 ID: "aurorabeam",
                 moveName: "Aurora Beam",
                 moveType: "ice",
@@ -518,7 +518,7 @@ namespace PBS.Databases
 
         // Aurora Veil
         {"auroraveil",
-            new MoveData(
+            new Move(
                 ID: "auroraveil",
                 moveName: "Aurora Veil",
                 moveType: "ice",
@@ -559,7 +559,7 @@ namespace PBS.Databases
 
         // Baneful Bunker
         {"banefulbunker",
-            new MoveData(
+            new Move(
                 ID: "banefulbunker",
                 moveName: "Baneful Bunker",
                 moveType: "poison",
@@ -595,7 +595,7 @@ namespace PBS.Databases
 
         // Baton Pass
         {"batonpass",
-            new MoveData(
+            new Move(
                 ID: "batonpass",
                 moveName: "Baton Pass",
                 moveType: "normal",
@@ -618,7 +618,7 @@ namespace PBS.Databases
 
         // Beak Blast
         {"beakblast",
-            new MoveData(
+            new Move(
                 ID: "beakblast",
                 moveName: "Beak Blast",
                 moveType: "flying",
@@ -649,7 +649,7 @@ namespace PBS.Databases
 
         // Beat Up
         {"beatup",
-            new MoveData(
+            new Move(
                 ID: "beatup",
                 moveName: "Beat Up",
                 moveType: "dark",
@@ -670,7 +670,7 @@ namespace PBS.Databases
 
         // Belch
         {"belch",
-            new MoveData(
+            new Move(
                 ID: "belch",
                 moveName: "Belch",
                 moveType: "poison",
@@ -694,7 +694,7 @@ namespace PBS.Databases
 
         // Bestow
         {"bestow",
-            new MoveData(
+            new Move(
                 ID: "bestow",
                 moveName: "Bestow",
                 moveType: "normal",
@@ -724,7 +724,7 @@ namespace PBS.Databases
 
         // Bide
         {"bide",
-            new MoveData(
+            new Move(
                 ID: "bide",
                 moveName: "Bide",
                 moveType: "normal",
@@ -751,7 +751,7 @@ namespace PBS.Databases
 
         // Bind
         {"bind",
-            new MoveData(
+            new Move(
                 ID: "bind",
                 moveName: "Bind",
                 moveType: "normal",
@@ -783,7 +783,7 @@ namespace PBS.Databases
 
         // Bite
         {"bite",
-            new MoveData(
+            new Move(
                 ID: "bite",
                 moveName: "Bite",
                 moveType: "dark",
@@ -815,7 +815,7 @@ namespace PBS.Databases
 
         // Blizzard
         {"blizzard",
-            new MoveData(
+            new Move(
                 ID: "blizzard",
                 moveName: "Blizzard",
                 moveType: "ice",
@@ -850,7 +850,7 @@ namespace PBS.Databases
 
         // Block
         {"block",
-            new MoveData(
+            new Move(
                 ID: "block",
                 moveName: "Block",
                 moveType: "steel",
@@ -876,7 +876,7 @@ namespace PBS.Databases
 
         // Body Slam
         {"bodyslam",
-            new MoveData(
+            new Move(
                 ID: "bodyslam",
                 moveName: "Body Slam",
                 moveType: "normal",
@@ -910,7 +910,7 @@ namespace PBS.Databases
 
         // Bounce
         {"bounce",
-            new MoveData(
+            new Move(
                 ID: "bounce",
                 moveName: "Bounce",
                 moveType: "flying",
@@ -941,7 +941,7 @@ namespace PBS.Databases
 
         // Bubblebeam
         {"bubblebeam",
-            new MoveData(
+            new Move(
                 ID: "bubblebeam",
                 moveName: "Bubble Beam",
                 moveType: "water",
@@ -969,7 +969,7 @@ namespace PBS.Databases
 
         // Bug Bite
         {"bugbite",
-            new MoveData(
+            new Move(
                 ID: "bugbite",
                 moveName: "Bug Bite",
                 moveType: "bug",
@@ -993,7 +993,7 @@ namespace PBS.Databases
 
         // Burn Up
         {"burnup",
-            new MoveData(
+            new Move(
                 ID: "burnup",
                 moveName: "Burn Up",
                 moveType: "fire",
@@ -1019,7 +1019,7 @@ namespace PBS.Databases
 
         // Burning Jealousy
         {"burningjealousy",
-            new MoveData(
+            new Move(
                 ID: "burningjealousy",
                 moveName: "Burning Jealousy",
                 moveType: "fire",
@@ -1046,7 +1046,7 @@ namespace PBS.Databases
 
         // Celebrate
         {"celebrate",
-            new MoveData(
+            new Move(
                 ID: "celebrate",
                 moveName: "Celebrate",
                 moveType: "normal",
@@ -1072,7 +1072,7 @@ namespace PBS.Databases
 
         // Chatter
         {"chatter",
-            new MoveData(
+            new Move(
                 ID: "chatter",
                 moveName: "Chatter",
                 moveType: "flying",
@@ -1110,7 +1110,7 @@ namespace PBS.Databases
 
         // Chip Away
         {"chipaway",
-            new MoveData(
+            new Move(
                 ID: "chipaway",
                 moveName: "Chip Away",
                 moveType: "normal",
@@ -1134,7 +1134,7 @@ namespace PBS.Databases
 
         // Circle Throw
         {"circlethrow",
-            new MoveData(
+            new Move(
                 ID: "circlethrow",
                 moveName: "Circle Throw",
                 moveType: "fighting",
@@ -1157,7 +1157,7 @@ namespace PBS.Databases
 
         // Close Combat
         {"closecombat",
-            new MoveData(
+            new Move(
                 ID: "closecombat",
                 moveName: "Close Combat",
                 moveType: "fighting",
@@ -1185,7 +1185,7 @@ namespace PBS.Databases
 
         // Comet Punch
         {"cometpunch",
-            new MoveData(
+            new Move(
                 ID: "cometpunch",
                 moveName: "Comet Punch",
                 moveType: "normal",
@@ -1208,7 +1208,7 @@ namespace PBS.Databases
 
         // Confuse Ray
         {"confuseray",
-            new MoveData(
+            new Move(
                 ID: "confuseray",
                 moveName: "Confuse Ray",
                 moveType: "ghost",
@@ -1242,7 +1242,7 @@ namespace PBS.Databases
 
         // Copycat
         {"copycat",
-            new MoveData(
+            new Move(
                 ID: "copycat",
                 moveName: "Copycat",
                 moveType: "normal",
@@ -1267,7 +1267,7 @@ namespace PBS.Databases
 
         // Core Enforcer
         {"coreenforcer",
-            new MoveData(
+            new Move(
                 ID: "coreenforcer",
                 moveName: "Core Enforcer",
                 moveType: "dragon",
@@ -1288,7 +1288,7 @@ namespace PBS.Databases
 
         // Corrosive Gas
         {"corrosivegas",
-            new MoveData(
+            new Move(
                 ID: "corrosivegas",
                 moveName: "Corrosive Gas",
                 moveType: "poison",
@@ -1308,7 +1308,7 @@ namespace PBS.Databases
 
         // Counter
         {"counter",
-            new MoveData(
+            new Move(
                 ID: "counter",
                 moveName: "Counter",
                 moveType: "fighting",
@@ -1336,7 +1336,7 @@ namespace PBS.Databases
 
         // Covet
         {"covet",
-            new MoveData(
+            new Move(
                 ID: "covet",
                 moveName: "Covet",
                 moveType: "normal",
@@ -1360,7 +1360,7 @@ namespace PBS.Databases
 
         // Crafty Shield
         {"craftyshield",
-            new MoveData(
+            new Move(
                 ID: "craftyshield",
                 moveName: "Crafty Shield",
                 moveType: "fairy",
@@ -1393,7 +1393,7 @@ namespace PBS.Databases
 
         // Cut
         {"cut",
-            new MoveData(
+            new Move(
                 ID: "cut",
                 moveName: "Cut",
                 moveType: "normal",
@@ -1413,7 +1413,7 @@ namespace PBS.Databases
 
         // Defense Curl
         {"defensecurl",
-            new MoveData(
+            new Move(
                 ID: "defensecurl",
                 moveName: "Defense Curl",
                 moveType: "normal",
@@ -1451,7 +1451,7 @@ namespace PBS.Databases
 
         // Destiny Bond
         {"destinybond",
-            new MoveData(
+            new Move(
                 ID: "destinybond",
                 moveName: "Destiny Bond",
                 moveType: "ghost",
@@ -1480,7 +1480,7 @@ namespace PBS.Databases
 
         // Detect
         {"detect",
-            new MoveData(
+            new Move(
                 ID: "detect",
                 moveName: "Detect",
                 moveType: "fighting",
@@ -1506,7 +1506,7 @@ namespace PBS.Databases
 
         // Diamond Storm
         {"diamondstorm",
-            new MoveData(
+            new Move(
                 ID: "diamondstorm",
                 moveName: "Diamond Storm",
                 moveType: "rock",
@@ -1535,7 +1535,7 @@ namespace PBS.Databases
 
         // Dig
         {"dig",
-            new MoveData(
+            new Move(
                 ID: "dig",
                 moveName: "Dig",
                 moveType: "ground",
@@ -1565,7 +1565,7 @@ namespace PBS.Databases
 
         // Disable
         {"disable",
-            new MoveData(
+            new Move(
                 ID: "disable",
                 moveName: "Disable",
                 moveType: "normal",
@@ -1595,7 +1595,7 @@ namespace PBS.Databases
 
         // Dive
         {"dive",
-            new MoveData(
+            new Move(
                 ID: "dive",
                 moveName: "Dive",
                 moveType: "water",
@@ -1626,7 +1626,7 @@ namespace PBS.Databases
 
         // Doom Desire
         {"doomdesire",
-            new MoveData(
+            new Move(
                 ID: "doomdesire",
                 moveName: "Doom Desire",
                 moveType: "steel",
@@ -1652,7 +1652,7 @@ namespace PBS.Databases
 
         // Double-Edge
         {"doubleedge",
-            new MoveData(
+            new Move(
                 ID: "doubleedge",
                 moveName: "Double-Edge",
                 moveType: "normal",
@@ -1676,7 +1676,7 @@ namespace PBS.Databases
 
         // Double Kick
         {"doublekick",
-            new MoveData(
+            new Move(
                 ID: "doublekick",
                 moveName: "Double Kick",
                 moveType: "fighting",
@@ -1698,7 +1698,7 @@ namespace PBS.Databases
 
         // Double Slap
         {"doubleslap",
-            new MoveData(
+            new Move(
                 ID: "doubleslap",
                 moveName: "Double Slap",
                 moveType: "normal",
@@ -1720,7 +1720,7 @@ namespace PBS.Databases
 
         // Dragon Dance
         {"dragondance",
-            new MoveData(
+            new Move(
                 ID: "dragondance",
                 moveName: "Dragon Dance",
                 moveType: "dragon",
@@ -1751,7 +1751,7 @@ namespace PBS.Databases
 
         // Dragon Rage
         {"dragonrage",
-            new MoveData(
+            new Move(
                 ID: "dragonrage",
                 moveName: "Dragon Rage",
                 moveType: "dragon",
@@ -1772,7 +1772,7 @@ namespace PBS.Databases
 
         // Dragon Tail
         {"dragontail",
-            new MoveData(
+            new Move(
                 ID: "dragontail",
                 moveName: "Dragon Tail",
                 moveType: "dragon",
@@ -1795,7 +1795,7 @@ namespace PBS.Databases
 
         // Dynamax Cannon
         {"dynamaxcannon",
-            new MoveData(
+            new Move(
                 ID: "dynamaxcannon",
                 moveName: "Dynamax Cannon",
                 moveType: "dragon",
@@ -1822,7 +1822,7 @@ namespace PBS.Databases
 
         // Earthquake
         {"earthquake",
-            new MoveData(
+            new Move(
                 ID: "earthquake",
                 moveName: "Earthquake",
                 moveType: "ground",
@@ -1838,7 +1838,7 @@ namespace PBS.Databases
 
         // Electric Terrain
         {"electricterrain",
-            new MoveData(
+            new Move(
                 ID: "electricterrain",
                 moveName: "Electric Terrain",
                 moveType: "electric",
@@ -1868,7 +1868,7 @@ namespace PBS.Databases
 
         // Embargo
         {"embargo",
-            new MoveData(
+            new Move(
                 ID: "embargo",
                 moveName: "Embargo",
                 moveType: "dark",
@@ -1897,7 +1897,7 @@ namespace PBS.Databases
 
         // Ember
         {"ember",
-            new MoveData(
+            new Move(
                 ID: "ember",
                 moveName: "Ember",
                 moveType: "fire",
@@ -1921,7 +1921,7 @@ namespace PBS.Databases
 
         // Encore
         {"encore",
-            new MoveData(
+            new Move(
                 ID: "encore",
                 moveName: "Encore",
                 moveType: "normal",
@@ -1951,7 +1951,7 @@ namespace PBS.Databases
 
         // Endeavor
         {"endeavor",
-            new MoveData(
+            new Move(
                 ID: "endeavor",
                 moveName: "Endeavor",
                 moveType: "normal",
@@ -1972,7 +1972,7 @@ namespace PBS.Databases
 
         // Endure
         {"endure",
-            new MoveData(
+            new Move(
                 ID: "endure",
                 moveName: "Endure",
                 moveType: "normal",
@@ -1996,7 +1996,7 @@ namespace PBS.Databases
 
         // Energy Ball
         {"energyball",
-            new MoveData(
+            new Move(
                 ID: "energyball",
                 moveName: "Energy Ball",
                 moveType: "grass",
@@ -2025,7 +2025,7 @@ namespace PBS.Databases
 
         // Expanding Force
         {"expandingforce",
-            new MoveData(
+            new Move(
                 ID: "expandingforce",
                 moveName: "Expanding Force",
                 moveType: "psychic",
@@ -2048,7 +2048,7 @@ namespace PBS.Databases
 
         // Explosion
         {"explosion",
-            new MoveData(
+            new Move(
                 ID: "explosion",
                 moveName: "Explosion",
                 moveType: "normal",
@@ -2075,7 +2075,7 @@ namespace PBS.Databases
 
         // Fake Out
         {"fakeout",
-            new MoveData(
+            new Move(
                 ID: "fakeout",
                 moveName: "Fake Out",
                 moveType: "normal",
@@ -2105,7 +2105,7 @@ namespace PBS.Databases
 
         // False Swipe
         {"falseswipe",
-            new MoveData(
+            new Move(
                 ID: "falseswipe",
                 moveName: "False Swipe",
                 moveType: "normal",
@@ -2126,7 +2126,7 @@ namespace PBS.Databases
 
         // Feint
         {"feint",
-            new MoveData(
+            new Move(
                 ID: "feint",
                 moveName: "Feint",
                 moveType: "normal",
@@ -2151,7 +2151,7 @@ namespace PBS.Databases
 
         // Fire Punch
         {"firepunch",
-            new MoveData(
+            new Move(
                 ID: "firepunch",
                 moveName: "Fire Punch",
                 moveType: "fire",
@@ -2179,7 +2179,7 @@ namespace PBS.Databases
 
         // Fire Spin
         {"firespin",
-            new MoveData(
+            new Move(
                 ID: "firespin",
                 moveName: "Fire Spin",
                 moveType: "fire",
@@ -2211,7 +2211,7 @@ namespace PBS.Databases
 
         // First Impression
         {"firstimpression",
-            new MoveData(
+            new Move(
                 ID: "firstimpression",
                 moveName: "First Impression",
                 moveType: "bug",
@@ -2232,7 +2232,7 @@ namespace PBS.Databases
 
         // Flamethrower
         {"flamethrower",
-            new MoveData(
+            new Move(
                 ID: "flamethrower",
                 moveName: "Flamethrower",
                 moveType: "fire",
@@ -2254,7 +2254,7 @@ namespace PBS.Databases
 
         // Fleur Cannon
         {"fleurcannon",
-            new MoveData(
+            new Move(
                 ID: "fleurcannon",
                 moveName: "Fleur Cannon",
                 moveType: "fairy",
@@ -2281,7 +2281,7 @@ namespace PBS.Databases
 
         // Fling
         {"fling",
-            new MoveData(
+            new Move(
                 ID: "fling",
                 moveName: "Fling",
                 moveType: "dark",
@@ -2305,7 +2305,7 @@ namespace PBS.Databases
 
         // Fly
         {"fly",
-            new MoveData(
+            new Move(
                 ID: "fly",
                 moveName: "Fly",
                 moveType: "flying",
@@ -2335,7 +2335,7 @@ namespace PBS.Databases
 
         // Flying Press
         {"flyingpress",
-            new MoveData(
+            new Move(
                 ID: "flyingpress",
                 moveName: "Flying Press",
                 moveType: "fighting",
@@ -2367,7 +2367,7 @@ namespace PBS.Databases
 
         // Focus Punch
         {"focuspunch",
-            new MoveData(
+            new Move(
                 ID: "focuspunch",
                 moveName: "Focus Punch",
                 moveType: "fighting",
@@ -2397,7 +2397,7 @@ namespace PBS.Databases
 
         // Follow Me
         {"followme",
-            new MoveData(
+            new Move(
                 ID: "followme",
                 moveName: "Follow Me",
                 moveType: "normal",
@@ -2426,7 +2426,7 @@ namespace PBS.Databases
 
         // Foresight
         {"foresight",
-            new MoveData(
+            new Move(
                 ID: "foresight",
                 moveName: "Foresight",
                 moveType: "normal",
@@ -2456,7 +2456,7 @@ namespace PBS.Databases
 
         // Forest's Curse
         {"forestscurse",
-            new MoveData(
+            new Move(
                 ID: "forestscurse",
                 moveName: "Forest's Curse",
                 moveType: "grass",
@@ -2484,7 +2484,7 @@ namespace PBS.Databases
 
         // Freeze Shock
         {"freezeshock",
-            new MoveData(
+            new Move(
                 ID: "freezeshock",
                 moveName: "Freeze Shock",
                 moveType: "ice",
@@ -2519,7 +2519,7 @@ namespace PBS.Databases
 
         // Freeze-Dry
         {"freezedry",
-            new MoveData(
+            new Move(
                 ID: "freezedry",
                 moveName: "Freeze-Dry",
                 moveType: "ice",
@@ -2544,7 +2544,7 @@ namespace PBS.Databases
 
         // Frost Breath
         {"frostbreath",
-            new MoveData(
+            new Move(
                 ID: "frostbreath",
                 moveName: "Frost Breath",
                 moveType: "ice",
@@ -2564,7 +2564,7 @@ namespace PBS.Databases
 
         // Fury Attack
         {"furyattack",
-            new MoveData(
+            new Move(
                 ID: "furyattack",
                 moveName: "Fury Attack",
                 moveType: "normal",
@@ -2585,7 +2585,7 @@ namespace PBS.Databases
 
         // Future Sight
         {"futuresight",
-            new MoveData(
+            new Move(
                 ID: "futuresight",
                 moveName: "Future Sight",
                 moveType: "psychic",
@@ -2614,7 +2614,7 @@ namespace PBS.Databases
 
         // Gastro Acid
         {"gastroacid",
-            new MoveData(
+            new Move(
                 ID: "gastroacid",
                 moveName: "Gastro Acid",
                 moveType: "poison",
@@ -2634,7 +2634,7 @@ namespace PBS.Databases
 
         // Geomancy
         {"geomancy",
-            new MoveData(
+            new Move(
                 ID: "geomancy",
                 moveName: "Geomancy",
                 moveType: "fairy",
@@ -2666,7 +2666,7 @@ namespace PBS.Databases
 
         // Giga Drain
         {"gigadrain",
-            new MoveData(
+            new Move(
                 ID: "gigadrain",
                 moveName: "Giga Drain",
                 moveType: "grass",
@@ -2682,7 +2682,7 @@ namespace PBS.Databases
 
         // Grass Knot
         {"grassknot",
-            new MoveData(
+            new Move(
                 ID: "grassknot",
                 moveName: "Grass Knot",
                 moveType: "grass",
@@ -2704,7 +2704,7 @@ namespace PBS.Databases
 
         // Grassy Glide
         {"grassyglide",
-            new MoveData(
+            new Move(
                 ID: "grassyglide",
                 moveName: "Grassy Glide",
                 moveType: "grass",
@@ -2723,7 +2723,7 @@ namespace PBS.Databases
 
         // Grassy Terrain
         {"grassyterrain",
-            new MoveData(
+            new Move(
                 ID: "grassyterrain",
                 moveName: "Grassy Terrain",
                 moveType: "grass",
@@ -2753,7 +2753,7 @@ namespace PBS.Databases
 
         // Gravity
         {"gravity",
-            new MoveData(
+            new Move(
                 ID: "gravity",
                 moveName: "Gravity",
                 moveType: "psychic",
@@ -2782,7 +2782,7 @@ namespace PBS.Databases
 
         // Growl
         {"growl",
-            new MoveData(
+            new Move(
                 ID: "growl",
                 moveName: "Growl",
                 moveType: "normal",
@@ -2813,7 +2813,7 @@ namespace PBS.Databases
 
         // Growth
         {"growth",
-            new MoveData(
+            new Move(
                 ID: "growth",
                 moveName: "Growth",
                 moveType: "grass",
@@ -2847,7 +2847,7 @@ namespace PBS.Databases
 
         // Guard Split
         {"guardsplit",
-            new MoveData(
+            new Move(
                 ID: "guardsplit",
                 moveName: "Guard Split",
                 moveType: "psychic",
@@ -2875,7 +2875,7 @@ namespace PBS.Databases
 
         // Guard Swap
         {"guardswap",
-            new MoveData(
+            new Move(
                 ID: "guardswap",
                 moveName: "Guard Swap",
                 moveType: "psychic",
@@ -2903,7 +2903,7 @@ namespace PBS.Databases
 
         // Guillotine
         {"guillotine",
-            new MoveData(
+            new Move(
                 ID: "guillotine",
                 moveName: "Guillotine",
                 moveType: "normal",
@@ -2929,7 +2929,7 @@ namespace PBS.Databases
 
         // Gust
         {"gust",
-            new MoveData(
+            new Move(
                 ID: "gust",
                 moveName: "Gust",
                 moveType: "flying",
@@ -2957,7 +2957,7 @@ namespace PBS.Databases
 
         // Hail
         {"hail",
-            new MoveData(
+            new Move(
                 ID: "hail",
                 moveName: "Hail",
                 moveType: "ice",
@@ -2986,7 +2986,7 @@ namespace PBS.Databases
 
         // Haze
         {"haze",
-            new MoveData(
+            new Move(
                 ID: "haze",
                 moveName: "Haze",
                 moveType: "ice",
@@ -3012,7 +3012,7 @@ namespace PBS.Databases
 
         // Headbutt
         {"headbutt",
-            new MoveData(
+            new Move(
                 ID: "headbutt",
                 moveName: "Headbutt",
                 moveType: "normal",
@@ -3044,7 +3044,7 @@ namespace PBS.Databases
 
         // Heal Bell
         {"healbell",
-            new MoveData(
+            new Move(
                 ID: "healbell",
                 moveName: "Heal Bell",
                 moveType: "normal",
@@ -3082,7 +3082,7 @@ namespace PBS.Databases
 
         // Heal Block
         {"healblock",
-            new MoveData(
+            new Move(
                 ID: "healblock",
                 moveName: "Heal Block",
                 moveType: "psychic",
@@ -3111,7 +3111,7 @@ namespace PBS.Databases
 
         // Heal Order
         {"healorder",
-            new MoveData(
+            new Move(
                 ID: "healorder",
                 moveName: "Heal Order",
                 moveType: "bug",
@@ -3140,7 +3140,7 @@ namespace PBS.Databases
 
         // Heal Pulse
         {"healpulse",
-            new MoveData(
+            new Move(
                 ID: "healpulse",
                 moveName: "Heal Pulse",
                 moveType: "psychic",
@@ -3168,7 +3168,7 @@ namespace PBS.Databases
 
         // Healing Wish
         {"healingwish",
-            new MoveData(
+            new Move(
                 ID: "healingwish",
                 moveName: "Healing Wish",
                 moveType: "psychic",
@@ -3199,7 +3199,7 @@ namespace PBS.Databases
 
         // Heat Crash
         {"heatcrash",
-            new MoveData(
+            new Move(
                 ID: "heatcrash",
                 moveName: "Heat Crash",
                 moveType: "fire",
@@ -3229,7 +3229,7 @@ namespace PBS.Databases
 
         // Heavy Slam
         {"heavyslam",
-            new MoveData(
+            new Move(
                 ID: "heavyslam",
                 moveName: "Heavy Slam",
                 moveType: "steel",
@@ -3259,7 +3259,7 @@ namespace PBS.Databases
 
         // Helping Hand
         {"helpinghand",
-            new MoveData(
+            new Move(
                 ID: "helpinghand",
                 moveName: "Helping Hand",
                 moveType: "normal",
@@ -3310,7 +3310,7 @@ namespace PBS.Databases
 
         // Hidden Power
         {"hiddenpower",
-            new MoveData(
+            new Move(
                 ID: "hiddenpower",
                 moveName: "Hidden Power",
                 moveType: "normal",
@@ -3330,7 +3330,7 @@ namespace PBS.Databases
 
         // High Jump Kick
         {"highjumpkick",
-            new MoveData(
+            new Move(
                 ID: "highjumpkick",
                 moveName: "High Jump Kick",
                 moveType: "fighting",
@@ -3357,7 +3357,7 @@ namespace PBS.Databases
 
         // Hold Hands
         {"holdhands",
-            new MoveData(
+            new Move(
                 ID: "holdhands",
                 moveName: "Hold Hands",
                 moveType: "normal",
@@ -3387,7 +3387,7 @@ namespace PBS.Databases
 
         // Horn Attack
         {"hornattack",
-            new MoveData(
+            new Move(
                 ID: "hornattack",
                 moveName: "Horn Attack",
                 moveType: "normal",
@@ -3409,7 +3409,7 @@ namespace PBS.Databases
 
         // Horn Drill
         {"horndrill",
-            new MoveData(
+            new Move(
                 ID: "horndrill",
                 moveName: "Horn Drill",
                 moveType: "normal",
@@ -3435,7 +3435,7 @@ namespace PBS.Databases
 
         // Hydro Pump
         {"hydropump",
-            new MoveData(
+            new Move(
                 ID: "hydropump",
                 moveName: "Hydro Pump",
                 moveType: "water",
@@ -3453,7 +3453,7 @@ namespace PBS.Databases
 
         // Hyper Beam
         {"hyperbeam",
-            new MoveData(
+            new Move(
                 ID: "hyperbeam",
                 moveName: "Hyper Beam",
                 moveType: "normal",
@@ -3478,7 +3478,7 @@ namespace PBS.Databases
 
         // Hyperspace Fury
         {"hyperspacefury",
-            new MoveData(
+            new Move(
                 ID: "hyperspacefury",
                 moveName: "Hyperspace Fury",
                 moveType: "dark",
@@ -3513,7 +3513,7 @@ namespace PBS.Databases
 
         // Hyperspace Hole
         {"hyperspacehole",
-            new MoveData(
+            new Move(
                 ID: "hyperspacehole",
                 moveName: "Hyperspace Hole",
                 moveType: "psychic",
@@ -3540,7 +3540,7 @@ namespace PBS.Databases
 
         // Ice Ball
         {"iceball",
-            new MoveData(
+            new Move(
                 ID: "iceball",
                 moveName: "Ice Ball",
                 moveType: "ice",
@@ -3562,7 +3562,7 @@ namespace PBS.Databases
 
         // Ice Beam
         {"icebeam",
-            new MoveData(
+            new Move(
                 ID: "icebeam",
                 moveName: "Ice Beam",
                 moveType: "ice",
@@ -3592,7 +3592,7 @@ namespace PBS.Databases
 
         // Ice Burn
         {"iceburn",
-            new MoveData(
+            new Move(
                 ID: "iceburn",
                 moveName: "Ice Burn",
                 moveType: "ice",
@@ -3627,7 +3627,7 @@ namespace PBS.Databases
 
         // Ice Punch
         {"icepunch",
-            new MoveData(
+            new Move(
                 ID: "icepunch",
                 moveName: "Ice Punch",
                 moveType: "ice",
@@ -3657,7 +3657,7 @@ namespace PBS.Databases
 
         // Imprison
         {"imprison",
-            new MoveData(
+            new Move(
                 ID: "imprison",
                 moveName: "Imprison",
                 moveType: "psychic",
@@ -3686,7 +3686,7 @@ namespace PBS.Databases
 
         // Incinerate
         {"incinerate",
-            new MoveData(
+            new Move(
                 ID: "incinerate",
                 moveName: "Incinerate",
                 moveType: "fire",
@@ -3710,7 +3710,7 @@ namespace PBS.Databases
 
         // Ingrain
         {"ingrain",
-            new MoveData(
+            new Move(
                 ID: "ingrain",
                 moveName: "Ingrain",
                 moveType: "grass",
@@ -3738,7 +3738,7 @@ namespace PBS.Databases
 
         // Instruct
         {"instruct",
-            new MoveData(
+            new Move(
                 ID: "instruct",
                 moveName: "Instruct",
                 moveType: "psychic",
@@ -3762,7 +3762,7 @@ namespace PBS.Databases
 
         // Ion Deluge
         {"iondeluge",
-            new MoveData(
+            new Move(
                 ID: "iondeluge",
                 moveName: "Ion Deluge",
                 moveType: "electric",
@@ -3795,7 +3795,7 @@ namespace PBS.Databases
 
         // Judgment
         {"judgment",
-            new MoveData(
+            new Move(
                 ID: "judgment",
                 moveName: "Judgment",
                 moveType: "normal",
@@ -3816,7 +3816,7 @@ namespace PBS.Databases
 
         // Jump Kick
         {"jumpkick",
-            new MoveData(
+            new Move(
                 ID: "jumpkick",
                 moveName: "Jump Kick",
                 moveType: "fighting",
@@ -3846,7 +3846,7 @@ namespace PBS.Databases
 
         // Karate Chop
         {"karatechop",
-            new MoveData(
+            new Move(
                 ID: "karatechop",
                 moveName: "Karate Chop",
                 moveType: "fighting",
@@ -3868,7 +3868,7 @@ namespace PBS.Databases
 
         // King's Shield
         {"kingsshield",
-            new MoveData(
+            new Move(
                 ID: "kingsshield",
                 moveName: "King's Shield",
                 moveType: "steel",
@@ -3904,7 +3904,7 @@ namespace PBS.Databases
         
         // Knock Off
         {"knockoff",
-            new MoveData(
+            new Move(
                 ID: "knockoff",
                 moveName: "Knock Off",
                 moveType: "dark",
@@ -3929,7 +3929,7 @@ namespace PBS.Databases
 
         // Lash Out
         {"lashout",
-            new MoveData(
+            new Move(
                 ID: "lashout",
                 moveName: "Lash Out",
                 moveType: "dark",
@@ -3949,7 +3949,7 @@ namespace PBS.Databases
 
         // Leech Seed
         {"leechseed",
-            new MoveData(
+            new Move(
                 ID: "leechseed",
                 moveName: "Leech Seed",
                 moveType: "grass",
@@ -3982,7 +3982,7 @@ namespace PBS.Databases
 
         // Leer
         {"leer",
-            new MoveData(
+            new Move(
                 ID: "leer",
                 moveName: "Leer",
                 moveType: "normal",
@@ -4010,7 +4010,7 @@ namespace PBS.Databases
 
         // Light of Iruin
         {"lightofiruin",
-            new MoveData(
+            new Move(
                 ID: "lightofiruin",
                 moveName: "Light of Iruin",
                 moveType: "fairy",
@@ -4033,7 +4033,7 @@ namespace PBS.Databases
 
         // Light Screen
         {"lightscreen",
-            new MoveData(
+            new Move(
                 ID: "lightscreen",
                 moveName: "Light Screen",
                 moveType: "psychic",
@@ -4063,7 +4063,7 @@ namespace PBS.Databases
 
         // Liquidation
         {"liquidation",
-            new MoveData(
+            new Move(
                 ID: "liquidation",
                 moveName: "Liquidation",
                 moveType: "water",
@@ -4092,7 +4092,7 @@ namespace PBS.Databases
 
         // Lock On
         {"lockon",
-            new MoveData(
+            new Move(
                 ID: "lockon",
                 moveName: "Lock On",
                 moveType: "normal",
@@ -4120,7 +4120,7 @@ namespace PBS.Databases
 
         // Low Kick
         {"lowkick",
-            new MoveData(
+            new Move(
                 ID: "lowkick",
                 moveName: "Low Kick",
                 moveType: "fighting",
@@ -4143,7 +4143,7 @@ namespace PBS.Databases
 
         // Lucky Chant
         {"luckychant",
-            new MoveData(
+            new Move(
                 ID: "luckychant",
                 moveName: "Lucky Chant",
                 moveType: "normal",
@@ -4175,7 +4175,7 @@ namespace PBS.Databases
 
         // Lunar Dance
         {"lunardance",
-            new MoveData(
+            new Move(
                 ID: "lunardance",
                 moveName: "Lunar Dance",
                 moveType: "psychic",
@@ -4211,7 +4211,7 @@ namespace PBS.Databases
 
         // Magic Coat
         {"magiccoat",
-            new MoveData(
+            new Move(
                 ID: "magiccoat",
                 moveName: "Magic Coat",
                 moveType: "psychic",
@@ -4250,7 +4250,7 @@ namespace PBS.Databases
 
         // Magic Powder
         {"magicpowder",
-            new MoveData(
+            new Move(
                 ID: "magicpowder",
                 moveName: "Magic Powder",
                 moveType: "psychic",
@@ -4278,7 +4278,7 @@ namespace PBS.Databases
 
         // Magic Room
         {"magicroom",
-            new MoveData(
+            new Move(
                 ID: "magicroom",
                 moveName: "Magic Room",
                 moveType: "psychic",
@@ -4307,7 +4307,7 @@ namespace PBS.Databases
 
         // Magnitude
         {"magnitude",
-            new MoveData(
+            new Move(
                 ID: "magnitude",
                 moveName: "Magnitude",
                 moveType: "ground",
@@ -4328,7 +4328,7 @@ namespace PBS.Databases
 
         // Mat Block
         {"matblock",
-            new MoveData(
+            new Move(
                 ID: "matblock",
                 moveName: "Mat Block",
                 moveType: "fighting",
@@ -4356,7 +4356,7 @@ namespace PBS.Databases
 
         // Me First
         {"mefirst",
-            new MoveData(
+            new Move(
                 ID: "mefirst",
                 moveName: "Me First",
                 moveType: "normal",
@@ -4382,7 +4382,7 @@ namespace PBS.Databases
 
         // Mega Drain
         {"megadrain",
-            new MoveData(
+            new Move(
                 ID: "megadrain",
                 moveName: "Mega Drain",
                 moveType: "grass",
@@ -4400,7 +4400,7 @@ namespace PBS.Databases
 
         // Mega Kick
         {"megakick",
-            new MoveData(
+            new Move(
                 ID: "megakick",
                 moveName: "Mega Kick",
                 moveType: "normal",
@@ -4422,7 +4422,7 @@ namespace PBS.Databases
 
         // Mega Punch
         {"megapunch",
-            new MoveData(
+            new Move(
                 ID: "megapunch",
                 moveName: "Mega Punch",
                 moveType: "normal",
@@ -4440,7 +4440,7 @@ namespace PBS.Databases
 
         // Memento
         {"memento",
-            new MoveData(
+            new Move(
                 ID: "memento",
                 moveName: "Memento",
                 moveType: "dark",
@@ -4472,7 +4472,7 @@ namespace PBS.Databases
 
         // Metal Burst
         {"metalburst",
-            new MoveData(
+            new Move(
                 ID: "metalburst",
                 moveName: "Metal Burst",
                 moveType: "steel",
@@ -4498,7 +4498,7 @@ namespace PBS.Databases
 
         // Metronome
         {"metronome",
-            new MoveData(
+            new Move(
                 ID: "metronome",
                 moveName: "Metronome",
                 moveType: "normal",
@@ -4523,7 +4523,7 @@ namespace PBS.Databases
 
         // Milk Drink
         {"milkdrink",
-            new MoveData(
+            new Move(
                 ID: "milkdrink",
                 moveName: "Milk Drink",
                 moveType: "normal",
@@ -4552,7 +4552,7 @@ namespace PBS.Databases
 
         // Mimic
         {"mimic",
-            new MoveData(
+            new Move(
                 ID: "mimic",
                 moveName: "Mimic",
                 moveType: "normal",
@@ -4579,7 +4579,7 @@ namespace PBS.Databases
 
         // Mind Blown
         {"mindblown",
-            new MoveData(
+            new Move(
                 ID: "mindblown",
                 moveName: "Mind Blown",
                 moveType: "fire",
@@ -4606,7 +4606,7 @@ namespace PBS.Databases
 
         // Mind Reader
         {"mindreader",
-            new MoveData(
+            new Move(
                 ID: "mindreader",
                 moveName: "Mind Reader",
                 moveType: "psychic",
@@ -4634,7 +4634,7 @@ namespace PBS.Databases
 
         // Minimize
         {"minimize",
-            new MoveData(
+            new Move(
                 ID: "minimize",
                 moveName: "Minimize",
                 moveType: "minimize",
@@ -4667,7 +4667,7 @@ namespace PBS.Databases
 
         // Miracle Eye
         {"miracleeye",
-            new MoveData(
+            new Move(
                 ID: "miracleeye",
                 moveName: "Miracle Eye",
                 moveType: "psychic",
@@ -4704,7 +4704,7 @@ namespace PBS.Databases
 
         // Mirror Coat
         {"mirrorcoat",
-            new MoveData(
+            new Move(
                 ID: "mirrorcoat",
                 moveName: "Mirror Coat",
                 moveType: "psychic",
@@ -4731,7 +4731,7 @@ namespace PBS.Databases
 
         // Mirror Move
         {"mirrormove",
-            new MoveData(
+            new Move(
                 ID: "mirrormove",
                 moveName: "Mirror Move",
                 moveType: "flying",
@@ -4757,7 +4757,7 @@ namespace PBS.Databases
 
         // Mist
         {"mist",
-            new MoveData(
+            new Move(
                 ID: "mist",
                 moveName: "Mist",
                 moveType: "ice",
@@ -4790,7 +4790,7 @@ namespace PBS.Databases
 
         // Misty Terrain
         {"mistyterrain",
-            new MoveData(
+            new Move(
                 ID: "mistyterrain",
                 moveName: "Misty Terrain",
                 moveType: "fairy",
@@ -4820,7 +4820,7 @@ namespace PBS.Databases
 
         // Moongeist Beam
         {"moongeistbeam",
-            new MoveData(
+            new Move(
                 ID: "moongeistbeam",
                 moveName: "Moongeist Beam",
                 moveType: "ghost",
@@ -4845,7 +4845,7 @@ namespace PBS.Databases
 
         // Natural Gift
         {"naturalgift",
-            new MoveData(
+            new Move(
                 ID: "naturalgift",
                 moveName: "Natural Gift",
                 moveType: "normal",
@@ -4866,7 +4866,7 @@ namespace PBS.Databases
 
         // Nature Power
         {"naturepower",
-            new MoveData(
+            new Move(
                 ID: "naturepower",
                 moveName: "Nature Power",
                 moveType: "normal",
@@ -4891,7 +4891,7 @@ namespace PBS.Databases
 
         // Nature's Madness
         {"naturesmadness",
-            new MoveData(
+            new Move(
                 ID: "naturesmadness",
                 moveName: "Nature's Madness",
                 moveType: "fairy",
@@ -4912,7 +4912,7 @@ namespace PBS.Databases
 
         // Night Shade
         {"nightshade",
-            new MoveData(
+            new Move(
                 ID: "nightshade",
                 moveName: "Night Shade",
                 moveType: "ghost",
@@ -4937,7 +4937,7 @@ namespace PBS.Databases
 
         // Obstruct
         {"obstruct",
-            new MoveData(
+            new Move(
                 ID: "obstruct",
                 moveName: "Obstruct",
                 moveType: "dark",
@@ -4971,7 +4971,7 @@ namespace PBS.Databases
 
         // Odor Sleuth
         {"odorsleuth",
-            new MoveData(
+            new Move(
                 ID: "odorsleuth",
                 moveName: "Odor Sleuth",
                 moveType: "normal",
@@ -5001,7 +5001,7 @@ namespace PBS.Databases
 
         // Outrage
         {"outrage",
-            new MoveData(
+            new Move(
                 ID: "outrage",
                 moveName: "Outrage",
                 moveType: "dragon",
@@ -5038,7 +5038,7 @@ namespace PBS.Databases
 
         // Parting Shot
         {"partingshot",
-            new MoveData(
+            new Move(
                 ID: "partingshot",
                 moveName: "Parting Shot",
                 moveType: "dark",
@@ -5069,7 +5069,7 @@ namespace PBS.Databases
 
         // Pay Day
         {"payday",
-            new MoveData(
+            new Move(
                 ID: "payday",
                 moveName: "Pay Day",
                 moveType: "normal",
@@ -5094,7 +5094,7 @@ namespace PBS.Databases
 
         // Perish Song
         {"perishsong",
-            new MoveData(
+            new Move(
                 ID: "perishsong",
                 moveName: "Perish Song",
                 moveType: "normal",
@@ -5124,7 +5124,7 @@ namespace PBS.Databases
 
         // Petal Dance
         {"petaldance",
-            new MoveData(
+            new Move(
                 ID: "petaldance",
                 moveName: "Petal Dance",
                 moveType: "grass",
@@ -5158,7 +5158,7 @@ namespace PBS.Databases
 
         // Phantom Force
         {"phantomforce",
-            new MoveData(
+            new Move(
                 ID: "phantomforce",
                 moveName: "Phantom Force",
                 moveType: "ghost",
@@ -5192,7 +5192,7 @@ namespace PBS.Databases
 
         // Photon Geyser
         {"photongeyser",
-            new MoveData(
+            new Move(
                 ID: "photongeyser",
                 moveName: "Photon Geyser",
                 moveType: "psychic",
@@ -5214,7 +5214,7 @@ namespace PBS.Databases
 
         // Pin Missile
         {"pinmissile",
-            new MoveData(
+            new Move(
                 ID: "pinmissile",
                 moveName: "Pin Missile",
                 moveType: "bug",
@@ -5235,7 +5235,7 @@ namespace PBS.Databases
 
         // Plasma Fist
         {"plasmafist",
-            new MoveData(
+            new Move(
                 ID: "plasmafist",
                 moveName: "Plasma Fist",
                 moveType: "electric",
@@ -5265,7 +5265,7 @@ namespace PBS.Databases
 
         // Pluck
         {"pluck",
-            new MoveData(
+            new Move(
                 ID: "pluck",
                 moveName: "Pluck",
                 moveType: "flying",
@@ -5291,7 +5291,7 @@ namespace PBS.Databases
 
         // Poison Powder
         {"poisonpowder",
-            new MoveData(
+            new Move(
                 ID: "poisonpowder",
                 moveName: "Poison Powder",
                 moveType: "poison",
@@ -5321,7 +5321,7 @@ namespace PBS.Databases
 
         // Poison Sting
         {"poisonsting",
-            new MoveData(
+            new Move(
                 ID: "poisonsting",
                 moveName: "Poison Sting",
                 moveType: "poison",
@@ -5351,7 +5351,7 @@ namespace PBS.Databases
 
         // Poison Tail
         {"poisontail",
-            new MoveData(
+            new Move(
                 ID: "poisontail",
                 moveName: "Poison Tail",
                 moveType: "poison",
@@ -5384,7 +5384,7 @@ namespace PBS.Databases
 
         // Pollen Puff
         {"pollenpuff",
-            new MoveData(
+            new Move(
                 ID: "pollenpuff",
                 moveName: "Pollen Puff",
                 moveType: "bug",
@@ -5418,7 +5418,7 @@ namespace PBS.Databases
 
         // Poltergeist
         {"poltergeist",
-            new MoveData(
+            new Move(
                 ID: "poltergeist",
                 moveName: "Poltergeist",
                 moveType: "ghost",
@@ -5439,7 +5439,7 @@ namespace PBS.Databases
 
         // Pound
         {"pound",
-            new MoveData(
+            new Move(
                 ID: "pound",
                 moveName: "Pound",
                 moveType: "normal",
@@ -5456,7 +5456,7 @@ namespace PBS.Databases
 
         // Powder
         {"powder",
-            new MoveData(
+            new Move(
                 ID: "powder",
                 moveName: "Powder",
                 moveType: "bug",
@@ -5485,7 +5485,7 @@ namespace PBS.Databases
 
         // Power Split
         {"powersplit",
-            new MoveData(
+            new Move(
                 ID: "powersplit",
                 moveName: "Power Split",
                 moveType: "psychic",
@@ -5513,7 +5513,7 @@ namespace PBS.Databases
 
         // Power Swap
         {"powerswap",
-            new MoveData(
+            new Move(
                 ID: "powerswap",
                 moveName: "Power Swap",
                 moveType: "psychic",
@@ -5541,7 +5541,7 @@ namespace PBS.Databases
 
         // Power Trick
         {"powertrick",
-            new MoveData(
+            new Move(
                 ID: "powertrick",
                 moveName: "Power Trick",
                 moveType: "psychic",
@@ -5568,7 +5568,7 @@ namespace PBS.Databases
 
         // Power Trip
         {"powertrip",
-            new MoveData(
+            new Move(
                 ID: "powertip",
                 moveName: "Power Trip",
                 moveType: "dark",
@@ -5589,7 +5589,7 @@ namespace PBS.Databases
 
         // Protect
         {"protect",
-            new MoveData(
+            new Move(
                 ID: "protect",
                 moveName: "Protect",
                 moveType: "normal",
@@ -5614,7 +5614,7 @@ namespace PBS.Databases
 
         // Psybeam
         {"psybeam",
-            new MoveData(
+            new Move(
                 ID: "psybeam",
                 moveName: "Psybeam",
                 moveType: "psychic",
@@ -5638,7 +5638,7 @@ namespace PBS.Databases
 
         // Psychic
         {"psychic",
-            new MoveData(
+            new Move(
                 ID: "psychic",
                 moveName: "Psychic",
                 moveType: "psychic",
@@ -5667,7 +5667,7 @@ namespace PBS.Databases
 
         // Psychic Terrain
         {"psychicterrain",
-            new MoveData(
+            new Move(
                 ID: "psychicterrain",
                 moveName: "Psychic Terrain",
                 moveType: "psychic",
@@ -5697,7 +5697,7 @@ namespace PBS.Databases
 
         // Psyshock
         {"psyshock",
-            new MoveData(
+            new Move(
                 ID: "psyshock",
                 moveName: "Psyshock",
                 moveType: "psychic",
@@ -5721,7 +5721,7 @@ namespace PBS.Databases
 
         // Psystrike
         {"psystrike",
-            new MoveData(
+            new Move(
                 ID: "psystrike",
                 moveName: "Psystrike",
                 moveType: "psychic",
@@ -5745,7 +5745,7 @@ namespace PBS.Databases
 
         // Psywave
         {"psywave",
-            new MoveData(
+            new Move(
                 ID: "psywave",
                 moveName: "Psywave",
                 moveType: "psychic",
@@ -5766,7 +5766,7 @@ namespace PBS.Databases
 
         // Punishment
         {"punishment",
-            new MoveData(
+            new Move(
                 ID: "punishment",
                 moveName: "Punishment",
                 moveType: "dark",
@@ -5787,7 +5787,7 @@ namespace PBS.Databases
 
         // Pursuit
         {"pursuit",
-            new MoveData(
+            new Move(
                 ID: "pursuit",
                 moveName: "Pursuit",
                 moveType: "dark",
@@ -5812,7 +5812,7 @@ namespace PBS.Databases
 
         // Quash
         {"quash",
-            new MoveData(
+            new Move(
                 ID: "quash",
                 moveName: "Quash",
                 moveType: "dark",
@@ -5836,7 +5836,7 @@ namespace PBS.Databases
 
         // Quick Attack
         {"quickattack",
-            new MoveData(
+            new Move(
                 ID: "quickattack",
                 moveName: "Quick Attack",
                 moveType: "normal",
@@ -5852,7 +5852,7 @@ namespace PBS.Databases
 
         // Quick Guard
         {"quickguard",
-            new MoveData(
+            new Move(
                 ID: "quickguard",
                 moveName: "Quick Guard",
                 moveType: "fighting",
@@ -5885,7 +5885,7 @@ namespace PBS.Databases
 
         // Rage
         {"rage",
-            new MoveData(
+            new Move(
                 ID: "rage",
                 moveName: "Rage",
                 moveType: "normal",
@@ -5910,7 +5910,7 @@ namespace PBS.Databases
 
         // Rage Powder
         {"ragepowder",
-            new MoveData(
+            new Move(
                 ID: "ragepowder",
                 moveName: "Rage Powder",
                 moveType: "bug",
@@ -5939,7 +5939,7 @@ namespace PBS.Databases
 
         // Rain Dance
         {"raindance",
-            new MoveData(
+            new Move(
                 ID: "raindance",
                 moveName: "Rain Dance",
                 moveType: "water",
@@ -5968,7 +5968,7 @@ namespace PBS.Databases
 
         // Razor Leaf
         {"razorleaf",
-            new MoveData(
+            new Move(
                 ID: "razorleaf",
                 moveName: "Razor Leaf",
                 moveType: "grass",
@@ -5993,7 +5993,7 @@ namespace PBS.Databases
 
         // Razor Wind
         {"razorwind",
-            new MoveData(
+            new Move(
                 ID: "razorwind",
                 moveName: "Razor Wind",
                 moveType: "normal",
@@ -6024,7 +6024,7 @@ namespace PBS.Databases
 
         // Recover
         {"recover",
-            new MoveData(
+            new Move(
                 ID: "recover",
                 moveName: "Recover",
                 moveType: "normal",
@@ -6053,7 +6053,7 @@ namespace PBS.Databases
 
         // Recycle
         {"recycle",
-            new MoveData(
+            new Move(
                 ID: "recycle",
                 moveName: "Recycle",
                 moveType: "normal",
@@ -6079,7 +6079,7 @@ namespace PBS.Databases
 
         // Reflect
         {"reflect",
-            new MoveData(
+            new Move(
                 ID: "reflect",
                 moveName: "Reflect",
                 moveType: "psychic",
@@ -6109,7 +6109,7 @@ namespace PBS.Databases
 
         // Refresh
         {"refresh",
-            new MoveData(
+            new Move(
                 ID: "refresh",
                 moveName: "Refresh",
                 moveType: "normal",
@@ -6134,7 +6134,7 @@ namespace PBS.Databases
 
         // Relic Song
         {"relicsong",
-            new MoveData(
+            new Move(
                 ID: "relicsong",
                 moveName: "Relic Song",
                 moveType: "normal",
@@ -6171,7 +6171,7 @@ namespace PBS.Databases
 
         // Rest
         {"rest",
-            new MoveData(
+            new Move(
                 ID: "rest",
                 moveName: "Rest",
                 moveType: "normal",
@@ -6198,7 +6198,7 @@ namespace PBS.Databases
 
         // Rising Voltage
         {"risingvoltage",
-            new MoveData(
+            new Move(
                 ID: "risingvoltage",
                 moveName: "Rising Voltage",
                 moveType: "electric",
@@ -6217,7 +6217,7 @@ namespace PBS.Databases
 
         // Roar
         {"roar",
-            new MoveData(
+            new Move(
                 ID: "roar",
                 moveName: "Roar",
                 moveType: "normal",
@@ -6242,7 +6242,7 @@ namespace PBS.Databases
 
         // Role Play
         {"roleplay",
-            new MoveData(
+            new Move(
                 ID: "roleplay",
                 moveName: "Role Play",
                 moveType: "psychic",
@@ -6267,7 +6267,7 @@ namespace PBS.Databases
 
         // Rolling Kick
         {"rollingkick",
-            new MoveData(
+            new Move(
                 ID: "rollingkick",
                 moveName: "Rolling Kick",
                 moveType: "fighting",
@@ -6299,7 +6299,7 @@ namespace PBS.Databases
 
         // Rollout
         {"rollout",
-            new MoveData(
+            new Move(
                 ID: "rollout",
                 moveName: "Rollout",
                 moveType: "rock",
@@ -6321,7 +6321,7 @@ namespace PBS.Databases
 
         // Roost
         {"roost",
-            new MoveData(
+            new Move(
                 ID: "roost",
                 moveName: "Roost",
                 moveType: "flying",
@@ -6364,7 +6364,7 @@ namespace PBS.Databases
 
         // Sacred Sword
         {"sacredsword",
-            new MoveData(
+            new Move(
                 ID: "sacredsword",
                 moveName: "Sacred Sword",
                 moveType: "fighting",
@@ -6388,7 +6388,7 @@ namespace PBS.Databases
 
         // Safeguard
         {"safeguard",
-            new MoveData(
+            new Move(
                 ID: "safeguard",
                 moveName: "Safeguard",
                 moveType: "normal",
@@ -6422,7 +6422,7 @@ namespace PBS.Databases
 
         // Sand Attack
         {"sandattack",
-            new MoveData(
+            new Move(
                 ID: "sandattack",
                 moveName: "Sand Attack",
                 moveType: "ground",
@@ -6451,7 +6451,7 @@ namespace PBS.Databases
 
         // Sandstorm
         {"sandstorm",
-            new MoveData(
+            new Move(
                 ID: "sandstorm",
                 moveName: "Sandstorm",
                 moveType: "rock",
@@ -6480,7 +6480,7 @@ namespace PBS.Databases
 
         // Scratch
         {"scratch",
-            new MoveData(
+            new Move(
                 ID: "scratch",
                 moveName: "Scratch",
                 moveType: "normal",
@@ -6502,7 +6502,7 @@ namespace PBS.Databases
 
         // Secret Power
         {"secretpower",
-            new MoveData(
+            new Move(
                 ID: "secretpower",
                 moveName: "Secret Power",
                 moveType: "normal",
@@ -6523,7 +6523,7 @@ namespace PBS.Databases
 
         // Secret Sword
         {"secretsword",
-            new MoveData(
+            new Move(
                 ID: "secretsword",
                 moveName: "Secret Sword",
                 moveType: "fighting",
@@ -6547,7 +6547,7 @@ namespace PBS.Databases
 
         // Seismic Toss
         {"seismictoss",
-            new MoveData(
+            new Move(
                 ID: "seismictoss",
                 moveName: "Seismic Toss",
                 moveType: "fighting",
@@ -6569,7 +6569,7 @@ namespace PBS.Databases
 
         // Shadow Force
         {"shadowforce",
-            new MoveData(
+            new Move(
                 ID: "shadowforce",
                 moveName: "Shadow Force",
                 moveType: "ghost",
@@ -6602,7 +6602,7 @@ namespace PBS.Databases
 
         // Shadow Sneak
         {"shadowsneak",
-            new MoveData(
+            new Move(
                 ID: "shadowsneak",
                 moveName: "Shadow Sneak",
                 moveType: "ghost",
@@ -6618,7 +6618,7 @@ namespace PBS.Databases
 
         // Shell Side Arm
         {"shellsidearm",
-            new MoveData(
+            new Move(
                 ID: "shellsidearm",
                 moveName: "Shell Side Arm",
                 moveType: "poison",
@@ -6634,7 +6634,7 @@ namespace PBS.Databases
 
         // Shell Smash
         {"shellsmash",
-            new MoveData(
+            new Move(
                 ID: "shellsmash",
                 moveName: "Shell Smash",
                 moveType: "normal",
@@ -6663,7 +6663,7 @@ namespace PBS.Databases
 
         // Shell Trap
         {"shelltrap",
-            new MoveData(
+            new Move(
                 ID: "shelltrap",
                 moveName: "Shell Trap",
                 moveType: "fire",
@@ -6693,7 +6693,7 @@ namespace PBS.Databases
 
         // Sing
         {"sing",
-            new MoveData(
+            new Move(
                 ID: "sing",
                 moveName: "Sing",
                 moveType: "normal",
@@ -6724,7 +6724,7 @@ namespace PBS.Databases
 
         // Sketch
         {"sketch",
-            new MoveData(
+            new Move(
                 ID: "sketch",
                 moveName: "Sketch",
                 moveType: "normal",
@@ -6755,7 +6755,7 @@ namespace PBS.Databases
 
         // Skill Swap
         {"skillswap",
-            new MoveData(
+            new Move(
                 ID: "skillswap",
                 moveName: "Skill Swap",
                 moveType: "psychic",
@@ -6780,7 +6780,7 @@ namespace PBS.Databases
 
         // Skull Bash
         {"skullbash",
-            new MoveData(
+            new Move(
                 ID: "skullbash",
                 moveName: "Skull Bash",
                 moveType: "normal",
@@ -6813,7 +6813,7 @@ namespace PBS.Databases
 
         // Sky Attack
         {"skyattack",
-            new MoveData(
+            new Move(
                 ID: "skyattack",
                 moveName: "Sky Attack",
                 moveType: "flying",
@@ -6852,7 +6852,7 @@ namespace PBS.Databases
 
         // Sky Drop
         {"skydrop",
-            new MoveData(
+            new Move(
                 ID: "skydrop",
                 moveName: "Sky Drop",
                 moveType: "flying",
@@ -6881,7 +6881,7 @@ namespace PBS.Databases
 
         // Slack Off
         {"slackoff",
-            new MoveData(
+            new Move(
                 ID: "slackoff",
                 moveName: "Slack Off",
                 moveType: "normal",
@@ -6910,7 +6910,7 @@ namespace PBS.Databases
 
         // Slam
         {"slam",
-            new MoveData(
+            new Move(
                 ID: "slam",
                 moveName: "Slam",
                 moveType: "normal",
@@ -6927,7 +6927,7 @@ namespace PBS.Databases
 
         // Sleep Talk
         {"sleeptalk",
-            new MoveData(
+            new Move(
                 ID: "sleeptalk",
                 moveName: "Sleep Talk",
                 moveType: "normal",
@@ -6952,7 +6952,7 @@ namespace PBS.Databases
 
         // Smack Down
         {"smackdown",
-            new MoveData(
+            new Move(
                 ID: "smackdown",
                 moveName: "Smack Down",
                 moveType: "rock",
@@ -6989,7 +6989,7 @@ namespace PBS.Databases
 
         // Snarl
         {"snarl",
-            new MoveData(
+            new Move(
                 ID: "snarl",
                 moveName: "Snarl",
                 moveType: "dark",
@@ -7017,7 +7017,7 @@ namespace PBS.Databases
 
         // Snatch
         {"snatch",
-            new MoveData(
+            new Move(
                 ID: "snatch",
                 moveName: "Snatch",
                 moveType: "dark",
@@ -7044,7 +7044,7 @@ namespace PBS.Databases
 
         // Snore
         {"snore",
-            new MoveData(
+            new Move(
                 ID: "snore",
                 moveName: "Snore",
                 moveType: "normal",
@@ -7076,7 +7076,7 @@ namespace PBS.Databases
 
         // Soak
         {"soak",
-            new MoveData(
+            new Move(
                 ID: "soak",
                 moveName: "Soak",
                 moveType: "water",
@@ -7103,7 +7103,7 @@ namespace PBS.Databases
 
         // Soft-Boiled
         {"softboiled",
-            new MoveData(
+            new Move(
                 ID: "softboiled",
                 moveName: "Soft-Boiled",
                 moveType: "normal",
@@ -7132,7 +7132,7 @@ namespace PBS.Databases
 
         // Solar Beam
         {"solarbeam",
-            new MoveData(
+            new Move(
                 ID: "solarbeam",
                 moveName: "Solar Beam",
                 moveType: "grass",
@@ -7162,7 +7162,7 @@ namespace PBS.Databases
 
         // Solar Blade
         {"solarblade",
-            new MoveData(
+            new Move(
                 ID: "solarblade",
                 moveName: "Solar Blade",
                 moveType: "grass",
@@ -7193,7 +7193,7 @@ namespace PBS.Databases
 
         // Sonic Boom
         {"sonicboom",
-            new MoveData(
+            new Move(
                 ID: "sonicboom",
                 moveName: "Sonic Boom",
                 moveType: "normal",
@@ -7214,7 +7214,7 @@ namespace PBS.Databases
 
         // Spectral Thief
         {"spectralthief",
-            new MoveData(
+            new Move(
                 ID: "spectralthief",
                 moveName: "Spectral Thief",
                 moveType: "ghost",
@@ -7243,7 +7243,7 @@ namespace PBS.Databases
 
         // Speed Swap
         {"speedswap",
-            new MoveData(
+            new Move(
                 ID: "speedswap",
                 moveName: "Speed Swap",
                 moveType: "psychic",
@@ -7271,7 +7271,7 @@ namespace PBS.Databases
 
         // Spikes
         {"spikes",
-            new MoveData(
+            new Move(
                 ID: "spikes",
                 moveName: "Spikes",
                 moveType: "ground",
@@ -7306,7 +7306,7 @@ namespace PBS.Databases
 
         // Spiky Shield
         {"spikyshield",
-            new MoveData(
+            new Move(
                 ID: "spikyshield",
                 moveName: "Spiky Shield",
                 moveType: "grass",
@@ -7341,7 +7341,7 @@ namespace PBS.Databases
 
         // Spore
         {"spore",
-            new MoveData(
+            new Move(
                 ID: "spore",
                 moveName: "Spore",
                 moveType: "grass",
@@ -7372,7 +7372,7 @@ namespace PBS.Databases
 
         // Spotlight
         {"spotlight",
-            new MoveData(
+            new Move(
                 ID: "spotlight",
                 moveName: "Spotlight",
                 moveType: "normal",
@@ -7401,7 +7401,7 @@ namespace PBS.Databases
 
         // Stealth Rock
         {"stealthrock",
-            new MoveData(
+            new Move(
                 ID: "stealthrock",
                 moveName: "Stealth Rock",
                 moveType: "rock",
@@ -7440,7 +7440,7 @@ namespace PBS.Databases
         
         // Steam Eruption
         {"steameruption",
-            new MoveData(
+            new Move(
                 ID: "steameruption",
                 moveName: "Steam Eruption",
                 moveType: "water",
@@ -7476,7 +7476,7 @@ namespace PBS.Databases
 
         // Steel Roller
         {"steelroller",
-            new MoveData(
+            new Move(
                 ID: "steelroller",
                 moveName: "Steel Roller",
                 moveType: "steel",
@@ -7497,7 +7497,7 @@ namespace PBS.Databases
 
         // Sticky Web
         {"stickyweb",
-            new MoveData(
+            new Move(
                 ID: "stickyweb",
                 moveName: "Sticky Web",
                 moveType: "bug",
@@ -7533,7 +7533,7 @@ namespace PBS.Databases
 
         // Stomp
         {"stomp",
-            new MoveData(
+            new Move(
                 ID: "stomp",
                 moveName: "Stomp",
                 moveType: "normal",
@@ -7572,7 +7572,7 @@ namespace PBS.Databases
 
         // Stored Power
         {"storedpower",
-            new MoveData(
+            new Move(
                 ID: "storedpower",
                 moveName: "Stored Power",
                 moveType: "psychic",
@@ -7593,7 +7593,7 @@ namespace PBS.Databases
 
         // Storm Throw
         {"stormthrow",
-            new MoveData(
+            new Move(
                 ID: "stormthrow",
                 moveName: "Storm Throw",
                 moveType: "fighting",
@@ -7613,7 +7613,7 @@ namespace PBS.Databases
 
         // Stuff Cheeks
         {"stuffcheeks",
-            new MoveData(
+            new Move(
                 ID: "stuffcheeks",
                 moveName: "Stuff Cheeks",
                 moveType: "normal",
@@ -7640,7 +7640,7 @@ namespace PBS.Databases
 
         // Stun Spore
         {"stunspore",
-            new MoveData(
+            new Move(
                 ID: "stunspore",
                 moveName: "Stun Spore",
                 moveType: "grass",
@@ -7670,7 +7670,7 @@ namespace PBS.Databases
 
         // Substitute
         {"substitute",
-            new MoveData(
+            new Move(
                 ID: "substitute",
                 moveName: "Substitute",
                 moveType: "normal",
@@ -7699,7 +7699,7 @@ namespace PBS.Databases
 
         // Sucker Punch
         {"suckerpunch",
-            new MoveData(
+            new Move(
                 ID: "suckerpunch",
                 moveName: "Sucker Punch",
                 moveType: "dark",
@@ -7719,7 +7719,7 @@ namespace PBS.Databases
 
         // Superpower
         {"superpower",
-            new MoveData(
+            new Move(
                 ID: "superpower",
                 moveName: "Superpower",
                 moveType: "fighting",
@@ -7747,7 +7747,7 @@ namespace PBS.Databases
 
         // Supersonic
         {"supersonic",
-            new MoveData(
+            new Move(
                 ID: "supersonic",
                 moveName: "Supersonic",
                 moveType: "normal",
@@ -7782,7 +7782,7 @@ namespace PBS.Databases
 
         // Sunny Day
         {"sunnyday",
-            new MoveData(
+            new Move(
                 ID: "sunnyday",
                 moveName: "Sunny Day",
                 moveType: "fire",
@@ -7810,7 +7810,7 @@ namespace PBS.Databases
 
         // Sunsteel Strike
         {"sunsteelstrike",
-            new MoveData(
+            new Move(
                 ID: "sunsteelstrike",
                 moveName: "Sunsteel Strike",
                 moveType: "steel",
@@ -7832,7 +7832,7 @@ namespace PBS.Databases
 
         // Super Fang
         {"superfang",
-            new MoveData(
+            new Move(
                 ID: "superfang",
                 moveName: "Super Fang",
                 moveType: "normal",
@@ -7852,7 +7852,7 @@ namespace PBS.Databases
 
         // Surf
         {"surf",
-            new MoveData(
+            new Move(
                 ID: "surf",
                 moveName: "Surf",
                 moveType: "water",
@@ -7877,7 +7877,7 @@ namespace PBS.Databases
 
         // Switcheroo
         {"switcheroo",
-            new MoveData(
+            new Move(
                 ID: "switcheroo",
                 moveName: "Switcheroo",
                 moveType: "dark",
@@ -7903,7 +7903,7 @@ namespace PBS.Databases
 
         // Swords Dance
         {"swordsdance",
-            new MoveData(
+            new Move(
                 ID: "swordsdance",
                 moveName: "Swords Dance",
                 moveType: "normal",
@@ -7934,7 +7934,7 @@ namespace PBS.Databases
 
         // Synchronoise
         {"synchronoise",
-            new MoveData(
+            new Move(
                 ID: "synchronoise",
                 moveName: "Synchronoise",
                 moveType: "psychic",
@@ -7958,7 +7958,7 @@ namespace PBS.Databases
 
         // Tackle
         {"tackle",
-            new MoveData(
+            new Move(
                 ID: "tackle",
                 moveName: "Tackle",
                 moveType: "normal",
@@ -7979,7 +7979,7 @@ namespace PBS.Databases
 
         // Tail Whip
         {"tailwhip",
-            new MoveData(
+            new Move(
                 ID: "tailwhip",
                 moveName: "Tail Whip",
                 moveType: "normal",
@@ -8008,7 +8008,7 @@ namespace PBS.Databases
 
         // Take Down
         {"takedown",
-            new MoveData(
+            new Move(
                 ID: "takedown",
                 moveName: "Take Down",
                 moveType: "normal",
@@ -8032,7 +8032,7 @@ namespace PBS.Databases
 
         // Tar Shot
         {"tarshot",
-            new MoveData(
+            new Move(
                 ID: "tarshot",
                 moveName: "Tar Shot",
                 moveType: "rock",
@@ -8071,7 +8071,7 @@ namespace PBS.Databases
 
         // Taunt
         {"taunt",
-            new MoveData(
+            new Move(
                 ID: "taunt",
                 moveName: "Taunt",
                 moveType: "dark",
@@ -8101,7 +8101,7 @@ namespace PBS.Databases
 
         // Teatime
         {"teatime",
-            new MoveData(
+            new Move(
                 ID: "teatime",
                 moveName: "Teatime",
                 moveType: "normal",
@@ -8127,7 +8127,7 @@ namespace PBS.Databases
 
         // Techno Blast
         {"technoblast",
-            new MoveData(
+            new Move(
                 ID: "technoblast",
                 moveName: "Techno Blast",
                 moveType: "normal",
@@ -8148,7 +8148,7 @@ namespace PBS.Databases
 
         // Teleport
         {"teleport",
-            new MoveData(
+            new Move(
                 ID: "teleport",
                 moveName: "Teleport",
                 moveType: "psychic",
@@ -8171,7 +8171,7 @@ namespace PBS.Databases
 
         // Terrain Pulse
         {"terrainpulse",
-            new MoveData(
+            new Move(
                 ID: "terrainpulse",
                 moveName: "Terrain Pulse",
                 moveType: "normal",
@@ -8192,7 +8192,7 @@ namespace PBS.Databases
         
         // Thief
         {"thief",
-            new MoveData(
+            new Move(
                 ID: "thief",
                 moveName: "Thief",
                 moveType: "dark",
@@ -8216,7 +8216,7 @@ namespace PBS.Databases
 
         // Thousand Arrows
         {"thousandarrows",
-            new MoveData(
+            new Move(
                 ID: "thousandarrows",
                 moveName: "Thousand Arrows",
                 moveType: "ground",
@@ -8253,7 +8253,7 @@ namespace PBS.Databases
 
         // Thousand Waves
         {"thousandwaves",
-            new MoveData(
+            new Move(
                 ID: "thousandwaves",
                 moveName: "Thousand Waves",
                 moveType: "ground",
@@ -8279,7 +8279,7 @@ namespace PBS.Databases
 
         // Thrash
         {"thrash",
-            new MoveData(
+            new Move(
                 ID: "thrash",
                 moveName: "Thrash",
                 moveType: "normal",
@@ -8313,7 +8313,7 @@ namespace PBS.Databases
 
         // Thunder Punch
         {"thunderpunch",
-            new MoveData(
+            new Move(
                 ID: "thunderpunch",
                 moveName: "Thunder Punch",
                 moveType: "electric",
@@ -8344,7 +8344,7 @@ namespace PBS.Databases
 
         // Thunder Wave
         {"thunderwave",
-            new MoveData(
+            new Move(
                 ID: "thunderwave",
                 moveName: "Thunder Wave",
                 moveType: "electric",
@@ -8373,7 +8373,7 @@ namespace PBS.Databases
 
         // Thunderbolt
         {"thunderbolt",
-            new MoveData(
+            new Move(
                 ID: "thunderbolt",
                 moveName: "Thunderbolt",
                 moveType: "electric",
@@ -8398,7 +8398,7 @@ namespace PBS.Databases
 
         // Torment
         {"torment",
-            new MoveData(
+            new Move(
                 ID: "torment",
                 moveName: "Torment",
                 moveType: "dark",
@@ -8428,7 +8428,7 @@ namespace PBS.Databases
 
         // Toxic Spikes
         {"toxicspikes",
-            new MoveData(
+            new Move(
                 ID: "toxicspikes",
                 moveName: "Toxic Spikes",
                 moveType: "poison",
@@ -8470,7 +8470,7 @@ namespace PBS.Databases
 
         // Transform
         {"transform",
-            new MoveData(
+            new Move(
                 ID: "transform",
                 moveName: "Transform",
                 moveType: "normal",
@@ -8501,7 +8501,7 @@ namespace PBS.Databases
 
         // Trick
         {"trick",
-            new MoveData(
+            new Move(
                 ID: "trick",
                 moveName: "Trick",
                 moveType: "psychic",
@@ -8527,7 +8527,7 @@ namespace PBS.Databases
 
         // Trick Room
         {"trickroom",
-            new MoveData(
+            new Move(
                 ID: "trickroom",
                 moveName: "Trick Room",
                 moveType: "psychic",
@@ -8555,7 +8555,7 @@ namespace PBS.Databases
 
         // Trick-or-Treat
         {"trickortreat",
-            new MoveData(
+            new Move(
                 ID: "trickortreat",
                 moveName: "Trick-or-Treat",
                 moveType: "ghost",
@@ -8583,7 +8583,7 @@ namespace PBS.Databases
 
         // Triple Axel
         {"tripleaxel",
-            new MoveData(
+            new Move(
                 ID: "tripleaxel",
                 moveName: "Triple Axel",
                 moveType: "ice",
@@ -8607,7 +8607,7 @@ namespace PBS.Databases
 
         // Triple Kick
         {"triplekick",
-            new MoveData(
+            new Move(
                 ID: "triplekick",
                 moveName: "Triple Kick",
                 moveType: "fighting",
@@ -8631,7 +8631,7 @@ namespace PBS.Databases
 
         // Twineedle
         {"twineedle",
-            new MoveData(
+            new Move(
                 ID: "twineedle",
                 moveName: "Twineedle",
                 moveType: "bug",
@@ -8678,7 +8678,7 @@ namespace PBS.Databases
 
         // Uproar
         {"uproar",
-            new MoveData(
+            new Move(
                 ID: "uproar",
                 moveName: "Uproar",
                 moveType: "normal",
@@ -8703,7 +8703,7 @@ namespace PBS.Databases
 
         // U-Turn
         {"uturn",
-            new MoveData(
+            new Move(
                 ID: "uturn",
                 moveName: "U-Turn",
                 moveType: "bug",
@@ -8729,7 +8729,7 @@ namespace PBS.Databases
 
         // V-Create
         {"vcreate",
-            new MoveData(
+            new Move(
                 ID: "vcreate",
                 moveName: "V-Create",
                 moveType: "fire",
@@ -8757,7 +8757,7 @@ namespace PBS.Databases
 
         // Vine Whip
         {"vinewhip",
-            new MoveData(
+            new Move(
                 ID: "vinewhip",
                 moveName: "Vine Whip",
                 moveType: "grass",
@@ -8774,7 +8774,7 @@ namespace PBS.Databases
 
         // Vise Grip
         {"visegrip",
-            new MoveData(
+            new Move(
                 ID: "visegrip",
                 moveName: "Vise Grip",
                 moveType: "normal",
@@ -8791,7 +8791,7 @@ namespace PBS.Databases
 
         // Volt Switch
         {"voltswitch",
-            new MoveData(
+            new Move(
                 ID: "voltswitch",
                 moveName: "Volt Switch",
                 moveType: "electric",
@@ -8817,7 +8817,7 @@ namespace PBS.Databases
 
         // Water Gun
         {"watergun",
-            new MoveData(
+            new Move(
                 ID: "watergun",
                 moveName: "Water Gun",
                 moveType: "water",
@@ -8838,7 +8838,7 @@ namespace PBS.Databases
 
         // Weather Ball
         {"weatherball",
-            new MoveData(
+            new Move(
                 ID: "weatherball",
                 moveName: "Weather Ball",
                 moveType: "normal",
@@ -8861,7 +8861,7 @@ namespace PBS.Databases
 
         // Whirlwind
         {"whirlwind",
-            new MoveData(
+            new Move(
                 ID: "whirlwind",
                 moveName: "Whirlwind",
                 moveType: "normal",
@@ -8886,7 +8886,7 @@ namespace PBS.Databases
 
         // Wide Guard
         {"wideguard",
-            new MoveData(
+            new Move(
                 ID: "wideguard",
                 moveName: "Wide Guard",
                 moveType: "rock",
@@ -8916,7 +8916,7 @@ namespace PBS.Databases
 
         // Will-O-Wisp
         {"willowisp",
-            new MoveData(
+            new Move(
                 ID: "willowisp",
                 moveName: "Will-O-Wisp",
                 moveType: "fire",
@@ -8944,7 +8944,7 @@ namespace PBS.Databases
 
         // Wing Attack
         {"wingattack",
-            new MoveData(
+            new Move(
                 ID: "wingattack",
                 moveName: "Wing Attack",
                 moveType: "flying",
@@ -8966,7 +8966,7 @@ namespace PBS.Databases
 
         // Wish
         {"wish",
-            new MoveData(
+            new Move(
                 ID: "wish",
                 moveName: "Wish",
                 moveType: "normal",
@@ -8993,7 +8993,7 @@ namespace PBS.Databases
 
         // Withdraw
         {"withdraw",
-            new MoveData(
+            new Move(
                 ID: "withdraw",
                 moveName: "Withdraw",
                 moveType: "water",
@@ -9023,7 +9023,7 @@ namespace PBS.Databases
 
         // Wonder Room
         {"wonderroom",
-            new MoveData(
+            new Move(
                 ID: "wonderroom",
                 moveName: "Wonder Room",
                 moveType: "psychic",
@@ -9051,7 +9051,7 @@ namespace PBS.Databases
 
         // Wrap
         {"wrap",
-            new MoveData(
+            new Move(
                 ID: "wrap",
                 moveName: "Wrap",
                 moveType: "normal",
@@ -9089,7 +9089,7 @@ namespace PBS.Databases
 
         // Yawn
         {"yawn",
-            new MoveData(
+            new Move(
                 ID: "yawn",
                 moveName: "Yawn",
                 moveType: "normal",
@@ -9129,7 +9129,7 @@ namespace PBS.Databases
 
         // Breakneck Blitz
         {"breakneckblitz",
-            new MoveData(
+            new Move(
                 ID: "breakneckblitz",
                 moveName: "Breakneck Blitz",
                 moveType: "normal",
@@ -9145,7 +9145,7 @@ namespace PBS.Databases
 
         // Shattered Psyche
         {"shatteredpsyche",
-            new MoveData(
+            new Move(
                 ID: "shatteredpsyche",
                 moveName: "Shattered Psyche",
                 moveType: "psychic",
@@ -9163,7 +9163,7 @@ namespace PBS.Databases
 
         // Guardian Of Alola
         {"guardianofalola",
-            new MoveData(
+            new Move(
                 ID: "guardianofalola",
                 moveName: "Guardian Of Alola",
                 moveType: "fairy",
@@ -9183,7 +9183,7 @@ namespace PBS.Databases
 
         // Light That Burns the Sky
         {"lightthatburnsthesky",
-            new MoveData(
+            new Move(
                 ID: "lightthatburnsthesky",
                 moveName: "Light That Burns the Sky",
                 moveType: "psychic",
@@ -9210,7 +9210,7 @@ namespace PBS.Databases
 
         // Max Guard
         {"maxguard",
-            new MoveData(
+            new Move(
                 ID: "maxguard",
                 moveName: "Max Guard",
                 moveType: "normal",
@@ -9234,7 +9234,7 @@ namespace PBS.Databases
 
         // Max Airstream
         {"maxairstream",
-            new MoveData(
+            new Move(
                 ID: "maxairstream",
                 moveName: "Max Airstream",
                 moveType: "flying",
@@ -9261,7 +9261,7 @@ namespace PBS.Databases
 
         // Max Darkness
         {"maxdarkness",
-            new MoveData(
+            new Move(
                 ID: "maxdarkness",
                 moveName: "Max Darkness",
                 moveType: "dark",
@@ -9288,7 +9288,7 @@ namespace PBS.Databases
                 
         // Max Flare
         {"maxflare",
-            new MoveData(
+            new Move(
                 ID: "maxflare",
                 moveName: "Max Flare",
                 moveType: "fire",
@@ -9315,7 +9315,7 @@ namespace PBS.Databases
 
         // Max Flutterby
         {"maxflutterby",
-            new MoveData(
+            new Move(
                 ID: "maxflutterby",
                 moveName: "Max Flutterby",
                 moveType: "bug",
@@ -9342,7 +9342,7 @@ namespace PBS.Databases
                 
         // Max Geyser
         {"maxgeyser",
-            new MoveData(
+            new Move(
                 ID: "maxgeyser",
                 moveName: "Max Geyser",
                 moveType: "water",
@@ -9369,7 +9369,7 @@ namespace PBS.Databases
                 
         // Max Hailstorm
         {"maxhailstorm",
-            new MoveData(
+            new Move(
                 ID: "maxhailstorm",
                 moveName: "Max Hailstorm",
                 moveType: "ice",
@@ -9396,7 +9396,7 @@ namespace PBS.Databases
 
         // Max Knuckle
         {"maxknuckle",
-            new MoveData(
+            new Move(
                 ID: "maxknuckle",
                 moveName: "Max Knuckle",
                 moveType: "fighting",
@@ -9423,7 +9423,7 @@ namespace PBS.Databases
                 
         // Max Lightning
         {"maxlightning",
-            new MoveData(
+            new Move(
                 ID: "maxlightning",
                 moveName: "Max Lightning",
                 moveType: "electric",
@@ -9450,7 +9450,7 @@ namespace PBS.Databases
                 
         // Max Mindstorm
         {"maxmindstorm",
-            new MoveData(
+            new Move(
                 ID: "maxmindstorm",
                 moveName: "Max Mindstorm",
                 moveType: "psychic",
@@ -9477,7 +9477,7 @@ namespace PBS.Databases
                 
         // Max Ooze
         {"maxooze",
-            new MoveData(
+            new Move(
                 ID: "maxooze",
                 moveName: "Max Ooze",
                 moveType: "poison",
@@ -9504,7 +9504,7 @@ namespace PBS.Databases
                 
         // Max Overgrowth
         {"maxovergrowth",
-            new MoveData(
+            new Move(
                 ID: "maxovergrowth",
                 moveName: "Max Overgrowth",
                 moveType: "grass",
@@ -9531,7 +9531,7 @@ namespace PBS.Databases
                 
         // Max Quake
         {"maxquake",
-            new MoveData(
+            new Move(
                 ID: "maxquake",
                 moveName: "Max Quake",
                 moveType: "ground",
@@ -9558,7 +9558,7 @@ namespace PBS.Databases
                 
         // Max Phantasm
         {"maxphantasm",
-            new MoveData(
+            new Move(
                 ID: "maxphantasm",
                 moveName: "Max Phantasm",
                 moveType: "ghost",
@@ -9585,7 +9585,7 @@ namespace PBS.Databases
                 
         // Max Rockfall
         {"maxrockfall",
-            new MoveData(
+            new Move(
                 ID: "maxrockfall",
                 moveName: "Max Rockfall",
                 moveType: "rock",
@@ -9612,7 +9612,7 @@ namespace PBS.Databases
                 
         // Max Starfall
         {"maxstarfall",
-            new MoveData(
+            new Move(
                 ID: "maxstarfall",
                 moveName: "Max Starfall",
                 moveType: "fairy",
@@ -9639,7 +9639,7 @@ namespace PBS.Databases
                 
         // Max Steelspike
         {"maxsteelspike",
-            new MoveData(
+            new Move(
                 ID: "maxsteelspike",
                 moveName: "Max Steelspike",
                 moveType: "steel",
@@ -9666,7 +9666,7 @@ namespace PBS.Databases
 
         // Max Strike
         {"maxstrike",
-            new MoveData(
+            new Move(
                 ID: "maxstrike",
                 moveName: "Max Strike",
                 moveType: "normal",
@@ -9693,7 +9693,7 @@ namespace PBS.Databases
 
         // Max Wyrmwind
         {"maxwyrmwind",
-            new MoveData(
+            new Move(
                 ID: "maxwyrmwind",
                 moveName: "Max Wyrmwind",
                 moveType: "dragon",
@@ -9722,7 +9722,7 @@ namespace PBS.Databases
 
         // G-Max Cannonade
         {"gmaxcannonade",
-            new MoveData(
+            new Move(
                 ID: "gmaxcannonade",
                 moveName: "G-Max Cannonade",
                 moveType: "water",
@@ -9751,7 +9751,7 @@ namespace PBS.Databases
     };
 
         // Methods
-        public MoveData GetMoveData(string ID)
+        public Move GetMoveData(string ID)
         {
             if (database.ContainsKey(ID))
             {
@@ -9767,7 +9767,7 @@ namespace PBS.Databases
             List<string> validMoves = new List<string>();
             for (int i = 0; i < moves.Count; i++)
             {
-                MoveData moveData = GetMoveData(moves[i]);
+                Move moveData = GetMoveData(moves[i]);
                 if (!moveData.HasTag(MoveTag.UncallableCommon)
                     && !moveData.HasTag(MoveTag.UncallableByMetronome)
                     && !moveData.HasTag(MoveTag.ZMove))

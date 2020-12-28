@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PBS.Data
 {
-    public class PokemonData
+    public class Pokemon
     {
         // General
         public string ID { get; private set; }
@@ -17,7 +17,7 @@ namespace PBS.Data
             {
                 if (string.IsNullOrEmpty(p_speciesName) && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).speciesName;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).speciesName;
                 }
                 return p_speciesName;
             }
@@ -33,7 +33,7 @@ namespace PBS.Data
             {
                 if (p_pokedexNo < 0 && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).pokedexNo;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).pokedexNo;
                 }
                 return p_pokedexNo;
             }
@@ -49,7 +49,7 @@ namespace PBS.Data
             {
                 if (string.IsNullOrEmpty(p_pokedexCategory) && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).pokedexCategory;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).pokedexCategory;
                 }
                 return p_pokedexCategory;
             }
@@ -67,7 +67,7 @@ namespace PBS.Data
                 {
                     if (!string.IsNullOrEmpty(baseID))
                     {
-                        return Pokemon.instance.GetPokemonData(baseID).formName;
+                        return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).formName;
                     }
                     else
                     {
@@ -89,7 +89,7 @@ namespace PBS.Data
             {
                 if (useBaseMaleRatio && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).maleRatio;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).maleRatio;
                 }
                 return p_maleRatio;
             }
@@ -108,7 +108,7 @@ namespace PBS.Data
             {
                 if (p_height < 0 && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).height;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).height;
                 }
                 return p_height;
             }
@@ -124,7 +124,7 @@ namespace PBS.Data
             {
                 if (p_weight < 0 && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).weight;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).weight;
                 }
                 return p_weight;
             }
@@ -143,7 +143,7 @@ namespace PBS.Data
             {
                 if (useBaseAesthetic && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).displayID;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).displayID;
                 }
                 return string.IsNullOrEmpty(p_displayID) ? ID : p_displayID;
             }
@@ -160,7 +160,7 @@ namespace PBS.Data
             {
                 if (useBaseAesthetic && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).xOffset2DNear;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).xOffset2DNear;
                 }
                 return p_xOffset2DNear;
             }
@@ -176,7 +176,7 @@ namespace PBS.Data
             {
                 if (useBaseAesthetic && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).yOffset2DNear;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).yOffset2DNear;
                 }
                 return p_yOffset2DNear;
             }
@@ -193,7 +193,7 @@ namespace PBS.Data
             {
                 if (useBaseAesthetic && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).xOffset2DFar;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).xOffset2DFar;
                 }
                 return p_xOffset2DFar;
             }
@@ -209,7 +209,7 @@ namespace PBS.Data
             {
                 if (useBaseAesthetic && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).yOffset2DFar;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).yOffset2DFar;
                 }
                 return p_yOffset2DFar;
             }
@@ -228,7 +228,7 @@ namespace PBS.Data
             {
                 if (useBaseTypes && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).types;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).types;
                 }
                 return p_types;
             }
@@ -247,7 +247,7 @@ namespace PBS.Data
             {
                 if (useBaseAbilities && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).abilities;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).abilities;
                 }
                 return p_abilities;
             }
@@ -264,7 +264,7 @@ namespace PBS.Data
             {
                 if (useBaseHiddenAbilities && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).hiddenAbilities;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).hiddenAbilities;
                 }
                 return p_hiddenAbilities;
             }
@@ -283,7 +283,7 @@ namespace PBS.Data
             {
                 if ((p_baseHP < 0 || useBaseBaseStats) && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).baseHP;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).baseHP;
                 }
                 return p_baseHP;
             }
@@ -299,7 +299,7 @@ namespace PBS.Data
             {
                 if ((p_baseATK < 0 || useBaseBaseStats) && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).baseATK;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).baseATK;
                 }
                 return p_baseATK;
             }
@@ -315,7 +315,7 @@ namespace PBS.Data
             {
                 if ((p_baseDEF < 0 || useBaseBaseStats) && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).baseDEF;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).baseDEF;
                 }
                 return p_baseDEF;
             }
@@ -331,7 +331,7 @@ namespace PBS.Data
             {
                 if ((p_baseSPA < 0 || useBaseBaseStats) && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).baseSPA;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).baseSPA;
                 }
                 return p_baseSPA;
             }
@@ -347,7 +347,7 @@ namespace PBS.Data
             {
                 if ((p_baseSPD < 0 || useBaseBaseStats) && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).baseSPD;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).baseSPD;
                 }
                 return p_baseSPD;
             }
@@ -363,7 +363,7 @@ namespace PBS.Data
             {
                 if ((p_baseSPE < 0 || useBaseBaseStats) && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).baseSPE;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).baseSPE;
                 }
                 return p_baseSPE;
             }
@@ -383,7 +383,7 @@ namespace PBS.Data
                 if (combineBaseTags && !string.IsNullOrEmpty(baseID))
                 {
                     HashSet<PokemonTag> unionTags = new HashSet<PokemonTag>(p_tags);
-                    unionTags.UnionWith(Pokemon.instance.GetPokemonData(baseID).tags);
+                    unionTags.UnionWith(PBS.Databases.Pokemon.instance.GetPokemonData(baseID).tags);
                     return unionTags;
                 }
                 return p_tags;
@@ -394,7 +394,7 @@ namespace PBS.Data
             }
         }
 
-        public PokemonData(
+        public Pokemon(
             string ID,
             string baseID = null, bool isDistinct = false,
             string speciesName = null,
@@ -459,7 +459,7 @@ namespace PBS.Data
         }
 
         // Aesthetic Form
-        public static PokemonData AestheticVariant(
+        public static Pokemon AestheticVariant(
             string ID,
             string baseID, bool isDistinct = false,
             string formName = null,
@@ -472,7 +472,7 @@ namespace PBS.Data
             IEnumerable<PokemonTag> tags = null
             )
         {
-            PokemonData aestheticData = new PokemonData(
+            Pokemon aestheticData = new Pokemon(
                 ID: ID,
                 baseID: baseID, isDistinct: isDistinct,
                 formName: formName,
@@ -505,7 +505,7 @@ namespace PBS.Data
             }
             if (baseID != null)
             {
-                PokemonData baseData = Pokemon.instance.GetPokemonData(baseID);
+                Pokemon baseData = PBS.Databases.Pokemon.instance.GetPokemonData(baseID);
                 return baseData.IsABaseID(tryBaseID);
             }
             return false;

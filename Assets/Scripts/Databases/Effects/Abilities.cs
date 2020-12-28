@@ -4056,7 +4056,7 @@ namespace PBS.Databases.Effects.Abilities
                 }
                 return false;
             }
-            public bool IsStatusBlocked(StatusPKData statusData)
+            public bool IsStatusBlocked(PokemonStatus statusData)
             {
                 for (int i = 0; i < blockedStatuses.Count; i++)
                 {

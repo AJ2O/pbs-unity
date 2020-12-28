@@ -100,7 +100,7 @@ namespace PBS.Battle.View.Scene
             }
 
             // draw pokemon
-            PokemonData pokemonData = Pokemon.instance.GetPokemonData(pokemon.pokemonID);
+            PBS.Data.Pokemon pokemonData = PBS.Databases.Pokemon.instance.GetPokemonData(pokemon.pokemonID);
             string drawPath = "pokemonSprites/" + (isNear ? "back/" : "front/") + pokemonData.displayID;
 
             Entities.Pokemon newScnPokemon = Instantiate(pokemonPrefab, spawnPos.position, Quaternion.identity, spawnPos);

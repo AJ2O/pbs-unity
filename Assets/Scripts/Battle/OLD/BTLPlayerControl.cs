@@ -1118,7 +1118,7 @@ public class BTLPlayerControl : MonoBehaviour
             {
                 for (int i = 0; i < moveslots.Count && !canZMove; i++)
                 {
-                    MoveData ZMoveData = battleModel.GetPokemonZMoveData(pokemon, moveslots[i].moveID);
+                    Move ZMoveData = battleModel.GetPokemonZMoveData(pokemon, moveslots[i].moveID);
                     if (ZMoveData != null)
                     {
                         canZMove = true;
@@ -1197,12 +1197,12 @@ public class BTLPlayerControl : MonoBehaviour
         string moveID = selectedMoveslot.moveID;
         if (chooseZMove)
         {
-            MoveData ZMoveData = battleModel.GetPokemonZMoveData(userPokemon: commandPokemon, moveID: selectedMoveslot.moveID);
+            Move ZMoveData = battleModel.GetPokemonZMoveData(userPokemon: commandPokemon, moveID: selectedMoveslot.moveID);
             moveID = ZMoveData.ID;
         }
         if (chooseDynamax)
         {
-            MoveData maxMoveData = battleModel.GetPokemonMaxMoveData(
+            Move maxMoveData = battleModel.GetPokemonMaxMoveData(
                 userPokemon: commandPokemon, 
                 moveData: Moves.instance.GetMoveData(selectedMoveslot.moveID));
             moveID = maxMoveData.ID;
@@ -1743,7 +1743,7 @@ public class BTLPlayerControl : MonoBehaviour
             bool validMove = true;
             if (chooseZMove)
             {
-                MoveData ZMoveData =
+                Move ZMoveData =
                     battleModel.GetPokemonZMoveData(userPokemon: commandPokemon, moveID: choice.moveID);
                 if (ZMoveData == null)
                 {
@@ -1876,7 +1876,7 @@ public class BTLPlayerControl : MonoBehaviour
             bool validMove = true;
             if (chooseZMove)
             {
-                MoveData ZMoveData = 
+                Move ZMoveData = 
                     battleModel.GetPokemonZMoveData(userPokemon: commandPokemon, moveID: selectedMoveslot.moveID);
                 if (ZMoveData == null)
                 {
@@ -2675,7 +2675,7 @@ public class BTLPlayerControl : MonoBehaviour
         if (attemptedCommand.commandType == BattleCommandType.Fight)
         {
             // auto-success for struggle
-            MoveData moveData = Moves.instance.GetMoveData(attemptedCommand.moveID);
+            Move moveData = Moves.instance.GetMoveData(attemptedCommand.moveID);
             if (moveData.GetEffect(MoveEffectType.Struggle) != null)
             {
                 bypassChecks = true;
@@ -2738,7 +2738,7 @@ public class BTLPlayerControl : MonoBehaviour
                         && battleModel.IsPokemonChoiced(userPokemon))
                     {
                         bool bypassChoiceLock = moveData.HasTag(MoveTag.IgnoreChoiceLock);
-                        MoveData choiceMoveData = Moves.instance.GetMoveData(userPokemon.bProps.choiceMove);
+                        Move choiceMoveData = Moves.instance.GetMoveData(userPokemon.bProps.choiceMove);
                         if (!bypassChoiceLock)
                         {
                             commandSuccess = false;
@@ -2850,7 +2850,7 @@ public class BTLPlayerControl : MonoBehaviour
                     if (commandSuccess && !string.IsNullOrEmpty(userPokemon.bProps.blockMove))
                     {
                         PBS.Main.Pokemon.Pokemon blockUser = battleModel.GetFieldPokemonByID(userPokemon.bProps.blockPokemon);
-                        MoveData moveData = Moves.instance.GetMoveData(userPokemon.bProps.blockMove);
+                        Move moveData = Moves.instance.GetMoveData(userPokemon.bProps.blockMove);
                         MoveEffect effect = moveData.GetEffect(MoveEffectType.Block);
 
                         string textCodeID = effect.GetString(2);
@@ -2874,7 +2874,7 @@ public class BTLPlayerControl : MonoBehaviour
                     if (commandSuccess && !string.IsNullOrEmpty(userPokemon.bProps.bindMove))
                     {
                         PBS.Main.Pokemon.Pokemon bindUser = battleModel.GetFieldPokemonByID(userPokemon.bProps.bindPokemon);
-                        MoveData moveData = Moves.instance.GetMoveData(userPokemon.bProps.bindMove);
+                        Move moveData = Moves.instance.GetMoveData(userPokemon.bProps.bindMove);
                         MoveEffect effect = moveData.GetEffect(MoveEffectType.Bind);
 
                         string textCodeID = effect.GetString(3);
@@ -2898,7 +2898,7 @@ public class BTLPlayerControl : MonoBehaviour
                     if (commandSuccess && !string.IsNullOrEmpty(userPokemon.bProps.skyDropMove))
                     {
                         PBS.Main.Pokemon.Pokemon trapUser = battleModel.GetFieldPokemonByID(userPokemon.bProps.skyDropUser);
-                        MoveData moveData = Moves.instance.GetMoveData(userPokemon.bProps.skyDropMove);
+                        Move moveData = Moves.instance.GetMoveData(userPokemon.bProps.skyDropMove);
                         MoveEffect effect = moveData.GetEffect(MoveEffectType.SkyDrop);
 
                         string textCodeID = effect.GetString(2);
@@ -2923,7 +2923,7 @@ public class BTLPlayerControl : MonoBehaviour
                     {
                         for (int i = 0; i < userPokemon.bProps.ingrainMoves.Count; i++)
                         {
-                            MoveData ingrainData = Moves.instance.GetMoveData(
+                            Move ingrainData = Moves.instance.GetMoveData(
                                 userPokemon.bProps.ingrainMoves[i]
                                 );
                             MoveEffect ingrainEffect = ingrainData.GetEffect(MoveEffectType.Ingrain);
@@ -2951,7 +2951,7 @@ public class BTLPlayerControl : MonoBehaviour
                     for (int i = 0; i < battleModel.pokemonOnField.Count && commandSuccess; i++)
                     {
                         PBS.Main.Pokemon.Pokemon trapPokemon = battleModel.pokemonOnField[i];
-                        AbilityData abilityData = 
+                        PBS.Data.Ability abilityData =
                             battleModel.PBPGetAbilityDataWithEffect(trapPokemon, AbilityEffectType.ShadowTag);
                         if (!trapPokemon.IsTheSameAs(userPokemon) && abilityData != null)
                         {
@@ -2986,8 +2986,8 @@ public class BTLPlayerControl : MonoBehaviour
                                 if (trapped 
                                     && shadowTag.immuneToSelf)
                                 {
-                                    AbilityData abilityData2 = battleModel.PBPGetAbilityDataWithEffect(
-                                        userPokemon, 
+                                    PBS.Data.Ability abilityData2 = battleModel.PBPGetAbilityDataWithEffect(
+                                        userPokemon,
                                         AbilityEffectType.ShadowTag);
                                     if (abilityData2 != null)
                                     {
@@ -3084,7 +3084,7 @@ public class BTLPlayerControl : MonoBehaviour
         {
             PBS.Main.Pokemon.Pokemon itemPokemon = attemptedCommand.commandUser;
             Trainer itemTrainer = attemptedCommand.itemTrainer;
-            ItemData itemData = Items.instance.GetItemData(attemptedCommand.itemID);
+            PBS.Data.Item itemData = Items.instance.GetItemData(attemptedCommand.itemID);
 
             BTLEvent_GameText textEvent = new BTLEvent_GameText();
             textEvent.SetCloneModel(battleModel);
@@ -3267,7 +3267,7 @@ public class BTLPlayerControl : MonoBehaviour
                 {
                     for (int i = 0; i < userPokemon.bProps.ingrainMoves.Count; i++)
                     {
-                        MoveData ingrainData = Moves.instance.GetMoveData(
+                        Move ingrainData = Moves.instance.GetMoveData(
                             userPokemon.bProps.ingrainMoves[i]
                             );
                         MoveEffect ingrainEffect = ingrainData.GetEffect(MoveEffectType.Ingrain);

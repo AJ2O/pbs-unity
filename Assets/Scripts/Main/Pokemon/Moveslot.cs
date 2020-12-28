@@ -26,7 +26,7 @@ namespace PBS.Main.Pokemon
                 return basePP + bonusPP;
             }
         }
-        public MoveData data
+        public Move data
         {
             get
             {

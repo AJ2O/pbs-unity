@@ -9,7 +9,7 @@ public class TeamCondition
     public string statusID;
     public int turnsActive;
     public int turnsLeft;
-    public StatusTEData data
+    public TeamStatus data
     {
         get
         {

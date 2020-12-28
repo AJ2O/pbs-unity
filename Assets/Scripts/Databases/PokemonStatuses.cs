@@ -28,11 +28,11 @@ namespace PBS.Databases
         }
 
         // Database
-        private Dictionary<string, StatusPKData> database = new Dictionary<string, StatusPKData>
+        private Dictionary<string, PokemonStatus> database = new Dictionary<string, PokemonStatus>
         {
             // Null / Placeholder
             {"",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "",
                     statusTags: new PokemonSTag[]
                     {
@@ -44,7 +44,7 @@ namespace PBS.Databases
 
             // Healthy
             {"healthy",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "healthy",
                     conditionName: "Healthy",
 
@@ -62,7 +62,7 @@ namespace PBS.Databases
 
             // Burn
             {"burn",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "burn",
                     conditionName: "Burn", shortName: "BRN",
                     inflictTextID: "status-burn-start",
@@ -105,7 +105,7 @@ namespace PBS.Databases
 
             // Freeze
             {"freeze",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "freeze",
                     conditionName: "Freeze",
                     shortName: "FRZ",
@@ -140,7 +140,7 @@ namespace PBS.Databases
 
             // Paralysis
             {"paralysis",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "paralysis",
                     conditionName: "Paralysis",
                     shortName: "PRZ",
@@ -181,7 +181,7 @@ namespace PBS.Databases
 
             // Poison
             {"poison",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "poison",
                     conditionName: "Poison", shortName: "PSN",
                     inflictTextID: "status-poison-start",
@@ -217,7 +217,7 @@ namespace PBS.Databases
 
             // Toxic / Badly Poisoned
             {"poison2",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "poison2",
                     baseID: "poison",
                     conditionName: "Toxic Poison", shortName: "TXC",
@@ -242,7 +242,7 @@ namespace PBS.Databases
 
             // Sleep
             {"sleep",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "sleep",
                     conditionName: "Sleep", shortName: "SLP",
                     inflictTextID: "status-sleep-start",
@@ -268,7 +268,7 @@ namespace PBS.Databases
         
             // Bound
             {"bound",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "bound",
                     conditionName: "Bound",
 
@@ -298,7 +298,7 @@ namespace PBS.Databases
 
             // Confusion
             {"confusion",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "confusion",
                     conditionName: "Confusion",
                     inflictTextID: "status-inflict-confusion",
@@ -330,7 +330,7 @@ namespace PBS.Databases
 
             // Encore
             {"encore",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "encore",
                     conditionName: "Encore",
                     statusTags: new PokemonSTag[]
@@ -354,7 +354,7 @@ namespace PBS.Databases
 
             // Defense Curl
             {"defensecurl",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "defensecurl",
                     conditionName: "Defense Curl",
                     effectsNew: new Effects.PokemonStatuses.PokemonSE[]
@@ -365,7 +365,7 @@ namespace PBS.Databases
 
             // Disable
             {"disable",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "disable",
                     conditionName: "Disable",
                     effectsNew: new Effects.PokemonStatuses.PokemonSE[]
@@ -378,7 +378,7 @@ namespace PBS.Databases
 
             // Electrify
             {"electrify",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "electrify",
                     conditionName: "Electrify",
                     effectsNew: new Effects.PokemonStatuses.PokemonSE[]
@@ -389,7 +389,7 @@ namespace PBS.Databases
 
             // Embargo
             {"embargo",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "embargo",
                     conditionName: "Embargo",
                     effectsNew: new Effects.PokemonStatuses.PokemonSE[]
@@ -402,7 +402,7 @@ namespace PBS.Databases
 
             // Flinch
             {"flinch",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "flinch",
                     conditionName: "Flinch",
                     effectsNew: new Effects.PokemonStatuses.PokemonSE[]
@@ -413,7 +413,7 @@ namespace PBS.Databases
 
             // Heal Block
             {"healblock",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "healblock",
                     conditionName: "Heal Block",
                     effectsNew: new Effects.PokemonStatuses.PokemonSE[]
@@ -426,7 +426,7 @@ namespace PBS.Databases
 
             // Identification
             {"identification",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "identification",
                     conditionName: "identification",
                     effectsNew: new Effects.PokemonStatuses.PokemonSE[]
@@ -439,7 +439,7 @@ namespace PBS.Databases
 
             // Imprison
             {"imprison",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "imprison",
                     conditionName: "Imprison",
                     effectsNew: new Effects.PokemonStatuses.PokemonSE[]
@@ -450,7 +450,7 @@ namespace PBS.Databases
 
             // Infatuation
             {"infatuation",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "infatuation",
                     conditionName: "Infatuation",
                     effectsNew: new Effects.PokemonStatuses.PokemonSE[]
@@ -461,7 +461,7 @@ namespace PBS.Databases
 
             // Perish Song
             {"perishsong",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "perishsong",
                     conditionName: "Perish Song",
                     effectsNew: new Effects.PokemonStatuses.PokemonSE[]
@@ -472,7 +472,7 @@ namespace PBS.Databases
 
             // Tar Shot
             {"tarshot",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "tarshot",
                     conditionName: "Tar Shot",
                     effectsNew: new Effects.PokemonStatuses.PokemonSE[]
@@ -486,7 +486,7 @@ namespace PBS.Databases
 
             // Taunt
             {"taunt",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "taunt",
                     conditionName: "Taunt",
                     effectsNew: new Effects.PokemonStatuses.PokemonSE[]
@@ -499,7 +499,7 @@ namespace PBS.Databases
 
             // Torment
             {"torment",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "torment",
                     conditionName: "Torment",
                     effectsNew: new Effects.PokemonStatuses.PokemonSE[]
@@ -512,7 +512,7 @@ namespace PBS.Databases
 
             // Yawn
             {"yawn",
-                new StatusPKData(
+                new PokemonStatus(
                     ID: "yawn",
                     conditionName: "Yawn",
                     effectsNew: new Effects.PokemonStatuses.PokemonSE[]
@@ -527,7 +527,7 @@ namespace PBS.Databases
         };
 
         // Methods
-        public StatusPKData GetStatusData(string ID)
+        public PokemonStatus GetStatusData(string ID)
         {
             if (database.ContainsKey(ID))
             {
@@ -536,7 +536,7 @@ namespace PBS.Databases
             Debug.LogWarning("Could not find move with ID: " + ID);
             return database[""];
         }
-        public StatusPKData GetDefaultStatusData()
+        public PokemonStatus GetDefaultStatusData()
         {
             return GetStatusData("healthy");
         }

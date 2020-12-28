@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PBS.Data
 {
-    public class ItemData
+    public class Item
     {
         // General
         public string ID { get; set; }
@@ -39,7 +39,7 @@ namespace PBS.Data
             {
                 if (useBaseAesthetic && !string.IsNullOrEmpty(baseID))
                 {
-                    return Pokemon.instance.GetPokemonData(baseID).displayID;
+                    return PBS.Databases.Pokemon.instance.GetPokemonData(baseID).displayID;
                 }
                 return string.IsNullOrEmpty(p_displayID) ? ID : p_displayID;
             }
@@ -113,7 +113,7 @@ namespace PBS.Data
         }
 
         // Constructor
-        public ItemData(string ID,
+        public Item(string ID,
             string baseID = null,
             string itemName = null,
             ItemPocket pocket = ItemPocket.None,

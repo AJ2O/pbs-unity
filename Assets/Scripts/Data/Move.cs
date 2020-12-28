@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace PBS.Data
 {
-    public class MoveData
+    public class Move
     {
         // General
         public string ID { get; private set; }
@@ -261,7 +261,7 @@ namespace PBS.Data
         // TODO: Contest Stats / Effects
 
         // Constructor
-        public MoveData(
+        public Move(
             string ID,
             string baseID = null,
             string moveName = null,
@@ -349,9 +349,9 @@ namespace PBS.Data
         }
 
         // Clone
-        public MoveData Clone()
+        public Move Clone()
         {
-            MoveData cloneData = new MoveData(
+            Move cloneData = new Move(
                 ID: ID,
                 baseID: baseID,
                 moveName: moveName,
@@ -379,13 +379,13 @@ namespace PBS.Data
                 );
             return cloneData;
         }
-        public MoveData PartialClone(
+        public Move PartialClone(
             MoveCategory category,
             string moveType,
             float basePower, float accuracy, int priority
             )
         {
-            MoveData clone = Clone();
+            Move clone = Clone();
             this.category = category;
             this.moveType = moveType;
             this.basePower = Mathf.FloorToInt(basePower);
@@ -402,7 +402,7 @@ namespace PBS.Data
             }
             if (baseID != null)
             {
-                MoveData baseData = Moves.instance.GetMoveData(baseID);
+                Move baseData = Moves.instance.GetMoveData(baseID);
                 return baseData.IsABaseID(tryBaseID);
             }
             return false;

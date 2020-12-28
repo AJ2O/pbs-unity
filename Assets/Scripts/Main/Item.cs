@@ -8,7 +8,7 @@ public class Item
 {
     // General
     public string itemID { get; set; }
-    public ItemData data { 
+    public PBS.Data.Item data { 
         get 
         {
             return Items.instance.GetItemData(itemID);

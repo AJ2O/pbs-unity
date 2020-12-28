@@ -108,7 +108,7 @@ public class BTLUIPanelFight : BTLUIPanel
         BTLUI_ButtonFight moveBtn,
         bool choosingZMove = false, bool choosingMaxMove = false)
     {
-        MoveData moveData = battle.GetPokemonMoveData(userPokemon: pokemon, moveID: moveslot.moveID);
+        Move moveData = battle.GetPokemonMoveData(userPokemon: pokemon, moveID: moveslot.moveID);
         if (choosingZMove)
         {
             moveData = battle.GetPokemonZMoveData(pokemon, moveslot.moveID);
@@ -199,7 +199,7 @@ public class BTLUIPanelFight : BTLUIPanel
             selectedBtn.SelectSelf();
             backBtn.UnselectSelf();
 
-            MoveData moveData = selectedBtn.moveData;
+            Move moveData = selectedBtn.moveData;
             PBS.Data.ElementalType typeData = PBS.Databases.ElementalTypes.instance.GetTypeData(moveData.moveType);
             Color typeColor = Color.clear;
             ColorUtility.TryParseHtmlString(typeData.typeColor, out typeColor);

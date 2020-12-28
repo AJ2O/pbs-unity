@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PBS.Data
 {
-    public class StatusTEData
+    public class TeamStatus
     {
         public string ID { get; private set; }
         public string baseID { get; private set; }
@@ -78,7 +78,7 @@ namespace PBS.Data
         }
 
         // Constructor
-        public StatusTEData(
+        public TeamStatus(
             string ID,
             string baseID = null,
             string conditionName = null,
@@ -134,9 +134,9 @@ namespace PBS.Data
         }
 
         // Clone
-        public StatusTEData Clone()
+        public TeamStatus Clone()
         {
-            StatusTEData cloneData = new StatusTEData(
+            TeamStatus cloneData = new TeamStatus(
                 ID: ID,
                 baseID: baseID,
                 conditionName: conditionName,
@@ -165,7 +165,7 @@ namespace PBS.Data
             }
             if (baseID != null)
             {
-                StatusTEData baseData = TeamStatuses.instance.GetStatusData(baseID);
+                TeamStatus baseData = TeamStatuses.instance.GetStatusData(baseID);
                 return baseData.IsABaseID(tryBaseID);
             }
             return false;

@@ -187,7 +187,7 @@ namespace PBS.Battle.View.UI.Panels
                 btn.statusTxt.text = "";
                 if (!string.IsNullOrEmpty(pokemon.nonVolatileStatus))
                 {
-                    StatusPKData statusData = PokemonStatuses.instance.GetStatusData(pokemon.nonVolatileStatus);
+                    PokemonStatus statusData = PokemonStatuses.instance.GetStatusData(pokemon.nonVolatileStatus);
                     btn.statusTxt.text = statusData.shortName;
                 }
 
@@ -199,7 +199,7 @@ namespace PBS.Battle.View.UI.Panels
                     : btn.hpLow;
 
                 // draw icon
-                string drawPath = "pokemonSprites/icon/" + Pokemon.instance.GetPokemonData(pokemon.pokemonID).displayID;
+                string drawPath = "pokemonSprites/icon/" + PBS.Databases.Pokemon.instance.GetPokemonData(pokemon.pokemonID).displayID;
                 btn.icon.sprite = BattleAssetLoader.instance.nullPokemonIconSprite;
                 if (BattleAssetLoader.instance.loadedPokemonSprites.ContainsKey(drawPath))
                 {

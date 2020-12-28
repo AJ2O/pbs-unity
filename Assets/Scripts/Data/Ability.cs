@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PBS.Data
 {
-    public class AbilityData
+    public class Ability
     {
         // General
         public string ID { get; private set; }
@@ -56,7 +56,7 @@ namespace PBS.Data
             }
         }
 
-        public AbilityData(
+        public Ability(
             string ID,
             string baseID = null,
             string abilityName = null,

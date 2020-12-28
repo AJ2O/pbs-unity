@@ -10,7 +10,7 @@ public class BattleCondition
     public string statusID;
     public int turnsActive;
     public int turnsLeft;
-    public StatusBTLData data
+    public BattleStatus data
     {
         get
         {

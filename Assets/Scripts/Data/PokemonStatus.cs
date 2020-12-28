@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PBS.Data
 {
-    public class StatusPKData
+    public class PokemonStatus
     {
         // General
         public string ID { get; private set; }
@@ -97,7 +97,7 @@ namespace PBS.Data
         }
 
         // Constructor
-        public StatusPKData(
+        public PokemonStatus(
             string ID,
             string baseID = null,
             string conditionName = null,
@@ -151,9 +151,9 @@ namespace PBS.Data
         }
 
         // Clone
-        public StatusPKData Clone()
+        public PokemonStatus Clone()
         {
-            StatusPKData cloneData = new StatusPKData(
+            PokemonStatus cloneData = new PokemonStatus(
                 ID: ID,
                 baseID: baseID,
                 conditionName: conditionName,
@@ -182,7 +182,7 @@ namespace PBS.Data
             }
             if (baseID != null)
             {
-                StatusPKData baseData = PokemonStatuses.instance.GetStatusData(baseID);
+                PokemonStatus baseData = PokemonStatuses.instance.GetStatusData(baseID);
                 return baseData.IsABaseID(tryBaseID);
             }
             return false;

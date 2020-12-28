@@ -9,7 +9,7 @@ namespace PBS.Main.Pokemon
         public bool activated;
         public bool isSuppressed;
         public int turnsActive;
-        public AbilityData data
+        public Data.Ability data
         {
             get
             {

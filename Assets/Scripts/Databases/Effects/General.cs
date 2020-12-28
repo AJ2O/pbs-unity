@@ -165,7 +165,7 @@ namespace PBS.Databases.Effects.General
         public bool IsPokemonAPreForm(Main.Pokemon.Pokemon pokemon, bool useBasePokemonID = false)
         {
             string pokemonID = useBasePokemonID ? pokemon.basePokemonID : pokemon.pokemonID;
-            PokemonData pokemonData = Pokemon.instance.GetPokemonData(pokemonID);
+            PBS.Data.Pokemon pokemonData = Pokemon.instance.GetPokemonData(pokemonID);
 
             for (int i = 0; i < preForms.Count; i++)
             {
@@ -180,7 +180,7 @@ namespace PBS.Databases.Effects.General
         public bool IsPokemonAToForm(Main.Pokemon.Pokemon pokemon, bool useBasePokemonID = false)
         {
             string pokemonID = useBasePokemonID ? pokemon.basePokemonID : pokemon.pokemonID;
-            PokemonData pokemonData = Pokemon.instance.GetPokemonData(pokemonID);
+            PBS.Data.Pokemon pokemonData = Pokemon.instance.GetPokemonData(pokemonID);
 
             if (pokemonID == toForm)
             {

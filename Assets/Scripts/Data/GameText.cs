@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace PBS.Data
 {
-    public class GameTextData
+    public class GameText
     {
         // General
         public string ID { get; private set; }
         public Dictionary<GameLanguages, string> languageDict { get; private set; }
 
         // Constructor
-        public GameTextData(
+        public GameText(
             string ID,
             Dictionary<GameLanguages, string> languageDict
             )

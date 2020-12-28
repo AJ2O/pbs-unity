@@ -120,7 +120,7 @@ namespace PBS.Battle.View.UI.Panels
         /// <param name="moveBtn">The button to associate.</param>
         public void SetMoveButton(Events.CommandAgent.Moveslot moveslot, FightButton moveBtn)
         {
-            MoveData moveData = Moves.instance.GetMoveData(moveslot.moveID);
+            Move moveData = Moves.instance.GetMoveData(moveslot.moveID);
             moveBtn.moveslot = moveslot;
 
             if (!moveslot.hide)
@@ -202,7 +202,7 @@ namespace PBS.Battle.View.UI.Panels
                 }
                 else
                 {
-                    MoveData moveData = Moves.instance.GetMoveData(selectedBtn.moveID);
+                    Move moveData = Moves.instance.GetMoveData(selectedBtn.moveID);
                     Data.ElementalType typeData = Databases.ElementalTypes.instance.GetTypeData(moveData.moveType);
                     Color typeColor = Color.clear;
                     ColorUtility.TryParseHtmlString(typeData.typeColor, out typeColor);
