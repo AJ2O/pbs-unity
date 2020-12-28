@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Main.Pokemon;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -111,7 +112,7 @@ public class BTLAIControl : MonoBehaviour
         List<Pokemon> otherCommandablePokemon)
     {
         List<BattleCommand> commands = new List<BattleCommand>();
-        List<Pokemon.Moveslot> useableMoves = battleModel.GetPokemonUseableMoves(pokemon);
+        List<Moveslot> useableMoves = battleModel.GetPokemonUseableMoves(pokemon);
         if (useableMoves.Count == 0)
         {
             // Struggle

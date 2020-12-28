@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Rendering;
 using System;
+using PBS.Main.Pokemon;
 
 public class BTLUI : MonoBehaviour
 {
@@ -44,7 +45,7 @@ public class BTLUI : MonoBehaviour
     public BTLUI_ButtonTxt fightSpecialBtn;
     public Image fightSpecialIcon;
     private List<BTLUI_ButtonFight> fightBtns;
-    private List<Pokemon.Moveslot> fightList;
+    private List<Moveslot> fightList;
     public Sprite fightMegaIcon,
         fightZMoveIcon,
         fightDynamaxIcon;
@@ -138,7 +139,7 @@ public class BTLUI : MonoBehaviour
         cmdList = new List<BattleCommandType>();
 
         fightBtns = new List<BTLUI_ButtonFight>();
-        fightList = new List<Pokemon.Moveslot>();
+        fightList = new List<Moveslot>();
 
         fieldTargetBtns = new List<BTLUI_ButtonFieldTarget>();
         positionList = new List<BattlePosition>();
@@ -382,13 +383,13 @@ public class BTLUI : MonoBehaviour
 
     // FIGHT
     public void SetMoves(
-        List<Pokemon.Moveslot> choices, 
+        List<Moveslot> choices, 
         bool canMegaEvolve = false,
         bool canZMove = false,
         bool canDynamax = false)
     {
         fightBtns = new List<BTLUI_ButtonFight>();
-        fightList = new List<Pokemon.Moveslot>(choices);
+        fightList = new List<Moveslot>(choices);
 
         int realBtns = 0;
         for (int i = 0; i < fightList.Count; i++)
@@ -446,7 +447,7 @@ public class BTLUI : MonoBehaviour
             fightSpecialIcon.gameObject.SetActive(false);
         }
     }
-    private void CreateFightBtn(Pokemon.Moveslot moveslot, BTLUI_ButtonFight btn)
+    private void CreateFightBtn(Moveslot moveslot, BTLUI_ButtonFight btn)
     {
         btn.moveslot = moveslot;
         btn.moveTxt.text = MoveDatabase.instance.GetMoveData(moveslot.moveID).moveName;
@@ -455,7 +456,7 @@ public class BTLUI : MonoBehaviour
     }
     public void SwitchSelectedMoveTo(
         Pokemon pokemon, 
-        Pokemon.Moveslot selected, 
+        Moveslot selected, 
         bool choosingSpecial,
         bool choosingZMove,
         bool choosingMaxMove)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PBS.Main.Pokemon;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PokemonDatabase
@@ -668,7 +669,7 @@ public class PokemonDatabase
         Debug.LogWarning("Could not find Pokemon with ID: " + ID);
         return database[""];
     }
-    public PokemonData GetPokemonIllusionData(Pokemon.BattleProperties.Illusion illusion)
+    public PokemonData GetPokemonIllusionData(BattleProperties.Illusion illusion)
     {
         if (database.ContainsKey(illusion.pokemonID))
         {

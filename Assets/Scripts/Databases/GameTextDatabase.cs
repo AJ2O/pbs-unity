@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PBS.Main.Pokemon;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace PBS.Databases

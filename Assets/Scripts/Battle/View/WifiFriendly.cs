@@ -21,10 +21,10 @@ namespace PBS.Battle.View.WifiFriendly
         public int level;
         public PokemonGender gender;
         public string nonVolatileStatus;
-        public global::Pokemon.DynamaxState dynamaxState;
+        public Main.Pokemon.Pokemon.DynamaxState dynamaxState;
 
         public Pokemon() { }
-        public Pokemon(global:: Pokemon obj)
+        public Pokemon(Main.Pokemon.Pokemon obj)
         {
             uniqueID = obj.uniqueID;
             pokemonID = obj.pokemonID;

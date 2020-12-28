@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Main.Pokemon;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -54,12 +55,12 @@ public class Testing : MonoBehaviour
             level: 15,
             hpPercent: 1f,
             natureID: "hardy",
-            moveslots: new Pokemon.Moveslot[]
+            moveslots: new Moveslot[]
             {
-                new Pokemon.Moveslot("karatechop"),
-                new Pokemon.Moveslot("forestscurse"),
-                new Pokemon.Moveslot("roost"),
-                new Pokemon.Moveslot("tackle"),
+                new Moveslot("karatechop"),
+                new Moveslot("forestscurse"),
+                new Moveslot("roost"),
+                new Moveslot("tackle"),
             },
             //nonVolatileStatus: new StatusCondition("burn"),
             abilityNo: 1,
@@ -73,12 +74,12 @@ public class Testing : MonoBehaviour
             level: 15,
             hpPercent: 1f,
             natureID: "adamant",
-            moveslots: new Pokemon.Moveslot[]
+            moveslots: new Moveslot[]
             {
-                new Pokemon.Moveslot("roost"),
-                new Pokemon.Moveslot("yawn"),
-                new Pokemon.Moveslot("tackle"),
-                new Pokemon.Moveslot("doubleedge", PPUps: GameSettings.pkmnMaxPPUps),
+                new Moveslot("roost"),
+                new Moveslot("yawn"),
+                new Moveslot("tackle"),
+                new Moveslot("doubleedge", PPUps: GameSettings.pkmnMaxPPUps),
             },
             //nonVolatileStatus: new StatusCondition("poison2"),
             abilityNo: 1,
@@ -92,12 +93,12 @@ public class Testing : MonoBehaviour
             level: 15,
             hpPercent: 0.75f,
             natureID: "sassy",
-            moveslots: new Pokemon.Moveslot[]
+            moveslots: new Moveslot[]
             {
-                new Pokemon.Moveslot("watergun"),
-                new Pokemon.Moveslot("withdraw"),
-                new Pokemon.Moveslot("healingwish"),
-                new Pokemon.Moveslot("recover"),
+                new Moveslot("watergun"),
+                new Moveslot("withdraw"),
+                new Moveslot("healingwish"),
+                new Moveslot("recover"),
             }
             //nonVolatileStatus: new StatusCondition("paralysis")
             );
@@ -105,12 +106,12 @@ public class Testing : MonoBehaviour
         Pokemon pokemon4 = new Pokemon(
             pokemonID: "pikachu",
             level: 18,
-            moveslots: new Pokemon.Moveslot[]
+            moveslots: new Moveslot[]
             {
-                new Pokemon.Moveslot("thunderpunch"),
-                new Pokemon.Moveslot("poisontail"),
-                new Pokemon.Moveslot("recover"),
-                new Pokemon.Moveslot("batonpass")
+                new Moveslot("thunderpunch"),
+                new Moveslot("poisontail"),
+                new Moveslot("recover"),
+                new Moveslot("batonpass")
             },
             nonVolatileStatus: new StatusCondition("poison2"),
             abilityNo: 0,
@@ -122,12 +123,12 @@ public class Testing : MonoBehaviour
             level: 10,
             hpPercent: 1f,
             natureID: "relaxed",
-            moveslots: new Pokemon.Moveslot[]
+            moveslots: new Moveslot[]
             {
-                new Pokemon.Moveslot("grassyterrain"),
-                new Pokemon.Moveslot("fakeout"),
-                new Pokemon.Moveslot("roost"),
-                new Pokemon.Moveslot("relicsong"),
+                new Moveslot("grassyterrain"),
+                new Moveslot("fakeout"),
+                new Moveslot("roost"),
+                new Moveslot("relicsong"),
             }
             //item: new Item("psychiumz")
             );
@@ -137,12 +138,12 @@ public class Testing : MonoBehaviour
             level: 10,
             hpPercent: 1f,
             natureID: "timid",
-            moveslots: new Pokemon.Moveslot[]
+            moveslots: new Moveslot[]
             {
-                new Pokemon.Moveslot("karatechop"),
-                new Pokemon.Moveslot("raindance2"),
-                new Pokemon.Moveslot("roost"),
-                new Pokemon.Moveslot("hyperspacehole2"),
+                new Moveslot("karatechop"),
+                new Moveslot("raindance2"),
+                new Moveslot("roost"),
+                new Moveslot("hyperspacehole2"),
             }
             );
 
@@ -151,12 +152,12 @@ public class Testing : MonoBehaviour
             level: 10,
             hpPercent: 1f,
             natureID: "rash",
-            moveslots: new Pokemon.Moveslot[]
+            moveslots: new Moveslot[]
             {
-                new Pokemon.Moveslot("knockoff"),
-                new Pokemon.Moveslot("hyperspacefury"),
-                new Pokemon.Moveslot("roost"),
-                new Pokemon.Moveslot("terrainpulse"),
+                new Moveslot("knockoff"),
+                new Moveslot("hyperspacefury"),
+                new Moveslot("roost"),
+                new Moveslot("terrainpulse"),
             }
             );
 
@@ -164,12 +165,12 @@ public class Testing : MonoBehaviour
             pokemonID: "arceus",
             level: 15,
             natureID: "hardy",
-            moveslots: new Pokemon.Moveslot[]
+            moveslots: new Moveslot[]
             {
-                new Pokemon.Moveslot("liquidation"),
-                new Pokemon.Moveslot("roost"),
-                new Pokemon.Moveslot("dragondance"),
-                new Pokemon.Moveslot("growl"),
+                new Moveslot("liquidation"),
+                new Moveslot("roost"),
+                new Moveslot("dragondance"),
+                new Moveslot("growl"),
             },
             //item: new Item("psychiumz"),
             item: new Item("ironplate"),
@@ -181,12 +182,12 @@ public class Testing : MonoBehaviour
             level: 10,
             hpPercent: 1f,
             natureID: "jolly",
-            moveslots: new Pokemon.Moveslot[]
+            moveslots: new Moveslot[]
             {
-                new Pokemon.Moveslot("knockoff"),
-                new Pokemon.Moveslot("dragondance"),
-                new Pokemon.Moveslot("roost"),
-                new Pokemon.Moveslot("tripleaxel"),
+                new Moveslot("knockoff"),
+                new Moveslot("dragondance"),
+                new Moveslot("roost"),
+                new Moveslot("tripleaxel"),
             },
             item: new Item("tapuniumz")
             );
@@ -196,14 +197,14 @@ public class Testing : MonoBehaviour
             level: 10,
             hpPercent: 1f,
             natureID: "modest",
-            moveslots: new Pokemon.Moveslot[]
+            moveslots: new Moveslot[]
             {
-                new Pokemon.Moveslot("hydropump"),
-                new Pokemon.Moveslot("stormthrow"),
-                new Pokemon.Moveslot("roost"),
-                new Pokemon.Moveslot("magnitude"),
+                new Moveslot("hydropump"),
+                new Moveslot("stormthrow"),
+                new Moveslot("roost"),
+                new Moveslot("magnitude"),
             },
-            dynamaxProps: new Pokemon.DynamaxProperties(
+            dynamaxProps: new DynamaxProperties(
                 dynamaxLevel: 10,
                 GMaxForm: "blastoise-gmax",
                 GMaxMove: "gmaxcannonade",
@@ -217,12 +218,12 @@ public class Testing : MonoBehaviour
             level: 12,
             hpPercent: 1f,
             natureID: "naive",
-            moveslots: new Pokemon.Moveslot[]
+            moveslots: new Moveslot[]
             {
-                new Pokemon.Moveslot("stormthrow"),
-                new Pokemon.Moveslot("liquidation"),
-                new Pokemon.Moveslot("roost"),
-                new Pokemon.Moveslot("icebeam"),
+                new Moveslot("stormthrow"),
+                new Moveslot("liquidation"),
+                new Moveslot("roost"),
+                new Moveslot("icebeam"),
             }
             );
 
@@ -267,9 +268,9 @@ public class Testing : MonoBehaviour
             pokemonID: "bulbasaur",
             level: 10,
             natureID: "hardy",
-            moveslots: new Pokemon.Moveslot[]
+            moveslots: new Moveslot[]
             {
-                new Pokemon.Moveslot("swordsdance", PPUps: GameSettings.pkmnMaxPPUps),
+                new Moveslot("swordsdance", PPUps: GameSettings.pkmnMaxPPUps),
             },
 
             item: new Item("chilanberry")
@@ -279,9 +280,9 @@ public class Testing : MonoBehaviour
             pokemonID: "charmander",
             level: 10,
             natureID: "adamant",
-            moveslots: new Pokemon.Moveslot[]
+            moveslots: new Moveslot[]
             {
-                new Pokemon.Moveslot("tackle"),
+                new Moveslot("tackle"),
             },
             item: new Item("occaberry")
             );
@@ -290,9 +291,9 @@ public class Testing : MonoBehaviour
             pokemonID: "squirtle",
             level: 10,
             natureID: "sassy",
-            moveslots: new Pokemon.Moveslot[]
+            moveslots: new Moveslot[]
             {
-                new Pokemon.Moveslot("watergun"),
+                new Moveslot("watergun"),
             },
 
             item: new Item("passhoberry")
@@ -302,9 +303,9 @@ public class Testing : MonoBehaviour
             pokemonID: "morpeko",
             level: 10,
             natureID: "modest",
-            moveslots: new Pokemon.Moveslot[]
+            moveslots: new Moveslot[]
             {
-                new Pokemon.Moveslot("aurawheel"),
+                new Moveslot("aurawheel"),
             }
             );
 
@@ -312,9 +313,9 @@ public class Testing : MonoBehaviour
             pokemonID: "mimikyu",
             level: 10,
             natureID: "bold",
-            moveslots: new Pokemon.Moveslot[]
+            moveslots: new Moveslot[]
             {
-                new Pokemon.Moveslot("shadowsneak"),
+                new Moveslot("shadowsneak"),
             }
             );
 
@@ -380,12 +381,12 @@ public class Testing : MonoBehaviour
                         level: 15,
                         hpPercent: 1f,
                         natureID: "hardy",
-                        moveslots: new Pokemon.Moveslot[]
+                        moveslots: new Moveslot[]
                         {
-                            new Pokemon.Moveslot("toxicspikes"),
-                            new Pokemon.Moveslot("forestscurse"),
-                            new Pokemon.Moveslot("roost"),
-                            new Pokemon.Moveslot("explosion"),
+                            new Moveslot("toxicspikes"),
+                            new Moveslot("forestscurse"),
+                            new Moveslot("roost"),
+                            new Moveslot("explosion"),
                         },
                         //nonVolatileStatus: new StatusCondition("burn"),
                         abilityNo: 1,
@@ -398,12 +399,12 @@ public class Testing : MonoBehaviour
                         level: 15,
                         hpPercent: 0.75f,
                         natureID: "adamant",
-                        moveslots: new Pokemon.Moveslot[]
+                        moveslots: new Moveslot[]
                         {
-                            new Pokemon.Moveslot("taunt"),
-                            new Pokemon.Moveslot("yawn"),
-                            new Pokemon.Moveslot("tackle"),
-                            new Pokemon.Moveslot("aurawheel", PPUps: GameSettings.pkmnMaxPPUps),
+                            new Moveslot("taunt"),
+                            new Moveslot("yawn"),
+                            new Moveslot("tackle"),
+                            new Moveslot("aurawheel", PPUps: GameSettings.pkmnMaxPPUps),
                         },
                         //nonVolatileStatus: new StatusCondition("poison2"),
                         isHiddenAbility: true,
@@ -416,12 +417,12 @@ public class Testing : MonoBehaviour
                         level: 15,
                         hpPercent: 1f,
                         natureID: "timid",
-                        moveslots: new Pokemon.Moveslot[]
+                        moveslots: new Moveslot[]
                         {
-                            new Pokemon.Moveslot("karatechop"),
-                            new Pokemon.Moveslot("raindance2"),
-                            new Pokemon.Moveslot("destinybond"),
-                            new Pokemon.Moveslot("hyperspacehole"),
+                            new Moveslot("karatechop"),
+                            new Moveslot("raindance2"),
+                            new Moveslot("destinybond"),
+                            new Moveslot("hyperspacehole"),
                         }
                         ),
 
@@ -430,12 +431,12 @@ public class Testing : MonoBehaviour
                         level: 15,
                         hpPercent: 1f,
                         natureID: "jolly",
-                        moveslots: new Pokemon.Moveslot[]
+                        moveslots: new Moveslot[]
                         {
-                            new Pokemon.Moveslot("knockoff"),
-                            new Pokemon.Moveslot("uturn"),
-                            new Pokemon.Moveslot("roost"),
-                            new Pokemon.Moveslot("naturesmadness"),
+                            new Moveslot("knockoff"),
+                            new Moveslot("uturn"),
+                            new Moveslot("roost"),
+                            new Moveslot("naturesmadness"),
                         },
                         item: new Item("tapuniumz")
                         ),
@@ -445,14 +446,14 @@ public class Testing : MonoBehaviour
                         level: 15,
                         hpPercent: 1f,
                         natureID: "modest",
-                        moveslots: new Pokemon.Moveslot[]
+                        moveslots: new Moveslot[]
                         {
-                            new Pokemon.Moveslot("hydropump"),
-                            new Pokemon.Moveslot("stormthrow"),
-                            new Pokemon.Moveslot("roost"),
-                            new Pokemon.Moveslot("magnitude"),
+                            new Moveslot("hydropump"),
+                            new Moveslot("stormthrow"),
+                            new Moveslot("roost"),
+                            new Moveslot("magnitude"),
                         },
-                        dynamaxProps: new Pokemon.DynamaxProperties(
+                        dynamaxProps: new DynamaxProperties(
                             dynamaxLevel: 10,
                             GMaxForm: "blastoise-gmax",
                             GMaxMove: "gmaxcannonade",
@@ -465,12 +466,12 @@ public class Testing : MonoBehaviour
                         pokemonID: "arceus",
                         level: 15,
                         natureID: "hardy",
-                        moveslots: new Pokemon.Moveslot[]
+                        moveslots: new Moveslot[]
                         {
-                            new Pokemon.Moveslot("liquidation"),
-                            new Pokemon.Moveslot("roost"),
-                            new Pokemon.Moveslot("dragondance"),
-                            new Pokemon.Moveslot("psychic"),
+                            new Moveslot("liquidation"),
+                            new Moveslot("roost"),
+                            new Moveslot("dragondance"),
+                            new Moveslot("psychic"),
                         },
                         item: new Item("psychiumz"),
                         //item: new Item("ironplate"),
@@ -485,12 +486,12 @@ public class Testing : MonoBehaviour
                     new Pokemon(
                         pokemonID: "pikachu",
                         level: 15,
-                        moveslots: new Pokemon.Moveslot[]
+                        moveslots: new Moveslot[]
                         {
-                            new Pokemon.Moveslot("firepunch"),
-                            new Pokemon.Moveslot("thousandwaves"),
-                            new Pokemon.Moveslot("stealthrock"),
-                            new Pokemon.Moveslot("batonpass")
+                            new Moveslot("firepunch"),
+                            new Moveslot("thousandwaves"),
+                            new Moveslot("stealthrock"),
+                            new Moveslot("batonpass")
                         },
                         nonVolatileStatus: new StatusCondition("poison2"),
                         abilityNo: 0,
@@ -502,12 +503,12 @@ public class Testing : MonoBehaviour
                         level: 15,
                         hpPercent: 1f,
                         natureID: "hardy",
-                        moveslots: new Pokemon.Moveslot[]
+                        moveslots: new Moveslot[]
                         {
-                            new Pokemon.Moveslot("uturn"),
-                            new Pokemon.Moveslot("forestscurse"),
-                            new Pokemon.Moveslot("poltergeist"),
-                            new Pokemon.Moveslot("leechseed"),
+                            new Moveslot("uturn"),
+                            new Moveslot("forestscurse"),
+                            new Moveslot("poltergeist"),
+                            new Moveslot("leechseed"),
                         }
                         //nonVolatileStatus: new StatusCondition("burn")
                         ),
@@ -517,12 +518,12 @@ public class Testing : MonoBehaviour
                         level: 15,
                         hpPercent: 0.75f,
                         natureID: "adamant",
-                        moveslots: new Pokemon.Moveslot[]
+                        moveslots: new Moveslot[]
                         {
-                            new Pokemon.Moveslot("roost"),
-                            new Pokemon.Moveslot("yawn"),
-                            new Pokemon.Moveslot("taunt"),
-                            new Pokemon.Moveslot("flamethrower", PPUps: GameSettings.pkmnMaxPPUps),
+                            new Moveslot("roost"),
+                            new Moveslot("yawn"),
+                            new Moveslot("taunt"),
+                            new Moveslot("flamethrower", PPUps: GameSettings.pkmnMaxPPUps),
                         },
                         //nonVolatileStatus: new StatusCondition("poison2"),
                         abilityNo: 1,
@@ -536,14 +537,14 @@ public class Testing : MonoBehaviour
                         level: 15,
                         hpPercent: 1f,
                         natureID: "timid",
-                        moveslots: new Pokemon.Moveslot[]
+                        moveslots: new Moveslot[]
                         {
-                            new Pokemon.Moveslot("hydropump"),
-                            new Pokemon.Moveslot("stormthrow"),
-                            new Pokemon.Moveslot("roost"),
-                            new Pokemon.Moveslot("thunderbolt"),
+                            new Moveslot("hydropump"),
+                            new Moveslot("stormthrow"),
+                            new Moveslot("roost"),
+                            new Moveslot("thunderbolt"),
                         },
-                        dynamaxProps: new Pokemon.DynamaxProperties(dynamaxLevel: 10),
+                        dynamaxProps: new DynamaxProperties(dynamaxLevel: 10),
                         item: new Item("blastoisinite")
                         ),
 
@@ -552,12 +553,12 @@ public class Testing : MonoBehaviour
                         level: 15,
                         hpPercent: 1f,
                         natureID: "relaxed",
-                        moveslots: new Pokemon.Moveslot[]
+                        moveslots: new Moveslot[]
                         {
-                            new Pokemon.Moveslot("aromatherapy"),
-                            new Pokemon.Moveslot("fakeout"),
-                            new Pokemon.Moveslot("closecombat"),
-                            new Pokemon.Moveslot("relicsong"),
+                            new Moveslot("aromatherapy"),
+                            new Moveslot("fakeout"),
+                            new Moveslot("closecombat"),
+                            new Moveslot("relicsong"),
                         }
                         //item: new Item("psychiumz")
                         ),
@@ -567,12 +568,12 @@ public class Testing : MonoBehaviour
                         level: 15,
                         hpPercent: 1f,
                         natureID: "naive",
-                        moveslots: new Pokemon.Moveslot[]
+                        moveslots: new Moveslot[]
                         {
-                            new Pokemon.Moveslot("shadowforce"),
-                            new Pokemon.Moveslot("liquidation"),
-                            new Pokemon.Moveslot("recover"),
-                            new Pokemon.Moveslot("icebeam"),
+                            new Moveslot("shadowforce"),
+                            new Moveslot("liquidation"),
+                            new Moveslot("recover"),
+                            new Moveslot("icebeam"),
                         })
                 });
                 break;
@@ -587,12 +588,12 @@ public class Testing : MonoBehaviour
                     new Pokemon(
                         pokemonID: "pikachu",
                         level: 18,
-                        moveslots: new Pokemon.Moveslot[]
+                        moveslots: new Moveslot[]
                         {
-                            new Pokemon.Moveslot("thunderpunch"),
-                            new Pokemon.Moveslot("poisontail"),
-                            new Pokemon.Moveslot("recover"),
-                            new Pokemon.Moveslot("batonpass")
+                            new Moveslot("thunderpunch"),
+                            new Moveslot("poisontail"),
+                            new Moveslot("recover"),
+                            new Moveslot("batonpass")
                         },
                         abilityNo: 0,
                         isHiddenAbility: false

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Main.Pokemon;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -125,14 +126,14 @@ public class BTLUI_New : BTLUI_Base
     // Fight Panel
     public override void SetMoves(
         Pokemon pokemon, 
-        List<Pokemon.Moveslot> moveslots, 
+        List<Moveslot> moveslots, 
         bool canMegaEvolve, bool canZMove = false, bool canDynamax = false,
         bool choosingZMove = false, bool choosingMaxMove = false)
     {
-        List<Pokemon.Moveslot> filteredMoveslots = new List<Pokemon.Moveslot>(moveslots);
+        List<Moveslot> filteredMoveslots = new List<Moveslot>(moveslots);
         for (int i = 0; i < filteredMoveslots.Count; i++)
         {
-            Pokemon.Moveslot moveslot = filteredMoveslots[i];
+            Moveslot moveslot = filteredMoveslots[i];
             if (moveslot == null)
             {
                 filteredMoveslots.RemoveAt(i);
@@ -148,7 +149,7 @@ public class BTLUI_New : BTLUI_Base
     }
     public override void SwitchSelectedMoveTo(
         Pokemon pokemon, 
-        Pokemon.Moveslot selected, 
+        Moveslot selected, 
         bool choosingSpecial, bool choosingZMove, bool choosingMaxMove)
     {
         if (selected == null)

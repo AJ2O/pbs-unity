@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PBS.Main.Pokemon;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -62,7 +63,7 @@ public class BTLPlayerControl : MonoBehaviour
     // Fight
     private bool choosingFight;
     private bool forceMove;
-    private List<Pokemon.Moveslot> moveslots;
+    private List<Moveslot> moveslots;
     private int moveIndex;
     private bool canMegaEvolve, chooseMegaEvolve;
     private bool canZMove, chooseZMove;
@@ -71,7 +72,7 @@ public class BTLPlayerControl : MonoBehaviour
 
     // Fight Target
     private bool choosingFightTarget;
-    private Pokemon.Moveslot selectedMoveslot;
+    private Moveslot selectedMoveslot;
     private List<List<BattlePosition>> moveTargets;
     private int moveTargetIndex;
 
@@ -847,7 +848,7 @@ public class BTLPlayerControl : MonoBehaviour
         commandTypes = new List<BattleCommandType>();
         commandIndex = 0;
 
-        moveslots = new List<Pokemon.Moveslot>();
+        moveslots = new List<Moveslot>();
         moveIndex = 0;
         canMegaEvolve = false;
         chooseMegaEvolve = false;
@@ -1074,7 +1075,7 @@ public class BTLPlayerControl : MonoBehaviour
         // if there's no useable moves, show struggle option
         if (battleModel.GetPokemonUseableMoves(pokemon).Count == 0)
         {
-            moveslots = new List<Pokemon.Moveslot> { new Pokemon.Moveslot("struggle") };
+            moveslots = new List<Moveslot> { new Moveslot("struggle") };
         }
         else
         {
@@ -1179,7 +1180,7 @@ public class BTLPlayerControl : MonoBehaviour
     public IEnumerator ControlPromptFieldTarget(
         Pokemon pokemon,
         Trainer trainer,
-        Pokemon.Moveslot selectedMoveslot,
+        Moveslot selectedMoveslot,
         BattleCommand[] setCommands = null
         )
     {
@@ -1593,7 +1594,7 @@ public class BTLPlayerControl : MonoBehaviour
             bool accountForBack = moveslots.Contains(null);
             int rows = ((moveslots.Count + (accountForBack ? -1 : 0)) / 2) + (accountForBack ? 1 : 0);
             int columns = 2;
-            Pokemon.Moveslot[,] map = GetMoveslotMap(rows, columns, accountForBack, moveslots);
+            Moveslot[,] map = GetMoveslotMap(rows, columns, accountForBack, moveslots);
 
             int newPos = moveIndex;
             int[] curPos = GetMoveslotXYPos(moveslots[moveIndex], map);
@@ -1605,15 +1606,15 @@ public class BTLPlayerControl : MonoBehaviour
                 int newColumn = (curPos[1] + scrollX) % columns;
                 if (newColumn < 0) newColumn += columns;
 
-                Pokemon.Moveslot nxtSlot = map[newRow, newColumn];
+                Moveslot nxtSlot = map[newRow, newColumn];
                 newPos = moveslots.IndexOf(nxtSlot);
             }
             NavigateFightMenu(newPos - moveIndex);
         }
     }
-    private Pokemon.Moveslot[,] GetMoveslotMap(int rows, int columns, bool accountForBack, List<Pokemon.Moveslot> list)
+    private Moveslot[,] GetMoveslotMap(int rows, int columns, bool accountForBack, List<Moveslot> list)
     {
-        Pokemon.Moveslot[,] map = new Pokemon.Moveslot[rows, columns];
+        Moveslot[,] map = new Moveslot[rows, columns];
         int start = accountForBack ? 1 : 0;
         for (int i = 0; i < rows; i++)
         {
@@ -1639,7 +1640,7 @@ public class BTLPlayerControl : MonoBehaviour
         }
         return map;
     }
-    private int[] GetMoveslotXYPos(Pokemon.Moveslot moveslot, Pokemon.Moveslot[,] map)
+    private int[] GetMoveslotXYPos(Moveslot moveslot, Moveslot[,] map)
     {
         for (int i = 0; i < map.GetLength(0); i++)
         {
@@ -1725,7 +1726,7 @@ public class BTLPlayerControl : MonoBehaviour
         {
             return;
         }
-        Pokemon.Moveslot choice = moveslots[moveIndex];
+        Moveslot choice = moveslots[moveIndex];
 
         // exit to commands
         if (choice == null)
@@ -2757,7 +2758,7 @@ public class BTLPlayerControl : MonoBehaviour
                 {
                     for (int i = 0; i < userPokemon.bProps.moveLimiters.Count && commandSuccess; i++)
                     {
-                        Pokemon.BattleProperties.MoveLimiter moveLimiter =
+                        BattleProperties.MoveLimiter moveLimiter =
                             userPokemon.bProps.moveLimiters[i];
                         EffectDatabase.StatusPKEff.MoveLimiting effect_ = moveLimiter.effect;
 

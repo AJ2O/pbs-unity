@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PBS.Main.Pokemon;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace PBS.Battle
@@ -220,7 +221,7 @@ namespace PBS.Battle
             pokemon.bProps.turnsActive++;
 
             // Abilities
-            List<Pokemon.Ability> pbAbilities = PBPGetAbilities(pokemon);
+            List<Ability> pbAbilities = PBPGetAbilities(pokemon);
             for (int i = 0; i < pbAbilities.Count; i++)
             {
                 pbAbilities[i].turnsActive++;
@@ -284,7 +285,7 @@ namespace PBS.Battle
             // Protect
             pokemon.bProps.protect = null;
             // Truant
-            Pokemon.AbilityEffectPair truantEffectPair = PBPGetAbilityEffectPair(pokemon, AbilityEffectType.Truant);
+            AbilityEffectPair truantEffectPair = PBPGetAbilityEffectPair(pokemon, AbilityEffectType.Truant);
             if (truantEffectPair == null)
             {
                 pokemon.bProps.truantTurns = 0;
@@ -893,7 +894,7 @@ namespace PBS.Battle
                     {
                         for (int i = 0; i < userPokemon.bProps.moveLimiters.Count && commandSuccess; i++)
                         {
-                            Pokemon.BattleProperties.MoveLimiter moveLimiter =
+                            BattleProperties.MoveLimiter moveLimiter =
                                 userPokemon.bProps.moveLimiters[i];
                             EffectDatabase.StatusPKEff.MoveLimiting effect_ = moveLimiter.effect;
 
@@ -1703,7 +1704,7 @@ namespace PBS.Battle
                         = new List<View.Events.CommandAgent.Moveslot>();
                     List<View.Events.CommandAgent.Moveslot> agentMaxMoves
                         = new List<View.Events.CommandAgent.Moveslot>();
-                    List<Pokemon.Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
+                    List<Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
 
                     // Z-Moves
                     bool canZMove = false;
@@ -2448,14 +2449,14 @@ namespace PBS.Battle
             {
                 List<StatusCondition> conditions = GetAllPokemonFilteredStatus(pokemon, PokemonSEType.StatScale);
                 List<BattleCondition> bConditions = BBPGetSCs();
-                List<Pokemon.Ability> pbAbilities = PBPGetAbilities(pokemon);
+                List<Ability> pbAbilities = PBPGetAbilities(pokemon);
 
                 // Abilities
 
                 // Slow Start
                 for (int i = 0; i < pbAbilities.Count; i++)
                 {
-                    Pokemon.Ability ability = pbAbilities[i];
+                    Ability ability = pbAbilities[i];
                     EffectDatabase.AbilityEff.AbilityEffect slowStart_ =
                         ability.data.GetEffectNew(AbilityEffectType.SlowStart);
                     if (slowStart_ != null)
@@ -2836,7 +2837,7 @@ namespace PBS.Battle
         }
         public void ReplenishPokemonPP(Pokemon pokemon)
         {
-            List<Pokemon.Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
+            List<Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
             for (int i = 0; i < moveslots.Count; i++)
             {
                 moveslots[i].PP = moveslots[i].maxPP;
@@ -3182,12 +3183,12 @@ namespace PBS.Battle
         }
 
         // Pokemon: Command Methods
-        public List<Pokemon.Moveslot> GetPokemonBattleMoveslots(Pokemon pokemon)
+        public List<Moveslot> GetPokemonBattleMoveslots(Pokemon pokemon)
         {
-            List<Pokemon.Moveslot> moveslots = new List<Pokemon.Moveslot>();
+            List<Moveslot> moveslots = new List<Moveslot>();
 
             // Transform moves
-            Pokemon.Moveslot[] moveslotSet;
+            Moveslot[] moveslotSet;
             if (pokemon.bProps.tProps != null)
             {
                 moveslotSet = pokemon.bProps.tProps.moveslots;
@@ -3200,7 +3201,7 @@ namespace PBS.Battle
 
             for (int i = 0; i < moveslotSet.Length; i++)
             {
-                Pokemon.Moveslot curSlot = moveslotSet[i];
+                Moveslot curSlot = moveslotSet[i];
                 if (curSlot != null)
                 {
                     bool moveAdded = false;
@@ -3240,7 +3241,7 @@ namespace PBS.Battle
             {
                 return true;
             }
-            List<Pokemon.Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
+            List<Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
             for (int i = 0; i < moveslots.Count; i++)
             {
                 if (moveslots[i].moveID == moveID)
@@ -3252,7 +3253,7 @@ namespace PBS.Battle
         }
         public int GetPokemonMovePP(Pokemon pokemon, string moveID)
         {
-            List<Pokemon.Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
+            List<Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
             for (int i = 0; i < moveslots.Count; i++)
             {
                 if (moveslots[i].moveID == moveID)
@@ -3303,7 +3304,7 @@ namespace PBS.Battle
 
             return true;
         }
-        public bool DoesMoveslotHaveEnoughPP(Pokemon pokemon, Pokemon.Moveslot moveslot)
+        public bool DoesMoveslotHaveEnoughPP(Pokemon pokemon, Moveslot moveslot)
         {
             // TODO: real checks
             return moveslot.PP > 0;
@@ -3349,7 +3350,7 @@ namespace PBS.Battle
         public bool IsPokemonMoveLimited(
             Pokemon pokemon,
             MoveData moveData,
-            Pokemon.BattleProperties.MoveLimiter moveLimiter)
+            BattleProperties.MoveLimiter moveLimiter)
         {
             // Disable
             if (moveLimiter.effect is EffectDatabase.StatusPKEff.Disable)
@@ -3395,10 +3396,10 @@ namespace PBS.Battle
 
             return false;
         }
-        public List<Pokemon.Moveslot> GetPokemonUseableMoves(Pokemon pokemon)
+        public List<Moveslot> GetPokemonUseableMoves(Pokemon pokemon)
         {
-            List<Pokemon.Moveslot> moveslots = new List<Pokemon.Moveslot>();
-            List<Pokemon.Moveslot> moveset = GetPokemonBattleMoveslots(pokemon);
+            List<Moveslot> moveslots = new List<Moveslot>();
+            List<Moveslot> moveset = GetPokemonBattleMoveslots(pokemon);
             for (int i = 0; i < moveset.Count; i++)
             {
                 if (DoesMoveslotHaveEnoughPP(pokemon, pokemon.moveslots[i])
@@ -3411,7 +3412,7 @@ namespace PBS.Battle
         }
         public BattleCommand GetStruggleCommand(Pokemon pokemon, bool isPlayer = false)
         {
-            Pokemon.Moveslot struggleMove = new Pokemon.Moveslot("struggle");
+            Moveslot struggleMove = new Moveslot("struggle");
             BattleCommand struggleCommand = BattleCommand.CreateMoveCommand(
                 pokemon,
                 struggleMove.moveID,
@@ -3560,15 +3561,15 @@ namespace PBS.Battle
             // Reset overridden values
             transformPokemon.bProps.ResetOverrides(transformPokemon);
 
-            transformPokemon.bProps.tProps = new Pokemon.TransformProperties(targetPokemon);
+            transformPokemon.bProps.tProps = new TransformProperties(targetPokemon);
             transformPokemon.bProps.ATKStage = targetPokemon.bProps.ATKStage;
             transformPokemon.bProps.DEFStage = targetPokemon.bProps.DEFStage;
             transformPokemon.bProps.SPAStage = targetPokemon.bProps.SPAStage;
             transformPokemon.bProps.SPDStage = targetPokemon.bProps.SPDStage;
             transformPokemon.bProps.SPEStage = targetPokemon.bProps.SPEStage;
 
-            List<Pokemon.Ability> pbAbilities = PBPGetAbilities(targetPokemon, ignoreSuppression: true);
-            transformPokemon.bProps.abilities = new List<Pokemon.Ability>();
+            List<Ability> pbAbilities = PBPGetAbilities(targetPokemon, ignoreSuppression: true);
+            transformPokemon.bProps.abilities = new List<Ability>();
             for (int i = 0; i < pbAbilities.Count; i++)
             {
                 transformPokemon.bProps.abilities.Add(pbAbilities[i].TransformClone());
@@ -3642,16 +3643,16 @@ namespace PBS.Battle
         }
 
         // Abilities
-        public List<Pokemon.Ability> PBPGetAbilities(
+        public List<Ability> PBPGetAbilities(
             Pokemon pokemon,
             bool bypassAbility = false,
             bool ignoreSuppression = false,
             bool skipNeutralizingGasCheck = false)
         {
-            List<Pokemon.Ability> abilities = new List<Pokemon.Ability>();
+            List<Ability> abilities = new List<Ability>();
             for (int i = 0; i < pokemon.bProps.abilities.Count; i++)
             {
-                Pokemon.Ability curAbility = pokemon.bProps.abilities[i];
+                Ability curAbility = pokemon.bProps.abilities[i];
                 // suppressed (ex. Gastro Acid, Core Enforcer)
                 if (!curAbility.isSuppressed || ignoreSuppression)
                 {
@@ -3678,12 +3679,12 @@ namespace PBS.Battle
             }
             return abilities;
         }
-        public Pokemon.Ability PBPGetAbility(
+        public Ability PBPGetAbility(
             Pokemon pokemon,
             bool bypassAbility = false,
             bool ignoreSuppression = false)
         {
-            List<Pokemon.Ability> abilities = PBPGetAbilities(
+            List<Ability> abilities = PBPGetAbilities(
                 pokemon: pokemon,
                 bypassAbility: bypassAbility,
                 ignoreSuppression: ignoreSuppression
@@ -3695,18 +3696,18 @@ namespace PBS.Battle
             return null;
         }
 
-        public List<Pokemon.Ability> PBPGetAbilitiesGainable(
+        public List<Ability> PBPGetAbilitiesGainable(
             Pokemon pokemon
             )
         {
-            List<Pokemon.Ability> abilities = new List<Pokemon.Ability>();
-            List<Pokemon.Ability> pbAbilities = PBPGetAbilities(
+            List<Ability> abilities = new List<Ability>();
+            List<Ability> pbAbilities = PBPGetAbilities(
                 pokemon: pokemon,
                 ignoreSuppression: true
                 );
             for (int i = 0; i < pbAbilities.Count; i++)
             {
-                Pokemon.Ability ability = pbAbilities[i];
+                Ability ability = pbAbilities[i];
                 bool addAbility = true;
 
                 if (ability.data.HasTag(AbilityTag.CannotRolePlay))
@@ -3723,14 +3724,14 @@ namespace PBS.Battle
             return abilities;
         }
 
-        public Pokemon.Ability PBPGetAbilityWithEffect(
+        public Ability PBPGetAbilityWithEffect(
             Pokemon pokemon,
             AbilityEffectType effectType,
             bool bypassAbility = false,
             bool ignoreSuppression = false
             )
         {
-            List<Pokemon.Ability> abilities = PBPGetAbilitiesWithEffect(
+            List<Ability> abilities = PBPGetAbilitiesWithEffect(
                 pokemon: pokemon,
                 effectType: effectType,
                 bypassAbility: bypassAbility,
@@ -3742,22 +3743,22 @@ namespace PBS.Battle
             }
             return null;
         }
-        public List<Pokemon.Ability> PBPGetAbilitiesWithEffect(
+        public List<Ability> PBPGetAbilitiesWithEffect(
             Pokemon pokemon,
             AbilityEffectType effectType,
             bool bypassAbility = false,
             bool ignoreSuppression = false
             )
         {
-            List<Pokemon.Ability> abilities = new List<Pokemon.Ability>();
-            List<Pokemon.Ability> pbAbilities = PBPGetAbilities(
+            List<Ability> abilities = new List<Ability>();
+            List<Ability> pbAbilities = PBPGetAbilities(
                 pokemon: pokemon,
                 bypassAbility: bypassAbility,
                 ignoreSuppression: ignoreSuppression
                 );
             for (int i = 0; i < pbAbilities.Count; i++)
             {
-                Pokemon.Ability ability = pbAbilities[i];
+                Ability ability = pbAbilities[i];
                 if (ability.data.GetEffectNew(effectType) != null)
                 {
                     abilities.Add(ability);
@@ -3773,7 +3774,7 @@ namespace PBS.Battle
             bool ignoreSuppression = true
             )
         {
-            List<Pokemon.Ability> abilities = PBPGetAbilities(
+            List<Ability> abilities = PBPGetAbilities(
                 pokemon: pokemon,
                 bypassAbility: bypassAbility,
                 ignoreSuppression: ignoreSuppression);
@@ -3794,7 +3795,7 @@ namespace PBS.Battle
             bool ignoreSuppression = false)
         {
             List<AbilityData> abilities = new List<AbilityData>();
-            List<Pokemon.Ability> pbAbilities = PBPGetAbilities(
+            List<Ability> pbAbilities = PBPGetAbilities(
                 pokemon: pokemon,
                 bypassAbility: bypassAbility,
                 ignoreSuppression: ignoreSuppression);
@@ -3905,39 +3906,39 @@ namespace PBS.Battle
             return null;
         }
 
-        public List<Pokemon.AbilityEffectPair> PBPGetAbilityEffectPairs(
+        public List<AbilityEffectPair> PBPGetAbilityEffectPairs(
             Pokemon pokemon,
             AbilityEffectType effectType,
             bool bypassAbility = false,
             bool ignoreSuppression = false
             )
         {
-            List<Pokemon.AbilityEffectPair> effectPairs = new List<Pokemon.AbilityEffectPair>();
-            List<Pokemon.Ability> pbAbilities = PBPGetAbilities(
+            List<AbilityEffectPair> effectPairs = new List<AbilityEffectPair>();
+            List<Ability> pbAbilities = PBPGetAbilities(
                 pokemon: pokemon,
                 bypassAbility: bypassAbility,
                 ignoreSuppression: ignoreSuppression);
 
             for (int i = 0; i < pbAbilities.Count; i++)
             {
-                Pokemon.Ability ability = pbAbilities[i];
+                Ability ability = pbAbilities[i];
                 List<EffectDatabase.AbilityEff.AbilityEffect> effectsNew = ability.data.GetEffectsNew(effectType);
                 for (int k = 0; k < effectsNew.Count; k++)
                 {
                     EffectDatabase.AbilityEff.AbilityEffect effect = effectsNew[k];
-                    effectPairs.Add(new Pokemon.AbilityEffectPair(ability, effect));
+                    effectPairs.Add(new AbilityEffectPair(ability, effect));
                 }
             }
             return effectPairs;
         }
-        public Pokemon.AbilityEffectPair PBPGetAbilityEffectPair(
+        public AbilityEffectPair PBPGetAbilityEffectPair(
             Pokemon pokemon,
             AbilityEffectType effectType,
             bool bypassAbility = false,
             bool ignoreSuppression = false
             )
         {
-            List<Pokemon.AbilityEffectPair> effectPairs =
+            List<AbilityEffectPair> effectPairs =
                 PBPGetAbilityEffectPairs(
                     pokemon: pokemon,
                     effectType: effectType,
@@ -3972,12 +3973,12 @@ namespace PBS.Battle
             return null;
         }
 
-        public List<Pokemon.Ability> PBPGetAbilitiesReplaceable(
+        public List<Ability> PBPGetAbilitiesReplaceable(
             Pokemon pokemon,
-            List<Pokemon.Ability> worrySeedAbilities)
+            List<Ability> worrySeedAbilities)
         {
-            List<Pokemon.Ability> pbAbilities = PBPGetAbilities(pokemon);
-            List<Pokemon.Ability> replaceableAbilities = new List<Pokemon.Ability>();
+            List<Ability> pbAbilities = PBPGetAbilities(pokemon);
+            List<Ability> replaceableAbilities = new List<Ability>();
             for (int i = 0; i < pbAbilities.Count; i++)
             {
                 if (!pbAbilities[i].data.HasTag(AbilityTag.CannotWorrySeed))
@@ -3998,13 +3999,13 @@ namespace PBS.Battle
             }
             return replaceableAbilities;
         }
-        public List<Pokemon.Ability> PBPSetAbilitiesReplaceable(
+        public List<Ability> PBPSetAbilitiesReplaceable(
             Pokemon pokemon,
-            List<Pokemon.Ability> worrySeedAbilities
+            List<Ability> worrySeedAbilities
             )
         {
-            List<Pokemon.Ability> setAbilities = new List<Pokemon.Ability>();
-            List<Pokemon.Ability> replaceableAbilities = PBPGetAbilitiesReplaceable(
+            List<Ability> setAbilities = new List<Ability>();
+            List<Ability> replaceableAbilities = PBPGetAbilitiesReplaceable(
                 pokemon: pokemon,
                 worrySeedAbilities: worrySeedAbilities
                 );
@@ -4013,7 +4014,7 @@ namespace PBS.Battle
                 pokemon.bProps.abilities.Remove(replaceableAbilities[i]);
             }
 
-            List<Pokemon.Ability> pbAbilities = PBPGetAbilities(
+            List<Ability> pbAbilities = PBPGetAbilities(
                 pokemon: pokemon,
                 ignoreSuppression: true
                 );
@@ -4035,11 +4036,11 @@ namespace PBS.Battle
             return setAbilities;
         }
 
-        public bool PBPSuppressAbility(Pokemon pokemon, Pokemon.Ability ability)
+        public bool PBPSuppressAbility(Pokemon pokemon, Ability ability)
         {
-            return PBPSuppressAbilities(pokemon, new List<Pokemon.Ability> { ability });
+            return PBPSuppressAbilities(pokemon, new List<Ability> { ability });
         }
-        public bool PBPSuppressAbilities(Pokemon pokemon, List<Pokemon.Ability> abilities)
+        public bool PBPSuppressAbilities(Pokemon pokemon, List<Ability> abilities)
         {
             for (int i = 0; i < abilities.Count; i++)
             {
@@ -4057,12 +4058,12 @@ namespace PBS.Battle
                 Pokemon pokemon = pokemonOnField[i];
                 if (!skipFaint || !IsPokemonFainted(pokemon))
                 {
-                    List<Pokemon.Ability> abilities = PBPGetAbilities(
+                    List<Ability> abilities = PBPGetAbilities(
                         pokemon: pokemon,
                         skipNeutralizingGasCheck: true);
                     for (int k = 0; k < abilities.Count; k++)
                     {
-                        Pokemon.Ability ability = abilities[k];
+                        Ability ability = abilities[k];
                         if (ability.data.GetEffectNew(AbilityEffectType.NeutralizingGas) != null)
                         {
                             return true;
@@ -4072,13 +4073,13 @@ namespace PBS.Battle
             }
             return false;
         }
-        public List<Pokemon.Ability> PBPGetNeutralizedAbilities(Pokemon pokemon)
+        public List<Ability> PBPGetNeutralizedAbilities(Pokemon pokemon)
         {
-            List<Pokemon.Ability> neutralizedAbilities = new List<Pokemon.Ability>();
-            List<Pokemon.Ability> pbAbilities = PBPGetAbilities(pokemon);
+            List<Ability> neutralizedAbilities = new List<Ability>();
+            List<Ability> pbAbilities = PBPGetAbilities(pokemon);
             for (int i = 0; i < pbAbilities.Count; i++)
             {
-                Pokemon.Ability ability = pbAbilities[i];
+                Ability ability = pbAbilities[i];
                 if (!ability.data.HasTag(AbilityTag.CannotNeutralize))
                 {
                     neutralizedAbilities.Add(ability);
@@ -4165,13 +4166,13 @@ namespace PBS.Battle
             }
             return scs;
         }
-        public Pokemon.Ability PBPGetComatoseSCAbility(Pokemon pokemon, string statusID)
+        public Ability PBPGetComatoseSCAbility(Pokemon pokemon, string statusID)
         {
-            List<Pokemon.Ability> abilities = PBPGetAbilities(pokemon);
+            List<Ability> abilities = PBPGetAbilities(pokemon);
 
             for (int i = 0; i < abilities.Count; i++)
             {
-                Pokemon.Ability ability = abilities[i];
+                Ability ability = abilities[i];
                 List<EffectDatabase.AbilityEff.AbilityEffect> comatose_ =
                     ability.data.GetEffectsNew(AbilityEffectType.Comatose);
                 for (int k = 0; k < comatose_.Count; k++)
@@ -4284,7 +4285,7 @@ namespace PBS.Battle
             }
 
             List<string> types = PBPGetTypes(pokemon);
-            List<Pokemon.Ability> abilities = PBPGetAbilities(pokemon);
+            List<Ability> abilities = PBPGetAbilities(pokemon);
 
             if (!pokemon.bProps.isSmackedDown)
             {
@@ -8705,7 +8706,7 @@ namespace PBS.Battle
             // Torment
             for (int i = 0; i < pokemon.bProps.moveLimiters.Count; i++)
             {
-                Pokemon.BattleProperties.MoveLimiter limiter
+                BattleProperties.MoveLimiter limiter
                     = pokemon.bProps.moveLimiters[i];
                 if (limiter.effect is EffectDatabase.StatusPKEff.Torment)
                 {
@@ -8882,7 +8883,7 @@ namespace PBS.Battle
                 {
                     for (int k = 0; k < team.trainers[i].party.Count; k++)
                     {
-                        List<Pokemon.Moveslot> moveslots = team.trainers[i].party[k].GetMoveset();
+                        List<Moveslot> moveslots = team.trainers[i].party[k].GetMoveset();
                         for (int j = 0; j < moveslots.Count; j++)
                         {
                             if (moveslots[j] != null)
@@ -8910,7 +8911,7 @@ namespace PBS.Battle
         public List<string> GetPokemonSleepTalkMoves(Pokemon pokemon)
         {
             List<string> moves = new List<string>();
-            List<Pokemon.Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
+            List<Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
             for (int i = 0; i < moveslots.Count; i++)
             {
                 MoveData moveData = MoveDatabase.instance.GetMoveData(moveslots[i].moveID);

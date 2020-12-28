@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Main.Pokemon;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,12 +44,12 @@ public class PlayerSave
             pokemonID: "bulbasaur",
             level: 15,
             natureID: "hardy",
-            moveslots: new Pokemon.Moveslot[]
+            moveslots: new Moveslot[]
             {
-                new Pokemon.Moveslot("tackle"),
-                new Pokemon.Moveslot("leechseed"),
-                new Pokemon.Moveslot("razorleaf"),
-                new Pokemon.Moveslot("growl")
+                new Moveslot("tackle"),
+                new Moveslot("leechseed"),
+                new Moveslot("razorleaf"),
+                new Moveslot("growl")
             }
             );
 
@@ -57,9 +58,9 @@ public class PlayerSave
             level: 10,
             currentHP: 14,
             natureID: "adamant",
-            moveslots: new Pokemon.Moveslot[]
+            moveslots: new Moveslot[]
             {
-                new Pokemon.Moveslot("ember")
+                new Moveslot("ember")
             }
             );
 
@@ -68,11 +69,11 @@ public class PlayerSave
             level: 19,
             currentHP: 10,
             natureID: "sassy",
-            moveslots: new Pokemon.Moveslot[]
+            moveslots: new Moveslot[]
             {
-                new Pokemon.Moveslot("watergun"),
-                new Pokemon.Moveslot("withdraw"),
-                new Pokemon.Moveslot("watergun")
+                new Moveslot("watergun"),
+                new Moveslot("withdraw"),
+                new Moveslot("watergun")
             }
             );
 
