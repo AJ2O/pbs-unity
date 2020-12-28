@@ -2,30 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PokemonDatabase
+namespace PBS.Databases
 {
-    //create an object of SingleObject
-    private static PokemonDatabase singleton = new PokemonDatabase();
-
-    //make the constructor private so that this class cannot be
-    //instantiated
-    private PokemonDatabase() { }
-
-    //Get the only object available
-    public static PokemonDatabase instance
+    public class Pokemon
     {
-        get
-        {
-            return singleton;
-        }
-        private set
-        {
-            singleton = value;
-        }
-    }
+        //create an object of SingleObject
+        private static Pokemon singleton = new Pokemon();
 
-    // Database
-    private Dictionary<string, PokemonData> database = new Dictionary<string, PokemonData> 
+        //make the constructor private so that this class cannot be
+        //instantiated
+        private Pokemon() { }
+
+        //Get the only object available
+        public static Pokemon instance
+        {
+            get
+            {
+                return singleton;
+            }
+            private set
+            {
+                singleton = value;
+            }
+        }
+
+        // Database
+        private Dictionary<string, PokemonData> database = new Dictionary<string, PokemonData>
     {
         // Null / Missingno / Placeholder
         {"",
@@ -37,7 +39,7 @@ public class PokemonDatabase
 
         // --- GENERATION 1: KANTO ---
 
-        {"bulbasaur", 
+        {"bulbasaur",
             new PokemonData(
                 ID: "bulbasaur",
                 speciesName: "Bulbasaur",
@@ -428,7 +430,7 @@ public class PokemonDatabase
                 ID: "greninja-battlebond",
                 baseID: "greninja",
                 abilities: new List<string> { "battlebond" },
-                useBaseAesthetic: true, useBaseTypes: true, useBaseBaseStats: true, 
+                useBaseAesthetic: true, useBaseTypes: true, useBaseBaseStats: true,
                 combineBaseTags: true
                 ) },
         {"greninja-ash",
@@ -657,26 +659,27 @@ public class PokemonDatabase
                 }
                 ) },
 
-    }; 
+    };
 
-    // Methods
-    public PokemonData GetPokemonData(string ID)
-    {
-        if (database.ContainsKey(ID))
+        // Methods
+        public PokemonData GetPokemonData(string ID)
         {
-            return database[ID];
+            if (database.ContainsKey(ID))
+            {
+                return database[ID];
+            }
+            Debug.LogWarning("Could not find Pokemon with ID: " + ID);
+            return database[""];
         }
-        Debug.LogWarning("Could not find Pokemon with ID: " + ID);
-        return database[""];
-    }
-    public PokemonData GetPokemonIllusionData(BattleProperties.Illusion illusion)
-    {
-        if (database.ContainsKey(illusion.pokemonID))
+        public PokemonData GetPokemonIllusionData(Main.Pokemon.BattleProperties.Illusion illusion)
         {
-            return database[illusion.pokemonID];
+            if (database.ContainsKey(illusion.pokemonID))
+            {
+                return database[illusion.pokemonID];
+            }
+            Debug.LogWarning("Could not find Illusion appearance with Pokemon ID: " + illusion.pokemonID);
+            return database[""];
         }
-        Debug.LogWarning("Could not find Illusion appearance with Pokemon ID: " + illusion.pokemonID);
-        return database[""];
-    }
 
+    }
 }

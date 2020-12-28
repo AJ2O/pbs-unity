@@ -1,4 +1,5 @@
-﻿using PBS.Enums.Battle;
+﻿using PBS.Databases;
+using PBS.Enums.Battle;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -197,7 +198,7 @@ namespace PBS.Battle.View.UI.Panels
                     : btn.hpLow;
 
                 // draw icon
-                string drawPath = "pokemonSprites/icon/" + PokemonDatabase.instance.GetPokemonData(pokemon.pokemonID).displayID;
+                string drawPath = "pokemonSprites/icon/" + Pokemon.instance.GetPokemonData(pokemon.pokemonID).displayID;
                 btn.icon.sprite = BattleAssetLoader.instance.nullPokemonIconSprite;
                 if (BattleAssetLoader.instance.loadedPokemonSprites.ContainsKey(drawPath))
                 {

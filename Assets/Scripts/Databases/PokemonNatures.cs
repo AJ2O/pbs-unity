@@ -2,30 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NatureDatabase
+namespace PBS.Databases
 {
-    //create an object of SingleObject
-    private static NatureDatabase singleton = new NatureDatabase();
-
-    //make the constructor private so that this class cannot be
-    //instantiated
-    private NatureDatabase() { }
-
-    //Get the only object available
-    public static NatureDatabase instance
+    public class PokemonNatures
     {
-        get
-        {
-            return singleton;
-        }
-        private set
-        {
-            singleton = value;
-        }
-    }
+        //create an object of SingleObject
+        private static PokemonNatures singleton = new PokemonNatures();
 
-    // Database
-    private Dictionary<string, NatureData> database = new Dictionary<string, NatureData>
+        //make the constructor private so that this class cannot be
+        //instantiated
+        private PokemonNatures() { }
+
+        //Get the only object available
+        public static PokemonNatures instance
+        {
+            get
+            {
+                return singleton;
+            }
+            private set
+            {
+                singleton = value;
+            }
+        }
+
+        // Database
+        private Dictionary<string, NatureData> database = new Dictionary<string, NatureData>
     {
         // neutral nature
         {"hardy",
@@ -180,19 +182,20 @@ public class NatureDatabase
 
     };
 
-    public NatureData GetNatureData(string ID)
-    {
-        if (this.database.ContainsKey(ID))
+        public NatureData GetNatureData(string ID)
         {
-            return this.database[ID];
+            if (database.ContainsKey(ID))
+            {
+                return database[ID];
+            }
+            Debug.LogWarning("Could not find Pokemon with ID: " + ID);
+            return database[""];
         }
-        Debug.LogWarning("Could not find Pokemon with ID: " + ID);
-        return database[""];
-    }
-    public NatureData GetRandomNature()
-    {
-        List<string> allNatures = new List<string>(database.Keys);
-        return GetNatureData(allNatures[Random.Range(0,allNatures.Count)]);
-    }
+        public NatureData GetRandomNature()
+        {
+            List<string> allNatures = new List<string>(database.Keys);
+            return GetNatureData(allNatures[Random.Range(0, allNatures.Count)]);
+        }
 
+    }
 }

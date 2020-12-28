@@ -1,4 +1,5 @@
-﻿using PBS.Enums.Battle;
+﻿using PBS.Databases;
+using PBS.Enums.Battle;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -98,7 +99,7 @@ namespace PBS.Battle.View.Scene
             }
 
             // draw pokemon
-            PokemonData pokemonData = PokemonDatabase.instance.GetPokemonData(pokemon.pokemonID);
+            PokemonData pokemonData = Pokemon.instance.GetPokemonData(pokemon.pokemonID);
             string drawPath = "pokemonSprites/" + (isNear ? "back/" : "front/") + pokemonData.displayID;
 
             Entities.Pokemon newScnPokemon = Instantiate(pokemonPrefab, spawnPos.position, Quaternion.identity, spawnPos);

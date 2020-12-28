@@ -1,4 +1,5 @@
-﻿using PBS.Main.Pokemon;
+﻿using PBS.Databases;
+using PBS.Main.Pokemon;
 using PBS.Main.Trainer;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,14 +24,14 @@ public class BTLAIControl : MonoBehaviour
     // Trainer Command Prompts
     public List<BattleCommand> GetCommandsByPrompt(
         Trainer trainer,
-        List<Pokemon> pokemonToControl)
+        List<PBS.Main.Pokemon.Pokemon> pokemonToControl)
     {
         committedCommands = new List<BattleCommand>();
         for (int i = 0; i < pokemonToControl.Count; i++)
         {
-            Pokemon pokemon = pokemonToControl[i];
+            PBS.Main.Pokemon.Pokemon pokemon = pokemonToControl[i];
             switchPosition = pokemonToControl[i].battlePos;
-            List<Pokemon> otherCommandablePokemon = 
+            List<PBS.Main.Pokemon.Pokemon> otherCommandablePokemon = 
                 pokemonToControl.GetRange(i + 1, pokemonToControl.Count - i - 1);
 
             BattleCommand selectedCommand = SelectCommand(
@@ -63,10 +64,10 @@ public class BTLAIControl : MonoBehaviour
 
     // Specific Pokemon Prompts
     private BattleCommand SelectCommand(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         Trainer trainer,
         List<BattleCommand> setCommands,
-        List<Pokemon> otherCommandablePokemon
+        List<PBS.Main.Pokemon.Pokemon> otherCommandablePokemon
         )
     {
         // keep a list of potential commands, then choose the best one at the end
@@ -97,7 +98,7 @@ public class BTLAIControl : MonoBehaviour
             null,
             trainer,
             committedCommands,
-            new List<Pokemon> { },
+            new List<PBS.Main.Pokemon.Pokemon> { },
             true
             ));
 
@@ -107,10 +108,10 @@ public class BTLAIControl : MonoBehaviour
 
     // Move Commands
     private List<BattleCommand> GetMoveCommands(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         Trainer trainer,
         List<BattleCommand> setCommands,
-        List<Pokemon> otherCommandablePokemon)
+        List<PBS.Main.Pokemon.Pokemon> otherCommandablePokemon)
     {
         List<BattleCommand> commands = new List<BattleCommand>();
         List<Moveslot> useableMoves = battleModel.GetPokemonUseableMoves(pokemon);
@@ -130,7 +131,7 @@ public class BTLAIControl : MonoBehaviour
                     targetPositions: 
                         battleModel.GetMoveAutoTargets(
                             pokemon, 
-                            MoveDatabase.instance.GetMoveData(useableMoves[i].moveID)),
+                            Moves.instance.GetMoveData(useableMoves[i].moveID)),
                     isExplicitlySelected: true);
                 commands.Add(moveCommand);
             }
@@ -140,14 +141,14 @@ public class BTLAIControl : MonoBehaviour
     
     // Party Commands
     private List<BattleCommand> GetPartyCommands(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         Trainer trainer,
         List<BattleCommand> setCommands,
-        List<Pokemon> otherCommandablePokemon,
+        List<PBS.Main.Pokemon.Pokemon> otherCommandablePokemon,
         bool forceReplace = false)
     {
         List<BattleCommand> commands = new List<BattleCommand>();
-        List<Pokemon> availablePokemon = battleModel.GetTrainerFirstXAvailablePokemon(trainer, trainer.party.Count);
+        List<PBS.Main.Pokemon.Pokemon> availablePokemon = battleModel.GetTrainerFirstXAvailablePokemon(trainer, trainer.party.Count);
 
         for (int i = 0; i < availablePokemon.Count; i++)
         {

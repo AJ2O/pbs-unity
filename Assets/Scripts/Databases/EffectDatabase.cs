@@ -1,4 +1,5 @@
-﻿using PBS.Main.Pokemon;
+﻿using PBS.Databases;
+using PBS.Main.Pokemon;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -195,10 +196,10 @@ public class EffectDatabase
                     toForm: toForm
                     );
             }
-            public bool IsPokemonAPreForm(Pokemon pokemon, bool useBasePokemonID = false)
+            public bool IsPokemonAPreForm(PBS.Main.Pokemon.Pokemon pokemon, bool useBasePokemonID = false)
             {
                 string pokemonID = useBasePokemonID ? pokemon.basePokemonID : pokemon.pokemonID;
-                PokemonData pokemonData = PokemonDatabase.instance.GetPokemonData(pokemonID);
+                PokemonData pokemonData = PBS.Databases.Pokemon.instance.GetPokemonData(pokemonID);
 
                 for (int i = 0; i < preForms.Count; i++)
                 {
@@ -210,10 +211,10 @@ public class EffectDatabase
                 }
                 return false;
             }
-            public bool IsPokemonAToForm(Pokemon pokemon, bool useBasePokemonID = false)
+            public bool IsPokemonAToForm(PBS.Main.Pokemon.Pokemon pokemon, bool useBasePokemonID = false)
             {
                 string pokemonID = useBasePokemonID ? pokemon.basePokemonID : pokemon.pokemonID;
-                PokemonData pokemonData = PokemonDatabase.instance.GetPokemonData(pokemonID);
+                PokemonData pokemonData = PBS.Databases.Pokemon.instance.GetPokemonData(pokemonID);
 
                 if (pokemonID == toForm)
                 {
@@ -1071,7 +1072,7 @@ public class EffectDatabase
                     invert: invert
                     );
             }
-            public bool DoesPokemonPassStatCheck(Pokemon pokemon)
+            public bool DoesPokemonPassStatCheck(PBS.Main.Pokemon.Pokemon pokemon)
             {
                 bool success = false;
 
@@ -2978,7 +2979,7 @@ public class EffectDatabase
                     SPEMinus: SPEMinus, ACCMinus: ACCMinus, EVAMinus: EVAMinus
                     );
             }
-            public int GetBasePower(Pokemon pokemon)
+            public int GetBasePower(PBS.Main.Pokemon.Pokemon pokemon)
             {
                 int basePower = minimumPower;
 
@@ -3508,7 +3509,7 @@ public class EffectDatabase
                     SPEMinus: SPEMinus, ACCMinus: ACCMinus, EVAMinus: EVAMinus
                     );
             }
-            public int GetPowerBoost(Pokemon pokemon)
+            public int GetPowerBoost(PBS.Main.Pokemon.Pokemon pokemon)
             {
                 int basePower = 0;
 
@@ -4871,11 +4872,11 @@ public class EffectDatabase
                     filters: filters
                     );
             }
-            public bool IsPokemonDisguised(Pokemon pokemon)
+            public bool IsPokemonDisguised(PBS.Main.Pokemon.Pokemon pokemon)
             {
                 return GetDisguiseForm(pokemon) != null;
             }
-            public General.FormTransformation GetDisguiseForm(Pokemon pokemon)
+            public General.FormTransformation GetDisguiseForm(PBS.Main.Pokemon.Pokemon pokemon)
             {
                 for (int i = 0; i < disguiseForms.Count; i++)
                 {
@@ -7921,7 +7922,7 @@ public class EffectDatabase
                         blockedStatuses: blockedStatuses
                         );
                 }
-                public bool IsAForm(Pokemon pokemon)
+                public bool IsAForm(PBS.Main.Pokemon.Pokemon pokemon)
                 {
                     for (int i = 0; i < forms.Count; i++)
                     {

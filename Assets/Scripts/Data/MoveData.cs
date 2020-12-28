@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Databases;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,7 +17,7 @@ public class MoveData
         {
             if (string.IsNullOrEmpty(p_moveName) && !string.IsNullOrEmpty(baseID))
             {
-                return MoveDatabase.instance.GetMoveData(baseID).moveName;
+                return Moves.instance.GetMoveData(baseID).moveName;
             }
             return p_moveName;
         }
@@ -33,7 +34,7 @@ public class MoveData
         {
             if (string.IsNullOrEmpty(p_moveType) && !string.IsNullOrEmpty(baseID))
             {
-                return MoveDatabase.instance.GetMoveData(baseID).moveType;
+                return Moves.instance.GetMoveData(baseID).moveType;
             }
             return p_moveType;
         }
@@ -51,7 +52,7 @@ public class MoveData
         {
             if (useSameCategory && !string.IsNullOrEmpty(baseID))
             {
-                return MoveDatabase.instance.GetMoveData(baseID).category;
+                return Moves.instance.GetMoveData(baseID).category;
             }
             return p_category;
         }
@@ -69,7 +70,7 @@ public class MoveData
         {
             if (useSameTargetType && !string.IsNullOrEmpty(baseID))
             {
-                return MoveDatabase.instance.GetMoveData(baseID).targetType;
+                return Moves.instance.GetMoveData(baseID).targetType;
             }
             return p_targetType;
         }
@@ -88,7 +89,7 @@ public class MoveData
         {
             if (useSameBasePower && !string.IsNullOrEmpty(baseID))
             {
-                return MoveDatabase.instance.GetMoveData(baseID).basePower;
+                return Moves.instance.GetMoveData(baseID).basePower;
             }
             return p_basePower;
         }
@@ -106,7 +107,7 @@ public class MoveData
         {
             if (useSameAccuracy && !string.IsNullOrEmpty(baseID))
             {
-                return MoveDatabase.instance.GetMoveData(baseID).accuracy;
+                return Moves.instance.GetMoveData(baseID).accuracy;
             }
             return p_accuracy;
         }
@@ -124,7 +125,7 @@ public class MoveData
         {
             if (useSamePP && !string.IsNullOrEmpty(baseID))
             {
-                return MoveDatabase.instance.GetMoveData(baseID).PP;
+                return Moves.instance.GetMoveData(baseID).PP;
             }
             return p_PP;
         }
@@ -142,7 +143,7 @@ public class MoveData
         {
             if (useSamePriority && !string.IsNullOrEmpty(baseID))
             {
-                return MoveDatabase.instance.GetMoveData(baseID).priority;
+                return Moves.instance.GetMoveData(baseID).priority;
             }
             return p_priority;
         }
@@ -162,7 +163,7 @@ public class MoveData
             if (combineBaseTags && !string.IsNullOrEmpty(baseID))
             {
                 HashSet<MoveTag> unionTags = new HashSet<MoveTag>(p_moveTags);
-                unionTags.UnionWith(MoveDatabase.instance.GetMoveData(baseID).moveTags);
+                unionTags.UnionWith(Moves.instance.GetMoveData(baseID).moveTags);
                 return unionTags;
             }
             return p_moveTags;
@@ -187,7 +188,7 @@ public class MoveData
             {
                 List<EffectDatabase.MoveEff.MoveEffect> unionEffects = new List<EffectDatabase.MoveEff.MoveEffect>();
                 unionEffects.AddRange(p_effectsNew);
-                unionEffects.AddRange(MoveDatabase.instance.GetMoveData(baseID).effectsNew);
+                unionEffects.AddRange(Moves.instance.GetMoveData(baseID).effectsNew);
                 return unionEffects;
             }
             return p_effectsNew;
@@ -206,7 +207,7 @@ public class MoveData
         {
             if (useSameBasePower && !string.IsNullOrEmpty(baseID))
             {
-                return MoveDatabase.instance.GetMoveData(baseID).ZBasePower;
+                return Moves.instance.GetMoveData(baseID).ZBasePower;
             }
             return p_ZBasePower;
         }
@@ -224,7 +225,7 @@ public class MoveData
         {
             if (useSameBasePower && !string.IsNullOrEmpty(baseID))
             {
-                return MoveDatabase.instance.GetMoveData(baseID).MaxPower;
+                return Moves.instance.GetMoveData(baseID).MaxPower;
             }
             return p_MaxPower;
         }
@@ -244,7 +245,7 @@ public class MoveData
             {
                 List<EffectDatabase.MoveEff.MoveEffect> unionEffects = new List<EffectDatabase.MoveEff.MoveEffect>();
                 unionEffects.AddRange(p_ZEffectsNew);
-                unionEffects.AddRange(MoveDatabase.instance.GetMoveData(baseID).ZEffectsNew);
+                unionEffects.AddRange(Moves.instance.GetMoveData(baseID).ZEffectsNew);
                 return unionEffects;
             }
             return p_ZEffectsNew;
@@ -399,7 +400,7 @@ public class MoveData
         }
         if (baseID != null)
         {
-            MoveData baseData = MoveDatabase.instance.GetMoveData(baseID);
+            MoveData baseData = Moves.instance.GetMoveData(baseID);
             return baseData.IsABaseID(tryBaseID);
         }
         return false;

@@ -3,33 +3,30 @@ using UnityEngine;
 
 namespace PBS.Databases
 {
-
-}
-
-public class ItemDatabase
-{
-    //create an object of SingleObject
-    private static ItemDatabase singleton = new ItemDatabase();
-
-    //make the constructor private so that this class cannot be
-    //instantiated
-    private ItemDatabase() { }
-
-    //Get the only object available
-    public static ItemDatabase instance
+    public class Items
     {
-        get
-        {
-            return singleton;
-        }
-        private set
-        {
-            singleton = value;
-        }
-    }
+        //create an object of SingleObject
+        private static Items singleton = new Items();
 
-    // Database
-    private Dictionary<string, ItemData> database = new Dictionary<string, ItemData>
+        //make the constructor private so that this class cannot be
+        //instantiated
+        private Items() { }
+
+        //Get the only object available
+        public static Items instance
+        {
+            get
+            {
+                return singleton;
+            }
+            private set
+            {
+                singleton = value;
+            }
+        }
+
+        // Database
+        private Dictionary<string, ItemData> database = new Dictionary<string, ItemData>
     {
         // Null / Placeholder
         {"",
@@ -67,7 +64,7 @@ public class ItemDatabase
                 {
 
                 },
-                
+
                 effectsNew: new EffectDatabase.ItemEff.ItemEffect[]
                 {
                     new EffectDatabase.ItemEff.Potion(
@@ -191,7 +188,7 @@ public class ItemDatabase
                 {
                     ItemTag.Consumable
                 },
-                
+
                 effectsNew: new EffectDatabase.ItemEff.ItemEffect[]
                 {
                     new EffectDatabase.ItemEff.NaturalGift(
@@ -300,7 +297,7 @@ public class ItemDatabase
                 {
                     ItemTag.OnlyUseableInBattle,
                 },
-                
+
                 effectsNew: new EffectDatabase.ItemEff.ItemEffect[]
                 {
                     new EffectDatabase.ItemEff.LiechiBerry(
@@ -463,7 +460,7 @@ public class ItemDatabase
                 {
 
                 },
-                
+
                 effectsNew: new EffectDatabase.ItemEff.ItemEffect[]
                 {
                     new EffectDatabase.ItemEff.ArceusPlate(baseFormID: "arceus", formID: "arceus-dragon"),
@@ -489,7 +486,7 @@ public class ItemDatabase
                 {
 
                 },
-                
+
                 effectsNew: new EffectDatabase.ItemEff.ItemEffect[]
                 {
                     new EffectDatabase.ItemEff.ArceusPlate(baseFormID: "arceus", formID: "arceus-dark"),
@@ -697,7 +694,7 @@ public class ItemDatabase
                 {
 
                 },
-                
+
                 effectsNew: new EffectDatabase.ItemEff.ItemEffect[]
                 {
                     new EffectDatabase.ItemEff.ArceusPlate(baseFormID: "arceus", formID: "arceus-grass"),
@@ -723,7 +720,7 @@ public class ItemDatabase
                 {
 
                 },
-                
+
                 effectsNew: new EffectDatabase.ItemEff.ItemEffect[]
                 {
                     new EffectDatabase.ItemEff.ArceusPlate(baseFormID: "arceus", formID: "arceus-psychic"),
@@ -852,14 +849,15 @@ public class ItemDatabase
 
     };
 
-    // Methods
-    public ItemData GetItemData(string ID)
-    {
-        if (this.database.ContainsKey(ID))
+        // Methods
+        public ItemData GetItemData(string ID)
         {
-            return this.database[ID];
+            if (database.ContainsKey(ID))
+            {
+                return database[ID];
+            }
+            Debug.LogWarning("Could not find item with ID: " + ID);
+            return database[""];
         }
-        Debug.LogWarning("Could not find item with ID: " + ID);
-        return database[""];
     }
 }

@@ -1,4 +1,5 @@
-﻿using PBS.Main.Pokemon;
+﻿using PBS.Databases;
+using PBS.Main.Pokemon;
 using PBS.Main.Team;
 using PBS.Main.Trainer;
 using System.Collections.Generic;
@@ -4619,10 +4620,10 @@ public class GameTextDatabase
         string baseString,
         int playerID = 0,
         int viewPos = 0,
-        Pokemon pokemon = null,
-        Pokemon userPokemon = null,
-        Pokemon targetPokemon = null,
-        Pokemon[] pokemonList = null,
+        PBS.Main.Pokemon.Pokemon pokemon = null,
+        PBS.Main.Pokemon.Pokemon userPokemon = null,
+        PBS.Main.Pokemon.Pokemon targetPokemon = null,
+        PBS.Main.Pokemon.Pokemon[] pokemonList = null,
         Trainer trainer = null,
         Team targetTeam = null,
         PokemonStats[] statList = null,
@@ -4654,10 +4655,10 @@ public class GameTextDatabase
 
         // set core variables
         string newString = baseString;
-        TypeData typeData = (typeID == null) ? null : TypeDatabase.instance.GetTypeData(typeID);
-        MoveData moveData = (moveID == null) ? null : MoveDatabase.instance.GetMoveData(moveID);
-        AbilityData abilityData = (abilityID == null) ? null : AbilityDatabase.instance.GetAbilityData(abilityID);
-        ItemData itemData = (itemID == null) ? null : ItemDatabase.instance.GetItemData(itemID);
+        TypeData typeData = (typeID == null) ? null : ElementalTypes.instance.GetTypeData(typeID);
+        MoveData moveData = (moveID == null) ? null : Moves.instance.GetMoveData(moveID);
+        AbilityData abilityData = (abilityID == null) ? null : Abilities.instance.GetAbilityData(abilityID);
+        ItemData itemData = (itemID == null) ? null : Items.instance.GetItemData(itemID);
         StatusPKData statusData = (statusID == null) ? null 
             : StatusPKDatabase.instance.GetStatusData(statusID);
         StatusTEData teamStatusData = (teamStatusID == null) ? null
@@ -4759,7 +4760,7 @@ public class GameTextDatabase
         }
         if (pokemonList != null)
         {
-            string pokemonNameList = GetPokemonNames(new List<Pokemon>(pokemonList));
+            string pokemonNameList = GetPokemonNames(new List<PBS.Main.Pokemon.Pokemon>(pokemonList));
             newString = newString.Replace("{{-pokemon-list-}}", pokemonNameList);
         }
         if (trainer != null)
@@ -4816,7 +4817,7 @@ public class GameTextDatabase
         {
             for (int i = 0; i < moveIDs.Length; i++)
             {
-                MoveData moveXData = MoveDatabase.instance.GetMoveData(moveIDs[i]);
+                MoveData moveXData = Moves.instance.GetMoveData(moveIDs[i]);
                 string partToReplace = "{{-move-name-" + i + "-}}";
                 newString = newString.Replace(partToReplace, moveXData.moveName);
             }
@@ -4848,11 +4849,11 @@ public class GameTextDatabase
         return newString;
     }
 
-    public static string GetPokemonName(Pokemon pokemon)
+    public static string GetPokemonName(PBS.Main.Pokemon.Pokemon pokemon)
     {
-        return GetPokemonNames(new List<Pokemon> { pokemon });
+        return GetPokemonNames(new List<PBS.Main.Pokemon.Pokemon> { pokemon });
     }
-    public static string GetPokemonNames(List<Pokemon> pokemonList)
+    public static string GetPokemonNames(List<PBS.Main.Pokemon.Pokemon> pokemonList)
     {
         string names = "";
         if (pokemonList.Count == 1)
@@ -4880,21 +4881,21 @@ public class GameTextDatabase
         string names = "";
         if (typeIDs.Length == 1)
         {
-            return TypeDatabase.instance.GetTypeData(typeIDs[0]).typeName + "-type";
+            return ElementalTypes.instance.GetTypeData(typeIDs[0]).typeName + "-type";
         }
         else if (typeIDs.Length == 2)
         {
-            return TypeDatabase.instance.GetTypeData(typeIDs[0]).typeName 
+            return ElementalTypes.instance.GetTypeData(typeIDs[0]).typeName 
                 + "- and " 
-                + TypeDatabase.instance.GetTypeData(typeIDs[1]).typeName + "-type";
+                + ElementalTypes.instance.GetTypeData(typeIDs[1]).typeName + "-type";
         }
         else
         {
             for (int i = 0; i < typeIDs.Length; i++)
             {
                 names += (i == typeIDs.Length - 1) ?
-                    "and " + TypeDatabase.instance.GetTypeData(typeIDs[i]).typeName + "-type" :
-                    TypeDatabase.instance.GetTypeData(typeIDs[i]).typeName + "-, ";
+                    "and " + ElementalTypes.instance.GetTypeData(typeIDs[i]).typeName + "-type" :
+                    ElementalTypes.instance.GetTypeData(typeIDs[i]).typeName + "-, ";
             }
         }
         return names;

@@ -1,4 +1,5 @@
-﻿using PBS.Main.Pokemon;
+﻿using PBS.Databases;
+using PBS.Main.Pokemon;
 using PBS.Main.Team;
 using PBS.Main.Trainer;
 using System;
@@ -43,7 +44,7 @@ public class BTLPlayerControl : MonoBehaviour
         controlBagCR,
         controlBagTargetCR;
     private bool waitCRActive = false;
-    private Pokemon commandPokemon;
+    private PBS.Main.Pokemon.Pokemon commandPokemon;
     private Trainer commandTrainer;
     private BattleCommand playerCommand;
     private BattleCommand[] committedCommands;
@@ -82,7 +83,7 @@ public class BTLPlayerControl : MonoBehaviour
     private bool choosingParty;
     private bool forceSwitch;
     private bool forceReplace;
-    private List<Pokemon> partySlots;
+    private List<PBS.Main.Pokemon.Pokemon> partySlots;
     private int partyIndex;
     private int switchPosition;
 
@@ -338,7 +339,7 @@ public class BTLPlayerControl : MonoBehaviour
         }
 
         Trainer trainer = bEvent.trainer;
-        List<Pokemon> pokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> pokemon = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < bEvent.sendPokemon.Length; i++)
         {
             pokemon.Add(bEvent.sendPokemon[i]);
@@ -407,7 +408,7 @@ public class BTLPlayerControl : MonoBehaviour
         }
 
         Trainer trainer = bEvent.trainer;
-        List<Pokemon> pokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> pokemon = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < bEvent.withdrawPokemon.Length; i++)
         {
             pokemon.Add(bEvent.withdrawPokemon[i]);
@@ -619,7 +620,7 @@ public class BTLPlayerControl : MonoBehaviour
             UpdateModel(bEvent.battleModel);
         }
         yield return StartCoroutine(view.FaintPokemon(
-            new List<Pokemon>(bEvent.faintedPokemon)
+            new List<PBS.Main.Pokemon.Pokemon>(bEvent.faintedPokemon)
             ));
     }
 
@@ -864,7 +865,7 @@ public class BTLPlayerControl : MonoBehaviour
         moveTargets = new List<List<BattlePosition>>();
         moveTargetIndex = 0;
 
-        partySlots = new List<Pokemon>();
+        partySlots = new List<PBS.Main.Pokemon.Pokemon>();
         partyIndex = 0;
         forceSwitch = false;
         forceReplace = false;
@@ -887,7 +888,7 @@ public class BTLPlayerControl : MonoBehaviour
         Trainer trainer = bEvent.trainer;
         committedCommands = new BattleCommand[bEvent.pokemonToCommand.Length];
 
-        List<Pokemon> pokemonToControl = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> pokemonToControl = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < bEvent.pokemonToCommand.Length; i++)
         {
             pokemonToControl.Add(bEvent.pokemonToCommand[i]);
@@ -943,7 +944,7 @@ public class BTLPlayerControl : MonoBehaviour
             committedCommands[i] = null;
 
             // set Default Values
-            partySlots = new List<Pokemon>();
+            partySlots = new List<PBS.Main.Pokemon.Pokemon>();
             partyIndex = 0;
             switchPosition = fillPositions[i];
             forceSwitch = true;
@@ -978,7 +979,7 @@ public class BTLPlayerControl : MonoBehaviour
     }
 
     private IEnumerator ControlPromptCommand(
-        Pokemon pokemon, 
+        PBS.Main.Pokemon.Pokemon pokemon, 
         Trainer trainer, 
         int pokemonIndex, 
         BattleCommand[] setCommands)
@@ -1025,7 +1026,7 @@ public class BTLPlayerControl : MonoBehaviour
     }
 
     private IEnumerator ControlPromptCommandExtra(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         Trainer trainer,
         BattleCommand[] setCommands,
         List<BattleExtraCommand> commandList
@@ -1060,7 +1061,7 @@ public class BTLPlayerControl : MonoBehaviour
     }
 
     public IEnumerator ControlPromptFight(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         Trainer trainer,
         BattleCommand[] setCommands = null,
         bool forceMove = false
@@ -1164,14 +1165,14 @@ public class BTLPlayerControl : MonoBehaviour
             canZMove: canZMove,
             canDynamax: canDynamax,
             choosingZMove: chooseZMove,
-            choosingMaxMove: chooseDynamax || commandPokemon.dynamaxState != Pokemon.DynamaxState.None);
+            choosingMaxMove: chooseDynamax || commandPokemon.dynamaxState != PBS.Main.Pokemon.Pokemon.DynamaxState.None);
         view.battleUI.SwitchPanel(BTLUI_Base.Panel.Fight);
         view.battleUI.SwitchSelectedMoveTo(
             pokemon: commandPokemon, 
             selected: moveslots[moveIndex], 
             choosingSpecial: chooseMegaEvolve || chooseZMove || chooseDynamax,
             choosingZMove: chooseZMove,
-            choosingMaxMove: chooseDynamax || pokemon.dynamaxState != Pokemon.DynamaxState.None);
+            choosingMaxMove: chooseDynamax || pokemon.dynamaxState != PBS.Main.Pokemon.Pokemon.DynamaxState.None);
 
         while (choosingFight)
         {
@@ -1180,7 +1181,7 @@ public class BTLPlayerControl : MonoBehaviour
     }
 
     public IEnumerator ControlPromptFieldTarget(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         Trainer trainer,
         Moveslot selectedMoveslot,
         BattleCommand[] setCommands = null
@@ -1202,11 +1203,11 @@ public class BTLPlayerControl : MonoBehaviour
         {
             MoveData maxMoveData = battleModel.GetPokemonMaxMoveData(
                 userPokemon: commandPokemon, 
-                moveData: MoveDatabase.instance.GetMoveData(selectedMoveslot.moveID));
+                moveData: Moves.instance.GetMoveData(selectedMoveslot.moveID));
             moveID = maxMoveData.ID;
         }
 
-        moveTargets = battleModel.GetMovePossibleTargets(commandPokemon, MoveDatabase.instance.GetMoveData(moveID));
+        moveTargets = battleModel.GetMovePossibleTargets(commandPokemon, Moves.instance.GetMoveData(moveID));
         moveTargets.Insert(0, null);
 
         // set the initial move index
@@ -1236,7 +1237,7 @@ public class BTLPlayerControl : MonoBehaviour
     }
 
     public IEnumerator ControlPromptParty(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         Trainer trainer,
         BattleCommand[] setCommands = null,
         bool forceSwitch = false
@@ -1248,7 +1249,7 @@ public class BTLPlayerControl : MonoBehaviour
         this.forceSwitch = forceSwitch;
 
         // set the possible party pokemon that can switch in
-        partySlots = new List<Pokemon>(commandTrainer.party);
+        partySlots = new List<PBS.Main.Pokemon.Pokemon>(commandTrainer.party);
         if (!forceSwitch)
         {
             partySlots.Insert(0, null);
@@ -1280,7 +1281,7 @@ public class BTLPlayerControl : MonoBehaviour
     }
 
     public IEnumerator ControlPromptBagPocket(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         Trainer trainer
         )
     {
@@ -1318,7 +1319,7 @@ public class BTLPlayerControl : MonoBehaviour
     }
 
     public IEnumerator ControlPromptBag(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         Trainer trainer,
         ItemBattlePocket pocket,
         BattleCommand[] setCommands = null
@@ -1676,7 +1677,7 @@ public class BTLPlayerControl : MonoBehaviour
                 selected: moveslots[moveIndex],
                 choosingSpecial: chooseMegaEvolve || chooseZMove || chooseDynamax,
                 choosingZMove: chooseZMove,
-                choosingMaxMove: chooseDynamax || commandPokemon.dynamaxState != Pokemon.DynamaxState.None);
+                choosingMaxMove: chooseDynamax || commandPokemon.dynamaxState != PBS.Main.Pokemon.Pokemon.DynamaxState.None);
         }
     }
 
@@ -1709,13 +1710,13 @@ public class BTLPlayerControl : MonoBehaviour
             canZMove: canZMove,
             canDynamax: canDynamax,
             choosingZMove: chooseZMove,
-            choosingMaxMove: chooseDynamax || commandPokemon.dynamaxState != Pokemon.DynamaxState.None);
+            choosingMaxMove: chooseDynamax || commandPokemon.dynamaxState != PBS.Main.Pokemon.Pokemon.DynamaxState.None);
         view.battleUI.SwitchSelectedMoveTo(
             pokemon: commandPokemon,
             selected: moveslots[moveIndex],
             choosingSpecial: chooseMegaEvolve || chooseZMove || chooseDynamax,
             choosingZMove: chooseZMove,
-            choosingMaxMove: chooseDynamax || commandPokemon.dynamaxState != Pokemon.DynamaxState.None);
+            choosingMaxMove: chooseDynamax || commandPokemon.dynamaxState != PBS.Main.Pokemon.Pokemon.DynamaxState.None);
     }
 
     private void SelectFightMenu(InputAction.CallbackContext obj)
@@ -1764,7 +1765,7 @@ public class BTLPlayerControl : MonoBehaviour
                         targetPositions: 
                             battleModel.GetMoveAutoTargets(
                                 commandPokemon, 
-                                MoveDatabase.instance.GetMoveData(choice.moveID)),
+                                Moves.instance.GetMoveData(choice.moveID)),
                         isExplicitlySelected: true,
                         isMegaEvolving: chooseMegaEvolve,
                         isZMove: chooseZMove,
@@ -1786,7 +1787,7 @@ public class BTLPlayerControl : MonoBehaviour
                                 selected: moveslots[moveIndex],
                                 choosingSpecial: chooseMegaEvolve || chooseZMove || chooseDynamax,
                                 choosingZMove: chooseZMove,
-                                choosingMaxMove: chooseDynamax || commandPokemon.dynamaxState != Pokemon.DynamaxState.None);
+                                choosingMaxMove: chooseDynamax || commandPokemon.dynamaxState != PBS.Main.Pokemon.Pokemon.DynamaxState.None);
                         }
                         waitCRActive = false;
                     }));
@@ -1939,7 +1940,7 @@ public class BTLPlayerControl : MonoBehaviour
                 selected: moveslots[moveIndex],
                 choosingSpecial: chooseMegaEvolve || chooseZMove || chooseDynamax,
                 choosingZMove: chooseZMove,
-                choosingMaxMove: chooseDynamax || commandPokemon.dynamaxState != Pokemon.DynamaxState.None);
+                choosingMaxMove: chooseDynamax || commandPokemon.dynamaxState != PBS.Main.Pokemon.Pokemon.DynamaxState.None);
         }
     }
 
@@ -1961,7 +1962,7 @@ public class BTLPlayerControl : MonoBehaviour
             bool accountForBack = partySlots.Contains(null);
             int rows = 1 + ((partySlots.Count - 1) / 2) + (accountForBack ? 1 : 0);
             int columns = 2;
-            Pokemon[,] map = GetPartyslotMap(rows, columns, accountForBack);
+            PBS.Main.Pokemon.Pokemon[,] map = GetPartyslotMap(rows, columns, accountForBack);
 
             int newPos = partyIndex;
             int[] curPos = GetPartyslotXYPos(partySlots[partyIndex], map);
@@ -1973,7 +1974,7 @@ public class BTLPlayerControl : MonoBehaviour
                 int newColumn = (curPos[1] + scrollX) % columns;
                 if (newColumn < 0) newColumn += columns;
 
-                Pokemon nxtSlot = map[newRow, newColumn];
+                PBS.Main.Pokemon.Pokemon nxtSlot = map[newRow, newColumn];
                 if (nxtSlot != null || accountForBack)
                 {
                     newPos = partySlots.IndexOf(nxtSlot);
@@ -1982,9 +1983,9 @@ public class BTLPlayerControl : MonoBehaviour
             NavigatePartyMenu(newPos - partyIndex);
         }
     }
-    private Pokemon[,] GetPartyslotMap(int rows, int columns, bool accountForBack)
+    private PBS.Main.Pokemon.Pokemon[,] GetPartyslotMap(int rows, int columns, bool accountForBack)
     {
-        Pokemon[,] map = new Pokemon[rows, columns];
+        PBS.Main.Pokemon.Pokemon[,] map = new PBS.Main.Pokemon.Pokemon[rows, columns];
         int start = accountForBack ? 1 : 0;
         for (int i = 0; i < rows; i++)
         {
@@ -2010,7 +2011,7 @@ public class BTLPlayerControl : MonoBehaviour
         }
         return map;
     }
-    private int[] GetPartyslotXYPos(Pokemon selected, Pokemon[,] map)
+    private int[] GetPartyslotXYPos(PBS.Main.Pokemon.Pokemon selected, PBS.Main.Pokemon.Pokemon[,] map)
     {
         for (int i = 0; i < map.GetLength(0); i++)
         {
@@ -2059,7 +2060,7 @@ public class BTLPlayerControl : MonoBehaviour
         {
             return;
         }
-        Pokemon choice = partySlots[partyIndex];
+        PBS.Main.Pokemon.Pokemon choice = partySlots[partyIndex];
 
         // exit to commands
         if (choice == null)
@@ -2196,7 +2197,7 @@ public class BTLPlayerControl : MonoBehaviour
             return;
         }
         BattleExtraCommand commandType = extraCommands[extraCommandIndex];
-        Pokemon choice = partySlots[partyIndex];
+        PBS.Main.Pokemon.Pokemon choice = partySlots[partyIndex];
 
         // Exit Commands
         if (commandType == BattleExtraCommand.Cancel)
@@ -2667,13 +2668,13 @@ public class BTLPlayerControl : MonoBehaviour
     {
         bool bypassChecks = false;
         bool commandSuccess = true;
-        Pokemon userPokemon = attemptedCommand.commandUser;
+        PBS.Main.Pokemon.Pokemon userPokemon = attemptedCommand.commandUser;
 
         // move commands
         if (attemptedCommand.commandType == BattleCommandType.Fight)
         {
             // auto-success for struggle
-            MoveData moveData = MoveDatabase.instance.GetMoveData(attemptedCommand.moveID);
+            MoveData moveData = Moves.instance.GetMoveData(attemptedCommand.moveID);
             if (moveData.GetEffect(MoveEffectType.Struggle) != null)
             {
                 bypassChecks = true;
@@ -2715,7 +2716,7 @@ public class BTLPlayerControl : MonoBehaviour
                 // Imprison
                 if (commandSuccess)
                 {
-                    Pokemon imprisonPokemon = battleModel.PBPGetImprison(userPokemon, moveData);
+                    PBS.Main.Pokemon.Pokemon imprisonPokemon = battleModel.PBPGetImprison(userPokemon, moveData);
                     if (imprisonPokemon != null)
                     {
                         commandSuccess = false;
@@ -2736,7 +2737,7 @@ public class BTLPlayerControl : MonoBehaviour
                         && battleModel.IsPokemonChoiced(userPokemon))
                     {
                         bool bypassChoiceLock = moveData.HasTag(MoveTag.IgnoreChoiceLock);
-                        MoveData choiceMoveData = MoveDatabase.instance.GetMoveData(userPokemon.bProps.choiceMove);
+                        MoveData choiceMoveData = Moves.instance.GetMoveData(userPokemon.bProps.choiceMove);
                         if (!bypassChoiceLock)
                         {
                             commandSuccess = false;
@@ -2847,8 +2848,8 @@ public class BTLPlayerControl : MonoBehaviour
                     // Block
                     if (commandSuccess && !string.IsNullOrEmpty(userPokemon.bProps.blockMove))
                     {
-                        Pokemon blockUser = battleModel.GetFieldPokemonByID(userPokemon.bProps.blockPokemon);
-                        MoveData moveData = MoveDatabase.instance.GetMoveData(userPokemon.bProps.blockMove);
+                        PBS.Main.Pokemon.Pokemon blockUser = battleModel.GetFieldPokemonByID(userPokemon.bProps.blockPokemon);
+                        MoveData moveData = Moves.instance.GetMoveData(userPokemon.bProps.blockMove);
                         MoveEffect effect = moveData.GetEffect(MoveEffectType.Block);
 
                         string textCodeID = effect.GetString(2);
@@ -2871,8 +2872,8 @@ public class BTLPlayerControl : MonoBehaviour
                     // Bind
                     if (commandSuccess && !string.IsNullOrEmpty(userPokemon.bProps.bindMove))
                     {
-                        Pokemon bindUser = battleModel.GetFieldPokemonByID(userPokemon.bProps.bindPokemon);
-                        MoveData moveData = MoveDatabase.instance.GetMoveData(userPokemon.bProps.bindMove);
+                        PBS.Main.Pokemon.Pokemon bindUser = battleModel.GetFieldPokemonByID(userPokemon.bProps.bindPokemon);
+                        MoveData moveData = Moves.instance.GetMoveData(userPokemon.bProps.bindMove);
                         MoveEffect effect = moveData.GetEffect(MoveEffectType.Bind);
 
                         string textCodeID = effect.GetString(3);
@@ -2895,8 +2896,8 @@ public class BTLPlayerControl : MonoBehaviour
                     // Sky Drop
                     if (commandSuccess && !string.IsNullOrEmpty(userPokemon.bProps.skyDropMove))
                     {
-                        Pokemon trapUser = battleModel.GetFieldPokemonByID(userPokemon.bProps.skyDropUser);
-                        MoveData moveData = MoveDatabase.instance.GetMoveData(userPokemon.bProps.skyDropMove);
+                        PBS.Main.Pokemon.Pokemon trapUser = battleModel.GetFieldPokemonByID(userPokemon.bProps.skyDropUser);
+                        MoveData moveData = Moves.instance.GetMoveData(userPokemon.bProps.skyDropMove);
                         MoveEffect effect = moveData.GetEffect(MoveEffectType.SkyDrop);
 
                         string textCodeID = effect.GetString(2);
@@ -2921,7 +2922,7 @@ public class BTLPlayerControl : MonoBehaviour
                     {
                         for (int i = 0; i < userPokemon.bProps.ingrainMoves.Count; i++)
                         {
-                            MoveData ingrainData = MoveDatabase.instance.GetMoveData(
+                            MoveData ingrainData = Moves.instance.GetMoveData(
                                 userPokemon.bProps.ingrainMoves[i]
                                 );
                             MoveEffect ingrainEffect = ingrainData.GetEffect(MoveEffectType.Ingrain);
@@ -2948,7 +2949,7 @@ public class BTLPlayerControl : MonoBehaviour
                 {
                     for (int i = 0; i < battleModel.pokemonOnField.Count && commandSuccess; i++)
                     {
-                        Pokemon trapPokemon = battleModel.pokemonOnField[i];
+                        PBS.Main.Pokemon.Pokemon trapPokemon = battleModel.pokemonOnField[i];
                         AbilityData abilityData = 
                             battleModel.PBPGetAbilityDataWithEffect(trapPokemon, AbilityEffectType.ShadowTag);
                         if (!trapPokemon.IsTheSameAs(userPokemon) && abilityData != null)
@@ -3056,7 +3057,7 @@ public class BTLPlayerControl : MonoBehaviour
                 {
                     if (setCommands[i] != null)
                     {
-                        Pokemon otherPokemon = setCommands[i].switchInPokemon;
+                        PBS.Main.Pokemon.Pokemon otherPokemon = setCommands[i].switchInPokemon;
                         if (otherPokemon != null)
                         {
                             if (otherPokemon.IsTheSameAs(attemptedCommand.switchInPokemon))
@@ -3080,9 +3081,9 @@ public class BTLPlayerControl : MonoBehaviour
         // bag commands
         else if (attemptedCommand.commandType == BattleCommandType.Bag)
         {
-            Pokemon itemPokemon = attemptedCommand.commandUser;
+            PBS.Main.Pokemon.Pokemon itemPokemon = attemptedCommand.commandUser;
             Trainer itemTrainer = attemptedCommand.itemTrainer;
-            ItemData itemData = ItemDatabase.instance.GetItemData(attemptedCommand.itemID);
+            ItemData itemData = Items.instance.GetItemData(attemptedCommand.itemID);
 
             BTLEvent_GameText textEvent = new BTLEvent_GameText();
             textEvent.SetCloneModel(battleModel);
@@ -3265,7 +3266,7 @@ public class BTLPlayerControl : MonoBehaviour
                 {
                     for (int i = 0; i < userPokemon.bProps.ingrainMoves.Count; i++)
                     {
-                        MoveData ingrainData = MoveDatabase.instance.GetMoveData(
+                        MoveData ingrainData = Moves.instance.GetMoveData(
                             userPokemon.bProps.ingrainMoves[i]
                             );
                         MoveEffect ingrainEffect = ingrainData.GetEffect(MoveEffectType.Ingrain);

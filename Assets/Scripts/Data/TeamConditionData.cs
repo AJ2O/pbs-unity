@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Databases;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ public class StatusTEData
         {
             if (string.IsNullOrEmpty(p_conditionName) && !string.IsNullOrEmpty(baseID))
             {
-                return MoveDatabase.instance.GetMoveData(baseID).moveName;
+                return Moves.instance.GetMoveData(baseID).moveName;
             }
             return p_conditionName;
         }

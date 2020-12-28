@@ -1,4 +1,5 @@
-﻿using PBS.Enums.Battle;
+﻿using PBS.Databases;
+using PBS.Enums.Battle;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -776,21 +777,21 @@ namespace PBS.Battle.View.UI
             string names = "";
             if (typeIDs.Count == 1)
             {
-                return TypeDatabase.instance.GetTypeData(typeIDs[0]).typeName + "-type";
+                return ElementalTypes.instance.GetTypeData(typeIDs[0]).typeName + "-type";
             }
             else if (typeIDs.Count == 2)
             {
-                return TypeDatabase.instance.GetTypeData(typeIDs[0]).typeName 
+                return ElementalTypes.instance.GetTypeData(typeIDs[0]).typeName 
                     + "- and " 
-                    + TypeDatabase.instance.GetTypeData(typeIDs[1]).typeName + "-type";
+                    + ElementalTypes.instance.GetTypeData(typeIDs[1]).typeName + "-type";
             }
             else
             {
                 for (int i = 0; i < typeIDs.Count; i++)
                 {
                     names += (i == typeIDs.Count - 1) ?
-                        "and " + TypeDatabase.instance.GetTypeData(typeIDs[i]).typeName + "-type" :
-                        TypeDatabase.instance.GetTypeData(typeIDs[i]).typeName + "-, ";
+                        "and " + ElementalTypes.instance.GetTypeData(typeIDs[i]).typeName + "-type" :
+                        ElementalTypes.instance.GetTypeData(typeIDs[i]).typeName + "-, ";
                 }
             }
             return names;
@@ -942,7 +943,7 @@ namespace PBS.Battle.View.UI
             if (!string.IsNullOrEmpty(message.pokemonID))
             {
                 WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(message.pokemonID);
-                PokemonData pokemonData = PokemonDatabase.instance.GetPokemonData(pokemon.pokemonID);
+                PokemonData pokemonData = Pokemon.instance.GetPokemonData(pokemon.pokemonID);
                 newString = newString.Replace("{{-pokemon-}}", pokemon.nickname);
                 newString = newString.Replace("{{-pokemon-form-}}", pokemonData.formName);
                 newString = newString.Replace("{{-pokemon-poss-}}", pokemon.nickname
@@ -952,7 +953,7 @@ namespace PBS.Battle.View.UI
             if (!string.IsNullOrEmpty(message.pokemonUserID))
             {
                 WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(message.pokemonUserID);
-                PokemonData pokemonData = PokemonDatabase.instance.GetPokemonData(pokemon.pokemonID);
+                PokemonData pokemonData = Pokemon.instance.GetPokemonData(pokemon.pokemonID);
                 newString = newString.Replace("{{-user-pokemon-}}", pokemon.nickname);
                 newString = newString.Replace("{{-user-pokemon-form-}}", pokemonData.formName);
                 newString = newString.Replace("{{-user-pokemon-poss-}}", pokemon.nickname
@@ -962,7 +963,7 @@ namespace PBS.Battle.View.UI
             if (!string.IsNullOrEmpty(message.pokemonTargetID))
             {
                 WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(message.pokemonTargetID);
-                PokemonData pokemonData = PokemonDatabase.instance.GetPokemonData(pokemon.pokemonID);
+                PokemonData pokemonData = Pokemon.instance.GetPokemonData(pokemon.pokemonID);
                 newString = newString.Replace("{{-target-pokemon-}}", pokemon.nickname);
                 newString = newString.Replace("{{-target-pokemon-form-}}", pokemonData.formName);
                 newString = newString.Replace("{{-target-pokemon-poss-}}", pokemon.nickname
@@ -1007,7 +1008,7 @@ namespace PBS.Battle.View.UI
 
             if (!string.IsNullOrEmpty(message.typeID))
             {
-                TypeData typeData = TypeDatabase.instance.GetTypeData(message.typeID);
+                TypeData typeData = ElementalTypes.instance.GetTypeData(message.typeID);
                 newString = newString.Replace("{{-type-name-}}", typeData.typeName + "-type");
             }
             if (message.typeIDs.Count > 0)
@@ -1017,14 +1018,14 @@ namespace PBS.Battle.View.UI
 
             if (!string.IsNullOrEmpty(message.moveID))
             {
-                MoveData moveData = MoveDatabase.instance.GetMoveData(message.moveID);
+                MoveData moveData = Moves.instance.GetMoveData(message.moveID);
                 newString = newString.Replace("{{-move-name-}}", moveData.moveName);
             }
             if (message.moveIDs.Count > 0)
             {
                 for (int i = 0; i < message.moveIDs.Count; i++)
                 {
-                    MoveData moveXData = MoveDatabase.instance.GetMoveData(message.moveIDs[i]);
+                    MoveData moveXData = Moves.instance.GetMoveData(message.moveIDs[i]);
                     string partToReplace = "{{-move-name-" + i + "-}}";
                     newString = newString.Replace(partToReplace, moveXData.moveName);
                 }
@@ -1032,14 +1033,14 @@ namespace PBS.Battle.View.UI
 
             if (!string.IsNullOrEmpty(message.abilityID))
             {
-                AbilityData abilityData = AbilityDatabase.instance.GetAbilityData(message.abilityID);
+                AbilityData abilityData = Abilities.instance.GetAbilityData(message.abilityID);
                 newString = newString.Replace("{{-ability-name-}}", abilityData.abilityName);
             }
             if (message.abilityIDs.Count > 0)
             {
                 for (int i = 0; i < message.abilityIDs.Count; i++)
                 {
-                    AbilityData abilityXData = AbilityDatabase.instance.GetAbilityData(message.abilityIDs[i]);
+                    AbilityData abilityXData = Abilities.instance.GetAbilityData(message.abilityIDs[i]);
                     string partToReplace = "{{-ability-name-" + i + "-}}";
                     newString = newString.Replace(partToReplace, abilityXData.abilityName);
                 }
@@ -1047,7 +1048,7 @@ namespace PBS.Battle.View.UI
 
             if (!string.IsNullOrEmpty(message.itemID))
             {
-                ItemData itemData = ItemDatabase.instance.GetItemData(message.itemID);
+                ItemData itemData = Items.instance.GetItemData(message.itemID);
                 newString = newString.Replace("{{-item-name-}}", itemData.itemName);
             }
 

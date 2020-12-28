@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using PBS.Databases;
 
-namespace PBS.Networking { 
+namespace PBS.Networking
+{
 
     /// <summary>
     /// This class handles interaction between the client and server.
@@ -857,7 +859,7 @@ namespace PBS.Networking {
         public IEnumerator ExecuteEvent_TrainerItemUse(Battle.View.Events.TrainerItemUse bEvent)
         {
             string text = "";
-            ItemData itemData = ItemDatabase.instance.GetItemData(bEvent.itemID);
+            ItemData itemData = Items.instance.GetItemData(bEvent.itemID);
             if (IsTrainerPlayer(bEvent.playerID))
             {
                 text = "You used one " + itemData.itemName + ".";
@@ -885,8 +887,8 @@ namespace PBS.Networking {
             Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
             Battle.View.WifiFriendly.Trainer trainer = myModel.GetTrainer(pokemon);
 
-            PokemonData preFormData = PokemonDatabase.instance.GetPokemonData(bEvent.preForm);
-            PokemonData postFormData = PokemonDatabase.instance.GetPokemonData(bEvent.postForm);
+            PokemonData preFormData = Pokemon.instance.GetPokemonData(bEvent.preForm);
+            PokemonData postFormData = Pokemon.instance.GetPokemonData(bEvent.postForm);
             Debug.Log("DEBUG - " + pokemon.nickname + " changed from "
                 + preFormData.speciesName + " (" + preFormData.formName + ") to "
                 + postFormData.speciesName + " (" + postFormData.formName + ") ");
@@ -1042,7 +1044,7 @@ namespace PBS.Networking {
         public IEnumerator ExecuteEvent_PokemonAbilityActivate(PBS.Battle.View.Events.PokemonAbilityActivate bEvent)
         {
             PBS.Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
-            AbilityData abilityData = AbilityDatabase.instance.GetAbilityData(bEvent.abilityID);
+            AbilityData abilityData = Abilities.instance.GetAbilityData(bEvent.abilityID);
 
             string prefix = PBS.Battle.View.UI.Canvas.GetPrefix(
                 pokemon: pokemon, 
@@ -1063,7 +1065,7 @@ namespace PBS.Networking {
         public IEnumerator ExecuteEvent_PokemonMoveUse(PBS.Battle.View.Events.PokemonMoveUse bEvent)
         {
             PBS.Battle.View.WifiFriendly.Pokemon pokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
-            MoveData moveData = MoveDatabase.instance.GetMoveData(bEvent.moveID);
+            MoveData moveData = Moves.instance.GetMoveData(bEvent.moveID);
 
             string prefix = PBS.Battle.View.UI.Canvas.GetPrefix(
                 pokemon: pokemon, 
@@ -1081,7 +1083,7 @@ namespace PBS.Networking {
         public IEnumerator ExecuteEvent_PokemonMoveHit(Battle.View.Events.PokemonMoveHit bEvent)
         {
             Battle.View.WifiFriendly.Pokemon userPokemon = myModel.GetMatchingPokemon(bEvent.pokemonUniqueID);
-            MoveData moveData = MoveDatabase.instance.GetMoveData(bEvent.moveID);
+            MoveData moveData = Moves.instance.GetMoveData(bEvent.moveID);
             List<Battle.View.Events.PokemonMoveHitTarget> hitTargets = bEvent.hitTargets;
 
             List<Battle.View.WifiFriendly.Pokemon> missedPokemon = new List<Battle.View.WifiFriendly.Pokemon>();
@@ -1690,7 +1692,7 @@ namespace PBS.Networking {
 
             if (!string.IsNullOrEmpty(message.typeID))
             {
-                TypeData typeData = TypeDatabase.instance.GetTypeData(message.typeID);
+                TypeData typeData = ElementalTypes.instance.GetTypeData(message.typeID);
                 newString = newString.Replace("{{-type-name-}}", typeData.typeName + "-type");
             }
             if (message.typeIDs.Count > 0)
@@ -1700,14 +1702,14 @@ namespace PBS.Networking {
 
             if (!string.IsNullOrEmpty(message.moveID))
             {
-                MoveData moveData = MoveDatabase.instance.GetMoveData(message.moveID);
+                MoveData moveData = Moves.instance.GetMoveData(message.moveID);
                 newString = newString.Replace("{{-move-name-}}", moveData.moveName);
             }
             if (message.moveIDs.Count > 0)
             {
                 for (int i = 0; i < message.moveIDs.Count; i++)
                 {
-                    MoveData moveXData = MoveDatabase.instance.GetMoveData(message.moveIDs[i]);
+                    MoveData moveXData = Moves.instance.GetMoveData(message.moveIDs[i]);
                     string partToReplace = "{{-move-name-" + i + "-}}";
                     newString = newString.Replace(partToReplace, moveXData.moveName);
                 }
@@ -1715,14 +1717,14 @@ namespace PBS.Networking {
 
             if (!string.IsNullOrEmpty(message.abilityID))
             {
-                AbilityData abilityData = AbilityDatabase.instance.GetAbilityData(message.abilityID);
+                AbilityData abilityData = Abilities.instance.GetAbilityData(message.abilityID);
                 newString = newString.Replace("{{-ability-name-}}", abilityData.abilityName);
             }
             if (message.abilityIDs.Count > 0)
             {
                 for (int i = 0; i < message.abilityIDs.Count; i++)
                 {
-                    AbilityData abilityXData = AbilityDatabase.instance.GetAbilityData(message.abilityIDs[i]);
+                    AbilityData abilityXData = Abilities.instance.GetAbilityData(message.abilityIDs[i]);
                     string partToReplace = "{{-ability-name-" + i + "-}}";
                     newString = newString.Replace(partToReplace, abilityXData.abilityName);
                 }
@@ -1730,7 +1732,7 @@ namespace PBS.Networking {
 
             if (!string.IsNullOrEmpty(message.itemID))
             {
-                ItemData itemData = ItemDatabase.instance.GetItemData(message.itemID);
+                ItemData itemData = Items.instance.GetItemData(message.itemID);
                 newString = newString.Replace("{{-item-name-}}", itemData.itemName);
             }
 

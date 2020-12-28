@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Databases;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,7 +43,7 @@ namespace PBS.Main.Pokemon
             {
                 if (string.IsNullOrEmpty(p_nickname))
                 {
-                    return PokemonDatabase.instance.GetPokemonData(pokemonID).speciesName;
+                    return Databases.Pokemon.instance.GetPokemonData(pokemonID).speciesName;
                 }
                 return p_nickname;
             }
@@ -58,7 +59,7 @@ namespace PBS.Main.Pokemon
         {
             get
             {
-                return PokemonDatabase.instance.GetPokemonData(pokemonID);
+                return Databases.Pokemon.instance.GetPokemonData(pokemonID);
             }
         }
 
@@ -82,10 +83,10 @@ namespace PBS.Main.Pokemon
         {
             get
             {
-                PokemonData pokemonData = PokemonDatabase.instance.GetPokemonData(pokemonID);
+                PokemonData pokemonData = Databases.Pokemon.instance.GetPokemonData(pokemonID);
 
                 float numerator = (2 * pokemonData.baseHP + ivHP + evHP / 4) * level;
-                float result = (numerator / 100 + level + 10) * NatureDatabase.instance.GetNatureData(natureID).HPMod;
+                float result = (numerator / 100 + level + 10) * PokemonNatures.instance.GetNatureData(natureID).HPMod;
 
                 if (dynamaxState != DynamaxState.None)
                 {
@@ -108,7 +109,7 @@ namespace PBS.Main.Pokemon
                 }
 
                 float numerator = (2 * data.baseATK + ivATK + evATK / 4) * level;
-                float result = (numerator / 100 + 5) * NatureDatabase.instance.GetNatureData(natureID).ATKMod;
+                float result = (numerator / 100 + 5) * PokemonNatures.instance.GetNatureData(natureID).ATKMod;
                 return Mathf.FloorToInt(result);
             }
         }
@@ -126,7 +127,7 @@ namespace PBS.Main.Pokemon
                 }
 
                 float numerator = (2 * data.baseDEF + ivDEF + evDEF / 4) * level;
-                float result = (numerator / 100 + 5) * NatureDatabase.instance.GetNatureData(natureID).DEFMod;
+                float result = (numerator / 100 + 5) * PokemonNatures.instance.GetNatureData(natureID).DEFMod;
                 return Mathf.FloorToInt(result);
             }
         }
@@ -144,7 +145,7 @@ namespace PBS.Main.Pokemon
                 }
 
                 float numerator = (2 * data.baseSPA + ivSPA + evSPA / 4) * level;
-                float result = (numerator / 100 + 5) * NatureDatabase.instance.GetNatureData(natureID).SPAMod;
+                float result = (numerator / 100 + 5) * PokemonNatures.instance.GetNatureData(natureID).SPAMod;
                 return Mathf.FloorToInt(result);
             }
         }
@@ -162,7 +163,7 @@ namespace PBS.Main.Pokemon
                 }
 
                 float numerator = (2 * data.baseSPD + ivSPD + evSPD / 4) * level;
-                float result = (numerator / 100 + 5) * NatureDatabase.instance.GetNatureData(natureID).SPDMod;
+                float result = (numerator / 100 + 5) * PokemonNatures.instance.GetNatureData(natureID).SPDMod;
                 return Mathf.FloorToInt(result);
             }
         }
@@ -180,7 +181,7 @@ namespace PBS.Main.Pokemon
                 }
 
                 float numerator = (2 * data.baseSPE + ivSPE + evSPE / 4) * level;
-                float result = (numerator / 100 + 5) * NatureDatabase.instance.GetNatureData(natureID).SPEMod;
+                float result = (numerator / 100 + 5) * PokemonNatures.instance.GetNatureData(natureID).SPEMod;
                 return Mathf.FloorToInt(result);
             }
         }
@@ -278,7 +279,7 @@ namespace PBS.Main.Pokemon
 
             if (natureID == null)
             {
-                this.natureID = NatureDatabase.instance.GetRandomNature().ID;
+                this.natureID = PokemonNatures.instance.GetRandomNature().ID;
             }
             else
             {
@@ -413,7 +414,7 @@ namespace PBS.Main.Pokemon
         // Forms
         public void CheckForm()
         {
-            AbilityData abilityData = AbilityDatabase.instance.GetAbilityData(GetAbility());
+            AbilityData abilityData = Abilities.instance.GetAbilityData(GetAbility());
             // Items
             if (item != null)
             {
@@ -421,8 +422,8 @@ namespace PBS.Main.Pokemon
                 for (int i = 0; i < griseousOrbs_.Count; i++)
                 {
                     EffectDatabase.ItemEff.GriseousOrb griseousOrb = griseousOrbs_[i] as EffectDatabase.ItemEff.GriseousOrb;
-                    PokemonData basePokemonData = PokemonDatabase.instance.GetPokemonData(griseousOrb.baseFormID);
-                    PokemonData toPokemonData = PokemonDatabase.instance.GetPokemonData(griseousOrb.formID);
+                    PokemonData basePokemonData = Databases.Pokemon.instance.GetPokemonData(griseousOrb.baseFormID);
+                    PokemonData toPokemonData = Databases.Pokemon.instance.GetPokemonData(griseousOrb.formID);
 
                     // Validate if the pokemon is contained
                     if (pokemonID == basePokemonData.ID

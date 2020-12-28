@@ -4,33 +4,30 @@ using UnityEngine;
 
 namespace PBS.Databases
 {
-
-}
-
-public class AbilityDatabase
-{
-    //create an object of SingleObject
-    private static AbilityDatabase singleton = new AbilityDatabase();
-
-    //make the constructor private so that this class cannot be
-    //instantiated
-    private AbilityDatabase() { }
-
-    //Get the only object available
-    public static AbilityDatabase instance
+    public class Abilities
     {
-        get
-        {
-            return singleton;
-        }
-        private set
-        {
-            singleton = value;
-        }
-    }
+        //create an object of SingleObject
+        private static Abilities singleton = new Abilities();
 
-    // Database
-    private Dictionary<string, AbilityData> database = new Dictionary<string, AbilityData>
+        //make the constructor private so that this class cannot be
+        //instantiated
+        private Abilities() { }
+
+        //Get the only object available
+        public static Abilities instance
+        {
+            get
+            {
+                return singleton;
+            }
+            private set
+            {
+                singleton = value;
+            }
+        }
+
+        // Database
+        private Dictionary<string, AbilityData> database = new Dictionary<string, AbilityData>
     {
         // Null / Placeholder
         {"",
@@ -250,7 +247,7 @@ public class AbilityDatabase
                 {
                     AbilityTag.CannotRolePlay, AbilityTag.CannotRolePlayUser,
                     AbilityTag.CannotSkillSwap, AbilityTag.CannotSkillSwapUser,
-                    AbilityTag.CannotSuppress, 
+                    AbilityTag.CannotSuppress,
                     AbilityTag.CannotWorrySeed,
                 },
                 effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
@@ -2571,7 +2568,7 @@ public class AbilityDatabase
                     new EffectDatabase.AbilityEff.ZenMode(
                         hpThreshold: 0.5f, checkBelow: true,
                         transformation: new EffectDatabase.General.FormTransformation(
-                            preForms: new string[] { "zygarde", "zygarde-10" }, 
+                            preForms: new string[] { "zygarde", "zygarde-10" },
                             toForm: "zygarde-complete"
                             )
                         ),
@@ -3312,7 +3309,7 @@ public class AbilityDatabase
                                         statusPKTypes: new PokemonSEType[] { PokemonSEType.NonVolatile }
                                         )
                                 }
-                                ) 
+                                )
                         }
                         ),
                 }
@@ -4424,7 +4421,7 @@ public class AbilityDatabase
                 }
                 ) },
 
-        
+
 
         {"unnerve",
             new AbilityData(
@@ -4463,14 +4460,15 @@ public class AbilityDatabase
 
     };
 
-    // Methods
-    public AbilityData GetAbilityData(string ID)
-    {
-        if (database.ContainsKey(ID))
+        // Methods
+        public AbilityData GetAbilityData(string ID)
         {
-            return database[ID];
+            if (database.ContainsKey(ID))
+            {
+                return database[ID];
+            }
+            Debug.LogWarning("Could not find ability with ID: " + ID);
+            return database[""];
         }
-        Debug.LogWarning("Could not find ability with ID: " + ID);
-        return database[""];
     }
 }

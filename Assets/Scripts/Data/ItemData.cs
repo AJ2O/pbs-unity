@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Databases;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ public class ItemData
         {
             if (string.IsNullOrEmpty(p_itemName) && !string.IsNullOrEmpty(baseID))
             {
-                return ItemDatabase.instance.GetItemData(baseID).itemName;
+                return Items.instance.GetItemData(baseID).itemName;
             }
             return p_itemName;
         }
@@ -36,7 +37,7 @@ public class ItemData
         {
             if (useBaseAesthetic && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).displayID;
+                return Pokemon.instance.GetPokemonData(baseID).displayID;
             }
             return string.IsNullOrEmpty(p_displayID) ? ID : p_displayID;
         }
@@ -53,7 +54,7 @@ public class ItemData
         {
             if (useBaseAesthetic && !string.IsNullOrEmpty(baseID))
             {
-                return ItemDatabase.instance.GetItemData(baseID).bagDisplayID;
+                return Items.instance.GetItemData(baseID).bagDisplayID;
             }
             return string.IsNullOrEmpty(p_bagDisplayID) ? p_displayID : p_bagDisplayID;
         }
@@ -73,7 +74,7 @@ public class ItemData
             if (combineBaseTags && !string.IsNullOrEmpty(baseID))
             {
                 HashSet<ItemTag> unionTags = new HashSet<ItemTag>(p_tags);
-                unionTags.UnionWith(ItemDatabase.instance.GetItemData(baseID).tags);
+                unionTags.UnionWith(Items.instance.GetItemData(baseID).tags);
                 return unionTags;
             }
             return p_tags;
@@ -98,7 +99,7 @@ public class ItemData
             {
                 List<EffectDatabase.ItemEff.ItemEffect> unionEffects = new List<EffectDatabase.ItemEff.ItemEffect>();
                 unionEffects.AddRange(p_effectsNew);
-                unionEffects.AddRange(ItemDatabase.instance.GetItemData(baseID).effectsNew);
+                unionEffects.AddRange(Items.instance.GetItemData(baseID).effectsNew);
                 return unionEffects;
             }
             return p_effectsNew;

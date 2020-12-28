@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Databases;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ public class AbilityData
         {
             if (string.IsNullOrEmpty(p_abilityName) && !string.IsNullOrEmpty(baseID))
             {
-                return AbilityDatabase.instance.GetAbilityData(baseID).abilityName;
+                return Abilities.instance.GetAbilityData(baseID).abilityName;
             }
             return p_abilityName;
         }
@@ -42,7 +43,7 @@ public class AbilityData
                 List<EffectDatabase.AbilityEff.AbilityEffect> unionEffects = 
                     new List<EffectDatabase.AbilityEff.AbilityEffect>();
                 unionEffects.AddRange(p_effectsNew);
-                unionEffects.AddRange(AbilityDatabase.instance.GetAbilityData(baseID).effectsNew);
+                unionEffects.AddRange(Abilities.instance.GetAbilityData(baseID).effectsNew);
                 return unionEffects;
             }
             return p_effectsNew;

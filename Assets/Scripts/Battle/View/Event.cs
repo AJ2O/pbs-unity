@@ -1,4 +1,5 @@
-﻿using PBS.Enums.Battle;
+﻿using PBS.Databases;
+using PBS.Enums.Battle;
 using PBS.Main.Team;
 using PBS.Main.Trainer;
 using System.Collections;
@@ -196,7 +197,7 @@ namespace PBS.Battle.View.Events
             public Moveslot() { }
             public Moveslot(string moveID)
             {
-                MoveData moveData = MoveDatabase.instance.GetMoveData(moveID);
+                MoveData moveData = Moves.instance.GetMoveData(moveID);
                 this.moveID = moveID;
                 this.PP = moveData.PP;
                 this.maxPP = moveData.PP;

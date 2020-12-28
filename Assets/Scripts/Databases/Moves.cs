@@ -3,33 +3,30 @@ using UnityEngine;
 
 namespace PBS.Databases
 {
-
-}
-
-public class MoveDatabase
-{
-    //create an object of SingleObject
-    private static MoveDatabase singleton = new MoveDatabase();
-
-    //make the constructor private so that this class cannot be
-    //instantiated
-    private MoveDatabase() { }
-
-    //Get the only object available
-    public static MoveDatabase instance
+    public class Moves
     {
-        get
-        {
-            return singleton;
-        }
-        private set
-        {
-            singleton = value;
-        }
-    }
+        //create an object of SingleObject
+        private static Moves singleton = new Moves();
 
-    // Database
-    private Dictionary<string, MoveData> database = new Dictionary<string, MoveData>
+        //make the constructor private so that this class cannot be
+        //instantiated
+        private Moves() { }
+
+        //Get the only object available
+        public static Moves instance
+        {
+            get
+            {
+                return singleton;
+            }
+            private set
+            {
+                singleton = value;
+            }
+        }
+
+        // Database
+        private Dictionary<string, MoveData> database = new Dictionary<string, MoveData>
     {
         // Null / Placeholder
         {"",
@@ -4047,7 +4044,7 @@ public class MoveDatabase
                 {
                     MoveTag.Snatchable,
                 },
-                
+
                 effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
                 {
                     new EffectDatabase.MoveEff.InflictStatus(
@@ -4077,7 +4074,7 @@ public class MoveDatabase
                 {
                     MoveTag.MakesContact
                 },
-                
+
                 effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
                 {
                     new EffectDatabase.MoveEff.StatStageMod(
@@ -4859,7 +4856,7 @@ public class MoveDatabase
                 {
 
                 },
-                
+
                 effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
                 {
                     new EffectDatabase.MoveEff.NaturalGift(),
@@ -6093,7 +6090,7 @@ public class MoveDatabase
                 {
                     MoveTag.Snatchable,
                 },
-                
+
                 effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
                 {
                     new EffectDatabase.MoveEff.InflictStatus(
@@ -6124,7 +6121,7 @@ public class MoveDatabase
                     MoveTag.IgnoreProtect,
                     MoveTag.Snatchable,
                 },
-                
+
                 effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
                 {
                     new EffectDatabase.MoveEff.Refresh(
@@ -7059,7 +7056,7 @@ public class MoveDatabase
                     MoveTag.SoundMove,
                     MoveTag.UncallableByMetronome,
                 },
-                
+
                 effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
                 {
                     new EffectDatabase.MoveEff.Snore(),
@@ -8023,7 +8020,7 @@ public class MoveDatabase
                 {
                     MoveTag.MakesContact,
                 },
-                
+
                 effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
                 {
                     new EffectDatabase.MoveEff.DoubleEdge(
@@ -9752,32 +9749,33 @@ public class MoveDatabase
 
     };
 
-    // Methods
-    public MoveData GetMoveData(string ID)
-    {
-        if (database.ContainsKey(ID))
+        // Methods
+        public MoveData GetMoveData(string ID)
         {
-            return database[ID];
-        }
-        Debug.LogWarning("Could not find move with ID: " + ID);
-        return database[""];
-    }
-
-    public List<string> GetMetronomeMoves()
-    {
-        List<string> moves = new List<string>(database.Keys);
-        List<string> validMoves = new List<string>();
-        for (int i = 0; i < moves.Count; i++)
-        {
-            MoveData moveData = GetMoveData(moves[i]);
-            if (!moveData.HasTag(MoveTag.UncallableCommon) 
-                && !moveData.HasTag(MoveTag.UncallableByMetronome)
-                && !moveData.HasTag(MoveTag.ZMove))
+            if (database.ContainsKey(ID))
             {
-                validMoves.Add(moves[i]);
+                return database[ID];
             }
+            Debug.LogWarning("Could not find move with ID: " + ID);
+            return database[""];
         }
-        return validMoves;
-    }
 
+        public List<string> GetMetronomeMoves()
+        {
+            List<string> moves = new List<string>(database.Keys);
+            List<string> validMoves = new List<string>();
+            for (int i = 0; i < moves.Count; i++)
+            {
+                MoveData moveData = GetMoveData(moves[i]);
+                if (!moveData.HasTag(MoveTag.UncallableCommon)
+                    && !moveData.HasTag(MoveTag.UncallableByMetronome)
+                    && !moveData.HasTag(MoveTag.ZMove))
+                {
+                    validMoves.Add(moves[i]);
+                }
+            }
+            return validMoves;
+        }
+
+    }
 }
