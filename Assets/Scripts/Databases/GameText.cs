@@ -1,4 +1,5 @@
-﻿using PBS.Main.Pokemon;
+﻿using PBS.Data;
+using PBS.Main.Pokemon;
 using PBS.Main.Team;
 using PBS.Main.Trainer;
 using System.Collections.Generic;
@@ -29,11 +30,11 @@ namespace PBS.Databases
         }
 
         // Database
-        private Dictionary<string, GameTextData> database = new Dictionary<string, GameTextData>
+        private Dictionary<string, PBS.Data.GameText> database = new Dictionary<string, PBS.Data.GameText>
     {
         // Null / Placeholder
         {"",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -44,7 +45,7 @@ namespace PBS.Databases
         // BATTLE MESSAGES
 
         {"bpc-run-trainer",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "bpc-run-trainer",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -52,7 +53,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"bpc-switch-unable",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "bpc-switch-unable",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -60,7 +61,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"bpc-switch-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "bpc-switch-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -68,7 +69,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"bpc-switch-already-switch",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "bpc-switch-already-switch",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -76,7 +77,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"bpc-mega-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "bpc-mega-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -84,7 +85,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"bpc-zmove-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "bpc-zmove-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -92,7 +93,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"bpc-dynamax-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "bpc-dynamax-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -102,7 +103,7 @@ namespace PBS.Databases
                 
         // TRAINER GENERAL
         {"trainer-perspective-player",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "team-perspective-player",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -110,7 +111,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"trainer-perspective-player-poss",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "trainer-perspective-player-poss",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -118,7 +119,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"trainer-perspective-ally",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "trainer-perspective-ally",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -126,7 +127,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"trainer-perspective-opposing",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "trainer-perspective-opposing",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -136,7 +137,7 @@ namespace PBS.Databases
         
         // TEAM GENERAL
         {"team-perspective-player",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "team-perspective-player",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -144,7 +145,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"team-perspective-ally",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "team-perspective-ally",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -152,7 +153,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"team-perspective-opposing",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "team-perspective-opposing",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -163,7 +164,7 @@ namespace PBS.Databases
         // POKEMON GENERAL
 
         {"pokemon-ability-gain",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-ability-gain",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -171,7 +172,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"pokemon-ability-lost",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-ability-lost",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -180,7 +181,7 @@ namespace PBS.Databases
                 ) },
 
         {"pokemon-changeform",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-changeform",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -188,7 +189,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"pokemon-changetype",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-changetype",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -197,7 +198,7 @@ namespace PBS.Databases
                 ) },
 
         {"pokemon-choiced",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-choiced",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -206,7 +207,7 @@ namespace PBS.Databases
                 ) },
 
         {"pokemon-damage",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-damage",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -215,7 +216,7 @@ namespace PBS.Databases
                 ) },
 
         {"pokemon-dynamax",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-dynamax",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -223,7 +224,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"pokemon-dynamax-wild",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-dynamax-wild",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -231,7 +232,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"pokemon-dynamax-form",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-dynamax-form",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -239,7 +240,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"pokemon-dynamax-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-dynamax-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -248,7 +249,7 @@ namespace PBS.Databases
                 ) },
 
         {"pokemon-faint",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-faint",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -257,7 +258,7 @@ namespace PBS.Databases
                 ) },
 
         {"pokemon-forcein",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-forcein",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -266,7 +267,7 @@ namespace PBS.Databases
                 ) },
 
         {"pokemon-gigantamax",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-gigantamax",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -275,7 +276,7 @@ namespace PBS.Databases
                 ) },
 
         {"pokemon-heal",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-heal",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -283,7 +284,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"pokemon-heal-hp",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-heal-hp",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -292,7 +293,7 @@ namespace PBS.Databases
                 ) },
 
         {"pokemon-heal-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-heal-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -300,7 +301,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"pokemon-megaevolve",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-megaevolve",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -308,7 +309,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"pokemon-megaevolve-form",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-megaevolve-form",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -316,7 +317,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"pokemon-revive",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-revive",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -324,7 +325,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"pokemon-run",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-run",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -332,7 +333,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"pokemon-run-trap",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-run-trap",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -340,7 +341,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"pokemon-run-ingrain",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-run-ingrain",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -348,7 +349,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"pokemon-switch-ingrain",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-switch-ingrain",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -357,7 +358,7 @@ namespace PBS.Databases
                 ) },
 
         {"pokemon-unaffect",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-unaffect",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -366,7 +367,7 @@ namespace PBS.Databases
                 ) },
 
         {"pokemon-use-move",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "pokemon-use-move",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -377,7 +378,7 @@ namespace PBS.Databases
         // ABILITIES
 
         {"ability-airlock",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-airlock",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -386,7 +387,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-anticipation",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-anticipation",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -395,7 +396,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-aurabreak",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-aurabreak",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -404,7 +405,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-baddreams",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-baddreams",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -413,7 +414,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-ballfetch",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-ballfetch",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -422,7 +423,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-battlebond",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-battlebond",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -430,7 +431,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"ability-battlebond-form",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-battlebond-form",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -439,7 +440,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-clearbody",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-clearbody",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -448,7 +449,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-colorchange",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-colorchange",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -457,7 +458,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-darkaura",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-darkaura",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -466,7 +467,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-disguise",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-disguise",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -475,7 +476,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-forewarn",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-forewarn",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -484,7 +485,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-frisk",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-frisk",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -493,7 +494,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-gulpmissile",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-gulpmissile",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -502,7 +503,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-harvest",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-harvest",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -511,7 +512,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-hypercutter",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-hypercutter",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -520,7 +521,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-illusion",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-illusion",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -529,7 +530,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-magicbounce",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-magicbounce",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -538,7 +539,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-magician",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-magician",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -547,7 +548,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-mirrorarmor-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-mirrorarmor-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -556,7 +557,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-moldbreaker",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-moldbreaker",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -565,7 +566,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-mummy",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-mummy",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -574,7 +575,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-neautralizinggas",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-neautralizinggas",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -583,7 +584,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-oblivious",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-oblivious",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -592,7 +593,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-pickup",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-pickup",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -601,7 +602,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-powerofalchemy",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-powerofalchemy",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -610,7 +611,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-pressure",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-pressure",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -619,7 +620,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-protean",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-protean",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -628,7 +629,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-quickdraw",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-quickdraw",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -637,7 +638,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-ripen",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-ripen",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -646,7 +647,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-runaway",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-runaway",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -655,7 +656,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-shadowtag",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-shadowtag",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -664,7 +665,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-slowstart",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-slowstart",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -673,7 +674,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-sturdy",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-sturdy",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -682,7 +683,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-symbiosis",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-symbiosis",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -691,7 +692,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-teravolt",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-teravolt",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -700,7 +701,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-trace",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-trace",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -709,7 +710,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-truant",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-truant",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -718,7 +719,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-turboblaze",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-turboblaze",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -727,7 +728,7 @@ namespace PBS.Databases
                 ) },
 
         {"ability-wanderingspirit",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-wanderingspirit",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -737,7 +738,7 @@ namespace PBS.Databases
 
         // Item-Related
         {"ability-unnerve-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-unnerve-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -747,7 +748,7 @@ namespace PBS.Databases
 
         // Protection
         {"ability-sturdy-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "ability-sturdy-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -757,7 +758,7 @@ namespace PBS.Databases
 
         // ITEMS
         {"item-consume-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "item-consume-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -766,7 +767,7 @@ namespace PBS.Databases
                 ) },
 
         {"item-focusband",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "item-focusband",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -775,7 +776,7 @@ namespace PBS.Databases
                 ) },
 
         {"item-focusband-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "item-focusband-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -784,7 +785,7 @@ namespace PBS.Databases
                 ) },
 
         {"item-lifeorb",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "item-lifeorb",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -793,7 +794,7 @@ namespace PBS.Databases
                 ) },
 
         {"item-quickclaw",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "item-quickclaw",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -802,7 +803,7 @@ namespace PBS.Databases
                 ) },
 
         {"item-typeberry-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "item-typeberry-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -811,7 +812,7 @@ namespace PBS.Databases
                 ) },
 
         {"item-use",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "item-use",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -820,7 +821,7 @@ namespace PBS.Databases
                 ) },
 
         {"item-use-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "item-use-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -828,7 +829,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"item-use-fail-battle",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "item-use-fail-battle",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -836,7 +837,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"item-use-fail-notenough",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "item-use-fail-notenough",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -844,7 +845,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"item-use-fail-ranout",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "item-use-fail-ranout",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -854,7 +855,7 @@ namespace PBS.Databases
 
         // MOVES
         {"move-FAIL-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-FAIL-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -862,7 +863,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-FAIL-effect",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-FAIL-effect",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -870,7 +871,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-FAIL-form",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-FAIL-form",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -878,7 +879,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-FAIL-pokemon",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-FAIL-pokemon",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -886,7 +887,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-noeffect-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-noeffect-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -894,7 +895,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-noeffect-multi-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-noeffect-multi-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -902,7 +903,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-struggle",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-struggle",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -911,7 +912,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-absorb",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-absorb",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -920,7 +921,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-allyswitch",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-allyswitch",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -929,7 +930,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-aquaring",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-aquaring",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -937,7 +938,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-aquaring-heal",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-aquaring-heal",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -946,7 +947,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-auroraveil",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-auroraveil",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -955,7 +956,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-burnup",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-burnup",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -963,7 +964,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-burnup-all",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-burnup-all",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -972,7 +973,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-coreenforcer",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-coreenforcer",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -981,7 +982,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-coreenforcer-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-coreenforcer-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -990,7 +991,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-corrosivegas",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-corrosivegas",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -999,7 +1000,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-covet",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-covet",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1008,7 +1009,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-doubleedge",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-doubleedge",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1017,7 +1018,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-endure",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-endure",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1025,7 +1026,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-endure-success",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-endure-success",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1034,7 +1035,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-feint",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-feint-protect-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1042,7 +1043,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-feint-matblock",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-feint-matblock-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1051,7 +1052,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-forestscurse",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-forestscurse",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1059,7 +1060,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-forestscurse-all",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-forestscurse-all",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1067,7 +1068,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-forestscurse-loss",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-forestscurse-loss",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1076,7 +1077,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-gmaxsteelsurge",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-gmaxsteelsurge",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1084,7 +1085,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-gmaxsteelsurge-damage",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-gmaxsteelsurge-damage",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1092,7 +1093,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-gmaxsteelsurge-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-gmaxsteelsurge-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1100,7 +1101,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-gmaxsteelsurge-remove",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-gmaxsteelsurge-remove",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1109,7 +1110,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-guardsplit",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-guardsplit",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1118,7 +1119,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-haze",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-haze",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1126,7 +1127,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-haze-pokemon",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-haze-pokemon",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1134,7 +1135,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-haze-team",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-haze-team",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1143,7 +1144,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-ingrain",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-ingrain",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1151,7 +1152,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-ingrain-heal",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-ingrain-heal",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1160,7 +1161,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-knockoff",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-knockoff",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1169,7 +1170,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-lightscreen",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-lightscreen",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1178,7 +1179,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-lockon",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-lockon",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1186,7 +1187,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-lockon-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-lockon-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1194,7 +1195,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-lockon-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-lockon-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1203,7 +1204,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-luckychant",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-luckychant",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1211,7 +1212,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-luckychant-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-luckychant-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1219,7 +1220,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-luckychant-remove",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-luckychant-remove",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1228,7 +1229,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-magiccoat",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-magiccoat",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1237,7 +1238,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-magnitude",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-magnitude",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1246,7 +1247,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-matblock",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-matblock",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1254,7 +1255,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-matblock-success",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-matblock-success",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1263,7 +1264,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-mist",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-mist",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1271,7 +1272,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-mist-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-mist-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1279,7 +1280,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-mist-protect",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-mist-protect",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1287,7 +1288,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-mist-remove",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-mist-remove",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1296,7 +1297,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-poltergeist",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-poltergeist",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1305,7 +1306,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-powersplit",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-powersplit",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1314,7 +1315,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-powerswap",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-powerswap",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1323,7 +1324,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-protect",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-protect",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1331,7 +1332,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-protect-success",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-protect-success",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1340,7 +1341,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-powertrick",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-powertrick",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1349,7 +1350,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-reflect-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-reflect-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1357,7 +1358,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-reflect",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-reflect",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1365,7 +1366,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-reflect-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-reflect-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1373,7 +1374,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-reflect-remove",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-reflect-remove",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1382,7 +1383,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-refresh-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-refresh-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1391,7 +1392,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-roleplay",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-roleplay",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1400,7 +1401,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-safeguard",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-safeguard",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1408,7 +1409,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-safeguard-protect",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-safeguard-protect",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1416,7 +1417,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-safeguard-remove",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-safeguard-remove",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1425,7 +1426,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-skillswap",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-skillswap",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1434,7 +1435,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-soak",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-soak",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1442,7 +1443,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-soak-all",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-soak-all",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1451,7 +1452,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-spikes",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-spikes",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1459,7 +1460,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-spikes-damage",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-spikes-damage",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1467,7 +1468,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-spikes-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-spikes-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1475,7 +1476,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-spikes-remove",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-spikes-remove",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1484,7 +1485,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-spikyshield",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-spikyshield",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1493,7 +1494,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-stealthrock",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-stealthrock",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1501,7 +1502,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-stealthrock-damage",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-stealthrock-damage",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1509,7 +1510,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-stealthrock-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-stealthrock-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1517,7 +1518,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-stealthrock-remove",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-stealthrock-remove",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1526,7 +1527,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-steelroller",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-steelroller",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1535,7 +1536,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-stickyweb",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-stickyweb",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1543,7 +1544,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-stickyweb-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-stickyweb-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1551,7 +1552,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-stickyweb-remove",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-stickyweb-remove",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1560,7 +1561,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-toxicspikes",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-toxicspikes",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1568,7 +1569,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-toxicspikes-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-toxicspikes-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1576,7 +1577,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-toxicspikes-remove",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-toxicspikes-remove",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1585,7 +1586,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-whirlwind",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-whirlwind",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1593,7 +1594,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-whirlwind-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-whirlwind-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1602,7 +1603,7 @@ namespace PBS.Databases
                 ) },
 
         {"zmove-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "zmove-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1610,7 +1611,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"zmove-use",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "zmove-use",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1618,7 +1619,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"zmove-protect",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "zmove-protect",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1627,7 +1628,7 @@ namespace PBS.Databases
                 ) },
 
         {"gmax-wildfire",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "gmax-wildfire",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1635,7 +1636,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"gmax-wildfire-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "gmax-wildfire-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1643,7 +1644,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"gmax-wildfire-damage",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "gmax-wildfire-damage",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1652,7 +1653,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-worryseed-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-worryseed-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1662,7 +1663,7 @@ namespace PBS.Databases
                 
         // STATUS
         {"status-electrify",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-electrify",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1671,7 +1672,7 @@ namespace PBS.Databases
                 ) },
 
         {"status-flinch",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-flinch",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1679,7 +1680,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-flinch-blink",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-flinch-blink",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1688,7 +1689,7 @@ namespace PBS.Databases
                 ) },
 
         {"status-identification",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-identification",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1696,7 +1697,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-identification-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-identification-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1705,7 +1706,7 @@ namespace PBS.Databases
                 ) },
 
         {"status-imprison",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-imprison",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1713,7 +1714,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-imprison-negate",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-imprison-negate",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1721,7 +1722,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-imprison-choose",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-imprison-choose",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1730,7 +1731,7 @@ namespace PBS.Databases
                 ) },
 
         {"status-infatuation",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-infatuation",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1738,7 +1739,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-infatuation-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-infatuation-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1746,7 +1747,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-infatuation-move",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-infatuation-move",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1754,7 +1755,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-infatuation-movefail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-infatuation-movefail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1762,7 +1763,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-infatuation-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-infatuation-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1770,7 +1771,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-infatuation-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-infatuation-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1779,7 +1780,7 @@ namespace PBS.Databases
                 ) },
 
         {"status-perishsong",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-perishsong",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1787,7 +1788,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-perishsong-count",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-perishsong-count",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1796,7 +1797,7 @@ namespace PBS.Databases
                 ) },
 
         {"status-tarshot",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-tarshot",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1805,7 +1806,7 @@ namespace PBS.Databases
                 ) },
 
         {"status-yawn",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-yawn",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1813,7 +1814,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-yawn-wait",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-yawn-wait",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1824,7 +1825,7 @@ namespace PBS.Databases
 
         // Call other moves
         {"move-naturepower-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-naturepower-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1834,7 +1835,7 @@ namespace PBS.Databases
 
         // Damage Multipliers
         {"move-helpinghand-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-helpinghand-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1844,7 +1845,7 @@ namespace PBS.Databases
 
         // Health-Related
         {"move-aromatherapy",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-aromatherapy",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1852,7 +1853,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-healbell",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-healbell",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1861,7 +1862,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-hpdrain-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-hpdrain-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1870,7 +1871,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-jumpkick-fail-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-jumpkick-fail-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1878,7 +1879,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-jumpkick-fail-jumpkick",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-jumpkick-fail-jumpkick",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1887,7 +1888,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-leechseed-seed-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-leechseed-seed-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1895,7 +1896,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-leechseed-drain-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-leechseed-drain-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1903,7 +1904,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-leechseed-fail-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-leechseed-fail-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1912,7 +1913,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-recoil-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-recoil-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1921,7 +1922,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-recover-success-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-recover-succcess-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1929,7 +1930,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-recover-fail-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-recover-fail-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1938,7 +1939,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-rest-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-rest-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1947,7 +1948,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-wish-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-wish-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1955,7 +1956,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-wish-heal",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-wish-heal",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1963,7 +1964,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-wish-heal-healingwish",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-wish-heal-healingwish",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1971,7 +1972,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-wish-heal-lunardance",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-wish-heal-lunardance",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1981,7 +1982,7 @@ namespace PBS.Databases
 
         // Item-Related
         {"move-bestow-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-bestow-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1990,7 +1991,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-bugbite-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-bugbite-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -1999,7 +2000,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-covet-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-covet-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2008,7 +2009,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-embargo-begin-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-embargo-begin-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2016,7 +2017,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-embargo-end-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-embargo-end-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2024,7 +2025,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-embargo-attempt-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-embargo-attempt-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2033,7 +2034,7 @@ namespace PBS.Databases
                 ) },
 
          {"move-fling-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-fling-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2042,7 +2043,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-incinerate-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-incinerate-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2051,7 +2052,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-knockoff-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-knockoff-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2060,7 +2061,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-recycle-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-recycle-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2069,7 +2070,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-teatime-fail-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-recycle-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2078,7 +2079,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-trick-start-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-trick-start-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2086,7 +2087,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-trick-swap-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-trick-swap-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2096,7 +2097,7 @@ namespace PBS.Databases
 
         // Multi-turn moves
         {"move-charge-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-charge-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2104,7 +2105,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-charge-bounce",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-charge-bounce",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2112,7 +2113,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-charge-dig",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-charge-dig",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2120,7 +2121,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-charge-dive",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-charge-dive",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2128,7 +2129,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-charge-fly",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-charge-fly",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2136,7 +2137,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-charge-freezeshock",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-charge-freezeshock",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2144,7 +2145,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-charge-geomancy",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-charge-geomancy",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2152,7 +2153,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-charge-iceburn",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-charge-iceburn",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2160,7 +2161,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-charge-phantomforce",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-charge-phantomforce",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2168,7 +2169,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-charge-razorwind",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-charge-razorwind",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2176,7 +2177,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-charge-shadowforce",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-charge-shadowforce",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2184,7 +2185,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-charge-skullbash",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-charge-skullbash",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2192,7 +2193,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-charge-skyattack",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-charge-skyattack",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2200,7 +2201,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-charge-solarbeam",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-charge-solarbeam",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2209,7 +2210,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-futuresight-start-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-futuresight-start-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2217,7 +2218,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-futuresight-attack-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-futuresight-attack-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2225,7 +2226,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-futuresight-start-doomdesire",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-futuresight-start-doomdesire",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2234,7 +2235,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-skydrop-grab-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-skydrop-grab-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2242,7 +2243,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-skydrop-free-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-skydrop-free-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2250,7 +2251,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-skydrop-trap-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-skydrop-trap-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2259,7 +2260,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-recharge-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-recharge-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2268,7 +2269,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-bide-store-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-bide-store-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2276,7 +2277,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-bide-end-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-bide-end-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2287,7 +2288,7 @@ namespace PBS.Databases
         // Protection
 
         {"move-endure-start-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-endure-start-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2295,7 +2296,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-endure-success-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-endure-success-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2304,7 +2305,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-feint-protect-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-feint-protect-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2312,7 +2313,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-feint-matblock-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-feint-matblock-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2321,7 +2322,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-matblock-start-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-matblock-start-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2329,7 +2330,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-matblock-success-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-matblock-success-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2338,7 +2339,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-protect-start-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-protect-start-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2346,7 +2347,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-protect-success-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-protect-success-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2355,7 +2356,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-spikyshield-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-spikyshield-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2366,7 +2367,7 @@ namespace PBS.Databases
         // Stat Change-Related
 
         {"move-rage-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-rage-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2375,7 +2376,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-spectralthief-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-spectralthief-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2386,7 +2387,7 @@ namespace PBS.Databases
         // Status-Related
 
         {"move-beakblast-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-beakblast-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2395,7 +2396,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-bind-start-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-bind-start-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2403,7 +2404,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-bind-end-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-bind-end-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2411,7 +2412,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-bind-damage-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-bind-damage-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2419,7 +2420,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-bind-trap-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-bind-trap-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2428,7 +2429,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-bind-start-firespin",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-bind-start-firespin",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2436,7 +2437,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-bind-damage-firespin",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-bind-damage-firespin",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2445,7 +2446,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-bind-start-wrap",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-bind-start-wrap",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2453,7 +2454,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-bind-end-wrap",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-bind-end-wrap",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2462,7 +2463,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-block-start-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-block-start-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2470,7 +2471,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-block-fail-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-block-fail-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2478,7 +2479,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-block-trap-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-block-trap-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2487,7 +2488,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-disable-attempt-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-disable-attempt-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2495,7 +2496,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-disable-start-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-disable-start-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2503,7 +2504,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-disable-end-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-disable-end-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2511,7 +2512,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-disable-already-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-disable-already-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2519,7 +2520,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-disable-fail-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-disable-fail-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2528,7 +2529,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-encore-start-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-encore-start-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2536,7 +2537,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-encore-end-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-encore-end-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2544,7 +2545,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-encore-attempt-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-encore-attempt-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2552,7 +2553,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-encore-already-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-encore-already-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2560,7 +2561,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-encore-fail-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-encore-already-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2569,7 +2570,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-healblock-start-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-healblock-start-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2577,7 +2578,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-healblock-end-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-healblock-end-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2585,7 +2586,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-healblock-attempt-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-healblock-attempt-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2593,7 +2594,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-healblock-already-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-healblock-already-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2601,7 +2602,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-healblock-fail-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-healblock-already-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2610,7 +2611,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-taunt-start-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-taunt-start-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2618,7 +2619,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-taunt-end-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-taunt-end-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2626,7 +2627,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-taunt-attempt-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-taunt-attempt-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2634,7 +2635,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-taunt-already-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-taunt-already-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2642,7 +2643,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-taunt-fail-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-taunt-already-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2651,7 +2652,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-torment-start-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-torment-start-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2659,7 +2660,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-torment-end-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-torment-end-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2667,7 +2668,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-torment-attempt-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-torment-attempt-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2675,7 +2676,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-torment-already-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-torment-already-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2683,7 +2684,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-torment-fail-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-torment-already-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2692,7 +2693,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-uproar-start-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-uproar-start-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2700,7 +2701,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-uproar-end-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-uproar-start-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2708,7 +2709,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-uproar-sleep-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-uproar-sleep-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2719,7 +2720,7 @@ namespace PBS.Databases
         // Type-Related
 
         {"move-powder-start-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-powder-start-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2727,7 +2728,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-powder-damage-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-powder-damage-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2736,7 +2737,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-smackdown-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-smackdown-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2746,7 +2747,7 @@ namespace PBS.Databases
 
         // Misc.
         {"move-afteryou-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-afteryou-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2754,7 +2755,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-celebrate",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-celebrate",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2762,7 +2763,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-destinybond-start-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-destinybond-start-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2770,7 +2771,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-destinybond-success-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-destinybond-success-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2778,7 +2779,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-focuspunch-charge-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-focuspunch-charge-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2786,7 +2787,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-focuspunch-fail-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-focuspunch-fail-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2795,7 +2796,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-followme-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-followme-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2804,7 +2805,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-holdhands-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-holdhands-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2813,7 +2814,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-magiccoat-magiccoat",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-magiccoat-magiccoat",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2821,7 +2822,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-magiccoat-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-magiccoat-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2830,7 +2831,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-quash-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-quash-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2839,7 +2840,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-thrash-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-thrash-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2848,7 +2849,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-mimic-success-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-mimic-success-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2857,7 +2858,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-shelltrap-charge-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-shelltrap-charge-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2865,7 +2866,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-shelltrap-fail-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-shelltrap-fail-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2874,7 +2875,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-sketch-success-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-sketch-success-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2883,7 +2884,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-snatch-wait-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-snatch-wait-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2891,7 +2892,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-snatch-success-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-snatch-success-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2900,7 +2901,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-substitute-create-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-substitute-create-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2908,7 +2909,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-substitute-destroy-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-substitute-destroy-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2916,7 +2917,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-substitute-already-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-substitute-already-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2924,7 +2925,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-substitute-fail-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-substitute-fail-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2932,7 +2933,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-substitute-block-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-substitute-block-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2940,7 +2941,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-substitute-damage-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-substitute-damage-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2949,7 +2950,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-transform-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-transform-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2958,7 +2959,7 @@ namespace PBS.Databases
                 ) },
 
         {"move-whirlwind-out-whirlwind",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-whirlwind-out-whirlwind",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2966,7 +2967,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-whirlwind-in-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-whirlwind-in-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2974,7 +2975,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-whirlwind-out-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-whirlwind-out-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2982,7 +2983,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"move-whirlwind-fail-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "move-whirlwind-fail-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -2994,7 +2995,7 @@ namespace PBS.Databases
 
         // Stat names
         {"stat-hp",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "stat-hp",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3002,7 +3003,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"stat-attack",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "stat-attack",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3010,7 +3011,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"stat-defense",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "stat-defense",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3018,7 +3019,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"stat-special-attack",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "stat-special-attack",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3026,7 +3027,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"stat-special-defense",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "stat-special-defense",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3034,7 +3035,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"stat-speed",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "stat-speed",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3042,7 +3043,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"stat-accuracy",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "stat-accuracy",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3050,7 +3051,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"stat-evasion",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "stat-evasion",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3060,7 +3061,7 @@ namespace PBS.Databases
 
         // Stat stage changes
         {"stats-up1",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "stats-up1",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3068,7 +3069,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"stats-up2",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "stats-up2",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3076,7 +3077,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"stats-up3",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "stats-up3",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3084,7 +3085,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"stats-down1",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "stats-down1",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3092,7 +3093,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"stats-down2",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "stats-down2",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3100,7 +3101,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"stats-down3",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "stats-down3",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3108,7 +3109,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"stats-maximize",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "stats-maximize",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3116,7 +3117,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"stats-minimize",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "stats-minimize",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3124,7 +3125,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"stats-max",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "stats-max",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3132,7 +3133,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"stats-min",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "stats-min",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3144,7 +3145,7 @@ namespace PBS.Databases
 
         // default
         {"status-inflict-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-inflict-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3152,7 +3153,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-heal-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-heal-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3160,7 +3161,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-item-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-item-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3168,7 +3169,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-already-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-already-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3176,7 +3177,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-fail-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-fail-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3184,7 +3185,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-hploss-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-hploss-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3192,7 +3193,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-flinch-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-flinch-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3200,7 +3201,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-free-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-free-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3208,7 +3209,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-sleep",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-sleep",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3216,7 +3217,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-sleep-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-sleep-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3224,7 +3225,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-freeze",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-freeze",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3232,7 +3233,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-freeze-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-freeze-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3240,7 +3241,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-paralysis",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-paralysis",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3248,7 +3249,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-trap-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-trap-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3256,7 +3257,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-confusion-idle",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-confusion-idle",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3264,7 +3265,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-confusion-hit",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-confusion-hit",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3274,7 +3275,7 @@ namespace PBS.Databases
 
         // Burn
         {"status-burn-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-burn-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3282,7 +3283,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"statu-burn-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-burn-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3290,7 +3291,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-item-burn",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-item-burn",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3298,7 +3299,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-burn-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-burn-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3306,7 +3307,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"statu-burn-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-burn-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3314,7 +3315,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-burn-hploss",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-burn-hploss",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3324,7 +3325,7 @@ namespace PBS.Databases
 
         // Freeze
         {"status-freeze-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-freeze-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3332,7 +3333,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-freeze-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-freeze-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3340,7 +3341,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-item-freeze",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-item-freeze",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3348,7 +3349,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-freeze-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-freeze-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3358,7 +3359,7 @@ namespace PBS.Databases
 
         // Paralysis
         {"status-paralysis-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-paralysis-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3366,7 +3367,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-paralysis-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-paralysis-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3374,7 +3375,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-item-paralysis",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-item-paralysis",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3382,7 +3383,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-paralysis-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-paralysis-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3390,7 +3391,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-paralysis-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-paralysis-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3400,7 +3401,7 @@ namespace PBS.Databases
 
         // Poison
         {"status-poison-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-poison-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3408,7 +3409,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-poison-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-poison-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3416,7 +3417,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-item-poison",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-item-poison",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3424,7 +3425,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-poison-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-poison-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3432,7 +3433,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-poison-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-poison-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3440,7 +3441,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-poison-hploss",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-poison-hploss",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3450,7 +3451,7 @@ namespace PBS.Databases
 
         // Sleep
         {"status-sleep-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-sleep-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3458,7 +3459,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-sleep-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-sleep-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3466,7 +3467,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-item-sleep",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-item-sleep",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3474,7 +3475,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-sleep-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-sleep-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3482,7 +3483,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-sleep-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-sleep-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3492,7 +3493,7 @@ namespace PBS.Databases
 
         // Toxic
         {"status-toxic-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-toxic-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3502,7 +3503,7 @@ namespace PBS.Databases
 
         // Bind
         {"status-inflict-bound",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-inflict-bound",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3510,7 +3511,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-hploss-bound",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-hploss-bound",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3520,7 +3521,7 @@ namespace PBS.Databases
 
         // Confusion
         {"status-inflict-confusion",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-inflict-confusion",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3528,7 +3529,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-heal-confusion",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-heal-confusion",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3536,7 +3537,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-item-confusion",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-item-confusion",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3544,7 +3545,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-already-confusion",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-already-confusion",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3554,7 +3555,7 @@ namespace PBS.Databases
 
         // Disable
         {"status-disable-attempt",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-disable-attempt",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3562,7 +3563,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-disable-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-disable-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3570,7 +3571,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-disable-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-disable-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3578,7 +3579,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-disable-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-disable-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3586,7 +3587,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-disable-use-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-disable-use-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3594,7 +3595,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-disable-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-disable-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3604,7 +3605,7 @@ namespace PBS.Databases
 
         // Encore
         {"status-encore-attempt",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-encore-attempt",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3612,7 +3613,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-encore-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-encore-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3620,7 +3621,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-encore-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-encore-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3628,7 +3629,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-encore-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-encore-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3636,7 +3637,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-encore-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-encore-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3646,7 +3647,7 @@ namespace PBS.Databases
                 
         // Heal Block
         {"status-healblock-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-healblock-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3654,7 +3655,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-healblock-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-healblock-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3662,7 +3663,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-healblock-attempt",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-healblock-attempt",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3670,7 +3671,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-healblock-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-healblock-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3678,7 +3679,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-healblock-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-healblock-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3688,7 +3689,7 @@ namespace PBS.Databases
                 
         // Taunt
         {"status-taunt-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-taunt-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3696,7 +3697,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-taunt-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-taunt-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3704,7 +3705,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-taunt-attempt",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-taunt-attempt",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3712,7 +3713,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-taunt-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-taunt-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3720,7 +3721,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-taunt-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-taunt-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3730,7 +3731,7 @@ namespace PBS.Databases
                 
         // Torment
         {"status-torment-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-torment-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3738,7 +3739,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-torment-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-torment-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3746,7 +3747,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-torment-attempt",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-torment-attempt",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3754,7 +3755,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-torment-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-torment-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3762,7 +3763,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"status-torment-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "status-torment-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3772,7 +3773,7 @@ namespace PBS.Databases
 
         // TEAM CONDITIONS
         {"team-status-inflict-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "team-status-inflict-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3780,7 +3781,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"team-status-heal-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "team-status-heal-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3788,7 +3789,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"team-status-already-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "team-status-already-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3798,7 +3799,7 @@ namespace PBS.Databases
                 
         // Aurora Veil
         {"tStatus-auroraveil-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "tStatus-auroraveil-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3806,7 +3807,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"tStatus-auroraveil-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "tStatus-auroraveil-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3814,7 +3815,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"tStatus-auroraveil-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "tStatus-auroraveil-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3822,7 +3823,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"tStatus-auroraveil-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "tStatus-auroraveil-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3832,7 +3833,7 @@ namespace PBS.Databases
                 
         // Light Screen
         {"tStatus-lightscreen-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "tStatus-lightscreen-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3840,7 +3841,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"tStatus-lightscreen-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "tStatus-lightscreen-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3848,7 +3849,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"tStatus-lightscreen-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "tStatus-lightscreen-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3856,7 +3857,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"tStatus-lightscreen-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "tStatus-lightscreen-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3866,7 +3867,7 @@ namespace PBS.Databases
                 
         // Reflect
         {"tStatus-reflect-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "tStatus-lightscreen-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3874,7 +3875,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"tStatus-reflect-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "tStatus-reflect-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3882,7 +3883,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"tStatus-reflect-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "tStatus-reflect-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3890,7 +3891,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"tStatus-reflect-fail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "tStatus-reflect-fail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3900,7 +3901,7 @@ namespace PBS.Databases
 
         // Mist
         {"team-status-inflict-mist",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "team-status-inflict-mist",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3908,7 +3909,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"team-status-heal-mist",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "team-status-heal-mist",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3916,7 +3917,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"team-status-mist-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "team-status-mist-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3924,7 +3925,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"team-status-already-mist",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "team-status-already-mist",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3933,7 +3934,7 @@ namespace PBS.Databases
                 ) },
 
         {"team-status-mist-test",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "team-status-mist-test",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3944,7 +3945,7 @@ namespace PBS.Databases
         // BATTLE CONDITIONS
         // default
         {"battle-status-inflict-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "battle-status-inflict-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3952,7 +3953,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"battle-status-nature-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "battle-status-nature-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3960,7 +3961,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"battle-status-heal-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "battle-status-heal-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3968,7 +3969,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"bStatus-default-hploss",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "battle-status-hploss-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3976,7 +3977,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"battle-status-strongwinds",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "battle-status-strongwinds",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3984,7 +3985,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"battle-status-already-default",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "battle-status-already-default",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -3994,7 +3995,7 @@ namespace PBS.Databases
 
         // MOVES
         {"battle-status-inflict-iondeluge",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "battle-status-inflict-iondeluge",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4004,7 +4005,7 @@ namespace PBS.Databases
 
         // GRAVITY
         {"bStatus-gravity-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "bStatus-gravity-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4012,7 +4013,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"bStatus-gravity-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "bStatus-gravity-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4020,7 +4021,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"bStatus-gravity-intensify",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "bStatus-gravity-intensify",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4028,7 +4029,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"bStatus-gravity-movefail",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "bStatus-gravity-movefail",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4038,7 +4039,7 @@ namespace PBS.Databases
 
         // ROOMS
         {"bStatus-magicroom-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "bStatus-magicroom-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4046,7 +4047,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"bStatus-magicroom-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "bStatus-magicroom-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4055,7 +4056,7 @@ namespace PBS.Databases
                 ) },
 
         {"battle-status-inflict-trickroom",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "battle-status-inflict-trickroom",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4063,7 +4064,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"battle-status-heal-trickroom",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "battle-status-heal-trickroom",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4072,7 +4073,7 @@ namespace PBS.Databases
                 ) },
 
         {"battle-status-inflict-wonderroom",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "battle-status-inflict-wonderroom",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4080,7 +4081,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"battle-status-heal-wonderroom",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "battle-status-heal-wonderroom",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4092,7 +4093,7 @@ namespace PBS.Databases
 
         // Electric Terrain
         {"terrain-electricterrain-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-electricterrain-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4100,7 +4101,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"terrain-electricterrain-nature",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-electricterrain-nature",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4108,7 +4109,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"terrain-electricterrain-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-electricterrain-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4116,7 +4117,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"terrain-electricterrain-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-electricterrain-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4124,7 +4125,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"terrain-electricterrain-block",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-electricterrain-block",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4134,7 +4135,7 @@ namespace PBS.Databases
         
         // Grassy Terrain
         {"terrain-grassyterrain-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-grassyterrain-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4142,7 +4143,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"terrain-grassyterrain-nature",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-grassyterrain-nature",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4150,7 +4151,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"terrain-grassyterrain-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-grassyterrain-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4158,7 +4159,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"terrain-grassyterrain-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-grassyterrain-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4166,7 +4167,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"terrain-grassyterrain-heal",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-grassyterrain-heal",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4176,7 +4177,7 @@ namespace PBS.Databases
                 
         // Misty Terrain
         {"terrain-mistyterrain-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-mistyterrain-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4184,7 +4185,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"terrain-mistyterrain-nature",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-mistyterrain-nature",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4192,7 +4193,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"terrain-mistyterrain-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-mistyterrain-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4200,7 +4201,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"terrain-mistyterrain-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-mistyterrain-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4208,7 +4209,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"terrain-mistyterrain-block",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-mistyterrain-block",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4218,7 +4219,7 @@ namespace PBS.Databases
         
         // Psychic Terrain
         {"terrain-psychicterrain-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-psychicterrain-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4226,7 +4227,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"terrain-psychicterrain-nature",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-psychicterrain-nature",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4234,7 +4235,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"terrain-psychicterrain-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-psychicterrain-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4242,7 +4243,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"terrain-psychicterrain-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-psychicterrain-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4250,7 +4251,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"terrain-psychicterrain-block",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "terrain-psychicterrain-block",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4262,7 +4263,7 @@ namespace PBS.Databases
         // WEATHER
 
         {"weather-clearskies-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-clearskies-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4272,7 +4273,7 @@ namespace PBS.Databases
 
         // Extremely Harsh Sunlight
         {"weather-extremelyharshsunlight-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-extremelyharshsunlight-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4280,7 +4281,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-extremelyharshsunlight-nature",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-extremelyharshsunlight-nature",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4288,7 +4289,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-extremelyharshsunlight-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-extremelyharshsunlight-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4296,7 +4297,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-extremelyharshsunlight-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-extremelyharshsunlight-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4304,7 +4305,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-extremelyharshsunlight-negate",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-extremelyharshsunlight-negate",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4312,7 +4313,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-extremelyharshsunlight-block",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-extremelyharshsunlight-block",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4322,7 +4323,7 @@ namespace PBS.Databases
                 
         // Fog
         {"weather-fog-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-fog-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4330,7 +4331,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-fog-nature",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-fog-nature",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4338,7 +4339,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-fog-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-fog-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4346,7 +4347,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-fog-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-fog-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4356,7 +4357,7 @@ namespace PBS.Databases
 
         // Hail
         {"weather-hail-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-hail-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4364,7 +4365,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-hail-nature",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-hail-nature",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4372,7 +4373,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-hail-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-hail-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4380,7 +4381,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-hail-buffet",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-hail-buffet",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4388,7 +4389,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-hail-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-hail-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4398,7 +4399,7 @@ namespace PBS.Databases
 
         // Harsh Sunlight
         {"weather-harshsunlight-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-harshsunlight-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4406,7 +4407,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-harshsunlight-nature",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-harshsunlight-nature",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4414,7 +4415,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-harshsunlight-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-harshsunlight-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4422,7 +4423,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-harshsunlight-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-harshsunlight-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4432,7 +4433,7 @@ namespace PBS.Databases
                 
         // Heavy Rain
         {"weather-heavyrain-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-heavyrain-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4440,7 +4441,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-heavyrain-nature",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-heavyrain-nature",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4448,7 +4449,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-heavyrain-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-heavyrain-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4456,7 +4457,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-heavyrain-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-heavyrain-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4464,7 +4465,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-heavyrain-negate",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-heavyrain-negate",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4472,7 +4473,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-heavyrain-block",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-heavyrain-block",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4482,7 +4483,7 @@ namespace PBS.Databases
                 
         // Rain
         {"weather-rain-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-rain-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4490,7 +4491,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-rain-nature",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-rain-nature",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4498,7 +4499,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-rain-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-rain-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4506,7 +4507,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-rain-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-rain-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4516,7 +4517,7 @@ namespace PBS.Databases
                 
         // Sandstorm
         {"weather-sandstorm-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-sandstorm-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4524,7 +4525,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-sandstorm-nature",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-sandstorm-nature",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4532,7 +4533,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-sandstorm-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-sandstorm-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4540,7 +4541,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-sandstorm-buffet",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-sandstorm-buffet",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4548,7 +4549,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-sandstorm-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-sandstorm-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4558,7 +4559,7 @@ namespace PBS.Databases
                 
         // Strong Winds
         {"weather-strongwinds-start",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-strongwinds-start",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4566,7 +4567,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-strongwinds-end",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-strongwinds-end",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4574,7 +4575,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-strongwinds-already",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-strongwinds-already",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4582,7 +4583,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-strongwinds-weaken",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-strongwinds-weaken",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4590,7 +4591,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"weather-strongwinds-block",
-            new GameTextData(
+            new PBS.Data.GameText(
                 ID: "weather-strongwinds-block",
                 languageDict: new Dictionary<GameLanguages, string>
                 {
@@ -4602,7 +4603,7 @@ namespace PBS.Databases
     };
 
         // Methods
-        public GameTextData GetGameTextData(string ID)
+        public PBS.Data.GameText GetGameTextData(string ID)
         {
             if (database.ContainsKey(ID))
             {
@@ -4651,16 +4652,16 @@ namespace PBS.Databases
 
             // set core variables
             string newString = baseString;
-            TypeData typeData = typeID == null ? null : ElementalTypes.instance.GetTypeData(typeID);
-            MoveData moveData = moveID == null ? null : Moves.instance.GetMoveData(moveID);
-            AbilityData abilityData = abilityID == null ? null : Abilities.instance.GetAbilityData(abilityID);
-            ItemData itemData = itemID == null ? null : Items.instance.GetItemData(itemID);
-            StatusPKData statusData = statusID == null ? null
-                : PokemonStatuses.instance.GetStatusData(statusID);
-            StatusTEData teamStatusData = teamStatusID == null ? null
-                : TeamStatuses.instance.GetStatusData(teamStatusID);
-            StatusBTLData battleStatusData = battleStatusID == null ? null
-                : BattleStatuses.instance.GetStatusData(battleStatusID);
+            Data.ElementalType typeData = typeID == null ? null : Databases.ElementalTypes.instance.GetTypeData(typeID);
+            Data.Move moveData = moveID == null ? null : Databases.Moves.instance.GetMoveData(moveID);
+            Data.Ability abilityData = abilityID == null ? null : Databases.Abilities.instance.GetAbilityData(abilityID);
+            Data.Item itemData = itemID == null ? null : Databases.Items.instance.GetItemData(itemID);
+            Data.PokemonStatus statusData = statusID == null ? null
+                : Databases.PokemonStatuses.instance.GetStatusData(statusID);
+            Data.TeamStatus teamStatusData = teamStatusID == null ? null
+                : Databases.TeamStatuses.instance.GetStatusData(teamStatusID);
+            Data.BattleStatus battleStatusData = battleStatusID == null ? null
+                : Databases.BattleStatuses.instance.GetStatusData(battleStatusID);
 
             // swapping substrings
             intArgs = intArgs == null ? new List<int>() : intArgs;
@@ -4813,7 +4814,7 @@ namespace PBS.Databases
             {
                 for (int i = 0; i < moveIDs.Length; i++)
                 {
-                    MoveData moveXData = Moves.instance.GetMoveData(moveIDs[i]);
+                    Move moveXData = Moves.instance.GetMoveData(moveIDs[i]);
                     string partToReplace = "{{-move-name-" + i + "-}}";
                     newString = newString.Replace(partToReplace, moveXData.moveName);
                 }
@@ -4913,7 +4914,7 @@ namespace PBS.Databases
 
         public static string ConvertStatToString(PokemonStats stat, bool capitalize = true)
         {
-            GameTextData textData = stat == PokemonStats.Attack ? instance.GetGameTextData("stat-attack")
+            PBS.Data.GameText textData = stat == PokemonStats.Attack ? instance.GetGameTextData("stat-attack")
                 : stat == PokemonStats.Defense ? instance.GetGameTextData("stat-defense")
                 : stat == PokemonStats.SpecialAttack ? instance.GetGameTextData("stat-special-attack")
                 : stat == PokemonStats.SpecialDefense ? instance.GetGameTextData("stat-special-defense")

@@ -1,4 +1,5 @@
-﻿using PBS.Databases;
+﻿using PBS.Data;
+using PBS.Databases;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class BattleCondition
     public string statusID;
     public int turnsActive;
     public int turnsLeft;
-    public StatusBTLData data
+    public BattleStatus data
     {
         get
         {

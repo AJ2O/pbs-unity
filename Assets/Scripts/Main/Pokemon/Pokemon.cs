@@ -1,4 +1,5 @@
-﻿using PBS.Databases;
+﻿using PBS.Data;
+using PBS.Databases;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,7 +56,7 @@ namespace PBS.Main.Pokemon
         public int level;
         public string natureID;
         public PokemonGender gender;
-        public PokemonData data
+        public PBS.Data.Pokemon data
         {
             get
             {
@@ -83,7 +84,7 @@ namespace PBS.Main.Pokemon
         {
             get
             {
-                PokemonData pokemonData = Databases.Pokemon.instance.GetPokemonData(pokemonID);
+                PBS.Data.Pokemon pokemonData = Databases.Pokemon.instance.GetPokemonData(pokemonID);
 
                 float numerator = (2 * pokemonData.baseHP + ivHP + evHP / 4) * level;
                 float result = (numerator / 100 + level + 10) * PokemonNatures.instance.GetNatureData(natureID).HPMod;
@@ -292,7 +293,7 @@ namespace PBS.Main.Pokemon
             }
             else
             {
-                gender = GameText.ConvertToGender(genderID);
+                gender = PBS.Databases.GameText.ConvertToGender(genderID);
             }
 
             // stats
@@ -383,7 +384,7 @@ namespace PBS.Main.Pokemon
                 nickname: original.nickname,
                 level: original.level,
                 natureID: original.natureID,
-                genderID: GameText.ConvertGenderToString(original.gender),
+                genderID: PBS.Databases.GameText.ConvertGenderToString(original.gender),
 
                 currentHP: original.currentHP,
                 ivHP: original.ivHP, ivATK: original.ivATK, ivDEF: original.ivDEF,
@@ -414,7 +415,7 @@ namespace PBS.Main.Pokemon
         // Forms
         public void CheckForm()
         {
-            AbilityData abilityData = Abilities.instance.GetAbilityData(GetAbility());
+            Data.Ability abilityData = Abilities.instance.GetAbilityData(GetAbility());
             // Items
             if (item != null)
             {
@@ -422,8 +423,8 @@ namespace PBS.Main.Pokemon
                 for (int i = 0; i < griseousOrbs_.Count; i++)
                 {
                     PBS.Databases.Effects.Items.GriseousOrb griseousOrb = griseousOrbs_[i] as PBS.Databases.Effects.Items.GriseousOrb;
-                    PokemonData basePokemonData = Databases.Pokemon.instance.GetPokemonData(griseousOrb.baseFormID);
-                    PokemonData toPokemonData = Databases.Pokemon.instance.GetPokemonData(griseousOrb.formID);
+                    PBS.Data.Pokemon basePokemonData = Databases.Pokemon.instance.GetPokemonData(griseousOrb.baseFormID);
+                    PBS.Data.Pokemon toPokemonData = Databases.Pokemon.instance.GetPokemonData(griseousOrb.formID);
 
                     // Validate if the pokemon is contained
                     if (pokemonID == basePokemonData.ID

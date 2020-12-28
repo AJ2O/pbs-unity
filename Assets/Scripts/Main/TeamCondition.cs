@@ -1,4 +1,5 @@
-﻿using PBS.Databases;
+﻿using PBS.Data;
+using PBS.Databases;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,7 +9,7 @@ public class TeamCondition
     public string statusID;
     public int turnsActive;
     public int turnsLeft;
-    public StatusTEData data
+    public TeamStatus data
     {
         get
         {

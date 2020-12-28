@@ -1,4 +1,5 @@
-﻿using PBS.Databases;
+﻿using PBS.Data;
+using PBS.Databases;
 using System.Collections.Generic;
 
 namespace PBS.Main.Pokemon
@@ -11,11 +12,11 @@ namespace PBS.Main.Pokemon
         {
             public string boundCauser;
             public int turnsLeft;
-            StatusPKData statusData;
+            PokemonStatus statusData;
 
             public Bound(
                 string boundCauser,
-                StatusPKData statusData,
+                PokemonStatus statusData,
                 int turnsLeft
                 )
             {
@@ -36,12 +37,12 @@ namespace PBS.Main.Pokemon
         {
             public string disableMove;
             public int turnsLeft;
-            StatusPKData statusData;
+            PokemonStatus statusData;
 
             public Disable(
                 string disableMove,
                 int turnsLeft,
-                StatusPKData statusData
+                PokemonStatus statusData
                 )
             {
                 this.disableMove = disableMove;
@@ -88,12 +89,12 @@ namespace PBS.Main.Pokemon
         {
             public string encoreMove;
             public int turnsLeft;
-            StatusPKData statusData;
+            PokemonStatus statusData;
 
             public Encore(
                 string encoreMove,
                 int turnsLeft,
-                StatusPKData statusData
+                PokemonStatus statusData
                 )
             {
                 this.encoreMove = encoreMove;
@@ -153,11 +154,11 @@ namespace PBS.Main.Pokemon
         public class HealBlock
         {
             public int turnsLeft;
-            StatusPKData statusData;
+            PokemonStatus statusData;
 
             public HealBlock(
                 int turnsLeft,
-                StatusPKData statusData
+                PokemonStatus statusData
                 )
             {
                 this.turnsLeft = turnsLeft;
@@ -281,11 +282,11 @@ namespace PBS.Main.Pokemon
         public class Taunt
         {
             public int turnsLeft;
-            StatusPKData statusData;
+            PokemonStatus statusData;
 
             public Taunt(
                 int turnsLeft,
-                StatusPKData statusData
+                PokemonStatus statusData
                 )
             {
                 this.turnsLeft = turnsLeft;
@@ -302,12 +303,12 @@ namespace PBS.Main.Pokemon
         {
             public string tormentMove;
             public int turnsLeft;
-            StatusPKData statusData;
+            PokemonStatus statusData;
 
             public Torment(
                 string tormentMove,
                 int turnsLeft,
-                StatusPKData statusData
+                PokemonStatus statusData
                 )
             {
                 this.tormentMove = tormentMove;

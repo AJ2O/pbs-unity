@@ -1,4 +1,5 @@
-﻿using PBS.Databases;
+﻿using PBS.Data;
+using PBS.Databases;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ public class Item
 {
     // General
     public string itemID { get; set; }
-    public ItemData data { 
+    public PBS.Data.Item data { 
         get 
         {
             return Items.instance.GetItemData(itemID);

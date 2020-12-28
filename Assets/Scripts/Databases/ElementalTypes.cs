@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Data;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,17 +28,17 @@ namespace PBS.Databases
         }
 
         // Database
-        private Dictionary<string, TypeData> database = new Dictionary<string, TypeData>
+        private Dictionary<string, Data.ElementalType> database = new Dictionary<string, Data.ElementalType>
     {
         // Null / Placeholder
         {"",
-            new TypeData(
+            new Data.ElementalType(
                 ID: "",
                 typeName: "???"
                 ) },
 
         {"bug",
-            new TypeData(
+            new Data.ElementalType(
                 ID: "bug",
                 typeName: "Bug",
                 typeColor: "#80ffc0",
@@ -58,7 +59,7 @@ namespace PBS.Databases
                 ) },
 
         {"dark",
-            new TypeData(
+            new Data.ElementalType(
                 ID: "dark",
                 typeName: "Dark",
                 typeColor: "#404040",
@@ -82,7 +83,7 @@ namespace PBS.Databases
                 ) },
 
         {"dragon",
-            new TypeData(
+            new Data.ElementalType(
                 ID: "dragon",
                 typeName: "Dragon",
                 typeColor: "#a080ff",
@@ -104,7 +105,7 @@ namespace PBS.Databases
                 ) },
 
         {"electric",
-            new TypeData(
+            new Data.ElementalType(
                 ID: "electric",
                 typeName: "Electric",
                 typeColor: "#ffff00",
@@ -123,7 +124,7 @@ namespace PBS.Databases
                 ) },
 
         {"fairy",
-            new TypeData(
+            new Data.ElementalType(
                 ID: "fairy",
                 typeName: "Fairy",
                 typeColor: "#ffa0fc",
@@ -147,7 +148,7 @@ namespace PBS.Databases
                 ) },
 
         {"fighting",
-            new TypeData(
+            new Data.ElementalType(
                 ID: "fighting",
                 typeName: "Fighting",
                 typeColor: "#c04040",
@@ -168,7 +169,7 @@ namespace PBS.Databases
                 ) },
 
         {"fire",
-            new TypeData(
+            new Data.ElementalType(
                 ID: "fire",
                 typeName: "Fire",
                 typeColor: "#ff0000",
@@ -192,7 +193,7 @@ namespace PBS.Databases
                 ) },
 
         {"flying",
-            new TypeData(
+            new Data.ElementalType(
                 ID: "flying",
                 typeName: "Flying",
                 typeColor: "#80ffe0",
@@ -222,7 +223,7 @@ namespace PBS.Databases
                 ) },
 
         {"ghost",
-            new TypeData(
+            new Data.ElementalType(
                 ID: "ghost",
                 typeName: "Ghost",
                 typeColor: "#8060a0",
@@ -251,7 +252,7 @@ namespace PBS.Databases
                 ) },
 
         {"grass",
-            new TypeData(
+            new Data.ElementalType(
                 ID: "grass",
                 typeName: "Grass",
                 typeColor: "#00ff00",
@@ -275,7 +276,7 @@ namespace PBS.Databases
                 ) },
 
         {"ground",
-            new TypeData(
+            new Data.ElementalType(
                 ID: "ground",
                 typeName: "Ground",
                 typeColor: "#ffa05c",
@@ -304,7 +305,7 @@ namespace PBS.Databases
                 ) },
 
         {"ice",
-            new TypeData(
+            new Data.ElementalType(
                 ID: "ice",
                 typeName: "Ice",
                 typeColor: "#c0e0fc",
@@ -324,7 +325,7 @@ namespace PBS.Databases
                 ) },
 
         {"normal",
-            new TypeData(
+            new Data.ElementalType(
                 ID: "normal",
                 typeName: "Normal",
                 typeColor: "#ffc0a0",
@@ -341,7 +342,7 @@ namespace PBS.Databases
                 ) },
 
         {"poison",
-            new TypeData(
+            new Data.ElementalType(
                 ID: "poison",
                 typeName: "Poison",
                 typeColor: "#bf00ff",
@@ -363,7 +364,7 @@ namespace PBS.Databases
                 ) },
 
         {"psychic",
-            new TypeData(
+            new Data.ElementalType(
                 ID: "psychic",
                 typeName: "Psychic",
                 typeColor: "#ff60ff",
@@ -382,7 +383,7 @@ namespace PBS.Databases
                 ) },
 
         {"rock",
-            new TypeData(
+            new Data.ElementalType(
                 ID: "rock",
                 typeName: "Rock",
                 typeColor: "#804000",
@@ -406,7 +407,7 @@ namespace PBS.Databases
                 ) },
 
         {"steel",
-            new TypeData(
+            new Data.ElementalType(
                 ID: "steel",
                 typeName: "Steel",
                 typeColor: "#d0d0e0",
@@ -438,7 +439,7 @@ namespace PBS.Databases
                 ) },
 
         {"water",
-            new TypeData(
+            new Data.ElementalType(
                 ID: "water",
                 typeName: "Water",
                 typeColor: "#4040ff",
@@ -460,7 +461,7 @@ namespace PBS.Databases
     };
 
         // Methods
-        public TypeData GetTypeData(string ID)
+        public Data.ElementalType GetTypeData(string ID)
         {
             if (database.ContainsKey(ID))
             {
@@ -475,7 +476,7 @@ namespace PBS.Databases
             List<string> allTypes = new List<string>(database.Keys);
             for (int i = 0; i < allTypes.Count; i++)
             {
-                TypeData typeData = GetTypeData(allTypes[i]);
+                Data.ElementalType typeData = GetTypeData(allTypes[i]);
 
                 if (string.IsNullOrEmpty(typeData.ID))
                 {

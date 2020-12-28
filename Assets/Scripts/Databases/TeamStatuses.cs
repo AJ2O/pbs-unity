@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Data;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,17 +28,17 @@ namespace PBS.Databases
         }
 
         // Database
-        private Dictionary<string, StatusTEData> database = new Dictionary<string, StatusTEData>
+        private Dictionary<string, TeamStatus> database = new Dictionary<string, TeamStatus>
         {
             // Null / Placeholder
             {"",
-                new StatusTEData(
+                new TeamStatus(
                     ID: ""
                     ) },
 
             // G-MAX EFFECTS
             {"gmaxcannonade",
-                new StatusTEData(
+                new TeamStatus(
                     ID: "gmaxcannonade",
                     conditionName: "G-Max Cannonade",
                     inflictTextID: "gmax-wildfire",
@@ -65,7 +66,7 @@ namespace PBS.Databases
                     }
                     ) },
             {"gmaxvinelash",
-                new StatusTEData(
+                new TeamStatus(
                     ID: "gmaxvinelash",
                     conditionName: "G-Max Vine Lash",
                     inflictTextID: "gmax-wildfire",
@@ -93,7 +94,7 @@ namespace PBS.Databases
                     }
                     ) },
             {"gmaxvolcalith",
-                new StatusTEData(
+                new TeamStatus(
                     ID: "gmaxvolcalith",
                     conditionName: "G-Max Volcalith",
                     inflictTextID: "gmax-wildfire",
@@ -121,7 +122,7 @@ namespace PBS.Databases
                     }
                     ) },
             {"gmaxwildfire",
-                new StatusTEData(
+                new TeamStatus(
                     ID: "gmaxwildfire",
                     conditionName: "G-Max Wildfire",
                     inflictTextID: "gmax-wildfire",
@@ -153,7 +154,7 @@ namespace PBS.Databases
 
             // LIGHT SCREENS
             {"auroraveil",
-                new StatusTEData(
+                new TeamStatus(
                     ID: "auroraveil",
                     conditionName: "Aurora Veil",
                     inflictTextID: "tStatus-auroraveil-start",
@@ -174,7 +175,7 @@ namespace PBS.Databases
                     }
                     ) },
             {"lightscreen",
-                new StatusTEData(
+                new TeamStatus(
                     ID: "lightscreen",
                     conditionName: "Light Screen",
                     inflictTextID: "tStatus-lightscreen-start",
@@ -195,7 +196,7 @@ namespace PBS.Databases
                     }
                     ) },
             {"reflect",
-                new StatusTEData(
+                new TeamStatus(
                     ID: "reflect",
                     conditionName: "Reflect",
                     inflictTextID: "tStatus-reflect-start",
@@ -221,7 +222,7 @@ namespace PBS.Databases
         };
 
         // Methods
-        public StatusTEData GetStatusData(string ID)
+        public TeamStatus GetStatusData(string ID)
         {
             if (database.ContainsKey(ID))
             {

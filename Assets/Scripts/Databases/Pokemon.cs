@@ -1,4 +1,5 @@
-﻿using PBS.Main.Pokemon;
+﻿using PBS.Data;
+using PBS.Main.Pokemon;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,11 +28,11 @@ namespace PBS.Databases
         }
 
         // Database
-        private Dictionary<string, PokemonData> database = new Dictionary<string, PokemonData>
+        private Dictionary<string, PBS.Data.Pokemon> database = new Dictionary<string, PBS.Data.Pokemon>
     {
         // Null / Missingno / Placeholder
         {"",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: ""
                 ) },
 
@@ -40,7 +41,7 @@ namespace PBS.Databases
         // --- GENERATION 1: KANTO ---
 
         {"bulbasaur",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "bulbasaur",
                 speciesName: "Bulbasaur",
                 pokedexNo: 1,
@@ -52,7 +53,7 @@ namespace PBS.Databases
                 ) },
 
         {"charmander",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "charmander",
                 speciesName: "Charmander",
                 pokedexNo: 4,
@@ -64,7 +65,7 @@ namespace PBS.Databases
                 ) },
 
         {"squirtle",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "squirtle",
                 speciesName: "Squirtle",
                 pokedexNo: 7,
@@ -76,7 +77,7 @@ namespace PBS.Databases
                 ) },
 
         {"blastoise",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "blastoise",
                 speciesName: "Blastoise",
                 pokedexNo: 9, pokedexCategory: "Shellfish",
@@ -91,7 +92,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"blastoise-mega",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "blastoise-mega",
                 baseID: "blastoise",
                 formName: "Mega Blastoise",
@@ -108,7 +109,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"blastoise-gmax",
-            PokemonData.AestheticVariant(
+            PBS.Data.Pokemon.AestheticVariant(
                 ID: "blastoise-gmax",
                 baseID: "blastoise",
                 formName: "Gigantamax Blastoise",
@@ -120,7 +121,7 @@ namespace PBS.Databases
                 ) },
 
         {"pikachu",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "pikachu",
                 speciesName: "Pikachu",
                 pokedexNo: 25,
@@ -147,7 +148,7 @@ namespace PBS.Databases
         // --- GENERATION 4: SINNOH ---
 
         {"cresselia",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "cresselia",
                 speciesName: "Cresselia",
                 pokedexNo: 488, pokedexCategory: "Lunar",
@@ -165,7 +166,7 @@ namespace PBS.Databases
                 ) },
 
         {"darkrai",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "darkrai",
                 speciesName: "Darkrai",
                 pokedexNo: 491, pokedexCategory: "Pitch-Black",
@@ -184,7 +185,7 @@ namespace PBS.Databases
 
         // Arceus
         {"arceus",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "arceus",
                 speciesName: "Arceus",
                 pokedexNo: 493, pokedexCategory: "Alpha",
@@ -200,7 +201,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"arceus-bug",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "arceus-bug",
                 baseID: "arceus",
                 formName: "Bug-Type",
@@ -210,7 +211,7 @@ namespace PBS.Databases
                 combineBaseTags: true
                 ) },
         {"arceus-dark",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "arceus-dark",
                 baseID: "arceus",
                 formName: "Dark-Type",
@@ -220,7 +221,7 @@ namespace PBS.Databases
                 combineBaseTags: true
                 ) },
         {"arceus-dragon",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "arceus-dragon",
                 baseID: "arceus",
                 formName: "Dragon-Type",
@@ -230,7 +231,7 @@ namespace PBS.Databases
                 combineBaseTags: true
                 ) },
         {"arceus-electric",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "arceus-electric",
                 baseID: "arceus",
                 formName: "Electric-Type",
@@ -240,7 +241,7 @@ namespace PBS.Databases
                 combineBaseTags: true
                 ) },
         {"arceus-fairy",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "arceus-fairy",
                 baseID: "arceus",
                 formName: "Fairy-Type",
@@ -250,7 +251,7 @@ namespace PBS.Databases
                 combineBaseTags: true
                 ) },
         {"arceus-fighting",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "arceus-fighting",
                 baseID: "arceus",
                 formName: "Fighting-Type",
@@ -260,7 +261,7 @@ namespace PBS.Databases
                 combineBaseTags: true
                 ) },
         {"arceus-fire",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "arceus-fire",
                 baseID: "arceus",
                 formName: "Fire-Type",
@@ -270,7 +271,7 @@ namespace PBS.Databases
                 combineBaseTags: true
                 ) },
         {"arceus-flying",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "arceus-flying",
                 baseID: "arceus",
                 formName: "Flying-Type",
@@ -280,7 +281,7 @@ namespace PBS.Databases
                 combineBaseTags: true
                 ) },
         {"arceus-ghost",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "arceus-ghost",
                 baseID: "arceus",
                 formName: "Ghost-Type",
@@ -290,7 +291,7 @@ namespace PBS.Databases
                 combineBaseTags: true
                 ) },
         {"arceus-grass",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "arceus-grass",
                 baseID: "arceus",
                 formName: "Grass-Type",
@@ -300,7 +301,7 @@ namespace PBS.Databases
                 combineBaseTags: true
                 ) },
         {"arceus-ground",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "arceus-ground",
                 baseID: "arceus",
                 formName: "Ground-Type",
@@ -310,7 +311,7 @@ namespace PBS.Databases
                 combineBaseTags: true
                 ) },
         {"arceus-ice",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "arceus-ice",
                 baseID: "arceus",
                 formName: "Ice-Type",
@@ -320,7 +321,7 @@ namespace PBS.Databases
                 combineBaseTags: true
                 ) },
         {"arceus-poison",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "arceus-poison",
                 baseID: "arceus",
                 formName: "Poison-Type",
@@ -330,7 +331,7 @@ namespace PBS.Databases
                 combineBaseTags: true
                 ) },
         {"arceus-psychic",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "arceus-psychic",
                 baseID: "arceus",
                 formName: "Psychic-Type",
@@ -340,7 +341,7 @@ namespace PBS.Databases
                 combineBaseTags: true
                 ) },
         {"arceus-rock",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "arceus-rock",
                 baseID: "arceus",
                 formName: "Rock-Type",
@@ -350,7 +351,7 @@ namespace PBS.Databases
                 combineBaseTags: true
                 ) },
         {"arceus-steel",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "arceus-steel",
                 baseID: "arceus",
                 formName: "Steel-Type",
@@ -360,7 +361,7 @@ namespace PBS.Databases
                 combineBaseTags: true
                 ) },
         {"arceus-water",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "arceus-water",
                 baseID: "arceus",
                 formName: "Water-Type",
@@ -375,7 +376,7 @@ namespace PBS.Databases
         // --- GENERATION 5: UNOVA ---
 
         {"meloetta-aria",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "meloetta-aria",
                 speciesName: "Meleotta",
                 pokedexNo: 648,
@@ -392,7 +393,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"meloetta-pirouette",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "meloetta-pirouette",
                 baseID: "meloetta-aria",
                 formName: "Pirouette Forme",
@@ -411,7 +412,7 @@ namespace PBS.Databases
         // --- GENERATION 6: KALOS ---
 
         {"greninja",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "greninja",
                 speciesName: "Greninja",
                 pokedexNo: 658, pokedexCategory: "Ninja",
@@ -426,7 +427,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"greninja-battlebond",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "greninja-battlebond",
                 baseID: "greninja",
                 abilities: new List<string> { "battlebond" },
@@ -434,7 +435,7 @@ namespace PBS.Databases
                 combineBaseTags: true
                 ) },
         {"greninja-ash",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "greninja-ash",
                 baseID: "greninja-battlebond",
                 formName: "Ash-Greninja",
@@ -444,7 +445,7 @@ namespace PBS.Databases
                 ) },
 
         {"hoopa-confined",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "hoopa-confined",
                 speciesName: "Hoopa",
                 pokedexNo: 720,
@@ -461,7 +462,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"hoopa-unbound",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "hoopa-unbound",
                 baseID: "hoopa-confined",
                 formName: "Hoopa Unbound",
@@ -479,7 +480,7 @@ namespace PBS.Databases
         // --- GENERATION 7: ALOLA ---
 
         {"mimikyu",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "mimikyu",
                 speciesName: "Mimikyu",
                 pokedexNo: 778, pokedexCategory: "Disguise",
@@ -490,7 +491,7 @@ namespace PBS.Databases
                 baseHP: 55, baseATK: 90, baseDEF: 80, baseSPA: 50, baseSPD: 105, baseSPE: 96
                 ) },
         {"mimikyu-busted",
-            PokemonData.AestheticVariant(
+            PBS.Data.Pokemon.AestheticVariant(
                 ID: "mimikyu-busted",
                 baseID: "mimikyu",
                 formName: "Busted Form",
@@ -502,7 +503,7 @@ namespace PBS.Databases
 
         // Guardian Deities
         {"tapukoko",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "tapukoko",
                 speciesName: "Tapu Koko",
                 pokedexNo: 785, pokedexCategory: "Land Spirit",
@@ -519,7 +520,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"tapulele",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "tapulele",
                 speciesName: "Tapu Lele",
                 pokedexNo: 786, pokedexCategory: "Land Spirit",
@@ -536,7 +537,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"tapubulu",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "tapubulu",
                 speciesName: "Tapu Bulu",
                 pokedexNo: 787, pokedexCategory: "Land Spirit",
@@ -553,7 +554,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"tapufini",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "tapufini",
                 speciesName: "Tapu Fini",
                 pokedexNo: 788, pokedexCategory: "Land Spirit",
@@ -576,7 +577,7 @@ namespace PBS.Databases
         // --- GENERATION 8: GALAR ---
 
         {"cramorant",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "cramorant",
                 speciesName: "Cramorant",
                 pokedexNo: 845, pokedexCategory: "Gulp",
@@ -586,7 +587,7 @@ namespace PBS.Databases
                 baseHP: 70, baseATK: 85, baseDEF: 55, baseSPA: 85, baseSPD: 95, baseSPE: 85
                 ) },
         {"cramorant-gulping",
-            PokemonData.AestheticVariant(
+            PBS.Data.Pokemon.AestheticVariant(
                 ID: "cramorant-gulping",
                 baseID: "cramorant",
                 formName: "Gulping Form",
@@ -598,7 +599,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"cramorant-gorging",
-            PokemonData.AestheticVariant(
+            PBS.Data.Pokemon.AestheticVariant(
                 ID: "cramorant-gorging",
                 baseID: "cramorant",
                 formName: "Gorging Form",
@@ -611,7 +612,7 @@ namespace PBS.Databases
                 ) },
 
         {"eiscue",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "eiscue",
                 speciesName: "Eiscue",
                 pokedexNo: 875, pokedexCategory: "Penguin",
@@ -622,7 +623,7 @@ namespace PBS.Databases
                 baseHP: 75, baseATK: 80, baseDEF: 110, baseSPA: 65, baseSPD: 90, baseSPE: 50
                 ) },
         {"eiscue-noice",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "eiscue-noice",
                 baseID: "eiscue",
                 formName: "Noice Face",
@@ -636,7 +637,7 @@ namespace PBS.Databases
                 ) },
 
         {"morpeko",
-            new PokemonData(
+            new PBS.Data.Pokemon(
                 ID: "morpeko",
                 speciesName: "Morpeko",
                 pokedexNo: 877,
@@ -648,7 +649,7 @@ namespace PBS.Databases
                 baseHP: 58, baseATK: 95, baseDEF: 58, baseSPA: 78, baseSPD: 58, baseSPE: 97
                 ) },
         {"morpeko-hangry",
-            PokemonData.AestheticVariant(
+            PBS.Data.Pokemon.AestheticVariant(
                 ID: "morpeko-hangry",
                 baseID: "morpeko",
                 formName: "Hangry Mode",
@@ -662,7 +663,7 @@ namespace PBS.Databases
     };
 
         // Methods
-        public PokemonData GetPokemonData(string ID)
+        public PBS.Data.Pokemon GetPokemonData(string ID)
         {
             if (database.ContainsKey(ID))
             {
@@ -671,7 +672,7 @@ namespace PBS.Databases
             Debug.LogWarning("Could not find Pokemon with ID: " + ID);
             return database[""];
         }
-        public PokemonData GetPokemonIllusionData(Main.Pokemon.BattleProperties.Illusion illusion)
+        public PBS.Data.Pokemon GetPokemonIllusionData(Main.Pokemon.BattleProperties.Illusion illusion)
         {
             if (database.ContainsKey(illusion.pokemonID))
             {

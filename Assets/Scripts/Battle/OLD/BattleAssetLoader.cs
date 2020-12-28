@@ -1,4 +1,5 @@
 ﻿using PBS.Battle;
+using PBS.Data;
 using PBS.Databases;
 using PBS.Main.Pokemon;
 using PBS.Main.Trainer;
@@ -139,7 +140,7 @@ public class BattleAssetLoader : MonoBehaviour
         Image imagePokemon = null
         )
     {
-        PokemonData pokemonData = PBS.Databases.Pokemon.instance.GetPokemonData(pokemon.pokemonID);
+        PBS.Data.Pokemon pokemonData = PBS.Databases.Pokemon.instance.GetPokemonData(pokemon.pokemonID);
         yield return StartCoroutine(LegacyLoadPokemon(
             data: pokemonData,
             useicon: useicon, useFront: useFront, useBack: useBack,
@@ -158,7 +159,7 @@ public class BattleAssetLoader : MonoBehaviour
         PBS.Battle.View.Scene.Entities.Pokemon scnPokemonNew = null,
         Image imagePokemon = null)
     {
-        PokemonData pokemonData = (pokemon.bProps.illusion != null) ?
+        PBS.Data.Pokemon pokemonData = (pokemon.bProps.illusion != null) ?
             PBS.Databases.Pokemon.instance.GetPokemonIllusionData(pokemon.bProps.illusion) : pokemon.data;
         yield return StartCoroutine(LegacyLoadPokemon(
             data: pokemonData,
@@ -167,7 +168,7 @@ public class BattleAssetLoader : MonoBehaviour
             imagePokemon: imagePokemon
             ));
     }
-    public IEnumerator LegacyLoadPokemon(PokemonData data, 
+    public IEnumerator LegacyLoadPokemon(PBS.Data.Pokemon data, 
         bool useicon = false,
         bool useFront = false,
         bool useBack = false,

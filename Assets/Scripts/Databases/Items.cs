@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PBS.Data;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace PBS.Databases
@@ -26,17 +27,17 @@ namespace PBS.Databases
         }
 
         // Database
-        private Dictionary<string, ItemData> database = new Dictionary<string, ItemData>
+        private Dictionary<string, PBS.Data.Item> database = new Dictionary<string, PBS.Data.Item>
     {
         // Null / Placeholder
         {"",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: ""
                 ) },
 
         // HELD ITEMS
         {"focussash",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "focussash",
                 itemName: "Focus Sash",
                 pocket: ItemPocket.OtherItems,
@@ -54,7 +55,7 @@ namespace PBS.Databases
 
         // MEDICINE
         {"potion",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "potion",
                 itemName: "Potion",
                 pocket: ItemPocket.Medicine,
@@ -79,7 +80,7 @@ namespace PBS.Databases
                 ) },
 
         {"antidote",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "antidote",
                 itemName: "Antidote",
                 pocket: ItemPocket.Medicine,
@@ -88,7 +89,7 @@ namespace PBS.Databases
 
         // BERRIES
         {"chilanberry",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "chilanberry",
                 itemName: "Chilan Berry",
                 pocket: ItemPocket.Berries,
@@ -115,7 +116,7 @@ namespace PBS.Databases
                 ) },
 
         {"lumberry",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "lumberry",
                 itemName: "Lum Berry",
                 pocket: ItemPocket.Berries,
@@ -147,7 +148,7 @@ namespace PBS.Databases
                 ) },
 
         {"occaberry",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "occaberry",
                 itemName: "Occa Berry",
                 pocket: ItemPocket.Berries,
@@ -178,7 +179,7 @@ namespace PBS.Databases
                 ) },
 
         {"oranberry",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "oranberry",
                 itemName: "Oran Berry",
                 pocket: ItemPocket.Berries,
@@ -206,7 +207,7 @@ namespace PBS.Databases
                 ) },
 
         {"passhoberry",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "passhoberry",
                 itemName: "Passho Berry",
                 pocket: ItemPocket.Berries,
@@ -233,7 +234,7 @@ namespace PBS.Databases
                 ) },
 
         {"sitrusberry",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "sitrusberry",
                 itemName: "Sitrus Berry",
                 pocket: ItemPocket.Berries,
@@ -259,7 +260,7 @@ namespace PBS.Databases
                 ) },
 
         {"wacanberry",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "wacanberry",
                 itemName: "Wacan Berry",
                 pocket: ItemPocket.Berries,
@@ -287,7 +288,7 @@ namespace PBS.Databases
 
         // BATTLE ITEMS
         {"xattack",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "xattack",
                 itemName: "X Attack",
                 pocket: ItemPocket.BattleItems,
@@ -307,7 +308,7 @@ namespace PBS.Databases
                 ) },
 
         {"xdefense",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "xdefense",
                 itemName: "X Defense",
                 pocket: ItemPocket.BattleItems,
@@ -327,7 +328,7 @@ namespace PBS.Databases
                 ) },
 
         {"xspatk",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "xspatk",
                 itemName: "X Sp. Atk",
                 pocket: ItemPocket.BattleItems,
@@ -347,7 +348,7 @@ namespace PBS.Databases
                 ) },
 
         {"xspdef",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "xspdef",
                 itemName: "X Sp. Def",
                 pocket: ItemPocket.BattleItems,
@@ -367,7 +368,7 @@ namespace PBS.Databases
                 ) },
 
         {"xspeed",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "xspeed",
                 itemName: "X Speed",
                 pocket: ItemPocket.BattleItems,
@@ -387,7 +388,7 @@ namespace PBS.Databases
                 ) },
 
         {"xaccuracy",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "xaccuracy",
                 itemName: "X Accuracy",
                 pocket: ItemPocket.BattleItems,
@@ -408,21 +409,21 @@ namespace PBS.Databases
 
         // KEY ITEMS
         {"dynamaxband",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "dynamaxband",
                 itemName: "Dynamax Band",
                 pocket: ItemPocket.KeyItems,
                 battlePocket: ItemBattlePocket.None
                 ) },
         {"megaring",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "megaring",
                 itemName: "Mega Ring",
                 pocket: ItemPocket.KeyItems,
                 battlePocket: ItemBattlePocket.None
                 ) },
         {"zring",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "zring",
                 itemName: "Z-Ring",
                 pocket: ItemPocket.KeyItems,
@@ -431,7 +432,7 @@ namespace PBS.Databases
 
         // MEGA STONES
         {"blastoisinite",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "blastoisinite",
                 itemName: "Blastoisinite",
                 pocket: ItemPocket.OtherItems,
@@ -450,7 +451,7 @@ namespace PBS.Databases
 
         // PLATES
         {"dracoplate",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "dracoplate",
                 itemName: "Draco Plate",
                 pocket: ItemPocket.OtherItems,
@@ -476,7 +477,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"dreadplate",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "dreadplate",
                 itemName: "Dread Plate",
                 pocket: ItemPocket.OtherItems,
@@ -502,7 +503,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"earthplate",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "earthplate",
                 itemName: "Earth Plate",
                 pocket: ItemPocket.OtherItems,
@@ -528,7 +529,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"electricplate",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "electricplate",
                 itemName: "Electric Plate",
                 pocket: ItemPocket.OtherItems,
@@ -554,7 +555,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"fistplate",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "fistplate",
                 itemName: "Fist Plate",
                 pocket: ItemPocket.OtherItems,
@@ -580,7 +581,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"flameplate",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "flameplate",
                 itemName: "Flame Plate",
                 pocket: ItemPocket.OtherItems,
@@ -606,7 +607,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"icicleplate",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "icicleplate",
                 itemName: "Icicle Plate",
                 pocket: ItemPocket.OtherItems,
@@ -632,7 +633,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"insectplate",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "insectplate",
                 itemName: "Insect Plate",
                 pocket: ItemPocket.OtherItems,
@@ -658,7 +659,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"ironplate",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "ironplate",
                 itemName: "Iron Plate",
                 pocket: ItemPocket.OtherItems,
@@ -684,7 +685,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"meadowplate",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "meadowplate",
                 itemName: "Meadow Plate",
                 pocket: ItemPocket.OtherItems,
@@ -710,7 +711,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"mindplate",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "mindplate",
                 itemName: "Mind Plate",
                 pocket: ItemPocket.OtherItems,
@@ -736,7 +737,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"pixieplate",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "pixieplate",
                 itemName: "Pixie Plate",
                 pocket: ItemPocket.OtherItems,
@@ -767,7 +768,7 @@ namespace PBS.Databases
         // --Regular
 
         {"normaliumz",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "normaliumz",
                 itemName: "Normalium Z",
                 pocket: ItemPocket.OtherItems,
@@ -784,7 +785,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"psychiumz",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "psychiumz",
                 itemName: "Psychium Z",
                 pocket: ItemPocket.OtherItems,
@@ -805,7 +806,7 @@ namespace PBS.Databases
         // --Signature
 
         {"tapuniumz",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "tapuniumz",
                 itemName: "Tapunium Z",
                 pocket: ItemPocket.OtherItems,
@@ -826,7 +827,7 @@ namespace PBS.Databases
                 }
                 ) },
         {"ultranecroziumz",
-            new ItemData(
+            new PBS.Data.Item(
                 ID: "ultranecroziumz",
                 itemName: "Ultranecrozium Z",
                 pocket: ItemPocket.OtherItems,
@@ -850,7 +851,7 @@ namespace PBS.Databases
     };
 
         // Methods
-        public ItemData GetItemData(string ID)
+        public PBS.Data.Item GetItemData(string ID)
         {
             if (database.ContainsKey(ID))
             {

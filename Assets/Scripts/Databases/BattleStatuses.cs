@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Data;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,11 +28,11 @@ namespace PBS.Databases
         }
 
         // Database
-        private Dictionary<string, StatusBTLData> database = new Dictionary<string, StatusBTLData>
+        private Dictionary<string, BattleStatus> database = new Dictionary<string, BattleStatus>
         {
             // Null / Placeholder
             {"",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: ""
                     ) },
 
@@ -39,7 +40,7 @@ namespace PBS.Databases
 
             // Clear Skies
             {"clearskies",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "clearskies",
                     conditionName: "Clear Skies",
 
@@ -56,7 +57,7 @@ namespace PBS.Databases
 
             // Clear Terrain
             {"clearterrain",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "clearterrain",
                     conditionName: "Clear Terrain",
 
@@ -73,7 +74,7 @@ namespace PBS.Databases
 
             // Regular Gravity
             {"regulargravity",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "regulargravity",
                     conditionName: "Regular Gravity",
 
@@ -90,7 +91,7 @@ namespace PBS.Databases
 
             // Default Magic Room
             {"defaultmagicroom",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "defaultmagicroom",
                     conditionName: "Default Magic Room",
 
@@ -107,7 +108,7 @@ namespace PBS.Databases
 
             // Default Trick Room
             {"defaulttrickroom",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "defaulttrickroom",
                     conditionName: "Default Trick Room",
 
@@ -124,7 +125,7 @@ namespace PBS.Databases
 
             // Default Wonder Room
             {"defaultwonderroom",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "defaultwonderroom",
                     conditionName: "Default Wonder Room",
 
@@ -144,7 +145,7 @@ namespace PBS.Databases
 
             // Gravity
             {"gravity",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "gravity",
                     conditionName: "Gravity",
                     startTextID: "bStatus-gravity-start",
@@ -167,7 +168,7 @@ namespace PBS.Databases
 
             // Magic Room
             {"magicroom",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "magicroom",
                     conditionName: "Magic Room",
                     startTextID: "bStatus-magicroom-start",
@@ -187,7 +188,7 @@ namespace PBS.Databases
 
             // Trick Room
             {"trickroom",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "trickroom",
                     conditionName: "Trick Room",
                     startTextID: "battle-status-inflict-trickroom",
@@ -207,7 +208,7 @@ namespace PBS.Databases
 
             // Wonder Room
             {"wonderroom",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "wonderroom",
                     conditionName: "Wonder Room",
                     startTextID: "battle-status-inflict-wonderroom",
@@ -232,7 +233,7 @@ namespace PBS.Databases
 
             // Electric Terrain
             {"electricterrain",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "electricterrain",
                     conditionName: "Electric Terrain",
 
@@ -268,7 +269,7 @@ namespace PBS.Databases
 
             // Grassy Terrain
             {"grassyterrain",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "grassyterrain",
                     conditionName: "Grassy Terrain",
 
@@ -310,7 +311,7 @@ namespace PBS.Databases
 
             // Misty Terrain
             {"mistyterrain",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "mistyterrain",
                     conditionName: "Misty Terrain",
 
@@ -350,7 +351,7 @@ namespace PBS.Databases
 
             // Psychic Terrain
             {"psychicterrain",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "psychicterrain",
                     conditionName: "Psychic Terrain",
 
@@ -389,7 +390,7 @@ namespace PBS.Databases
 
             // Extremely Harsh Sunglight
             {"extremelyharshsunlight",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "extremelyharshsunlight",
                     baseID: "harshsunlight",
                     conditionName: "Extremely Harsh Sunlight",
@@ -419,7 +420,7 @@ namespace PBS.Databases
 
             // Fog
             {"fog",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "fog",
                     conditionName: "Fog",
 
@@ -451,7 +452,7 @@ namespace PBS.Databases
 
             // Hail
             {"hail",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "hail",
                     conditionName: "Hail",
 
@@ -490,7 +491,7 @@ namespace PBS.Databases
 
             // Harsh Sunlight
             {"harshsunlight",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "harshsunlight",
                     conditionName: "Harsh Sunlight",
 
@@ -524,7 +525,7 @@ namespace PBS.Databases
 
             // Heavy Rain
             {"heavyrain",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "heavyrain",
                     baseID: "rain",
                     conditionName: "Heavy Rain",
@@ -553,7 +554,7 @@ namespace PBS.Databases
 
             // Rain
             {"rain",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "rain",
                     conditionName: "Rain",
 
@@ -587,7 +588,7 @@ namespace PBS.Databases
 
             // Sandstorm
             {"sandstorm",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "sandstorm",
                     conditionName: "Sandstorm",
 
@@ -636,7 +637,7 @@ namespace PBS.Databases
 
             // Strong Winds
             {"strongwinds",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "strongwinds",
                     conditionName: "Strong Winds",
 
@@ -671,7 +672,7 @@ namespace PBS.Databases
 
             // Ion Deluge
             {"iondeluge",
-                new StatusBTLData(
+                new BattleStatus(
                     ID: "iondeluge",
                     conditionName: "Ion Deluge",
                     startTextID: "battle-status-inflict-iondeluge",
@@ -695,7 +696,7 @@ namespace PBS.Databases
         };
 
         // Methods
-        public StatusBTLData GetStatusData(string ID)
+        public BattleStatus GetStatusData(string ID)
         {
             if (database.ContainsKey(ID))
             {
@@ -705,27 +706,27 @@ namespace PBS.Databases
             return database[""];
         }
 
-        public StatusBTLData GetDefaultGravity()
+        public BattleStatus GetDefaultGravity()
         {
             return GetStatusData("regulargravity");
         }
-        public StatusBTLData GetDefaultMagicRoom()
+        public BattleStatus GetDefaultMagicRoom()
         {
             return GetStatusData("defaultmagicroom");
         }
-        public StatusBTLData GetDefaultTerrain()
+        public BattleStatus GetDefaultTerrain()
         {
             return GetStatusData("clearterrain");
         }
-        public StatusBTLData GetDefaultTrickRoom()
+        public BattleStatus GetDefaultTrickRoom()
         {
             return GetStatusData("defaulttrickroom");
         }
-        public StatusBTLData GetDefaultWeather()
+        public BattleStatus GetDefaultWeather()
         {
             return GetStatusData("clearskies");
         }
-        public StatusBTLData GetDefaultWonderRoom()
+        public BattleStatus GetDefaultWonderRoom()
         {
             return GetStatusData("defaultwonderroom");
         }

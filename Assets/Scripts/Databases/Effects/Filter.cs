@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PBS.Data;
+using System.Collections.Generic;
 
 namespace PBS.Databases.Effects.Filter
 {
@@ -194,7 +195,7 @@ namespace PBS.Databases.Effects.Filter
                 );
         }
 
-        public bool DoesStatusSatisfy(StatusPKData statusData)
+        public bool DoesStatusSatisfy(PokemonStatus statusData)
         {
             if (conditionType == ConditionType.Pokemon)
             {
@@ -226,7 +227,7 @@ namespace PBS.Databases.Effects.Filter
             }
             return false;
         }
-        public bool DoesStatusSatisfy(StatusTEData statusData)
+        public bool DoesStatusSatisfy(TeamStatus statusData)
         {
             if (conditionType == ConditionType.Team)
             {
@@ -258,7 +259,7 @@ namespace PBS.Databases.Effects.Filter
             }
             return false;
         }
-        public bool DoesStatusSatisfy(StatusBTLData statusData)
+        public bool DoesStatusSatisfy(BattleStatus statusData)
         {
             if (conditionType == ConditionType.Battle)
             {

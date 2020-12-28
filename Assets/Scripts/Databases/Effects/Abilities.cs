@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PBS.Data;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace PBS.Databases.Effects.Abilities
@@ -4055,7 +4056,7 @@ namespace PBS.Databases.Effects.Abilities
                 }
                 return false;
             }
-            public bool IsStatusBlocked(StatusPKData statusData)
+            public bool IsStatusBlocked(PokemonStatus statusData)
             {
                 for (int i = 0; i < blockedStatuses.Count; i++)
                 {

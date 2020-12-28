@@ -1,4 +1,5 @@
-﻿using PBS.Main.Pokemon;
+﻿using PBS.Data;
+using PBS.Main.Pokemon;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,5 +12,5 @@ public class BTLUI_ButtonFight : BTLUI_Button
     public Text typeTxt;
     [HideInInspector] public bool hiddenByZMove = false;
     [HideInInspector] public Moveslot moveslot = null;
-    public MoveData moveData = null;
+    public Move moveData = null;
 }

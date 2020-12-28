@@ -1,4 +1,5 @@
-﻿using PBS.Main.Pokemon;
+﻿using PBS.Data;
+using PBS.Main.Pokemon;
 using PBS.Main.Team;
 using PBS.Main.Trainer;
 using System.Collections;
@@ -39,22 +40,22 @@ public class BTLEvent
 
 public class BTLEvent_Load : BTLEvent
 {
-    public PokemonData pokemonData = null;
-    public Pokemon pokemon = null;
+    public PBS.Data.Pokemon pokemonData = null;
+    public PBS.Main.Pokemon.Pokemon pokemon = null;
 
-    public ItemData itemData = null;
+    public PBS.Data.Item itemData = null;
     public Item item = null;
 }
 
 public class BTLEvent_Update : BTLEvent
 {
-    public List<Pokemon> updatePokemon;
+    public List<PBS.Main.Pokemon.Pokemon> updatePokemon;
 
     public void Create(
-        List<Pokemon> updatePokemon = null
+        List<PBS.Main.Pokemon.Pokemon> updatePokemon = null
         )
     {
-        this.updatePokemon = new List<Pokemon>();
+        this.updatePokemon = new List<PBS.Main.Pokemon.Pokemon>();
         if (updatePokemon != null)
         {
             for (int i = 0; i < updatePokemon.Count; i++)
@@ -78,10 +79,10 @@ public class BTLEvent_Message : BTLEvent
 public class BTLEvent_GameText : BTLEvent
 {
     public string textID = null;
-    public Pokemon pokemon = null;
-    public Pokemon userPokemon = null;
-    public Pokemon targetPokemon = null;
-    public Pokemon[] pokemonList = null;
+    public PBS.Main.Pokemon.Pokemon pokemon = null;
+    public PBS.Main.Pokemon.Pokemon userPokemon = null;
+    public PBS.Main.Pokemon.Pokemon targetPokemon = null;
+    public PBS.Main.Pokemon.Pokemon[] pokemonList = null;
     public Trainer trainer = null;
     public Team targetTeam = null;
     public PokemonStats[] statList = null;
@@ -99,11 +100,11 @@ public class BTLEvent_GameText : BTLEvent
 
     public void Create(
         string textID = null,
-        Pokemon pokemon = null,
-        Pokemon userPokemon = null,
-        Pokemon targetPokemon = null,
+        PBS.Main.Pokemon.Pokemon pokemon = null,
+        PBS.Main.Pokemon.Pokemon userPokemon = null,
+        PBS.Main.Pokemon.Pokemon targetPokemon = null,
         Trainer trainer = null,
-        Pokemon[] pokemonList = null,
+        PBS.Main.Pokemon.Pokemon[] pokemonList = null,
         Team targetTeam = null,
         PokemonStats[] statList = null,
         string typeID = null,
@@ -129,7 +130,7 @@ public class BTLEvent_GameText : BTLEvent
         this.pokemonList = null;
         if (pokemonList != null)
         {
-            this.pokemonList = new Pokemon[pokemonList.Length];
+            this.pokemonList = new PBS.Main.Pokemon.Pokemon[pokemonList.Length];
             for (int i = 0; i < pokemonList.Length; i++)
             {
                 this.pokemonList[i] = battleModel.GetBattleInstanceOfPokemon(pokemonList[i]);
@@ -195,16 +196,16 @@ public class BTLEvent_EndBattle : BTLEvent
 public class BTLEvent_SendOut : BTLEvent
 {
     public Trainer trainer;
-    public Pokemon[] sendPokemon;
+    public PBS.Main.Pokemon.Pokemon[] sendPokemon;
 
     public BTLEvent_SendOut()
     {
     }
 
-    public void Create(Trainer trainer, List<Pokemon> sendPokemon)
+    public void Create(Trainer trainer, List<PBS.Main.Pokemon.Pokemon> sendPokemon)
     {
         this.trainer = battleModel.GetBattleInstanceOfTrainer(trainer);
-        this.sendPokemon = new Pokemon[sendPokemon.Count];
+        this.sendPokemon = new PBS.Main.Pokemon.Pokemon[sendPokemon.Count];
         for (int i = 0; i < sendPokemon.Count; i++)
         {
             this.sendPokemon[i] = battleModel.GetBattleInstanceOfPokemon(sendPokemon[i]);
@@ -229,20 +230,20 @@ public class BTLEvent_ForceOut : BTLEvent
 public class BTLEvent_Withdraw : BTLEvent
 {
     public Trainer trainer;
-    public Pokemon[] withdrawPokemon;
+    public PBS.Main.Pokemon.Pokemon[] withdrawPokemon;
 
     public BTLEvent_Withdraw()
     {
     }
 
-    public void Create(Trainer trainer, Pokemon pokemon)
+    public void Create(Trainer trainer, PBS.Main.Pokemon.Pokemon pokemon)
     {
-        Create(trainer, new List<Pokemon> { pokemon });
+        Create(trainer, new List<PBS.Main.Pokemon.Pokemon> { pokemon });
     }
-    public void Create(Trainer trainer, List<Pokemon> withdrawPokemon)
+    public void Create(Trainer trainer, List<PBS.Main.Pokemon.Pokemon> withdrawPokemon)
     {
         this.trainer = battleModel.GetBattleInstanceOfTrainer(trainer);
-        this.withdrawPokemon = new Pokemon[withdrawPokemon.Count];
+        this.withdrawPokemon = new PBS.Main.Pokemon.Pokemon[withdrawPokemon.Count];
         for (int i = 0; i < withdrawPokemon.Count; i++)
         {
             this.withdrawPokemon[i] = battleModel.GetBattleInstanceOfPokemon(withdrawPokemon[i]);
@@ -253,13 +254,13 @@ public class BTLEvent_Withdraw : BTLEvent
 public class BTLEvent_PromptCommands : BTLEvent
 {
     public Trainer trainer;
-    public Pokemon[] pokemonToCommand;
+    public PBS.Main.Pokemon.Pokemon[] pokemonToCommand;
 
-    public void Create(Trainer trainer, List<Pokemon> pokemonToCommand)
+    public void Create(Trainer trainer, List<PBS.Main.Pokemon.Pokemon> pokemonToCommand)
     {
         this.trainer = battleModel.GetBattleInstanceOfTrainer(trainer);
 
-        this.pokemonToCommand = new Pokemon[pokemonToCommand.Count];
+        this.pokemonToCommand = new PBS.Main.Pokemon.Pokemon[pokemonToCommand.Count];
         for (int i = 0; i < pokemonToCommand.Count; i++)
         {
             this.pokemonToCommand[i] = battleModel.GetBattleInstanceOfPokemon(pokemonToCommand[i]);
@@ -286,11 +287,11 @@ public class BTLEvent_PromptReplace : BTLEvent
 
 public class BTLEvent_Move : BTLEvent
 {
-    public Pokemon user;
+    public PBS.Main.Pokemon.Pokemon user;
     public string moveID;
 
     public void Create(
-        Pokemon user,
+        PBS.Main.Pokemon.Pokemon user,
         string moveID)
     {
         this.user = battleModel.GetBattleInstanceOfPokemon(user);
@@ -301,12 +302,12 @@ public class BTLEvent_Move : BTLEvent
 
 public class BTLEvent_MoveHit : BTLEvent
 {
-    public Pokemon user;
+    public PBS.Main.Pokemon.Pokemon user;
     public string moveID;
     public int moveHit;
     public List<BattleHitTarget> battleHitTargets;
 
-    public void SetUser(Pokemon user)
+    public void SetUser(PBS.Main.Pokemon.Pokemon user)
     {
         this.user = battleModel.GetBattleInstanceOfPokemon(user);
     }
@@ -325,11 +326,11 @@ public class BTLEvent_MoveHit : BTLEvent
 
 public class BTLEvent_MoveHitTarget : BTLEvent
 {
-    public Pokemon targetPokemon;
+    public PBS.Main.Pokemon.Pokemon targetPokemon;
     public bool affectedByMove = false;
     public BTLEvent_Damage dmgEvent;
 
-    public void SetTarget(Pokemon pokemon)
+    public void SetTarget(PBS.Main.Pokemon.Pokemon pokemon)
     {
         targetPokemon = pokemon;
         if (dmgEvent != null)
@@ -338,7 +339,7 @@ public class BTLEvent_MoveHitTarget : BTLEvent
         }
     }
 
-    public void Create(Pokemon pokemon)
+    public void Create(PBS.Main.Pokemon.Pokemon pokemon)
     {
         SetTarget(battleModel.GetBattleInstanceOfPokemon(pokemon));
     }
@@ -346,7 +347,7 @@ public class BTLEvent_MoveHitTarget : BTLEvent
 
 public class BTLEvent_Damage : BTLEvent
 {
-    public Pokemon targetPokemon;
+    public PBS.Main.Pokemon.Pokemon targetPokemon;
     public int damageDealt;
     public int preHP;
     public int postHP;
@@ -354,7 +355,7 @@ public class BTLEvent_Damage : BTLEvent
     public bool criticalHit = false;
     public int hitDisplay = 0;
 
-    public void SetTarget(Pokemon pokemon)
+    public void SetTarget(PBS.Main.Pokemon.Pokemon pokemon)
     {
         targetPokemon = pokemon;
     }
@@ -376,12 +377,12 @@ public class BTLEvent_MultiDamage : BTLEvent
 
 public class BTLEvent_Heal : BTLEvent
 {
-    public Pokemon targetPokemon;
+    public PBS.Main.Pokemon.Pokemon targetPokemon;
     public int hpHealed;
     public int preHP;
     public int postHP;
 
-    public void SetTarget(Pokemon pokemon)
+    public void SetTarget(PBS.Main.Pokemon.Pokemon pokemon)
     {
         targetPokemon = pokemon;
     }
@@ -403,10 +404,10 @@ public class BTLEvent_MultiHeal : BTLEvent
 
 public class BTLEvent_StatusCondition : BTLEvent
 {
-    public Pokemon targetPokemon;
+    public PBS.Main.Pokemon.Pokemon targetPokemon;
     public string statusID;
 
-    public void Create(Pokemon targetPokemon, string statusID)
+    public void Create(PBS.Main.Pokemon.Pokemon targetPokemon, string statusID)
     {
         this.targetPokemon = battleModel.GetBattleInstanceOfPokemon(targetPokemon);
         this.statusID = statusID;
@@ -415,7 +416,7 @@ public class BTLEvent_StatusCondition : BTLEvent
 
 public class BTLEvent_StatStageMod : BTLEvent
 {
-    public Pokemon targetPokemon;
+    public PBS.Main.Pokemon.Pokemon targetPokemon;
     public PokemonStats[] statsToMod;
     public int modValue;
     public bool runAnim = false;
@@ -424,7 +425,7 @@ public class BTLEvent_StatStageMod : BTLEvent
     public BTLEvent_GameText gameText;
 
     public void Create(
-        Pokemon targetPokemon,
+        PBS.Main.Pokemon.Pokemon targetPokemon,
         List<PokemonStats> statsToMod,
         int modValue
         )
@@ -441,10 +442,10 @@ public class BTLEvent_StatStageMod : BTLEvent
 
 public class BTLEvent_Ability : BTLEvent
 {
-    public Pokemon pokemon;
+    public PBS.Main.Pokemon.Pokemon pokemon;
     public string abilityID;
 
-    public void SetPokemon(Pokemon pokemon)
+    public void SetPokemon(PBS.Main.Pokemon.Pokemon pokemon)
     {
         this.pokemon = battleModel.GetBattleInstanceOfPokemon(pokemon);
     }
@@ -452,10 +453,10 @@ public class BTLEvent_Ability : BTLEvent
 
 public class BTLEvent_SwitchPosition : BTLEvent
 {
-    public Pokemon pokemon1;
-    public Pokemon pokemon2;
+    public PBS.Main.Pokemon.Pokemon pokemon1;
+    public PBS.Main.Pokemon.Pokemon pokemon2;
 
-    public void Create(Pokemon pokemon1, Pokemon pokemon2)
+    public void Create(PBS.Main.Pokemon.Pokemon pokemon1, PBS.Main.Pokemon.Pokemon pokemon2)
     {
         this.pokemon1 = battleModel.GetBattleInstanceOfPokemon(pokemon1);
         this.pokemon2 = battleModel.GetBattleInstanceOfPokemon(pokemon2);
@@ -464,11 +465,11 @@ public class BTLEvent_SwitchPosition : BTLEvent
 
 public class BTLEvent_ChangePokemon : BTLEvent
 {
-    public Pokemon pokemon;
+    public PBS.Main.Pokemon.Pokemon pokemon;
     public string prePokemon;
     public string postPokemon;
 
-    public void Create(Pokemon pokemon, string prePokemon, string postPokemon)
+    public void Create(PBS.Main.Pokemon.Pokemon pokemon, string prePokemon, string postPokemon)
     {
         this.pokemon = battleModel.GetBattleInstanceOfPokemon(pokemon);
         this.prePokemon = prePokemon;
@@ -478,15 +479,15 @@ public class BTLEvent_ChangePokemon : BTLEvent
 
 public class BTLEvent_Faint : BTLEvent
 {
-    public Pokemon[] faintedPokemon;
+    public PBS.Main.Pokemon.Pokemon[] faintedPokemon;
 
-    public void Create(Pokemon faintedPokemon)
+    public void Create(PBS.Main.Pokemon.Pokemon faintedPokemon)
     {
-        Create(new List<Pokemon> { faintedPokemon });
+        Create(new List<PBS.Main.Pokemon.Pokemon> { faintedPokemon });
     }
-    public void Create(List<Pokemon> faintedPokemon)
+    public void Create(List<PBS.Main.Pokemon.Pokemon> faintedPokemon)
     {
-        this.faintedPokemon = new Pokemon[faintedPokemon.Count];
+        this.faintedPokemon = new PBS.Main.Pokemon.Pokemon[faintedPokemon.Count];
         for (int i = 0; i < faintedPokemon.Count; i++)
         {
             this.faintedPokemon[i] = battleModel.GetBattleInstanceOfPokemon(faintedPokemon[i]);

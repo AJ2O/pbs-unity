@@ -9,6 +9,7 @@ using PBS.Main.Pokemon;
 using PBS.Main.Trainer;
 using PBS.Main.Team;
 using PBS.Databases;
+using PBS.Data;
 
 public class BTLUI : MonoBehaviour
 {
@@ -492,7 +493,7 @@ public class BTLUI : MonoBehaviour
         btn.image.color = select ? btn.colorSel : btn.colorUnsel;
         btn.moveTxt.color = select ? colorTxtSel : colorTxtUnsel;
 
-        MoveData moveData = (btn.moveslot == null) ? null : Moves.instance.GetMoveData(btn.moveslot.moveID);
+        Move moveData = (btn.moveslot == null) ? null : Moves.instance.GetMoveData(btn.moveslot.moveID);
         if (moveData != null)
         {
             if (ZMove)
@@ -524,7 +525,7 @@ public class BTLUI : MonoBehaviour
             {
                 if (moveData != null)
                 {
-                    TypeData typeData = ElementalTypes.instance.GetTypeData(moveData.moveType);
+                    PBS.Data.ElementalType typeData = PBS.Databases.ElementalTypes.instance.GetTypeData(moveData.moveType);
                     promptString += "\\c" + typeData.typeColor + "\\" + typeData.typeName + "\\c.\\";
                     promptString += "\nPP: " + btn.moveslot.PP + " / " + btn.moveslot.maxPP;
                 }

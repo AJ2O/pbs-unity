@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Data;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,11 +28,11 @@ namespace PBS.Databases
         }
 
         // Database
-        private Dictionary<string, AbilityData> database = new Dictionary<string, AbilityData>
+        private Dictionary<string, Ability> database = new Dictionary<string, Ability>
     {
         // Null / Placeholder
         {"",
-            new AbilityData(
+            new Ability(
                 ID: "",
                 abilityName: "",
                 tags: new AbilityTag[]
@@ -46,7 +47,7 @@ namespace PBS.Databases
 
         // Adaptability
         {"adaptability",
-            new AbilityData(
+            new Ability(
                 ID: "adaptability",
                 abilityName: "Adaptability",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -57,7 +58,7 @@ namespace PBS.Databases
 
         // Aerilate
         {"aerilate",
-            new AbilityData(
+            new Ability(
                 ID: "aerilate",
                 abilityName: "Aerilate",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -77,7 +78,7 @@ namespace PBS.Databases
 
         // Aftermath
         {"aftermath",
-            new AbilityData(
+            new Ability(
                 ID: "aftermath",
                 abilityName: "Aftermath",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -93,7 +94,7 @@ namespace PBS.Databases
 
         // Air Lock
         {"airlock",
-            new AbilityData(
+            new Ability(
                 ID: "airlock",
                 abilityName: "Air Lock",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -104,7 +105,7 @@ namespace PBS.Databases
 
         // Analytic
         {"analytic",
-            new AbilityData(
+            new Ability(
                 ID: "analytic",
                 abilityName: "Analytic",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -115,7 +116,7 @@ namespace PBS.Databases
 
         // Anger Point
         {"angerpoint",
-            new AbilityData(
+            new Ability(
                 ID: "angerpoint",
                 abilityName: "Anger Point",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -128,7 +129,7 @@ namespace PBS.Databases
 
         // Anticipation
         {"anticipation",
-            new AbilityData(
+            new Ability(
                 ID: "anticipation",
                 abilityName: "Anticipation",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -139,7 +140,7 @@ namespace PBS.Databases
 
         // Arena Trap
         {"arenatrap",
-            new AbilityData(
+            new Ability(
                 ID: "arenatrap",
                 abilityName: "Arena Trap",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -156,7 +157,7 @@ namespace PBS.Databases
 
         // Aroma Veil
         {"aromaveil",
-            new AbilityData(
+            new Ability(
                 ID: "aromaveil",
                 abilityName: "Aroma Veil",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -178,7 +179,7 @@ namespace PBS.Databases
 
         // Aura Break
         {"aurabreak",
-            new AbilityData(
+            new Ability(
                 ID: "aurabreak",
                 abilityName: "Aura Break",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -189,7 +190,7 @@ namespace PBS.Databases
 
         // Bad Dreams
         {"baddreams",
-            new AbilityData(
+            new Ability(
                 ID: "baddreams",
                 abilityName: "Bad Dreams",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -200,7 +201,7 @@ namespace PBS.Databases
 
         // Ball Fetch
         {"ballfetch",
-            new AbilityData(
+            new Ability(
                 ID: "ballfetch",
                 abilityName: "Ball Fetch",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -211,7 +212,7 @@ namespace PBS.Databases
 
         // Battery
         {"battery",
-            new AbilityData(
+            new Ability(
                 ID: "battery",
                 abilityName: "Battery",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -229,7 +230,7 @@ namespace PBS.Databases
 
         // Battle Armor
         {"battlearmor",
-            new AbilityData(
+            new Ability(
                 ID: "battlearmor",
                 abilityName: "Battle Armor",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -240,7 +241,7 @@ namespace PBS.Databases
 
         // Battle Bond
         {"battlebond",
-            new AbilityData(
+            new Ability(
                 ID: "battlebond",
                 abilityName: "Battle Bond",
                 tags: new AbilityTag[]
@@ -264,7 +265,7 @@ namespace PBS.Databases
 
         // Beast Boost
         {"beastboost",
-            new AbilityData(
+            new Ability(
                 ID: "beastboost",
                 abilityName: "Beast Boost",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -275,7 +276,7 @@ namespace PBS.Databases
 
         // Berserk
         {"berserk",
-            new AbilityData(
+            new Ability(
                 ID: "berserk",
                 abilityName: "Berserk",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -289,7 +290,7 @@ namespace PBS.Databases
 
         // Big Pecks
         {"bigpecks",
-            new AbilityData(
+            new Ability(
                 ID: "bigpecks",
                 abilityName: "Big Pecks",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -302,7 +303,7 @@ namespace PBS.Databases
 
         // Blaze
         {"blaze",
-            new AbilityData(
+            new Ability(
                 ID: "blaze",
                 abilityName: "Blaze",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -323,7 +324,7 @@ namespace PBS.Databases
 
         // Bulletproof
         {"bulletproof",
-            new AbilityData(
+            new Ability(
                 ID: "bulletproof",
                 abilityName: "Bulletproof",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -341,7 +342,7 @@ namespace PBS.Databases
 
         // Cacophony
         {"cacophony",
-            new AbilityData(
+            new Ability(
                 ID: "cacophony",
                 abilityName: "Cacophony",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -359,7 +360,7 @@ namespace PBS.Databases
 
         // Cheek Pouch
         {"cheekpouch",
-            new AbilityData(
+            new Ability(
                 ID: "cheekpouch",
                 abilityName: "Cheek Pouch",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -370,7 +371,7 @@ namespace PBS.Databases
 
         // Chlorophyll
         {"chlorophyll",
-            new AbilityData(
+            new Ability(
                 ID: "chlorophyll",
                 abilityName: "Chlorophyll",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -392,7 +393,7 @@ namespace PBS.Databases
 
         // Clear Body
         {"clearbody",
-            new AbilityData(
+            new Ability(
                 ID: "clearbody",
                 abilityName: "Clear Body",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -405,7 +406,7 @@ namespace PBS.Databases
 
         // Color Change
         {"colorchange",
-            new AbilityData(
+            new Ability(
                 ID: "colorchange",
                 abilityName: "Color Change",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -416,7 +417,7 @@ namespace PBS.Databases
 
         // Comatose
         {"comatose",
-            new AbilityData(
+            new Ability(
                 ID: "comatose",
                 abilityName: "Comatose",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -427,7 +428,7 @@ namespace PBS.Databases
 
         // Competitive
         {"competitive",
-            new AbilityData(
+            new Ability(
                 ID: "competitive",
                 abilityName: "Competitive",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -446,7 +447,7 @@ namespace PBS.Databases
 
         // Compound Eyes
         {"compoundeyes",
-            new AbilityData(
+            new Ability(
                 ID: "compoundeyes",
                 abilityName: "Compound Eyes",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -463,7 +464,7 @@ namespace PBS.Databases
 
         // Contrary
         {"contrary",
-            new AbilityData(
+            new Ability(
                 ID: "contrary",
                 abilityName: "Contrary",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -474,7 +475,7 @@ namespace PBS.Databases
 
         // Corrosion
         {"corrosion",
-            new AbilityData(
+            new Ability(
                 ID: "corrosion",
                 abilityName: "Corrosion",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -487,7 +488,7 @@ namespace PBS.Databases
 
         // Cotton Down
         {"cottondown",
-            new AbilityData(
+            new Ability(
                 ID: "cottondown",
                 abilityName: "Cotton Down",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -502,7 +503,7 @@ namespace PBS.Databases
 
         // Cursed Body
         {"cursedbody",
-            new AbilityData(
+            new Ability(
                 ID: "cursedbody",
                 abilityName: "Cursed Body",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -525,7 +526,7 @@ namespace PBS.Databases
 
         // Cute Charm
         {"cutecharm",
-            new AbilityData(
+            new Ability(
                 ID: "cutecharm",
                 abilityName: "Cute Charm",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -548,7 +549,7 @@ namespace PBS.Databases
 
         // Damp
         {"damp",
-            new AbilityData(
+            new Ability(
                 ID: "damp",
                 abilityName: "Damp",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -559,7 +560,7 @@ namespace PBS.Databases
 
         // Dancer
         {"dancer",
-            new AbilityData(
+            new Ability(
                 ID: "dancer",
                 abilityName: "Dancer",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -570,7 +571,7 @@ namespace PBS.Databases
 
         // Dark Aura
         {"darkaura",
-            new AbilityData(
+            new Ability(
                 ID: "darkaura",
                 abilityName: "Dark Aura",
                 tags: new AbilityTag[]
@@ -587,7 +588,7 @@ namespace PBS.Databases
 
         // Dauntless Shield
         {"dauntlessshield",
-            new AbilityData(
+            new Ability(
                 ID: "dauntlessshield",
                 abilityName: "Dauntless Shield",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -600,7 +601,7 @@ namespace PBS.Databases
 
         // Dazzling
         {"dazzling",
-            new AbilityData(
+            new Ability(
                 ID: "dazzling",
                 abilityName: "Dazzling",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -611,7 +612,7 @@ namespace PBS.Databases
 
         // Defeatist
         {"defeatist",
-            new AbilityData(
+            new Ability(
                 ID: "defeatist",
                 abilityName: "Defeatist",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -630,7 +631,7 @@ namespace PBS.Databases
 
         // Defiant
         {"defiant",
-            new AbilityData(
+            new Ability(
                 ID: "defiant",
                 abilityName: "Defiant",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -649,7 +650,7 @@ namespace PBS.Databases
 
         // Delta Stream
         {"deltastream",
-            new AbilityData(
+            new Ability(
                 ID: "deltastream",
                 abilityName: "Delta Stream",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -666,7 +667,7 @@ namespace PBS.Databases
 
         // Desolate Land
         {"desolateland",
-            new AbilityData(
+            new Ability(
                 ID: "desolateland",
                 abilityName: "Desolate Land",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -683,7 +684,7 @@ namespace PBS.Databases
 
         // Disguise
         {"disguise",
-            new AbilityData(
+            new Ability(
                 ID: "disguise",
                 abilityName: "Disguise",
                 tags: new AbilityTag[]
@@ -713,7 +714,7 @@ namespace PBS.Databases
 
         // Download
         {"download",
-            new AbilityData(
+            new Ability(
                 ID: "download",
                 abilityName: "Download",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -734,7 +735,7 @@ namespace PBS.Databases
 
         // Drizzle
         {"drizzle",
-            new AbilityData(
+            new Ability(
                 ID: "drizzle",
                 abilityName: "Drizzle",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -750,7 +751,7 @@ namespace PBS.Databases
 
         // Drought
         {"drought",
-            new AbilityData(
+            new Ability(
                 ID: "drought",
                 abilityName: "Drought",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -766,7 +767,7 @@ namespace PBS.Databases
 
         // Dry Skin
         {"dryskin",
-            new AbilityData(
+            new Ability(
                 ID: "dryskin",
                 abilityName: "Dry Skin",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -808,7 +809,7 @@ namespace PBS.Databases
 
         // Early Bird
         {"earlybird",
-            new AbilityData(
+            new Ability(
                 ID: "earlybird",
                 abilityName: "Early Bird",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -821,7 +822,7 @@ namespace PBS.Databases
 
         // Effect Spore
         {"effectspore",
-            new AbilityData(
+            new Ability(
                 ID: "effectspore",
                 abilityName: "Effect Spore",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -864,7 +865,7 @@ namespace PBS.Databases
 
         // Electric Surge
         {"electricsurge",
-            new AbilityData(
+            new Ability(
                 ID: "electricsurge",
                 abilityName: "Electric Surge",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -880,7 +881,7 @@ namespace PBS.Databases
 
         // Emergency Exit
         {"emergencyexit",
-            new AbilityData(
+            new Ability(
                 ID: "emergencyexit",
                 abilityName: "Emergency Exit",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -891,7 +892,7 @@ namespace PBS.Databases
 
         // Fairy Aura
         {"fairyaura",
-            new AbilityData(
+            new Ability(
                 ID: "fairyaura",
                 abilityName: "Fairy Aura",
                 tags: new AbilityTag[]
@@ -908,7 +909,7 @@ namespace PBS.Databases
 
         // Filter
         {"filter",
-            new AbilityData(
+            new Ability(
                 ID: "filter",
                 abilityName: "Filter",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -920,7 +921,7 @@ namespace PBS.Databases
 
         // Flame Body
         {"flamebody",
-            new AbilityData(
+            new Ability(
                 ID: "flamebody",
                 abilityName: "Flame Body",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -943,7 +944,7 @@ namespace PBS.Databases
 
         // Flare Boost
         {"flareboost",
-            new AbilityData(
+            new Ability(
                 ID: "flareboost",
                 abilityName: "Flare Boost",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -965,7 +966,7 @@ namespace PBS.Databases
 
         // Flash Fire
         {"flashfire",
-            new AbilityData(
+            new Ability(
                 ID: "flashfire",
                 abilityName: "Flash Fire",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -983,7 +984,7 @@ namespace PBS.Databases
 
         // Flower Gift
         {"flowergift",
-            new AbilityData(
+            new Ability(
                 ID: "flowergift",
                 abilityName: "Flower Gift",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1024,7 +1025,7 @@ namespace PBS.Databases
 
         // Fluffy
         {"fluffy",
-            new AbilityData(
+            new Ability(
                 ID: "fluffy",
                 abilityName: "Fluffy",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1047,7 +1048,7 @@ namespace PBS.Databases
 
         // Forecast
         {"forecast",
-            new AbilityData(
+            new Ability(
                 ID: "forecast",
                 abilityName: "Forecast",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1088,7 +1089,7 @@ namespace PBS.Databases
 
         // Forewarn
         {"forewarn",
-            new AbilityData(
+            new Ability(
                 ID: "forewarn",
                 abilityName: "Forewarn",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1099,7 +1100,7 @@ namespace PBS.Databases
 
         // Friend Guard
         {"friendguard",
-            new AbilityData(
+            new Ability(
                 ID: "friendguard",
                 abilityName: "Friend Guard",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1111,7 +1112,7 @@ namespace PBS.Databases
 
         // Frisk
         {"frisk",
-            new AbilityData(
+            new Ability(
                 ID: "frisk",
                 abilityName: "Frisk",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1122,7 +1123,7 @@ namespace PBS.Databases
 
         // Full Metal Body
         {"fullmetalbody",
-            new AbilityData(
+            new Ability(
                 ID: "fullmetalbody",
                 abilityName: "Full Metal Body",
                 tags: new AbilityTag[]
@@ -1139,7 +1140,7 @@ namespace PBS.Databases
 
         // Fur Coat
         {"furcoat",
-            new AbilityData(
+            new Ability(
                 ID: "furcoat",
                 abilityName: "Fur Coat",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1156,7 +1157,7 @@ namespace PBS.Databases
 
         // Gale Wings
         {"galewings",
-            new AbilityData(
+            new Ability(
                 ID: "galewings",
                 abilityName: "Gale Wings",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1175,7 +1176,7 @@ namespace PBS.Databases
 
         // Galvanize
         {"galvanize",
-            new AbilityData(
+            new Ability(
                 ID: "galvanize",
                 abilityName: "Galvanize",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1195,7 +1196,7 @@ namespace PBS.Databases
 
         // Gluttony
         {"gluttony",
-            new AbilityData(
+            new Ability(
                 ID: "gluttony",
                 abilityName: "Gluttony",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1206,7 +1207,7 @@ namespace PBS.Databases
 
         // Gooey
         {"gooey",
-            new AbilityData(
+            new Ability(
                 ID: "gooey",
                 abilityName: "Gooey",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1220,7 +1221,7 @@ namespace PBS.Databases
 
         // Gorilla Tactics
         {"gorillatactics",
-            new AbilityData(
+            new Ability(
                 ID: "gorillatactics",
                 abilityName: "Gorilla Tactics",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1238,7 +1239,7 @@ namespace PBS.Databases
 
         // Grass Pelt
         {"grasspelt",
-            new AbilityData(
+            new Ability(
                 ID: "grasspelt",
                 abilityName: "Grass Pelt",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1260,7 +1261,7 @@ namespace PBS.Databases
 
         // Grassy Surge
         {"grassysurge",
-            new AbilityData(
+            new Ability(
                 ID: "grassysurge",
                 abilityName: "Grassy Surge",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1276,7 +1277,7 @@ namespace PBS.Databases
 
         // Gulp Missile
         {"gulpmissile",
-            new AbilityData(
+            new Ability(
                 ID: "gulpmissile",
                 abilityName: "Gulp Missile",
                 tags: new AbilityTag[]
@@ -1337,7 +1338,7 @@ namespace PBS.Databases
 
         // Guts
         {"guts",
-            new AbilityData(
+            new Ability(
                 ID: "guts",
                 abilityName: "Guts",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1358,7 +1359,7 @@ namespace PBS.Databases
 
         // Harvest
         {"harvest",
-            new AbilityData(
+            new Ability(
                 ID: "harvest",
                 abilityName: "Harvest",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1385,7 +1386,7 @@ namespace PBS.Databases
 
         // Healer
         {"healer",
-            new AbilityData(
+            new Ability(
                 ID: "healer",
                 abilityName: "Healer",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1400,7 +1401,7 @@ namespace PBS.Databases
 
         // Heatproof
         {"heatproof",
-            new AbilityData(
+            new Ability(
                 ID: "heatproof",
                 abilityName: "Heatproof",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1419,7 +1420,7 @@ namespace PBS.Databases
         
         // Heavy Metal
         {"heavymetal",
-            new AbilityData(
+            new Ability(
                 ID: "heavymetal",
                 abilityName: "Heavy Metal",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1430,7 +1431,7 @@ namespace PBS.Databases
 
         // Huge Power
         {"hugepower",
-            new AbilityData(
+            new Ability(
                 ID: "hugepower",
                 abilityName: "Huge Power",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1447,7 +1448,7 @@ namespace PBS.Databases
 
         // Hunger Switch
         {"hungerswitch",
-            new AbilityData(
+            new Ability(
                 ID: "hungerswitch",
                 abilityName: "Hunger Switch",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1460,7 +1461,7 @@ namespace PBS.Databases
 
         // Hustle
         {"hustle",
-            new AbilityData(
+            new Ability(
                 ID: "hustle",
                 abilityName: "Hustle",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1485,7 +1486,7 @@ namespace PBS.Databases
 
         // Hydration
         {"hydration",
-            new AbilityData(
+            new Ability(
                 ID: "hydration",
                 abilityName: "Hydration",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1506,7 +1507,7 @@ namespace PBS.Databases
 
         // Hyper Cutter
         {"hypercutter",
-            new AbilityData(
+            new Ability(
                 ID: "hypercutter",
                 abilityName: "Hyper Cutter",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1519,7 +1520,7 @@ namespace PBS.Databases
 
         // Ice Body
         {"icebody",
-            new AbilityData(
+            new Ability(
                 ID: "icebody",
                 abilityName: "Ice Body",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1538,7 +1539,7 @@ namespace PBS.Databases
 
         // Ice Face
         {"iceface",
-            new AbilityData(
+            new Ability(
                 ID: "iceface",
                 abilityName: "Ice Face",
                 tags: new AbilityTag[]
@@ -1579,7 +1580,7 @@ namespace PBS.Databases
 
         // Ice Scales
         {"icescales",
-            new AbilityData(
+            new Ability(
                 ID: "icescales",
                 abilityName: "Ice Scales",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1593,7 +1594,7 @@ namespace PBS.Databases
 
         // Illusion
         {"illusion",
-            new AbilityData(
+            new Ability(
                 ID: "illusion",
                 abilityName: "Illusion",
                 tags: new AbilityTag[]
@@ -1609,7 +1610,7 @@ namespace PBS.Databases
 
         // Immunity
         {"immunity",
-            new AbilityData(
+            new Ability(
                 ID: "immunity",
                 abilityName: "Immunity",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1622,7 +1623,7 @@ namespace PBS.Databases
 
         // Infiltrator
         {"infiltrator",
-            new AbilityData(
+            new Ability(
                 ID: "infiltrator",
                 abilityName: "Infiltrator",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1633,7 +1634,7 @@ namespace PBS.Databases
 
         // Innards Out
         {"innardsout",
-            new AbilityData(
+            new Ability(
                 ID: "innardsout",
                 abilityName: "Innards Out",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1651,7 +1652,7 @@ namespace PBS.Databases
 
         // Inner Focus
         {"innerfocus",
-            new AbilityData(
+            new Ability(
                 ID: "innerfocus",
                 abilityName: "Inner Focus",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1667,7 +1668,7 @@ namespace PBS.Databases
 
         // Insomnia
         {"insomnia",
-            new AbilityData(
+            new Ability(
                 ID: "insomnia",
                 abilityName: "Insomnia",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1680,7 +1681,7 @@ namespace PBS.Databases
 
         // Intimidate
         {"intimidate",
-            new AbilityData(
+            new Ability(
                 ID: "intimidate",
                 abilityName: "Intimidate",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1693,7 +1694,7 @@ namespace PBS.Databases
 
         // Intrepid Sword
         {"intrepidsword",
-            new AbilityData(
+            new Ability(
                 ID: "intrepidsword",
                 abilityName: "Intrepid Sword",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1706,7 +1707,7 @@ namespace PBS.Databases
 
         // Iron Barbs
         {"ironbarbs",
-            new AbilityData(
+            new Ability(
                 ID: "ironbarbs",
                 abilityName: "Iron Barbs",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1728,7 +1729,7 @@ namespace PBS.Databases
 
         // Iron Fist
         {"ironfist",
-            new AbilityData(
+            new Ability(
                 ID: "ironfist",
                 abilityName: "Iron Fist",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1747,7 +1748,7 @@ namespace PBS.Databases
 
         // Justified
         {"justified",
-            new AbilityData(
+            new Ability(
                 ID: "justified",
                 abilityName: "Justified",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1767,7 +1768,7 @@ namespace PBS.Databases
 
         // Keen Eye
         {"keeneye",
-            new AbilityData(
+            new Ability(
                 ID: "keeneye",
                 abilityName: "Keen Eye",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1784,7 +1785,7 @@ namespace PBS.Databases
 
         // Leaf Guard
         {"leafguard",
-            new AbilityData(
+            new Ability(
                 ID: "leafguard",
                 abilityName: "Leaf Guard",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1797,7 +1798,7 @@ namespace PBS.Databases
 
         // Levitate
         {"levitate",
-            new AbilityData(
+            new Ability(
                 ID: "levitate",
                 abilityName: "Levitate",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1808,7 +1809,7 @@ namespace PBS.Databases
 
         // Libero
         {"libero",
-            new AbilityData(
+            new Ability(
                 ID: "libero",
                 abilityName: "Libero",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1819,7 +1820,7 @@ namespace PBS.Databases
 
         // Light Metal
         {"lightmetal",
-            new AbilityData(
+            new Ability(
                 ID: "lightmetal",
                 abilityName: "Light Metal",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1830,7 +1831,7 @@ namespace PBS.Databases
 
         // Lightning Rod
         {"lightningrod",
-            new AbilityData(
+            new Ability(
                 ID: "lightningrod",
                 abilityName: "Lightning Rod",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1856,7 +1857,7 @@ namespace PBS.Databases
 
         // Limber
         {"limber",
-            new AbilityData(
+            new Ability(
                 ID: "limber",
                 abilityName: "Limber",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1869,7 +1870,7 @@ namespace PBS.Databases
 
         // Liquid Ooze
         {"liquidooze",
-            new AbilityData(
+            new Ability(
                 ID: "liquidooze",
                 abilityName: "Liquid Ooze",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1880,7 +1881,7 @@ namespace PBS.Databases
 
         // Liquid Voice
         {"liquidvoice",
-            new AbilityData(
+            new Ability(
                 ID: "liquidvoice",
                 abilityName: "Liquid Voice",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1900,7 +1901,7 @@ namespace PBS.Databases
 
         // Magic Bounce
         {"magicbounce",
-            new AbilityData(
+            new Ability(
                 ID: "magicbounce",
                 abilityName: "Magic Bounce",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1919,7 +1920,7 @@ namespace PBS.Databases
 
         // Magic Guard
         {"magicguard",
-            new AbilityData(
+            new Ability(
                 ID: "magicguard",
                 abilityName: "Magic Guard",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1931,7 +1932,7 @@ namespace PBS.Databases
 
         // Magician
         {"magician",
-            new AbilityData(
+            new Ability(
                 ID: "magician",
                 abilityName: "Magician",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1942,7 +1943,7 @@ namespace PBS.Databases
 
         // Magma Armor
         {"magmaarmor",
-            new AbilityData(
+            new Ability(
                 ID: "magmaarmor",
                 abilityName: "Magma Armor",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1955,7 +1956,7 @@ namespace PBS.Databases
 
         // Magnet Pull
         {"magnetpull",
-            new AbilityData(
+            new Ability(
                 ID: "magnetpull",
                 abilityName: "Magnet Pull",
                 tags: new AbilityTag[]
@@ -1976,7 +1977,7 @@ namespace PBS.Databases
 
         // Marvel Scale
         {"marvelscale",
-            new AbilityData(
+            new Ability(
                 ID: "marvelscale",
                 abilityName: "Marvel Scale",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -1997,7 +1998,7 @@ namespace PBS.Databases
 
         // Mega Launcher
         {"megalauncher",
-            new AbilityData(
+            new Ability(
                 ID: "megalauncher",
                 abilityName: "Mega Launcher",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2016,7 +2017,7 @@ namespace PBS.Databases
 
         // Merciless
         {"merciless",
-            new AbilityData(
+            new Ability(
                 ID: "merciless",
                 abilityName: "Merciless",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2036,7 +2037,7 @@ namespace PBS.Databases
 
         // Mimicry
         {"mimicry",
-            new AbilityData(
+            new Ability(
                 ID: "mimicry",
                 abilityName: "Mimicry",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2067,7 +2068,7 @@ namespace PBS.Databases
 
         // Minus
         {"minus",
-            new AbilityData(
+            new Ability(
                 ID: "minus",
                 abilityName: "Minus",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2086,7 +2087,7 @@ namespace PBS.Databases
 
         // Mirror Armor
         {"mirrorarmor",
-            new AbilityData(
+            new Ability(
                 ID: "mirrorarmor",
                 abilityName: "Mirror Armor",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2104,7 +2105,7 @@ namespace PBS.Databases
 
         // Misty Surge
         {"mistysurge",
-            new AbilityData(
+            new Ability(
                 ID: "mistysurge",
                 abilityName: "Misty Surge",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2120,7 +2121,7 @@ namespace PBS.Databases
 
         // Mold Breaker
         {"moldbreaker",
-            new AbilityData(
+            new Ability(
                 ID: "moldbreaker",
                 abilityName: "Mold Breaker",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2131,7 +2132,7 @@ namespace PBS.Databases
 
         // Moody
         {"moody",
-            new AbilityData(
+            new Ability(
                 ID: "moody",
                 abilityName: "Moody",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2159,7 +2160,7 @@ namespace PBS.Databases
 
         // Motor Drive
         {"motordrive",
-            new AbilityData(
+            new Ability(
                 ID: "motordrive",
                 abilityName: "Motor Drive",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2177,7 +2178,7 @@ namespace PBS.Databases
 
         // Moxie
         {"moxie",
-            new AbilityData(
+            new Ability(
                 ID: "moxie",
                 abilityName: "Moxie",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2190,7 +2191,7 @@ namespace PBS.Databases
 
         // Multitype
         {"multitype",
-            new AbilityData(
+            new Ability(
                 ID: "multitype",
                 abilityName: "Multitype",
                 tags: new AbilityTag[]
@@ -2212,7 +2213,7 @@ namespace PBS.Databases
 
         // Multiscale
         {"multiscale",
-            new AbilityData(
+            new Ability(
                 ID: "multiscale",
                 abilityName: "Multiscale",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2223,7 +2224,7 @@ namespace PBS.Databases
 
         // Mummy
         {"mummy",
-            new AbilityData(
+            new Ability(
                 ID: "mummy",
                 abilityName: "Mummy",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2234,7 +2235,7 @@ namespace PBS.Databases
 
         // Natural Cure
         {"naturalcure",
-            new AbilityData(
+            new Ability(
                 ID: "naturalcure",
                 abilityName: "Natural Cure",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2253,7 +2254,7 @@ namespace PBS.Databases
 
         // Neuroforce
         {"neuroforce",
-            new AbilityData(
+            new Ability(
                 ID: "neuroforce",
                 abilityName: "Neuroforce",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2265,7 +2266,7 @@ namespace PBS.Databases
 
         // Neutralizing Gas
         {"neutralizinggas",
-            new AbilityData(
+            new Ability(
                 ID: "neutralizinggas",
                 abilityName: "Neutralizing Gas",
                 tags: new AbilityTag[]
@@ -2280,7 +2281,7 @@ namespace PBS.Databases
 
         // No Guard
         {"noguard",
-            new AbilityData(
+            new Ability(
                 ID: "noguard",
                 abilityName: "No Guard",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2291,7 +2292,7 @@ namespace PBS.Databases
 
         // Normalize
         {"normalize",
-            new AbilityData(
+            new Ability(
                 ID: "normalize",
                 abilityName: "Normalize",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2304,7 +2305,7 @@ namespace PBS.Databases
 
         // Oblivious
         {"oblivious",
-            new AbilityData(
+            new Ability(
                 ID: "oblivious",
                 abilityName: "Oblivious",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2320,7 +2321,7 @@ namespace PBS.Databases
 
         // Overcoat
         {"overcoat",
-            new AbilityData(
+            new Ability(
                 ID: "overcoat",
                 abilityName: "Overcoat",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2339,7 +2340,7 @@ namespace PBS.Databases
 
         // Overgrow
         {"overgrow",
-            new AbilityData(
+            new Ability(
                 ID: "overgrow",
                 abilityName: "Overgrow",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2360,7 +2361,7 @@ namespace PBS.Databases
 
         // Own Tempo
         {"owntempo",
-            new AbilityData(
+            new Ability(
                 ID: "owntempo",
                 abilityName: "Own Tempo",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2376,7 +2377,7 @@ namespace PBS.Databases
 
         // Parental Bond
         {"parentalbond",
-            new AbilityData(
+            new Ability(
                 ID: "parentalbond",
                 abilityName: "Parental Bond",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2393,7 +2394,7 @@ namespace PBS.Databases
 
         // Pastel Veil
         {"pastelveil",
-            new AbilityData(
+            new Ability(
                 ID: "pastelveil",
                 abilityName: "Pastel Veil",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2407,7 +2408,7 @@ namespace PBS.Databases
 
         // Perish Body
         {"perishbody",
-            new AbilityData(
+            new Ability(
                 ID: "perishbody",
                 abilityName: "Perish Body",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2430,7 +2431,7 @@ namespace PBS.Databases
 
         // Pickpocket
         {"pickpocket",
-            new AbilityData(
+            new Ability(
                 ID: "pickpocket",
                 abilityName: "Pickpocket",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2441,7 +2442,7 @@ namespace PBS.Databases
 
         // Pixilate
         {"pixilate",
-            new AbilityData(
+            new Ability(
                 ID: "pixilate",
                 abilityName: "Pixilate",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2461,7 +2462,7 @@ namespace PBS.Databases
 
         // Plus
         {"plus",
-            new AbilityData(
+            new Ability(
                 ID: "plus",
                 abilityName: "Plus",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2480,7 +2481,7 @@ namespace PBS.Databases
 
         // Poison Heal
         {"poisonheal",
-            new AbilityData(
+            new Ability(
                 ID: "poisonheal",
                 abilityName: "Poison Heal",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2508,7 +2509,7 @@ namespace PBS.Databases
 
         // Poison Point
         {"poisonpoint",
-            new AbilityData(
+            new Ability(
                 ID: "poisonpoint",
                 abilityName: "Poison Point",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2531,7 +2532,7 @@ namespace PBS.Databases
 
         // Poison Touch
         {"poisontouch",
-            new AbilityData(
+            new Ability(
                 ID: "poisontouch",
                 abilityName: "Poison Touch",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2553,7 +2554,7 @@ namespace PBS.Databases
 
         // Power Construct
         {"powerconstruct",
-            new AbilityData(
+            new Ability(
                 ID: "powerconstruct",
                 abilityName: "Power Construct",
                 tags: new AbilityTag[]
@@ -2577,7 +2578,7 @@ namespace PBS.Databases
 
         // Power Of Alchemy
         {"powerofalchemy",
-            new AbilityData(
+            new Ability(
                 ID: "powerofalchemy",
                 abilityName: "Power Of Alchemy",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2588,7 +2589,7 @@ namespace PBS.Databases
 
         // Power Spot
         {"powerspot",
-            new AbilityData(
+            new Ability(
                 ID: "powerspot",
                 abilityName: "Power Spot",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2599,7 +2600,7 @@ namespace PBS.Databases
 
         // Prankster
         {"prankster",
-            new AbilityData(
+            new Ability(
                 ID: "prankster",
                 abilityName: "Prankster",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2629,7 +2630,7 @@ namespace PBS.Databases
 
         // Pressure
         {"pressure",
-            new AbilityData(
+            new Ability(
                 ID: "pressure",
                 abilityName: "Pressure",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2640,7 +2641,7 @@ namespace PBS.Databases
 
         // Primordial Sea
         {"primordialsea",
-            new AbilityData(
+            new Ability(
                 ID: "primordialsea",
                 abilityName: "Primordial Sea",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2657,7 +2658,7 @@ namespace PBS.Databases
 
         // Prism Armor
         {"prismarmor",
-            new AbilityData(
+            new Ability(
                 ID: "prismarmor",
                 abilityName: "Prism Armor",
                 tags: new AbilityTag[]
@@ -2673,7 +2674,7 @@ namespace PBS.Databases
 
         // Propeller Tail
         {"propellertail",
-            new AbilityData(
+            new Ability(
                 ID: "propellertail",
                 abilityName: "Propeller Tail",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2684,7 +2685,7 @@ namespace PBS.Databases
 
         // Protean
         {"protean",
-            new AbilityData(
+            new Ability(
                 ID: "protean",
                 abilityName: "Protean",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2695,7 +2696,7 @@ namespace PBS.Databases
 
         // Psychic Surge
         {"psychicsurge",
-            new AbilityData(
+            new Ability(
                 ID: "psychicsurge",
                 abilityName: "Psychic Surge",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2711,7 +2712,7 @@ namespace PBS.Databases
 
         // Punk Rock
         {"punkrock",
-            new AbilityData(
+            new Ability(
                 ID: "punkrock",
                 abilityName: "Punk Rock",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2734,7 +2735,7 @@ namespace PBS.Databases
 
         // Pure Power
         {"purepower",
-            new AbilityData(
+            new Ability(
                 ID: "purepower",
                 abilityName: "Pure Power",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2751,7 +2752,7 @@ namespace PBS.Databases
 
         // Queenly Majesty
         {"queenlymajesty",
-            new AbilityData(
+            new Ability(
                 ID: "queenlymajesty",
                 abilityName: "Queenly Majesty",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2762,7 +2763,7 @@ namespace PBS.Databases
 
         // Quick Draw
         {"quickdraw",
-            new AbilityData(
+            new Ability(
                 ID: "quickdraw",
                 abilityName: "Quick Draw",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2773,7 +2774,7 @@ namespace PBS.Databases
 
         // Quick Feet
         {"quickfeet",
-            new AbilityData(
+            new Ability(
                 ID: "quickfeet",
                 abilityName: "Quick Feet",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2794,7 +2795,7 @@ namespace PBS.Databases
 
         // Rain Dish
         {"raindish",
-            new AbilityData(
+            new Ability(
                 ID: "raindish",
                 abilityName: "Rain Dish",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2813,7 +2814,7 @@ namespace PBS.Databases
 
         // Rattled
         {"rattled",
-            new AbilityData(
+            new Ability(
                 ID: "rattled",
                 abilityName: "Rattled",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2837,7 +2838,7 @@ namespace PBS.Databases
 
         // Receiver
         {"receiver",
-            new AbilityData(
+            new Ability(
                 ID: "receiver",
                 abilityName: "Receiver",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2848,7 +2849,7 @@ namespace PBS.Databases
 
         // Reckless
         {"reckless",
-            new AbilityData(
+            new Ability(
                 ID: "reckless",
                 abilityName: "Reckless",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2867,7 +2868,7 @@ namespace PBS.Databases
 
         // Refrigerate
         {"refrigerate",
-            new AbilityData(
+            new Ability(
                 ID: "refrigerate",
                 abilityName: "Refrigerate",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2887,7 +2888,7 @@ namespace PBS.Databases
 
         // Regenerator
         {"regenerator",
-            new AbilityData(
+            new Ability(
                 ID: "regenerator",
                 abilityName: "Regenerator",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2903,7 +2904,7 @@ namespace PBS.Databases
 
         // Ripen
         {"ripen",
-            new AbilityData(
+            new Ability(
                 ID: "ripen",
                 abilityName: "Ripen",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2922,7 +2923,7 @@ namespace PBS.Databases
 
         // Rivalry
         {"rivalry",
-            new AbilityData(
+            new Ability(
                 ID: "rivalry",
                 abilityName: "Rivalry",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2933,7 +2934,7 @@ namespace PBS.Databases
 
         // RKS System
         {"rkssystem",
-            new AbilityData(
+            new Ability(
                 ID: "rkssystem",
                 abilityName: "RKS System",
                 tags: new AbilityTag[]
@@ -2955,7 +2956,7 @@ namespace PBS.Databases
 
         // Rock Head
         {"rockhead",
-            new AbilityData(
+            new Ability(
                 ID: "rockhead",
                 abilityName: "Rock Head",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2966,7 +2967,7 @@ namespace PBS.Databases
 
         // Rough Skin
         {"roughskin",
-            new AbilityData(
+            new Ability(
                 ID: "roughskin",
                 abilityName: "Rough Skin",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2988,7 +2989,7 @@ namespace PBS.Databases
 
         // Run Away
         {"runaway",
-            new AbilityData(
+            new Ability(
                 ID: "runaway",
                 abilityName: "Run Away",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -2999,7 +3000,7 @@ namespace PBS.Databases
 
         // Sand Force
         {"sandforce",
-            new AbilityData(
+            new Ability(
                 ID: "sandforce",
                 abilityName: "Sand Force",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3022,7 +3023,7 @@ namespace PBS.Databases
 
         // Sand Rush
         {"sandrush",
-            new AbilityData(
+            new Ability(
                 ID: "sandrush",
                 abilityName: "Sand Rush",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3047,7 +3048,7 @@ namespace PBS.Databases
 
         // Sand Spit
         {"sandspit",
-            new AbilityData(
+            new Ability(
                 ID: "sandspit",
                 abilityName: "Sand Spit",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3063,7 +3064,7 @@ namespace PBS.Databases
 
         // Sand Stream
         {"sandstream",
-            new AbilityData(
+            new Ability(
                 ID: "sandstream",
                 abilityName: "Sand Stream",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3079,7 +3080,7 @@ namespace PBS.Databases
 
         // Sand Veil
         {"sandveil",
-            new AbilityData(
+            new Ability(
                 ID: "sandveil",
                 abilityName: "Sand Veil",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3106,7 +3107,7 @@ namespace PBS.Databases
 
         // Sap Sipper
         {"sapsipper",
-            new AbilityData(
+            new Ability(
                 ID: "sapsipper",
                 abilityName: "Sap Sipper",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3124,7 +3125,7 @@ namespace PBS.Databases
 
         // Schooling
         {"schooling",
-            new AbilityData(
+            new Ability(
                 ID: "schooling",
                 abilityName: "Schooling",
                 tags: new AbilityTag[]
@@ -3153,7 +3154,7 @@ namespace PBS.Databases
 
         // Scrappy
         {"scrappy",
-            new AbilityData(
+            new Ability(
                 ID: "scrappy",
                 abilityName: "Scrappy",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3169,7 +3170,7 @@ namespace PBS.Databases
 
         // Screen Cleaner
         {"screencleaner",
-            new AbilityData(
+            new Ability(
                 ID: "screencleaner",
                 abilityName: "Screen Cleaner",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3180,7 +3181,7 @@ namespace PBS.Databases
 
         // Serene Grace
         {"serenegrace",
-            new AbilityData(
+            new Ability(
                 ID: "serenegrace",
                 abilityName: "Serene Grace",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3191,7 +3192,7 @@ namespace PBS.Databases
 
         // Shadow Shield
         {"shadowshield",
-            new AbilityData(
+            new Ability(
                 ID: "shadowshield",
                 abilityName: "Shadow Shield",
                 tags: new AbilityTag[]
@@ -3206,7 +3207,7 @@ namespace PBS.Databases
 
         // Shadow Tag
         {"shadowtag",
-            new AbilityData(
+            new Ability(
                 ID: "shadowtag",
                 abilityName: "Shadow Tag",
                 tags: new AbilityTag[]
@@ -3226,7 +3227,7 @@ namespace PBS.Databases
 
         // Shed Skin
         {"shedskin",
-            new AbilityData(
+            new Ability(
                 ID: "shedskin",
                 abilityName: "Shed Skin",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3240,7 +3241,7 @@ namespace PBS.Databases
 
         // Sheer Force
         {"sheerforce",
-            new AbilityData(
+            new Ability(
                 ID: "sheerforce",
                 abilityName: "Sheer Force",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3251,7 +3252,7 @@ namespace PBS.Databases
 
         // Shell Armor
         {"shellarmor",
-            new AbilityData(
+            new Ability(
                 ID: "shellarmor",
                 abilityName: "Shell Armor",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3262,7 +3263,7 @@ namespace PBS.Databases
 
         // Shield Dust
         {"shielddust",
-            new AbilityData(
+            new Ability(
                 ID: "shielddust",
                 abilityName: "Shield Dust",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3273,7 +3274,7 @@ namespace PBS.Databases
 
         // Shields Down
         {"shieldsdown",
-            new AbilityData(
+            new Ability(
                 ID: "shieldsdown",
                 abilityName: "Shields Down",
                 tags: new AbilityTag[]
@@ -3317,7 +3318,7 @@ namespace PBS.Databases
 
         // Simple
         {"simple",
-            new AbilityData(
+            new Ability(
                 ID: "simple",
                 abilityName: "Simple",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3328,7 +3329,7 @@ namespace PBS.Databases
 
         // Skill Link
         {"skilllink",
-            new AbilityData(
+            new Ability(
                 ID: "skilllink",
                 abilityName: "Skill Link",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3339,7 +3340,7 @@ namespace PBS.Databases
 
         // Slow Start
         {"slowstart",
-            new AbilityData(
+            new Ability(
                 ID: "slowstart",
                 abilityName: "Slow Start",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3357,7 +3358,7 @@ namespace PBS.Databases
 
         // Slush Rush
         {"slushrush",
-            new AbilityData(
+            new Ability(
                 ID: "slushrush",
                 abilityName: "Slush Rush",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3379,7 +3380,7 @@ namespace PBS.Databases
 
         // Sniper
         {"sniper",
-            new AbilityData(
+            new Ability(
                 ID: "sniper",
                 abilityName: "Sniper",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3390,7 +3391,7 @@ namespace PBS.Databases
 
         // Snow Cloak
         {"snowcloak",
-            new AbilityData(
+            new Ability(
                 ID: "snowcloak",
                 abilityName: "Snow Cloak",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3417,7 +3418,7 @@ namespace PBS.Databases
 
         // Snow Warning
         {"snowwarning",
-            new AbilityData(
+            new Ability(
                 ID: "snowwarning",
                 abilityName: "Snow Warning",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3433,7 +3434,7 @@ namespace PBS.Databases
 
         // Solar Power
         {"solarpower",
-            new AbilityData(
+            new Ability(
                 ID: "solarpower",
                 abilityName: "Solar Power",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3466,7 +3467,7 @@ namespace PBS.Databases
 
         // Solid Rock
         {"solidrock",
-            new AbilityData(
+            new Ability(
                 ID: "solidrock",
                 abilityName: "Solid Rock",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3478,7 +3479,7 @@ namespace PBS.Databases
 
         // Soundproof
         {"soundproof",
-            new AbilityData(
+            new Ability(
                 ID: "soundproof",
                 abilityName: "Soundproof",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3496,7 +3497,7 @@ namespace PBS.Databases
 
         // Soul-Heart
         {"soulheart",
-            new AbilityData(
+            new Ability(
                 ID: "soulheart",
                 abilityName: "Soul-Heart",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3509,7 +3510,7 @@ namespace PBS.Databases
 
         // Speed Boost
         {"speedboost",
-            new AbilityData(
+            new Ability(
                 ID: "speedboost",
                 abilityName: "Speed Boost",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3522,7 +3523,7 @@ namespace PBS.Databases
 
         // Stakeout
         {"stakeout",
-            new AbilityData(
+            new Ability(
                 ID: "stakeout",
                 abilityName: "Stakeout",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3533,7 +3534,7 @@ namespace PBS.Databases
 
         // Stall
         {"stall",
-            new AbilityData(
+            new Ability(
                 ID: "stall",
                 abilityName: "Stall",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3544,7 +3545,7 @@ namespace PBS.Databases
 
         // Stalwart
         {"stalwart",
-            new AbilityData(
+            new Ability(
                 ID: "stalwart",
                 abilityName: "Stalwart",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3555,7 +3556,7 @@ namespace PBS.Databases
 
         // Stamina
         {"stamina",
-            new AbilityData(
+            new Ability(
                 ID: "stamina",
                 abilityName: "Stamina",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3568,7 +3569,7 @@ namespace PBS.Databases
 
         // Stance Change
         {"stancechange",
-            new AbilityData(
+            new Ability(
                 ID: "stancechange",
                 abilityName: "Stance Change",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3600,7 +3601,7 @@ namespace PBS.Databases
 
         // Static
         {"static",
-            new AbilityData(
+            new Ability(
                 ID: "static",
                 abilityName: "Static",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3623,7 +3624,7 @@ namespace PBS.Databases
 
         // Steam Engine
         {"steamengine",
-            new AbilityData(
+            new Ability(
                 ID: "steamengine",
                 abilityName: "Steam Engine",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3643,7 +3644,7 @@ namespace PBS.Databases
 
         // Steelworker
         {"steelworker",
-            new AbilityData(
+            new Ability(
                 ID: "steelworker",
                 abilityName: "Steelworker",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3663,7 +3664,7 @@ namespace PBS.Databases
 
         // Steely Spirit
         {"steelyspirit",
-            new AbilityData(
+            new Ability(
                 ID: "steelyspirit",
                 abilityName: "Steely Spirit",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3684,7 +3685,7 @@ namespace PBS.Databases
 
         // Stench
         {"stench",
-            new AbilityData(
+            new Ability(
                 ID: "stench",
                 abilityName: "Stench",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3706,7 +3707,7 @@ namespace PBS.Databases
 
         // Sticky Hold
         {"stickyhold",
-            new AbilityData(
+            new Ability(
                 ID: "stickyhold",
                 abilityName: "Sticky Hold",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3717,7 +3718,7 @@ namespace PBS.Databases
 
         // Storm Drain
         {"stormdrain",
-            new AbilityData(
+            new Ability(
                 ID: "stormdrain",
                 abilityName: "Storm Drain",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3743,7 +3744,7 @@ namespace PBS.Databases
 
         // Strong Jaw
         {"strongjaw",
-            new AbilityData(
+            new Ability(
                 ID: "strongjaw",
                 abilityName: "Strong Jaw",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3762,7 +3763,7 @@ namespace PBS.Databases
 
         // Sturdy
         {"sturdy",
-            new AbilityData(
+            new Ability(
                 ID: "sturdy",
                 abilityName: "Sturdy",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3773,7 +3774,7 @@ namespace PBS.Databases
 
         // Suction Cups
         {"suctioncups",
-            new AbilityData(
+            new Ability(
                 ID: "suctioncups",
                 abilityName: "Suction Cups",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3784,7 +3785,7 @@ namespace PBS.Databases
 
         // Super Luck
         {"superluck",
-            new AbilityData(
+            new Ability(
                 ID: "superluck",
                 abilityName: "Super Luck",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3795,7 +3796,7 @@ namespace PBS.Databases
 
         // Surge Surfer
         {"surgesurfer",
-            new AbilityData(
+            new Ability(
                 ID: "surgesurfer",
                 abilityName: "Surge Surfer",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3817,7 +3818,7 @@ namespace PBS.Databases
 
         // Swarm
         {"swarm",
-            new AbilityData(
+            new Ability(
                 ID: "swarm",
                 abilityName: "Swarm",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3838,7 +3839,7 @@ namespace PBS.Databases
 
         // Sweet Veil
         {"sweetveil",
-            new AbilityData(
+            new Ability(
                 ID: "sweetveil",
                 abilityName: "Sweet Veil",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3852,7 +3853,7 @@ namespace PBS.Databases
 
         // Swift Swim
         {"swiftswim",
-            new AbilityData(
+            new Ability(
                 ID: "swiftswim",
                 abilityName: "Swift Swim",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3874,7 +3875,7 @@ namespace PBS.Databases
 
         // Symbiosis
         {"symbiosis",
-            new AbilityData(
+            new Ability(
                 ID: "symbiosis",
                 abilityName: "Symbiosis",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3885,7 +3886,7 @@ namespace PBS.Databases
 
         // Synchronize
         {"synchronize",
-            new AbilityData(
+            new Ability(
                 ID: "synchronize",
                 abilityName: "Synchronize",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3900,7 +3901,7 @@ namespace PBS.Databases
 
         // Tangled Feet
         {"tangledfeet",
-            new AbilityData(
+            new Ability(
                 ID: "tangledfeet",
                 abilityName: "Tangled Feet",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3921,7 +3922,7 @@ namespace PBS.Databases
 
         // Tangling Hair
         {"tanglinghair",
-            new AbilityData(
+            new Ability(
                 ID: "tanglinghair",
                 abilityName: "Tangling Hair",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3935,7 +3936,7 @@ namespace PBS.Databases
 
         // Technician
         {"technician",
-            new AbilityData(
+            new Ability(
                 ID: "technician",
                 abilityName: "Technician",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3946,7 +3947,7 @@ namespace PBS.Databases
 
         // Telepathy
         {"telepathy",
-            new AbilityData(
+            new Ability(
                 ID: "telepathy",
                 abilityName: "Telepathy",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3957,7 +3958,7 @@ namespace PBS.Databases
 
         // Teravolt
         {"teravolt",
-            new AbilityData(
+            new Ability(
                 ID: "teravolt",
                 abilityName: "Teravolt",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3968,7 +3969,7 @@ namespace PBS.Databases
 
         // Thick Fat
         {"thickfat",
-            new AbilityData(
+            new Ability(
                 ID: "thickfat",
                 abilityName: "Thick Fat",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3987,7 +3988,7 @@ namespace PBS.Databases
 
         // Tinted Lens
         {"tintedlens",
-            new AbilityData(
+            new Ability(
                 ID: "tintedlens",
                 abilityName: "Tinted Lens",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -3999,7 +4000,7 @@ namespace PBS.Databases
 
         // Torrent
         {"torrent",
-            new AbilityData(
+            new Ability(
                 ID: "torrent",
                 abilityName: "Torrent",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4020,7 +4021,7 @@ namespace PBS.Databases
 
         // Toxic Boost
         {"toxicboost",
-            new AbilityData(
+            new Ability(
                 ID: "toxicboost",
                 abilityName: "Toxic Boost",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4042,7 +4043,7 @@ namespace PBS.Databases
 
         // Trace
         {"trace",
-            new AbilityData(
+            new Ability(
                 ID: "trace",
                 abilityName: "Trace",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4053,7 +4054,7 @@ namespace PBS.Databases
 
         // Tough Claws
         {"toughclaws",
-            new AbilityData(
+            new Ability(
                 ID: "toughclaws",
                 abilityName: "Tough Claws",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4072,7 +4073,7 @@ namespace PBS.Databases
 
         // Triage
         {"triage",
-            new AbilityData(
+            new Ability(
                 ID: "triage",
                 abilityName: "Triage",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4089,7 +4090,7 @@ namespace PBS.Databases
 
         // Truant
         {"truant",
-            new AbilityData(
+            new Ability(
                 ID: "truant",
                 abilityName: "Truant",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4100,7 +4101,7 @@ namespace PBS.Databases
 
         // Turboblaze
         {"turboblaze",
-            new AbilityData(
+            new Ability(
                 ID: "turboblaze",
                 abilityName: "Turboblaze",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4111,7 +4112,7 @@ namespace PBS.Databases
 
         // Unaware
         {"unaware",
-            new AbilityData(
+            new Ability(
                 ID: "unaware",
                 abilityName: "Unaware",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4122,7 +4123,7 @@ namespace PBS.Databases
 
         // Unburden
         {"unburden",
-            new AbilityData(
+            new Ability(
                 ID: "unburden",
                 abilityName: "Unburden",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4139,7 +4140,7 @@ namespace PBS.Databases
 
         // Unseen Fist
         {"unseenfist",
-            new AbilityData(
+            new Ability(
                 ID: "unseenfist",
                 abilityName: "Unseen Fist",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4150,7 +4151,7 @@ namespace PBS.Databases
 
         // Victory Star
         {"victorystar",
-            new AbilityData(
+            new Ability(
                 ID: "victorystar",
                 abilityName: "Victory Star",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4168,7 +4169,7 @@ namespace PBS.Databases
 
         // Vital Spirit
         {"vitalspirit",
-            new AbilityData(
+            new Ability(
                 ID: "vitalspirit",
                 abilityName: "Vital Spirit",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4181,7 +4182,7 @@ namespace PBS.Databases
 
         // Volt Absorb
         {"voltabsorb",
-            new AbilityData(
+            new Ability(
                 ID: "voltabsorb",
                 abilityName: "Volt Absorb",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4199,7 +4200,7 @@ namespace PBS.Databases
 
         // Wandering Spirit
         {"wanderingspirit",
-            new AbilityData(
+            new Ability(
                 ID: "wanderingspirit",
                 abilityName: "Wandering Spirit",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4213,7 +4214,7 @@ namespace PBS.Databases
 
         // Water Absorb
         {"waterabsorb",
-            new AbilityData(
+            new Ability(
                 ID: "waterabsorb",
                 abilityName: "Water Absorb",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4231,7 +4232,7 @@ namespace PBS.Databases
 
         // Water Bubble
         {"waterbubble",
-            new AbilityData(
+            new Ability(
                 ID: "waterbubble",
                 abilityName: "Water Bubble",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4260,7 +4261,7 @@ namespace PBS.Databases
 
         // Water Compaction
         {"watercompaction",
-            new AbilityData(
+            new Ability(
                 ID: "watercompaction",
                 abilityName: "Water Compaction",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4280,7 +4281,7 @@ namespace PBS.Databases
 
         // Water Veil
         {"waterveil",
-            new AbilityData(
+            new Ability(
                 ID: "waterveil",
                 abilityName: "Water Veil",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4293,7 +4294,7 @@ namespace PBS.Databases
 
         // Weak Armor
         {"weakarmor",
-            new AbilityData(
+            new Ability(
                 ID: "weakarmor",
                 abilityName: "Weak Armor",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4308,7 +4309,7 @@ namespace PBS.Databases
 
         // White Smoke
         {"whitesmoke",
-            new AbilityData(
+            new Ability(
                 ID: "whitesmoke",
                 abilityName: "White Smoke",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4321,7 +4322,7 @@ namespace PBS.Databases
 
         // Wimp Out
         {"wimpout",
-            new AbilityData(
+            new Ability(
                 ID: "wimpout",
                 abilityName: "Wimp Out",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4332,7 +4333,7 @@ namespace PBS.Databases
 
         // Wonder Guard
         {"wonderguard",
-            new AbilityData(
+            new Ability(
                 ID: "wonderguard",
                 abilityName: "Wonder Guard",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4347,7 +4348,7 @@ namespace PBS.Databases
 
         // Wonder Skin
         {"wonderskin",
-            new AbilityData(
+            new Ability(
                 ID: "wonderskin",
                 abilityName: "Wonder Skin",
                 effectsNew: new Effects.Abilities.AbilityEffect[]
@@ -4364,7 +4365,7 @@ namespace PBS.Databases
 
         // Zen Mode
         {"zenmode",
-            new AbilityData(
+            new Ability(
                 ID: "zenmode",
                 abilityName: "Zen Mode",
                 tags: new AbilityTag[]
@@ -4408,7 +4409,7 @@ namespace PBS.Databases
         // ---ITEMS---
 
         {"klutz",
-            new AbilityData(
+            new Ability(
                 ID: "klutz",
                 abilityName: "Klutz",
                 tags: new AbilityTag[]
@@ -4424,7 +4425,7 @@ namespace PBS.Databases
 
 
         {"unnerve",
-            new AbilityData(
+            new Ability(
                 ID: "unnerve",
                 abilityName: "Unnerve",
                 tags: new AbilityTag[]
@@ -4461,7 +4462,7 @@ namespace PBS.Databases
     };
 
         // Methods
-        public AbilityData GetAbilityData(string ID)
+        public Ability GetAbilityData(string ID)
         {
             if (database.ContainsKey(ID))
             {

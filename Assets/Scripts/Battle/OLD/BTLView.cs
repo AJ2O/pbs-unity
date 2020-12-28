@@ -1,4 +1,5 @@
-﻿using PBS.Databases;
+﻿using PBS.Data;
+using PBS.Databases;
 using PBS.Main.Pokemon;
 using PBS.Main.Team;
 using PBS.Main.Trainer;
@@ -111,7 +112,7 @@ public class BTLView : MonoBehaviour
 
             string typeString = " (Types - ";
             List<string> pokemonTypes = battleModel.PBPGetTypes(pokemon);
-            typeString += GameText.ConvertTypesToString(pokemonTypes.ToArray());
+            typeString += PBS.Databases.GameText.ConvertTypesToString(pokemonTypes.ToArray());
             typeString += ")";
 
             string statusString = " (";
@@ -146,7 +147,7 @@ public class BTLView : MonoBehaviour
                 + battleModel.GetPokemonSPE(pokemon, false, false) + ")";
 
             string abilityString = " (Ability: ";
-            AbilityData abilityData = battleModel.PBPGetAbilityData(pokemon);
+            PBS.Data.Ability abilityData = battleModel.PBPGetAbilityData(pokemon);
             if (abilityData == null)
             {
                 abilityString += "---";
@@ -704,8 +705,8 @@ public class BTLView : MonoBehaviour
         battleScene.UndrawPokemon(pokemon);
         battleUI.UndrawPokemonHUD(pokemon);
 
-        PokemonData preFormData = PBS.Databases.Pokemon.instance.GetPokemonData(prePokemonID);
-        PokemonData postFormData = PBS.Databases.Pokemon.instance.GetPokemonData(postPokemonID);
+        PBS.Data.Pokemon preFormData = PBS.Databases.Pokemon.instance.GetPokemonData(prePokemonID);
+        PBS.Data.Pokemon postFormData = PBS.Databases.Pokemon.instance.GetPokemonData(postPokemonID);
 
         Debug.Log("DEBUG - " + pokemon.nickname + " changed from "
             + preFormData.speciesName + " (" + preFormData.formName + ") to "
@@ -995,9 +996,9 @@ public class BTLView : MonoBehaviour
     {
         if (bEvent.textID != null)
         {
-            GameTextData gameTextData = GameText.instance.GetGameTextData(bEvent.textID);
+            PBS.Data.GameText gameTextData = PBS.Databases.GameText.instance.GetGameTextData(bEvent.textID);
             string baseText = gameTextData.GetText();
-            string gameText = GameText.ConvertToString(
+            string gameText = PBS.Databases.GameText.ConvertToString(
                 baseString: baseText,
                 viewPos: teamPos,
                 playerID: playerID,
