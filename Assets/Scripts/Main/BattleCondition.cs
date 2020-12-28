@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Databases;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ public class BattleCondition
     {
         get
         {
-            return StatusBTLDatabase.instance.GetStatusData(statusID);
+            return BattleStatuses.instance.GetStatusData(statusID);
         }
     }
 

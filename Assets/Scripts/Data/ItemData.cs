@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Databases;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ public class ItemData
         {
             if (string.IsNullOrEmpty(p_itemName) && !string.IsNullOrEmpty(baseID))
             {
-                return ItemDatabase.instance.GetItemData(baseID).itemName;
+                return Items.instance.GetItemData(baseID).itemName;
             }
             return p_itemName;
         }
@@ -36,7 +37,7 @@ public class ItemData
         {
             if (useBaseAesthetic && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).displayID;
+                return Pokemon.instance.GetPokemonData(baseID).displayID;
             }
             return string.IsNullOrEmpty(p_displayID) ? ID : p_displayID;
         }
@@ -53,7 +54,7 @@ public class ItemData
         {
             if (useBaseAesthetic && !string.IsNullOrEmpty(baseID))
             {
-                return ItemDatabase.instance.GetItemData(baseID).bagDisplayID;
+                return Items.instance.GetItemData(baseID).bagDisplayID;
             }
             return string.IsNullOrEmpty(p_bagDisplayID) ? p_displayID : p_bagDisplayID;
         }
@@ -73,7 +74,7 @@ public class ItemData
             if (combineBaseTags && !string.IsNullOrEmpty(baseID))
             {
                 HashSet<ItemTag> unionTags = new HashSet<ItemTag>(p_tags);
-                unionTags.UnionWith(ItemDatabase.instance.GetItemData(baseID).tags);
+                unionTags.UnionWith(Items.instance.GetItemData(baseID).tags);
                 return unionTags;
             }
             return p_tags;
@@ -89,16 +90,16 @@ public class ItemData
 
     // New Effects
     private bool combineBaseEffects;
-    private List<EffectDatabase.ItemEff.ItemEffect> p_effectsNew { get; set; }
-    public List<EffectDatabase.ItemEff.ItemEffect> effectsNew
+    private List<PBS.Databases.Effects.Items.ItemEffect> p_effectsNew { get; set; }
+    public List<PBS.Databases.Effects.Items.ItemEffect> effectsNew
     {
         get
         {
             if (combineBaseEffects && !string.IsNullOrEmpty(baseID))
             {
-                List<EffectDatabase.ItemEff.ItemEffect> unionEffects = new List<EffectDatabase.ItemEff.ItemEffect>();
+                List<PBS.Databases.Effects.Items.ItemEffect> unionEffects = new List<PBS.Databases.Effects.Items.ItemEffect>();
                 unionEffects.AddRange(p_effectsNew);
-                unionEffects.AddRange(ItemDatabase.instance.GetItemData(baseID).effectsNew);
+                unionEffects.AddRange(Items.instance.GetItemData(baseID).effectsNew);
                 return unionEffects;
             }
             return p_effectsNew;
@@ -123,7 +124,7 @@ public class ItemData
         ItemEffect[] effects = null,
 
         bool combineBaseEffects = false,
-        EffectDatabase.ItemEff.ItemEffect[] effectsNew = null)
+        PBS.Databases.Effects.Items.ItemEffect[] effectsNew = null)
     {
         this.ID = ID;
         this.baseID = baseID;
@@ -152,10 +153,10 @@ public class ItemData
         }
 
         this.combineBaseEffects = combineBaseEffects;
-        this.effectsNew = new List<EffectDatabase.ItemEff.ItemEffect>();
+        this.effectsNew = new List<PBS.Databases.Effects.Items.ItemEffect>();
         if (effectsNew != null)
         {
-            List<EffectDatabase.ItemEff.ItemEffect> addableEffects = new List<EffectDatabase.ItemEff.ItemEffect>();
+            List<PBS.Databases.Effects.Items.ItemEffect> addableEffects = new List<PBS.Databases.Effects.Items.ItemEffect>();
             for (int i = 0; i < effectsNew.Length; i++)
             {
                 addableEffects.Add(effectsNew[i].Clone());
@@ -194,9 +195,9 @@ public class ItemData
         return effects;
     }
 
-    public List<EffectDatabase.ItemEff.ItemEffect> GetEffectsNew(ItemEffectType effectType)
+    public List<PBS.Databases.Effects.Items.ItemEffect> GetEffectsNew(ItemEffectType effectType)
     {
-        List<EffectDatabase.ItemEff.ItemEffect> effects = new List<EffectDatabase.ItemEff.ItemEffect>();
+        List<PBS.Databases.Effects.Items.ItemEffect> effects = new List<PBS.Databases.Effects.Items.ItemEffect>();
         for (int i = 0; i < effectsNew.Count; i++)
         {
             if (effectsNew[i].effectType == effectType)
@@ -206,7 +207,7 @@ public class ItemData
         }
         return effects;
     }
-    public EffectDatabase.ItemEff.ItemEffect GetEffectNew(ItemEffectType effectType)
+    public PBS.Databases.Effects.Items.ItemEffect GetEffectNew(ItemEffectType effectType)
     {
         for (int i = 0; i < effectsNew.Count; i++)
         {
@@ -217,9 +218,9 @@ public class ItemData
         }
         return null;
     }
-    public List<EffectDatabase.ItemEff.ItemEffect> GetEffectsOnConsume()
+    public List<PBS.Databases.Effects.Items.ItemEffect> GetEffectsOnConsume()
     {
-        List<EffectDatabase.ItemEff.ItemEffect> consumeEffects = new List<EffectDatabase.ItemEff.ItemEffect>();
+        List<PBS.Databases.Effects.Items.ItemEffect> consumeEffects = new List<PBS.Databases.Effects.Items.ItemEffect>();
         for (int i = 0; i < effectsNew.Count; i++)
         {
             if (effectsNew[i].applyOnConsume)
@@ -229,9 +230,9 @@ public class ItemData
         }
         return consumeEffects;
     }
-    public List<EffectDatabase.ItemEff.ItemEffect> GetEffectsOnUse()
+    public List<PBS.Databases.Effects.Items.ItemEffect> GetEffectsOnUse()
     {
-        List<EffectDatabase.ItemEff.ItemEffect> useEffects = new List<EffectDatabase.ItemEff.ItemEffect>();
+        List<PBS.Databases.Effects.Items.ItemEffect> useEffects = new List<PBS.Databases.Effects.Items.ItemEffect>();
         for (int i = 0; i < effectsNew.Count; i++)
         {
             if (effectsNew[i].applyOnUse)

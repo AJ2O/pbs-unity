@@ -3,33 +3,30 @@ using UnityEngine;
 
 namespace PBS.Databases
 {
-
-}
-
-public class MoveDatabase
-{
-    //create an object of SingleObject
-    private static MoveDatabase singleton = new MoveDatabase();
-
-    //make the constructor private so that this class cannot be
-    //instantiated
-    private MoveDatabase() { }
-
-    //Get the only object available
-    public static MoveDatabase instance
+    public class Moves
     {
-        get
-        {
-            return singleton;
-        }
-        private set
-        {
-            singleton = value;
-        }
-    }
+        //create an object of SingleObject
+        private static Moves singleton = new Moves();
 
-    // Database
-    private Dictionary<string, MoveData> database = new Dictionary<string, MoveData>
+        //make the constructor private so that this class cannot be
+        //instantiated
+        private Moves() { }
+
+        //Get the only object available
+        public static Moves instance
+        {
+            get
+            {
+                return singleton;
+            }
+            private set
+            {
+                singleton = value;
+            }
+        }
+
+        // Database
+        private Dictionary<string, MoveData> database = new Dictionary<string, MoveData>
     {
         // Null / Placeholder
         {"",
@@ -70,9 +67,9 @@ public class MoveDatabase
                     new MoveEffect(MoveEffectType.Struggle),
                     new MoveEffect(MoveEffectType.TypelessDamage),
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.DoubleEdge(
+                    new Effects.Moves.DoubleEdge(
                         hpLossPercent: 0.25f
                         )
                 }
@@ -193,9 +190,9 @@ public class MoveDatabase
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Feint(),
+                    new Effects.Moves.Feint(),
                 }
                 ) },
 
@@ -220,9 +217,9 @@ public class MoveDatabase
                 targetType: MoveTargetType.Adjacent,
                 basePower: 20, accuracy: 1.0f, PP: 25,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Absorb(),
+                    new Effects.Moves.Absorb(),
                 }
                 ) },
 
@@ -386,9 +383,9 @@ public class MoveDatabase
                         stringParams: new string[] { "move-aromatherapy" }
                         ),
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Refresh(
+                    new Effects.Moves.Refresh(
                         statusEffectTypes: new PokemonSEType[] { PokemonSEType.NonVolatile }
                         ),
                 }
@@ -435,10 +432,10 @@ public class MoveDatabase
                     MoveTag.MagicCoatSusceptible,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "infatuation"
                             ),
@@ -465,25 +462,25 @@ public class MoveDatabase
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.AuraWheel(
+                    new Effects.Moves.AuraWheel(
                         type: "electric",
                         pokemonIDs: new string[] { "morpeko" }
                         ),
-                    new EffectDatabase.MoveEff.AuraWheel(
+                    new Effects.Moves.AuraWheel(
                         type: "dark",
                         pokemonIDs: new string[] { "morpeko-hangry" }
                         ),
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPEMod: 1
                             ),
                         timing: MoveEffectTiming.AfterSuccessfulMoveUse,
                         occurrence: MoveEffectOccurrence.Once,
                         targetType: MoveEffectTargetType.Self
                         ),
-                    new EffectDatabase.MoveEff.FailNotPokemon(
+                    new Effects.Moves.FailNotPokemon(
                         pokemonIDs: new string[] { "morpeko", "morpeko-hangry" },
                         allowTransform: true
                         ),
@@ -504,11 +501,11 @@ public class MoveDatabase
                 {
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
+                    new Effects.Moves.StatStageMod(
                         chance: 0.1f,
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             ATKMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -541,10 +538,10 @@ public class MoveDatabase
                         stringParams: new string[] { "hail" }
                         ),
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Team,
                             statusID: "auroraveil"
                             ),
@@ -799,11 +796,11 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FakeOut(),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.FakeOut(),
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "flinch"
                             ),
@@ -955,10 +952,10 @@ public class MoveDatabase
                 {
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPEMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -1029,10 +1026,10 @@ public class MoveDatabase
                 targetType: MoveTargetType.AllAdjacentOpponents,
                 basePower: 70, accuracy: 1.0f, PP: 5,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.BurningJealousy(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.BurningJealousy(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "burn"
                             ),
@@ -1151,9 +1148,9 @@ public class MoveDatabase
                     MoveTag.UncallableByCopycat,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Whirlwind(),
+                    new Effects.Moves.Whirlwind(),
                 }
                 ) },
 
@@ -1172,10 +1169,10 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             DEFMod: -1, SPDMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -1202,9 +1199,9 @@ public class MoveDatabase
                     MoveTag.PunchMove
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FuryAttack(),
+                    new Effects.Moves.FuryAttack(),
                 }
                 ) },
 
@@ -1281,9 +1278,9 @@ public class MoveDatabase
                 {
 
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.CoreEnforcer(),
+                    new Effects.Moves.CoreEnforcer(),
                 },
                 ZBasePower: 140
                 ) },
@@ -1302,9 +1299,9 @@ public class MoveDatabase
                 {
 
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.CorrosiveGas(),
+                    new Effects.Moves.CorrosiveGas(),
                 }
                 ) },
 
@@ -1354,9 +1351,9 @@ public class MoveDatabase
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Covet(),
+                    new Effects.Moves.Covet(),
                 }
                 ) },
 
@@ -1428,10 +1425,10 @@ public class MoveDatabase
                     MoveTag.Snatchable,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             DEFMod: 1
                             ),
                         timing: MoveEffectTiming.AfterSuccessfulMoveUse,
@@ -1439,8 +1436,8 @@ public class MoveDatabase
                         targetType: MoveEffectTargetType.Target,
                         forceEffectDisplay: true
                         ),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "defensecurl"
                             ),
@@ -1498,10 +1495,10 @@ public class MoveDatabase
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Protect(
-                        protect: new EffectDatabase.General.Protect()
+                    new Effects.Moves.Protect(
+                        protect: new Effects.General.Protect()
                         ),
                 }
                 ) },
@@ -1521,10 +1518,10 @@ public class MoveDatabase
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             DEFMod: 2
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -1581,10 +1578,10 @@ public class MoveDatabase
                     MoveTag.MagicCoatSusceptible,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "disable"
                             ),
@@ -1668,9 +1665,9 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.DoubleEdge(
+                    new Effects.Moves.DoubleEdge(
                         hpLossPercent: 1f/3
                         )
                 }
@@ -1692,9 +1689,9 @@ public class MoveDatabase
                 },
 
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.DoubleKick(),
+                    new Effects.Moves.DoubleKick(),
                 }
                 ) },
 
@@ -1714,9 +1711,9 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FuryAttack(),
+                    new Effects.Moves.FuryAttack(),
                 }
                 ) },
 
@@ -1737,10 +1734,10 @@ public class MoveDatabase
                     MoveTag.Snatchable,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             ATKMod: 1, SPEMod: 1
                             ),
                         timing: MoveEffectTiming.AfterSuccessfulMoveUse,
@@ -1766,9 +1763,9 @@ public class MoveDatabase
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.DragonRage(damage: 40),
+                    new Effects.Moves.DragonRage(damage: 40),
                 }
                 ) },
 
@@ -1789,9 +1786,9 @@ public class MoveDatabase
                     MoveTag.UncallableByCopycat,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Whirlwind(),
+                    new Effects.Moves.Whirlwind(),
                 }
                 ) },
 
@@ -1853,10 +1850,10 @@ public class MoveDatabase
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "electricterrain"
                             ),
@@ -1883,10 +1880,10 @@ public class MoveDatabase
                     MoveTag.MagicCoatSusceptible,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "embargo"
                             ),
@@ -1937,10 +1934,10 @@ public class MoveDatabase
                     MoveTag.MagicCoatSusceptible,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "encore"
                             ),
@@ -1990,9 +1987,9 @@ public class MoveDatabase
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Endure(),
+                    new Effects.Moves.Endure(),
                 }
                 ) },
 
@@ -2011,11 +2008,11 @@ public class MoveDatabase
                     MoveTag.BallMove,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
+                    new Effects.Moves.StatStageMod(
                         chance: 0.1f,
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPDMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -2035,13 +2032,13 @@ public class MoveDatabase
                 targetType: MoveTargetType.Adjacent,
                 basePower: 80, accuracy: 1.0f, PP: 20,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.ExpandingForce(
+                    new Effects.Moves.ExpandingForce(
                         newTargetType: MoveTargetType.AllAdjacentOpponents,
                         conditions: new string[] { "psychicterrain" }
                         ),
-                    new EffectDatabase.MoveEff.ExpandingForcePower(
+                    new Effects.Moves.ExpandingForcePower(
                         damageScale: 1.5f,
                         conditions: new string[] { "psychicterrain" }
                         ),
@@ -2090,11 +2087,11 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FakeOut(),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.FakeOut(),
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "flinch"
                             ),
@@ -2145,9 +2142,9 @@ public class MoveDatabase
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Feint(),
+                    new Effects.Moves.Feint(),
                 }
                 ) },
 
@@ -2167,10 +2164,10 @@ public class MoveDatabase
                     MoveTag.PunchMove
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "burn"
                             ),
@@ -2226,9 +2223,9 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FakeOut(),
+                    new Effects.Moves.FakeOut(),
                 }
                 ) },
 
@@ -2242,10 +2239,10 @@ public class MoveDatabase
                 targetType: MoveTargetType.Adjacent,
                 basePower: 90, accuracy: 1.0f, PP: 15,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "burn"
                             ),
@@ -2441,10 +2438,10 @@ public class MoveDatabase
                     MoveTag.MagicCoatSusceptible
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "identification"
                             ),
@@ -2558,9 +2555,9 @@ public class MoveDatabase
                 {
                     MoveTag.MakesContact,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StormThrow(),
+                    new Effects.Moves.StormThrow(),
                 }
                 ) },
 
@@ -2579,9 +2576,9 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FuryAttack(),
+                    new Effects.Moves.FuryAttack(),
                 }
                 ) },
 
@@ -2628,9 +2625,9 @@ public class MoveDatabase
                 {
                     MoveTag.MagicCoatSusceptible,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.CoreEnforcer(),
+                    new Effects.Moves.CoreEnforcer(),
                 }
                 ) },
 
@@ -2676,9 +2673,9 @@ public class MoveDatabase
                 targetType: MoveTargetType.Adjacent,
                 basePower: 75, accuracy: 1.0f, PP: 10,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Absorb(),
+                    new Effects.Moves.Absorb(),
                 }
                 ) },
 
@@ -2698,9 +2695,9 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.LowKick(),
+                    new Effects.Moves.LowKick(),
                 }
                 ) },
 
@@ -2714,10 +2711,10 @@ public class MoveDatabase
                 targetType: MoveTargetType.Adjacent,
                 basePower: 70, accuracy: 1.0f, PP: 20,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.GrassyGlide(
-                        mode: EffectDatabase.MoveEff.GrassyGlide.PriorityMode.Add, priority: 1,
+                    new Effects.Moves.GrassyGlide(
+                        mode: Effects.Moves.GrassyGlide.PriorityMode.Add, priority: 1,
                         conditions: new string[] { "grassyterrain" }
                         ),
                 }
@@ -2738,10 +2735,10 @@ public class MoveDatabase
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "grassyterrain"
                             ),
@@ -2799,10 +2796,10 @@ public class MoveDatabase
                     MoveTag.SoundMove,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             ATKMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -3028,11 +3025,11 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FakeOut(),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.FakeOut(),
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "flinch"
                             ),
@@ -3074,9 +3071,9 @@ public class MoveDatabase
                         stringParams: new string[] { "move-healbell" }
                         ),
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Refresh(
+                    new Effects.Moves.Refresh(
                         statusEffectTypes: new PokemonSEType[] { PokemonSEType.NonVolatile }
                         ),
                 }
@@ -3097,10 +3094,10 @@ public class MoveDatabase
                     MoveTag.MagicCoatSusceptible,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "healblock"
                             ),
@@ -3223,9 +3220,9 @@ public class MoveDatabase
                         ),
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.HeavySlam(),
+                    new Effects.Moves.HeavySlam(),
                 }
                 ) },
 
@@ -3253,9 +3250,9 @@ public class MoveDatabase
                         ),
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.HeavySlam(),
+                    new Effects.Moves.HeavySlam(),
                 }
                 ) },
 
@@ -3324,9 +3321,9 @@ public class MoveDatabase
                 {
 
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.HiddenPower(),
+                    new Effects.Moves.HiddenPower(),
                 }
                 ) },
 
@@ -3498,12 +3495,12 @@ public class MoveDatabase
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Feint(),
-                    new EffectDatabase.MoveEff.FailNotPokemon(pokemonIDs: new string[] { "hoopa-unbound" }),
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.Feint(),
+                    new Effects.Moves.FailNotPokemon(pokemonIDs: new string[] { "hoopa-unbound" }),
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             DEFMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -3532,9 +3529,9 @@ public class MoveDatabase
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Feint(),
+                    new Effects.Moves.Feint(),
                 }
                 ) },
 
@@ -3556,9 +3553,9 @@ public class MoveDatabase
                     MoveTag.RollingMove,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Rollout(),
+                    new Effects.Moves.Rollout(),
                 }
                 ) },
 
@@ -3577,10 +3574,10 @@ public class MoveDatabase
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "freeze"
                             ),
@@ -3672,10 +3669,10 @@ public class MoveDatabase
                     MoveTag.Snatchable
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "imprison"
                             ),
@@ -3777,10 +3774,10 @@ public class MoveDatabase
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "iondeluge"
                             ),
@@ -3810,9 +3807,9 @@ public class MoveDatabase
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Judgment(),
+                    new Effects.Moves.Judgment(),
                 }
                 ) },
 
@@ -3862,9 +3859,9 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.KarateChop(),
+                    new Effects.Moves.KarateChop(),
                 }
                 ) },
 
@@ -3918,9 +3915,9 @@ public class MoveDatabase
                 {
                     MoveTag.MakesContact,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.KnockOff(
+                    new Effects.Moves.KnockOff(
                         damageScale: 1.5f
                         ),
                 }
@@ -3943,9 +3940,9 @@ public class MoveDatabase
                 {
                     MoveTag.MakesContact,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.LashOut(),
+                    new Effects.Moves.LashOut(),
                 }
                 ) },
 
@@ -4025,9 +4022,9 @@ public class MoveDatabase
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.DoubleEdge(
+                    new Effects.Moves.DoubleEdge(
                         hpLossPercent: 0.5f
                         )
                 }
@@ -4047,11 +4044,11 @@ public class MoveDatabase
                 {
                     MoveTag.Snatchable,
                 },
-                
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Team,
                             statusID: "lightscreen"
                             ),
@@ -4077,11 +4074,11 @@ public class MoveDatabase
                 {
                     MoveTag.MakesContact
                 },
-                
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             DEFMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -4135,9 +4132,9 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.LowKick(),
+                    new Effects.Moves.LowKick(),
                 },
 
                 MaxPower: 100
@@ -4236,13 +4233,13 @@ public class MoveDatabase
                         stringParams: new string[] { "move-magiccoat-magiccoat" }
                         ),
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.MagicCoat(
-                        magicCoat: new EffectDatabase.General.MagicCoat(),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.Moves.MagicCoat(
+                        magicCoat: new Effects.General.MagicCoat(),
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.MagicCoatSusceptible }
                                 )
                         }
@@ -4322,9 +4319,9 @@ public class MoveDatabase
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Magnitude(),
+                    new Effects.Moves.Magnitude(),
                 }
                 ) },
 
@@ -4347,12 +4344,12 @@ public class MoveDatabase
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.MatBlock(
-                        protect: new EffectDatabase.General.Protect()
+                    new Effects.Moves.MatBlock(
+                        protect: new Effects.General.Protect()
                         ),
-                    new EffectDatabase.MoveEff.FakeOut(),
+                    new Effects.Moves.FakeOut(),
                 }
                 ) },
 
@@ -4392,9 +4389,9 @@ public class MoveDatabase
                 targetType: MoveTargetType.Adjacent,
                 basePower: 40, accuracy: 1.0f, PP: 15,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Absorb(),
+                    new Effects.Moves.Absorb(),
                 },
 
                 ZBasePower: 120
@@ -4682,16 +4679,16 @@ public class MoveDatabase
                     MoveTag.MagicCoatSusceptible
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "identification",
-                            effectMode: EffectDatabase.General.InflictStatus.EffectMode.Replace,
-                            customPokemonEffects: new EffectDatabase.StatusPKEff.PokemonSE[]
+                            effectMode: Effects.General.InflictStatus.EffectMode.Replace,
+                            customPokemonEffects: new Effects.PokemonStatuses.PokemonSE[]
                             {
-                                new EffectDatabase.StatusPKEff.Identification(
+                                new Effects.PokemonStatuses.Identification(
                                     types: new string[] { "dark" }
                                     ),
                             }
@@ -4805,10 +4802,10 @@ public class MoveDatabase
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "mistyterrain"
                             ),
@@ -4836,9 +4833,9 @@ public class MoveDatabase
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.SunsteelStrike(),
+                    new Effects.Moves.SunsteelStrike(),
                 }
                 ) },
 
@@ -4859,10 +4856,10 @@ public class MoveDatabase
                 {
 
                 },
-                
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.NaturalGift(),
+                    new Effects.Moves.NaturalGift(),
                 }
                 ) },
 
@@ -4906,9 +4903,9 @@ public class MoveDatabase
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.SuperFang(damagePercent: 0.5f),
+                    new Effects.Moves.SuperFang(damagePercent: 0.5f),
                 }
                 ) },
 
@@ -4986,10 +4983,10 @@ public class MoveDatabase
                     MoveTag.MagicCoatSusceptible
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "identification"
                             ),
@@ -5109,11 +5106,11 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FakeOut(),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.FakeOut(),
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "perishsong"
                             ),
@@ -5186,9 +5183,9 @@ public class MoveDatabase
                     new MoveEffect(MoveEffectType.MultiTurnShadowForce),
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Feint(),
+                    new Effects.Moves.Feint(),
                 }
                 ) },
 
@@ -5207,10 +5204,10 @@ public class MoveDatabase
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.PhotonGeyser(),
-                    new EffectDatabase.MoveEff.SunsteelStrike(),
+                    new Effects.Moves.PhotonGeyser(),
+                    new Effects.Moves.SunsteelStrike(),
                 }
                 ) },
 
@@ -5229,9 +5226,9 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FuryAttack(),
+                    new Effects.Moves.FuryAttack(),
                 }
                 ) },
 
@@ -5433,9 +5430,9 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Poltergeist(),
+                    new Effects.Moves.Poltergeist(),
                 }
                 ) },
 
@@ -5583,9 +5580,9 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StoredPower(),
+                    new Effects.Moves.StoredPower(),
                 }
                 ) },
 
@@ -5606,10 +5603,10 @@ public class MoveDatabase
                     MoveTag.UncallableByCopycat,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Protect(
-                        protect: new EffectDatabase.General.Protect()
+                    new Effects.Moves.Protect(
+                        protect: new Effects.General.Protect()
                         ),
                 }
                 ) },
@@ -5653,11 +5650,11 @@ public class MoveDatabase
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
+                    new Effects.Moves.StatStageMod(
                         chance: 0.1f,
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPDMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -5682,10 +5679,10 @@ public class MoveDatabase
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "psychicterrain"
                             ),
@@ -5760,9 +5757,9 @@ public class MoveDatabase
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Psywave(),
+                    new Effects.Moves.Psywave(),
                 }
                 ) },
 
@@ -5781,9 +5778,9 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Punishment(),
+                    new Effects.Moves.Punishment(),
                 }
                 ) },
 
@@ -5803,9 +5800,9 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Pursuit(),
+                    new Effects.Moves.Pursuit(),
                 }
                 ) },
 
@@ -6093,11 +6090,11 @@ public class MoveDatabase
                 {
                     MoveTag.Snatchable,
                 },
-                
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Team,
                             statusID: "reflect"
                             ),
@@ -6124,10 +6121,10 @@ public class MoveDatabase
                     MoveTag.IgnoreProtect,
                     MoveTag.Snatchable,
                 },
-                
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Refresh(
+                    new Effects.Moves.Refresh(
                         statuses: new string[] { "burn", "paralysis", "poison", },
                         forceEffectDisplay: true
                         ),
@@ -6163,9 +6160,9 @@ public class MoveDatabase
                         ),
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.RelicSong(
+                    new Effects.Moves.RelicSong(
                         form1: "meloetta-aria", form2: "meloetta-pirouette"
                         ),
                 }
@@ -6208,9 +6205,9 @@ public class MoveDatabase
                 targetType: MoveTargetType.Adjacent,
                 basePower: 70, accuracy: 1.0f, PP: 20,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.RisingVoltage(
+                    new Effects.Moves.RisingVoltage(
                         damageScale: 2f,
                         conditions: new string[] { "electricterrain" }
                         )
@@ -6236,9 +6233,9 @@ public class MoveDatabase
                     MoveTag.UncallableByCopycat,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Whirlwind(),
+                    new Effects.Moves.Whirlwind(),
                 }
                 ) },
 
@@ -6283,11 +6280,11 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FakeOut(),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.FakeOut(),
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "flinch"
                             ),
@@ -6315,9 +6312,9 @@ public class MoveDatabase
                     MoveTag.RollingMove,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Rollout(),
+                    new Effects.Moves.Rollout(),
                 }
                 ) },
 
@@ -6517,9 +6514,9 @@ public class MoveDatabase
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.SecretPower(secondaryEffectChance: 0.3f),
+                    new Effects.Moves.SecretPower(secondaryEffectChance: 0.3f),
                 }
                 ) },
 
@@ -6596,9 +6593,9 @@ public class MoveDatabase
                         ),
                     new MoveEffect(MoveEffectType.MultiTurnShadowForce),
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Feint(),
+                    new Effects.Moves.Feint(),
                 }
                 ) },
 
@@ -6628,9 +6625,9 @@ public class MoveDatabase
                 targetType: MoveTargetType.Adjacent,
                 basePower: 90, accuracy: 1.0f, PP: 10,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.ShellSideArm(),
+                    new Effects.Moves.ShellSideArm(),
                 }
                 ) },
 
@@ -6649,10 +6646,10 @@ public class MoveDatabase
                     MoveTag.Snatchable,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             ATKMod: 2, SPAMod: 2, SPEMod: 2, DEFMod: -1, SPDMod: -1
                             ),
                         timing: MoveEffectTiming.AfterSuccessfulMoveUse,
@@ -6836,11 +6833,11 @@ public class MoveDatabase
                         stringParams: new string[] { "move-charge-skyattack" }
                         ),
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FakeOut(),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.FakeOut(),
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "flinch"
                             ),
@@ -7059,12 +7056,12 @@ public class MoveDatabase
                     MoveTag.SoundMove,
                     MoveTag.UncallableByMetronome,
                 },
-                
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Snore(),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.Snore(),
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "flinch"
                             ),
@@ -7208,9 +7205,9 @@ public class MoveDatabase
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.DragonRage(damage: 20),
+                    new Effects.Moves.DragonRage(damage: 20),
                 }
                 ) },
 
@@ -7357,10 +7354,10 @@ public class MoveDatabase
                     MoveTag.PowderMove,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "sleep"
                             ),
@@ -7455,10 +7452,10 @@ public class MoveDatabase
                     MoveTag.UncallableByMetronome
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "burn"
                             ),
@@ -7467,10 +7464,10 @@ public class MoveDatabase
                         targetType: MoveEffectTargetType.Target,
                         chance: 0.3f
                         ),
-                    new EffectDatabase.MoveEff.HealBeforeUse(
+                    new Effects.Moves.HealBeforeUse(
                         statuses: new string[] { "burn" }
                         ),
-                    new EffectDatabase.MoveEff.Refresh(
+                    new Effects.Moves.Refresh(
                         statuses: new string[] { "burn" }
                         ),
                 }
@@ -7491,9 +7488,9 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.SteelRoller(),
+                    new Effects.Moves.SteelRoller(),
                 }
                 ) },
 
@@ -7556,11 +7553,11 @@ public class MoveDatabase
                         floatParams: new float[] { 2 }
                         ),
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FakeOut(),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.FakeOut(),
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "flinch"
                             ),
@@ -7587,9 +7584,9 @@ public class MoveDatabase
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StoredPower(),
+                    new Effects.Moves.StoredPower(),
                 }
                 ) },
 
@@ -7607,9 +7604,9 @@ public class MoveDatabase
                 {
                     MoveTag.MakesContact,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StormThrow(),
+                    new Effects.Moves.StormThrow(),
                 }
                 ) },
 
@@ -7713,9 +7710,9 @@ public class MoveDatabase
                 {
                     MoveTag.MakesContact,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.SuckerPunch(),
+                    new Effects.Moves.SuckerPunch(),
                 }
                 ) },
 
@@ -7734,10 +7731,10 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             ATKMod: -1, DEFMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -7826,9 +7823,9 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.SunsteelStrike(),
+                    new Effects.Moves.SunsteelStrike(),
                 }
                 ) },
 
@@ -7846,9 +7843,9 @@ public class MoveDatabase
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.SuperFang(damagePercent: 0.5f),
+                    new Effects.Moves.SuperFang(damagePercent: 0.5f),
                 }
                 ) },
 
@@ -7920,10 +7917,10 @@ public class MoveDatabase
                     MoveTag.Snatchable,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             ATKMod: 2
                             ),
                         timing: MoveEffectTiming.AfterSuccessfulMoveUse,
@@ -7949,9 +7946,9 @@ public class MoveDatabase
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Synchronoise(),
+                    new Effects.Moves.Synchronoise(),
                 }
                 ) },
 
@@ -8023,10 +8020,10 @@ public class MoveDatabase
                 {
                     MoveTag.MakesContact,
                 },
-                
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.DoubleEdge(
+                    new Effects.Moves.DoubleEdge(
                         hpLossPercent: 0.25f
                         )
                 }
@@ -8047,10 +8044,10 @@ public class MoveDatabase
                     MoveTag.MagicCoatSusceptible
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPEMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -8058,8 +8055,8 @@ public class MoveDatabase
                         targetType: MoveEffectTargetType.Target,
                         forceEffectDisplay: true
                         ),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "tarshot"
                             ),
@@ -8087,10 +8084,10 @@ public class MoveDatabase
                     MoveTag.MagicCoatSusceptible,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "taunt"
                             ),
@@ -8186,9 +8183,9 @@ public class MoveDatabase
                     MoveTag.PulseMove,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.TerrainPulse(),
+                    new Effects.Moves.TerrainPulse(),
                 }
                 ) },
         
@@ -8210,9 +8207,9 @@ public class MoveDatabase
                     MoveTag.UncallableByMeFirst,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Covet(),
+                    new Effects.Moves.Covet(),
                 }
                 ) },
 
@@ -8329,10 +8326,10 @@ public class MoveDatabase
                     MoveTag.PunchMove
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "paralysis"
                             ),
@@ -8358,10 +8355,10 @@ public class MoveDatabase
                     MoveTag.MagicCoatSusceptible,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "paralysis"
                             ),
@@ -8383,10 +8380,10 @@ public class MoveDatabase
                 targetType: MoveTargetType.Adjacent,
                 basePower: 90, accuracy: 1.0f, PP: 15,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "paralysis"
                             ),
@@ -8414,10 +8411,10 @@ public class MoveDatabase
                     MoveTag.MagicCoatSusceptible,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "torment"
                             ),
@@ -8601,9 +8598,9 @@ public class MoveDatabase
                 },
 
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.TripleKick(),
+                    new Effects.Moves.TripleKick(),
                 }
                 ) },
 
@@ -8625,9 +8622,9 @@ public class MoveDatabase
                 },
 
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.TripleKick(),
+                    new Effects.Moves.TripleKick(),
                 }
                 ) },
 
@@ -8658,11 +8655,11 @@ public class MoveDatabase
                         stringParams: new string[] { "poison" }
                         ),
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.DoubleKick(),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.DoubleKick(),
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "poison"
                             ),
@@ -8853,9 +8850,9 @@ public class MoveDatabase
                     MoveTag.BallMove
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.WeatherBall(),
+                    new Effects.Moves.WeatherBall(),
                 },
 
                 ZBasePower: 160
@@ -8880,9 +8877,9 @@ public class MoveDatabase
                     MoveTag.UncallableByCopycat,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Whirlwind(),
+                    new Effects.Moves.Whirlwind(),
                 }
                 ) },
 
@@ -9009,10 +9006,10 @@ public class MoveDatabase
                     MoveTag.Snatchable,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             DEFMod: 1
                             ),
                         timing: MoveEffectTiming.AfterSuccessfulMoveUse,
@@ -9105,10 +9102,10 @@ public class MoveDatabase
                     MoveTag.PowderMove,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "yawn"
                             ),
@@ -9177,9 +9174,9 @@ public class MoveDatabase
                     MoveTag.ZMove,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.SuperFang(damagePercent: 0.75f),
+                    new Effects.Moves.SuperFang(damagePercent: 0.75f),
                 }
                 ) },
 
@@ -9198,10 +9195,10 @@ public class MoveDatabase
                     MoveTag.ZMove
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.PhotonGeyser(),
-                    new EffectDatabase.MoveEff.SunsteelStrike(),
+                    new Effects.Moves.PhotonGeyser(),
+                    new Effects.Moves.SunsteelStrike(),
                 }
                 ) },
 
@@ -9224,10 +9221,10 @@ public class MoveDatabase
                     MoveTag.DynamaxMove,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Protect(
-                        protect: new EffectDatabase.General.Protect(
+                    new Effects.Moves.Protect(
+                        protect: new Effects.General.Protect(
                             maxGuard: true
                             )
                         ),
@@ -9247,10 +9244,10 @@ public class MoveDatabase
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                            SPEMod: 1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9274,10 +9271,10 @@ public class MoveDatabase
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPDMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9301,10 +9298,10 @@ public class MoveDatabase
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "harshsunlight"
                             ),
@@ -9328,10 +9325,10 @@ public class MoveDatabase
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPAMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9355,10 +9352,10 @@ public class MoveDatabase
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "rain"
                             ),
@@ -9382,10 +9379,10 @@ public class MoveDatabase
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "hail"
                             ),
@@ -9409,10 +9406,10 @@ public class MoveDatabase
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             ATKMod: 1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9436,10 +9433,10 @@ public class MoveDatabase
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "electricterrain"
                             ),
@@ -9463,10 +9460,10 @@ public class MoveDatabase
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "psychicterrain"
                             ),
@@ -9490,10 +9487,10 @@ public class MoveDatabase
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPAMod: 1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9517,10 +9514,10 @@ public class MoveDatabase
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "grassyterrain"
                             ),
@@ -9544,10 +9541,10 @@ public class MoveDatabase
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPDMod: 1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9571,10 +9568,10 @@ public class MoveDatabase
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             DEFMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9598,10 +9595,10 @@ public class MoveDatabase
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "sandstorm"
                             ),
@@ -9625,10 +9622,10 @@ public class MoveDatabase
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "mistyterrain"
                             ),
@@ -9652,10 +9649,10 @@ public class MoveDatabase
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             DEFMod: 1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9679,10 +9676,10 @@ public class MoveDatabase
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPEMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9706,10 +9703,10 @@ public class MoveDatabase
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.Moves.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             ATKMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9735,10 +9732,10 @@ public class MoveDatabase
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.Moves.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.Moves.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Team,
                             statusID: "gmaxcannonade"
                             ),
@@ -9752,32 +9749,33 @@ public class MoveDatabase
 
     };
 
-    // Methods
-    public MoveData GetMoveData(string ID)
-    {
-        if (database.ContainsKey(ID))
+        // Methods
+        public MoveData GetMoveData(string ID)
         {
-            return database[ID];
-        }
-        Debug.LogWarning("Could not find move with ID: " + ID);
-        return database[""];
-    }
-
-    public List<string> GetMetronomeMoves()
-    {
-        List<string> moves = new List<string>(database.Keys);
-        List<string> validMoves = new List<string>();
-        for (int i = 0; i < moves.Count; i++)
-        {
-            MoveData moveData = GetMoveData(moves[i]);
-            if (!moveData.HasTag(MoveTag.UncallableCommon) 
-                && !moveData.HasTag(MoveTag.UncallableByMetronome)
-                && !moveData.HasTag(MoveTag.ZMove))
+            if (database.ContainsKey(ID))
             {
-                validMoves.Add(moves[i]);
+                return database[ID];
             }
+            Debug.LogWarning("Could not find move with ID: " + ID);
+            return database[""];
         }
-        return validMoves;
-    }
 
+        public List<string> GetMetronomeMoves()
+        {
+            List<string> moves = new List<string>(database.Keys);
+            List<string> validMoves = new List<string>();
+            for (int i = 0; i < moves.Count; i++)
+            {
+                MoveData moveData = GetMoveData(moves[i]);
+                if (!moveData.HasTag(MoveTag.UncallableCommon)
+                    && !moveData.HasTag(MoveTag.UncallableByMetronome)
+                    && !moveData.HasTag(MoveTag.ZMove))
+                {
+                    validMoves.Add(moves[i]);
+                }
+            }
+            return validMoves;
+        }
+
+    }
 }

@@ -1,4 +1,5 @@
-﻿using PBS.Main.Pokemon;
+﻿using PBS.Databases;
+using PBS.Main.Pokemon;
 using PBS.Main.Team;
 using PBS.Main.Trainer;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ public class Battle
     public BattleEnvironment environment;
 
     // Teams
-    public List<Pokemon> pokemonOnField;
+    public List<PBS.Main.Pokemon.Pokemon> pokemonOnField;
     public List<Team> teams;
 
     // Battling Conditions
@@ -32,7 +33,7 @@ public class Battle
     public string defaultWonderRoom;
 
     // Other Variables
-    public Pokemon runningPokemon;
+    public PBS.Main.Pokemon.Pokemon runningPokemon;
     public string lastUsedMove;
     public List<BattleFutureSightCommand> futureSightCommands;
     public List<BattleWishCommand> wishCommands;
@@ -71,20 +72,20 @@ public class Battle
                 }
             }
         }
-        pokemonOnField = new List<Pokemon>();
+        pokemonOnField = new List<PBS.Main.Pokemon.Pokemon>();
 
         weather = !string.IsNullOrEmpty(defaultWeather) ? new BattleCondition(defaultWeather)
-            : new BattleCondition(StatusBTLDatabase.instance.GetDefaultWeather().ID);
+            : new BattleCondition(BattleStatuses.instance.GetDefaultWeather().ID);
         terrain = !string.IsNullOrEmpty(defaultTerrain) ? new BattleCondition(defaultTerrain)
-            : new BattleCondition(StatusBTLDatabase.instance.GetDefaultTerrain().ID);
+            : new BattleCondition(BattleStatuses.instance.GetDefaultTerrain().ID);
         gravity = !string.IsNullOrEmpty(defaultGravity) ? new BattleCondition(defaultGravity)
-            : new BattleCondition(StatusBTLDatabase.instance.GetDefaultGravity().ID);
+            : new BattleCondition(BattleStatuses.instance.GetDefaultGravity().ID);
         magicRoom = !string.IsNullOrEmpty(defaultMagicRoom) ? new BattleCondition(defaultMagicRoom)
-            : new BattleCondition(StatusBTLDatabase.instance.GetDefaultMagicRoom().ID);
+            : new BattleCondition(BattleStatuses.instance.GetDefaultMagicRoom().ID);
         trickRoom = !string.IsNullOrEmpty(defaultTrickRoom) ? new BattleCondition(defaultTrickRoom)
-            : new BattleCondition(StatusBTLDatabase.instance.GetDefaultTrickRoom().ID);
+            : new BattleCondition(BattleStatuses.instance.GetDefaultTrickRoom().ID);
         wonderRoom = !string.IsNullOrEmpty(defaultWonderRoom) ? new BattleCondition(defaultWonderRoom)
-            : new BattleCondition(StatusBTLDatabase.instance.GetDefaultWonderRoom().ID);
+            : new BattleCondition(BattleStatuses.instance.GetDefaultWonderRoom().ID);
 
         this.defaultWeather = weather.statusID;
         this.defaultTerrain = terrain.statusID;
@@ -137,7 +138,7 @@ public class Battle
             );
 
         // pokemon on field
-        List<Pokemon> pokemonOnField = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> pokemonOnField = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < original.pokemonOnField.Count; i++)
         {
             pokemonOnField.Add(cloneModel.GetBattleInstanceOfPokemon(original.pokemonOnField[i]));
@@ -174,7 +175,7 @@ public class Battle
         str += "Pokemon On Field:\n";
         for (int i = 0; i < this.pokemonOnField.Count; i++)
         {
-            Pokemon pokemon = this.pokemonOnField[i];
+            PBS.Main.Pokemon.Pokemon pokemon = this.pokemonOnField[i];
             str += pokemon.nickname + " (" + pokemon.uniqueIDTrunc + ") " + " / ";
         }
         str += "\n";
@@ -215,7 +216,7 @@ public class Battle
         }
 
     }
-    public void AdvanceTurnPokemon(Pokemon pokemon)
+    public void AdvanceTurnPokemon(PBS.Main.Pokemon.Pokemon pokemon)
     {
         pokemon.bProps.turnsActive++;
 
@@ -228,7 +229,7 @@ public class Battle
 
         // Dynamax / Gigantamax
         if (pokemon.dynamaxProps.turnsLeft > 0 
-            && pokemon.dynamaxState != Pokemon.DynamaxState.None)
+            && pokemon.dynamaxState != PBS.Main.Pokemon.Pokemon.DynamaxState.None)
         {
             pokemon.dynamaxProps.turnsLeft--;
         }
@@ -490,7 +491,7 @@ public class Battle
     }
 
     // Command methods
-    public List<BattleCommandType> GetPokemonPossibleCommandTypes(Pokemon pokemon)
+    public List<BattleCommandType> GetPokemonPossibleCommandTypes(PBS.Main.Pokemon.Pokemon pokemon)
     {
         return new List<BattleCommandType>
         {
@@ -773,13 +774,13 @@ public class Battle
         bool bypassChecks = false;
         bool commandSuccess = true;
         List<BattleCommand> setCommands = new List<BattleCommand>(committedCommands);
-        Pokemon userPokemon = attemptedCommand.commandUser;
+        PBS.Main.Pokemon.Pokemon userPokemon = attemptedCommand.commandUser;
 
         // move commands
         if (attemptedCommand.commandType == BattleCommandType.Fight)
         {
             // auto-success for struggle
-            MoveData moveData = MoveDatabase.instance.GetMoveData(attemptedCommand.moveID);
+            MoveData moveData = Moves.instance.GetMoveData(attemptedCommand.moveID);
             if (moveData.GetEffect(MoveEffectType.Struggle) != null)
             {
                 bypassChecks = true;
@@ -790,7 +791,7 @@ public class Battle
                 // Imprison
                 if (commandSuccess)
                 {
-                    Pokemon imprisonPokemon = PBPGetImprison(userPokemon, moveData);
+                    PBS.Main.Pokemon.Pokemon imprisonPokemon = PBPGetImprison(userPokemon, moveData);
                     if (imprisonPokemon != null)
                     {
                         return false;
@@ -841,7 +842,7 @@ public class Battle
                 {
                     for (int i = 0; i < userPokemon.bProps.ingrainMoves.Count; i++)
                     {
-                        MoveData ingrainData = MoveDatabase.instance.GetMoveData(
+                        MoveData ingrainData = Moves.instance.GetMoveData(
                             userPokemon.bProps.ingrainMoves[i]
                             );
                         MoveEffect ingrainEffect = ingrainData.GetEffect(MoveEffectType.Ingrain);
@@ -870,7 +871,7 @@ public class Battle
             {
                 if (setCommands[i] != null)
                 {
-                    Pokemon otherPokemon = setCommands[i].switchInPokemon;
+                    PBS.Main.Pokemon.Pokemon otherPokemon = setCommands[i].switchInPokemon;
                     if (otherPokemon != null)
                     {
                         if (otherPokemon.IsTheSameAs(attemptedCommand.switchInPokemon))
@@ -884,9 +885,9 @@ public class Battle
         // bag commands
         else if (attemptedCommand.commandType == BattleCommandType.Bag)
         {
-            Pokemon itemPokemon = attemptedCommand.commandUser;
+            PBS.Main.Pokemon.Pokemon itemPokemon = attemptedCommand.commandUser;
             Trainer itemTrainer = attemptedCommand.itemTrainer;
-            ItemData itemData = ItemDatabase.instance.GetItemData(attemptedCommand.itemID);
+            ItemData itemData = Items.instance.GetItemData(attemptedCommand.itemID);
 
             // Make sure the trainer has enough of the items in their inventory
             if (commandSuccess)
@@ -965,10 +966,10 @@ public class Battle
                 return false;
             }
 
-            EffectDatabase.AbilityEff.AbilityEffect runAway_ =
+            PBS.Databases.Effects.Abilities.AbilityEffect runAway_ =
                 PBPGetAbilityEffect(userPokemon, AbilityEffectType.RunAway);
-            EffectDatabase.AbilityEff.RunAway runAway = (runAway_ == null) ? null :
-                runAway_ as EffectDatabase.AbilityEff.RunAway;
+            PBS.Databases.Effects.Abilities.RunAway runAway = (runAway_ == null) ? null :
+                runAway_ as PBS.Databases.Effects.Abilities.RunAway;
 
             // Block
             if (commandSuccess 
@@ -1004,7 +1005,7 @@ public class Battle
             {
                 for (int i = 0; i < userPokemon.bProps.ingrainMoves.Count; i++)
                 {
-                    MoveData ingrainData = MoveDatabase.instance.GetMoveData(
+                    MoveData ingrainData = Moves.instance.GetMoveData(
                         userPokemon.bProps.ingrainMoves[i]
                         );
                     MoveEffect ingrainEffect = ingrainData.GetEffect(MoveEffectType.Ingrain);
@@ -1051,7 +1052,7 @@ public class Battle
         moveCommand.consumePP = false;
         moveCommand.isFutureSightMove = true;
 
-        MoveData moveData = MoveDatabase.instance.GetMoveData(command.moveID);
+        MoveData moveData = Moves.instance.GetMoveData(command.moveID);
         MoveEffect effect = moveData.GetEffect(MoveEffectType.FutureSight);
         if (effect != null)
         {
@@ -1091,9 +1092,9 @@ public class Battle
         }*/
         return null;
     }
-    public Pokemon GetBattleInstanceOfPokemon(Pokemon searchPokemon)
+    public PBS.Main.Pokemon.Pokemon GetBattleInstanceOfPokemon(PBS.Main.Pokemon.Pokemon searchPokemon)
     {
-        List<Pokemon> allPokemon = GetPokemonFromAllTrainers();
+        List<PBS.Main.Pokemon.Pokemon> allPokemon = GetPokemonFromAllTrainers();
         for (int i = 0; i < allPokemon.Count; i++)
         {
             if (allPokemon[i].IsTheSameAs(searchPokemon))
@@ -1139,7 +1140,7 @@ public class Battle
         }
         return enemyTeams;
     }
-    public Team GetTeam(Pokemon pokemon)
+    public Team GetTeam(PBS.Main.Pokemon.Pokemon pokemon)
     {
         if (pokemon.teamPos != -1)
         {
@@ -1180,9 +1181,9 @@ public class Battle
         }
         return false;
     }
-    public Dictionary<Trainer, List<Pokemon>> ForceSendAllPokemon()
+    public Dictionary<Trainer, List<PBS.Main.Pokemon.Pokemon>> ForceSendAllPokemon()
     {
-        Dictionary<Trainer, List<Pokemon>> sentOutMap = new Dictionary<Trainer, List<Pokemon>>();
+        Dictionary<Trainer, List<PBS.Main.Pokemon.Pokemon>> sentOutMap = new Dictionary<Trainer, List<PBS.Main.Pokemon.Pokemon>>();
 
         // Force out on all sides
         for (int i = 0; i < this.teams.Count; i++)
@@ -1190,7 +1191,7 @@ public class Battle
             for (int j = 0; j < this.teams[i].trainers.Count; j++)
             {
                 Trainer trainer = this.teams[i].trainers[j];
-                List<Pokemon> sentPokemon = ForceSendTrainerPokemon(trainer);
+                List<PBS.Main.Pokemon.Pokemon> sentPokemon = ForceSendTrainerPokemon(trainer);
                 if (sentPokemon.Count > 0)
                 {
                     sentOutMap.Add(trainer, sentPokemon);
@@ -1200,9 +1201,9 @@ public class Battle
 
         return sentOutMap;
     }
-    public List<Pokemon> GetTeamPokemonOnField(Team team)
+    public List<PBS.Main.Pokemon.Pokemon> GetTeamPokemonOnField(Team team)
     {
-        List<Pokemon> pokemonOnField = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> pokemonOnField = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < team.trainers.Count; i++)
         {
             pokemonOnField.AddRange(GetTrainerOnFieldPokemon(team.trainers[i]));
@@ -1232,9 +1233,9 @@ public class Battle
     /// </summary>
     /// <param name="trainer">The trainer whose party is being searched.</param>
     /// <returns></returns>
-    public Pokemon GetTrainerFirstAvailablePokemon(Trainer trainer)
+    public PBS.Main.Pokemon.Pokemon GetTrainerFirstAvailablePokemon(Trainer trainer)
     {
-        List<Pokemon> pokemon = GetTrainerFirstXAvailablePokemon(trainer, 1);
+        List<PBS.Main.Pokemon.Pokemon> pokemon = GetTrainerFirstXAvailablePokemon(trainer, 1);
         if (pokemon.Count > 0)
         {
             return pokemon[0];
@@ -1247,9 +1248,9 @@ public class Battle
     /// <param name="x">The maximum number of Pokemon to search for.</param>
     /// <param name="trainer">The trainer whose party is being searched.</param>
     /// <returns></returns>
-    public List<Pokemon> GetTrainerFirstXAvailablePokemon(Trainer trainer, int x)
+    public List<PBS.Main.Pokemon.Pokemon> GetTrainerFirstXAvailablePokemon(Trainer trainer, int x)
     {
-        List<Pokemon> pokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> pokemon = new List<PBS.Main.Pokemon.Pokemon>();
         int count = 0;
 
         for (int i = 0; i < trainer.party.Count; i++)
@@ -1266,9 +1267,9 @@ public class Battle
         }
         return pokemon;
     }
-    public List<Pokemon> GetTrainerAllAvailablePokemon(Trainer trainer)
+    public List<PBS.Main.Pokemon.Pokemon> GetTrainerAllAvailablePokemon(Trainer trainer)
     {
-        List<Pokemon> pokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> pokemon = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < trainer.party.Count; i++)
         {
             if (trainer.party[i].IsAbleToBattle())
@@ -1283,9 +1284,9 @@ public class Battle
     /// </summary>
     /// <param name="trainer"></param>
     /// <returns></returns>
-    public List<Pokemon> GetTrainerOnFieldPokemon(Trainer trainer)
+    public List<PBS.Main.Pokemon.Pokemon> GetTrainerOnFieldPokemon(Trainer trainer)
     {
-        List<Pokemon> pokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> pokemon = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < this.pokemonOnField.Count; i++)
         {
             if (trainer.HasPokemon(this.pokemonOnField[i]))
@@ -1300,10 +1301,10 @@ public class Battle
     /// </summary>
     /// <param name="trainer"></param>
     /// <returns></returns>
-    public List<Pokemon> GetTrainerCommandablePokemon(Trainer trainer)
+    public List<PBS.Main.Pokemon.Pokemon> GetTrainerCommandablePokemon(Trainer trainer)
     {
-        List<Pokemon> trainerPokemon = GetTrainerOnFieldPokemon(trainer);
-        List<Pokemon> commandablePokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> trainerPokemon = GetTrainerOnFieldPokemon(trainer);
+        List<PBS.Main.Pokemon.Pokemon> commandablePokemon = new List<PBS.Main.Pokemon.Pokemon>();
 
         for (int i = 0; i < trainerPokemon.Count; i++)
         {
@@ -1342,12 +1343,12 @@ public class Battle
 
         return commandablePokemon;
     }
-    public List<Pokemon> ForceSendTrainerPokemon(Trainer trainer)
+    public List<PBS.Main.Pokemon.Pokemon> ForceSendTrainerPokemon(Trainer trainer)
     {
-        List<Pokemon> sentPokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> sentPokemon = new List<PBS.Main.Pokemon.Pokemon>();
 
         List<int> emptyPositions = GetEmptyTrainerControlPositions(trainer);
-        List<Pokemon> availablePokemon = GetTrainerFirstXAvailablePokemon(trainer, emptyPositions.Count);
+        List<PBS.Main.Pokemon.Pokemon> availablePokemon = GetTrainerFirstXAvailablePokemon(trainer, emptyPositions.Count);
         for (int i = 0; i < availablePokemon.Count; i++)
         {
             sentPokemon.Add(availablePokemon[i]);
@@ -1370,7 +1371,7 @@ public class Battle
         // remove all filled positions if they occur
         for (int j = 0; j < pokemonOnField.Count; j++)
         {
-            Pokemon pokemon = pokemonOnField[j];
+            PBS.Main.Pokemon.Pokemon pokemon = pokemonOnField[j];
             if (pokemon.teamPos == trainer.teamID
                 && positions.Contains(pokemon.battlePos))
             {
@@ -1382,32 +1383,32 @@ public class Battle
     public List<int> GetFillableTrainerPositions(Trainer trainer)
     {
         List<int> emptyPositions = GetEmptyTrainerControlPositions(trainer);
-        List<Pokemon> availablePokemon = GetTrainerFirstXAvailablePokemon(trainer, emptyPositions.Count);
+        List<PBS.Main.Pokemon.Pokemon> availablePokemon = GetTrainerFirstXAvailablePokemon(trainer, emptyPositions.Count);
         for (int i = 0; i < trainer.party.Count; i++)
         {
 
         }
         return emptyPositions;
     }
-    public void TrainerWithdrawPokemon(Trainer trainer, Pokemon pokemon) {
-        if (pokemon.dynamaxState != Pokemon.DynamaxState.None)
+    public void TrainerWithdrawPokemon(Trainer trainer, PBS.Main.Pokemon.Pokemon pokemon) {
+        if (pokemon.dynamaxState != PBS.Main.Pokemon.Pokemon.DynamaxState.None)
         {
-            if (pokemon.dynamaxState == Pokemon.DynamaxState.Gigantamax)
+            if (pokemon.dynamaxState == PBS.Main.Pokemon.Pokemon.DynamaxState.Gigantamax)
             {
                 PBPRevertForm(pokemon);
             }
-            pokemon.dynamaxState = Pokemon.DynamaxState.None;
+            pokemon.dynamaxState = PBS.Main.Pokemon.Pokemon.DynamaxState.None;
         }
 
         // Natural Cure / Regenerator
         if (!IsPokemonFainted(pokemon))
         {
-            List<EffectDatabase.AbilityEff.AbilityEffect> naturalCure_ = 
+            List<PBS.Databases.Effects.Abilities.AbilityEffect> naturalCure_ = 
                 PBPGetAbilityEffects(pokemon, AbilityEffectType.NaturalCure);
             for (int i = 0; i < naturalCure_.Count; i++)
             {
-                EffectDatabase.AbilityEff.NaturalCure naturalCure =
-                    naturalCure_[i] as EffectDatabase.AbilityEff.NaturalCure;
+                PBS.Databases.Effects.Abilities.NaturalCure naturalCure =
+                    naturalCure_[i] as PBS.Databases.Effects.Abilities.NaturalCure;
                 if (DoEffectFiltersPass(
                     filters: naturalCure.filters,
                     targetPokemon: pokemon
@@ -1438,14 +1439,14 @@ public class Battle
         }
         RemovePokemonOnField(pokemon);
     }
-    public void TrainerSendPokemon(Trainer trainer, Pokemon pokemon, int emptyPos)
+    public void TrainerSendPokemon(Trainer trainer, PBS.Main.Pokemon.Pokemon pokemon, int emptyPos)
     {
         pokemon.teamPos = trainer.teamID;
         pokemon.battlePos = emptyPos;
         pokemon.bProps.switchedIn = true;
         AddPokemonToField(pokemon);
     }
-    public void TrainerSwapPokemon(Trainer trainer, Pokemon pokemon1, Pokemon pokemon2)
+    public void TrainerSwapPokemon(Trainer trainer, PBS.Main.Pokemon.Pokemon pokemon1, PBS.Main.Pokemon.Pokemon pokemon2)
     {
         trainer.SwapPartyPokemon(pokemon1, pokemon2);
     }
@@ -1482,7 +1483,7 @@ public class Battle
         }
         return null;
     }
-    public Pokemon GetTrainerPokemonAtFaintPos(Trainer trainer, int faintPos)
+    public PBS.Main.Pokemon.Pokemon GetTrainerPokemonAtFaintPos(Trainer trainer, int faintPos)
     {
         for (int i = 0; i < trainer.party.Count; i++)
         {
@@ -1500,7 +1501,7 @@ public class Battle
     /// </summary>
     /// <param name="pokemon"></param>
     /// <returns></returns>
-    public Trainer GetPokemonOwner(Pokemon pokemon)
+    public Trainer GetPokemonOwner(PBS.Main.Pokemon.Pokemon pokemon)
     {
         for (int i = 0; i < teams.Count; i++)
         {
@@ -1515,13 +1516,13 @@ public class Battle
         }
         return null;
     }
-    public bool ArePokemonAndTrainerSameTeam(Pokemon pokemon, Trainer trainer)
+    public bool ArePokemonAndTrainerSameTeam(PBS.Main.Pokemon.Pokemon pokemon, Trainer trainer)
     {
         return pokemon.teamPos == trainer.teamID;
     }
 
     // Pokemon: Field / Positioning Methods
-    public Pokemon GetPokemonByID(string uniqueID)
+    public PBS.Main.Pokemon.Pokemon GetPokemonByID(string uniqueID)
     {
         for (int i = 0; i < teams.Count; i++)
         {
@@ -1530,7 +1531,7 @@ public class Battle
                 Trainer trainer = teams[i].trainers[k];
                 for (int j = 0; j < trainer.party.Count; j++)
                 {
-                    Pokemon pokemon = trainer.party[j];
+                    PBS.Main.Pokemon.Pokemon pokemon = trainer.party[j];
                     if (pokemon.uniqueID == uniqueID)
                     {
                         return pokemon;
@@ -1540,7 +1541,7 @@ public class Battle
         }
         return null;
     }
-    public Pokemon GetFieldPokemonByID(string uniqueID)
+    public PBS.Main.Pokemon.Pokemon GetFieldPokemonByID(string uniqueID)
     {
         for (int i = 0; i < pokemonOnField.Count; i++)
         {
@@ -1551,12 +1552,12 @@ public class Battle
         }
         return null;
     }
-    public bool AddPokemonToField(Pokemon pokemon)
+    public bool AddPokemonToField(PBS.Main.Pokemon.Pokemon pokemon)
     {
         this.pokemonOnField.Add(pokemon);
         return true;
     }
-    public bool RemovePokemonOnField(Pokemon pokemon)
+    public bool RemovePokemonOnField(PBS.Main.Pokemon.Pokemon pokemon)
     {
         for (int i = 0; i < pokemonOnField.Count; i++)
         {
@@ -1566,9 +1567,9 @@ public class Battle
                 pokemonOnField[i].battlePos = -1;
 
                 // unset dynamax
-                if (pokemonOnField[i].dynamaxState != Pokemon.DynamaxState.None)
+                if (pokemonOnField[i].dynamaxState != PBS.Main.Pokemon.Pokemon.DynamaxState.None)
                 {
-                    if (pokemonOnField[i].dynamaxState == Pokemon.DynamaxState.Gigantamax)
+                    if (pokemonOnField[i].dynamaxState == PBS.Main.Pokemon.Pokemon.DynamaxState.Gigantamax)
                     {
                         PBPRevertForm(pokemonOnField[i]);
                     }
@@ -1600,7 +1601,7 @@ public class Battle
             {
                 for (int k = 0; k < teams[i].trainers[j].party.Count; k++)
                 {
-                    Pokemon pokemon = teams[i].trainers[j].party[k];
+                    PBS.Main.Pokemon.Pokemon pokemon = teams[i].trainers[j].party[k];
                     if (pokemon.teamPos != -1 && pokemon.battlePos != -1)
                     {
                         pokemonOnField.Add(pokemon);
@@ -1609,7 +1610,7 @@ public class Battle
             }
         }
     }
-    public bool IsPokemonOnField(Pokemon pokemon)
+    public bool IsPokemonOnField(PBS.Main.Pokemon.Pokemon pokemon)
     {
         for (int i = 0; i < pokemonOnField.Count; i++)
         {
@@ -1620,7 +1621,7 @@ public class Battle
         }
         return false;
     }
-    public bool IsPokemonOnFieldAndAble(Pokemon pokemon)
+    public bool IsPokemonOnFieldAndAble(PBS.Main.Pokemon.Pokemon pokemon)
     {
         if (pokemon == null) return false;
         return !IsPokemonFainted(pokemon) && IsPokemonOnField(pokemon);
@@ -1641,7 +1642,7 @@ public class Battle
         }
         return battlePositions;
     }
-    public Pokemon GetPokemonAtPosition(BattlePosition position)
+    public PBS.Main.Pokemon.Pokemon GetPokemonAtPosition(BattlePosition position)
     {
         for (int i = 0; i < pokemonOnField.Count; i++)
         {
@@ -1653,16 +1654,16 @@ public class Battle
         }
         return null;
     }
-    public void SetPokemonPosition(Pokemon pokemon, BattlePosition position)
+    public void SetPokemonPosition(PBS.Main.Pokemon.Pokemon pokemon, BattlePosition position)
     {
         pokemon.battlePos = position.battlePos;
         pokemon.teamPos = position.teamPos;
     }
-    public BattlePosition GetPokemonPosition(Pokemon pokemon)
+    public BattlePosition GetPokemonPosition(PBS.Main.Pokemon.Pokemon pokemon)
     {
         return new BattlePosition(pokemon);
     }
-    public Team GetPokemonOpposingTeam(Pokemon pokemon)
+    public Team GetPokemonOpposingTeam(PBS.Main.Pokemon.Pokemon pokemon)
     {
         for (int i = 0; i < teams.Count; i++)
         {
@@ -1673,17 +1674,17 @@ public class Battle
         }
         return null;
     }
-    public bool ArePokemonAllies(Pokemon pokemon1, Pokemon pokemon2)
+    public bool ArePokemonAllies(PBS.Main.Pokemon.Pokemon pokemon1, PBS.Main.Pokemon.Pokemon pokemon2)
     {
         return pokemon1.teamPos == pokemon2.teamPos;
     }
-    public bool ArePokemonEnemies(Pokemon pokemon1, Pokemon pokemon2)
+    public bool ArePokemonEnemies(PBS.Main.Pokemon.Pokemon pokemon1, PBS.Main.Pokemon.Pokemon pokemon2)
     {
         return pokemon1.teamPos != pokemon2.teamPos;
     }
-    public List<Pokemon> GetAllyPokemon(Pokemon pokemon)
+    public List<PBS.Main.Pokemon.Pokemon> GetAllyPokemon(PBS.Main.Pokemon.Pokemon pokemon)
     {
-        List<Pokemon> allyPokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> allyPokemon = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < pokemonOnField.Count; i++)
         {
             if (ArePokemonAllies(pokemon, pokemonOnField[i])
@@ -1694,9 +1695,9 @@ public class Battle
         }
         return allyPokemon;
     }
-    public List<Pokemon> GetOpposingPokemon(Pokemon pokemon)
+    public List<PBS.Main.Pokemon.Pokemon> GetOpposingPokemon(PBS.Main.Pokemon.Pokemon pokemon)
     {
-        List<Pokemon> opposingPokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> opposingPokemon = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < pokemonOnField.Count; i++)
         {
             if (ArePokemonEnemies(pokemon, pokemonOnField[i])
@@ -1707,40 +1708,40 @@ public class Battle
         }
         return opposingPokemon;
     }
-    public Pokemon GetRandomOpponent(Pokemon pokemon)
+    public PBS.Main.Pokemon.Pokemon GetRandomOpponent(PBS.Main.Pokemon.Pokemon pokemon)
     {
-        List<Pokemon> opposingPokemon = GetOpposingPokemon(pokemon);
+        List<PBS.Main.Pokemon.Pokemon> opposingPokemon = GetOpposingPokemon(pokemon);
         if (opposingPokemon.Count > 0)
         {
             return opposingPokemon[Random.Range(0, opposingPokemon.Count)];
         }
         return null;
     }
-    public List<Pokemon> GetPokemonFromTeam(Team team)
+    public List<PBS.Main.Pokemon.Pokemon> GetPokemonFromTeam(Team team)
     {
-        List<Pokemon> allPokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> allPokemon = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < team.trainers.Count; i++)
         {
             allPokemon.AddRange(team.trainers[i].party);
         }
         return allPokemon;
     }
-    public List<Pokemon> GetPokemonFromAllTrainers()
+    public List<PBS.Main.Pokemon.Pokemon> GetPokemonFromAllTrainers()
     {
-        List<Pokemon> allPokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> allPokemon = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < teams.Count; i++)
         {
             allPokemon.AddRange(GetPokemonFromTeam(teams[i]));
         }
         return allPokemon;
     }
-    public List<Pokemon> GetPokemonFainted()
+    public List<PBS.Main.Pokemon.Pokemon> GetPokemonFainted()
     {
         return GetPokemonFaintedFrom(pokemonOnField);
     }
-    public List<Pokemon> GetPokemonFaintedFrom(List<Pokemon> pokemon)
+    public List<PBS.Main.Pokemon.Pokemon> GetPokemonFaintedFrom(List<PBS.Main.Pokemon.Pokemon> pokemon)
     {
-        List<Pokemon> faintedPokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> faintedPokemon = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < pokemon.Count; i++)
         {
             if (IsPokemonFainted(pokemon[i]))
@@ -1750,13 +1751,13 @@ public class Battle
         }
         return faintedPokemon;
     }
-    public List<Pokemon> GetPokemonUnfainted()
+    public List<PBS.Main.Pokemon.Pokemon> GetPokemonUnfainted()
     {
         return GetPokemonUnfaintedFrom(pokemonOnField);
     }
-    public List<Pokemon> GetPokemonUnfaintedFrom(List<Pokemon> pokemon)
+    public List<PBS.Main.Pokemon.Pokemon> GetPokemonUnfaintedFrom(List<PBS.Main.Pokemon.Pokemon> pokemon)
     {
-        List<Pokemon> alivePokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> alivePokemon = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < pokemon.Count; i++)
         {
             if (!IsPokemonFainted(pokemon[i]))
@@ -1766,9 +1767,9 @@ public class Battle
         }
         return alivePokemon;
     }
-    public List<Pokemon> GetPokemonOnFieldFrom(List<Pokemon> pokemon)
+    public List<PBS.Main.Pokemon.Pokemon> GetPokemonOnFieldFrom(List<PBS.Main.Pokemon.Pokemon> pokemon)
     {
-        List<Pokemon> fieldPokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> fieldPokemon = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < pokemon.Count; i++)
         {
             if (IsPokemonOnField(pokemon[i]))
@@ -1785,43 +1786,43 @@ public class Battle
     /// </summary>
     /// <param name="pokemon"></param>
     /// <returns></returns>
-    public float GetPokemonHPAsPercentage(Pokemon pokemon)
+    public float GetPokemonHPAsPercentage(PBS.Main.Pokemon.Pokemon pokemon)
     {
         return pokemon.HPPercent;
     }
-    public float GetPokemonHPPercentGivenHP(Pokemon pokemon, int HPValue)
+    public float GetPokemonHPPercentGivenHP(PBS.Main.Pokemon.Pokemon pokemon, int HPValue)
     {
         return (float)HPValue / pokemon.maxHP;
     }
-    public  void SetPokemonHP(Pokemon pokemon, float hpPercent)
+    public  void SetPokemonHP(PBS.Main.Pokemon.Pokemon pokemon, float hpPercent)
     {
 
     }
-    public void FaintPokemon(Pokemon pokemon)
+    public void FaintPokemon(PBS.Main.Pokemon.Pokemon pokemon)
     {
         pokemon.faintPos = pokemon.battlePos;
-        if (pokemon.megaState != Pokemon.MegaState.None)
+        if (pokemon.megaState != PBS.Main.Pokemon.Pokemon.MegaState.None)
         {
-            pokemon.megaState = Pokemon.MegaState.None;
+            pokemon.megaState = PBS.Main.Pokemon.Pokemon.MegaState.None;
             PBPRevertForm(pokemon);
         }
-        if (pokemon.dynamaxState != Pokemon.DynamaxState.None)
+        if (pokemon.dynamaxState != PBS.Main.Pokemon.Pokemon.DynamaxState.None)
         {
-            if (pokemon.dynamaxState == Pokemon.DynamaxState.Gigantamax)
+            if (pokemon.dynamaxState == PBS.Main.Pokemon.Pokemon.DynamaxState.Gigantamax)
             {
                 PBPRevertForm(pokemon);
             }
-            pokemon.dynamaxState = Pokemon.DynamaxState.None;
+            pokemon.dynamaxState = PBS.Main.Pokemon.Pokemon.DynamaxState.None;
         }
         RemovePokemonOnField(pokemon);
     }
-    public bool IsPokemonFainted(Pokemon pokemon)
+    public bool IsPokemonFainted(PBS.Main.Pokemon.Pokemon pokemon)
     {
         return !pokemon.IsAbleToBattle();
     }
-    public List<Pokemon> GetFaintedPokemon()
+    public List<PBS.Main.Pokemon.Pokemon> GetFaintedPokemon()
     {
-        List<Pokemon> pokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> pokemon = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < pokemonOnField.Count; i++)
         {
             if (IsPokemonFainted(pokemonOnField[i]))
@@ -1831,63 +1832,63 @@ public class Battle
         }
         return pokemon;
     }
-    public float GetPokemonHeight(Pokemon pokemon)
+    public float GetPokemonHeight(PBS.Main.Pokemon.Pokemon pokemon)
     {
         float height = pokemon.data.height;
         return height;
     }
-    public float GetPokemonWeight(Pokemon pokemon)
+    public float GetPokemonWeight(PBS.Main.Pokemon.Pokemon pokemon)
     {
         // base weight
         float weight = pokemon.data.weight;
 
         // Light Metal / Heavy Metal
-        List<EffectDatabase.AbilityEff.AbilityEffect> heavyMetal_ = 
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> heavyMetal_ = 
             PBPGetAbilityEffects(pokemon, AbilityEffectType.HeavyMetal);
         for (int i = 0; i < heavyMetal_.Count; i++)
         {
-            EffectDatabase.AbilityEff.HeavyMetal heavyMetal =
-                heavyMetal_[i] as EffectDatabase.AbilityEff.HeavyMetal;
+            PBS.Databases.Effects.Abilities.HeavyMetal heavyMetal =
+                heavyMetal_[i] as PBS.Databases.Effects.Abilities.HeavyMetal;
             weight *= heavyMetal.weightMultiplier;
         }
         return weight;
     }
-    public int GetPokemonATK(Pokemon pokemon, bool applyStatStage = true, bool applyModifiers = true)
+    public int GetPokemonATK(PBS.Main.Pokemon.Pokemon pokemon, bool applyStatStage = true, bool applyModifiers = true)
     {
         PokemonStats statType = pokemon.bProps.ATKMappedStat;
         float stat = GetPokemonStat(pokemon, statType, applyStatStage, applyModifiers);
 
         return Mathf.FloorToInt(stat);
     }
-    public int GetPokemonDEF(Pokemon pokemon, bool applyStatStage = true, bool applyModifiers = true)
+    public int GetPokemonDEF(PBS.Main.Pokemon.Pokemon pokemon, bool applyStatStage = true, bool applyModifiers = true)
     {
         PokemonStats statType = pokemon.bProps.DEFMappedStat;
         float stat = GetPokemonStat(pokemon, statType, applyStatStage, applyModifiers);
 
         return Mathf.FloorToInt(stat);
     }
-    public int GetPokemonSPA(Pokemon pokemon, bool applyStatStage = true, bool applyModifiers = true)
+    public int GetPokemonSPA(PBS.Main.Pokemon.Pokemon pokemon, bool applyStatStage = true, bool applyModifiers = true)
     {
         PokemonStats statType = pokemon.bProps.SPAMappedStat;
         float stat = GetPokemonStat(pokemon, statType, applyStatStage, applyModifiers);
 
         return Mathf.FloorToInt(stat);
     }
-    public int GetPokemonSPD(Pokemon pokemon, bool applyStatStage = true, bool applyModifiers = true)
+    public int GetPokemonSPD(PBS.Main.Pokemon.Pokemon pokemon, bool applyStatStage = true, bool applyModifiers = true)
     {
         PokemonStats statType = pokemon.bProps.SPDMappedStat;
         float stat = GetPokemonStat(pokemon, statType, applyStatStage, applyModifiers);
 
         return Mathf.FloorToInt(stat);
     }
-    public int GetPokemonSPE(Pokemon pokemon, bool applyStatStage = true, bool applyModifiers = true)
+    public int GetPokemonSPE(PBS.Main.Pokemon.Pokemon pokemon, bool applyStatStage = true, bool applyModifiers = true)
     {
         PokemonStats statType = pokemon.bProps.SPEMappedStat;
         float stat = GetPokemonStat(pokemon, statType, applyStatStage, applyModifiers);
 
         return Mathf.FloorToInt(stat);
     }
-    public PokemonStats GetPokemonHighestStat(Pokemon pokemon, bool applyStatStage = true, bool applyModifiers = false)
+    public PokemonStats GetPokemonHighestStat(PBS.Main.Pokemon.Pokemon pokemon, bool applyStatStage = true, bool applyModifiers = false)
     {
         PokemonStats highestStat = PokemonStats.None;
         int highestValue = 0;
@@ -1927,7 +1928,7 @@ public class Battle
         return highestStat;
     }
     public float GetPokemonStat(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         PokemonStats statType,
         bool applyStatStage = true,
         bool applyModifiers = true)
@@ -1937,10 +1938,10 @@ public class Battle
         // Wonder Room
         if (BBPIsPokemonAffectedByBSC(pokemon, wonderRoom))
         {
-            EffectDatabase.StatusBTLEff.BattleSE wonderRoom_ = wonderRoom.data.GetEffectNew(BattleSEType.WonderRoom);
+            PBS.Databases.Effects.BattleStatuses.BattleSE wonderRoom_ = wonderRoom.data.GetEffectNew(BattleSEType.WonderRoom);
             if (wonderRoom_ != null)
             {
-                EffectDatabase.StatusBTLEff.WonderRoom wonderRoomEffect = wonderRoom_ as EffectDatabase.StatusBTLEff.WonderRoom;
+                PBS.Databases.Effects.BattleStatuses.WonderRoom wonderRoomEffect = wonderRoom_ as PBS.Databases.Effects.BattleStatuses.WonderRoom;
                 statType = wonderRoomEffect.GetMappedStat(statType);
             }
         }
@@ -1971,12 +1972,12 @@ public class Battle
             for (int i = 0; i < pbAbilities.Count; i++)
             {
                 Ability ability = pbAbilities[i];
-                EffectDatabase.AbilityEff.AbilityEffect slowStart_ =
+                PBS.Databases.Effects.Abilities.AbilityEffect slowStart_ =
                     ability.data.GetEffectNew(AbilityEffectType.SlowStart);
                 if (slowStart_ != null)
                 {
-                    EffectDatabase.AbilityEff.SlowStart slowStart =
-                        slowStart_ as EffectDatabase.AbilityEff.SlowStart;
+                    PBS.Databases.Effects.Abilities.SlowStart slowStart =
+                        slowStart_ as PBS.Databases.Effects.Abilities.SlowStart;
                     if (DoEffectFiltersPass(
                         filters: slowStart.filters,
                         targetPokemon: pokemon
@@ -1991,12 +1992,12 @@ public class Battle
             }
 
             // Compound Eyes
-            List<EffectDatabase.AbilityEff.AbilityEffect> compoundEyes_ =
+            List<PBS.Databases.Effects.Abilities.AbilityEffect> compoundEyes_ =
                 PBPGetAbilityEffects(pokemon, AbilityEffectType.CompoundEyes);
             for (int k = 0; k < compoundEyes_.Count; k++)
             {
-                EffectDatabase.AbilityEff.CompoundEyes compoundEyes =
-                    compoundEyes_[k] as EffectDatabase.AbilityEff.CompoundEyes;
+                PBS.Databases.Effects.Abilities.CompoundEyes compoundEyes =
+                    compoundEyes_[k] as PBS.Databases.Effects.Abilities.CompoundEyes;
 
                 bool applyEffect = DoEffectFiltersPass(
                     filters: compoundEyes.filters,
@@ -2023,12 +2024,12 @@ public class Battle
             // Unburden
             if (pokemon.bProps.unburdenItem != null)
             {
-                List<EffectDatabase.AbilityEff.AbilityEffect> unburden_ =
+                List<PBS.Databases.Effects.Abilities.AbilityEffect> unburden_ =
                     PBPGetAbilityEffects(pokemon, AbilityEffectType.Unburden);
                 for (int i = 0; i < unburden_.Count; i++)
                 {
-                    EffectDatabase.AbilityEff.Unburden unburden =
-                        unburden_[i] as EffectDatabase.AbilityEff.Unburden;
+                    PBS.Databases.Effects.Abilities.Unburden unburden =
+                        unburden_[i] as PBS.Databases.Effects.Abilities.Unburden;
                     if (DoEffectFiltersPass(
                         filters: unburden.filters,
                         targetPokemon: pokemon
@@ -2040,15 +2041,15 @@ public class Battle
             }
 
             // Victory Star
-            List<Pokemon> allyPokemon = GetAllyPokemon(pokemon);
+            List<PBS.Main.Pokemon.Pokemon> allyPokemon = GetAllyPokemon(pokemon);
             for (int i = 0; i < allyPokemon.Count; i++)
             {
-                List<EffectDatabase.AbilityEff.AbilityEffect> victoryStar_ =
+                List<PBS.Databases.Effects.Abilities.AbilityEffect> victoryStar_ =
                     PBPGetAbilityEffects(allyPokemon[i], AbilityEffectType.CompoundEyes);
                 for (int k = 0; k < victoryStar_.Count; k++)
                 {
-                    EffectDatabase.AbilityEff.CompoundEyes victoryStar =
-                        victoryStar_[k] as EffectDatabase.AbilityEff.CompoundEyes;
+                    PBS.Databases.Effects.Abilities.CompoundEyes victoryStar =
+                        victoryStar_[k] as PBS.Databases.Effects.Abilities.CompoundEyes;
                     if (victoryStar.victoryStar)
                     {
                         bool applyEffect = DoEffectFiltersPass(
@@ -2076,13 +2077,13 @@ public class Battle
             }
 
             // Plus / Minus
-            List<EffectDatabase.AbilityEff.AbilityEffect> minus_ =
+            List<PBS.Databases.Effects.Abilities.AbilityEffect> minus_ =
                 PBPGetAbilityEffects(pokemon, AbilityEffectType.Minus);
             for (int i = 0; i < allyPokemon.Count; i++)
             {
                 for (int k = 0; k < minus_.Count; k++)
                 {
-                    EffectDatabase.AbilityEff.Minus minus = minus_[k] as EffectDatabase.AbilityEff.Minus;
+                    PBS.Databases.Effects.Abilities.Minus minus = minus_[k] as PBS.Databases.Effects.Abilities.Minus;
                     if (DoEffectFiltersPass(
                         filters: minus.filters,
                         userPokemon: pokemon
@@ -2113,11 +2114,11 @@ public class Battle
 
             // Guts
             bool gutsOverwrite = false;
-            List<EffectDatabase.AbilityEff.AbilityEffect> guts_ =
+            List<PBS.Databases.Effects.Abilities.AbilityEffect> guts_ =
                 PBPGetAbilityEffects(pokemon, AbilityEffectType.Guts);
             for (int i = 0; i < guts_.Count; i++)
             {
-                EffectDatabase.AbilityEff.Guts guts = guts_[i] as EffectDatabase.AbilityEff.Guts;
+                PBS.Databases.Effects.Abilities.Guts guts = guts_[i] as PBS.Databases.Effects.Abilities.Guts;
                 if (DoEffectFiltersPass(
                     filters: guts.filters,
                     targetPokemon: pokemon
@@ -2135,14 +2136,14 @@ public class Battle
             }
 
             // Swift Swim / Chlorophyll / Surge Surfer
-            List<EffectDatabase.AbilityEff.AbilityEffect> swiftSwim_ = 
+            List<PBS.Databases.Effects.Abilities.AbilityEffect> swiftSwim_ = 
                 PBPGetAbilityEffects(pokemon: pokemon, effectType: AbilityEffectType.SwiftSwim);
             for (int i = 0; i < swiftSwim_.Count; i++)
             {
-                EffectDatabase.AbilityEff.SwiftSwim swiftSwim = swiftSwim_[i] as EffectDatabase.AbilityEff.SwiftSwim;
+                PBS.Databases.Effects.Abilities.SwiftSwim swiftSwim = swiftSwim_[i] as PBS.Databases.Effects.Abilities.SwiftSwim;
                 for (int k = 0; k < swiftSwim.conditions.Count; k++)
                 {
-                    EffectDatabase.AbilityEff.SwiftSwim.SwiftSwimCondition ssCond = swiftSwim.conditions[k];
+                    PBS.Databases.Effects.Abilities.SwiftSwim.SwiftSwimCondition ssCond = swiftSwim.conditions[k];
                     // Check existing battle conditions
                     bool isFound = false;
                     for (int j = 0; j < ssCond.conditions.Count && !isFound; j++)
@@ -2166,14 +2167,14 @@ public class Battle
             // Flower Gift
             for (int i = 0; i < allyPokemon.Count; i++)
             {
-                List<EffectDatabase.AbilityEff.AbilityEffect> flowerGift_ =
+                List<PBS.Databases.Effects.Abilities.AbilityEffect> flowerGift_ =
                     PBPGetAbilityEffects(pokemon: allyPokemon[i], effectType: AbilityEffectType.SwiftSwim);
                 for (int k = 0; k < flowerGift_.Count; k++)
                 {
-                    EffectDatabase.AbilityEff.SwiftSwim flowerGift = flowerGift_[k] as EffectDatabase.AbilityEff.SwiftSwim;
+                    PBS.Databases.Effects.Abilities.SwiftSwim flowerGift = flowerGift_[k] as PBS.Databases.Effects.Abilities.SwiftSwim;
                     for (int j = 0; j < flowerGift.conditions.Count; j++)
                     {
-                        EffectDatabase.AbilityEff.SwiftSwim.SwiftSwimCondition ssCond = flowerGift.conditions[j];
+                        PBS.Databases.Effects.Abilities.SwiftSwim.SwiftSwimCondition ssCond = flowerGift.conditions[j];
                         // Check existing battle conditions
                         bool isFound = false;
                         for (int l = 0; l < ssCond.conditions.Count && !isFound; l++)
@@ -2202,7 +2203,7 @@ public class Battle
                 List<PokemonCEff> effects = conditions[i].data.GetEffects(PokemonSEType.StatScale);
                 for (int k = 0; k < effects.Count; k++)
                 {
-                    List<PokemonStats> scaledStats = GameTextDatabase.GetStatsFromList(effects[k].stringParams);
+                    List<PokemonStats> scaledStats = GameText.GetStatsFromList(effects[k].stringParams);
                     if (scaledStats.Contains(statType))
                     {
                         pokemonModifiers *= effects[k].GetFloat(0);
@@ -2218,12 +2219,12 @@ public class Battle
             {
                 if (BBPIsPokemonAffectedByBSC(pokemon, bConditions[i]))
                 {
-                    List<EffectDatabase.StatusBTLEff.BattleSE> statScales_ =
+                    List<PBS.Databases.Effects.BattleStatuses.BattleSE> statScales_ =
                         bConditions[i].data.GetEffectsNew(BattleSEType.StatScale);
                     for (int k = 0; k < statScales_.Count; k++)
                     {
-                        EffectDatabase.StatusBTLEff.StatScale statScale = 
-                            statScales_[k] as EffectDatabase.StatusBTLEff.StatScale;
+                        PBS.Databases.Effects.BattleStatuses.StatScale statScale = 
+                            statScales_[k] as PBS.Databases.Effects.BattleStatuses.StatScale;
                         if (DoesBattleEFiltersPass(
                             effect: statScale,
                             targetPokemon: pokemon
@@ -2238,12 +2239,12 @@ public class Battle
 
             // Items
             float itemModifiers = 1f;
-            List<EffectDatabase.ItemEff.ItemEffect> choiceBandStats_ =
+            List<PBS.Databases.Effects.Items.ItemEffect> choiceBandStats_ =
                 PBPGetItemEffects(pokemon: pokemon, effectType: ItemEffectType.ChoiceBandStats);
             for (int k = 0; k < choiceBandStats_.Count; k++)
             {
-                EffectDatabase.ItemEff.ChoiceBandStats choiceBandStats =
-                    choiceBandStats_[k] as EffectDatabase.ItemEff.ChoiceBandStats;
+                PBS.Databases.Effects.Items.ChoiceBandStats choiceBandStats =
+                    choiceBandStats_[k] as PBS.Databases.Effects.Items.ChoiceBandStats;
 
                 bool applyEffect = DoEffectFiltersPass(
                     filters: choiceBandStats.filters,
@@ -2272,7 +2273,7 @@ public class Battle
 
         return stat;
     }
-    public int GetPokemonStatStage(Pokemon pokemon, PokemonStats statType)
+    public int GetPokemonStatStage(PBS.Main.Pokemon.Pokemon pokemon, PokemonStats statType)
     {
         return (statType == PokemonStats.Attack) ? pokemon.bProps.ATKStage
             : (statType == PokemonStats.Defense) ? pokemon.bProps.DEFStage
@@ -2283,7 +2284,7 @@ public class Battle
             : (statType == PokemonStats.Evasion) ? pokemon.bProps.EVAStage
             : 0;
     }
-    public void SetPokemonStatStage(Pokemon pokemon, PokemonStats statType, int stage)
+    public void SetPokemonStatStage(PBS.Main.Pokemon.Pokemon pokemon, PokemonStats statType, int stage)
     {
         if (statType == PokemonStats.Attack) pokemon.bProps.ATKStage = stage;
         if (statType == PokemonStats.Defense) pokemon.bProps.DEFStage = stage;
@@ -2293,7 +2294,7 @@ public class Battle
         if (statType == PokemonStats.Accuracy) pokemon.bProps.ACCStage = stage;
         if (statType == PokemonStats.Evasion) pokemon.bProps.EVAStage = stage;
     }
-    public float GetPokemonStatModifier(Pokemon pokemon, PokemonStats statType)
+    public float GetPokemonStatModifier(PBS.Main.Pokemon.Pokemon pokemon, PokemonStats statType)
     {
         int statStage = GetPokemonStatStage(pokemon, statType);
         int absStatStage = Mathf.Abs(statStage);
@@ -2319,7 +2320,7 @@ public class Battle
         float modifier = numerator / denominator;
         return modifier;
     }
-    public int AddPokemonHP(Pokemon pokemon, int HPGain)
+    public int AddPokemonHP(PBS.Main.Pokemon.Pokemon pokemon, int HPGain)
     {
         int realHPGain;
         if (pokemon.currentHP + HPGain >= pokemon.maxHP)
@@ -2334,7 +2335,7 @@ public class Battle
         }
         return realHPGain;
     }
-    public int SubtractPokemonHP(Pokemon pokemon, int HPLost)
+    public int SubtractPokemonHP(PBS.Main.Pokemon.Pokemon pokemon, int HPLost)
     {
         int realHPLost;
         if (pokemon.currentHP <= HPLost)
@@ -2349,7 +2350,7 @@ public class Battle
         }
         return realHPLost;
     }
-    public void ReplenishPokemonPP(Pokemon pokemon)
+    public void ReplenishPokemonPP(PBS.Main.Pokemon.Pokemon pokemon)
     {
         List<Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
         for (int i = 0; i < moveslots.Count; i++)
@@ -2357,7 +2358,7 @@ public class Battle
             moveslots[i].PP = moveslots[i].maxPP;
         }
     }
-    public int SubtractSubstituteHP(Pokemon pokemon, int HPLost)
+    public int SubtractSubstituteHP(PBS.Main.Pokemon.Pokemon pokemon, int HPLost)
     {
         int realHPLost;
         if (pokemon.bProps.substituteHP <= HPLost)
@@ -2372,7 +2373,7 @@ public class Battle
         }
         return realHPLost;
     }
-    public int GetPokemonHPByPercent(Pokemon pokemon, float HPPercent, bool roundDown = true, bool roundUp = false)
+    public int GetPokemonHPByPercent(PBS.Main.Pokemon.Pokemon pokemon, float HPPercent, bool roundDown = true, bool roundUp = false)
     {
         // restrict to positive values
         HPPercent = Mathf.Max(0, HPPercent);
@@ -2381,7 +2382,7 @@ public class Battle
             : Mathf.RoundToInt(pokemon.maxHP * HPPercent);
     }
 
-    public BattleOrder GetPokemonOrder(Pokemon pokemon1, Pokemon pokemon2)
+    public BattleOrder GetPokemonOrder(PBS.Main.Pokemon.Pokemon pokemon1, PBS.Main.Pokemon.Pokemon pokemon2)
     {
         int speed1 = GetPokemonSPE(pokemon1);
         int speed2 = GetPokemonSPE(pokemon2);
@@ -2389,11 +2390,11 @@ public class Battle
 
         bool isStall1 = false;
         bool isStall2 = false;
-        List<EffectDatabase.AbilityEff.AbilityEffect> stall1_ = PBPGetAbilityEffects(pokemon1, AbilityEffectType.Stall);
-        List<EffectDatabase.AbilityEff.AbilityEffect> stall2_ = PBPGetAbilityEffects(pokemon2, AbilityEffectType.Stall);
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> stall1_ = PBPGetAbilityEffects(pokemon1, AbilityEffectType.Stall);
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> stall2_ = PBPGetAbilityEffects(pokemon2, AbilityEffectType.Stall);
         for (int i = 0; i < stall1_.Count && !isStall1; i++)
         {
-            EffectDatabase.AbilityEff.Stall stall = stall1_[i] as EffectDatabase.AbilityEff.Stall;
+            PBS.Databases.Effects.Abilities.Stall stall = stall1_[i] as PBS.Databases.Effects.Abilities.Stall;
             if (DoEffectFiltersPass(
                 filters: stall.filters,
                 userPokemon: pokemon1,
@@ -2405,7 +2406,7 @@ public class Battle
         }
         for (int i = 0; i < stall2_.Count && !isStall2; i++)
         {
-            EffectDatabase.AbilityEff.Stall stall = stall2_[i] as EffectDatabase.AbilityEff.Stall;
+            PBS.Databases.Effects.Abilities.Stall stall = stall2_[i] as PBS.Databases.Effects.Abilities.Stall;
             if (DoEffectFiltersPass(
                 filters: stall.filters,
                 userPokemon: pokemon2,
@@ -2422,8 +2423,8 @@ public class Battle
         {
             if (trickRoom.data.GetEffectNew(BattleSEType.TrickRoom) != null)
             {
-                EffectDatabase.StatusBTLEff.BattleSE trickRoom_ = trickRoom.data.GetEffectNew(BattleSEType.TrickRoom);
-                EffectDatabase.StatusBTLEff.TrickRoom trickRoomEffect = trickRoom_ as EffectDatabase.StatusBTLEff.TrickRoom;
+                PBS.Databases.Effects.BattleStatuses.BattleSE trickRoom_ = trickRoom.data.GetEffectNew(BattleSEType.TrickRoom);
+                PBS.Databases.Effects.BattleStatuses.TrickRoom trickRoomEffect = trickRoom_ as PBS.Databases.Effects.BattleStatuses.TrickRoom;
                 PokemonStats statToUse = trickRoomEffect.speedStat;
 
                 bool pokemon1Affected = false;
@@ -2481,12 +2482,12 @@ public class Battle
 
         return battleOrder;
     }
-    public List<Pokemon> GetPokemonBySpeed(List<Pokemon> originalPokemon)
+    public List<PBS.Main.Pokemon.Pokemon> GetPokemonBySpeed(List<PBS.Main.Pokemon.Pokemon> originalPokemon)
     {
-        List<Pokemon> orderedPokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> orderedPokemon = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < originalPokemon.Count; i++)
         {
-            Pokemon unsortedPokemon = originalPokemon[i];
+            PBS.Main.Pokemon.Pokemon unsortedPokemon = originalPokemon[i];
             // if no sorted commands, make it the first sorted element
             if (orderedPokemon.Count == 0)
             {
@@ -2498,7 +2499,7 @@ public class Battle
                 bool isCommandInserted = false;
                 for (int j = 0; j < orderedPokemon.Count && !isCommandInserted; j++)
                 {
-                    Pokemon sortedPokemon = orderedPokemon[j];
+                    PBS.Main.Pokemon.Pokemon sortedPokemon = orderedPokemon[j];
 
                     // Get the order of the commands, of the unsorted in relation to the sorted
                     BattleOrder commandOrder = GetPokemonOrder(unsortedPokemon, sortedPokemon);
@@ -2542,7 +2543,7 @@ public class Battle
     }
 
     // Pokemon: Stat Stage Methods
-    public void SetStatStage(Pokemon pokemon, PokemonStats stat, int stage)
+    public void SetStatStage(PBS.Main.Pokemon.Pokemon pokemon, PokemonStats stat, int stage)
     {
         switch (stat)
         {
@@ -2599,8 +2600,8 @@ public class Battle
     public int GetTrueStatMod(
         List<PokemonStats> statsToModify,
         int modValue,
-        Pokemon targetPokemon,
-        Pokemon userPokemon = null,
+        PBS.Main.Pokemon.Pokemon targetPokemon,
+        PBS.Main.Pokemon.Pokemon userPokemon = null,
         bool maximize = false,
         bool minimize = false)
     {
@@ -2640,8 +2641,8 @@ public class Battle
     public bool CanPokemonStatModsExecute(
         List<PokemonStats> statsToModify,
         int modValue,
-        Pokemon targetPokemon,
-        Pokemon userPokemon = null,
+        PBS.Main.Pokemon.Pokemon targetPokemon,
+        PBS.Main.Pokemon.Pokemon userPokemon = null,
         bool maximize = false,
         bool minimize = false
         )
@@ -2680,8 +2681,8 @@ public class Battle
     public bool IsStatModsTooHigh(
         List<PokemonStats> statsToModify,
         int modValue,
-        Pokemon targetPokemon,
-        Pokemon userPokemon = null,
+        PBS.Main.Pokemon.Pokemon targetPokemon,
+        PBS.Main.Pokemon.Pokemon userPokemon = null,
         bool maximize = false,
         bool minimize = false)
     {
@@ -2697,7 +2698,7 @@ public class Battle
     }
 
     // Pokemon: Command Methods
-    public List<Moveslot> GetPokemonBattleMoveslots(Pokemon pokemon)
+    public List<Moveslot> GetPokemonBattleMoveslots(PBS.Main.Pokemon.Pokemon pokemon)
     {
         List<Moveslot> moveslots = new List<Moveslot>();
 
@@ -2749,7 +2750,7 @@ public class Battle
 
         return moveslots;
     }
-    public bool DoesPokemonHaveMove(Pokemon pokemon, string moveID)
+    public bool DoesPokemonHaveMove(PBS.Main.Pokemon.Pokemon pokemon, string moveID)
     {
         if (pokemon.HasMove(moveID))
         {
@@ -2765,7 +2766,7 @@ public class Battle
         }
         return false;
     }
-    public int GetPokemonMovePP(Pokemon pokemon, string moveID)
+    public int GetPokemonMovePP(PBS.Main.Pokemon.Pokemon pokemon, string moveID)
     {
         List<Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
         for (int i = 0; i < moveslots.Count; i++)
@@ -2777,7 +2778,7 @@ public class Battle
         }
         return -1;
     }
-    public bool CanPokemonStillExecuteCommand(Pokemon pokemon, BattleCommand command)
+    public bool CanPokemonStillExecuteCommand(PBS.Main.Pokemon.Pokemon pokemon, BattleCommand command)
     {
 
         // Fainted
@@ -2818,19 +2819,19 @@ public class Battle
 
         return true;
     }
-    public bool DoesMoveslotHaveEnoughPP(Pokemon pokemon, Moveslot moveslot)
+    public bool DoesMoveslotHaveEnoughPP(PBS.Main.Pokemon.Pokemon pokemon, Moveslot moveslot)
     {
         // TODO: real checks
         return moveslot.PP > 0;
     }
-    public bool CanPokemonUseMove(Pokemon pokemon, string moveID)
+    public bool CanPokemonUseMove(PBS.Main.Pokemon.Pokemon pokemon, string moveID)
     {
-        MoveData moveData = MoveDatabase.instance.GetMoveData(moveID);
+        MoveData moveData = Moves.instance.GetMoveData(moveID);
 
         // TODO: real checks
 
         // imprison
-        Pokemon imprison = PBPGetImprison(pokemon, moveData);
+        PBS.Main.Pokemon.Pokemon imprison = PBPGetImprison(pokemon, moveData);
         if (imprison != null)
         {
             return false;
@@ -2844,7 +2845,7 @@ public class Battle
         return true;
     }
     public bool IsPokemonMoveLimited(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         MoveData moveData
         )
     {
@@ -2862,12 +2863,12 @@ public class Battle
         return false;
     }
     public bool IsPokemonMoveLimited(
-        Pokemon pokemon, 
+        PBS.Main.Pokemon.Pokemon pokemon, 
         MoveData moveData,
         PBS.Main.Pokemon.BattleProperties.MoveLimiter moveLimiter)
     {
         // Disable
-        if (moveLimiter.effect is EffectDatabase.StatusPKEff.Disable)
+        if (moveLimiter.effect is PBS.Databases.Effects.PokemonStatuses.Disable)
         {
             if (moveLimiter.affectedMoves.Contains(moveData.ID))
             {
@@ -2875,7 +2876,7 @@ public class Battle
             }
         }
         // Encore
-        else if (moveLimiter.effect is EffectDatabase.StatusPKEff.Encore)
+        else if (moveLimiter.effect is PBS.Databases.Effects.PokemonStatuses.Encore)
         {
             if (!moveLimiter.affectedMoves.Contains(moveData.ID))
             {
@@ -2883,7 +2884,7 @@ public class Battle
             }
         }
         // Heal Block
-        else if (moveLimiter.effect is EffectDatabase.StatusPKEff.HealBlock)
+        else if (moveLimiter.effect is PBS.Databases.Effects.PokemonStatuses.HealBlock)
         {
             if (IsHealingMove(moveData))
             {
@@ -2891,16 +2892,16 @@ public class Battle
             }
         }
         // Taunt
-        else if (moveLimiter.effect is EffectDatabase.StatusPKEff.Taunt)
+        else if (moveLimiter.effect is PBS.Databases.Effects.PokemonStatuses.Taunt)
         {
-            EffectDatabase.StatusPKEff.Taunt taunt = moveLimiter.effect as EffectDatabase.StatusPKEff.Taunt;
+            PBS.Databases.Effects.PokemonStatuses.Taunt taunt = moveLimiter.effect as PBS.Databases.Effects.PokemonStatuses.Taunt;
             if (taunt.category == MoveCategory.Status)
             {
                 return true;
             }
         }
         // Torment
-        else if (moveLimiter.effect is EffectDatabase.StatusPKEff.Torment)
+        else if (moveLimiter.effect is PBS.Databases.Effects.PokemonStatuses.Torment)
         {
             if (moveLimiter.affectedMoves.Contains(moveData.ID))
             {
@@ -2910,7 +2911,7 @@ public class Battle
 
         return false;
     }
-    public List<Moveslot> GetPokemonUseableMoves(Pokemon pokemon)
+    public List<Moveslot> GetPokemonUseableMoves(PBS.Main.Pokemon.Pokemon pokemon)
     {
         List<Moveslot> moveslots = new List<Moveslot>();
         List<Moveslot> moveset = GetPokemonBattleMoveslots(pokemon);
@@ -2924,21 +2925,21 @@ public class Battle
         }
         return moveslots;
     }
-    public BattleCommand GetStruggleCommand(Pokemon pokemon, bool isPlayer = false)
+    public BattleCommand GetStruggleCommand(PBS.Main.Pokemon.Pokemon pokemon, bool isPlayer = false)
     {
         Moveslot struggleMove = new Moveslot("struggle");
         BattleCommand struggleCommand = BattleCommand.CreateMoveCommand(
             pokemon,
             struggleMove.moveID,
-            GetMoveAutoTargets(pokemon, MoveDatabase.instance.GetMoveData(struggleMove.moveID)));
+            GetMoveAutoTargets(pokemon, Moves.instance.GetMoveData(struggleMove.moveID)));
         return struggleCommand;
     }
-    public bool IsPokemonPreventedFromHealing(Pokemon pokemon)
+    public bool IsPokemonPreventedFromHealing(PBS.Main.Pokemon.Pokemon pokemon)
     {
         // Heal Block
         for (int i = 0; i < pokemon.bProps.moveLimiters.Count; i++)
         {
-            if (pokemon.bProps.moveLimiters[i].effect is EffectDatabase.StatusPKEff.HealBlock)
+            if (pokemon.bProps.moveLimiters[i].effect is PBS.Databases.Effects.PokemonStatuses.HealBlock)
             {
                 return true;
             }
@@ -2948,7 +2949,7 @@ public class Battle
     }
 
     // Pokemon: Misc Methods
-    public void ResetBattleOnlyProperties(Pokemon pokemon)
+    public void ResetBattleOnlyProperties(PBS.Main.Pokemon.Pokemon pokemon)
     {
         // stat stages
         pokemon.isInBattleMode = false;
@@ -2962,7 +2963,7 @@ public class Battle
         }
         pokemon.bProps.Reset(pokemon);
     }
-    public void ResetStatChanges(Pokemon pokemon)
+    public void ResetStatChanges(PBS.Main.Pokemon.Pokemon pokemon)
     {
         pokemon.bProps.ATKStage = 0;
         pokemon.bProps.DEFStage = 0;
@@ -2972,11 +2973,11 @@ public class Battle
         pokemon.bProps.ACCStage = 0;
         pokemon.bProps.EVAStage = 0;
     }
-    public void ResetCommands(Pokemon pokemon)
+    public void ResetCommands(PBS.Main.Pokemon.Pokemon pokemon)
     {
         pokemon.UnsetNextCommand();
     }
-    public void DisruptPokemon(Pokemon pokemon, MoveData moveData)
+    public void DisruptPokemon(PBS.Main.Pokemon.Pokemon pokemon, MoveData moveData)
     {
         // Bide
         if (moveData.GetEffect(MoveEffectType.Bide) != null)
@@ -2988,18 +2989,18 @@ public class Battle
     // ---POKEMON BATTLE PROPERTIES---
     
     // Form Changes
-    public void PBPDynamax(Pokemon pokemon)
+    public void PBPDynamax(PBS.Main.Pokemon.Pokemon pokemon)
     {
         float preHPPercent = GetPokemonHPAsPercentage(pokemon);
         int preMaxHP = pokemon.maxHP;
         
         if (!string.IsNullOrEmpty(pokemon.dynamaxProps.GMaxForm))
         {
-            pokemon.dynamaxState = Pokemon.DynamaxState.Gigantamax;
+            pokemon.dynamaxState = PBS.Main.Pokemon.Pokemon.DynamaxState.Gigantamax;
         }
         else
         {
-            pokemon.dynamaxState = Pokemon.DynamaxState.Dynamax;
+            pokemon.dynamaxState = PBS.Main.Pokemon.Pokemon.DynamaxState.Dynamax;
         }
         pokemon.dynamaxProps.turnsLeft = GameSettings.pkmnDynamaxTurns;
 
@@ -3013,16 +3014,16 @@ public class Battle
             }
         }
     }
-    public void PBPUndynamax(Pokemon pokemon)
+    public void PBPUndynamax(PBS.Main.Pokemon.Pokemon pokemon)
     {
         float preHPPercent = GetPokemonHPAsPercentage(pokemon);
         int preMaxHP = pokemon.maxHP;
 
-        if (pokemon.dynamaxState == Pokemon.DynamaxState.Gigantamax)
+        if (pokemon.dynamaxState == PBS.Main.Pokemon.Pokemon.DynamaxState.Gigantamax)
         {
             PBPRevertForm(pokemon);
         }
-        pokemon.dynamaxState = Pokemon.DynamaxState.None;
+        pokemon.dynamaxState = PBS.Main.Pokemon.Pokemon.DynamaxState.None;
 
         int postMaxHP = pokemon.maxHP;
         if (postMaxHP != preMaxHP)
@@ -3034,7 +3035,7 @@ public class Battle
             }
         }
     }
-    public void PBPChangeForm(Pokemon pokemon, string newPokemonID)
+    public void PBPChangeForm(PBS.Main.Pokemon.Pokemon pokemon, string newPokemonID)
     {
         float preHPPercent = GetPokemonHPAsPercentage(pokemon);
         int preMaxHP = pokemon.maxHP;
@@ -3052,7 +3053,7 @@ public class Battle
             }
         }
     }
-    public void PBPRevertForm(Pokemon pokemon)
+    public void PBPRevertForm(PBS.Main.Pokemon.Pokemon pokemon)
     {
         float preHPPercent = GetPokemonHPAsPercentage(pokemon);
         int preMaxHP = pokemon.maxHP;
@@ -3070,7 +3071,7 @@ public class Battle
             }
         }
     }
-    public void PBPTransformIntoPokemon(Pokemon transformPokemon, Pokemon targetPokemon)
+    public void PBPTransformIntoPokemon(PBS.Main.Pokemon.Pokemon transformPokemon, PBS.Main.Pokemon.Pokemon targetPokemon)
     {
         // Reset overridden values
         transformPokemon.bProps.ResetOverrides(transformPokemon);
@@ -3092,14 +3093,14 @@ public class Battle
         transformPokemon.bProps.types = new List<string>(targetPokemon.bProps.types);
     }
     public bool PBPIsPokemonOfForm(
-        Pokemon pokemon, 
+        PBS.Main.Pokemon.Pokemon pokemon, 
         string formPokemon, 
         bool allowDerivatives = false,
         bool allowAncestors = false,
         bool allowTransform = true)
     {
         string userID = pokemon.pokemonID;
-        PokemonData pokemonData = PokemonDatabase.instance.GetPokemonData(formPokemon);
+        PokemonData pokemonData = PBS.Databases.Pokemon.instance.GetPokemonData(formPokemon);
 
         // form inequality
         if (userID != pokemonData.ID)
@@ -3122,7 +3123,7 @@ public class Battle
             }
             else if (allowTransform && pokemon.bProps.tProps != null)
             {
-                PokemonData trnsData = PokemonDatabase.instance.GetPokemonData(pokemon.bProps.tProps.pokemonID);
+                PokemonData trnsData = PBS.Databases.Pokemon.instance.GetPokemonData(pokemon.bProps.tProps.pokemonID);
                 if (trnsData.ID != pokemonData.ID)
                 {
                     // If the user is a derivative of the target form
@@ -3158,7 +3159,7 @@ public class Battle
 
     // Abilities
     public List<Ability> PBPGetAbilities(
-        Pokemon pokemon, 
+        PBS.Main.Pokemon.Pokemon pokemon, 
         bool bypassAbility = false, 
         bool ignoreSuppression = false,
         bool skipNeutralizingGasCheck = false)
@@ -3194,7 +3195,7 @@ public class Battle
         return abilities;
     }
     public Ability PBPGetAbility(
-        Pokemon pokemon, 
+        PBS.Main.Pokemon.Pokemon pokemon, 
         bool bypassAbility = false, 
         bool ignoreSuppression = false)
     {
@@ -3211,7 +3212,7 @@ public class Battle
     }
 
     public List<Ability> PBPGetAbilitiesGainable(
-        Pokemon pokemon
+        PBS.Main.Pokemon.Pokemon pokemon
         )
     {
         List<Ability> abilities = new List<Ability>();
@@ -3239,7 +3240,7 @@ public class Battle
     }
 
     public Ability PBPGetAbilityWithEffect(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         AbilityEffectType effectType,
         bool bypassAbility = false,
         bool ignoreSuppression = false
@@ -3258,7 +3259,7 @@ public class Battle
         return null;
     }
     public List<Ability> PBPGetAbilitiesWithEffect(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         AbilityEffectType effectType,
         bool bypassAbility = false,
         bool ignoreSuppression = false
@@ -3283,7 +3284,7 @@ public class Battle
 
     public bool PBPHasAbility(
         string abilityID,
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         bool bypassAbility = false,
         bool ignoreSuppression = true
         )
@@ -3304,7 +3305,7 @@ public class Battle
     }
 
     public List<AbilityData> PBPGetAbilityDatas(
-        Pokemon pokemon, 
+        PBS.Main.Pokemon.Pokemon pokemon, 
         bool bypassAbility = false,
         bool ignoreSuppression = false)
     {
@@ -3321,7 +3322,7 @@ public class Battle
         return abilities;
     }
     public AbilityData PBPGetAbilityData(
-        Pokemon pokemon, 
+        PBS.Main.Pokemon.Pokemon pokemon, 
         bool bypassAbility = false,
         bool ignoreSuppression = false)
     {
@@ -3339,7 +3340,7 @@ public class Battle
     
 
     public List<AbilityData> PBPGetAbilityDatasWithEffect(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         AbilityEffectType effectType,
         bool bypassAbility = false,
         bool ignoreSuppression = false
@@ -3361,7 +3362,7 @@ public class Battle
         return abilities;
     }
     public AbilityData PBPGetAbilityDataWithEffect(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         AbilityEffectType effectType,
         bool bypassAbility = false,
         bool ignoreSuppression = false)
@@ -3379,8 +3380,8 @@ public class Battle
         return null;
     }
 
-    public List<EffectDatabase.AbilityEff.AbilityEffect> PBPGetAbilityEffects(
-        Pokemon pokemon,
+    public List<PBS.Databases.Effects.Abilities.AbilityEffect> PBPGetAbilityEffects(
+        PBS.Main.Pokemon.Pokemon pokemon,
         AbilityEffectType effectType,
         bool bypassAbility = false,
         bool ignoreSuppression = false
@@ -3392,22 +3393,22 @@ public class Battle
             bypassAbility: bypassAbility,
             ignoreSuppression: ignoreSuppression
             );
-        List<EffectDatabase.AbilityEff.AbilityEffect> abilityEffects = 
-            new List<EffectDatabase.AbilityEff.AbilityEffect>();
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> abilityEffects = 
+            new List<PBS.Databases.Effects.Abilities.AbilityEffect>();
         for (int i = 0; i < pbAbilityDatas.Count; i++)
         {
             abilityEffects.AddRange(pbAbilityDatas[i].GetEffectsNew(effectType));
         }
         return abilityEffects;
     }
-    public EffectDatabase.AbilityEff.AbilityEffect PBPGetAbilityEffect(
-        Pokemon pokemon,
+    public PBS.Databases.Effects.Abilities.AbilityEffect PBPGetAbilityEffect(
+        PBS.Main.Pokemon.Pokemon pokemon,
         AbilityEffectType effectType,
         bool bypassAbility = false,
         bool ignoreSuppression = false
         )
     {
-        List<EffectDatabase.AbilityEff.AbilityEffect> abilityEffects =
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> abilityEffects =
             PBPGetAbilityEffects(
                 pokemon: pokemon, 
                 effectType: effectType,
@@ -3421,7 +3422,7 @@ public class Battle
     }
 
     public List<AbilityEffectPair> PBPGetAbilityEffectPairs(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         AbilityEffectType effectType,
         bool bypassAbility = false,
         bool ignoreSuppression = false
@@ -3436,17 +3437,17 @@ public class Battle
         for (int i = 0; i < pbAbilities.Count; i++)
         {
             Ability ability = pbAbilities[i];
-            List<EffectDatabase.AbilityEff.AbilityEffect> effectsNew = ability.data.GetEffectsNew(effectType);
+            List<PBS.Databases.Effects.Abilities.AbilityEffect> effectsNew = ability.data.GetEffectsNew(effectType);
             for (int k = 0; k < effectsNew.Count; k++)
             {
-                EffectDatabase.AbilityEff.AbilityEffect effect = effectsNew[k];
+                PBS.Databases.Effects.Abilities.AbilityEffect effect = effectsNew[k];
                 effectPairs.Add(new AbilityEffectPair(ability, effect));
             }
         }
         return effectPairs;
     }
     public AbilityEffectPair PBPGetAbilityEffectPair(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         AbilityEffectType effectType,
         bool bypassAbility = false,
         bool ignoreSuppression = false
@@ -3465,7 +3466,7 @@ public class Battle
         return null;
     }
 
-    public Pokemon PBPGetPokemonWithAbilityEffect(
+    public PBS.Main.Pokemon.Pokemon PBPGetPokemonWithAbilityEffect(
         AbilityEffectType effectType, 
         bool bypassAbility = false,
         bool ignoreSuppression = false)
@@ -3488,7 +3489,7 @@ public class Battle
     }
 
     public List<Ability> PBPGetAbilitiesReplaceable(
-        Pokemon pokemon, 
+        PBS.Main.Pokemon.Pokemon pokemon, 
         List<Ability> worrySeedAbilities)
     {
         List<Ability> pbAbilities = PBPGetAbilities(pokemon);
@@ -3514,7 +3515,7 @@ public class Battle
         return replaceableAbilities;
     }
     public List<Ability> PBPSetAbilitiesReplaceable(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         List<Ability> worrySeedAbilities
         )
     {
@@ -3550,11 +3551,11 @@ public class Battle
         return setAbilities;
     }
 
-    public bool PBPSuppressAbility(Pokemon pokemon, Ability ability)
+    public bool PBPSuppressAbility(PBS.Main.Pokemon.Pokemon pokemon, Ability ability)
     {
         return PBPSuppressAbilities(pokemon, new List<Ability> { ability });
     }
-    public bool PBPSuppressAbilities(Pokemon pokemon, List<Ability> abilities)
+    public bool PBPSuppressAbilities(PBS.Main.Pokemon.Pokemon pokemon, List<Ability> abilities)
     {
         for (int i = 0; i < abilities.Count; i++)
         {
@@ -3569,7 +3570,7 @@ public class Battle
     {
         for (int i = 0; i < pokemonOnField.Count; i++)
         {
-            Pokemon pokemon = pokemonOnField[i];
+            PBS.Main.Pokemon.Pokemon pokemon = pokemonOnField[i];
             if (!skipFaint || !IsPokemonFainted(pokemon))
             {
                 List<Ability> abilities = PBPGetAbilities(
@@ -3587,7 +3588,7 @@ public class Battle
         }
         return false;
     }
-    public List<Ability> PBPGetNeutralizedAbilities(Pokemon pokemon)
+    public List<Ability> PBPGetNeutralizedAbilities(PBS.Main.Pokemon.Pokemon pokemon)
     {
         List<Ability> neutralizedAbilities = new List<Ability>();
         List<Ability> pbAbilities = PBPGetAbilities(pokemon);
@@ -3603,11 +3604,11 @@ public class Battle
     }
 
     public AbilityData PBPLegacyGetAbilityDataWithEffect(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         AbilityEffectType effectType,
         bool bypassAbility = false)
     {
-        AbilityData abilityData = AbilityDatabase.instance.GetAbilityData(pokemon.GetAbility());
+        AbilityData abilityData = Abilities.instance.GetAbilityData(pokemon.GetAbility());
         if (abilityData.GetEffect(effectType) != null)
         {
             if (!pokemon.bProps.isAbilitySuppressed || abilityData.HasTag(AbilityTag.CannotSuppress))
@@ -3621,7 +3622,7 @@ public class Battle
         return null;
     }
     public AbilityEffect PBPLegacyGetAbilityEffect(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         AbilityEffectType effectType,
         bool bypassAbility = false)
     {
@@ -3634,7 +3635,7 @@ public class Battle
     }
 
     // Status Conditions
-    public StatusCondition PBPGetSC(Pokemon pokemon, string statusID, bool descendant = true)
+    public StatusCondition PBPGetSC(PBS.Main.Pokemon.Pokemon pokemon, string statusID, bool descendant = true)
     {
         List<StatusCondition> conditions = PBPGetSCs(pokemon);
         for (int i = 0; i < conditions.Count; i++)
@@ -3651,7 +3652,7 @@ public class Battle
         }
         return null;
     }
-    public List<StatusCondition> PBPGetSCs(Pokemon pokemon)
+    public List<StatusCondition> PBPGetSCs(PBS.Main.Pokemon.Pokemon pokemon)
     {
         List<StatusCondition> conditions = new List<StatusCondition>();
         if (!pokemon.nonVolatileStatus.data.HasTag(PokemonSTag.IsDefault))
@@ -3661,10 +3662,10 @@ public class Battle
         conditions.AddRange(pokemon.bProps.statusConditions);
         return conditions;
     }
-    public List<StatusCondition> PBPGetSCs(Pokemon pokemon, EffectDatabase.Filter.Harvest filter)
+    public List<StatusCondition> PBPGetSCs(PBS.Main.Pokemon.Pokemon pokemon, PBS.Databases.Effects.Filter.Harvest filter)
     {
         List<StatusCondition> scs = new List<StatusCondition>();
-        if (filter.conditionType == EffectDatabase.Filter.Harvest.ConditionType.Pokemon)
+        if (filter.conditionType == PBS.Databases.Effects.Filter.Harvest.ConditionType.Pokemon)
         {
             if (filter.conditions.Count > 0)
             {
@@ -3680,14 +3681,14 @@ public class Battle
         }
         return scs;
     }
-    public Ability PBPGetComatoseSCAbility(Pokemon pokemon)
+    public Ability PBPGetComatoseSCAbility(PBS.Main.Pokemon.Pokemon pokemon)
     {
         List<Ability> abilities = PBPGetAbilities(pokemon);
 
         for (int i = 0; i < abilities.Count; i++)
         {
             Ability ability = abilities[i];
-            List<EffectDatabase.AbilityEff.AbilityEffect> comatose_ =
+            List<PBS.Databases.Effects.Abilities.AbilityEffect> comatose_ =
                 ability.data.GetEffectsNew(AbilityEffectType.Comatose);
             if (comatose_ != null)
             {
@@ -3698,7 +3699,7 @@ public class Battle
     }
 
     // Type-Related
-    public List<string> PBPGetTypes(Pokemon pokemon)
+    public List<string> PBPGetTypes(PBS.Main.Pokemon.Pokemon pokemon)
     {
         List<string> pokemonTypes = new List<string>(pokemon.bProps.types);
 
@@ -3711,7 +3712,7 @@ public class Battle
         // Roost
         if (!string.IsNullOrEmpty(pokemon.bProps.roostMove))
         {
-            MoveData moveData = MoveDatabase.instance.GetMoveData(pokemon.bProps.roostMove);
+            MoveData moveData = Moves.instance.GetMoveData(pokemon.bProps.roostMove);
             MoveEffect effect = moveData.GetEffect(MoveEffectType.RoostTypeLoss);
             if (effect != null)
             {
@@ -3728,7 +3729,7 @@ public class Battle
         {
             for (int i = 0; i < pokemonTypes.Count; i++)
             {
-                TypeData typeData = TypeDatabase.instance.GetTypeData(pokemonTypes[i]);
+                TypeData typeData = ElementalTypes.instance.GetTypeData(pokemonTypes[i]);
                 if (typeData.HasTag(TypeTag.Airborne))
                 {
                     pokemonTypes.Remove(typeData.ID);
@@ -3740,7 +3741,7 @@ public class Battle
 
         return pokemonTypes;
     }
-    public List<string> PBPGetTypeResistances(Pokemon pokemon, bool allowInverse = true)
+    public List<string> PBPGetTypeResistances(PBS.Main.Pokemon.Pokemon pokemon, bool allowInverse = true)
     {
         return GetTypeResistances(
             typeIDs: PBPGetTypes(pokemon),
@@ -3748,7 +3749,7 @@ public class Battle
             allowInverse: allowInverse
             );
     }
-    public List<string> PBPGetTypeWeaknesses(Pokemon pokemon, bool allowInverse = true)
+    public List<string> PBPGetTypeWeaknesses(PBS.Main.Pokemon.Pokemon pokemon, bool allowInverse = true)
     {
         return GetTypeWeaknesses(
             typeIDs: PBPGetTypes(pokemon),
@@ -3756,7 +3757,7 @@ public class Battle
             allowInverse: allowInverse
             );
     }
-    public List<string> PBPGetTypeImmunities(Pokemon pokemon, bool allowInverse = true)
+    public List<string> PBPGetTypeImmunities(PBS.Main.Pokemon.Pokemon pokemon, bool allowInverse = true)
     {
         return GetTypeImmunities(
             typeIDs: PBPGetTypes(pokemon),
@@ -3764,15 +3765,15 @@ public class Battle
             allowInverse: allowInverse
             );
     }
-    public bool PBPIsPokemonGrounded(Pokemon pokemon)
+    public bool PBPIsPokemonGrounded(PBS.Main.Pokemon.Pokemon pokemon)
     {
         // Gravity forces grounded pokemon
         if (BBPIsPokemonAffectedByBSC(pokemon, gravity))
         {
-            EffectDatabase.StatusBTLEff.BattleSE gravity_ = gravity.data.GetEffectNew(BattleSEType.Gravity);
+            PBS.Databases.Effects.BattleStatuses.BattleSE gravity_ = gravity.data.GetEffectNew(BattleSEType.Gravity);
             if (gravity_ != null)
             {
-                EffectDatabase.StatusBTLEff.Gravity gravityEffect = gravity_ as EffectDatabase.StatusBTLEff.Gravity;
+                PBS.Databases.Effects.BattleStatuses.Gravity gravityEffect = gravity_ as PBS.Databases.Effects.BattleStatuses.Gravity;
                 if (gravityEffect.intensifyGravity)
                 {
                     return true;
@@ -3783,7 +3784,7 @@ public class Battle
         // Ingrain causes grounded
         for (int i = 0; i < pokemon.bProps.ingrainMoves.Count; i++)
         {
-            MoveData moveData = MoveDatabase.instance.GetMoveData(pokemon.bProps.ingrainMoves[i]);
+            MoveData moveData = Moves.instance.GetMoveData(pokemon.bProps.ingrainMoves[i]);
             MoveEffect effect = moveData.GetEffect(MoveEffectType.Ingrain);
             if (effect.GetBool(0))
             {
@@ -3799,7 +3800,7 @@ public class Battle
             // airborne types (ex. Flying)
             for (int i = 0; i < types.Count; i++)
             {
-                TypeData typeData = TypeDatabase.instance.GetTypeData(types[i]);
+                TypeData typeData = ElementalTypes.instance.GetTypeData(types[i]);
                 if (typeData.HasTag(TypeTag.Airborne))
                 {
                     return false;
@@ -3809,11 +3810,11 @@ public class Battle
             // Levitate Check
             for (int i = 0; i < abilities.Count; i++)
             {
-                EffectDatabase.AbilityEff.AbilityEffect levitate_ =
+                PBS.Databases.Effects.Abilities.AbilityEffect levitate_ =
                     abilities[i].data.GetEffectNew(AbilityEffectType.Levitate);
                 if (levitate_ != null)
                 {
-                    EffectDatabase.AbilityEff.Levitate levitate = levitate_ as EffectDatabase.AbilityEff.Levitate;
+                    PBS.Databases.Effects.Abilities.Levitate levitate = levitate_ as PBS.Databases.Effects.Abilities.Levitate;
                     if (DoEffectFiltersPass(
                         filters: levitate.filters,
                         targetPokemon: pokemon
@@ -3826,11 +3827,11 @@ public class Battle
         }
         return true;
     }
-    public bool PBPIsPokemonTypeInversed(Pokemon pokemon, string specificType)
+    public bool PBPIsPokemonTypeInversed(PBS.Main.Pokemon.Pokemon pokemon, string specificType)
     {
         return PBPIsPokemonTypeInversed(pokemon, new List<string> { specificType });
     }
-    public bool PBPIsPokemonTypeInversed(Pokemon pokemon, List<string> specificTypes = null)
+    public bool PBPIsPokemonTypeInversed(PBS.Main.Pokemon.Pokemon pokemon, List<string> specificTypes = null)
     {
         specificTypes = (specificTypes == null) ? new List<string>() : specificTypes;
 
@@ -3844,7 +3845,7 @@ public class Battle
     }
 
     // Misc. Properties
-    public Pokemon PBPGetImprison(Pokemon pokemon, MoveData moveData)
+    public PBS.Main.Pokemon.Pokemon PBPGetImprison(PBS.Main.Pokemon.Pokemon pokemon, MoveData moveData)
     {
         for (int i = 0; i < pokemonOnField.Count; i++)
         {
@@ -3875,7 +3876,7 @@ public class Battle
         }
         return null;
     }
-    public bool IsPokemonLockedOn(Pokemon userPokemon, Pokemon targetPokemon)
+    public bool IsPokemonLockedOn(PBS.Main.Pokemon.Pokemon userPokemon, PBS.Main.Pokemon.Pokemon targetPokemon)
     {
         for (int i = 0; i < userPokemon.bProps.lockOnTargets.Count; i++)
         {
@@ -3892,7 +3893,7 @@ public class Battle
     // Status Conditions
     public TeamCondition TBPGetSC(Team team, string statusID, bool descendant = true)
     {
-        StatusTEData statusData = StatusTEDatabase.instance.GetStatusData(statusID);
+        StatusTEData statusData = TeamStatuses.instance.GetStatusData(statusID);
         List<TeamCondition> conditions = TBPGetSCs(team);
         for (int i = 0; i < conditions.Count; i++)
         {
@@ -3915,10 +3916,10 @@ public class Battle
         conditions.AddRange(team.bProps.lightScreens);
         return conditions;
     }
-    public List<TeamCondition> TBPGetSCs(Team team, EffectDatabase.Filter.Harvest filter)
+    public List<TeamCondition> TBPGetSCs(Team team, PBS.Databases.Effects.Filter.Harvest filter)
     {
         List<TeamCondition> scs = new List<TeamCondition>();
-        if (filter.conditionType == EffectDatabase.Filter.Harvest.ConditionType.Team)
+        if (filter.conditionType == PBS.Databases.Effects.Filter.Harvest.ConditionType.Team)
         {
             if (filter.conditions.Count > 0)
             {
@@ -3937,7 +3938,7 @@ public class Battle
 
     public void AddTeamEntryHazard(Team team, PBS.Main.Team.BattleProperties.EntryHazard entryHazard)
     {
-        MoveData moveData = MoveDatabase.instance.GetMoveData(entryHazard.hazardID);
+        MoveData moveData = Moves.instance.GetMoveData(entryHazard.hazardID);
 
         // Below is the order that entry hazards are applied
         MoveEffect SREffect = moveData.GetEffect(MoveEffectType.EntryHazardStealthRock);
@@ -3949,7 +3950,7 @@ public class Battle
         for (int i = 0; i < team.bProps.entryHazards.Count; i++)
         {
             PBS.Main.Team.BattleProperties.EntryHazard curHazard = team.bProps.entryHazards[i];
-            MoveData orderedMoveData = MoveDatabase.instance.GetMoveData(curHazard.hazardID);
+            MoveData orderedMoveData = Moves.instance.GetMoveData(curHazard.hazardID);
 
             bool addToList = false;
             if (!addToList
@@ -4035,7 +4036,7 @@ public class Battle
         return null;
     }
 
-    public bool TBPIsPokemonAffectedByTS(Pokemon pokemon, StatusTEData statusData)
+    public bool TBPIsPokemonAffectedByTS(PBS.Main.Pokemon.Pokemon pokemon, StatusTEData statusData)
     {
         /*// Aerial only?
         if (statusData.HasTag(BattleSTag.IsAerial))
@@ -4070,7 +4071,7 @@ public class Battle
     // Status Conditions
     public BattleCondition BBPGetSC(string statusID, bool descendant = true)
     {
-        StatusBTLData statusData = StatusBTLDatabase.instance.GetStatusData(statusID);
+        StatusBTLData statusData = BattleStatuses.instance.GetStatusData(statusID);
         List<BattleCondition> conditions = BBPGetSCs();
         for (int i = 0; i < conditions.Count; i++)
         {
@@ -4092,10 +4093,10 @@ public class Battle
         conditions.AddRange(statusConditions);
         return conditions;
     }
-    public List<BattleCondition> BBPGetSCs(EffectDatabase.Filter.Harvest filter)
+    public List<BattleCondition> BBPGetSCs(PBS.Databases.Effects.Filter.Harvest filter)
     {
         List<BattleCondition> scs = new List<BattleCondition>();
-        if (filter.conditionType == EffectDatabase.Filter.Harvest.ConditionType.Battle)
+        if (filter.conditionType == PBS.Databases.Effects.Filter.Harvest.ConditionType.Battle)
         {
             if (filter.conditions.Count > 0)
             {
@@ -4131,21 +4132,21 @@ public class Battle
     }
 
     // Strong Winds
-    public List<EffectDatabase.StatusBTLEff.StrongWinds> BBPGetStrongWindsEffects(BattleHitTarget hitTarget)
+    public List<PBS.Databases.Effects.BattleStatuses.StrongWinds> BBPGetStrongWindsEffects(BattleHitTarget hitTarget)
     {
         return BBPGetStrongWindsEffects(new List<BattleHitTarget>() { hitTarget });
     }
-    public List<EffectDatabase.StatusBTLEff.StrongWinds> BBPGetStrongWindsEffects(List<BattleHitTarget> hitTargets)
+    public List<PBS.Databases.Effects.BattleStatuses.StrongWinds> BBPGetStrongWindsEffects(List<BattleHitTarget> hitTargets)
     {
-        List<EffectDatabase.StatusBTLEff.StrongWinds> strongWinds = new List<EffectDatabase.StatusBTLEff.StrongWinds>();
+        List<PBS.Databases.Effects.BattleStatuses.StrongWinds> strongWinds = new List<PBS.Databases.Effects.BattleStatuses.StrongWinds>();
         List<BattleCondition> conditions = BBPGetSCs();
         for (int i = 0; i < conditions.Count; i++)
         {
-            List<EffectDatabase.StatusBTLEff.BattleSE> effects = 
+            List<PBS.Databases.Effects.BattleStatuses.BattleSE> effects = 
                 conditions[i].data.GetEffectsNew(BattleSEType.StrongWinds);
             for (int k = 0; k < effects.Count; k++)
             {
-                EffectDatabase.StatusBTLEff.StrongWinds curEff = effects[k] as EffectDatabase.StatusBTLEff.StrongWinds;
+                PBS.Databases.Effects.BattleStatuses.StrongWinds curEff = effects[k] as PBS.Databases.Effects.BattleStatuses.StrongWinds;
                 bool addEffect = false;
 
                 for (int j = 0; j < hitTargets.Count; j++)
@@ -4168,7 +4169,7 @@ public class Battle
         }
         return strongWinds;
     }
-    public List<string> BBPGetTargetStrongWindTypes(BattleHitTarget target, EffectDatabase.StatusBTLEff.StrongWinds effect)
+    public List<string> BBPGetTargetStrongWindTypes(BattleHitTarget target, PBS.Databases.Effects.BattleStatuses.StrongWinds effect)
     {
         List<string> affectedTypes = new List<string>();
 
@@ -4208,11 +4209,11 @@ public class Battle
         }
         return false;
     }
-    public bool BBPIsPokemonAffectedByBSC(Pokemon pokemon, BattleCondition condition)
+    public bool BBPIsPokemonAffectedByBSC(PBS.Main.Pokemon.Pokemon pokemon, BattleCondition condition)
     {
         return BBPIsPokemonAffectedByBS(pokemon: pokemon, statusData: condition.data);
     }
-    public bool BBPIsPokemonAffectedByBS(Pokemon pokemon, StatusBTLData statusData)
+    public bool BBPIsPokemonAffectedByBS(PBS.Main.Pokemon.Pokemon pokemon, StatusBTLData statusData)
     {
         // Weather
         if (statusData.GetEffectNew(BattleSEType.Weather) != null)
@@ -4274,7 +4275,7 @@ public class Battle
         for (int i = 0; i < checkTypes.Count; i++)
         {
             string curTypeCheck = checkTypes[i];
-            TypeData typeData = TypeDatabase.instance.GetTypeData(curTypeCheck);
+            TypeData typeData = ElementalTypes.instance.GetTypeData(curTypeCheck);
 
             bool typeContained = false;
             for (int k = 0; k < containerTypes.Count; k++)
@@ -4292,11 +4293,11 @@ public class Battle
         }
         return true;
     }
-    public bool DoesPokemonHaveType(Pokemon pokemon, string typeID)
+    public bool DoesPokemonHaveType(PBS.Main.Pokemon.Pokemon pokemon, string typeID)
     {
         return DoesPokemonHaveATypeInList(pokemon, new string[] { typeID });
     }
-    public bool DoesPokemonHaveATypeInList(Pokemon pokemon, string[] types)
+    public bool DoesPokemonHaveATypeInList(PBS.Main.Pokemon.Pokemon pokemon, string[] types)
     {
         List<string> pokemonTypes = PBPGetTypes(pokemon);
         for (int i = 0; i < types.Length; i++)
@@ -4308,22 +4309,22 @@ public class Battle
         }
         return false;
     }
-    public void SetPokemonType(Pokemon pokemon, string type)
+    public void SetPokemonType(PBS.Main.Pokemon.Pokemon pokemon, string type)
     {
         SetPokemonTypes(pokemon, new List<string> { type });
     }
-    public void SetPokemonTypes(Pokemon pokemon, List<string> types)
+    public void SetPokemonTypes(PBS.Main.Pokemon.Pokemon pokemon, List<string> types)
     {
         pokemon.bProps.types = new List<string>(types);
     }
 
     public string GetMoveType(string moveID)
     {
-        return MoveDatabase.instance.GetMoveData(moveID).moveType;
+        return Moves.instance.GetMoveData(moveID).moveType;
     }
     public BattleTypeEffectiveness GetTypeEffectiveness(
         string offensiveType,
-        Pokemon targetPokemon,
+        PBS.Main.Pokemon.Pokemon targetPokemon,
         bool allowInverse = true
         )
     {
@@ -4333,8 +4334,8 @@ public class Battle
             allowInverse: allowInverse);
     }
     public BattleTypeEffectiveness GetTypeEffectiveness(
-        List<string> offensiveTypes, 
-        Pokemon targetPokemon,
+        List<string> offensiveTypes,
+        PBS.Main.Pokemon.Pokemon targetPokemon,
         HashSet<string> overwrittenTypes = null,
         HashSet<string> bypassResistances = null,
         HashSet<string> bypassWeaknesses = null,
@@ -4352,7 +4353,7 @@ public class Battle
         for (int i = 0; i < targetTypes.Count; i++)
         {
             float curEffectiveness = 1f;
-            TypeData typeData = TypeDatabase.instance.GetTypeData(targetTypes[i]);
+            TypeData typeData = ElementalTypes.instance.GetTypeData(targetTypes[i]);
             // skip overwritten types
             if (overwrittenTypes.Contains(typeData.ID))
             {
@@ -4366,7 +4367,7 @@ public class Battle
             // Loop through offensive types
             for (int k = 0; k < offensiveTypes.Count; k++)
             {
-                TypeData offensiveTypeData = TypeDatabase.instance.GetTypeData(offensiveTypes[k]);
+                TypeData offensiveTypeData = ElementalTypes.instance.GetTypeData(offensiveTypes[k]);
                 for (int j = 0; j < resistances.Count; j++)
                 {
                     string curType = resistances[j];
@@ -4475,7 +4476,7 @@ public class Battle
         
         return effectiveness;
     }
-    public BattleTypeEffectiveness GetMoveEffectiveness(Pokemon userPokemon, MoveData moveData, Pokemon targetPokemon)
+    public BattleTypeEffectiveness GetMoveEffectiveness(PBS.Main.Pokemon.Pokemon userPokemon, MoveData moveData, PBS.Main.Pokemon.Pokemon targetPokemon)
     {
         BattleTypeEffectiveness effectiveness = new BattleTypeEffectiveness();
 
@@ -4544,7 +4545,7 @@ public class Battle
             List<string> effectTypes = new List<string>(flyingPressEffects[i].stringParams);
             if (effectTypes.Contains("ALL"))
             {
-                effectTypes = TypeDatabase.instance.GetAllTypes();
+                effectTypes = ElementalTypes.instance.GetAllTypes();
             }
 
             // Bypass Resistance
@@ -4567,11 +4568,11 @@ public class Battle
         }
 
         // Scrappy
-        List<EffectDatabase.AbilityEff.AbilityEffect> scrappy_
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> scrappy_
             = PBPGetAbilityEffects(userPokemon, AbilityEffectType.Scrappy);
         for (int i = 0; i < scrappy_.Count; i++)
         {
-            EffectDatabase.AbilityEff.Scrappy scrappy = scrappy_[i] as EffectDatabase.AbilityEff.Scrappy;
+            PBS.Databases.Effects.Abilities.Scrappy scrappy = scrappy_[i] as PBS.Databases.Effects.Abilities.Scrappy;
             bypassImmunities.UnionWith(scrappy.bypassImmunities);
         }
 
@@ -4585,7 +4586,7 @@ public class Battle
             List<string> effectTypes = new List<string>(freezeDryEffects[i].stringParams);
             if (effectTypes.Contains("ALL"))
             {
-                effectTypes = TypeDatabase.instance.GetAllTypes();
+                effectTypes = ElementalTypes.instance.GetAllTypes();
             }
             
             // Types that resist this move
@@ -4610,7 +4611,7 @@ public class Battle
         for (int i = 0; i < targetTypes.Count; i++)
         {
             float curEffectiveness = 1f;
-            TypeData typeData = TypeDatabase.instance.GetTypeData(targetTypes[i]);
+            TypeData typeData = ElementalTypes.instance.GetTypeData(targetTypes[i]);
 
             bool skipTypeCheck = false;
 
@@ -4657,7 +4658,7 @@ public class Battle
 
         return effectiveness;
     }
-    public List<string> GetMoveOffensiveTypes(Pokemon pokemon, MoveData moveData)
+    public List<string> GetMoveOffensiveTypes(PBS.Main.Pokemon.Pokemon pokemon, MoveData moveData)
     {
         List<string> offensiveTypes = new List<string> { moveData.moveType };
 
@@ -4668,7 +4669,7 @@ public class Battle
             List<string> effectTypes = new List<string>(flyingPressEffects[i].stringParams);
             if (effectTypes.Contains("ALL"))
             {
-                effectTypes = TypeDatabase.instance.GetAllTypes();
+                effectTypes = ElementalTypes.instance.GetAllTypes();
             }
 
             offensiveTypes.AddRange(effectTypes);
@@ -4676,7 +4677,7 @@ public class Battle
         return offensiveTypes;
     }
 
-    public List<string> GetTypeResistances(string typeID, Pokemon pokemon = null, bool allowInverse = true)
+    public List<string> GetTypeResistances(string typeID, PBS.Main.Pokemon.Pokemon pokemon = null, bool allowInverse = true)
     {
         return GetTypeResistances(
             typeIDs: new List<string> { typeID },
@@ -4684,7 +4685,7 @@ public class Battle
             allowInverse: allowInverse
             );
     }
-    public List<string> GetTypeResistances(List<string> typeIDs, Pokemon pokemon = null, bool allowInverse = true)
+    public List<string> GetTypeResistances(List<string> typeIDs, PBS.Main.Pokemon.Pokemon pokemon = null, bool allowInverse = true)
     {
         bool inverse = (pokemon == null) ? BBPIsInversed() : PBPIsPokemonTypeInversed(pokemon);
 
@@ -4701,7 +4702,7 @@ public class Battle
 
         for (int i = 0; i < typeIDs.Count; i++)
         {
-            TypeData typeData = TypeDatabase.instance.GetTypeData(typeIDs[i]);
+            TypeData typeData = ElementalTypes.instance.GetTypeData(typeIDs[i]);
             if (inverse && allowInverse)
             {
                 types.AddRange(typeData.weaknesses);
@@ -4713,7 +4714,7 @@ public class Battle
         }
         return types;
     }
-    public List<string> GetTypeWeaknesses(string typeID, Pokemon pokemon = null, bool allowInverse = true)
+    public List<string> GetTypeWeaknesses(string typeID, PBS.Main.Pokemon.Pokemon pokemon = null, bool allowInverse = true)
     {
         return GetTypeWeaknesses(
             typeIDs: new List<string> { typeID },
@@ -4721,7 +4722,7 @@ public class Battle
             allowInverse: allowInverse
             );
     }
-    public List<string> GetTypeWeaknesses(List<string> typeIDs, Pokemon pokemon = null, bool allowInverse = true)
+    public List<string> GetTypeWeaknesses(List<string> typeIDs, PBS.Main.Pokemon.Pokemon pokemon = null, bool allowInverse = true)
     {
         bool inverse = (pokemon == null) ? BBPIsInversed() : PBPIsPokemonTypeInversed(pokemon);
 
@@ -4738,7 +4739,7 @@ public class Battle
 
         for (int i = 0; i < typeIDs.Count; i++)
         {
-            TypeData typeData = TypeDatabase.instance.GetTypeData(typeIDs[i]);
+            TypeData typeData = ElementalTypes.instance.GetTypeData(typeIDs[i]);
             if (inverse && allowInverse)
             {
                 types.AddRange(typeData.resistances);
@@ -4751,7 +4752,7 @@ public class Battle
         }
         return types;
     }
-    public List<string> GetTypeImmunities(string typeID, Pokemon pokemon = null, bool allowInverse = true)
+    public List<string> GetTypeImmunities(string typeID, PBS.Main.Pokemon.Pokemon pokemon = null, bool allowInverse = true)
     {
         return GetTypeImmunities(
             typeIDs: new List<string> { typeID },
@@ -4759,15 +4760,15 @@ public class Battle
             allowInverse: allowInverse
             );
     }
-    public List<string> GetTypeImmunities(List<string> typeIDs, Pokemon pokemon = null, bool allowInverse = true)
+    public List<string> GetTypeImmunities(List<string> typeIDs, PBS.Main.Pokemon.Pokemon pokemon = null, bool allowInverse = true)
     {
         bool inverse = (pokemon == null) ? BBPIsInversed() : PBPIsPokemonTypeInversed(pokemon);
 
         // Foresight / Odor Sleuth / Miracle Eye (Filter out immunities)
-        List<EffectDatabase.StatusPKEff.Identification> identifieds = new List<EffectDatabase.StatusPKEff.Identification>();
+        List<PBS.Databases.Effects.PokemonStatuses.Identification> identifieds = new List<PBS.Databases.Effects.PokemonStatuses.Identification>();
         if (pokemon != null)
         {
-            identifieds = new List<EffectDatabase.StatusPKEff.Identification>(pokemon.bProps.identifieds);
+            identifieds = new List<PBS.Databases.Effects.PokemonStatuses.Identification>(pokemon.bProps.identifieds);
         }
 
         List<string> types = new List<string>();
@@ -4783,13 +4784,13 @@ public class Battle
 
         for (int i = 0; i < typeIDs.Count; i++)
         {
-            TypeData typeData = TypeDatabase.instance.GetTypeData(typeIDs[i]);
+            TypeData typeData = ElementalTypes.instance.GetTypeData(typeIDs[i]);
             bool addImmunities = true;
 
             // Foresight / Odor Sleuth / Miracle Eye
             for (int k = 0; k < identifieds.Count; k++)
             {
-                EffectDatabase.StatusPKEff.Identification curID = identifieds[k];
+                PBS.Databases.Effects.PokemonStatuses.Identification curID = identifieds[k];
                 if (AreTypesContained(curID.types, typeData.ID))
                 {
                     addImmunities = false;
@@ -4815,22 +4816,22 @@ public class Battle
 
     // Moves: General
     public MoveData GetPokemonZMoveData(
-        Pokemon userPokemon,
+        PBS.Main.Pokemon.Pokemon userPokemon,
         string moveID
         )
     {
-        MoveData baseMoveData = MoveDatabase.instance.GetMoveData(moveID);
+        MoveData baseMoveData = Moves.instance.GetMoveData(moveID);
         if (baseMoveData.category == MoveCategory.Physical || baseMoveData.category == MoveCategory.Special)
         {
-            EffectDatabase.ItemEff.ItemEffect zCrystal_ = PBPGetItemEffect(userPokemon, ItemEffectType.ZCrystal);
-            List<EffectDatabase.ItemEff.ItemEffect> zCrystalSignatures_ =
+            PBS.Databases.Effects.Items.ItemEffect zCrystal_ = PBPGetItemEffect(userPokemon, ItemEffectType.ZCrystal);
+            List<PBS.Databases.Effects.Items.ItemEffect> zCrystalSignatures_ =
                 PBPGetItemEffects(userPokemon, ItemEffectType.ZCrystalSignature);
 
             // Signature Z-Crystal Check
             for (int i = 0; i < zCrystalSignatures_.Count; i++)
             {
-                EffectDatabase.ItemEff.ZCrystalSignature zCrystalSignature =
-                    zCrystalSignatures_[i] as EffectDatabase.ItemEff.ZCrystalSignature;
+                PBS.Databases.Effects.Items.ZCrystalSignature zCrystalSignature =
+                    zCrystalSignatures_[i] as PBS.Databases.Effects.Items.ZCrystalSignature;
 
                 bool eligibleUser = false;
                 bool eligibleMove = false;
@@ -4859,16 +4860,16 @@ public class Battle
 
                 if (eligibleMove)
                 {
-                    return MoveDatabase.instance.GetMoveData(zCrystalSignature.ZMove);
+                    return Moves.instance.GetMoveData(zCrystalSignature.ZMove);
                 }
             }
             // General Z-Crystal Check
             if (zCrystal_ != null)
             {
-                EffectDatabase.ItemEff.ZCrystal zCrystal = zCrystal_ as EffectDatabase.ItemEff.ZCrystal;
+                PBS.Databases.Effects.Items.ZCrystal zCrystal = zCrystal_ as PBS.Databases.Effects.Items.ZCrystal;
                 if (baseMoveData.moveType == zCrystal.moveType)
                 {
-                    MoveData zMoveData = MoveDatabase.instance.GetMoveData(zCrystal.ZMove);
+                    MoveData zMoveData = Moves.instance.GetMoveData(zCrystal.ZMove);
 
                     // Get Z-Power
                     int ZBasePower = baseMoveData.ZBasePower;
@@ -4900,7 +4901,7 @@ public class Battle
         return null;
     }
     public MoveData GetPokemonMaxMoveData(
-        Pokemon userPokemon,
+        PBS.Main.Pokemon.Pokemon userPokemon,
         MoveData moveData
         )
     {
@@ -4917,12 +4918,12 @@ public class Battle
             if (!string.IsNullOrEmpty(userPokemon.dynamaxProps.GMaxForm)
                 && userPokemon.dynamaxProps.moveType == moveData.moveType)
             {
-                maxMoveData = MoveDatabase.instance.GetMoveData(userPokemon.dynamaxProps.GMaxMove);
+                maxMoveData = Moves.instance.GetMoveData(userPokemon.dynamaxProps.GMaxMove);
             }
             else
             {
-                TypeData typeData = TypeDatabase.instance.GetTypeData(moveData.moveType);
-                maxMoveData = MoveDatabase.instance.GetMoveData(typeData.maxMove);
+                TypeData typeData = ElementalTypes.instance.GetTypeData(moveData.moveType);
+                maxMoveData = Moves.instance.GetMoveData(typeData.maxMove);
             }
             if (maxMoveData.basePower <= 0)
             {
@@ -4933,23 +4934,23 @@ public class Battle
             return maxMoveData;
         }
     }
-    public MoveData GetPokemonMaxGuard(Pokemon userPokemon, MoveData moveData)
+    public MoveData GetPokemonMaxGuard(PBS.Main.Pokemon.Pokemon userPokemon, MoveData moveData)
     {
-        return MoveDatabase.instance.GetMoveData("maxguard");
+        return Moves.instance.GetMoveData("maxguard");
     }
     public MoveData GetPokemonMoveData(
-        Pokemon userPokemon,
+        PBS.Main.Pokemon.Pokemon userPokemon,
         string moveID,
-        Pokemon targetPokemon,
+        PBS.Main.Pokemon.Pokemon targetPokemon,
         BattleCommand command = null,
         bool overrideZMove = false, bool overrideMaxMove = false,
         int hit = 1,
-        EffectDatabase.MoveEff.Magnitude.MagnitudeLevel magnitudeLevel = null,
-        EffectDatabase.AbilityEff.ParentalBond.BondedHit parentalBondHit = null
+        PBS.Databases.Effects.Moves.Magnitude.MagnitudeLevel magnitudeLevel = null,
+        PBS.Databases.Effects.Abilities.ParentalBond.BondedHit parentalBondHit = null
         )
     {
         return GetPokemonMoveData(
-            userPokemon: userPokemon, targetPokemon: new List<Pokemon> { targetPokemon },
+            userPokemon: userPokemon, targetPokemon: new List<PBS.Main.Pokemon.Pokemon> { targetPokemon },
             moveID: moveID, hit: hit, 
             magnitudeLevel: magnitudeLevel, parentalBondHit: parentalBondHit,
             command: command,
@@ -4957,17 +4958,17 @@ public class Battle
             );
     }
     public MoveData GetPokemonMoveData(
-        Pokemon userPokemon,
+        PBS.Main.Pokemon.Pokemon userPokemon,
         string moveID,
-        List<Pokemon> targetPokemon = null,
+        List<PBS.Main.Pokemon.Pokemon> targetPokemon = null,
         BattleCommand command = null,
         bool overrideZMove = false, bool overrideMaxMove = false,
         int hit = 1,
-        EffectDatabase.MoveEff.Magnitude.MagnitudeLevel magnitudeLevel = null,
-        EffectDatabase.AbilityEff.ParentalBond.BondedHit parentalBondHit = null
+        PBS.Databases.Effects.Moves.Magnitude.MagnitudeLevel magnitudeLevel = null,
+        PBS.Databases.Effects.Abilities.ParentalBond.BondedHit parentalBondHit = null
         )
     {
-        MoveData baseMoveData = MoveDatabase.instance.GetMoveData(moveID);
+        MoveData baseMoveData = Moves.instance.GetMoveData(moveID);
 
         // Z-Move Overwrite
         bool willConvertToZMove = overrideZMove;
@@ -4993,8 +4994,8 @@ public class Battle
         int priority = baseMoveData.priority;
 
         MoveData pokemonMoveData = baseMoveData.Clone();
-        targetPokemon = (targetPokemon == null) ? new List<Pokemon>() : targetPokemon;
-        List<Pokemon> allyPokemon = GetAllyPokemon(userPokemon);
+        targetPokemon = (targetPokemon == null) ? new List<PBS.Main.Pokemon.Pokemon>() : targetPokemon;
+        List<PBS.Main.Pokemon.Pokemon> allyPokemon = GetAllyPokemon(userPokemon);
         List<StatusCondition> userConditions = PBPGetSCs(userPokemon);
         List<BattleCondition> bConditions = BBPGetSCs();
 
@@ -5004,14 +5005,14 @@ public class Battle
         // ---Overwriting Move Base Power---
 
         // Beat Up
-        EffectDatabase.MoveEff.MoveEffect beatUp_ = pokemonMoveData.GetEffectNew(MoveEffectType.BeatUp);
+        PBS.Databases.Effects.Moves.MoveEffect beatUp_ = pokemonMoveData.GetEffectNew(MoveEffectType.BeatUp);
         if (beatUp_ != null)
         {
-            EffectDatabase.MoveEff.BeatUp beatUp = beatUp_ as EffectDatabase.MoveEff.BeatUp;
+            PBS.Databases.Effects.Moves.BeatUp beatUp = beatUp_ as PBS.Databases.Effects.Moves.BeatUp;
             Trainer trainer = GetPokemonOwner(userPokemon);
 
-            Pokemon beatUpUser = null;
-            List<Pokemon> beatUpPokemon = GetTrainerAllAvailablePokemon(trainer);
+            PBS.Main.Pokemon.Pokemon beatUpUser = null;
+            List<PBS.Main.Pokemon.Pokemon> beatUpPokemon = GetTrainerAllAvailablePokemon(trainer);
             if (beatUpPokemon.Count >= hit - 1)
             {
                 beatUpUser = beatUpPokemon[hit - 1];
@@ -5037,16 +5038,16 @@ public class Battle
         }
 
         // Hidden Power
-        EffectDatabase.MoveEff.MoveEffect hiddenPower_ = pokemonMoveData.GetEffectNew(MoveEffectType.HiddenPower);
+        PBS.Databases.Effects.Moves.MoveEffect hiddenPower_ = pokemonMoveData.GetEffectNew(MoveEffectType.HiddenPower);
         if (hiddenPower_ != null)
         {
-            EffectDatabase.MoveEff.HiddenPower hiddenPower = hiddenPower_ as EffectDatabase.MoveEff.HiddenPower;
+            PBS.Databases.Effects.Moves.HiddenPower hiddenPower = hiddenPower_ as PBS.Databases.Effects.Moves.HiddenPower;
             if (hiddenPower.calculateType && hiddenPower.types.Count > 0)
             {
                 List<string> possibleTypes = new List<string>(hiddenPower.types);
                 if (possibleTypes.Contains("ALL"))
                 {
-                    possibleTypes = TypeDatabase.instance.GetAllTypes();
+                    possibleTypes = ElementalTypes.instance.GetAllTypes();
                 }
                 int hpBit = userPokemon.ivHP % 2;
                 int atkBit = userPokemon.ivATK % 2;
@@ -5061,7 +5062,7 @@ public class Battle
                 string newMoveType = possibleTypes[typeValue];
 
                 moveType = newMoveType;
-                Debug.Log("DEBUG - Hidden Power Type: " + TypeDatabase.instance.GetTypeData(newMoveType).typeName);
+                Debug.Log("DEBUG - Hidden Power Type: " + ElementalTypes.instance.GetTypeData(newMoveType).typeName);
             }
             if (hiddenPower.calculateDamage)
             {
@@ -5094,10 +5095,10 @@ public class Battle
         }
 
         // Heavy Slam
-        EffectDatabase.MoveEff.MoveEffect heavySlam_ = pokemonMoveData.GetEffectNew(MoveEffectType.HeavySlam);
+        PBS.Databases.Effects.Moves.MoveEffect heavySlam_ = pokemonMoveData.GetEffectNew(MoveEffectType.HeavySlam);
         if (heavySlam_ != null && targetPokemon.Count > 0)
         {
-            EffectDatabase.MoveEff.HeavySlam heavySlam = heavySlam_ as EffectDatabase.MoveEff.HeavySlam;
+            PBS.Databases.Effects.Moves.HeavySlam heavySlam = heavySlam_ as PBS.Databases.Effects.Moves.HeavySlam;
             float userWeight = GetPokemonWeight(userPokemon);
             float totalTargetWeight = 0f;
             for (int i = 0; i < targetPokemon.Count; i++)
@@ -5140,10 +5141,10 @@ public class Battle
         }
 
         // Low Kick
-        EffectDatabase.MoveEff.MoveEffect lowKick_ = pokemonMoveData.GetEffectNew(MoveEffectType.LowKick);
+        PBS.Databases.Effects.Moves.MoveEffect lowKick_ = pokemonMoveData.GetEffectNew(MoveEffectType.LowKick);
         if (lowKick_ != null && targetPokemon.Count > 0)
         {
-            EffectDatabase.MoveEff.LowKick lowKick = lowKick_ as EffectDatabase.MoveEff.LowKick;
+            PBS.Databases.Effects.Moves.LowKick lowKick = lowKick_ as PBS.Databases.Effects.Moves.LowKick;
             float userWeight = GetPokemonWeight(userPokemon);
             float totalTargetWeight = 0f;
             for (int i = 0; i < targetPokemon.Count; i++)
@@ -5191,15 +5192,15 @@ public class Battle
         }
 
         // Natural Gift
-        EffectDatabase.MoveEff.MoveEffect naturalGift = pokemonMoveData.GetEffectNew(MoveEffectType.NaturalGift);
+        PBS.Databases.Effects.Moves.MoveEffect naturalGift = pokemonMoveData.GetEffectNew(MoveEffectType.NaturalGift);
         if (naturalGift != null)
         {
             Item naturalGiftItem = PBPGetItemWithEffect(userPokemon, ItemEffectType.NaturalGift);
             if (naturalGiftItem != null)
             {
-                EffectDatabase.ItemEff.NaturalGift naturalGiftEffect =
+                PBS.Databases.Effects.Items.NaturalGift naturalGiftEffect =
                     naturalGiftItem.data.GetEffectNew(ItemEffectType.NaturalGift)
-                    as EffectDatabase.ItemEff.NaturalGift;
+                    as PBS.Databases.Effects.Items.NaturalGift;
                 if (!string.IsNullOrEmpty(naturalGiftEffect.moveType))
                 {
                     moveType = naturalGiftEffect.moveType;
@@ -5212,19 +5213,19 @@ public class Battle
         }
 
         // Punishment
-        EffectDatabase.MoveEff.MoveEffect punishment_ = pokemonMoveData.GetEffectNew(MoveEffectType.Punishment);
+        PBS.Databases.Effects.Moves.MoveEffect punishment_ = pokemonMoveData.GetEffectNew(MoveEffectType.Punishment);
         if (punishment_ != null && targetPokemon.Count > 0)
         {
-            EffectDatabase.MoveEff.Punishment punishment = punishment_ as EffectDatabase.MoveEff.Punishment;
+            PBS.Databases.Effects.Moves.Punishment punishment = punishment_ as PBS.Databases.Effects.Moves.Punishment;
             basePower = punishment.GetBasePower(targetPokemon[0]);
             Debug.Log("DEBUG - Punishment - " + basePower);
         }
 
         // Reversal
-        EffectDatabase.MoveEff.MoveEffect reversal_ = pokemonMoveData.GetEffectNew(MoveEffectType.Reversal);
+        PBS.Databases.Effects.Moves.MoveEffect reversal_ = pokemonMoveData.GetEffectNew(MoveEffectType.Reversal);
         if (reversal_ != null)
         {
-            EffectDatabase.MoveEff.Reversal reversal = reversal_ as EffectDatabase.MoveEff.Reversal;
+            PBS.Databases.Effects.Moves.Reversal reversal = reversal_ as PBS.Databases.Effects.Moves.Reversal;
             basePower = reversal.lowestBasePower;
 
             float HPPercent = GetPokemonHPAsPercentage(userPokemon);
@@ -5245,10 +5246,10 @@ public class Battle
         // ---Adding Move Base Power---
 
         // Stored Power
-        EffectDatabase.MoveEff.MoveEffect storedPower_ = pokemonMoveData.GetEffectNew(MoveEffectType.StoredPower);
+        PBS.Databases.Effects.Moves.MoveEffect storedPower_ = pokemonMoveData.GetEffectNew(MoveEffectType.StoredPower);
         if (storedPower_ != null)
         {
-            EffectDatabase.MoveEff.StoredPower storedPower = storedPower_ as EffectDatabase.MoveEff.StoredPower;
+            PBS.Databases.Effects.Moves.StoredPower storedPower = storedPower_ as PBS.Databases.Effects.Moves.StoredPower;
             basePower += storedPower.GetPowerBoost(userPokemon);
             Debug.Log("DEBUG - Stored Power - " + basePower);
         }
@@ -5257,10 +5258,10 @@ public class Battle
         // ---Changing Move Category---
 
         // Photon Geyser
-        EffectDatabase.MoveEff.MoveEffect photonGeyser_ = pokemonMoveData.GetEffectNew(MoveEffectType.PhotonGeyser);
+        PBS.Databases.Effects.Moves.MoveEffect photonGeyser_ = pokemonMoveData.GetEffectNew(MoveEffectType.PhotonGeyser);
         if (photonGeyser_ != null)
         {
-            EffectDatabase.MoveEff.PhotonGeyser photonGeyser = photonGeyser_ as EffectDatabase.MoveEff.PhotonGeyser;
+            PBS.Databases.Effects.Moves.PhotonGeyser photonGeyser = photonGeyser_ as PBS.Databases.Effects.Moves.PhotonGeyser;
             int ATK = GetPokemonATK(
                 pokemon: userPokemon,
                 applyStatStage: true,
@@ -5278,11 +5279,11 @@ public class Battle
         }
 
         // Shell Side Arm
-        EffectDatabase.MoveEff.MoveEffect shellSideArm_ = pokemonMoveData.GetEffectNew(MoveEffectType.ShellSideArm);
+        PBS.Databases.Effects.Moves.MoveEffect shellSideArm_ = pokemonMoveData.GetEffectNew(MoveEffectType.ShellSideArm);
         if (shellSideArm_ != null
             && targetPokemon.Count > 0)
         {
-            EffectDatabase.MoveEff.ShellSideArm shellSideArm = shellSideArm_ as EffectDatabase.MoveEff.ShellSideArm;
+            PBS.Databases.Effects.Moves.ShellSideArm shellSideArm = shellSideArm_ as PBS.Databases.Effects.Moves.ShellSideArm;
             int totalDEF = 0;
             int totalSPD = 0;
             for (int i = 0; i < targetPokemon.Count; i++)
@@ -5310,13 +5311,13 @@ public class Battle
         // ---Changing Move Typing---
 
         // Aura Wheel
-        List<EffectDatabase.MoveEff.MoveEffect> auraWheel_ = pokemonMoveData.GetEffectsNew(MoveEffectType.AuraWheel);
+        List<PBS.Databases.Effects.Moves.MoveEffect> auraWheel_ = pokemonMoveData.GetEffectsNew(MoveEffectType.AuraWheel);
         if (auraWheel_.Count > 0)
         {
             bool foundPokemon = false;
             for (int i = 0; i < auraWheel_.Count; i++)
             {
-                EffectDatabase.MoveEff.AuraWheel auraWheel = auraWheel_[i] as EffectDatabase.MoveEff.AuraWheel;
+                PBS.Databases.Effects.Moves.AuraWheel auraWheel = auraWheel_[i] as PBS.Databases.Effects.Moves.AuraWheel;
                 for (int k = 0; k < auraWheel.pokemonIDs.Count; k++)
                 {
                     if (userPokemon.pokemonID == auraWheel.pokemonIDs[k])
@@ -5344,27 +5345,27 @@ public class Battle
         }
 
         // Judgement
-        EffectDatabase.MoveEff.MoveEffect judgment_ = pokemonMoveData.GetEffectNew(MoveEffectType.Judgment);
+        PBS.Databases.Effects.Moves.MoveEffect judgment_ = pokemonMoveData.GetEffectNew(MoveEffectType.Judgment);
         if (judgment_ != null)
         {
-            EffectDatabase.MoveEff.Judgment judgment = judgment_ as EffectDatabase.MoveEff.Judgment;
-            EffectDatabase.ItemEff.ItemEffect judgmentItem_ = PBPGetItemEffect(userPokemon, ItemEffectType.Judgment);
+            PBS.Databases.Effects.Moves.Judgment judgment = judgment_ as PBS.Databases.Effects.Moves.Judgment;
+            PBS.Databases.Effects.Items.ItemEffect judgmentItem_ = PBPGetItemEffect(userPokemon, ItemEffectType.Judgment);
             if (judgmentItem_ != null)
             {
-                EffectDatabase.ItemEff.Judgment judgmentItem = judgmentItem_ as EffectDatabase.ItemEff.Judgment;
+                PBS.Databases.Effects.Items.Judgment judgmentItem = judgmentItem_ as PBS.Databases.Effects.Items.Judgment;
                 moveType = judgmentItem.moveType;
             }
         }
 
         // Weather Ball
-        EffectDatabase.MoveEff.MoveEffect weatherBall_ = pokemonMoveData.GetEffectNew(MoveEffectType.WeatherBall);
+        PBS.Databases.Effects.Moves.MoveEffect weatherBall_ = pokemonMoveData.GetEffectNew(MoveEffectType.WeatherBall);
         if (weatherBall_ != null)
         {
-            EffectDatabase.MoveEff.WeatherBall weatherBall = weatherBall_ as EffectDatabase.MoveEff.WeatherBall;
-            EffectDatabase.StatusBTLEff.BattleSE weather_ = weather.data.GetEffectNew(BattleSEType.Weather);
+            PBS.Databases.Effects.Moves.WeatherBall weatherBall = weatherBall_ as PBS.Databases.Effects.Moves.WeatherBall;
+            PBS.Databases.Effects.BattleStatuses.BattleSE weather_ = weather.data.GetEffectNew(BattleSEType.Weather);
             if (weather_ != null)
             {
-                EffectDatabase.StatusBTLEff.Weather weatherEffect = weather_ as EffectDatabase.StatusBTLEff.Weather;
+                PBS.Databases.Effects.BattleStatuses.Weather weatherEffect = weather_ as PBS.Databases.Effects.BattleStatuses.Weather;
                 if (!string.IsNullOrEmpty(weatherEffect.weatherBallType))
                 {
                     moveType = weatherEffect.weatherBallType;
@@ -5373,14 +5374,14 @@ public class Battle
         }
 
         // Terrain Pulse
-        EffectDatabase.MoveEff.MoveEffect terrainPulse_ = pokemonMoveData.GetEffectNew(MoveEffectType.TerrainPulse);
+        PBS.Databases.Effects.Moves.MoveEffect terrainPulse_ = pokemonMoveData.GetEffectNew(MoveEffectType.TerrainPulse);
         if (terrainPulse_ != null)
         {
-            EffectDatabase.MoveEff.TerrainPulse terrainPulse = terrainPulse_ as EffectDatabase.MoveEff.TerrainPulse;
-            EffectDatabase.StatusBTLEff.BattleSE terrain_ = terrain.data.GetEffectNew(BattleSEType.Terrain);
+            PBS.Databases.Effects.Moves.TerrainPulse terrainPulse = terrainPulse_ as PBS.Databases.Effects.Moves.TerrainPulse;
+            PBS.Databases.Effects.BattleStatuses.BattleSE terrain_ = terrain.data.GetEffectNew(BattleSEType.Terrain);
             if (terrain_ != null)
             {
-                EffectDatabase.StatusBTLEff.Terrain terrainEffect = terrain_ as EffectDatabase.StatusBTLEff.Terrain;
+                PBS.Databases.Effects.BattleStatuses.Terrain terrainEffect = terrain_ as PBS.Databases.Effects.BattleStatuses.Terrain;
                 if (!string.IsNullOrEmpty(terrainEffect.terrainPulseType))
                 {
                     moveType = terrainEffect.terrainPulseType;
@@ -5397,7 +5398,7 @@ public class Battle
         // Aerilate
         if (!convertedToZMove)
         {
-            EffectDatabase.AbilityEff.AbilityEffect aerilate_ = PBPGetAbilityEffect(userPokemon, AbilityEffectType.Aerilate);
+            PBS.Databases.Effects.Abilities.AbilityEffect aerilate_ = PBPGetAbilityEffect(userPokemon, AbilityEffectType.Aerilate);
             if (aerilate_ != null)
             {
                 MoveData aerilateMoveData = pokemonMoveData.PartialClone(
@@ -5406,7 +5407,7 @@ public class Battle
                     basePower: basePower, accuracy: accuracy, priority: priority
                     );
 
-                EffectDatabase.AbilityEff.Aerilate aerilate = aerilate_ as EffectDatabase.AbilityEff.Aerilate;
+                PBS.Databases.Effects.Abilities.Aerilate aerilate = aerilate_ as PBS.Databases.Effects.Abilities.Aerilate;
                 if (DoEffectFiltersPass(
                     filters: aerilate.filters,
                     userPokemon: userPokemon,
@@ -5423,12 +5424,12 @@ public class Battle
         for (int i = 0; i < bConditions.Count; i++)
         {
             BattleCondition bCond = bConditions[i];
-            TypeData moveTypeData = TypeDatabase.instance.GetTypeData(moveType);
+            TypeData moveTypeData = ElementalTypes.instance.GetTypeData(moveType);
 
-            EffectDatabase.StatusBTLEff.BattleSE ionDeluge_ = bCond.data.GetEffectNew(BattleSEType.IonDeluge);
+            PBS.Databases.Effects.BattleStatuses.BattleSE ionDeluge_ = bCond.data.GetEffectNew(BattleSEType.IonDeluge);
             if (ionDeluge_ != null)
             {
-                EffectDatabase.StatusBTLEff.IonDeluge ionDeluge = ionDeluge_ as EffectDatabase.StatusBTLEff.IonDeluge;
+                PBS.Databases.Effects.BattleStatuses.IonDeluge ionDeluge = ionDeluge_ as PBS.Databases.Effects.BattleStatuses.IonDeluge;
                 bool foundCond = false;
                 for (int k = 0; k < ionDeluge.fromTypes.Count; k++)
                 {
@@ -5450,7 +5451,7 @@ public class Battle
 
         // Max Move Overwrite
 
-        bool willConvertToMaxMove = overrideMaxMove || userPokemon.dynamaxState != Pokemon.DynamaxState.None;
+        bool willConvertToMaxMove = overrideMaxMove || userPokemon.dynamaxState != PBS.Main.Pokemon.Pokemon.DynamaxState.None;
         if (command != null && !willConvertToMaxMove)
         {
             willConvertToMaxMove = command.isDynamaxing;
@@ -5484,10 +5485,10 @@ public class Battle
         // ---Changing Move Priority---
 
         // Gale Wings / Prankster
-        List<EffectDatabase.AbilityEff.AbilityEffect> galeWings_ = PBPGetAbilityEffects(userPokemon, AbilityEffectType.GaleWings);
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> galeWings_ = PBPGetAbilityEffects(userPokemon, AbilityEffectType.GaleWings);
         for (int i = 0; i < galeWings_.Count; i++)
         {
-            EffectDatabase.AbilityEff.GaleWings galeWings = galeWings_[i] as EffectDatabase.AbilityEff.GaleWings;
+            PBS.Databases.Effects.Abilities.GaleWings galeWings = galeWings_[i] as PBS.Databases.Effects.Abilities.GaleWings;
             MoveData tempMoveData = pokemonMoveData.PartialClone(
                 category: category,
                 moveType: moveType,
@@ -5501,11 +5502,11 @@ public class Battle
                 moveData: tempMoveData
                 ))
             {
-                if (galeWings.mode == EffectDatabase.AbilityEff.GaleWings.PriorityMode.Add)
+                if (galeWings.mode == PBS.Databases.Effects.Abilities.GaleWings.PriorityMode.Add)
                 {
                     priority += galeWings.priority;
                 }
-                else if (galeWings.mode == EffectDatabase.AbilityEff.GaleWings.PriorityMode.Set)
+                else if (galeWings.mode == PBS.Databases.Effects.Abilities.GaleWings.PriorityMode.Set)
                 {
                     priority = galeWings.priority;
                     break;
@@ -5514,10 +5515,10 @@ public class Battle
         }
 
         // Grassy Glide
-        EffectDatabase.MoveEff.MoveEffect grassyGlide_ = pokemonMoveData.GetEffectNew(MoveEffectType.GrassyGlide);
+        PBS.Databases.Effects.Moves.MoveEffect grassyGlide_ = pokemonMoveData.GetEffectNew(MoveEffectType.GrassyGlide);
         if (grassyGlide_ != null)
         {
-            EffectDatabase.MoveEff.GrassyGlide grassyGlide = grassyGlide_ as EffectDatabase.MoveEff.GrassyGlide;
+            PBS.Databases.Effects.Moves.GrassyGlide grassyGlide = grassyGlide_ as PBS.Databases.Effects.Moves.GrassyGlide;
             List<BattleCondition> conditions = BBPGetSCs();
 
             for (int i = 0; i < conditions.Count; i++)
@@ -5528,7 +5529,7 @@ public class Battle
                     if (BBPIsPokemonAffectedByBS(userPokemon, conditions[k].data))
                     {
                         StatusBTLData statusData =
-                            StatusBTLDatabase.instance.GetStatusData(grassyGlide.conditions[k]);
+                            BattleStatuses.instance.GetStatusData(grassyGlide.conditions[k]);
                         if (conditions[i].statusID == statusData.ID
                             || conditions[i].data.IsABaseID(statusData.ID))
                         {
@@ -5540,7 +5541,7 @@ public class Battle
                 if (foundType)
                 {
                     priority =
-                         (grassyGlide.mode == EffectDatabase.MoveEff.GrassyGlide.PriorityMode.Add)
+                         (grassyGlide.mode == PBS.Databases.Effects.Moves.GrassyGlide.PriorityMode.Add)
                          ? priority + grassyGlide.priority : grassyGlide.priority;
                     break;
                 }
@@ -5550,7 +5551,7 @@ public class Battle
         // ---Scaling Move Base Power---
 
         // Eruption
-        EffectDatabase.MoveEff.MoveEffect eruption_ = pokemonMoveData.GetEffectNew(MoveEffectType.Eruption);
+        PBS.Databases.Effects.Moves.MoveEffect eruption_ = pokemonMoveData.GetEffectNew(MoveEffectType.Eruption);
         if (eruption_ != null)
         {
             float HPPercent = GetPokemonHPAsPercentage(userPokemon);
@@ -5562,10 +5563,10 @@ public class Battle
         }
 
         // Technician
-        EffectDatabase.AbilityEff.AbilityEffect technician_ = PBPGetAbilityEffect(userPokemon, AbilityEffectType.Technician);
+        PBS.Databases.Effects.Abilities.AbilityEffect technician_ = PBPGetAbilityEffect(userPokemon, AbilityEffectType.Technician);
         if (technician_ != null)
         {
-            EffectDatabase.AbilityEff.Technician technician = technician_ as EffectDatabase.AbilityEff.Technician;
+            PBS.Databases.Effects.Abilities.Technician technician = technician_ as PBS.Databases.Effects.Abilities.Technician;
             if (basePower <= technician.threshold)
             {
                 basePower *= technician.powerMultiplier;
@@ -5573,7 +5574,7 @@ public class Battle
         }
 
         // Sheer Force
-        List<EffectDatabase.AbilityEff.AbilityEffect> sheerForce_ = PBPGetAbilityEffects(userPokemon, AbilityEffectType.SheerForce);
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> sheerForce_ = PBPGetAbilityEffects(userPokemon, AbilityEffectType.SheerForce);
         if (sheerForce_.Count > 0)
         {
             MoveData tempData = pokemonMoveData.PartialClone(
@@ -5585,29 +5586,29 @@ public class Battle
             {
                 for (int i = 0; i < sheerForce_.Count; i++)
                 {
-                    EffectDatabase.AbilityEff.SheerForce sheerForce =
-                        sheerForce_[i] as EffectDatabase.AbilityEff.SheerForce;
+                    PBS.Databases.Effects.Abilities.SheerForce sheerForce =
+                        sheerForce_[i] as PBS.Databases.Effects.Abilities.SheerForce;
                     basePower *= sheerForce.powerMultiplier;
                 }
             }
         }
 
         // Rivalry
-        List<EffectDatabase.AbilityEff.AbilityEffect> rivalry_ = PBPGetAbilityEffects(userPokemon, AbilityEffectType.Rivalry);
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> rivalry_ = PBPGetAbilityEffects(userPokemon, AbilityEffectType.Rivalry);
         if (rivalry_.Count > 0 && targetPokemon.Count == 1)
         {
-            Pokemon singleTarget = targetPokemon[0];
+            PBS.Main.Pokemon.Pokemon singleTarget = targetPokemon[0];
             PokemonGender gender1 = userPokemon.gender;
             PokemonGender gender2 = singleTarget.gender;
 
             for (int i = 0; i < rivalry_.Count; i++)
             {
-                EffectDatabase.AbilityEff.Rivalry rivalry = rivalry_[i] as EffectDatabase.AbilityEff.Rivalry;
+                PBS.Databases.Effects.Abilities.Rivalry rivalry = rivalry_[i] as PBS.Databases.Effects.Abilities.Rivalry;
                 if (gender1 == gender2)
                 {
                     basePower *= rivalry.sameMultiplier;
                 }
-                else if (Pokemon.IsGenderOpposite(gender1, gender2))
+                else if (PBS.Main.Pokemon.Pokemon.IsGenderOpposite(gender1, gender2))
                 {
                     basePower *= rivalry.oppositeMultiplier;
                 }
@@ -5616,12 +5617,12 @@ public class Battle
 
         // Battery
         // (Self)
-        List<EffectDatabase.AbilityEff.AbilityEffect> battery_ = PBPGetAbilityEffects(userPokemon, AbilityEffectType.Battery);
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> battery_ = PBPGetAbilityEffects(userPokemon, AbilityEffectType.Battery);
         if (battery_.Count > 0)
         {
             for (int i = 0; i < battery_.Count; i++)
             {
-                EffectDatabase.AbilityEff.Battery battery = battery_[i] as EffectDatabase.AbilityEff.Battery;
+                PBS.Databases.Effects.Abilities.Battery battery = battery_[i] as PBS.Databases.Effects.Abilities.Battery;
 
                 if (battery.affectsSelf)
                 {
@@ -5645,15 +5646,15 @@ public class Battle
         // (Ally)
         for (int i = 0; i < allyPokemon.Count; i++)
         {
-            Pokemon ally = allyPokemon[i];
+            PBS.Main.Pokemon.Pokemon ally = allyPokemon[i];
             if (!IsPokemonFainted(ally))
             {
-                List<EffectDatabase.AbilityEff.AbilityEffect> batteryAlly_ = PBPGetAbilityEffects(ally, AbilityEffectType.Battery);
+                List<PBS.Databases.Effects.Abilities.AbilityEffect> batteryAlly_ = PBPGetAbilityEffects(ally, AbilityEffectType.Battery);
                 if (batteryAlly_.Count > 0)
                 {
                     for (int k = 0; k < batteryAlly_.Count; k++)
                     {
-                        EffectDatabase.AbilityEff.Battery battery = batteryAlly_[k] as EffectDatabase.AbilityEff.Battery;
+                        PBS.Databases.Effects.Abilities.Battery battery = batteryAlly_[k] as PBS.Databases.Effects.Abilities.Battery;
                         MoveData tempMoveData = pokemonMoveData.PartialClone(
                             category: category,
                             moveType: moveType,
@@ -5674,10 +5675,10 @@ public class Battle
         }
 
         // Analytic
-        EffectDatabase.AbilityEff.AbilityEffect analytic_ = PBPGetAbilityEffect(userPokemon, AbilityEffectType.Analytic);
+        PBS.Databases.Effects.Abilities.AbilityEffect analytic_ = PBPGetAbilityEffect(userPokemon, AbilityEffectType.Analytic);
         if (analytic_ != null && targetPokemon.Count > 0)
         {
-            EffectDatabase.AbilityEff.Analytic analytic = analytic_ as EffectDatabase.AbilityEff.Analytic;
+            PBS.Databases.Effects.Abilities.Analytic analytic = analytic_ as PBS.Databases.Effects.Abilities.Analytic;
             for (int i = 0; i < targetPokemon.Count; i++)
             {
                 if (targetPokemon[i].bProps.actedThisTurn)
@@ -5689,7 +5690,7 @@ public class Battle
         }
 
         // Flare Boost / Toxic Boost
-        List<EffectDatabase.AbilityEff.AbilityEffect> flareBoost_ =
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> flareBoost_ =
                 PBPGetAbilityEffects(userPokemon, AbilityEffectType.FlareBoost);
         for (int i = 0; i < flareBoost_.Count; i++)
         {
@@ -5698,7 +5699,7 @@ public class Battle
                 moveType: moveType,
                 basePower: basePower, accuracy: accuracy, priority: priority
                 );
-            EffectDatabase.AbilityEff.FlareBoost flareBoost = flareBoost_[i] as EffectDatabase.AbilityEff.FlareBoost;
+            PBS.Databases.Effects.Abilities.FlareBoost flareBoost = flareBoost_[i] as PBS.Databases.Effects.Abilities.FlareBoost;
             if (DoEffectFiltersPass(
                 filters: flareBoost.filters,
                 userPokemon: userPokemon,
@@ -5710,7 +5711,7 @@ public class Battle
         }
 
         // Iron Fist
-        List<EffectDatabase.AbilityEff.AbilityEffect> ironFist_ = PBPGetAbilityEffects(userPokemon, AbilityEffectType.IronFist);
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> ironFist_ = PBPGetAbilityEffects(userPokemon, AbilityEffectType.IronFist);
         if (ironFist_.Count > 0)
         {
             MoveData ironFistData = pokemonMoveData.Clone();
@@ -5722,7 +5723,7 @@ public class Battle
 
             for (int i = 0; i < ironFist_.Count; i++)
             {
-                EffectDatabase.AbilityEff.IronFist ironFist = ironFist_[i] as EffectDatabase.AbilityEff.IronFist;
+                PBS.Databases.Effects.Abilities.IronFist ironFist = ironFist_[i] as PBS.Databases.Effects.Abilities.IronFist;
                 if (DoEffectFiltersPass(
                     filters: ironFist.filters,
                     userPokemon: userPokemon,
@@ -5751,16 +5752,16 @@ public class Battle
         // Steely Spirit (Ally)
         for (int i = 0; i < allyPokemon.Count; i++)
         {
-            Pokemon ally = allyPokemon[i];
+            PBS.Main.Pokemon.Pokemon ally = allyPokemon[i];
             if (!IsPokemonFainted(ally))
             {
-                List<EffectDatabase.AbilityEff.AbilityEffect> steelySpirit_ = 
+                List<PBS.Databases.Effects.Abilities.AbilityEffect> steelySpirit_ = 
                     PBPGetAbilityEffects(ally, AbilityEffectType.IronFist);
                 if (steelySpirit_.Count > 0)
                 {
                     for (int k = 0; k < steelySpirit_.Count; k++)
                     {
-                        EffectDatabase.AbilityEff.IronFist steelySpirit = steelySpirit_[k] as EffectDatabase.AbilityEff.IronFist;
+                        PBS.Databases.Effects.Abilities.IronFist steelySpirit = steelySpirit_[k] as PBS.Databases.Effects.Abilities.IronFist;
                         MoveData tempMoveData = pokemonMoveData.PartialClone(
                             category: category,
                             moveType: moveType,
@@ -5781,10 +5782,10 @@ public class Battle
         }
 
         // Stakeout
-        EffectDatabase.AbilityEff.AbilityEffect stakeout_ = PBPGetAbilityEffect(userPokemon, AbilityEffectType.Stakeout);
+        PBS.Databases.Effects.Abilities.AbilityEffect stakeout_ = PBPGetAbilityEffect(userPokemon, AbilityEffectType.Stakeout);
         if (stakeout_ != null && targetPokemon.Count > 0)
         {
-            EffectDatabase.AbilityEff.Stakeout stakeout = stakeout_ as EffectDatabase.AbilityEff.Stakeout;
+            PBS.Databases.Effects.Abilities.Stakeout stakeout = stakeout_ as PBS.Databases.Effects.Abilities.Stakeout;
             for (int i = 0; i < targetPokemon.Count; i++)
             {
                 if (targetPokemon[i].bProps.switchedIn)
@@ -5796,10 +5797,10 @@ public class Battle
         }
 
         // Expanding Force
-        EffectDatabase.MoveEff.MoveEffect expandingForce_ = pokemonMoveData.GetEffectNew(MoveEffectType.ExpandingForcePower);
+        PBS.Databases.Effects.Moves.MoveEffect expandingForce_ = pokemonMoveData.GetEffectNew(MoveEffectType.ExpandingForcePower);
         if (expandingForce_ != null)
         {
-            EffectDatabase.MoveEff.ExpandingForcePower expandingForce = expandingForce_ as EffectDatabase.MoveEff.ExpandingForcePower;
+            PBS.Databases.Effects.Moves.ExpandingForcePower expandingForce = expandingForce_ as PBS.Databases.Effects.Moves.ExpandingForcePower;
             List<BattleCondition> conditions = BBPGetSCs();
             for (int i = 0; i < conditions.Count; i++)
             {
@@ -5826,10 +5827,10 @@ public class Battle
         }
 
         // Pursuit
-        EffectDatabase.MoveEff.MoveEffect pursuit_ = pokemonMoveData.GetEffectNew(MoveEffectType.Pursuit);
+        PBS.Databases.Effects.Moves.MoveEffect pursuit_ = pokemonMoveData.GetEffectNew(MoveEffectType.Pursuit);
         if (pursuit_ != null)
         {
-            EffectDatabase.MoveEff.Pursuit pursuit = pursuit_ as EffectDatabase.MoveEff.Pursuit;
+            PBS.Databases.Effects.Moves.Pursuit pursuit = pursuit_ as PBS.Databases.Effects.Moves.Pursuit;
             if (targetPokemon.Count > 0)
             {
                 for (int i = 0; i < targetPokemon.Count; i++)
@@ -5845,10 +5846,10 @@ public class Battle
         }
 
         // Rising Voltage
-        EffectDatabase.MoveEff.MoveEffect risingVoltage_ = pokemonMoveData.GetEffectNew(MoveEffectType.RisingVoltage);
+        PBS.Databases.Effects.Moves.MoveEffect risingVoltage_ = pokemonMoveData.GetEffectNew(MoveEffectType.RisingVoltage);
         if (risingVoltage_ != null && targetPokemon.Count > 0)
         {
-            EffectDatabase.MoveEff.RisingVoltage risingVoltage = risingVoltage_ as EffectDatabase.MoveEff.RisingVoltage;
+            PBS.Databases.Effects.Moves.RisingVoltage risingVoltage = risingVoltage_ as PBS.Databases.Effects.Moves.RisingVoltage;
             List<BattleCondition> conditions = BBPGetSCs();
             for (int i = 0; i < conditions.Count; i++)
             {
@@ -5884,10 +5885,10 @@ public class Battle
         }
 
         // Rollout
-        EffectDatabase.MoveEff.MoveEffect rollout_ = pokemonMoveData.GetEffectNew(MoveEffectType.Rollout);
+        PBS.Databases.Effects.Moves.MoveEffect rollout_ = pokemonMoveData.GetEffectNew(MoveEffectType.Rollout);
         if (rollout_ != null)
         {
-            EffectDatabase.MoveEff.Rollout rollout = rollout_ as EffectDatabase.MoveEff.Rollout;
+            PBS.Databases.Effects.Moves.Rollout rollout = rollout_ as PBS.Databases.Effects.Moves.Rollout;
             if (command != null)
             {
                 float scaleAmount = Mathf.Pow(rollout.damageScale, (command.iteration - 1));
@@ -5906,21 +5907,21 @@ public class Battle
         }
 
         // Triple Kick
-        EffectDatabase.MoveEff.MoveEffect tripleKick_ = pokemonMoveData.GetEffectNew(MoveEffectType.TripleKick);
+        PBS.Databases.Effects.Moves.MoveEffect tripleKick_ = pokemonMoveData.GetEffectNew(MoveEffectType.TripleKick);
         if (tripleKick_ != null)
         {
-            EffectDatabase.MoveEff.TripleKick tripleKick = tripleKick_ as EffectDatabase.MoveEff.TripleKick;
+            PBS.Databases.Effects.Moves.TripleKick tripleKick = tripleKick_ as PBS.Databases.Effects.Moves.TripleKick;
             basePower *= hit;
         }
 
         // Weather Ball
         if (weatherBall_ != null)
         {
-            EffectDatabase.MoveEff.WeatherBall weatherBall = weatherBall_ as EffectDatabase.MoveEff.WeatherBall;
-            EffectDatabase.StatusBTLEff.BattleSE weather_ = weather.data.GetEffectNew(BattleSEType.Weather);
+            PBS.Databases.Effects.Moves.WeatherBall weatherBall = weatherBall_ as PBS.Databases.Effects.Moves.WeatherBall;
+            PBS.Databases.Effects.BattleStatuses.BattleSE weather_ = weather.data.GetEffectNew(BattleSEType.Weather);
             if (weather_ != null)
             {
-                EffectDatabase.StatusBTLEff.Weather weatherEffect = weather_ as EffectDatabase.StatusBTLEff.Weather;
+                PBS.Databases.Effects.BattleStatuses.Weather weatherEffect = weather_ as PBS.Databases.Effects.BattleStatuses.Weather;
                 if (weatherEffect.weatherBallBoost)
                 {
                     basePower *= weatherBall.damageScale;
@@ -5931,11 +5932,11 @@ public class Battle
         // Terrain Pulse
         if (terrainPulse_ != null)
         {
-            EffectDatabase.MoveEff.TerrainPulse terrainPulse = terrainPulse_ as EffectDatabase.MoveEff.TerrainPulse;
-            EffectDatabase.StatusBTLEff.BattleSE terrain_ = terrain.data.GetEffectNew(BattleSEType.Terrain);
+            PBS.Databases.Effects.Moves.TerrainPulse terrainPulse = terrainPulse_ as PBS.Databases.Effects.Moves.TerrainPulse;
+            PBS.Databases.Effects.BattleStatuses.BattleSE terrain_ = terrain.data.GetEffectNew(BattleSEType.Terrain);
             if (terrain_ != null)
             {
-                EffectDatabase.StatusBTLEff.Terrain terrainEffect = terrain_ as EffectDatabase.StatusBTLEff.Terrain;
+                PBS.Databases.Effects.BattleStatuses.Terrain terrainEffect = terrain_ as PBS.Databases.Effects.BattleStatuses.Terrain;
                 basePower *= terrainPulse.damageScale;
             }
         }
@@ -5950,7 +5951,7 @@ public class Battle
         }
 
         // Charcoal
-        List<EffectDatabase.ItemEff.ItemEffect> charcoal_ = PBPGetItemEffects(userPokemon, ItemEffectType.Charcoal);
+        List<PBS.Databases.Effects.Items.ItemEffect> charcoal_ = PBPGetItemEffects(userPokemon, ItemEffectType.Charcoal);
         for (int i = 0; i < charcoal_.Count; i++)
         {
             MoveData charcoalData = pokemonMoveData.PartialClone(
@@ -5959,7 +5960,7 @@ public class Battle
                 basePower: basePower, accuracy: accuracy, priority: priority
                 );
 
-            EffectDatabase.ItemEff.Charcoal charcoal = charcoal_[i] as EffectDatabase.ItemEff.Charcoal;
+            PBS.Databases.Effects.Items.Charcoal charcoal = charcoal_[i] as PBS.Databases.Effects.Items.Charcoal;
             if (DoEffectFiltersPass(
                 filters: charcoal.filters,
                 targetPokemon: userPokemon,
@@ -5978,10 +5979,10 @@ public class Battle
         // --- Removing Move Characteristics ---
 
         // Long Reach
-        List<EffectDatabase.AbilityEff.AbilityEffect> longReach_ = PBPGetAbilityEffects(userPokemon, AbilityEffectType.LongReach);
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> longReach_ = PBPGetAbilityEffects(userPokemon, AbilityEffectType.LongReach);
         for (int i = 0; i < longReach_.Count; i++)
         {
-            EffectDatabase.AbilityEff.LongReach longReach = longReach_[i] as EffectDatabase.AbilityEff.LongReach;
+            PBS.Databases.Effects.Abilities.LongReach longReach = longReach_[i] as PBS.Databases.Effects.Abilities.LongReach;
             MoveData tempMoveData = pokemonMoveData.PartialClone(
                 category: category,
                 moveType: moveType,
@@ -6014,12 +6015,12 @@ public class Battle
 
         return pokemonMoveData;
     }
-    public List<EffectDatabase.MoveEff.MoveEffect> GetPokemonSecretPowerEffects(
-        Pokemon userPokemon, 
+    public List<PBS.Databases.Effects.Moves.MoveEffect> GetPokemonSecretPowerEffects(
+        PBS.Main.Pokemon.Pokemon userPokemon, 
         MoveData moveData,
-        EffectDatabase.MoveEff.SecretPower secretPowerMain)
+        PBS.Databases.Effects.Moves.SecretPower secretPowerMain)
     {
-        List<EffectDatabase.MoveEff.MoveEffect> secretPowerEffects = new List<EffectDatabase.MoveEff.MoveEffect>();
+        List<PBS.Databases.Effects.Moves.MoveEffect> secretPowerEffects = new List<PBS.Databases.Effects.Moves.MoveEffect>();
         bool checkEnvironment = true;
 
         if (checkEnvironment)
@@ -6027,8 +6028,8 @@ public class Battle
             // Building = paralysis
             if (environment.environmentType == BattleEnvironmentType.Building)
             {
-                EffectDatabase.MoveEff.InflictStatus effect = new EffectDatabase.MoveEff.InflictStatus(
-                    new EffectDatabase.General.InflictStatus(
+                PBS.Databases.Effects.Moves.InflictStatus effect = new PBS.Databases.Effects.Moves.InflictStatus(
+                    new PBS.Databases.Effects.General.InflictStatus(
                         statusType: StatusType.Pokemon,
                         statusID: "paralysis"
                         ),
@@ -6042,8 +6043,8 @@ public class Battle
             // Cave = flinching
             else if (environment.environmentType == BattleEnvironmentType.Cave)
             {
-                EffectDatabase.MoveEff.InflictStatus effect = new EffectDatabase.MoveEff.InflictStatus(
-                    new EffectDatabase.General.InflictStatus(
+                PBS.Databases.Effects.Moves.InflictStatus effect = new PBS.Databases.Effects.Moves.InflictStatus(
+                    new PBS.Databases.Effects.General.InflictStatus(
                         statusType: StatusType.Pokemon,
                         statusID: "flinch"
                         ),
@@ -6057,8 +6058,8 @@ public class Battle
             // Snow = freezing
             else if (environment.environmentType == BattleEnvironmentType.Snow)
             {
-                EffectDatabase.MoveEff.InflictStatus effect = new EffectDatabase.MoveEff.InflictStatus(
-                    new EffectDatabase.General.InflictStatus(
+                PBS.Databases.Effects.Moves.InflictStatus effect = new PBS.Databases.Effects.Moves.InflictStatus(
+                    new PBS.Databases.Effects.General.InflictStatus(
                         statusType: StatusType.Pokemon,
                         statusID: "freeze"
                         ),
@@ -6072,8 +6073,8 @@ public class Battle
             // Grass = sleep
             else if (environment.environmentType == BattleEnvironmentType.Field)
             {
-                EffectDatabase.MoveEff.InflictStatus effect = new EffectDatabase.MoveEff.InflictStatus(
-                    new EffectDatabase.General.InflictStatus(
+                PBS.Databases.Effects.Moves.InflictStatus effect = new PBS.Databases.Effects.Moves.InflictStatus(
+                    new PBS.Databases.Effects.General.InflictStatus(
                         statusType: StatusType.Pokemon,
                         statusID: "sleep"
                         ),
@@ -6087,8 +6088,8 @@ public class Battle
             // Volcano = burn
             else if (environment.environmentType == BattleEnvironmentType.Volcano)
             {
-                EffectDatabase.MoveEff.InflictStatus effect = new EffectDatabase.MoveEff.InflictStatus(
-                    new EffectDatabase.General.InflictStatus(
+                PBS.Databases.Effects.Moves.InflictStatus effect = new PBS.Databases.Effects.Moves.InflictStatus(
+                    new PBS.Databases.Effects.General.InflictStatus(
                         statusType: StatusType.Pokemon,
                         statusID: "burn"
                         ),
@@ -6109,7 +6110,7 @@ public class Battle
         return moveData.category == MoveCategory.Physical
             || moveData.category == MoveCategory.Special;
     }
-    public bool IsMoveTagSatisfied(Pokemon userPokemon, MoveData moveData, MoveTag tag, Pokemon targetPokemon = null)
+    public bool IsMoveTagSatisfied(PBS.Main.Pokemon.Pokemon userPokemon, MoveData moveData, MoveTag tag, PBS.Main.Pokemon.Pokemon targetPokemon = null)
     {
         if (tag == MoveTag.MakesContact)
         {
@@ -6121,7 +6122,7 @@ public class Battle
         }
         return moveData.HasTag(tag);
     }
-    public bool DoesMoveMakeContact(Pokemon userPokemon, MoveData moveData, Pokemon targetPokemon = null)
+    public bool DoesMoveMakeContact(PBS.Main.Pokemon.Pokemon userPokemon, MoveData moveData, PBS.Main.Pokemon.Pokemon targetPokemon = null)
     {
         bool contact = moveData.HasTag(MoveTag.MakesContact);
 
@@ -6135,7 +6136,7 @@ public class Battle
     {
         for (int i = 0; i < moveData.effectsNew.Count; i++)
         {
-            EffectDatabase.MoveEff.MoveEffect effect = moveData.effectsNew[i];
+            PBS.Databases.Effects.Moves.MoveEffect effect = moveData.effectsNew[i];
             if (IsMoveEffectAdditional(moveData, effect))
             {
                 return true;
@@ -6143,12 +6144,12 @@ public class Battle
         }
         return false;
     }
-    public bool IsMoveEffectAdditional(MoveData moveData, EffectDatabase.MoveEff.MoveEffect effect_)
+    public bool IsMoveEffectAdditional(MoveData moveData, PBS.Databases.Effects.Moves.MoveEffect effect_)
     {
         // inflict status
-        if (effect_ is EffectDatabase.MoveEff.InflictStatus)
+        if (effect_ is PBS.Databases.Effects.Moves.InflictStatus)
         {
-            EffectDatabase.MoveEff.InflictStatus effect = effect_ as EffectDatabase.MoveEff.InflictStatus;
+            PBS.Databases.Effects.Moves.InflictStatus effect = effect_ as PBS.Databases.Effects.Moves.InflictStatus;
             if (effect.targetType == MoveEffectTargetType.Target
                 || effect.targetType == MoveEffectTargetType.Team
                 || effect.targetType == MoveEffectTargetType.Battlefield)
@@ -6157,9 +6158,9 @@ public class Battle
             }
         }
         // stat stage mods
-        else if (effect_ is EffectDatabase.MoveEff.StatStageMod)
+        else if (effect_ is PBS.Databases.Effects.Moves.StatStageMod)
         {
-            EffectDatabase.MoveEff.StatStageMod effect = effect_ as EffectDatabase.MoveEff.StatStageMod;
+            PBS.Databases.Effects.Moves.StatStageMod effect = effect_ as PBS.Databases.Effects.Moves.StatStageMod;
             if (effect.targetType == MoveEffectTargetType.Self
                 || effect.targetType == MoveEffectTargetType.SelfTeam)
             {
@@ -6182,7 +6183,7 @@ public class Battle
     }
 
     // Moves: Targeting Methods
-    public bool ArePokemonAdjacent(Pokemon pokemon1, Pokemon pokemon2)
+    public bool ArePokemonAdjacent(PBS.Main.Pokemon.Pokemon pokemon1, PBS.Main.Pokemon.Pokemon pokemon2)
     {
         return ArePositionsAdjacent(
             position1: GetPokemonPosition(pokemon1),
@@ -6220,7 +6221,7 @@ public class Battle
     {
         return position1.teamPos != position2.teamPos;
     }
-    public bool IsMoveAdjacentTargeting(Pokemon pokemon, MoveData moveData, MoveTargetType overwriteTarget = MoveTargetType.None)
+    public bool IsMoveAdjacentTargeting(PBS.Main.Pokemon.Pokemon pokemon, MoveData moveData, MoveTargetType overwriteTarget = MoveTargetType.None)
     {
         MoveTargetType targetType = moveData.targetType;
         targetType = (overwriteTarget == MoveTargetType.None) ? targetType : overwriteTarget;
@@ -6236,7 +6237,7 @@ public class Battle
             || targetType == MoveTargetType.AllPokemon
             || targetType == MoveTargetType.Any);
     }
-    public bool IsMoveSelfTargeting(Pokemon pokemon, MoveData moveData, MoveTargetType overwriteTarget = MoveTargetType.None)
+    public bool IsMoveSelfTargeting(PBS.Main.Pokemon.Pokemon pokemon, MoveData moveData, MoveTargetType overwriteTarget = MoveTargetType.None)
     {
         MoveTargetType targetType = moveData.targetType;
         targetType = (overwriteTarget == MoveTargetType.None) ? targetType : overwriteTarget;
@@ -6247,7 +6248,7 @@ public class Battle
             || targetType == MoveTargetType.AllAllies
             || targetType == MoveTargetType.TeamAlly);
     }
-    public bool IsMoveAllyTargeting(Pokemon pokemon, MoveData moveData, MoveTargetType overwriteTarget = MoveTargetType.None)
+    public bool IsMoveAllyTargeting(PBS.Main.Pokemon.Pokemon pokemon, MoveData moveData, MoveTargetType overwriteTarget = MoveTargetType.None)
     {
         MoveTargetType targetType = moveData.targetType;
         targetType = (overwriteTarget == MoveTargetType.None) ? targetType : overwriteTarget;
@@ -6263,7 +6264,7 @@ public class Battle
             || targetType == MoveTargetType.Adjacent
             || targetType == MoveTargetType.Any);
     }
-    public bool IsMoveOpponentTargeting(Pokemon pokemon, MoveData moveData, MoveTargetType overwriteTarget = MoveTargetType.None)
+    public bool IsMoveOpponentTargeting(PBS.Main.Pokemon.Pokemon pokemon, MoveData moveData, MoveTargetType overwriteTarget = MoveTargetType.None)
     {
         MoveTargetType targetType = moveData.targetType;
         targetType = (overwriteTarget == MoveTargetType.None) ? targetType : overwriteTarget;
@@ -6277,7 +6278,7 @@ public class Battle
             || targetType == MoveTargetType.Adjacent
             || targetType == MoveTargetType.Any);
     }
-    public bool IsMoveMultiTargeting(Pokemon pokemon, MoveData moveData, MoveTargetType overwriteTarget = MoveTargetType.None)
+    public bool IsMoveMultiTargeting(PBS.Main.Pokemon.Pokemon pokemon, MoveData moveData, MoveTargetType overwriteTarget = MoveTargetType.None)
     {
         MoveTargetType targetType = moveData.targetType;
         targetType = (overwriteTarget == MoveTargetType.None) ? targetType : overwriteTarget;
@@ -6293,7 +6294,7 @@ public class Battle
             || targetType == MoveTargetType.TeamOpponent
             || targetType == MoveTargetType.Battlefield);
     }
-    public bool IsMoveFieldTargeting(Pokemon pokemon, MoveData moveData, MoveTargetType overwriteTarget = MoveTargetType.None)
+    public bool IsMoveFieldTargeting(PBS.Main.Pokemon.Pokemon pokemon, MoveData moveData, MoveTargetType overwriteTarget = MoveTargetType.None)
     {
         MoveTargetType targetType = moveData.targetType;
         targetType = (overwriteTarget == MoveTargetType.None) ? targetType : overwriteTarget;
@@ -6302,7 +6303,7 @@ public class Battle
             || targetType == MoveTargetType.TeamOpponent
             || targetType == MoveTargetType.Battlefield);
     }
-    public bool IsMoveSideTargeting(Pokemon pokemon, MoveData moveData, MoveTargetType overwriteTarget = MoveTargetType.None)
+    public bool IsMoveSideTargeting(PBS.Main.Pokemon.Pokemon pokemon, MoveData moveData, MoveTargetType overwriteTarget = MoveTargetType.None)
     {
         MoveTargetType targetType = moveData.targetType;
         targetType = (overwriteTarget == MoveTargetType.None) ? targetType : overwriteTarget;
@@ -6311,7 +6312,7 @@ public class Battle
             || targetType == MoveTargetType.TeamOpponent);
     }
     public List<List<BattlePosition>> GetMovePossibleTargets(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         MoveData moveData,
         MoveTargetType overwriteTarget = MoveTargetType.None)
     {
@@ -6386,7 +6387,7 @@ public class Battle
         return IsSinglesBattle();
     }
     public List<BattlePosition> GetMoveAutoTargets(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         MoveData moveData,
         BattlePosition biasPosition = null,
         MoveTargetType overwriteTarget = MoveTargetType.None,
@@ -6485,7 +6486,7 @@ public class Battle
                     hasEnemy = true;
                 }
 
-                Pokemon pokemon = GetPokemonAtPosition(currentTargets[k]);
+                PBS.Main.Pokemon.Pokemon pokemon = GetPokemonAtPosition(currentTargets[k]);
                 if (pokemon != null)
                 {
                     if (!IsPokemonFainted(pokemon))
@@ -6521,12 +6522,12 @@ public class Battle
         }
         return targets;
     }
-    public List<Pokemon> GetMoveTargetsLive(BattleCommand command)
+    public List<PBS.Main.Pokemon.Pokemon> GetMoveTargetsLive(BattleCommand command)
     {
-        List<Pokemon> targetPokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> targetPokemon = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < command.targetPositions.Length; i++)
         {
-            Pokemon pokemon = GetPokemonAtPosition(command.targetPositions[i]);
+            PBS.Main.Pokemon.Pokemon pokemon = GetPokemonAtPosition(command.targetPositions[i]);
             if (pokemon != null)
             {
                 targetPokemon.Add(pokemon);
@@ -6534,12 +6535,12 @@ public class Battle
         }
         return targetPokemon;
     }
-    public List<Pokemon> GetTargetsLive(BattlePosition[] battlePositions)
+    public List<PBS.Main.Pokemon.Pokemon> GetTargetsLive(BattlePosition[] battlePositions)
     {
-        List<Pokemon> targetPokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> targetPokemon = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < battlePositions.Length; i++)
         {
-            Pokemon pokemon = GetPokemonAtPosition(battlePositions[i]);
+            PBS.Main.Pokemon.Pokemon pokemon = GetPokemonAtPosition(battlePositions[i]);
             if (pokemon != null)
             {
                 targetPokemon.Add(pokemon);
@@ -6550,9 +6551,9 @@ public class Battle
 
     // Moves: Damaging Methods
     public int GetPokemonOffensiveStat(
-        Pokemon userPokemon,
+        PBS.Main.Pokemon.Pokemon userPokemon,
         MoveData moveData,
-        Pokemon targetPokemon = null,
+        PBS.Main.Pokemon.Pokemon targetPokemon = null,
         MoveCategory overwriteCategory = MoveCategory.None,
         bool criticalHit = false,
         bool bypassAbility = false)
@@ -6567,7 +6568,7 @@ public class Battle
         MoveEffect psyshock = moveData.GetEffect(MoveEffectType.PsyshockOffense);
         if (psyshock != null)
         {
-            statToUse = GameTextDatabase.GetStatFromString(psyshock.GetString(0));
+            statToUse = GameText.GetStatFromString(psyshock.GetString(0));
         }
 
         // Ignore Stat Changes
@@ -6575,11 +6576,11 @@ public class Battle
         if (targetPokemon != null)
         {
             // Target has Unaware
-            EffectDatabase.AbilityEff.AbilityEffect unaware_ =
+            PBS.Databases.Effects.Abilities.AbilityEffect unaware_ =
                 PBPGetAbilityEffect(targetPokemon, AbilityEffectType.Unaware, bypassAbility);
             if (unaware_ != null)
             {
-                EffectDatabase.AbilityEff.Unaware unaware = unaware_ as EffectDatabase.AbilityEff.Unaware;
+                PBS.Databases.Effects.Abilities.Unaware unaware = unaware_ as PBS.Databases.Effects.Abilities.Unaware;
                 if (unaware.attackerStatsIgnored.Contains(statToUse))
                 {
                     applyStatStage = false;
@@ -6601,9 +6602,9 @@ public class Battle
             : 1;
     }
     public int GetPokemonDefensiveStat(
-        Pokemon targetPokemon,
+        PBS.Main.Pokemon.Pokemon targetPokemon,
         MoveData moveData,
-        Pokemon userPokemon = null,
+        PBS.Main.Pokemon.Pokemon userPokemon = null,
         MoveCategory overwriteCategory = MoveCategory.None,
         bool criticalHit = false,
         bool bypassAbility = false)
@@ -6617,7 +6618,7 @@ public class Battle
         MoveEffect psyshock = moveData.GetEffect(MoveEffectType.Psyshock);
         if (psyshock != null)
         {
-            statToUse = GameTextDatabase.GetStatFromString(psyshock.GetString(0));
+            statToUse = GameText.GetStatFromString(psyshock.GetString(0));
         }
 
         // Ignore Stat Changes
@@ -6629,7 +6630,7 @@ public class Battle
                 = PBPLegacyGetAbilityEffect(userPokemon, AbilityEffectType.UnawareOffense);
             if (unaware != null)
             {
-                List<PokemonStats> ignoredStats = GameTextDatabase.GetStatsFromList(unaware.stringParams);
+                List<PokemonStats> ignoredStats = GameText.GetStatsFromList(unaware.stringParams);
                 if (ignoredStats.Contains(statToUse))
                 {
                     applyStatStage = false;
@@ -6640,7 +6641,7 @@ public class Battle
         MoveEffect chipAway = moveData.GetEffect(MoveEffectType.ChipAway);
         if (chipAway != null)
         {
-            List<PokemonStats> ignoredStats = GameTextDatabase.GetStatsFromList(chipAway.stringParams);
+            List<PokemonStats> ignoredStats = GameText.GetStatsFromList(chipAway.stringParams);
             if (ignoredStats.Contains(statToUse))
             {
                 applyStatStage = false;
@@ -6660,7 +6661,7 @@ public class Battle
             : (statToUse == PokemonStats.Speed) ? GetPokemonSPE(targetPokemon, applyStatStage: applyStatStage)
             : 1;
     }
-    public bool CalculateCriticalHit(Pokemon userPokemon, Pokemon targetPokemon, MoveData moveData)
+    public bool CalculateCriticalHit(PBS.Main.Pokemon.Pokemon userPokemon, PBS.Main.Pokemon.Pokemon targetPokemon, MoveData moveData)
     {
         int critStage = 0;
         bool applyCritical = false;
@@ -6669,7 +6670,7 @@ public class Battle
         // Mold Breaker bypasses ability immunities
         if (!bypassAbility)
         {
-            EffectDatabase.AbilityEff.AbilityEffect moldBreakerEffect =
+            PBS.Databases.Effects.Abilities.AbilityEffect moldBreakerEffect =
                 PBPGetAbilityEffect(userPokemon, AbilityEffectType.MoldBreaker);
             if (moldBreakerEffect != null)
             {
@@ -6677,7 +6678,7 @@ public class Battle
             }
 
             // Sunsteel Strike bypasses ability immunities
-            EffectDatabase.MoveEff.MoveEffect effect = moveData.GetEffectNew(MoveEffectType.SunteelStrike);
+            PBS.Databases.Effects.Moves.MoveEffect effect = moveData.GetEffectNew(MoveEffectType.SunteelStrike);
             if (effect != null)
             {
                 bypassAbility = true;
@@ -6690,7 +6691,7 @@ public class Battle
         for (int i = 0; i < targetTeam.bProps.safeguards.Count; i++)
         {
             PBS.Main.Team.BattleProperties.Safeguard safeguard = targetTeam.bProps.safeguards[i];
-            MoveData reflectData = MoveDatabase.instance.GetMoveData(safeguard.moveID);
+            MoveData reflectData = Moves.instance.GetMoveData(safeguard.moveID);
             MoveEffect effect = reflectData.GetEffect(MoveEffectType.Safeguard);
             MoveEffect luckyChantEffect = reflectData.GetEffect(MoveEffectType.SafeguardLuckyChant);
 
@@ -6704,7 +6705,7 @@ public class Battle
         }
 
         // Battle Armor negates critical hits
-        EffectDatabase.AbilityEff.AbilityEffect battleArmor_
+        PBS.Databases.Effects.Abilities.AbilityEffect battleArmor_
             = PBPGetAbilityEffect(targetPokemon, AbilityEffectType.BattleArmor, bypassAbility);
         if (battleArmor_ != null)
         {
@@ -6712,10 +6713,10 @@ public class Battle
         }
 
         // Critical Moves (Stone Edge, Freeze Dry, etc.)
-        EffectDatabase.MoveEff.MoveEffect karateChop_ = moveData.GetEffectNew(MoveEffectType.KarateChop);
+        PBS.Databases.Effects.Moves.MoveEffect karateChop_ = moveData.GetEffectNew(MoveEffectType.KarateChop);
         if (karateChop_ != null)
         {
-            EffectDatabase.MoveEff.KarateChop karateChop = karateChop_ as EffectDatabase.MoveEff.KarateChop;
+            PBS.Databases.Effects.Moves.KarateChop karateChop = karateChop_ as PBS.Databases.Effects.Moves.KarateChop;
             critStage += karateChop.criticalBoost;
             if (karateChop.alwaysCritical)
             {
@@ -6724,10 +6725,10 @@ public class Battle
         }
 
         // Super Luck
-        EffectDatabase.AbilityEff.AbilityEffect superLuck_ = PBPGetAbilityEffect(userPokemon, AbilityEffectType.SuperLuck);
+        PBS.Databases.Effects.Abilities.AbilityEffect superLuck_ = PBPGetAbilityEffect(userPokemon, AbilityEffectType.SuperLuck);
         if (superLuck_ != null)
         {
-            EffectDatabase.AbilityEff.SuperLuck superLuck = superLuck_ as EffectDatabase.AbilityEff.SuperLuck;
+            PBS.Databases.Effects.Abilities.SuperLuck superLuck = superLuck_ as PBS.Databases.Effects.Abilities.SuperLuck;
             if (DoEffectFiltersPass(
                 filters: superLuck.filters,
                 userPokemon: userPokemon,
@@ -6777,9 +6778,9 @@ public class Battle
     }
 
     public int GetDamage(
-        EffectDatabase.General.Damage damage,
-        Pokemon targetPokemon,
-        Pokemon attackerPokemon = null
+        PBS.Databases.Effects.General.Damage damage,
+        PBS.Main.Pokemon.Pokemon targetPokemon,
+        PBS.Main.Pokemon.Pokemon attackerPokemon = null
         )
     {
         int damageDealt = 0;
@@ -6789,7 +6790,7 @@ public class Battle
         }
 
         // Calculated
-        if (damage.mode == EffectDatabase.General.Damage.DamageMode.Calculated)
+        if (damage.mode == PBS.Databases.Effects.General.Damage.DamageMode.Calculated)
         {
             int calculatedDamage = Mathf.FloorToInt(GetMoveBaseDamage(
                 userPokemon: attackerPokemon,
@@ -6802,36 +6803,36 @@ public class Battle
             return calculatedDamage;
         }
         // Direct HP
-        else if (damage.mode == EffectDatabase.General.Damage.DamageMode.DirectHP)
+        else if (damage.mode == PBS.Databases.Effects.General.Damage.DamageMode.DirectHP)
         {
             return Mathf.FloorToInt(damage.value);
         }
         // Max HP %
-        else if (damage.mode == EffectDatabase.General.Damage.DamageMode.MaxHPPercent)
+        else if (damage.mode == PBS.Databases.Effects.General.Damage.DamageMode.MaxHPPercent)
         {
             return Mathf.FloorToInt(GetPokemonHPByPercent(targetPokemon, damage.value));
         }
         // Innards Out (Remaining HP %)
-        else if (damage.mode == EffectDatabase.General.Damage.DamageMode.InnardsOut)
+        else if (damage.mode == PBS.Databases.Effects.General.Damage.DamageMode.InnardsOut)
         {
             return Mathf.FloorToInt(targetPokemon.currentHP * damage.value);
         }
         return damageDealt;
     }
     public int GetHeal(
-        EffectDatabase.General.HealHP heal,
-        Pokemon targetPokemon,
-        Pokemon healerPokemon = null
+        PBS.Databases.Effects.General.HealHP heal,
+        PBS.Main.Pokemon.Pokemon targetPokemon,
+        PBS.Main.Pokemon.Pokemon healerPokemon = null
         )
     {
         int healedHP = 0;
         // Hit Points
-        if (heal.healMode == EffectDatabase.General.HealHP.HealMode.HitPoints)
+        if (heal.healMode == PBS.Databases.Effects.General.HealHP.HealMode.HitPoints)
         {
             return Mathf.FloorToInt(heal.healValue);
         }
         // Max HP %
-        else if (heal.healMode == EffectDatabase.General.HealHP.HealMode.MaxHPPercent)
+        else if (heal.healMode == PBS.Databases.Effects.General.HealHP.HealMode.MaxHPPercent)
         {
             return GetPokemonHPByPercent(targetPokemon, heal.healValue);
         }
@@ -6840,8 +6841,8 @@ public class Battle
     }
 
     public float GetMoveBaseDamage(
-        Pokemon userPokemon,
-        Pokemon targetPokemon,
+        PBS.Main.Pokemon.Pokemon userPokemon,
+        PBS.Main.Pokemon.Pokemon targetPokemon,
         MoveData moveData = null,
         MoveCategory overwriteCategory = MoveCategory.None,
         int overwriteBasePower = 0,
@@ -6916,8 +6917,8 @@ public class Battle
         return baseDamage;
     }
     public int GetMoveDamage(
-        Pokemon userPokemon,
-        Pokemon targetPokemon,
+        PBS.Main.Pokemon.Pokemon userPokemon,
+        PBS.Main.Pokemon.Pokemon targetPokemon,
         MoveData moveData,
         bool criticalHit = false,
         bool bypassAbility = false,
@@ -6926,8 +6927,8 @@ public class Battle
     {
         Team userTeam = GetTeam(userPokemon);
         Team targetTeam = GetTeam(targetPokemon);
-        List<Pokemon> onFieldEnemyPokemon = GetAllyPokemon(targetPokemon);
-        TypeData moveTypeData = TypeDatabase.instance.GetTypeData(moveData.moveType);
+        List<PBS.Main.Pokemon.Pokemon> onFieldEnemyPokemon = GetAllyPokemon(targetPokemon);
+        TypeData moveTypeData = ElementalTypes.instance.GetTypeData(moveData.moveType);
         string moveType = moveData.moveType;
 
         // get base move damage
@@ -6949,11 +6950,11 @@ public class Battle
         if (criticalHit)
         {
             // Sniper
-            List<EffectDatabase.AbilityEff.AbilityEffect> sniper_ =
+            List<PBS.Databases.Effects.Abilities.AbilityEffect> sniper_ =
                 PBPGetAbilityEffects(userPokemon, AbilityEffectType.Sniper);
             for (int i = 0; i < sniper_.Count; i++)
             {
-                EffectDatabase.AbilityEff.Sniper sniper = sniper_[i] as EffectDatabase.AbilityEff.Sniper;
+                PBS.Databases.Effects.Abilities.Sniper sniper = sniper_[i] as PBS.Databases.Effects.Abilities.Sniper;
                 if (DoEffectFiltersPass(
                     filters: sniper.filters,
                     userPokemon: userPokemon,
@@ -6973,7 +6974,7 @@ public class Battle
 
         // STAB
         List<string> userTypes = PBPGetTypes(userPokemon);
-        EffectDatabase.AbilityEff.AbilityEffect adaptability_
+        PBS.Databases.Effects.Abilities.AbilityEffect adaptability_
             = PBPGetAbilityEffect(userPokemon, AbilityEffectType.Adaptability);
         for (int i = 0; i < userTypes.Count; i++)
         {
@@ -6982,8 +6983,8 @@ public class Battle
                 // Adaptability
                 if (adaptability_ != null)
                 {
-                    EffectDatabase.AbilityEff.Adaptability adaptability = 
-                        adaptability_ as EffectDatabase.AbilityEff.Adaptability;
+                    PBS.Databases.Effects.Abilities.Adaptability adaptability = 
+                        adaptability_ as PBS.Databases.Effects.Abilities.Adaptability;
                     dmgMultiplier *= adaptability.STABMultiplier;
                 }
                 else
@@ -6996,13 +6997,13 @@ public class Battle
         // ---MOVE MODIFIERS (USER)---
 
         // Damage Multipliers (General)
-        List<EffectDatabase.MoveEff.MoveEffect> dmgMultipliers_ = moveData.GetEffectsNew(MoveEffectType.DamageMultiplier);
+        List<PBS.Databases.Effects.Moves.MoveEffect> dmgMultipliers_ = moveData.GetEffectsNew(MoveEffectType.DamageMultiplier);
         if (dmgMultipliers_.Count > 0)
         {
             for (int i = 0; i < dmgMultipliers_.Count; i++)
             {
-                EffectDatabase.MoveEff.DamageMultiplier dmgMultiplierEff =
-                    dmgMultipliers_[i] as EffectDatabase.MoveEff.DamageMultiplier;
+                PBS.Databases.Effects.Moves.DamageMultiplier dmgMultiplierEff =
+                    dmgMultipliers_[i] as PBS.Databases.Effects.Moves.DamageMultiplier;
                 if (DoesMoveEffectFiltersPass(
                         effect: dmgMultiplierEff,
                         moveData: moveData,
@@ -7020,7 +7021,7 @@ public class Battle
         {
             for (int i = 0; i < userPokemon.bProps.helpingHandMoves.Count; i++)
             {
-                MoveData helpData = MoveDatabase.instance.GetMoveData(userPokemon.bProps.helpingHandMoves[i]);
+                MoveData helpData = Moves.instance.GetMoveData(userPokemon.bProps.helpingHandMoves[i]);
                 MoveEffect effect = helpData.GetEffect(MoveEffectType.HelpingHand);
                 dmgMultiplier *= effect.GetFloat(0);
             }
@@ -7048,7 +7049,7 @@ public class Battle
         // Dark Aura / Aura Break
         float darkAuraMultiplier = 1f;
         HashSet<string> darkAuraAbilities = new HashSet<string>();
-        Pokemon auraBreakUser = PBPGetPokemonWithAbilityEffect(AbilityEffectType.AuraBreak);
+        PBS.Main.Pokemon.Pokemon auraBreakUser = PBPGetPokemonWithAbilityEffect(AbilityEffectType.AuraBreak);
         for (int i = 0; i < pokemonOnField.Count; i++)
         {
             AbilityData abilityData = PBPGetAbilityDataWithEffect(pokemonOnField[i], AbilityEffectType.DarkAura);
@@ -7057,12 +7058,12 @@ public class Battle
                 if (!darkAuraAbilities.Contains(abilityData.ID))
                 {
                     darkAuraAbilities.Add(abilityData.ID);
-                    List<EffectDatabase.AbilityEff.AbilityEffect> darkAuras_ = 
+                    List<PBS.Databases.Effects.Abilities.AbilityEffect> darkAuras_ = 
                         abilityData.GetEffectsNew(AbilityEffectType.DarkAura);
                     for (int k = 0; k < darkAuras_.Count; k++)
                     {
-                        EffectDatabase.AbilityEff.DarkAura darkAura = 
-                            darkAuras_[k] as EffectDatabase.AbilityEff.DarkAura;
+                        PBS.Databases.Effects.Abilities.DarkAura darkAura = 
+                            darkAuras_[k] as PBS.Databases.Effects.Abilities.DarkAura;
                         if (DoEffectFiltersPass(
                             filters: darkAura.filters,
                             userPokemon: userPokemon,
@@ -7088,13 +7089,13 @@ public class Battle
         abilityMultiplier *= darkAuraMultiplier;
 
         // Neuroforce / Tinted Lens
-        List<EffectDatabase.AbilityEff.AbilityEffect> tintedLens_ = PBPGetAbilityEffects(
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> tintedLens_ = PBPGetAbilityEffects(
             pokemon: userPokemon,
             effectType: AbilityEffectType.TintedLens
             );
         for (int i = 0; i < tintedLens_.Count; i++)
         {
-            EffectDatabase.AbilityEff.TintedLens tintedLens = tintedLens_[i] as EffectDatabase.AbilityEff.TintedLens;
+            PBS.Databases.Effects.Abilities.TintedLens tintedLens = tintedLens_[i] as PBS.Databases.Effects.Abilities.TintedLens;
             if (DoEffectFiltersPass(
                 filters: tintedLens.filters,
                 userPokemon: userPokemon,
@@ -7207,15 +7208,15 @@ public class Battle
         // Friend Guard
         for (int i = 0; i < onFieldEnemyPokemon.Count; i++)
         {
-            List<EffectDatabase.AbilityEff.AbilityEffect> friendGuards_ = PBPGetAbilityEffects(
+            List<PBS.Databases.Effects.Abilities.AbilityEffect> friendGuards_ = PBPGetAbilityEffects(
                 pokemon: onFieldEnemyPokemon[i],
                 effectType: AbilityEffectType.FriendGuard,
                 bypassAbility: bypassAbility
                 );
             for (int k = 0; k < friendGuards_.Count; k++)
             {
-                EffectDatabase.AbilityEff.FriendGuard friendGuard = 
-                    friendGuards_[i] as EffectDatabase.AbilityEff.FriendGuard;
+                PBS.Databases.Effects.Abilities.FriendGuard friendGuard = 
+                    friendGuards_[i] as PBS.Databases.Effects.Abilities.FriendGuard;
                 if (DoEffectFiltersPass(
                     filters: friendGuard.filters,
                     userPokemon: onFieldEnemyPokemon[i],
@@ -7229,14 +7230,14 @@ public class Battle
         }
 
         // Ice Scales
-        List<EffectDatabase.AbilityEff.AbilityEffect> iceScales_ = 
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> iceScales_ = 
             PBPGetAbilityEffects(
                 pokemon: targetPokemon, 
                 effectType: AbilityEffectType.IceScales, 
                 bypassAbility: bypassAbility);
         for (int i = 0; i < iceScales_.Count; i++)
         {
-            EffectDatabase.AbilityEff.IceScales iceScales = iceScales_[i] as EffectDatabase.AbilityEff.IceScales;
+            PBS.Databases.Effects.Abilities.IceScales iceScales = iceScales_[i] as PBS.Databases.Effects.Abilities.IceScales;
             if (DoEffectFiltersPass(
                 filters: iceScales.filters,
                 userPokemon: userPokemon,
@@ -7278,14 +7279,14 @@ public class Battle
         }
 
         // Multiscale
-        List<EffectDatabase.AbilityEff.AbilityEffect> multiscale_ =
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> multiscale_ =
             PBPGetAbilityEffects(pokemon: targetPokemon,
             effectType: AbilityEffectType.Multiscale,
             bypassAbility: bypassAbility);
         for (int i = 0; i < multiscale_.Count; i++)
         {
-            EffectDatabase.AbilityEff.Multiscale multiscale =
-                multiscale_[i] as EffectDatabase.AbilityEff.Multiscale;
+            PBS.Databases.Effects.Abilities.Multiscale multiscale =
+                multiscale_[i] as PBS.Databases.Effects.Abilities.Multiscale;
             if (DoEffectFiltersPass(
                 filters: multiscale.filters,
                 userPokemon: userPokemon,
@@ -7301,14 +7302,14 @@ public class Battle
         }
 
         // Solid Rock / Filter / Prism Armor
-        List<EffectDatabase.AbilityEff.AbilityEffect> solidRocks_ =
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> solidRocks_ =
             PBPGetAbilityEffects(
                 pokemon: targetPokemon,
                 effectType: AbilityEffectType.SolidRock,
                 bypassAbility: bypassAbility);
         for (int i = 0; i < solidRocks_.Count; i++)
         {
-            EffectDatabase.AbilityEff.SolidRock solidRock = solidRocks_[i] as EffectDatabase.AbilityEff.SolidRock;
+            PBS.Databases.Effects.Abilities.SolidRock solidRock = solidRocks_[i] as PBS.Databases.Effects.Abilities.SolidRock;
             if (DoEffectFiltersPass(
                 filters: solidRock.filters,
                 userPokemon: userPokemon,
@@ -7335,12 +7336,12 @@ public class Battle
         if (userTeam != targetTeam)
         {
             bool bypassScreens = false;
-            List<EffectDatabase.AbilityEff.AbilityEffect> infiltrator_ = 
+            List<PBS.Databases.Effects.Abilities.AbilityEffect> infiltrator_ = 
                 PBPGetAbilityEffects(userPokemon, AbilityEffectType.Infiltrator);
             for (int i = 0; i < infiltrator_.Count && !bypassScreens; i++)
             {
-                EffectDatabase.AbilityEff.Infiltrator infiltrator =
-                    infiltrator_[i] as EffectDatabase.AbilityEff.Infiltrator;
+                PBS.Databases.Effects.Abilities.Infiltrator infiltrator =
+                    infiltrator_[i] as PBS.Databases.Effects.Abilities.Infiltrator;
                 if (infiltrator.bypassScreens)
                 {
                     bypassScreens = true;
@@ -7355,12 +7356,12 @@ public class Battle
                 TeamCondition lightScreenCondition = targetTeam.bProps.lightScreens[i];
                 if (TBPIsPokemonAffectedByTS(targetPokemon, lightScreenCondition.data))
                 {
-                    List<EffectDatabase.StatusTEEff.TeamSE> lightScreen_ =
+                    List<PBS.Databases.Effects.TeamStatuses.TeamSE> lightScreen_ =
                         lightScreenCondition.data.GetEffectsNew(TeamSEType.LightScreen);
                     for (int k = 0; k < lightScreen_.Count; k++)
                     {
-                        EffectDatabase.StatusTEEff.LightScreen lightScreen = 
-                            lightScreen_[k] as EffectDatabase.StatusTEEff.LightScreen;
+                        PBS.Databases.Effects.TeamStatuses.LightScreen lightScreen = 
+                            lightScreen_[k] as PBS.Databases.Effects.TeamStatuses.LightScreen;
                         if (DoEffectFiltersPass(
                             filters: lightScreen.filters,
                             userPokemon: userPokemon,
@@ -7388,12 +7389,12 @@ public class Battle
         for (int i = 0; i < battleConditions.Count; i++)
         {
             // Type Damage Modifiers
-            List<EffectDatabase.StatusBTLEff.BattleSE> typeDamageModifers_ =
+            List<PBS.Databases.Effects.BattleStatuses.BattleSE> typeDamageModifers_ =
                     battleConditions[i].data.GetEffectsNew(BattleSEType.TypeDamageModifier);
             for (int k = 0; k < typeDamageModifers_.Count; k++)
             {
-                EffectDatabase.StatusBTLEff.TypeDamageModifier typeDamageModifer =
-                    typeDamageModifers_[k] as EffectDatabase.StatusBTLEff.TypeDamageModifier;
+                PBS.Databases.Effects.BattleStatuses.TypeDamageModifier typeDamageModifer =
+                    typeDamageModifers_[k] as PBS.Databases.Effects.BattleStatuses.TypeDamageModifier;
                 bool proceed = true;
                 if (proceed && typeDamageModifer.offensiveCheck)
                 {
@@ -7441,12 +7442,12 @@ public class Battle
             }
 
             // Move Damage Modifiers
-            List<EffectDatabase.StatusBTLEff.BattleSE> moveDamageModifers_ =
+            List<PBS.Databases.Effects.BattleStatuses.BattleSE> moveDamageModifers_ =
                 battleConditions[i].data.GetEffectsNew(BattleSEType.MoveDamageModifier);
             for (int k = 0; k < moveDamageModifers_.Count; k++)
             {
-                EffectDatabase.StatusBTLEff.MoveDamageModifier moveDamageModifer =
-                    moveDamageModifers_[k] as EffectDatabase.StatusBTLEff.MoveDamageModifier;
+                PBS.Databases.Effects.BattleStatuses.MoveDamageModifier moveDamageModifer =
+                    moveDamageModifers_[k] as PBS.Databases.Effects.BattleStatuses.MoveDamageModifier;
                 bool proceed = true;
                 if (proceed && moveDamageModifer.offensiveCheck)
                 {
@@ -7502,7 +7503,7 @@ public class Battle
             * presetMultipliers;
         return Mathf.Max(1, Mathf.FloorToInt(totalDamage));
     }
-    public bool DoesMoveOverrideDamage(Pokemon userPokemon, MoveData moveData)
+    public bool DoesMoveOverrideDamage(PBS.Main.Pokemon.Pokemon userPokemon, MoveData moveData)
     {
         // Bide
         MoveEffect bideEffect = moveData.GetEffect(MoveEffectType.Bide);
@@ -7526,35 +7527,35 @@ public class Battle
         }
 
         // One-Hit KO: Guillotine, Sheer Cold, etc.
-        EffectDatabase.MoveEff.MoveEffect guillotine_ = moveData.GetEffectNew(MoveEffectType.Guillotine);
+        PBS.Databases.Effects.Moves.MoveEffect guillotine_ = moveData.GetEffectNew(MoveEffectType.Guillotine);
         if (guillotine_ != null)
         {
             return true;
         }
 
         // Level: Night Shade, Seismic Toss
-        EffectDatabase.MoveEff.MoveEffect seismicToss_ = moveData.GetEffectNew(MoveEffectType.SeismicToss);
+        PBS.Databases.Effects.Moves.MoveEffect seismicToss_ = moveData.GetEffectNew(MoveEffectType.SeismicToss);
         if (seismicToss_ != null)
         {
             return true;
         }
 
         // Set-Damage: Dragon Rage, Sonic Boom
-        EffectDatabase.MoveEff.MoveEffect dragonRage_ = moveData.GetEffectNew(MoveEffectType.DragonRage);
+        PBS.Databases.Effects.Moves.MoveEffect dragonRage_ = moveData.GetEffectNew(MoveEffectType.DragonRage);
         if (dragonRage_ != null)
         {
             return true;
         }
 
         // Percentage Damage: Super Fang, Guardian of Alola
-        EffectDatabase.MoveEff.MoveEffect superFang_ = moveData.GetEffectNew(MoveEffectType.SuperFang);
+        PBS.Databases.Effects.Moves.MoveEffect superFang_ = moveData.GetEffectNew(MoveEffectType.SuperFang);
         if (superFang_ != null)
         {
             return true;
         }
 
         // Psywave
-        EffectDatabase.MoveEff.MoveEffect psywave_ = moveData.GetEffectNew(MoveEffectType.Psywave);
+        PBS.Databases.Effects.Moves.MoveEffect psywave_ = moveData.GetEffectNew(MoveEffectType.Psywave);
         if (psywave_ != null)
         {
             return true;
@@ -7562,7 +7563,7 @@ public class Battle
 
         return false;
     }
-    public int GetMoveOverrideDamage(Pokemon userPokemon, Pokemon targetPokemon, MoveData moveData)
+    public int GetMoveOverrideDamage(PBS.Main.Pokemon.Pokemon userPokemon, PBS.Main.Pokemon.Pokemon targetPokemon, MoveData moveData)
     {
         // Bide
         MoveEffect bideEffect = moveData.GetEffect(MoveEffectType.Bide);
@@ -7589,41 +7590,41 @@ public class Battle
         }
 
         // One-Hit KO: Guillotine, Sheer Cold, etc.
-        EffectDatabase.MoveEff.MoveEffect guillotine_ = moveData.GetEffectNew(MoveEffectType.Guillotine);
+        PBS.Databases.Effects.Moves.MoveEffect guillotine_ = moveData.GetEffectNew(MoveEffectType.Guillotine);
         if (guillotine_ != null)
         {
             return targetPokemon.maxHP;
         }
 
         // Level: Night Shade, Seismic Toss
-        EffectDatabase.MoveEff.MoveEffect seismicToss_ = moveData.GetEffectNew(MoveEffectType.SeismicToss);
+        PBS.Databases.Effects.Moves.MoveEffect seismicToss_ = moveData.GetEffectNew(MoveEffectType.SeismicToss);
         if (seismicToss_ != null)
         {
-            EffectDatabase.MoveEff.SeismicToss seismicToss = seismicToss_ as EffectDatabase.MoveEff.SeismicToss;
+            PBS.Databases.Effects.Moves.SeismicToss seismicToss = seismicToss_ as PBS.Databases.Effects.Moves.SeismicToss;
             return userPokemon.level;
         }
 
         // Set-Damage: Dragon Rage, Sonic Boom
-        EffectDatabase.MoveEff.MoveEffect dragonRage_ = moveData.GetEffectNew(MoveEffectType.DragonRage);
+        PBS.Databases.Effects.Moves.MoveEffect dragonRage_ = moveData.GetEffectNew(MoveEffectType.DragonRage);
         if (dragonRage_ != null)
         {
-            EffectDatabase.MoveEff.DragonRage dragonRage = dragonRage_ as EffectDatabase.MoveEff.DragonRage;
+            PBS.Databases.Effects.Moves.DragonRage dragonRage = dragonRage_ as PBS.Databases.Effects.Moves.DragonRage;
             return dragonRage.damage;
         }
 
         // Percentage Damage: Super Fang, Guardian of Alola
-        EffectDatabase.MoveEff.MoveEffect superFang_ = moveData.GetEffectNew(MoveEffectType.SuperFang);
+        PBS.Databases.Effects.Moves.MoveEffect superFang_ = moveData.GetEffectNew(MoveEffectType.SuperFang);
         if (superFang_ != null)
         {
-            EffectDatabase.MoveEff.SuperFang superFang = superFang_ as EffectDatabase.MoveEff.SuperFang;
+            PBS.Databases.Effects.Moves.SuperFang superFang = superFang_ as PBS.Databases.Effects.Moves.SuperFang;
             return Mathf.FloorToInt(targetPokemon.currentHP * superFang.damagePercent);
         }
 
         // Psywave
-        EffectDatabase.MoveEff.MoveEffect psywave_ = moveData.GetEffectNew(MoveEffectType.Psywave);
+        PBS.Databases.Effects.Moves.MoveEffect psywave_ = moveData.GetEffectNew(MoveEffectType.Psywave);
         if (psywave_ != null)
         {
-            EffectDatabase.MoveEff.Psywave psywave = psywave_ as EffectDatabase.MoveEff.Psywave;
+            PBS.Databases.Effects.Moves.Psywave psywave = psywave_ as PBS.Databases.Effects.Moves.Psywave;
             float numerator = Random.Range(0, GameSettings.pkmnMaxLevel + 1) + psywave.lowestScaleValue;
             float denominator = GameSettings.pkmnMaxLevel;
             float damage = userPokemon.level * (numerator / denominator);
@@ -7635,8 +7636,8 @@ public class Battle
 
     // Moves: Accuracy Methods
     public float GetMoveAccuracy(
-        Pokemon userPokemon, 
-        Pokemon targetPokemon, 
+        PBS.Main.Pokemon.Pokemon userPokemon,
+        PBS.Main.Pokemon.Pokemon targetPokemon, 
         MoveData moveData, 
         bool bypassTraditionalCheck = false)
     {
@@ -7652,7 +7653,7 @@ public class Battle
         // Mold Breaker bypasses ability immunities
         if (!bypassAbility)
         {
-            EffectDatabase.AbilityEff.AbilityEffect moldBreakerEffect =
+            PBS.Databases.Effects.Abilities.AbilityEffect moldBreakerEffect =
                 PBPGetAbilityEffect(userPokemon, AbilityEffectType.MoldBreaker);
             if (moldBreakerEffect != null)
             {
@@ -7660,7 +7661,7 @@ public class Battle
             }
 
             // Sunsteel Strike bypasses ability immunities
-            EffectDatabase.MoveEff.MoveEffect effect = moveData.GetEffectNew(MoveEffectType.SunteelStrike);
+            PBS.Databases.Effects.Moves.MoveEffect effect = moveData.GetEffectNew(MoveEffectType.SunteelStrike);
             if (effect != null)
             {
                 bypassAbility = true;
@@ -7677,11 +7678,11 @@ public class Battle
         
         // attacker
         bool noGuardActive = false;
-        List<EffectDatabase.AbilityEff.AbilityEffect> attackerNoGuard_ =
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> attackerNoGuard_ =
             PBPGetAbilityEffects(userPokemon, AbilityEffectType.NoGuard);
         for (int i = 0; i < attackerNoGuard_.Count; i++)
         {
-            EffectDatabase.AbilityEff.NoGuard noGuard = attackerNoGuard_[i] as EffectDatabase.AbilityEff.NoGuard;
+            PBS.Databases.Effects.Abilities.NoGuard noGuard = attackerNoGuard_[i] as PBS.Databases.Effects.Abilities.NoGuard;
             if (DoEffectFiltersPass(
                 filters: noGuard.filters,
                 userPokemon: userPokemon,
@@ -7697,11 +7698,11 @@ public class Battle
         }
         
         // attacked
-        List<EffectDatabase.AbilityEff.AbilityEffect> attackedNoGuard_ =
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> attackedNoGuard_ =
             PBPGetAbilityEffects(targetPokemon, AbilityEffectType.NoGuard, bypassAbility: bypassAbility);
         for (int i = 0; i < attackedNoGuard_.Count; i++)
         {
-            EffectDatabase.AbilityEff.NoGuard noGuard = attackedNoGuard_[i] as EffectDatabase.AbilityEff.NoGuard;
+            PBS.Databases.Effects.Abilities.NoGuard noGuard = attackedNoGuard_[i] as PBS.Databases.Effects.Abilities.NoGuard;
             if (DoEffectFiltersPass(
                 filters: noGuard.filters,
                 userPokemon: userPokemon,
@@ -7748,16 +7749,16 @@ public class Battle
         // Wonder Skin (flat)
         if (!bypassTraditionalCheck && userPokemon != targetPokemon)
         {
-            List<EffectDatabase.AbilityEff.AbilityEffect> wonderSkin_ = 
+            List<PBS.Databases.Effects.Abilities.AbilityEffect> wonderSkin_ = 
                 PBPGetAbilityEffects(
                     pokemon: targetPokemon, 
                     effectType: AbilityEffectType.WonderSkin, 
                     bypassAbility: bypassAbility);
             for (int i = 0; i < wonderSkin_.Count; i++)
             {
-                EffectDatabase.AbilityEff.WonderSkin wonderSkin =
-                    wonderSkin_[i] as EffectDatabase.AbilityEff.WonderSkin;
-                if (wonderSkin.mode == EffectDatabase.AbilityEff.WonderSkin.AccuracyMode.Set)
+                PBS.Databases.Effects.Abilities.WonderSkin wonderSkin =
+                    wonderSkin_[i] as PBS.Databases.Effects.Abilities.WonderSkin;
+                if (wonderSkin.mode == PBS.Databases.Effects.Abilities.WonderSkin.AccuracyMode.Set)
                 {
                     if (DoEffectFiltersPass(
                         filters: wonderSkin.filters,
@@ -7843,22 +7844,22 @@ public class Battle
             bool applyAccuracyStage = true;
             bool applyEvasionStage = true;
 
-            EffectDatabase.AbilityEff.AbilityEffect userUnaware_ =
+            PBS.Databases.Effects.Abilities.AbilityEffect userUnaware_ =
                 PBPGetAbilityEffect(userPokemon, AbilityEffectType.Unaware);
             if (userUnaware_ != null)
             {
-                EffectDatabase.AbilityEff.Unaware unaware = userUnaware_ as EffectDatabase.AbilityEff.Unaware;
+                PBS.Databases.Effects.Abilities.Unaware unaware = userUnaware_ as PBS.Databases.Effects.Abilities.Unaware;
                 if (unaware.targetStatsIgnored.Contains(PokemonStats.Evasion))
                 {
                     applyEvasionStage = false;
                 }
             }
 
-            EffectDatabase.AbilityEff.AbilityEffect targetUnaware_ =
+            PBS.Databases.Effects.Abilities.AbilityEffect targetUnaware_ =
                 PBPGetAbilityEffect(targetPokemon, AbilityEffectType.Unaware, bypassAbility);
             if (targetUnaware_ != null)
             {
-                EffectDatabase.AbilityEff.Unaware unaware = targetUnaware_ as EffectDatabase.AbilityEff.Unaware;
+                PBS.Databases.Effects.Abilities.Unaware unaware = targetUnaware_ as PBS.Databases.Effects.Abilities.Unaware;
                 if (unaware.targetStatsIgnored.Contains(PokemonStats.Accuracy))
                 {
                     applyAccuracyStage = false;
@@ -7877,11 +7878,11 @@ public class Battle
                 applyStatStage: applyEvasionStage);
 
             // Hustle
-            List<EffectDatabase.AbilityEff.AbilityEffect> hustle_ = PBPGetAbilityEffects(userPokemon, AbilityEffectType.Hustle);
+            List<PBS.Databases.Effects.Abilities.AbilityEffect> hustle_ = PBPGetAbilityEffects(userPokemon, AbilityEffectType.Hustle);
             for (int i = 0; i < hustle_.Count; i++)
             {
-                EffectDatabase.AbilityEff.Hustle hustle =
-                    hustle_[i] as EffectDatabase.AbilityEff.Hustle;
+                PBS.Databases.Effects.Abilities.Hustle hustle =
+                    hustle_[i] as PBS.Databases.Effects.Abilities.Hustle;
                 if (DoEffectFiltersPass(
                     filters: hustle.filters,
                     userPokemon: userPokemon,
@@ -7914,16 +7915,16 @@ public class Battle
             // Wonder Skin
             if (userPokemon != targetPokemon)
             {
-                List<EffectDatabase.AbilityEff.AbilityEffect> wonderSkin_ =
+                List<PBS.Databases.Effects.Abilities.AbilityEffect> wonderSkin_ =
                 PBPGetAbilityEffects(
                     pokemon: targetPokemon,
                     effectType: AbilityEffectType.WonderSkin,
                     bypassAbility: bypassAbility);
                 for (int i = 0; i < wonderSkin_.Count; i++)
                 {
-                    EffectDatabase.AbilityEff.WonderSkin wonderSkin =
-                        wonderSkin_[i] as EffectDatabase.AbilityEff.WonderSkin;
-                    if (wonderSkin.mode == EffectDatabase.AbilityEff.WonderSkin.AccuracyMode.Multiplier)
+                    PBS.Databases.Effects.Abilities.WonderSkin wonderSkin =
+                        wonderSkin_[i] as PBS.Databases.Effects.Abilities.WonderSkin;
+                    if (wonderSkin.mode == PBS.Databases.Effects.Abilities.WonderSkin.AccuracyMode.Multiplier)
                     {
                         if (DoEffectFiltersPass(
                             filters: wonderSkin.filters,
@@ -7950,7 +7951,7 @@ public class Battle
         // One-Hit KO accuracy bypasses traditional checks
         if (accuracy != 0)
         {
-            EffectDatabase.MoveEff.MoveEffect guillotine_ = moveData.GetEffectNew(MoveEffectType.GuillotineAccuracy);
+            PBS.Databases.Effects.Moves.MoveEffect guillotine_ = moveData.GetEffectNew(MoveEffectType.GuillotineAccuracy);
             if (guillotine_ != null)
             {
                 accuracy = (Mathf.Max(0, userPokemon.level - targetPokemon.level) + (accuracy * 100)) / 100f;
@@ -7961,7 +7962,7 @@ public class Battle
     }
 
     // Moves: Misc Methods
-    public bool IsMultiHitMove(Pokemon userPokemon, MoveData moveData)
+    public bool IsMultiHitMove(PBS.Main.Pokemon.Pokemon userPokemon, MoveData moveData)
     {
         MoveEffect skyDropEffect = moveData.GetEffect(MoveEffectType.SkyDrop);
         if (skyDropEffect != null)
@@ -7974,28 +7975,28 @@ public class Battle
         }
 
         // Beat Up
-        EffectDatabase.MoveEff.MoveEffect beatUp_ = moveData.GetEffectNew(MoveEffectType.BeatUp);
+        PBS.Databases.Effects.Moves.MoveEffect beatUp_ = moveData.GetEffectNew(MoveEffectType.BeatUp);
         if (beatUp_ != null)
         {
             return true;
         }
 
         // Double Slap, Icicle Spear, Rock Blast, etc.
-        EffectDatabase.MoveEff.MoveEffect furyAttack_ = moveData.GetEffectNew(MoveEffectType.FuryAttack);
+        PBS.Databases.Effects.Moves.MoveEffect furyAttack_ = moveData.GetEffectNew(MoveEffectType.FuryAttack);
         if (furyAttack_ != null)
         {
             return true;
         }
 
         // Double Kick, Dragon Darts
-        EffectDatabase.MoveEff.MoveEffect doubleKick_ = moveData.GetEffectNew(MoveEffectType.DoubleKick);
+        PBS.Databases.Effects.Moves.MoveEffect doubleKick_ = moveData.GetEffectNew(MoveEffectType.DoubleKick);
         if (doubleKick_ != null)
         {
             return true;
         }
 
         // Triple Kick
-        EffectDatabase.MoveEff.MoveEffect tripleKick_ = moveData.GetEffectNew(MoveEffectType.TripleKick);
+        PBS.Databases.Effects.Moves.MoveEffect tripleKick_ = moveData.GetEffectNew(MoveEffectType.TripleKick);
         if (tripleKick_ != null)
         {
             return true;
@@ -8008,7 +8009,7 @@ public class Battle
         return moveData.GetEffect(MoveEffectType.Recover) != null
             || moveData.GetEffect(MoveEffectType.Rest) != null;
     }
-    public int GetMoveHits(Pokemon userPokemon, MoveData moveData)
+    public int GetMoveHits(PBS.Main.Pokemon.Pokemon userPokemon, MoveData moveData)
     {
         // default
         int hits = 1;
@@ -8024,20 +8025,20 @@ public class Battle
         }
 
         // Beat Up
-        EffectDatabase.MoveEff.MoveEffect beatUp_ = moveData.GetEffectNew(MoveEffectType.BeatUp);
+        PBS.Databases.Effects.Moves.MoveEffect beatUp_ = moveData.GetEffectNew(MoveEffectType.BeatUp);
         if (beatUp_ != null)
         {
-            EffectDatabase.MoveEff.BeatUp beatUp = beatUp_ as EffectDatabase.MoveEff.BeatUp;
+            PBS.Databases.Effects.Moves.BeatUp beatUp = beatUp_ as PBS.Databases.Effects.Moves.BeatUp;
             Trainer trainer = GetPokemonOwner(userPokemon);
             return GetTrainerAllAvailablePokemon(trainer).Count;
         }
 
         // Double Slap, Icicle Spear, Rock Blast, etc.
-        EffectDatabase.MoveEff.MoveEffect furyAttack_ = moveData.GetEffectNew(MoveEffectType.FuryAttack);
+        PBS.Databases.Effects.Moves.MoveEffect furyAttack_ = moveData.GetEffectNew(MoveEffectType.FuryAttack);
         if (furyAttack_ != null)
         {
-            EffectDatabase.MoveEff.FuryAttack furyAttack = furyAttack_ as EffectDatabase.MoveEff.FuryAttack;
-            EffectDatabase.AbilityEff.AbilityEffect skillLink =
+            PBS.Databases.Effects.Moves.FuryAttack furyAttack = furyAttack_ as PBS.Databases.Effects.Moves.FuryAttack;
+            PBS.Databases.Effects.Abilities.AbilityEffect skillLink =
                 PBPGetAbilityEffect(userPokemon, AbilityEffectType.SkillLink);
             if (skillLink != null)
             {
@@ -8082,18 +8083,18 @@ public class Battle
         }
 
         // Double Kick, Dragon Darts
-        EffectDatabase.MoveEff.MoveEffect doubleKick_ = moveData.GetEffectNew(MoveEffectType.DoubleKick);
+        PBS.Databases.Effects.Moves.MoveEffect doubleKick_ = moveData.GetEffectNew(MoveEffectType.DoubleKick);
         if (doubleKick_ != null)
         {
-            EffectDatabase.MoveEff.DoubleKick doubleKick = doubleKick_ as EffectDatabase.MoveEff.DoubleKick;
+            PBS.Databases.Effects.Moves.DoubleKick doubleKick = doubleKick_ as PBS.Databases.Effects.Moves.DoubleKick;
             hits *= doubleKick.hits;
         }
 
         // Triple Kick
-        EffectDatabase.MoveEff.MoveEffect tripleKick_ = moveData.GetEffectNew(MoveEffectType.TripleKick);
+        PBS.Databases.Effects.Moves.MoveEffect tripleKick_ = moveData.GetEffectNew(MoveEffectType.TripleKick);
         if (tripleKick_ != null)
         {
-            EffectDatabase.MoveEff.TripleKick tripleKick = tripleKick_ as EffectDatabase.MoveEff.TripleKick;
+            PBS.Databases.Effects.Moves.TripleKick tripleKick = tripleKick_ as PBS.Databases.Effects.Moves.TripleKick;
             hits *= tripleKick.hits;
         }
 
@@ -8101,8 +8102,8 @@ public class Battle
         return Mathf.Max(1, hits);
     }
     public int GetPPConsumed(
-        Pokemon userPokemon,
-        List<Pokemon> targetPokemon,
+        PBS.Main.Pokemon.Pokemon userPokemon,
+        List<PBS.Main.Pokemon.Pokemon> targetPokemon,
         MoveData moveData)
     {
         float PPLost = 1f;
@@ -8111,17 +8112,17 @@ public class Battle
         // Pressure
         for (int i = 0; i < targetPokemon.Count; i++)
         {
-            Pokemon pokemon = targetPokemon[i];
+            PBS.Main.Pokemon.Pokemon pokemon = targetPokemon[i];
 
             // doesn't affect allies
             if (!ArePokemonAllies(userPokemon, pokemon))
             {
-                List<EffectDatabase.AbilityEff.AbilityEffect> pressure_ =
+                List<PBS.Databases.Effects.Abilities.AbilityEffect> pressure_ =
                     PBPGetAbilityEffects(pokemon, AbilityEffectType.Pressure);
                 for (int k = 0; k < pressure_.Count; k++)
                 {
-                    EffectDatabase.AbilityEff.Pressure pressure =
-                        pressure_[k] as EffectDatabase.AbilityEff.Pressure;
+                    PBS.Databases.Effects.Abilities.Pressure pressure =
+                        pressure_[k] as PBS.Databases.Effects.Abilities.Pressure;
                     if (DoEffectFiltersPass(
                         filters: pressure.filters,
                         userPokemon: pokemon,
@@ -8129,11 +8130,11 @@ public class Battle
                         moveData: moveData
                         ))
                     {
-                        if (pressure.mode == EffectDatabase.AbilityEff.Pressure.DeductionMode.Flat)
+                        if (pressure.mode == PBS.Databases.Effects.Abilities.Pressure.DeductionMode.Flat)
                         {
                             PPLostFlat += pressure.ppLoss;
                         }
-                        else if (pressure.mode == EffectDatabase.AbilityEff.Pressure.DeductionMode.Scale)
+                        else if (pressure.mode == PBS.Databases.Effects.Abilities.Pressure.DeductionMode.Scale)
                         {
                             PPLost *= pressure.ppLoss;
                         }
@@ -8145,7 +8146,7 @@ public class Battle
 
         return userPokemon.ConsumePP(moveData.ID, Mathf.CeilToInt(PPLost));
     }
-    public bool IsMagicCoated(Pokemon userPokemon, List<Pokemon> targetPokemon, MoveData moveData)
+    public bool IsMagicCoated(PBS.Main.Pokemon.Pokemon userPokemon, List<PBS.Main.Pokemon.Pokemon> targetPokemon, MoveData moveData)
     {
         for (int i = 0; i < targetPokemon.Count; i++)
         {
@@ -8157,7 +8158,7 @@ public class Battle
         }
         return false;
     }
-    public bool IsMagicCoated(Pokemon userPokemon, Pokemon targetPokemon, MoveData moveData)
+    public bool IsMagicCoated(PBS.Main.Pokemon.Pokemon userPokemon, PBS.Main.Pokemon.Pokemon targetPokemon, MoveData moveData)
     {
         // Magic Coatable
         if (moveData.moveTags.Contains(MoveTag.MagicCoatSusceptible))
@@ -8171,7 +8172,7 @@ public class Battle
         }
         return false;
     }
-    public bool IsMoveReflected(Pokemon userPokemon, List<Pokemon> targetPokemon, MoveData moveData)
+    public bool IsMoveReflected(PBS.Main.Pokemon.Pokemon userPokemon, List<PBS.Main.Pokemon.Pokemon> targetPokemon, MoveData moveData)
     {
         for (int i = 0; i < targetPokemon.Count; i++)
         {
@@ -8183,7 +8184,7 @@ public class Battle
         }
         return false;
     }
-    public bool IsMoveReflected(Pokemon userPokemon, Pokemon targetPokemon, MoveData moveData)
+    public bool IsMoveReflected(PBS.Main.Pokemon.Pokemon userPokemon, PBS.Main.Pokemon.Pokemon targetPokemon, MoveData moveData)
     {
         // Magic Coat
         if (IsMagicCoated(userPokemon, targetPokemon, moveData))
@@ -8193,7 +8194,7 @@ public class Battle
 
         return false;
     }
-    public void SetPokemonLastMove(Pokemon pokemon, string moveID)
+    public void SetPokemonLastMove(PBS.Main.Pokemon.Pokemon pokemon, string moveID)
     {
         pokemon.bProps.lastMove = moveID;
         // Torment
@@ -8201,44 +8202,44 @@ public class Battle
         {
             PBS.Main.Pokemon.BattleProperties.MoveLimiter limiter
                 = pokemon.bProps.moveLimiters[i];
-            if (limiter.effect is EffectDatabase.StatusPKEff.Torment)
+            if (limiter.effect is PBS.Databases.Effects.PokemonStatuses.Torment)
             {
                 limiter.SetMove(moveID);
             }
         }
     }
-    public void SetPokemonLastTargeted(Pokemon pokemon, Pokemon targeterPokemon, string moveID)
+    public void SetPokemonLastTargeted(PBS.Main.Pokemon.Pokemon pokemon, PBS.Main.Pokemon.Pokemon targeterPokemon, string moveID)
     {
         pokemon.bProps.lastMoveTargetedTurns = 2;
         pokemon.bProps.lastMoveTargetedBy = moveID;
         pokemon.bProps.lastTargeterPokemon = targeterPokemon.uniqueID;
     }
-    public void UnsetPokemonLastTargeted(Pokemon pokemon)
+    public void UnsetPokemonLastTargeted(PBS.Main.Pokemon.Pokemon pokemon)
     {
         pokemon.bProps.lastMoveTargetedBy = null;
         pokemon.bProps.lastTargeterPokemon = null;
         pokemon.bProps.lastMoveTargetedTurns = 0;
     }
-    public void ResetPokemonProtect(Pokemon pokemon)
+    public void ResetPokemonProtect(PBS.Main.Pokemon.Pokemon pokemon)
     {
         pokemon.bProps.protectCounter = 0;
     }
 
-    public void SetPokemonThrashMove(Pokemon pokemon, BattleCommand command, int thrashTurns)
+    public void SetPokemonThrashMove(PBS.Main.Pokemon.Pokemon pokemon, BattleCommand command, int thrashTurns)
     {
         pokemon.bProps.thrashMove = command.moveID;
         pokemon.bProps.thrashTurns = thrashTurns;
         command.consumePP = false;
         pokemon.SetNextCommand(command);
     }
-    public void SetPokemonUproarMove(Pokemon pokemon, BattleCommand command, int uproarTurns)
+    public void SetPokemonUproarMove(PBS.Main.Pokemon.Pokemon pokemon, BattleCommand command, int uproarTurns)
     {
         pokemon.bProps.uproarMove = command.moveID;
         pokemon.bProps.uproarTurns = uproarTurns;
         command.consumePP = false;
         pokemon.SetNextCommand(command);
     }
-    public void UnsetPokemonThrashMove(Pokemon pokemon)
+    public void UnsetPokemonThrashMove(PBS.Main.Pokemon.Pokemon pokemon)
     {
         if (pokemon.bProps.thrashMove != null)
         {
@@ -8247,7 +8248,7 @@ public class Battle
             pokemon.UnsetNextCommand();
         }
     }
-    public void UnsetPokemonUproarMove(Pokemon pokemon)
+    public void UnsetPokemonUproarMove(PBS.Main.Pokemon.Pokemon pokemon)
     {
         if (pokemon.bProps.uproarMove != null)
         {
@@ -8256,27 +8257,27 @@ public class Battle
             pokemon.UnsetNextCommand();
         }
     }
-    public void UnsetPokemonBlockMove(Pokemon pokemon)
+    public void UnsetPokemonBlockMove(PBS.Main.Pokemon.Pokemon pokemon)
     {
         pokemon.bProps.blockMove = null;
         pokemon.bProps.blockPokemon = null;
     }
-    public void UnsetPokemonBindMove(Pokemon pokemon)
+    public void UnsetPokemonBindMove(PBS.Main.Pokemon.Pokemon pokemon)
     {
         pokemon.bProps.bindMove = null;
         pokemon.bProps.bindPokemon = null;
         pokemon.bProps.bindTurns = 0;
     }
-    public void UnsetPokemonRageMove(Pokemon pokemon)
+    public void UnsetPokemonRageMove(PBS.Main.Pokemon.Pokemon pokemon)
     {
         pokemon.bProps.rageMove = null;
         pokemon.bProps.rageCounter = 0;
     }
 
-    public bool IsPokemonChoiced(Pokemon pokemon)
+    public bool IsPokemonChoiced(PBS.Main.Pokemon.Pokemon pokemon)
     {
         // Gorilla Tactics
-        EffectDatabase.AbilityEff.AbilityEffect gorillaTactics_ = 
+        PBS.Databases.Effects.Abilities.AbilityEffect gorillaTactics_ = 
             PBPGetAbilityEffect(pokemon, AbilityEffectType.GorillaTactics);
         if (gorillaTactics_ != null)
         {
@@ -8284,7 +8285,7 @@ public class Battle
         }
 
         // Choice Item
-        EffectDatabase.ItemEff.ItemEffect choiceBand_ = PBPGetItemEffect(pokemon, ItemEffectType.ChoiceBand);
+        PBS.Databases.Effects.Items.ItemEffect choiceBand_ = PBPGetItemEffect(pokemon, ItemEffectType.ChoiceBand);
         if (choiceBand_ != null)
         {
             return true;
@@ -8292,7 +8293,7 @@ public class Battle
 
         return false;
     }
-    public bool CanMoveBeChoiceLocked(Pokemon pokemon, MoveData moveData)
+    public bool CanMoveBeChoiceLocked(PBS.Main.Pokemon.Pokemon pokemon, MoveData moveData)
     {
         // Z-Moves, Max Moves, etc. cannot be locked
         if (moveData.HasTag(MoveTag.ZMove)
@@ -8310,7 +8311,7 @@ public class Battle
         return true;
     }
 
-    public bool CanPokemonMoveBeDisabled(Pokemon pokemon, string moveID)
+    public bool CanPokemonMoveBeDisabled(PBS.Main.Pokemon.Pokemon pokemon, string moveID)
     {
         if (string.IsNullOrEmpty(moveID))
         {
@@ -8320,13 +8321,13 @@ public class Battle
         {
             return false;
         }
-        MoveData moveData = MoveDatabase.instance.GetMoveData(moveID);
+        MoveData moveData = Moves.instance.GetMoveData(moveID);
         return !moveData.HasTag(MoveTag.CannotDisable);
     }
 
-    public List<Pokemon> GetPokemonUsingSnatch(Pokemon ignorePokemon)
+    public List<PBS.Main.Pokemon.Pokemon> GetPokemonUsingSnatch(PBS.Main.Pokemon.Pokemon ignorePokemon)
     {
-        List<Pokemon> pokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> pokemon = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < pokemonOnField.Count; i++)
         {
             if (!string.IsNullOrEmpty(pokemonOnField[i].bProps.snatchMove))
@@ -8341,16 +8342,16 @@ public class Battle
     }
 
     // Moves: Call other moves
-    public string GetNaturePowerMove(Pokemon pokemon)
+    public string GetNaturePowerMove(PBS.Main.Pokemon.Pokemon pokemon)
     {
         // TODO: Nature Power
         string naturePowerMove = null;
 
         // Move based on terrain
-        EffectDatabase.StatusBTLEff.BattleSE terrain_ = terrain.data.GetEffectNew(BattleSEType.Terrain);
+        PBS.Databases.Effects.BattleStatuses.BattleSE terrain_ = terrain.data.GetEffectNew(BattleSEType.Terrain);
         if (terrain_ != null)
         {
-            EffectDatabase.StatusBTLEff.Terrain terrainEffect = terrain_ as EffectDatabase.StatusBTLEff.Terrain;
+            PBS.Databases.Effects.BattleStatuses.Terrain terrainEffect = terrain_ as PBS.Databases.Effects.BattleStatuses.Terrain;
             if (!string.IsNullOrEmpty(terrainEffect.naturePowerMove))
             {
                 return terrainEffect.naturePowerMove;
@@ -8366,7 +8367,7 @@ public class Battle
     }
     
     
-    public List<string> GetPokemonAssistMoves(Pokemon pokemon)
+    public List<string> GetPokemonAssistMoves(PBS.Main.Pokemon.Pokemon pokemon)
     {
         List<string> moves = new List<string>();
         Team team = GetTeam(pokemon);
@@ -8382,7 +8383,7 @@ public class Battle
                         if (moveslots[j] != null)
                         {
                             // Check Assist Validity
-                            MoveData moveData = MoveDatabase.instance.GetMoveData(moveslots[j].moveID);
+                            MoveData moveData = Moves.instance.GetMoveData(moveslots[j].moveID);
                             if (!moves.Contains(moveData.ID)
                                 && !moveData.HasTag(MoveTag.UncallableByAssist)
                                 && !moveData.HasTag(MoveTag.ZMove))
@@ -8396,18 +8397,18 @@ public class Battle
         }
         return moves;
     }
-    public List<string> GetMetronomeMoves(Pokemon pokemon)
+    public List<string> GetMetronomeMoves(PBS.Main.Pokemon.Pokemon pokemon)
     {
-        List<string> moves = MoveDatabase.instance.GetMetronomeMoves();
+        List<string> moves = Moves.instance.GetMetronomeMoves();
         return moves;
     }
-    public List<string> GetPokemonSleepTalkMoves(Pokemon pokemon)
+    public List<string> GetPokemonSleepTalkMoves(PBS.Main.Pokemon.Pokemon pokemon)
     {
         List<string> moves = new List<string>();
         List<Moveslot> moveslots = GetPokemonBattleMoveslots(pokemon);
         for (int i = 0; i < moveslots.Count; i++)
         {
-            MoveData moveData = MoveDatabase.instance.GetMoveData(moveslots[i].moveID);
+            MoveData moveData = Moves.instance.GetMoveData(moveslots[i].moveID);
             if (!moveData.HasTag(MoveTag.UncallableCommon)
                 && !moveData.HasTag(MoveTag.UncallableBySleepTalk)
                 && !moveData.HasTag(MoveTag.ZMove))
@@ -8418,20 +8419,20 @@ public class Battle
         return moves;
     }
     public List<BattlePosition> GetRedirectionTargets(
-        Pokemon userPokemon,
+        PBS.Main.Pokemon.Pokemon userPokemon,
         MoveData moveData,
         MoveTargetType overwriteTarget = MoveTargetType.None,
         bool stopAtFirst = true)
     {
         List<BattlePosition> positions = new List<BattlePosition>();
-        List<Pokemon> fastestPokemon = GetPokemonBySpeed(pokemonOnField);
+        List<PBS.Main.Pokemon.Pokemon> fastestPokemon = GetPokemonBySpeed(pokemonOnField);
 
         // Set ability bypass if possible
         bool bypassAbility = false;
         // Mold Breaker bypasses ability immunities
         if (!bypassAbility)
         {
-            EffectDatabase.AbilityEff.AbilityEffect moldBreakerEffect =
+            PBS.Databases.Effects.Abilities.AbilityEffect moldBreakerEffect =
                 PBPGetAbilityEffect(userPokemon, AbilityEffectType.MoldBreaker);
             if (moldBreakerEffect != null)
             {
@@ -8439,7 +8440,7 @@ public class Battle
             }
 
             // Sunsteel Strike bypasses ability immunities
-            EffectDatabase.MoveEff.MoveEffect effect = moveData.GetEffectNew(MoveEffectType.SunteelStrike);
+            PBS.Databases.Effects.Moves.MoveEffect effect = moveData.GetEffectNew(MoveEffectType.SunteelStrike);
             if (effect != null)
             {
                 bypassAbility = true;
@@ -8448,7 +8449,7 @@ public class Battle
 
         for (int i = 0; i < fastestPokemon.Count; i++)
         {
-            Pokemon candidate = fastestPokemon[i];
+            PBS.Main.Pokemon.Pokemon candidate = fastestPokemon[i];
             if (userPokemon != candidate)
             {
                 bool redirected = false;
@@ -8484,17 +8485,17 @@ public class Battle
         return positions;
     }
     public List<BattlePosition> GetFollowMeTargets(
-        Pokemon userPokemon,
+        PBS.Main.Pokemon.Pokemon userPokemon,
         MoveData moveData,
         MoveTargetType overwriteTarget = MoveTargetType.None,
         bool stopAtFirst = true)
     {
         List<BattlePosition> positions = new List<BattlePosition>();
 
-        List<Pokemon> fastestPokemon = GetPokemonBySpeed(pokemonOnField);
+        List<PBS.Main.Pokemon.Pokemon> fastestPokemon = GetPokemonBySpeed(pokemonOnField);
         for (int i = 0; i < fastestPokemon.Count; i++)
         {
-            Pokemon candidate = fastestPokemon[i];
+            PBS.Main.Pokemon.Pokemon candidate = fastestPokemon[i];
             if (ArePokemonEnemies(userPokemon, candidate)
                 && !IsPokemonFainted(candidate)
                 && candidate.bProps.isCenterOfAttention)
@@ -8516,12 +8517,12 @@ public class Battle
 
     
     // Status Conditions
-    public List<StatusCondition> GetPokemonStatusConditions(Pokemon pokemon)
+    public List<StatusCondition> GetPokemonStatusConditions(PBS.Main.Pokemon.Pokemon pokemon)
     {
         List<StatusCondition> conditions = pokemon.GetAllStatusConditions();
         return conditions;
     }
-    public List<StatusCondition> GetAllPokemonFilteredStatus(Pokemon pokemon, PokemonSEType effect)
+    public List<StatusCondition> GetAllPokemonFilteredStatus(PBS.Main.Pokemon.Pokemon pokemon, PokemonSEType effect)
     {
         List<StatusCondition> conditions = new List<StatusCondition>();
         List<StatusCondition> allConditions = GetPokemonStatusConditions(pokemon);
@@ -8534,7 +8535,7 @@ public class Battle
         }
         return conditions;
     }
-    public StatusCondition GetPokemonFilteredStatus(Pokemon pokemon, PokemonSEType effect)
+    public StatusCondition GetPokemonFilteredStatus(PBS.Main.Pokemon.Pokemon pokemon, PokemonSEType effect)
     {
         List<StatusCondition> conditions = GetAllPokemonFilteredStatus(pokemon, effect);
         if (conditions.Count > 0)
@@ -8543,7 +8544,7 @@ public class Battle
         }
         return null;
     }
-    public void AdvanceStatusTurns(Pokemon pokemon, PokemonSTag filterTag)
+    public void AdvanceStatusTurns(PBS.Main.Pokemon.Pokemon pokemon, PokemonSTag filterTag)
     {
         List<StatusCondition> statusConditions = GetPokemonStatusConditions(pokemon);
         for (int i = 0; i < statusConditions.Count; i++)
@@ -8555,14 +8556,14 @@ public class Battle
             }
         }
     }
-    public void AdvanceStatusTurns(Pokemon pokemon, StatusCondition condition)
+    public void AdvanceStatusTurns(PBS.Main.Pokemon.Pokemon pokemon, StatusCondition condition)
     {
         if (condition.turnsLeft > 0)
         {
             condition.turnsLeft--;
         }
     }
-    public void HealStatusCondition(Pokemon pokemon, StatusCondition condition)
+    public void HealStatusCondition(PBS.Main.Pokemon.Pokemon pokemon, StatusCondition condition)
     {
         if (condition.data.HasTag(PokemonSTag.NonVolatile)
             && pokemon.nonVolatileStatus.statusID == condition.statusID)
@@ -8572,7 +8573,7 @@ public class Battle
         pokemon.RemoveStatusCondition(condition.statusID);
     }
 
-    public StatusCondition GetConfusionStatusCondition(Pokemon pokemon)
+    public StatusCondition GetConfusionStatusCondition(PBS.Main.Pokemon.Pokemon pokemon)
     {
         List<StatusCondition> conditions = GetPokemonStatusConditions(pokemon);
         for (int i = 0; i < conditions.Count; i++)
@@ -8585,7 +8586,7 @@ public class Battle
         }
         return null;
     }
-    public StatusCondition GetDisableStatusCondition(Pokemon pokemon)
+    public StatusCondition GetDisableStatusCondition(PBS.Main.Pokemon.Pokemon pokemon)
     {
         List<StatusCondition> conditions = GetPokemonStatusConditions(pokemon);
         for (int i = 0; i < conditions.Count; i++)
@@ -8598,7 +8599,7 @@ public class Battle
         }
         return null;
     }
-    public StatusCondition GetTrapStatusCondition(Pokemon pokemon)
+    public StatusCondition GetTrapStatusCondition(PBS.Main.Pokemon.Pokemon pokemon)
     {
         List<StatusCondition> conditions = GetPokemonStatusConditions(pokemon);
         for (int i = 0; i < conditions.Count; i++)
@@ -8612,9 +8613,9 @@ public class Battle
         return null;
     }
 
-    public StatusCondition ApplyStatusCondition(Pokemon pokemon, string statusID, int turnsLeft = -1)
+    public StatusCondition ApplyStatusCondition(PBS.Main.Pokemon.Pokemon pokemon, string statusID, int turnsLeft = -1)
     {
-        StatusPKData statusData = StatusPKDatabase.instance.GetStatusData(statusID);
+        StatusPKData statusData = PokemonStatuses.instance.GetStatusData(statusID);
         StatusCondition condition = new StatusCondition(
             statusID: statusID,
             turnsLeft: turnsLeft
@@ -8697,7 +8698,7 @@ public class Battle
     }
     public TeamCondition ApplyTeamSC(Team team, string statusID, int turnsLeft = -1)
     {
-        StatusTEData statusData = StatusTEDatabase.instance.GetStatusData(statusID);
+        StatusTEData statusData = TeamStatuses.instance.GetStatusData(statusID);
         TeamCondition condition = new TeamCondition(
             statusID: statusID,
             turnsLeft: turnsLeft
@@ -8811,7 +8812,7 @@ public class Battle
 
     public BattleCondition InflictBattleSC(string statusID, int turnsLeft = -1)
     {
-        StatusBTLData statusData = StatusBTLDatabase.instance.GetStatusData(statusID);
+        StatusBTLData statusData = BattleStatuses.instance.GetStatusData(statusID);
         BattleCondition condition = new BattleCondition(
             statusID: statusID,
             turnsLeft: turnsLeft
@@ -8858,9 +8859,9 @@ public class Battle
 
     // Effects
     public bool DoesEffectFilterPass(
-        EffectDatabase.Filter.FilterEffect effect_,
-        Pokemon userPokemon = null,
-        Pokemon targetPokemon = null,
+        PBS.Databases.Effects.Filter.FilterEffect effect_,
+        PBS.Main.Pokemon.Pokemon userPokemon = null,
+        PBS.Main.Pokemon.Pokemon targetPokemon = null,
         Team targetTeam = null,
         MoveData moveData = null,
         AbilityData abilityData = null,
@@ -8880,21 +8881,21 @@ public class Battle
         if (effect_.effectType == FilterEffectType.BurningJealousy)
         {
             success = false;
-            EffectDatabase.Filter.BurningJealousy burningJealousy = effect_ as EffectDatabase.Filter.BurningJealousy;
-            if (burningJealousy.targetType == EffectDatabase.Filter.BurningJealousy.TargetType.Self
+            PBS.Databases.Effects.Filter.BurningJealousy burningJealousy = effect_ as PBS.Databases.Effects.Filter.BurningJealousy;
+            if (burningJealousy.targetType == PBS.Databases.Effects.Filter.BurningJealousy.TargetType.Self
                 && userPokemon != null)
             {
                 success = burningJealousy.DoesPokemonPassStatCheck(userPokemon);
             }
-            else if (burningJealousy.targetType == EffectDatabase.Filter.BurningJealousy.TargetType.Target
+            else if (burningJealousy.targetType == PBS.Databases.Effects.Filter.BurningJealousy.TargetType.Target
                 && targetPokemon != null)
             {
                 success = burningJealousy.DoesPokemonPassStatCheck(targetPokemon);
             }
-            else if (burningJealousy.targetType == EffectDatabase.Filter.BurningJealousy.TargetType.AllyTeam
+            else if (burningJealousy.targetType == PBS.Databases.Effects.Filter.BurningJealousy.TargetType.AllyTeam
                 && userPokemon != null)
             {
-                List<Pokemon> teamPokemon = GetAllyPokemon(userPokemon);
+                List<PBS.Main.Pokemon.Pokemon> teamPokemon = GetAllyPokemon(userPokemon);
                 teamPokemon.Add(userPokemon);
                 for (int i = 0; i < teamPokemon.Count; i++)
                 {
@@ -8905,10 +8906,10 @@ public class Battle
                     }
                 }
             }
-            else if (burningJealousy.targetType == EffectDatabase.Filter.BurningJealousy.TargetType.TargetTeam
+            else if (burningJealousy.targetType == PBS.Databases.Effects.Filter.BurningJealousy.TargetType.TargetTeam
                 && targetTeam != null)
             {
-                List<Pokemon> teamPokemon = GetTeamPokemonOnField(targetTeam);
+                List<PBS.Main.Pokemon.Pokemon> teamPokemon = GetTeamPokemonOnField(targetTeam);
                 for (int i = 0; i < teamPokemon.Count; i++)
                 {
                     if (burningJealousy.DoesPokemonPassStatCheck(teamPokemon[i]))
@@ -8923,15 +8924,15 @@ public class Battle
         else if (effect_.effectType == FilterEffectType.Harvest)
         {
             success = false;
-            EffectDatabase.Filter.Harvest harvest = effect_ as EffectDatabase.Filter.Harvest;
-            if (harvest.conditionType == EffectDatabase.Filter.Harvest.ConditionType.Battle)
+            PBS.Databases.Effects.Filter.Harvest harvest = effect_ as PBS.Databases.Effects.Filter.Harvest;
+            if (harvest.conditionType == PBS.Databases.Effects.Filter.Harvest.ConditionType.Battle)
             {
                 if (BBPGetSCs(harvest).Count > 0)
                 {
                     success = true;
                 }
             }
-            else if (harvest.conditionType == EffectDatabase.Filter.Harvest.ConditionType.Team
+            else if (harvest.conditionType == PBS.Databases.Effects.Filter.Harvest.ConditionType.Team
                 && targetTeam != null)
 
             {
@@ -8940,7 +8941,7 @@ public class Battle
                     success = true;
                 }
             }
-            else if (harvest.conditionType == EffectDatabase.Filter.Harvest.ConditionType.Pokemon
+            else if (harvest.conditionType == PBS.Databases.Effects.Filter.Harvest.ConditionType.Pokemon
                 && targetPokemon != null)
             {
                 if (PBPGetSCs(targetPokemon, harvest).Count > 0)
@@ -8952,14 +8953,14 @@ public class Battle
         // Item Check
         else if (effect_.effectType == FilterEffectType.ItemCheck && item != null)
         {
-            EffectDatabase.Filter.ItemCheck itemCheck = effect_ as EffectDatabase.Filter.ItemCheck;
+            PBS.Databases.Effects.Filter.ItemCheck itemCheck = effect_ as PBS.Databases.Effects.Filter.ItemCheck;
             success = itemCheck.DoesItemPassFilter(item);
         }
         // Move Check
         else if (effect_.effectType == FilterEffectType.MoveCheck && moveData != null)
         {
             success = true;
-            EffectDatabase.Filter.MoveCheck moveCheck = effect_ as EffectDatabase.Filter.MoveCheck;
+            PBS.Databases.Effects.Filter.MoveCheck moveCheck = effect_ as PBS.Databases.Effects.Filter.MoveCheck;
             
             // Specific Moves
             if (success && moveCheck.specificMoveIDs.Count > 0)
@@ -9038,18 +9039,18 @@ public class Battle
         else if (effect_.effectType == FilterEffectType.PollenPuff && userPokemon != null && targetPokemon != null)
         {
             success = false;
-            EffectDatabase.Filter.PollenPuff pollenPuff = effect_ as EffectDatabase.Filter.PollenPuff;
-            if (pollenPuff.targetTypes.Contains(EffectDatabase.Filter.PollenPuff.TargetType.Self)
+            PBS.Databases.Effects.Filter.PollenPuff pollenPuff = effect_ as PBS.Databases.Effects.Filter.PollenPuff;
+            if (pollenPuff.targetTypes.Contains(PBS.Databases.Effects.Filter.PollenPuff.TargetType.Self)
                 && userPokemon.IsTheSameAs(targetPokemon))
             {
                 success = true;
             }
-            else if (pollenPuff.targetTypes.Contains(EffectDatabase.Filter.PollenPuff.TargetType.Ally)
+            else if (pollenPuff.targetTypes.Contains(PBS.Databases.Effects.Filter.PollenPuff.TargetType.Ally)
                 && ArePokemonAllies(userPokemon, targetPokemon))
             {
                 success = true;
             }
-            else if (pollenPuff.targetTypes.Contains(EffectDatabase.Filter.PollenPuff.TargetType.Enemy)
+            else if (pollenPuff.targetTypes.Contains(PBS.Databases.Effects.Filter.PollenPuff.TargetType.Enemy)
                 && ArePokemonEnemies(userPokemon, targetPokemon))
             {
                 success = true;
@@ -9059,9 +9060,9 @@ public class Battle
         else if (effect_.effectType == FilterEffectType.TypeList)
         {
             success = false;
-            EffectDatabase.Filter.TypeList typeList = effect_ as EffectDatabase.Filter.TypeList;
+            PBS.Databases.Effects.Filter.TypeList typeList = effect_ as PBS.Databases.Effects.Filter.TypeList;
             // Pokemon
-            if (typeList.targetType == EffectDatabase.Filter.TypeList.TargetType.Pokemon && targetPokemon != null)
+            if (typeList.targetType == PBS.Databases.Effects.Filter.TypeList.TargetType.Pokemon && targetPokemon != null)
             {
                 List<string> pokemonTypes = PBPGetTypes(targetPokemon);
                 for (int i = 0; i < pokemonTypes.Count; i++)
@@ -9078,7 +9079,7 @@ public class Battle
                 }
             }
             // Move
-            else if (typeList.targetType == EffectDatabase.Filter.TypeList.TargetType.Move && moveData != null)
+            else if (typeList.targetType == PBS.Databases.Effects.Filter.TypeList.TargetType.Move && moveData != null)
             {
                 if (AreTypesContained(containerTypes: typeList.types, checkType: moveData.moveType))
                 {
@@ -9093,9 +9094,9 @@ public class Battle
         return success;
     }
     public bool DoEffectFiltersPass(
-        List<EffectDatabase.Filter.FilterEffect> filters,
-        Pokemon userPokemon = null,
-        Pokemon targetPokemon = null,
+        List<PBS.Databases.Effects.Filter.FilterEffect> filters,
+        PBS.Main.Pokemon.Pokemon userPokemon = null,
+        PBS.Main.Pokemon.Pokemon targetPokemon = null,
         Team targetTeam = null,
         MoveData moveData = null,
         AbilityData abilityData = null,
@@ -9120,10 +9121,10 @@ public class Battle
     }
 
     public bool DoesMoveEffectFiltersPass(
-        EffectDatabase.MoveEff.MoveEffect effect,
+        PBS.Databases.Effects.Moves.MoveEffect effect,
         MoveData moveData,
-        Pokemon userPokemon = null,
-        Pokemon targetPokemon = null,
+        PBS.Main.Pokemon.Pokemon userPokemon = null,
+        PBS.Main.Pokemon.Pokemon targetPokemon = null,
         Team targetTeam = null
         )
     {
@@ -9136,9 +9137,9 @@ public class Battle
             );
     }
     public bool DoesPokemonSEFiltersPass(
-        EffectDatabase.StatusPKEff.PokemonSE effect,
-        Pokemon userPokemon = null,
-        Pokemon targetPokemon = null,
+        PBS.Databases.Effects.PokemonStatuses.PokemonSE effect,
+        PBS.Main.Pokemon.Pokemon userPokemon = null,
+        PBS.Main.Pokemon.Pokemon targetPokemon = null,
         Team targetTeam = null
         )
     {
@@ -9157,9 +9158,9 @@ public class Battle
         return true;
     }
     public bool DoesTeamSEFiltersPass(
-        EffectDatabase.StatusTEEff.TeamSE effect,
-        Pokemon userPokemon = null,
-        Pokemon targetPokemon = null,
+        PBS.Databases.Effects.TeamStatuses.TeamSE effect,
+        PBS.Main.Pokemon.Pokemon userPokemon = null,
+        PBS.Main.Pokemon.Pokemon targetPokemon = null,
         Team targetTeam = null
         )
     {
@@ -9178,9 +9179,9 @@ public class Battle
         return true;
     }
     public bool DoesBattleEFiltersPass(
-        EffectDatabase.StatusBTLEff.BattleSE effect,
-        Pokemon userPokemon = null,
-        Pokemon targetPokemon = null,
+        PBS.Databases.Effects.BattleStatuses.BattleSE effect,
+        PBS.Main.Pokemon.Pokemon userPokemon = null,
+        PBS.Main.Pokemon.Pokemon targetPokemon = null,
         Team targetTeam = null
         )
     {
@@ -9199,7 +9200,7 @@ public class Battle
         return true;
     }
 
-    public bool CanApplyMoveEffect(Pokemon userPokemon, Pokemon targetPokemon, MoveData moveData, MoveEffect effect)
+    public bool CanApplyMoveEffect(PBS.Main.Pokemon.Pokemon userPokemon, PBS.Main.Pokemon.Pokemon targetPokemon, MoveData moveData, MoveEffect effect)
     {
         if (effect.HasFilter(MoveEffectFilter.AlliesOnly) && !ArePokemonAllies(userPokemon, targetPokemon))
         {
@@ -9215,8 +9216,8 @@ public class Battle
     public bool DoesMoveEffectPassChance(
         MoveEffect effect,
         MoveData moveData,
-        Pokemon userPokemon = null,
-        Pokemon targetPokemon = null,
+        PBS.Main.Pokemon.Pokemon userPokemon = null,
+        PBS.Main.Pokemon.Pokemon targetPokemon = null,
         Team targetTeam = null,
         float startChance = 0)
     {
@@ -9248,10 +9249,10 @@ public class Battle
     }
 
     public bool DoesMoveEffectPassChecks(
-        EffectDatabase.MoveEff.MoveEffect effect,
+        PBS.Databases.Effects.Moves.MoveEffect effect,
         MoveData moveData,
-        Pokemon userPokemon = null,
-        Pokemon targetPokemon = null,
+        PBS.Main.Pokemon.Pokemon userPokemon = null,
+        PBS.Main.Pokemon.Pokemon targetPokemon = null,
         Team targetTeam = null,
         float startChance = 0)
     {
@@ -9267,7 +9268,7 @@ public class Battle
             return false;
         }
         // Sheer Force Check
-        EffectDatabase.AbilityEff.AbilityEffect sheerForce_ = 
+        PBS.Databases.Effects.Abilities.AbilityEffect sheerForce_ = 
             PBPGetAbilityEffect(userPokemon, AbilityEffectType.SheerForce);
         if (sheerForce_ != null)
         {
@@ -9283,12 +9284,12 @@ public class Battle
         }
 
         // Shield Dust
-        List<EffectDatabase.AbilityEff.AbilityEffect> shieldDust_ =
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> shieldDust_ =
             PBPGetAbilityEffects(targetPokemon, AbilityEffectType.ShieldDust);
         for (int i = 0; i < shieldDust_.Count; i++)
         {
-            EffectDatabase.AbilityEff.ShieldDust shieldDust =
-                shieldDust_[i] as EffectDatabase.AbilityEff.ShieldDust;
+            PBS.Databases.Effects.Abilities.ShieldDust shieldDust =
+                shieldDust_[i] as PBS.Databases.Effects.Abilities.ShieldDust;
             if (DoEffectFiltersPass(
                 filters: shieldDust.filters,
                 userPokemon: userPokemon,
@@ -9322,12 +9323,12 @@ public class Battle
         }
 
         // Serene Grace
-        List<EffectDatabase.AbilityEff.AbilityEffect> sereneGrace_ =
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> sereneGrace_ =
             PBPGetAbilityEffects(userPokemon, AbilityEffectType.SereneGrace);
         for (int i = 0; i < sereneGrace_.Count; i++)
         {
-            EffectDatabase.AbilityEff.SereneGrace sereneGrace =
-                sereneGrace_[i] as EffectDatabase.AbilityEff.SereneGrace;
+            PBS.Databases.Effects.Abilities.SereneGrace sereneGrace =
+                sereneGrace_[i] as PBS.Databases.Effects.Abilities.SereneGrace;
             if (DoEffectFiltersPass(
                 filters: sereneGrace.filters,
                 userPokemon: userPokemon,
@@ -9345,8 +9346,8 @@ public class Battle
     public bool DoesStatusEffectPassChance(
         PokemonCEff effect,
         StatusCondition condition,
-        Pokemon userPokemon = null,
-        Pokemon targetPokemon = null,
+        PBS.Main.Pokemon.Pokemon userPokemon = null,
+        PBS.Main.Pokemon.Pokemon targetPokemon = null,
         float startChance = 0)
     {
         float chance = 1f;
@@ -9376,7 +9377,7 @@ public class Battle
     }
 
     // Items
-    public Item GetPokemonItem(Pokemon pokemon, string itemID)
+    public Item GetPokemonItem(PBS.Main.Pokemon.Pokemon pokemon, string itemID)
     {
         Item item = PBPGetHeldItem(pokemon);
         if (item != null)
@@ -9388,7 +9389,7 @@ public class Battle
         }
         return null;
     }
-    public Item PBPGetHeldItem(Pokemon pokemon)
+    public Item PBPGetHeldItem(PBS.Main.Pokemon.Pokemon pokemon)
     {
         List<Item> items = PBPGetHeldItems(pokemon);
         if (items.Count > 0)
@@ -9397,7 +9398,7 @@ public class Battle
         }
         return null;
     }
-    public List<Item> PBPGetHeldItems(Pokemon pokemon)
+    public List<Item> PBPGetHeldItems(PBS.Main.Pokemon.Pokemon pokemon)
     {
         List<Item> items = new List<Item>();
         if (pokemon.item != null)
@@ -9406,11 +9407,11 @@ public class Battle
         }
         return items;
     }
-    public void PBPConsumeItem(Pokemon pokemon, Item item)
+    public void PBPConsumeItem(PBS.Main.Pokemon.Pokemon pokemon, Item item)
     {
         pokemon.UnsetItem(item);
     }
-    public Item GetPokemonItemFiltered(Pokemon pokemon, ItemEffectType effect)
+    public Item GetPokemonItemFiltered(PBS.Main.Pokemon.Pokemon pokemon, ItemEffectType effect)
     {
         Item item = PBPGetHeldItem(pokemon);
         if (item != null)
@@ -9425,18 +9426,18 @@ public class Battle
         }
         return null;
     }
-    public EffectDatabase.ItemEff.ItemEffect PBPGetItemEffect(Pokemon pokemon, ItemEffectType effectType)
+    public PBS.Databases.Effects.Items.ItemEffect PBPGetItemEffect(PBS.Main.Pokemon.Pokemon pokemon, ItemEffectType effectType)
     {
-        List<EffectDatabase.ItemEff.ItemEffect> effects = PBPGetItemEffects(pokemon, effectType);
+        List<PBS.Databases.Effects.Items.ItemEffect> effects = PBPGetItemEffects(pokemon, effectType);
         if (effects.Count > 0)
         {
             return effects[0];
         }
         return null;
     }
-    public List<EffectDatabase.ItemEff.ItemEffect> PBPGetItemEffects(Pokemon pokemon, ItemEffectType effectType)
+    public List<PBS.Databases.Effects.Items.ItemEffect> PBPGetItemEffects(PBS.Main.Pokemon.Pokemon pokemon, ItemEffectType effectType)
     {
-        List<EffectDatabase.ItemEff.ItemEffect> effects = new List<EffectDatabase.ItemEff.ItemEffect>();
+        List<PBS.Databases.Effects.Items.ItemEffect> effects = new List<PBS.Databases.Effects.Items.ItemEffect>();
         Item item = PBPGetHeldItem(pokemon);
         if (item != null)
         {
@@ -9447,7 +9448,7 @@ public class Battle
         }
         return effects;
     }
-    public Item PBPGetItemWithEffect(Pokemon pokemon, ItemEffectType effectType)
+    public Item PBPGetItemWithEffect(PBS.Main.Pokemon.Pokemon pokemon, ItemEffectType effectType)
     {
         List<Item> items = PBPGetItemsWithEffect(pokemon, effectType);
         if (items.Count > 0)
@@ -9456,7 +9457,7 @@ public class Battle
         }
         return null;
     }
-    public List<Item> PBPGetItemsWithEffect(Pokemon pokemon, ItemEffectType effectType)
+    public List<Item> PBPGetItemsWithEffect(PBS.Main.Pokemon.Pokemon pokemon, ItemEffectType effectType)
     {
         List<Item> items = new List<Item>();
         List<Item> heldItems = PBPGetHeldItems(pokemon);
@@ -9472,7 +9473,7 @@ public class Battle
         }
         return items;
     }
-    public ItemEffect GetPokemonItemEffect(Pokemon pokemon, ItemEffectType effectType)
+    public ItemEffect GetPokemonItemEffect(PBS.Main.Pokemon.Pokemon pokemon, ItemEffectType effectType)
     {
         List<ItemEffect> itemEffects = GetPokemonItemEffects(pokemon, effectType);
         if (itemEffects.Count > 0)
@@ -9481,7 +9482,7 @@ public class Battle
         }
         return null;
     }
-    public List<ItemEffect> GetPokemonItemEffects(Pokemon pokemon, ItemEffectType effectType)
+    public List<ItemEffect> GetPokemonItemEffects(PBS.Main.Pokemon.Pokemon pokemon, ItemEffectType effectType)
     {
         List<ItemEffect> itemEffects = new List<ItemEffect>();
 
@@ -9495,7 +9496,7 @@ public class Battle
         }
         return itemEffects;
     }
-    public bool CanPokemonUseItem(Pokemon pokemon, Item item)
+    public bool CanPokemonUseItem(PBS.Main.Pokemon.Pokemon pokemon, Item item)
     {
         bool canUse = true;
         if (canUse && !item.useable)
@@ -9506,10 +9507,10 @@ public class Battle
         // Klutz
         if (canUse && !item.data.HasTag(ItemTag.BypassKlutz))
         {
-            List<EffectDatabase.AbilityEff.AbilityEffect> klutz_ = PBPGetAbilityEffects(pokemon, AbilityEffectType.Klutz);
+            List<PBS.Databases.Effects.Abilities.AbilityEffect> klutz_ = PBPGetAbilityEffects(pokemon, AbilityEffectType.Klutz);
             for (int i = 0; i < klutz_.Count && canUse; i++)
             {
-                EffectDatabase.AbilityEff.Klutz klutz = klutz_[i] as EffectDatabase.AbilityEff.Klutz;
+                PBS.Databases.Effects.Abilities.Klutz klutz = klutz_[i] as PBS.Databases.Effects.Abilities.Klutz;
                 if (DoEffectFiltersPass(
                     filters: klutz.filters,
                     userPokemon: pokemon,
@@ -9527,10 +9528,10 @@ public class Battle
         {
             if (BBPIsPokemonAffectedByBSC(pokemon, magicRoom))
             {
-                EffectDatabase.StatusBTLEff.BattleSE magicRoom_ = magicRoom.data.GetEffectNew(BattleSEType.MagicRoom);
+                PBS.Databases.Effects.BattleStatuses.BattleSE magicRoom_ = magicRoom.data.GetEffectNew(BattleSEType.MagicRoom);
                 if (magicRoom_ != null)
                 {
-                    EffectDatabase.StatusBTLEff.MagicRoom magicRoomEffect = magicRoom_ as EffectDatabase.StatusBTLEff.MagicRoom;
+                    PBS.Databases.Effects.BattleStatuses.MagicRoom magicRoomEffect = magicRoom_ as PBS.Databases.Effects.BattleStatuses.MagicRoom;
                     if (magicRoomEffect.suppressItems)
                     {
                         canUse = false;
@@ -9550,7 +9551,7 @@ public class Battle
 
         return canUse;
     }
-    public bool CanPokemonItemBeLost(Pokemon pokemon)
+    public bool CanPokemonItemBeLost(PBS.Main.Pokemon.Pokemon pokemon)
     {
         Item item = PBPGetHeldItem(pokemon);
         if (item != null)
@@ -9559,7 +9560,7 @@ public class Battle
         }
         return false;
     } 
-    public bool CanPokemonItemBeLost(Pokemon pokemon, Item item)
+    public bool CanPokemonItemBeLost(PBS.Main.Pokemon.Pokemon pokemon, Item item)
     {
         // Arceus / Genesect / Giratina / Silvally / etc.
         if (item.data.GetEffectNew(ItemEffectType.GriseousOrb) != null)
@@ -9571,18 +9572,18 @@ public class Battle
         }
 
         // Z-Crystals
-        EffectDatabase.ItemEff.ItemEffect zCrystal_ = item.data.GetEffectNew(ItemEffectType.ZCrystal);
-        EffectDatabase.ItemEff.ItemEffect zCrystalSignature_ = item.data.GetEffectNew(ItemEffectType.ZCrystalSignature);
+        PBS.Databases.Effects.Items.ItemEffect zCrystal_ = item.data.GetEffectNew(ItemEffectType.ZCrystal);
+        PBS.Databases.Effects.Items.ItemEffect zCrystalSignature_ = item.data.GetEffectNew(ItemEffectType.ZCrystalSignature);
         if (zCrystal_ != null || zCrystalSignature_ != null)
         {
             return false;
         }
 
         // Sticky Hold
-        List<EffectDatabase.AbilityEff.AbilityEffect> stickyHold_ = PBPGetAbilityEffects(pokemon, AbilityEffectType.StickyHold);
+        List<PBS.Databases.Effects.Abilities.AbilityEffect> stickyHold_ = PBPGetAbilityEffects(pokemon, AbilityEffectType.StickyHold);
         for (int i = 0; i < stickyHold_.Count; i++)
         {
-            EffectDatabase.AbilityEff.StickyHold stickyHold = stickyHold_[i] as EffectDatabase.AbilityEff.StickyHold;
+            PBS.Databases.Effects.Abilities.StickyHold stickyHold = stickyHold_[i] as PBS.Databases.Effects.Abilities.StickyHold;
             if (DoEffectFiltersPass(
                 filters: stickyHold.filters,
                 targetPokemon: pokemon,
@@ -9595,7 +9596,7 @@ public class Battle
 
         return true;
     }
-    public bool CanPokemonItemBeGained(Pokemon pokemon, Item item)
+    public bool CanPokemonItemBeGained(PBS.Main.Pokemon.Pokemon pokemon, Item item)
     {
         // Check if already held item is unusable
         Item heldItem = PBPGetHeldItem(pokemon);
@@ -9620,7 +9621,7 @@ public class Battle
 
         return true;
     }
-    public bool CanPokemonSwapItems(Pokemon pokemon1, Item item1, Pokemon pokemon2, Item item2)
+    public bool CanPokemonSwapItems(PBS.Main.Pokemon.Pokemon pokemon1, Item item1, PBS.Main.Pokemon.Pokemon pokemon2, Item item2)
     {
         if (item1 == null && item2 == null)
         {
@@ -9646,7 +9647,7 @@ public class Battle
         }
         return true;
     }
-    public bool CanPokemonConsumeBerries(Pokemon pokemon)
+    public bool CanPokemonConsumeBerries(PBS.Main.Pokemon.Pokemon pokemon)
     {
         bool canConsume = true;
 
@@ -9669,9 +9670,9 @@ public class Battle
 
         return canConsume;
     }
-    public bool CanPokemonUseFormChangeItem(Pokemon pokemon, Item item)
+    public bool CanPokemonUseFormChangeItem(PBS.Main.Pokemon.Pokemon pokemon, Item item)
     {
-        EffectDatabase.ItemEff.ItemEffect itemEffect =
+        PBS.Databases.Effects.Items.ItemEffect itemEffect =
             PBPGetItemFormChangeEffect(pokemon, item);
         if (itemEffect != null)
         {
@@ -9679,14 +9680,14 @@ public class Battle
         }
         return false;
     }
-    public EffectDatabase.ItemEff.ItemEffect PBPGetItemFormChangeEffect(Pokemon pokemon, Item item)
+    public PBS.Databases.Effects.Items.ItemEffect PBPGetItemFormChangeEffect(PBS.Main.Pokemon.Pokemon pokemon, Item item)
     {
-        List<EffectDatabase.ItemEff.ItemEffect> griseousOrbs_ = item.data.GetEffectsNew(ItemEffectType.GriseousOrb);
+        List<PBS.Databases.Effects.Items.ItemEffect> griseousOrbs_ = item.data.GetEffectsNew(ItemEffectType.GriseousOrb);
         for (int i = 0; i < griseousOrbs_.Count; i++)
         {
-            EffectDatabase.ItemEff.GriseousOrb griseousOrb = griseousOrbs_[i] as EffectDatabase.ItemEff.GriseousOrb;
-            PokemonData basePokemonData = PokemonDatabase.instance.GetPokemonData(griseousOrb.baseFormID);
-            PokemonData toPokemonData = PokemonDatabase.instance.GetPokemonData(griseousOrb.formID);
+            PBS.Databases.Effects.Items.GriseousOrb griseousOrb = griseousOrbs_[i] as PBS.Databases.Effects.Items.GriseousOrb;
+            PokemonData basePokemonData = PBS.Databases.Pokemon.instance.GetPokemonData(griseousOrb.baseFormID);
+            PokemonData toPokemonData = PBS.Databases.Pokemon.instance.GetPokemonData(griseousOrb.formID);
 
             // Validate if the pokemon is contained
             if (pokemon.pokemonID == basePokemonData.ID
@@ -9695,7 +9696,7 @@ public class Battle
             {
                 bool canUse = true;
                 // Arceus Plate = Multitype Check
-                if (griseousOrb is EffectDatabase.ItemEff.ArceusPlate)
+                if (griseousOrb is PBS.Databases.Effects.Items.ArceusPlate)
                 {
                     if (PBPGetAbilityEffect(pokemon, AbilityEffectType.Multitype) != null)
                     {
@@ -9704,7 +9705,7 @@ public class Battle
                 }
 
                 // RKS Memory = RKS System Check
-                if (griseousOrb is EffectDatabase.ItemEff.RKSMemory)
+                if (griseousOrb is PBS.Databases.Effects.Items.RKSMemory)
                 {
                     if (PBPGetAbilityEffect(pokemon, AbilityEffectType.RKSSystem) != null)
                     {

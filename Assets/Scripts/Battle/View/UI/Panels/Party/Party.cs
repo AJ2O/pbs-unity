@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Databases;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -87,10 +88,10 @@ namespace PBS.Battle.View.UI.Panels
             button.lvlTxt.text = "Lv." + pokemon.level;
             button.hpTxt.text = pokemon.currentHP + "/" + pokemon.maxHP;
             button.statusTxt.text = (string.IsNullOrEmpty(pokemon.nonVolatileStatus)) ? ""
-                : StatusPKDatabase.instance.GetStatusData(pokemon.nonVolatileStatus).shortName;
+                : PokemonStatuses.instance.GetStatusData(pokemon.nonVolatileStatus).shortName;
 
             // draw icon
-            string drawPath = "pokemonSprites/icon/" + PokemonDatabase.instance.GetPokemonData(pokemon.pokemonID).displayID;
+            string drawPath = "pokemonSprites/icon/" + Pokemon.instance.GetPokemonData(pokemon.pokemonID).displayID;
             button.icon.sprite = BattleAssetLoader.instance.nullPokemonIconSprite;
             if (BattleAssetLoader.instance.loadedPokemonSprites.ContainsKey(drawPath))
             {

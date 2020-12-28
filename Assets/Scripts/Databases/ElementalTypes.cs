@@ -2,30 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TypeDatabase
+namespace PBS.Databases
 {
-    //create an object of SingleObject
-    private static TypeDatabase singleton = new TypeDatabase();
-
-    //make the constructor private so that this class cannot be
-    //instantiated
-    private TypeDatabase() { }
-
-    //Get the only object available
-    public static TypeDatabase instance
+    public class ElementalTypes
     {
-        get
-        {
-            return singleton;
-        }
-        private set
-        {
-            singleton = value;
-        }
-    }
+        //create an object of SingleObject
+        private static ElementalTypes singleton = new ElementalTypes();
 
-    // Database
-    private Dictionary<string, TypeData> database = new Dictionary<string, TypeData>
+        //make the constructor private so that this class cannot be
+        //instantiated
+        private ElementalTypes() { }
+
+        //Get the only object available
+        public static ElementalTypes instance
+        {
+            get
+            {
+                return singleton;
+            }
+            private set
+            {
+                singleton = value;
+            }
+        }
+
+        // Database
+        private Dictionary<string, TypeData> database = new Dictionary<string, TypeData>
     {
         // Null / Placeholder
         {"",
@@ -457,40 +459,41 @@ public class TypeDatabase
                 ) },
     };
 
-    // Methods
-    public TypeData GetTypeData(string ID)
-    {
-        if (database.ContainsKey(ID))
+        // Methods
+        public TypeData GetTypeData(string ID)
         {
-            return database[ID];
-        }
-        Debug.LogWarning("Could not find type with ID: " + ID);
-        return database[""];
-    }
-
-    public List<string> GetAllTypes(bool filterBaseOnly = false)
-    {
-        List<string> allTypes = new List<string>(database.Keys);
-        for (int i = 0; i < allTypes.Count; i++)
-        {
-            TypeData typeData = GetTypeData(allTypes[i]);
-
-            if (string.IsNullOrEmpty(typeData.ID))
+            if (database.ContainsKey(ID))
             {
-                bool removeType = true;
+                return database[ID];
+            }
+            Debug.LogWarning("Could not find type with ID: " + ID);
+            return database[""];
+        }
 
-                if (filterBaseOnly && !string.IsNullOrEmpty(typeData.baseID))
-                {
-                    removeType = false;
-                }
+        public List<string> GetAllTypes(bool filterBaseOnly = false)
+        {
+            List<string> allTypes = new List<string>(database.Keys);
+            for (int i = 0; i < allTypes.Count; i++)
+            {
+                TypeData typeData = GetTypeData(allTypes[i]);
 
-                if (removeType)
+                if (string.IsNullOrEmpty(typeData.ID))
                 {
-                    allTypes.RemoveAt(i);
-                    i--;
+                    bool removeType = true;
+
+                    if (filterBaseOnly && !string.IsNullOrEmpty(typeData.baseID))
+                    {
+                        removeType = false;
+                    }
+
+                    if (removeType)
+                    {
+                        allTypes.RemoveAt(i);
+                        i--;
+                    }
                 }
             }
+            return new List<string>(allTypes);
         }
-        return new List<string>(allTypes);
     }
 }

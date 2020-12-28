@@ -1,4 +1,5 @@
-﻿using PBS.Main.Pokemon;
+﻿using PBS.Databases;
+using PBS.Main.Pokemon;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,7 +26,7 @@ public class BTLUIPanelFight : BTLUIPanel
 
     public void SetMoves(
         Battle battle, 
-        Pokemon pokemon, 
+        PBS.Main.Pokemon.Pokemon pokemon, 
         List<Moveslot> moveList,
         bool canMegaEvolve, bool canZMove = false, bool canDynamax = false,
         bool choosingZMove = false, bool choosingMaxMove = false)
@@ -101,7 +102,7 @@ public class BTLUIPanelFight : BTLUIPanel
     }
     public void SetMoveButton(
         Battle battle, 
-        Pokemon pokemon, 
+        PBS.Main.Pokemon.Pokemon pokemon, 
         Moveslot moveslot,
         BTLUI_ButtonFight moveBtn,
         bool choosingZMove = false, bool choosingMaxMove = false)
@@ -117,7 +118,7 @@ public class BTLUIPanelFight : BTLUIPanel
         }
         if (moveData != null)
         {
-            TypeData typeData = TypeDatabase.instance.GetTypeData(moveData.moveType);
+            TypeData typeData = ElementalTypes.instance.GetTypeData(moveData.moveType);
             Color typeColor = Color.clear;
             ColorUtility.TryParseHtmlString(typeData.typeColor, out typeColor);
 
@@ -198,7 +199,7 @@ public class BTLUIPanelFight : BTLUIPanel
             backBtn.UnselectSelf();
 
             MoveData moveData = selectedBtn.moveData;
-            TypeData typeData = TypeDatabase.instance.GetTypeData(moveData.moveType);
+            TypeData typeData = ElementalTypes.instance.GetTypeData(moveData.moveType);
             Color typeColor = Color.clear;
             ColorUtility.TryParseHtmlString(typeData.typeColor, out typeColor);
             string moveText = "<color=" + typeData.typeColor + ">" + typeData.typeName + "</color>\n";

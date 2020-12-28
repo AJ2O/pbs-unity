@@ -1,4 +1,6 @@
-﻿namespace PBS.Main.Pokemon
+﻿using PBS.Databases;
+
+namespace PBS.Main.Pokemon
 {
     public class Ability
     {
@@ -10,7 +12,7 @@
         {
             get
             {
-                return AbilityDatabase.instance.GetAbilityData(abilityID);
+                return Abilities.instance.GetAbilityData(abilityID);
             }
         }
 

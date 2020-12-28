@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Databases;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -118,12 +119,12 @@ namespace PBS.Battle.View.UI.Panels
         /// <param name="moveBtn">The button to associate.</param>
         public void SetMoveButton(Events.CommandAgent.Moveslot moveslot, FightButton moveBtn)
         {
-            MoveData moveData = MoveDatabase.instance.GetMoveData(moveslot.moveID);
+            MoveData moveData = Moves.instance.GetMoveData(moveslot.moveID);
             moveBtn.moveslot = moveslot;
 
             if (!moveslot.hide)
             {
-                TypeData typeData = TypeDatabase.instance.GetTypeData(moveData.moveType);
+                TypeData typeData = ElementalTypes.instance.GetTypeData(moveData.moveType);
                 Color typeColor;
                 ColorUtility.TryParseHtmlString(typeData.typeColor, out typeColor);
 
@@ -200,8 +201,8 @@ namespace PBS.Battle.View.UI.Panels
                 }
                 else
                 {
-                    MoveData moveData = MoveDatabase.instance.GetMoveData(selectedBtn.moveID);
-                    TypeData typeData = TypeDatabase.instance.GetTypeData(moveData.moveType);
+                    MoveData moveData = Moves.instance.GetMoveData(selectedBtn.moveID);
+                    TypeData typeData = ElementalTypes.instance.GetTypeData(moveData.moveType);
                     Color typeColor = Color.clear;
                     ColorUtility.TryParseHtmlString(typeData.typeColor, out typeColor);
                     string moveText = "<color=" + typeData.typeColor + ">" + typeData.typeName + "</color>\n";

@@ -1,4 +1,5 @@
-﻿using PBS.Main.Pokemon;
+﻿using PBS.Databases;
+using PBS.Main.Pokemon;
 using PBS.Main.Team;
 using PBS.Main.Trainer;
 using System.Collections;
@@ -77,7 +78,7 @@ public class BTLView : MonoBehaviour
     }
 
     public void UpdateViaEvent(
-        List<Pokemon> pokemon
+        List<PBS.Main.Pokemon.Pokemon> pokemon
         )
     {
         for (int i = 0; i < pokemon.Count; i++)
@@ -105,12 +106,12 @@ public class BTLView : MonoBehaviour
         string text = "";
         for (int i = 0; i < battleModel.pokemonOnField.Count; i++)
         {
-            Pokemon pokemon = battleModel.pokemonOnField[i];
+            PBS.Main.Pokemon.Pokemon pokemon = battleModel.pokemonOnField[i];
             double hpPercent = System.Math.Round(battleModel.GetPokemonHPAsPercentage(pokemon), 2);
 
             string typeString = " (Types - ";
             List<string> pokemonTypes = battleModel.PBPGetTypes(pokemon);
-            typeString += GameTextDatabase.ConvertTypesToString(pokemonTypes.ToArray());
+            typeString += GameText.ConvertTypesToString(pokemonTypes.ToArray());
             typeString += ")";
 
             string statusString = " (";
@@ -179,7 +180,7 @@ public class BTLView : MonoBehaviour
     {
         DrawModel();
     }
-    public string Debug_GetPokemonHealth(Pokemon pokemon)
+    public string Debug_GetPokemonHealth(PBS.Main.Pokemon.Pokemon pokemon)
     {
         string hpText = "==========";
         float hpPercent = battleModel.GetPokemonHPAsPercentage(pokemon);
@@ -224,7 +225,7 @@ public class BTLView : MonoBehaviour
         // if wild battle, say you were challenged by pokemon
         if (battleModel.battleSettings.isWildBattle)
         {
-            List<Pokemon> wildPokemon = new List<Pokemon>();
+            List<PBS.Main.Pokemon.Pokemon> wildPokemon = new List<PBS.Main.Pokemon.Pokemon>();
             for (int i = 0; i < enemyTrainers.Count; i++)
             {
                 wildPokemon.AddRange(enemyTrainers[i].party);
@@ -312,11 +313,11 @@ public class BTLView : MonoBehaviour
     }
 
     // Switching Pokemon
-    public IEnumerator SendOutPokemon(Trainer trainer, Pokemon pokemon)
+    public IEnumerator SendOutPokemon(Trainer trainer, PBS.Main.Pokemon.Pokemon pokemon)
     {
-        yield return StartCoroutine(SendOutPokemon(trainer, new List<Pokemon> { pokemon }));
+        yield return StartCoroutine(SendOutPokemon(trainer, new List<PBS.Main.Pokemon.Pokemon> { pokemon }));
     }
-    public IEnumerator SendOutPokemon(Trainer trainer, List<Pokemon> pokemon)
+    public IEnumerator SendOutPokemon(Trainer trainer, List<PBS.Main.Pokemon.Pokemon> pokemon)
     {
         string text = "";
         if (trainer.playerID == playerID)
@@ -337,11 +338,11 @@ public class BTLView : MonoBehaviour
             battleUI.DrawPokemonHUD(pokemon[i], battleModel, pokemon[i].teamPos == teamPos);
         }
     }
-    public IEnumerator WithdrawPokemon(Trainer trainer, Pokemon pokemon)
+    public IEnumerator WithdrawPokemon(Trainer trainer, PBS.Main.Pokemon.Pokemon pokemon)
     {
-        yield return StartCoroutine(WithdrawPokemon(trainer, new List<Pokemon> { pokemon }));
+        yield return StartCoroutine(WithdrawPokemon(trainer, new List<PBS.Main.Pokemon.Pokemon> { pokemon }));
     }
-    public IEnumerator WithdrawPokemon(Trainer trainer, List<Pokemon> pokemon)
+    public IEnumerator WithdrawPokemon(Trainer trainer, List<PBS.Main.Pokemon.Pokemon> pokemon)
     {
         string text = "";
         if (trainer.playerID == playerID)
@@ -366,10 +367,10 @@ public class BTLView : MonoBehaviour
 
     // Move Execution
     public IEnumerator UseMoveDisplay(
-        Pokemon pokemon, 
+        PBS.Main.Pokemon.Pokemon pokemon, 
         string moveID)
     {
-        string moveName = MoveDatabase.instance.GetMoveData(moveID).moveName;
+        string moveName = Moves.instance.GetMoveData(moveID).moveName;
 
         // Dialog
         string text = GetPrefix(pokemon) + GetPokemonName(pokemon) + " used " + moveName + "!";
@@ -377,13 +378,13 @@ public class BTLView : MonoBehaviour
     }
 
     public IEnumerator UseMove(
-        Pokemon userPokemon,
+        PBS.Main.Pokemon.Pokemon userPokemon,
         string moveID,
         int moveHit,
         List<BattleHitTarget> hitTargets
         )
     {
-        List<Pokemon> missedPokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> missedPokemon = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < hitTargets.Count; i++)
         {
             if (hitTargets[i].missed)
@@ -402,7 +403,7 @@ public class BTLView : MonoBehaviour
             }
             else
             {
-                List<Pokemon> enemyDodgers = FilterPokemonByPerspective(missedPokemon, ViewPerspective.Enemy);
+                List<PBS.Main.Pokemon.Pokemon> enemyDodgers = FilterPokemonByPerspective(missedPokemon, ViewPerspective.Enemy);
                 if (enemyDodgers.Count > 0) 
                 {
                     string text = GetPrefix(ViewPerspective.Enemy) 
@@ -412,7 +413,7 @@ public class BTLView : MonoBehaviour
                     yield return StartCoroutine(battleUI.DrawText(text));
                 }
 
-                List<Pokemon> allyDodgers = FilterPokemonByPerspective(missedPokemon, ViewPerspective.Ally);
+                List<PBS.Main.Pokemon.Pokemon> allyDodgers = FilterPokemonByPerspective(missedPokemon, ViewPerspective.Ally);
                 if (allyDodgers.Count > 0)
                 {
                     string text = GetPrefix(ViewPerspective.Ally)
@@ -422,7 +423,7 @@ public class BTLView : MonoBehaviour
                     yield return StartCoroutine(battleUI.DrawText(text));
                 }
 
-                List<Pokemon> playerDodgers = FilterPokemonByPerspective(missedPokemon, ViewPerspective.Player);
+                List<PBS.Main.Pokemon.Pokemon> playerDodgers = FilterPokemonByPerspective(missedPokemon, ViewPerspective.Player);
                 if (playerDodgers.Count > 0)
                 {
                     string text = GetPrefix(ViewPerspective.Player)
@@ -441,7 +442,7 @@ public class BTLView : MonoBehaviour
         }
 
         // display immune pokemon
-        List<Pokemon> immunePokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> immunePokemon = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < hitTargets.Count; i++)
         {
             if (hitTargets[i].affectedByMove && hitTargets[i].effectiveness.GetTotalEffectiveness() == 0)
@@ -459,7 +460,7 @@ public class BTLView : MonoBehaviour
             {
                 string prefixTxt = "It had no effect on ";
 
-                List<Pokemon> enemyImmune = FilterPokemonByPerspective(immunePokemon, ViewPerspective.Enemy);
+                List<PBS.Main.Pokemon.Pokemon> enemyImmune = FilterPokemonByPerspective(immunePokemon, ViewPerspective.Enemy);
                 if (enemyImmune.Count > 0)
                 {
                     string text = prefixTxt
@@ -469,7 +470,7 @@ public class BTLView : MonoBehaviour
                     yield return StartCoroutine(battleUI.DrawText(text));
                 }
 
-                List<Pokemon> allyImmune = FilterPokemonByPerspective(immunePokemon, ViewPerspective.Ally);
+                List<PBS.Main.Pokemon.Pokemon> allyImmune = FilterPokemonByPerspective(immunePokemon, ViewPerspective.Ally);
                 if (allyImmune.Count > 0)
                 {
                     string text = prefixTxt
@@ -479,7 +480,7 @@ public class BTLView : MonoBehaviour
                     yield return StartCoroutine(battleUI.DrawText(text));
                 }
 
-                List<Pokemon> playerImmune = FilterPokemonByPerspective(immunePokemon, ViewPerspective.Player);
+                List<PBS.Main.Pokemon.Pokemon> playerImmune = FilterPokemonByPerspective(immunePokemon, ViewPerspective.Player);
                 if (playerImmune.Count > 0)
                 {
                     string text = prefixTxt
@@ -496,11 +497,11 @@ public class BTLView : MonoBehaviour
     }
 
     public IEnumerator UseMoveAnimation(
-        Pokemon userPokemon,
+        PBS.Main.Pokemon.Pokemon userPokemon,
         string moveID,
         int moveHit,
         List<BattleHitTarget> hitTargets,
-        List<Pokemon> missedPokemon
+        List<PBS.Main.Pokemon.Pokemon> missedPokemon
         )
     {
         battleUI.UndrawDialogBox();
@@ -530,9 +531,9 @@ public class BTLView : MonoBehaviour
         }
 
         // Critical Hits / Effectiveness
-        List<Pokemon> criticalTargets = new List<Pokemon>();
-        List<Pokemon> superEffTargets = new List<Pokemon>();
-        List<Pokemon> nveEffTargets = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> criticalTargets = new List<PBS.Main.Pokemon.Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> superEffTargets = new List<PBS.Main.Pokemon.Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> nveEffTargets = new List<PBS.Main.Pokemon.Pokemon>();
     
         for (int i = 0; i < hitTargets.Count; i++)
         {
@@ -562,7 +563,7 @@ public class BTLView : MonoBehaviour
             else
             {
                 string prefixTxt = "It was a critical hit on ";
-                List<Pokemon> enemyPokemon = FilterPokemonByPerspective(criticalTargets, ViewPerspective.Enemy);
+                List<PBS.Main.Pokemon.Pokemon> enemyPokemon = FilterPokemonByPerspective(criticalTargets, ViewPerspective.Enemy);
                 if (enemyPokemon.Count > 0)
                 {
                     string text = prefixTxt
@@ -572,7 +573,7 @@ public class BTLView : MonoBehaviour
                     yield return StartCoroutine(battleUI.DrawText(text));
                 }
 
-                List<Pokemon> allyPokemon = FilterPokemonByPerspective(criticalTargets, ViewPerspective.Ally);
+                List<PBS.Main.Pokemon.Pokemon> allyPokemon = FilterPokemonByPerspective(criticalTargets, ViewPerspective.Ally);
                 if (allyPokemon.Count > 0)
                 {
                     string text = prefixTxt
@@ -582,7 +583,7 @@ public class BTLView : MonoBehaviour
                     yield return StartCoroutine(battleUI.DrawText(text));
                 }
 
-                List<Pokemon> playerPokemon = FilterPokemonByPerspective(criticalTargets, ViewPerspective.Player);
+                List<PBS.Main.Pokemon.Pokemon> playerPokemon = FilterPokemonByPerspective(criticalTargets, ViewPerspective.Player);
                 if (playerPokemon.Count > 0)
                 {
                     string text = prefixTxt
@@ -602,7 +603,7 @@ public class BTLView : MonoBehaviour
             else
             {
                 string prefixTxt = "It was super-effective on ";
-                List<Pokemon> enemyPokemon = FilterPokemonByPerspective(superEffTargets, ViewPerspective.Enemy);
+                List<PBS.Main.Pokemon.Pokemon> enemyPokemon = FilterPokemonByPerspective(superEffTargets, ViewPerspective.Enemy);
                 if (enemyPokemon.Count > 0)
                 {
                     string text = prefixTxt
@@ -612,7 +613,7 @@ public class BTLView : MonoBehaviour
                     yield return StartCoroutine(battleUI.DrawText(text));
                 }
 
-                List<Pokemon> allyPokemon = FilterPokemonByPerspective(superEffTargets, ViewPerspective.Ally);
+                List<PBS.Main.Pokemon.Pokemon> allyPokemon = FilterPokemonByPerspective(superEffTargets, ViewPerspective.Ally);
                 if (allyPokemon.Count > 0)
                 {
                     string text = prefixTxt
@@ -622,7 +623,7 @@ public class BTLView : MonoBehaviour
                     yield return StartCoroutine(battleUI.DrawText(text));
                 }
 
-                List<Pokemon> playerPokemon = FilterPokemonByPerspective(superEffTargets, ViewPerspective.Player);
+                List<PBS.Main.Pokemon.Pokemon> playerPokemon = FilterPokemonByPerspective(superEffTargets, ViewPerspective.Player);
                 if (playerPokemon.Count > 0)
                 {
                     string text = prefixTxt
@@ -642,7 +643,7 @@ public class BTLView : MonoBehaviour
             else
             {
                 string prefixTxt = "It was not very effective on ";
-                List<Pokemon> enemyPokemon = FilterPokemonByPerspective(nveEffTargets, ViewPerspective.Enemy);
+                List<PBS.Main.Pokemon.Pokemon> enemyPokemon = FilterPokemonByPerspective(nveEffTargets, ViewPerspective.Enemy);
                 if (enemyPokemon.Count > 0)
                 {
                     string text = prefixTxt
@@ -652,7 +653,7 @@ public class BTLView : MonoBehaviour
                     yield return StartCoroutine(battleUI.DrawText(text));
                 }
 
-                List<Pokemon> allyPokemon = FilterPokemonByPerspective(nveEffTargets, ViewPerspective.Ally);
+                List<PBS.Main.Pokemon.Pokemon> allyPokemon = FilterPokemonByPerspective(nveEffTargets, ViewPerspective.Ally);
                 if (allyPokemon.Count > 0)
                 {
                     string text = prefixTxt
@@ -662,7 +663,7 @@ public class BTLView : MonoBehaviour
                     yield return StartCoroutine(battleUI.DrawText(text));
                 }
 
-                List<Pokemon> playerPokemon = FilterPokemonByPerspective(nveEffTargets, ViewPerspective.Player);
+                List<PBS.Main.Pokemon.Pokemon> playerPokemon = FilterPokemonByPerspective(nveEffTargets, ViewPerspective.Player);
                 if (playerPokemon.Count > 0)
                 {
                     string text = prefixTxt
@@ -677,8 +678,8 @@ public class BTLView : MonoBehaviour
     }
 
     public IEnumerator SwitchPokemonPositions(
-        Pokemon pokemon1,
-        Pokemon pokemon2
+        PBS.Main.Pokemon.Pokemon pokemon1,
+        PBS.Main.Pokemon.Pokemon pokemon2
         )
     {
         battleScene.UndrawPokemon(pokemon1);
@@ -695,7 +696,7 @@ public class BTLView : MonoBehaviour
     }
 
     public IEnumerator ChangePokemon(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         string prePokemonID,
         string postPokemonID
         )
@@ -703,8 +704,8 @@ public class BTLView : MonoBehaviour
         battleScene.UndrawPokemon(pokemon);
         battleUI.UndrawPokemonHUD(pokemon);
 
-        PokemonData preFormData = PokemonDatabase.instance.GetPokemonData(prePokemonID);
-        PokemonData postFormData = PokemonDatabase.instance.GetPokemonData(postPokemonID);
+        PokemonData preFormData = PBS.Databases.Pokemon.instance.GetPokemonData(prePokemonID);
+        PokemonData postFormData = PBS.Databases.Pokemon.instance.GetPokemonData(postPokemonID);
 
         Debug.Log("DEBUG - " + pokemon.nickname + " changed from "
             + preFormData.speciesName + " (" + preFormData.formName + ") to "
@@ -720,7 +721,7 @@ public class BTLView : MonoBehaviour
 
     // Damage Execution
     public IEnumerator DealDamage(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         int preHP,
         int postHP,
         int damageDealt,
@@ -754,7 +755,7 @@ public class BTLView : MonoBehaviour
     }
 
     public IEnumerator HealDamage(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         int preHP,
         int postHP,
         int hpHealed
@@ -775,11 +776,11 @@ public class BTLView : MonoBehaviour
     }
 
     public IEnumerator InflictStatus(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         string statusID
         )
     {
-        string statusString = StatusPKDatabase.instance.GetStatusData(statusID).conditionName;
+        string statusString = PokemonStatuses.instance.GetStatusData(statusID).conditionName;
         string text = statusString + " was inflicted on " + GetPokemonName(pokemon);
         Debug.Log("ANIM - " + text);
 
@@ -788,7 +789,7 @@ public class BTLView : MonoBehaviour
     }
 
     public IEnumerator ApplyStatStageMod(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         int modValue,
         PokemonStats[] statMods
         )
@@ -805,27 +806,27 @@ public class BTLView : MonoBehaviour
 
     // Abilities
     public IEnumerator IndicateAbility(
-        Pokemon pokemon,
+        PBS.Main.Pokemon.Pokemon pokemon,
         string abilityID
         )
     {
         string text = "("
             + GetPokemonName(pokemon) 
-            + "'s " + AbilityDatabase.instance.GetAbilityData(abilityID).abilityName
+            + "'s " + Abilities.instance.GetAbilityData(abilityID).abilityName
             + ")";
         Debug.Log(text);
         yield return null;
     }
 
     public IEnumerator FaintPokemon(
-        List<Pokemon> pokemon)
+        List<PBS.Main.Pokemon.Pokemon> pokemon)
     {
         if (pokemon.Count > 0)
         {
             string faintNames = GetPokemonNames(pokemon);
-            List<Pokemon> enemyPokemon = new List<Pokemon>();
-            List<Pokemon> allyPokemon = new List<Pokemon>();
-            List<Pokemon> playerPokemon = new List<Pokemon>();
+            List<PBS.Main.Pokemon.Pokemon> enemyPokemon = new List<PBS.Main.Pokemon.Pokemon>();
+            List<PBS.Main.Pokemon.Pokemon> allyPokemon = new List<PBS.Main.Pokemon.Pokemon>();
+            List<PBS.Main.Pokemon.Pokemon> playerPokemon = new List<PBS.Main.Pokemon.Pokemon>();
 
             for (int i = 0; i < pokemon.Count; i++)
             {
@@ -870,7 +871,7 @@ public class BTLView : MonoBehaviour
     }
 
     // Text / Names
-    public ViewPerspective GetPerspective(Pokemon pokemon)
+    public ViewPerspective GetPerspective(PBS.Main.Pokemon.Pokemon pokemon)
     {
         Trainer trainer = battleModel.GetPokemonOwner(pokemon);
         if (trainer.teamID != teamPos)
@@ -886,9 +887,9 @@ public class BTLView : MonoBehaviour
             return ViewPerspective.Ally;
         }
     }
-    public List<Pokemon> FilterPokemonByPerspective(List<Pokemon> pokemon, ViewPerspective viewPerspective)
+    public List<PBS.Main.Pokemon.Pokemon> FilterPokemonByPerspective(List<PBS.Main.Pokemon.Pokemon> pokemon, ViewPerspective viewPerspective)
     {
-        List<Pokemon> filteredPokemon = new List<Pokemon>();
+        List<PBS.Main.Pokemon.Pokemon> filteredPokemon = new List<PBS.Main.Pokemon.Pokemon>();
         for (int i = 0; i < pokemon.Count; i++)
         {
             if (GetPerspective(pokemon[i]) == viewPerspective)
@@ -911,7 +912,7 @@ public class BTLView : MonoBehaviour
 
         return prefix;
     }
-    public string GetPrefix(Pokemon pokemon, bool capitalize = true)
+    public string GetPrefix(PBS.Main.Pokemon.Pokemon pokemon, bool capitalize = true)
     {
         string text = "";
         if (pokemon.teamPos != teamPos)
@@ -932,11 +933,11 @@ public class BTLView : MonoBehaviour
         }
         return text;
     }
-    public string GetPokemonName(Pokemon pokemon)
+    public string GetPokemonName(PBS.Main.Pokemon.Pokemon pokemon)
     {
-        return GetPokemonNames(new List<Pokemon> { pokemon });
+        return GetPokemonNames(new List<PBS.Main.Pokemon.Pokemon> { pokemon });
     }
-    public string GetPokemonNames(List<Pokemon> pokemonList, bool orConjunct = false)
+    public string GetPokemonNames(List<PBS.Main.Pokemon.Pokemon> pokemonList, bool orConjunct = false)
     {
         string conjunct = (orConjunct) ? "or" : "and";
 
@@ -994,9 +995,9 @@ public class BTLView : MonoBehaviour
     {
         if (bEvent.textID != null)
         {
-            GameTextData gameTextData = GameTextDatabase.instance.GetGameTextData(bEvent.textID);
+            GameTextData gameTextData = GameText.instance.GetGameTextData(bEvent.textID);
             string baseText = gameTextData.GetText();
-            string gameText = GameTextDatabase.ConvertToString(
+            string gameText = GameText.ConvertToString(
                 baseString: baseText,
                 viewPos: teamPos,
                 playerID: playerID,

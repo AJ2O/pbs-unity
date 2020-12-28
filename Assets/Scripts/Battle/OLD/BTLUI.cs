@@ -8,6 +8,7 @@ using System;
 using PBS.Main.Pokemon;
 using PBS.Main.Trainer;
 using PBS.Main.Team;
+using PBS.Databases;
 
 public class BTLUI : MonoBehaviour
 {
@@ -65,7 +66,7 @@ public class BTLUI : MonoBehaviour
     public GameObject partyOptionObj;
     public Text partyTxt;
     private List<BTLUI_ButtonParty> partyBtns;
-    private List<Pokemon> partyList;
+    private List<PBS.Main.Pokemon.Pokemon> partyList;
 
     [Header("Party Command Panel")]
     public GameObject partyCmdPanel;
@@ -147,7 +148,7 @@ public class BTLUI : MonoBehaviour
         positionList = new List<BattlePosition>();
 
         partyBtns = new List<BTLUI_ButtonParty>();
-        partyList = new List<Pokemon>();
+        partyList = new List<PBS.Main.Pokemon.Pokemon>();
 
         partyCmdBtns = new List<BTLUI_ButtonCmdExtra>();
 
@@ -332,7 +333,7 @@ public class BTLUI : MonoBehaviour
 
 
     // COMMAND
-    public void SetCommands(Pokemon pokemon, List<BattleCommandType> commands)
+    public void SetCommands(PBS.Main.Pokemon.Pokemon pokemon, List<BattleCommandType> commands)
     {
         cmdBtns = new List<BTLUI_ButtonCmd>();
         cmdList = new List<BattleCommandType>(commands);
@@ -452,12 +453,12 @@ public class BTLUI : MonoBehaviour
     private void CreateFightBtn(Moveslot moveslot, BTLUI_ButtonFight btn)
     {
         btn.moveslot = moveslot;
-        btn.moveTxt.text = MoveDatabase.instance.GetMoveData(moveslot.moveID).moveName;
+        btn.moveTxt.text = Moves.instance.GetMoveData(moveslot.moveID).moveName;
         btn.colorSel = colorSel;
         btn.colorUnsel = colorUnsel;
     }
     public void SwitchSelectedMoveTo(
-        Pokemon pokemon, 
+        PBS.Main.Pokemon.Pokemon pokemon, 
         Moveslot selected, 
         bool choosingSpecial,
         bool choosingZMove,
@@ -482,7 +483,7 @@ public class BTLUI : MonoBehaviour
         }
     }
     private void SelectFightBtn(
-        Pokemon pokemon, 
+        PBS.Main.Pokemon.Pokemon pokemon, 
         BTLUI_ButtonFight btn, 
         bool select, 
         bool ZMove = false,
@@ -491,7 +492,7 @@ public class BTLUI : MonoBehaviour
         btn.image.color = select ? btn.colorSel : btn.colorUnsel;
         btn.moveTxt.color = select ? colorTxtSel : colorTxtUnsel;
 
-        MoveData moveData = (btn.moveslot == null) ? null : MoveDatabase.instance.GetMoveData(btn.moveslot.moveID);
+        MoveData moveData = (btn.moveslot == null) ? null : Moves.instance.GetMoveData(btn.moveslot.moveID);
         if (moveData != null)
         {
             if (ZMove)
@@ -523,7 +524,7 @@ public class BTLUI : MonoBehaviour
             {
                 if (moveData != null)
                 {
-                    TypeData typeData = TypeDatabase.instance.GetTypeData(moveData.moveType);
+                    TypeData typeData = ElementalTypes.instance.GetTypeData(moveData.moveType);
                     promptString += "\\c" + typeData.typeColor + "\\" + typeData.typeName + "\\c.\\";
                     promptString += "\nPP: " + btn.moveslot.PP + " / " + btn.moveslot.maxPP;
                 }
@@ -579,7 +580,7 @@ public class BTLUI : MonoBehaviour
     public void CreateFieldTargetBtn(BattlePosition position, BTLUI_ButtonFieldTarget btn)
     {
         btn.position = position;
-        Pokemon pokemon = battleModel.GetPokemonAtPosition(position);
+        PBS.Main.Pokemon.Pokemon pokemon = battleModel.GetPokemonAtPosition(position);
         if (pokemon != null)
         {
             btn.pokemon = pokemon;
@@ -705,10 +706,10 @@ public class BTLUI : MonoBehaviour
 
 
     // PARTY
-    public void SetParty(List<Pokemon> choices, bool forceSwitch, Item item = null)
+    public void SetParty(List<PBS.Main.Pokemon.Pokemon> choices, bool forceSwitch, Item item = null)
     {
         partyBtns = new List<BTLUI_ButtonParty>();
-        partyList = new List<Pokemon>(choices);
+        partyList = new List<PBS.Main.Pokemon.Pokemon>(choices);
 
         int realBtns = 0;
         for (int i = 0; i < partyList.Count; i++)
@@ -744,7 +745,7 @@ public class BTLUI : MonoBehaviour
         }
         StartCoroutine(DrawTextInstant(text: promptString, textBox: partyTxt));
     }
-    private void CreatePartyBtn(Pokemon pokemon, BTLUI_ButtonParty btn)
+    private void CreatePartyBtn(PBS.Main.Pokemon.Pokemon pokemon, BTLUI_ButtonParty btn)
     {
         btn.pokemon = pokemon;
 
@@ -792,7 +793,7 @@ public class BTLUI : MonoBehaviour
                 ));
         }
     }
-    public void SwitchSelectedPartyTo(Pokemon selected)
+    public void SwitchSelectedPartyTo(PBS.Main.Pokemon.Pokemon selected)
     {
         for (int i = 0; i < partyBtns.Count; i++)
         {
@@ -824,7 +825,7 @@ public class BTLUI : MonoBehaviour
 
 
     // PARTY COMMAND
-    public void SetPartyCommands(Pokemon pokemon, List<BattleExtraCommand> commands)
+    public void SetPartyCommands(PBS.Main.Pokemon.Pokemon pokemon, List<BattleExtraCommand> commands)
     {
         partyCmdBtns = new List<BTLUI_ButtonCmdExtra>();
 
@@ -1037,7 +1038,7 @@ public class BTLUI : MonoBehaviour
 
 
     // HUD
-    public BTLUI_PokemonHUD DrawPokemonHUD(Pokemon pokemon, Battle battle, bool isNear)
+    public BTLUI_PokemonHUD DrawPokemonHUD(PBS.Main.Pokemon.Pokemon pokemon, Battle battle, bool isNear)
     {
         // get spawn position
         Transform spawnPos = this.transform;
@@ -1075,7 +1076,7 @@ public class BTLUI : MonoBehaviour
 
         return pokemonHUD;
     }
-    public bool UndrawPokemonHUD(Pokemon pokemon)
+    public bool UndrawPokemonHUD(PBS.Main.Pokemon.Pokemon pokemon)
     {
         BTLUI_PokemonHUD pokemonHUD = GetPokemonHUD(pokemon);
         if (pokemonHUD != null)
@@ -1087,7 +1088,7 @@ public class BTLUI : MonoBehaviour
         return false;
     }
 
-    public BTLUI_PokemonHUD GetPokemonHUD(Pokemon pokemon)
+    public BTLUI_PokemonHUD GetPokemonHUD(PBS.Main.Pokemon.Pokemon pokemon)
     {
         for (int i = 0; i < pokemonHUDs.Count; i++)
         {
@@ -1098,7 +1099,7 @@ public class BTLUI : MonoBehaviour
         }
         return null;
     }
-    public void UpdatePokemonHUD(Pokemon pokemon, Battle battle)
+    public void UpdatePokemonHUD(PBS.Main.Pokemon.Pokemon pokemon, Battle battle)
     {
         BTLUI_PokemonHUD pokemonHUD = GetPokemonHUD(pokemon);
         if (pokemonHUD != null)
@@ -1133,7 +1134,7 @@ public class BTLUI : MonoBehaviour
         }
     }
 
-    public void SetPokemonHUDActive(Pokemon pokemon, bool active)
+    public void SetPokemonHUDActive(PBS.Main.Pokemon.Pokemon pokemon, bool active)
     {
         BTLUI_PokemonHUD pokemonHUD = GetPokemonHUD(pokemon);
         if (pokemonHUD != null)
@@ -1154,7 +1155,7 @@ public class BTLUI : MonoBehaviour
         }
     }
 
-    public IEnumerator AnimatePokemonHUDHPChange(Pokemon pokemon, int preHP, int postHP, float timeSpan = 1f)
+    public IEnumerator AnimatePokemonHUDHPChange(PBS.Main.Pokemon.Pokemon pokemon, int preHP, int postHP, float timeSpan = 1f)
     {
         BTLUI_PokemonHUD pokemonHUD = GetPokemonHUD(pokemon);
         if (pokemonHUD != null)

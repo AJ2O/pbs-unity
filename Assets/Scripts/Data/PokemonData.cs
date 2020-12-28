@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PBS.Databases;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PokemonData
@@ -12,7 +13,7 @@ public class PokemonData
         get
         {
             if (string.IsNullOrEmpty(p_speciesName) && !string.IsNullOrEmpty(baseID)) {
-                return PokemonDatabase.instance.GetPokemonData(baseID).speciesName;
+                return Pokemon.instance.GetPokemonData(baseID).speciesName;
             }
             return p_speciesName;
         }
@@ -28,7 +29,7 @@ public class PokemonData
         {
             if (p_pokedexNo < 0 && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).pokedexNo;
+                return Pokemon.instance.GetPokemonData(baseID).pokedexNo;
             }
             return p_pokedexNo;
         }
@@ -44,7 +45,7 @@ public class PokemonData
         {
             if (string.IsNullOrEmpty(p_pokedexCategory) && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).pokedexCategory;
+                return Pokemon.instance.GetPokemonData(baseID).pokedexCategory;
             }
             return p_pokedexCategory;
         }
@@ -62,7 +63,7 @@ public class PokemonData
             {
                 if (!string.IsNullOrEmpty(baseID))
                 {
-                    return PokemonDatabase.instance.GetPokemonData(baseID).formName;
+                    return Pokemon.instance.GetPokemonData(baseID).formName;
                 }
                 else
                 {
@@ -83,7 +84,7 @@ public class PokemonData
         {
             if (useBaseMaleRatio && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).maleRatio;
+                return Pokemon.instance.GetPokemonData(baseID).maleRatio;
             }
             return p_maleRatio;
         }
@@ -101,7 +102,7 @@ public class PokemonData
         {
             if (p_height < 0 && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).height;
+                return Pokemon.instance.GetPokemonData(baseID).height;
             }
             return p_height;
         }
@@ -117,7 +118,7 @@ public class PokemonData
         {
             if (p_weight < 0 && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).weight;
+                return Pokemon.instance.GetPokemonData(baseID).weight;
             }
             return p_weight;
         }
@@ -136,7 +137,7 @@ public class PokemonData
         {
             if (useBaseAesthetic && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).displayID;
+                return Pokemon.instance.GetPokemonData(baseID).displayID;
             }
             return string.IsNullOrEmpty(p_displayID) ? ID : p_displayID;
         }
@@ -153,7 +154,7 @@ public class PokemonData
         {
             if (useBaseAesthetic && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).xOffset2DNear;
+                return Pokemon.instance.GetPokemonData(baseID).xOffset2DNear;
             }
             return p_xOffset2DNear;
         }
@@ -168,7 +169,7 @@ public class PokemonData
         {
             if (useBaseAesthetic && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).yOffset2DNear;
+                return Pokemon.instance.GetPokemonData(baseID).yOffset2DNear;
             }
             return p_yOffset2DNear;
         }
@@ -185,7 +186,7 @@ public class PokemonData
         {
             if (useBaseAesthetic && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).xOffset2DFar;
+                return Pokemon.instance.GetPokemonData(baseID).xOffset2DFar;
             }
             return p_xOffset2DFar;
         }
@@ -201,7 +202,7 @@ public class PokemonData
         {
             if (useBaseAesthetic && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).yOffset2DFar;
+                return Pokemon.instance.GetPokemonData(baseID).yOffset2DFar;
             }
             return p_yOffset2DFar;
         }
@@ -219,7 +220,7 @@ public class PokemonData
         {
             if (useBaseTypes && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).types;
+                return Pokemon.instance.GetPokemonData(baseID).types;
             }
             return p_types;
         }
@@ -237,7 +238,7 @@ public class PokemonData
         {
             if (useBaseAbilities && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).abilities;
+                return Pokemon.instance.GetPokemonData(baseID).abilities;
             }
             return p_abilities;
         }
@@ -253,7 +254,7 @@ public class PokemonData
         {
             if (useBaseHiddenAbilities && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).hiddenAbilities;
+                return Pokemon.instance.GetPokemonData(baseID).hiddenAbilities;
             }
             return p_hiddenAbilities;
         }
@@ -272,7 +273,7 @@ public class PokemonData
         {
             if ((p_baseHP < 0 || useBaseBaseStats) && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).baseHP;
+                return Pokemon.instance.GetPokemonData(baseID).baseHP;
             }
             return p_baseHP;
         }
@@ -288,7 +289,7 @@ public class PokemonData
         {
             if ((p_baseATK < 0 || useBaseBaseStats) && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).baseATK;
+                return Pokemon.instance.GetPokemonData(baseID).baseATK;
             }
             return p_baseATK;
         }
@@ -304,7 +305,7 @@ public class PokemonData
         {
             if ((p_baseDEF < 0 || useBaseBaseStats) && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).baseDEF;
+                return Pokemon.instance.GetPokemonData(baseID).baseDEF;
             }
             return p_baseDEF;
         }
@@ -320,7 +321,7 @@ public class PokemonData
         {
             if ((p_baseSPA < 0 || useBaseBaseStats) && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).baseSPA;
+                return Pokemon.instance.GetPokemonData(baseID).baseSPA;
             }
             return p_baseSPA;
         }
@@ -336,7 +337,7 @@ public class PokemonData
         {
             if ((p_baseSPD < 0 || useBaseBaseStats) && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).baseSPD;
+                return Pokemon.instance.GetPokemonData(baseID).baseSPD;
             }
             return p_baseSPD;
         }
@@ -352,7 +353,7 @@ public class PokemonData
         {
             if ((p_baseSPE < 0 || useBaseBaseStats) && !string.IsNullOrEmpty(baseID))
             {
-                return PokemonDatabase.instance.GetPokemonData(baseID).baseSPE;
+                return Pokemon.instance.GetPokemonData(baseID).baseSPE;
             }
             return p_baseSPE;
         }
@@ -371,7 +372,7 @@ public class PokemonData
             if (combineBaseTags && !string.IsNullOrEmpty(baseID))
             {
                 HashSet<PokemonTag> unionTags = new HashSet<PokemonTag>(p_tags);
-                unionTags.UnionWith(PokemonDatabase.instance.GetPokemonData(baseID).tags);
+                unionTags.UnionWith(Pokemon.instance.GetPokemonData(baseID).tags);
                 return unionTags;
             }
             return p_tags;
@@ -493,7 +494,7 @@ public class PokemonData
         }
         if (baseID != null)
         {
-            PokemonData baseData = PokemonDatabase.instance.GetPokemonData(baseID);
+            PokemonData baseData = Pokemon.instance.GetPokemonData(baseID);
             return baseData.IsABaseID(tryBaseID);
         }
         return false;

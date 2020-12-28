@@ -3,10 +3,10 @@
     public class AbilityEffectPair
     {
         public Ability ability;
-        public EffectDatabase.AbilityEff.AbilityEffect effect;
+        public PBS.Databases.Effects.Abilities.AbilityEffect effect;
         public AbilityEffectPair(
             Ability ability,
-            EffectDatabase.AbilityEff.AbilityEffect effect)
+            PBS.Databases.Effects.Abilities.AbilityEffect effect)
         {
             this.ability = ability;
             this.effect = effect;

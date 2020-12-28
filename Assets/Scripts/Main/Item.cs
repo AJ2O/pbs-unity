@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Databases;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ public class Item
     public ItemData data { 
         get 
         {
-            return ItemDatabase.instance.GetItemData(itemID);
+            return Items.instance.GetItemData(itemID);
         } 
     }
 

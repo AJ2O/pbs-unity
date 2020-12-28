@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Databases;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace PBS.Main.Pokemon
                     return p_maxPP;
                 }
 
-                int basePP = MoveDatabase.instance.GetMoveData(moveID).PP;
+                int basePP = Moves.instance.GetMoveData(moveID).PP;
                 int bonusPP = basePP / 5 * PPUps;
                 return basePP + bonusPP;
             }
@@ -28,7 +29,7 @@ namespace PBS.Main.Pokemon
         {
             get
             {
-                return MoveDatabase.instance.GetMoveData(moveID);
+                return Moves.instance.GetMoveData(moveID);
             }
         }
 

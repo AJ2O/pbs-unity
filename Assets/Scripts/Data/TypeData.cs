@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Databases;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ public class TypeData
         {
             if (string.IsNullOrEmpty(p_typeName) && !string.IsNullOrEmpty(baseID))
             {
-                return TypeDatabase.instance.GetTypeData(baseID).typeName;
+                return ElementalTypes.instance.GetTypeData(baseID).typeName;
             }
             return p_typeName;
         }
@@ -34,7 +35,7 @@ public class TypeData
             if (combineResistances && !string.IsNullOrEmpty(baseID))
             {
                 List<string> unionList = new List<string>(p_resistances);
-                unionList.AddRange(TypeDatabase.instance.GetTypeData(baseID).resistances);
+                unionList.AddRange(ElementalTypes.instance.GetTypeData(baseID).resistances);
                 return unionList;
             }
             return p_resistances;
@@ -54,7 +55,7 @@ public class TypeData
             if (combineWeaknesses && !string.IsNullOrEmpty(baseID))
             {
                 List<string> unionList = new List<string>(p_weaknesses);
-                unionList.AddRange(TypeDatabase.instance.GetTypeData(baseID).weaknesses);
+                unionList.AddRange(ElementalTypes.instance.GetTypeData(baseID).weaknesses);
                 return unionList;
             }
             return p_weaknesses;
@@ -74,7 +75,7 @@ public class TypeData
             if (combineImmunities && !string.IsNullOrEmpty(baseID))
             {
                 List<string> unionList = new List<string>(p_immunities);
-                unionList.AddRange(TypeDatabase.instance.GetTypeData(baseID).immunities);
+                unionList.AddRange(ElementalTypes.instance.GetTypeData(baseID).immunities);
                 return unionList;
             }
             return p_immunities;
@@ -95,7 +96,7 @@ public class TypeData
             if (combineTags && !string.IsNullOrEmpty(baseID))
             {
                 HashSet<TypeTag> unionTags = new HashSet<TypeTag>(p_tags);
-                unionTags.UnionWith(TypeDatabase.instance.GetTypeData(baseID).tags);
+                unionTags.UnionWith(ElementalTypes.instance.GetTypeData(baseID).tags);
                 return unionTags;
             }
             return p_tags;
@@ -116,7 +117,7 @@ public class TypeData
             if (combineEffects && !string.IsNullOrEmpty(baseID))
             {
                 List<TypeEffect> unionList = new List<TypeEffect>(p_effects);
-                unionList.AddRange(TypeDatabase.instance.GetTypeData(baseID).effects);
+                unionList.AddRange(ElementalTypes.instance.GetTypeData(baseID).effects);
                 return unionList;
             }
             return p_effects;
@@ -127,16 +128,16 @@ public class TypeData
         }
     }
 
-    private List<EffectDatabase.TypeEff.TypeEffect> p_effectsNew { get; set; }
-    public List<EffectDatabase.TypeEff.TypeEffect> effectsNew
+    private List<PBS.Databases.Effects.ElementalTypes.TypeEffect> p_effectsNew { get; set; }
+    public List<PBS.Databases.Effects.ElementalTypes.TypeEffect> effectsNew
     {
         get
         {
             if (combineEffects && !string.IsNullOrEmpty(baseID))
             {
-                List<EffectDatabase.TypeEff.TypeEffect> unionEffects = new List<EffectDatabase.TypeEff.TypeEffect>();
+                List<PBS.Databases.Effects.ElementalTypes.TypeEffect> unionEffects = new List<PBS.Databases.Effects.ElementalTypes.TypeEffect>();
                 unionEffects.AddRange(p_effectsNew);
-                unionEffects.AddRange(TypeDatabase.instance.GetTypeData(baseID).effectsNew);
+                unionEffects.AddRange(ElementalTypes.instance.GetTypeData(baseID).effectsNew);
                 return unionEffects;
             }
             return p_effectsNew;
@@ -167,7 +168,7 @@ public class TypeData
         bool combineTags = false, IEnumerable<TypeTag> tags = null,
 
         bool combineEffects = false, TypeEffect[] effects = null,
-        EffectDatabase.TypeEff.TypeEffect[] effectsNew = null)
+        PBS.Databases.Effects.ElementalTypes.TypeEffect[] effectsNew = null)
     {
         this.ID = ID;
         this.baseID = baseID;
@@ -195,10 +196,10 @@ public class TypeData
             this.effects = new List<TypeEffect>(newEffects);
         }
 
-        this.effectsNew = new List<EffectDatabase.TypeEff.TypeEffect>();
+        this.effectsNew = new List<PBS.Databases.Effects.ElementalTypes.TypeEffect>();
         if (effectsNew != null)
         {
-            List<EffectDatabase.TypeEff.TypeEffect> addableEffects = new List<EffectDatabase.TypeEff.TypeEffect>();
+            List<PBS.Databases.Effects.ElementalTypes.TypeEffect> addableEffects = new List<PBS.Databases.Effects.ElementalTypes.TypeEffect>();
             for (int i = 0; i < effectsNew.Length; i++)
             {
                 addableEffects.Add(effectsNew[i].Clone());
@@ -218,7 +219,7 @@ public class TypeData
         }
         if (baseID != null)
         {
-            TypeData baseData = TypeDatabase.instance.GetTypeData(baseID);
+            TypeData baseData = ElementalTypes.instance.GetTypeData(baseID);
             return baseData.IsABaseID(tryBaseID);
         }
         return false;

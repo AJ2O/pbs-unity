@@ -1,4 +1,5 @@
 ﻿using PBS.Battle;
+using PBS.Databases;
 using PBS.Main.Pokemon;
 using PBS.Main.Trainer;
 using System.Collections;
@@ -46,7 +47,7 @@ public class BattleAssetLoader : MonoBehaviour
                 Trainer trainer = battle.teams[i].trainers[k];
 
                 // load pokemon assets
-                List<Pokemon> party = trainer.party;
+                List<PBS.Main.Pokemon.Pokemon> party = trainer.party;
                 for (int j = 0; j < party.Count; j++)
                 {
                     yield return StartCoroutine(LegacyLoadPokemon(party[j]));
@@ -76,7 +77,7 @@ public class BattleAssetLoader : MonoBehaviour
                 Trainer trainer = battle.teams[i].trainers[k];
 
                 // load pokemon assets
-                List<Pokemon> party = trainer.party;
+                List<PBS.Main.Pokemon.Pokemon> party = trainer.party;
                 for (int j = 0; j < party.Count; j++)
                 {
                     yield return StartCoroutine(LegacyLoadPokemon(party[j]));
@@ -138,7 +139,7 @@ public class BattleAssetLoader : MonoBehaviour
         Image imagePokemon = null
         )
     {
-        PokemonData pokemonData = PokemonDatabase.instance.GetPokemonData(pokemon.pokemonID);
+        PokemonData pokemonData = PBS.Databases.Pokemon.instance.GetPokemonData(pokemon.pokemonID);
         yield return StartCoroutine(LegacyLoadPokemon(
             data: pokemonData,
             useicon: useicon, useFront: useFront, useBack: useBack,
@@ -148,7 +149,7 @@ public class BattleAssetLoader : MonoBehaviour
     }
 
 
-    public IEnumerator LegacyLoadPokemon(Pokemon pokemon,
+    public IEnumerator LegacyLoadPokemon(PBS.Main.Pokemon.Pokemon pokemon,
         bool useicon = false,
         bool useFront = false,
         bool useBack = false,
@@ -158,7 +159,7 @@ public class BattleAssetLoader : MonoBehaviour
         Image imagePokemon = null)
     {
         PokemonData pokemonData = (pokemon.bProps.illusion != null) ?
-            PokemonDatabase.instance.GetPokemonIllusionData(pokemon.bProps.illusion) : pokemon.data;
+            PBS.Databases.Pokemon.instance.GetPokemonIllusionData(pokemon.bProps.illusion) : pokemon.data;
         yield return StartCoroutine(LegacyLoadPokemon(
             data: pokemonData,
             useicon: useicon, useFront: useFront, useBack: useBack,
