@@ -1,4 +1,5 @@
 ﻿using PBS.Main.Pokemon;
+using PBS.Main.Team;
 using PBS.Main.Trainer;
 using System.Collections;
 using System.Collections.Generic;
@@ -492,12 +493,12 @@ public class BattleHitTarget
 
 public class BattleHitTeam
 {
-    public BattleTeam team;
+    public Team team;
     public bool affectedByMove;
     public EffectDatabase.General.Protect protection;
     public EffectDatabase.General.MagicCoat reflection;
 
-    public BattleHitTeam(BattleTeam team)
+    public BattleHitTeam(Team team)
     {
         this.team = team;
         this.affectedByMove = true;

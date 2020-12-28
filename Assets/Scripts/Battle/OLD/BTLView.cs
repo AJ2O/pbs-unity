@@ -1,4 +1,5 @@
 ﻿using PBS.Main.Pokemon;
+using PBS.Main.Team;
 using PBS.Main.Trainer;
 using System.Collections;
 using System.Collections.Generic;
@@ -250,8 +251,8 @@ public class BTLView : MonoBehaviour
 
     public IEnumerator EndBattle()
     {
-        BattleTeam winningTeam = battleModel.GetWinningTeam();
-        List<BattleTeam> losingTeams = battleModel.GetLosingTeams();
+        Team winningTeam = battleModel.GetWinningTeam();
+        List<Team> losingTeams = battleModel.GetLosingTeams();
 
         battleUI.SetPokemonHUDsActive(false);
 

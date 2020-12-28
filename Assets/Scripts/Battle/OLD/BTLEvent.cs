@@ -1,4 +1,5 @@
 ﻿using PBS.Main.Pokemon;
+using PBS.Main.Team;
 using PBS.Main.Trainer;
 using System.Collections;
 using System.Collections.Generic;
@@ -82,7 +83,7 @@ public class BTLEvent_GameText : BTLEvent
     public Pokemon targetPokemon = null;
     public Pokemon[] pokemonList = null;
     public Trainer trainer = null;
-    public BattleTeam targetTeam = null;
+    public Team targetTeam = null;
     public PokemonStats[] statList = null;
     public string typeID = null;
     public string moveID = null;
@@ -103,7 +104,7 @@ public class BTLEvent_GameText : BTLEvent
         Pokemon targetPokemon = null,
         Trainer trainer = null,
         Pokemon[] pokemonList = null,
-        BattleTeam targetTeam = null,
+        Team targetTeam = null,
         PokemonStats[] statList = null,
         string typeID = null,
         string moveID = null,

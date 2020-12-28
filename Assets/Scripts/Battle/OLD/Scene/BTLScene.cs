@@ -1,4 +1,5 @@
 ﻿using PBS.Main.Pokemon;
+using PBS.Main.Team;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -57,19 +58,19 @@ public class BTLScene : MonoBehaviour
     {
         // get spawn position
         Transform spawnPos = this.transform;
-        BattleTeam team = battle.GetTeam(pokemon);
+        Team team = battle.GetTeam(pokemon);
         switch (team.teamMode)
         {
-            case BattleTeam.TeamMode.Single:
+            case Team.TeamMode.Single:
                 spawnPos = (isNear) ? spawnNearSingle : spawnFarSingle;
                 break;
 
-            case BattleTeam.TeamMode.Double:
+            case Team.TeamMode.Double:
                 spawnPos = (pokemon.battlePos == 0) ? (isNear ? spawnNearDouble0 : spawnFarDouble0)
                     : isNear ? spawnNearDouble1 : spawnFarDouble1;
                 break;
 
-            case BattleTeam.TeamMode.Triple:
+            case Team.TeamMode.Triple:
                 spawnPos = (pokemon.battlePos == 0) ? (isNear ? spawnNearTriple0 : spawnFarTriple0)
                     : (pokemon.battlePos == 1) ? (isNear ? spawnNearTriple1 : spawnFarTriple1)
                     : isNear ? spawnNearTriple2 : spawnFarTriple2;

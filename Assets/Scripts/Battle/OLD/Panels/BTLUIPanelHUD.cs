@@ -1,4 +1,5 @@
 ﻿using PBS.Main.Pokemon;
+using PBS.Main.Team;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -74,19 +75,19 @@ public class BTLUIPanelHUD : BTLUIPanel
     {
         // get spawn position
         Transform spawnPos = null;
-        BattleTeam team = battleModel.GetTeam(pokemon);
+        Team team = battleModel.GetTeam(pokemon);
         switch (team.teamMode)
         {
-            case BattleTeam.TeamMode.Single:
+            case Team.TeamMode.Single:
                 spawnPos = isNear ? pokemonHUDSpawnNearSingle : pokemonHUDSpawnFarSingle;
                 break;
 
-            case BattleTeam.TeamMode.Double:
+            case Team.TeamMode.Double:
                 spawnPos = (pokemon.battlePos == 0) ? (isNear ? pokemonHUDSpawnNearDouble0 : pokemonHUDSpawnFarDouble0)
                     : isNear ? pokemonHUDSpawnNearDouble1 : pokemonHUDSpawnFarDouble1;
                 break;
 
-            case BattleTeam.TeamMode.Triple:
+            case Team.TeamMode.Triple:
                 spawnPos = (pokemon.battlePos == 0) ? (isNear ? pokemonHUDSpawnNearTriple0 : pokemonHUDSpawnFarTriple0)
                     : (pokemon.battlePos == 1) ? (isNear ? pokemonHUDSpawnNearTriple1 : pokemonHUDSpawnFarTriple1)
                     : isNear ? pokemonHUDSpawnNearTriple2 : pokemonHUDSpawnFarTriple2;
@@ -145,7 +146,7 @@ public class BTLUIPanelHUD : BTLUIPanel
     {
         // get spawn position
         Transform spawnPos = GetPokemonHUDSpawnPosition(pokemon, battleModel, isNear);
-        BattleTeam team = battleModel.GetTeam(pokemon);
+        Team team = battleModel.GetTeam(pokemon);
         if (spawnPos == null)
         {
             Debug.LogWarning("Could not find HUD Spawn Position for " + pokemon.nickname);
@@ -157,12 +158,12 @@ public class BTLUIPanelHUD : BTLUIPanel
             BTLUI_PokemonHUD pokemonHUD = Instantiate(pokemonHUDPrefab, spawnPos.position, Quaternion.identity, spawnPos);
             pokemonHUD.pokemonUniqueID = pokemon.uniqueID;
             pokemonHUD.hpObj.gameObject.SetActive(isNear
-                && (team.teamMode == BattleTeam.TeamMode.Single
-                    || team.teamMode == BattleTeam.TeamMode.Double));
+                && (team.teamMode == Team.TeamMode.Single
+                    || team.teamMode == Team.TeamMode.Double));
             // set EXP bar
             pokemonHUD.expObj.SetActive(isNear
-                && (team.teamMode == BattleTeam.TeamMode.Single
-                    || team.teamMode == BattleTeam.TeamMode.Double));
+                && (team.teamMode == Team.TeamMode.Single
+                    || team.teamMode == Team.TeamMode.Double));
             pokemonHUDs.Add(pokemonHUD);
 
             UpdatePokemonHUD(pokemon, battleModel);

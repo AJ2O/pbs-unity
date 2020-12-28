@@ -1,4 +1,5 @@
 ﻿using PBS.Main.Pokemon;
+using PBS.Main.Team;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -73,22 +74,22 @@ public class BTLUIPanelFieldTarget : BTLUIPanel
     }
     public BTLUI_ButtonFieldTarget GetFieldTargetButton(BattlePosition position, int teamPerspective, Battle battleModel)
     {
-        BattleTeam team = battleModel.GetTeamFromBattlePosition(position);
+        Team team = battleModel.GetTeamFromBattlePosition(position);
         bool isAlly = (teamPerspective == position.teamPos);
 
         BTLUI_ButtonFieldTarget curBtn =
 
             // singles battle
-            (team.teamMode == BattleTeam.TeamMode.Single) ? (isAlly ? targetBtnNearSingle : targetBtnFarSingle)
+            (team.teamMode == Team.TeamMode.Single) ? (isAlly ? targetBtnNearSingle : targetBtnFarSingle)
 
             // doubles battle
-            : (team.teamMode == BattleTeam.TeamMode.Double) ?
+            : (team.teamMode == Team.TeamMode.Double) ?
                 (isAlly ?
                     ((position.battlePos == 0) ? targetBtnNearDouble0 : targetBtnNearDouble1)
                     : ((position.battlePos == 0) ? targetBtnFarDouble0 : targetBtnFarDouble1))
 
             // triples battle
-            : (team.teamMode == BattleTeam.TeamMode.Triple) ?
+            : (team.teamMode == Team.TeamMode.Triple) ?
                 (isAlly ?
                     ((position.battlePos == 0) ? targetBtnNearTriple0
                         : (position.battlePos == 1) ? targetBtnNearTriple1 : targetBtnNearTriple2)
@@ -108,7 +109,7 @@ public class BTLUIPanelFieldTarget : BTLUIPanel
         for (int i = 0; i < allPositions.Count; i++)
         {
             BattlePosition curPos = allPositions[i];
-            BattleTeam team = battleModel.GetTeamFromBattlePosition(curPos);
+            Team team = battleModel.GetTeamFromBattlePosition(curPos);
             bool isAlly = (teamPos == curPos.teamPos);
 
             BTLUI_ButtonFieldTarget curBtn = GetFieldTargetButton(

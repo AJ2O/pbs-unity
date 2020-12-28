@@ -1,4 +1,5 @@
 ﻿using PBS.Main.Pokemon;
+using PBS.Main.Team;
 using PBS.Main.Trainer;
 using System.Collections.Generic;
 using UnityEngine;
@@ -4623,7 +4624,7 @@ public class GameTextDatabase
         Pokemon targetPokemon = null,
         Pokemon[] pokemonList = null,
         Trainer trainer = null,
-        BattleTeam targetTeam = null,
+        Team targetTeam = null,
         PokemonStats[] statList = null,
 
         string typeID = null,
@@ -4643,7 +4644,7 @@ public class GameTextDatabase
         )
     {
         // set player references
-        BattleTeam playerTeam = null;
+        Team playerTeam = null;
         Trainer playerTrainer = null;
         if (battleModel != null)
         {
@@ -4691,7 +4692,7 @@ public class GameTextDatabase
             if (battleModel != null)
             {
                 Trainer ownerTrainer = battleModel.GetPokemonOwner(userPokemon);
-                BattleTeam team = battleModel.GetTeam(userPokemon);
+                Team team = battleModel.GetTeam(userPokemon);
 
                 if (playerTeam != team)
                 {
@@ -4728,7 +4729,7 @@ public class GameTextDatabase
             if (battleModel != null)
             {
                 Trainer ownerTrainer = battleModel.GetPokemonOwner(targetPokemon);
-                BattleTeam team = battleModel.GetTeam(targetPokemon);
+                Team team = battleModel.GetTeam(targetPokemon);
                 if (playerTeam != team)
                 {
                     if (battleModel.battleSettings.isWildBattle)
