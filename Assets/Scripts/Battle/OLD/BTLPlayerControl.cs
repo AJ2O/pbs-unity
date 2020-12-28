@@ -2758,7 +2758,7 @@ public class BTLPlayerControl : MonoBehaviour
                 {
                     for (int i = 0; i < userPokemon.bProps.moveLimiters.Count && commandSuccess; i++)
                     {
-                        Pokemon.BattleProperties.MoveLimiter moveLimiter =
+                        BattleProperties.MoveLimiter moveLimiter =
                             userPokemon.bProps.moveLimiters[i];
                         EffectDatabase.StatusPKEff.MoveLimiting effect_ = moveLimiter.effect;
 

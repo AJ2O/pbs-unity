@@ -235,12 +235,12 @@ public class BTLManager : MonoBehaviour
 
                     bool activatedQuickClaw = false;
                     // Quick Draw
-                    List<Pokemon.Ability> pbAbilities = battle.PBPGetAbilitiesWithEffect(
+                    List<Ability> pbAbilities = battle.PBPGetAbilitiesWithEffect(
                         pokemon: userPokemon,
                         effectType: AbilityEffectType.QuickDraw);
                     for (int k = 0; k < pbAbilities.Count && !activatedQuickClaw; k++)
                     {
-                        Pokemon.Ability ability = pbAbilities[k];
+                        Ability ability = pbAbilities[k];
                         EffectDatabase.AbilityEff.AbilityEffect quickDraw_ =
                             ability.data.GetEffectNew(AbilityEffectType.QuickDraw);
                         if (quickDraw_ != null)
@@ -875,8 +875,8 @@ public class BTLManager : MonoBehaviour
             for (int i = 0; i < allPokemon.Count; i++)
             {
                 Pokemon currentTarget = allPokemon[i];
-                List<Pokemon.BattleProperties.MoveLimiter> limiters =
-                    new List<Pokemon.BattleProperties.MoveLimiter>(currentTarget.bProps.moveLimiters);
+                List<BattleProperties.MoveLimiter> limiters =
+                    new List<BattleProperties.MoveLimiter>(currentTarget.bProps.moveLimiters);
                 for (int k = 0; k < limiters.Count; k++)
                 {
                     if (limiters[k].turnsLeft == 0)
@@ -898,7 +898,7 @@ public class BTLManager : MonoBehaviour
                 // Embargo
                 if (currentTarget.bProps.embargo != null)
                 {
-                    Pokemon.BattleProperties.Embargo embargo = currentTarget.bProps.embargo;
+                    BattleProperties.Embargo embargo = currentTarget.bProps.embargo;
                     if (embargo.turnsLeft == 0)
                     {
                         currentTarget.bProps.embargo = null;
@@ -957,8 +957,8 @@ public class BTLManager : MonoBehaviour
             for (int i = 0; i < allPokemon.Count; i++)
             {
                 Pokemon curPokemon = allPokemon[i];
-                List<Pokemon.BattleProperties.ForestsCurse> forestsCurses
-                    = new List<Pokemon.BattleProperties.ForestsCurse>(curPokemon.bProps.forestsCurses);
+                List<BattleProperties.ForestsCurse> forestsCurses
+                    = new List<BattleProperties.ForestsCurse>(curPokemon.bProps.forestsCurses);
 
                 for (int k = 0; k < forestsCurses.Count; k++)
                 {
@@ -977,8 +977,8 @@ public class BTLManager : MonoBehaviour
             for (int i = 0; i < allPokemon.Count; i++)
             {
                 Pokemon curPokemon = allPokemon[i];
-                List<Pokemon.BattleProperties.LockOn> lockOnTargets 
-                    = new List<Pokemon.BattleProperties.LockOn>(curPokemon.bProps.lockOnTargets);
+                List<BattleProperties.LockOn> lockOnTargets 
+                    = new List<BattleProperties.LockOn>(curPokemon.bProps.lockOnTargets);
 
                 for (int k = 0; k < lockOnTargets.Count; k++)
                 {
@@ -1470,7 +1470,7 @@ public class BTLManager : MonoBehaviour
             Pokemon pokemon = alivePokemon[i];
             if (battle.IsPokemonOnFieldAndAble(pokemon))
             {
-                List<Pokemon.Ability> abilities = battle.PBPGetAbilities(pokemon);
+                List<Ability> abilities = battle.PBPGetAbilities(pokemon);
 
                 // Battle Bond
                 if (attackerPokemon != null && pokemon == attackerPokemon)
@@ -1675,7 +1675,7 @@ public class BTLManager : MonoBehaviour
                 // Power of Alchemy / Receiver
                 for (int k = 0; k < abilities.Count; k++)
                 {
-                    Pokemon.Ability powerOfAlchemyAbility = abilities[k];
+                    Ability powerOfAlchemyAbility = abilities[k];
                     EffectDatabase.AbilityEff.AbilityEffect powerOfAlchemy_ =
                         powerOfAlchemyAbility.data.GetEffectNew(AbilityEffectType.PowerOfAlchemy);
                     if (powerOfAlchemy_ != null)
@@ -1693,7 +1693,7 @@ public class BTLManager : MonoBehaviour
 
                             for (int j = 0; j < faintedAllies.Count && !triggeredReceiver; j++)
                             {
-                                List<Pokemon.Ability> allyAbilities =
+                                List<Ability> allyAbilities =
                                     battle.PBPGetAbilitiesGainable(faintedPokemon[j]);
                                 if (allyAbilities.Count > 0
                                     && battle.PBPGetAbilitiesReplaceable(pokemon, allyAbilities).Count > 0)
@@ -2145,7 +2145,7 @@ public class BTLManager : MonoBehaviour
             MoveData encoreData = null;
             for (int i = 0; i < userPokemon.bProps.moveLimiters.Count && encoreData == null; i++)
             {
-                Pokemon.BattleProperties.MoveLimiter limiter =
+                BattleProperties.MoveLimiter limiter =
                     userPokemon.bProps.moveLimiters[i];
                 if (limiter.effect is EffectDatabase.StatusPKEff.Encore)
                 {
@@ -2430,11 +2430,11 @@ public class BTLManager : MonoBehaviour
                     SendEvent(gameText);
 
                     // Steadfast
-                    List<Pokemon.Ability> pbAbilities = 
+                    List<Ability> pbAbilities = 
                         battle.PBPGetAbilitiesWithEffect(userPokemon, AbilityEffectType.Steadfast);
                     for (int i = 0; i < pbAbilities.Count; i++)
                     {
-                        Pokemon.Ability ability = pbAbilities[i];
+                        Ability ability = pbAbilities[i];
                         EffectDatabase.AbilityEff.AbilityEffect steadfast_ =
                             ability.data.GetEffectNew(AbilityEffectType.Steadfast);
                         if (steadfast_ != null)
@@ -2640,7 +2640,7 @@ public class BTLManager : MonoBehaviour
             {
                 for (int i = 0; i < userPokemon.bProps.moveLimiters.Count && moveSuccess; i++)
                 {
-                    Pokemon.BattleProperties.MoveLimiter limiter =
+                    BattleProperties.MoveLimiter limiter =
                         userPokemon.bProps.moveLimiters[i];
                     if (!limiter.justInitialized || !limiter.effect.canUseMiddleOfTurn)
                     {
@@ -2664,7 +2664,7 @@ public class BTLManager : MonoBehaviour
             && !command.isFutureSightMove
             && userPokemon.bProps.truantTurns > 0)
         {
-            Pokemon.AbilityEffectPair truantPair = 
+            AbilityEffectPair truantPair = 
                 battle.PBPGetAbilityEffectPair(userPokemon, AbilityEffectType.Truant);
             if (truantPair != null)
             {
@@ -2803,11 +2803,11 @@ public class BTLManager : MonoBehaviour
 
                 // Stance Change
                 bool isStanceChanged = false;
-                List<Pokemon.Ability> stanceChangeAbilities = 
+                List<Ability> stanceChangeAbilities = 
                     battle.PBPGetAbilitiesWithEffect(userPokemon, AbilityEffectType.StanceChange);
                 for (int i = 0; i < stanceChangeAbilities.Count && !isStanceChanged; i++)
                 {
-                    Pokemon.Ability ability = stanceChangeAbilities[i];
+                    Ability ability = stanceChangeAbilities[i];
                     List<EffectDatabase.AbilityEff.AbilityEffect> stanceChange_ =
                         ability.data.GetEffectsNew(AbilityEffectType.StanceChange);
                     for (int k = 0; k < stanceChange_.Count && !isStanceChanged; k++)
@@ -3675,13 +3675,13 @@ public class BTLManager : MonoBehaviour
             // Parental Bond
             List<EffectDatabase.AbilityEff.ParentalBond.BondedHit> parentalBondHits =
                 new List<EffectDatabase.AbilityEff.ParentalBond.BondedHit>();
-            Pokemon.Ability parentalBondAbility = null;
+            Ability parentalBondAbility = null;
             if (!command.forceOneHit)
             {
-                List<Pokemon.Ability> userAbilities = battle.PBPGetAbilities(userPokemon);
+                List<Ability> userAbilities = battle.PBPGetAbilities(userPokemon);
                 for (int i = 0; i < userAbilities.Count && parentalBondAbility == null; i++)
                 {
-                    Pokemon.Ability ability = userAbilities[i];
+                    Ability ability = userAbilities[i];
                     EffectDatabase.AbilityEff.AbilityEffect parentalBond_ =
                         ability.data.GetEffectNew(AbilityEffectType.ParentalBond);
                     if (parentalBond_ != null)
@@ -3973,7 +3973,7 @@ public class BTLManager : MonoBehaviour
                         hit: curHit,
                         magnitudeLevel: magnitudeLevel,
                         parentalBondHit: parentalBondHit);
-                    List<Pokemon.Ability> targetAbilities =
+                    List<Ability> targetAbilities =
                         battle.PBPGetAbilities(currentTarget, bypassAbility);
 
                     // Check if team association already blocked move
@@ -4408,14 +4408,14 @@ public class BTLManager : MonoBehaviour
                                         // Sturdy
                                         if (!faintAvoided)
                                         {
-                                            List<Pokemon.AbilityEffectPair> sturdyAbilities =
+                                            List<AbilityEffectPair> sturdyAbilities =
                                                 battle.PBPGetAbilityEffectPairs(
                                                     currentTarget, 
                                                     AbilityEffectType.Sturdy, 
                                                     bypassAbility);
                                             for (int j = 0; j < sturdyAbilities.Count && !faintAvoided; j++)
                                             {
-                                                Pokemon.AbilityEffectPair abilityPair = sturdyAbilities[j];
+                                                AbilityEffectPair abilityPair = sturdyAbilities[j];
                                                 EffectDatabase.AbilityEff.Sturdy sturdy =
                                                     abilityPair.effect as EffectDatabase.AbilityEff.Sturdy;
                                                 if (battle.DoEffectFiltersPass(
@@ -4757,13 +4757,13 @@ public class BTLManager : MonoBehaviour
                                 int drainedHP = Mathf.FloorToInt(absorb.healPercent * damage);
 
                                 bool ignoreDrain = false;
-                                List<Pokemon.Ability> targetAbilities = 
+                                List<Ability> targetAbilities = 
                                     battle.PBPGetAbilities(currentTarget.pokemon);
                                 if (battle.IsPokemonOnFieldAndAble(userPokemon))
                                 {
                                     for (int j = 0; j < targetAbilities.Count && !ignoreDrain; j++)
                                     {
-                                        Pokemon.Ability ability = targetAbilities[j];
+                                        Ability ability = targetAbilities[j];
                                         EffectDatabase.AbilityEff.AbilityEffect liquidOoze_ =
                                             ability.data.GetEffectNew(AbilityEffectType.LiquidOoze);
 
@@ -5198,7 +5198,7 @@ public class BTLManager : MonoBehaviour
                                         List<Pokemon> dampUsers = battle.GetPokemonUnfaintedFrom(battle.pokemonOnField);
                                         for (int j = 0; j < dampUsers.Count && !blocked; j++)
                                         {
-                                            List<Pokemon.Ability> abilities = battle.PBPGetAbilities(dampUsers[j]);
+                                            List<Ability> abilities = battle.PBPGetAbilities(dampUsers[j]);
                                             for (int l = 0; l < abilities.Count && !blocked; l++)
                                             {
                                                 AbilityData dampData = abilities[l].data;
@@ -5602,7 +5602,7 @@ public class BTLManager : MonoBehaviour
                     Pokemon availablePokemon = battle.GetTrainerFirstAvailablePokemon(trainer);
                     if (availablePokemon != null)
                     {
-                        List<Pokemon.Ability> userAbilities = battle.PBPGetAbilities(userPokemon);
+                        List<Ability> userAbilities = battle.PBPGetAbilities(userPokemon);
                         bool wimpedOut = false;
                         for (int i = 0; i < userAbilities.Count && !wimpedOut; i++)
                         {
@@ -5838,7 +5838,7 @@ public class BTLManager : MonoBehaviour
                     Pokemon availablePokemon = battle.GetTrainerFirstAvailablePokemon(trainer);
                     if (availablePokemon != null)
                     {
-                        List<Pokemon.Ability> userAbilities = battle.PBPGetAbilities(userPokemon);
+                        List<Ability> userAbilities = battle.PBPGetAbilities(userPokemon);
                         bool wimpedOut = false;
                         for (int i = 0; i < userAbilities.Count && !wimpedOut; i++)
                         {
@@ -5919,10 +5919,10 @@ public class BTLManager : MonoBehaviour
                     }
 
                     // Gulp Missile
-                    List<Pokemon.Ability> userAbilities = battle.PBPGetAbilities(userPokemon);
+                    List<Ability> userAbilities = battle.PBPGetAbilities(userPokemon);
                     for (int i = 0; i < userAbilities.Count; i++)
                     {
-                        Pokemon.Ability ability = userAbilities[i];
+                        Ability ability = userAbilities[i];
                         List<EffectDatabase.AbilityEff.AbilityEffect> gulpMissiles_ =
                             ability.data.GetEffectsNew(AbilityEffectType.GulpMissile);
                         bool changedForm = false;
@@ -6434,7 +6434,7 @@ public class BTLManager : MonoBehaviour
             {
                 if (battle.IsPokemonOnFieldAndAble(dancerPokemon[i]))
                 {
-                    List<Pokemon.Ability> abilities = battle.PBPGetAbilities(dancerPokemon[i]);
+                    List<Ability> abilities = battle.PBPGetAbilities(dancerPokemon[i]);
                     for (int k = 0; k < abilities.Count; k++)
                     {
                         EffectDatabase.AbilityEff.AbilityEffect dancer_ = 
@@ -6842,8 +6842,8 @@ public class BTLManager : MonoBehaviour
                                 }
 
                                 List<string> typesRemoved = new List<string>();
-                                List<Pokemon.BattleProperties.ForestsCurse> forestsCursesRemoved
-                                    = new List<Pokemon.BattleProperties.ForestsCurse>();
+                                List<BattleProperties.ForestsCurse> forestsCursesRemoved
+                                    = new List<BattleProperties.ForestsCurse>();
                                 for (int i = 0; i < removableTypes.Count; i++)
                                 {
                                     bool typeRemoved = false;
@@ -7022,7 +7022,7 @@ public class BTLManager : MonoBehaviour
                                     for (int k = 0; k < targetPokemon.bProps.forestsCurses.Count; k++)
                                     {
                                         // Can't add same forest curse effect
-                                        Pokemon.BattleProperties.ForestsCurse forestCurse = 
+                                        BattleProperties.ForestsCurse forestCurse = 
                                             targetPokemon.bProps.forestsCurses[k];
                                         if (forestCurse.moveID == moveData.ID
                                             && forestCurse.typeID == curType)
@@ -7066,8 +7066,8 @@ public class BTLManager : MonoBehaviour
 
                                     for (int i = 0; i < addableTypes.Count; i++)
                                     {
-                                        Pokemon.BattleProperties.ForestsCurse forestCurse = 
-                                            new Pokemon.BattleProperties.ForestsCurse(
+                                        BattleProperties.ForestsCurse forestCurse = 
+                                            new BattleProperties.ForestsCurse(
                                                 moveData.ID,
                                                 typeID: addableTypes[i],
                                                 turns
@@ -7300,8 +7300,8 @@ public class BTLManager : MonoBehaviour
                                 {
                                     int turns = Mathf.FloorToInt(effect.GetFloat(0));
 
-                                    Pokemon.BattleProperties.LockOn lockOnTarget = 
-                                        new Pokemon.BattleProperties.LockOn(
+                                    BattleProperties.LockOn lockOnTarget = 
+                                        new BattleProperties.LockOn(
                                             targetPokemon.uniqueID,
                                             moveData.ID,
                                             turns
@@ -8010,8 +8010,8 @@ public class BTLManager : MonoBehaviour
                                 }
 
                                 List<string> typesRemoved = new List<string>();
-                                List<Pokemon.BattleProperties.ForestsCurse> forestsCursesRemoved
-                                    = new List<Pokemon.BattleProperties.ForestsCurse>();
+                                List<BattleProperties.ForestsCurse> forestsCursesRemoved
+                                    = new List<BattleProperties.ForestsCurse>();
                                 for (int i = 0; i < removableTypes.Count; i++)
                                 {
                                     bool typeRemoved = false;
@@ -8147,7 +8147,7 @@ public class BTLManager : MonoBehaviour
                                     for (int k = 0; k < userPokemon.bProps.forestsCurses.Count; k++)
                                     {
                                         // Can't add same forest curse effect
-                                        Pokemon.BattleProperties.ForestsCurse forestCurse =
+                                        BattleProperties.ForestsCurse forestCurse =
                                             userPokemon.bProps.forestsCurses[k];
                                         if (forestCurse.moveID == moveData.ID
                                             && forestCurse.typeID == curType)
@@ -8191,8 +8191,8 @@ public class BTLManager : MonoBehaviour
 
                                     for (int i = 0; i < addableTypes.Count; i++)
                                     {
-                                        Pokemon.BattleProperties.ForestsCurse forestCurse =
-                                            new Pokemon.BattleProperties.ForestsCurse(
+                                        BattleProperties.ForestsCurse forestCurse =
+                                            new BattleProperties.ForestsCurse(
                                                 moveData.ID,
                                                 typeID: addableTypes[i],
                                                 turns
@@ -9117,7 +9117,7 @@ public class BTLManager : MonoBehaviour
                 EffectDatabase.MoveEff.CoreEnforcer coreEnforcer = effect_ as EffectDatabase.MoveEff.CoreEnforcer;
                 if (battle.IsPokemonOnFieldAndAble(targetPokemon))
                 {
-                    List<Pokemon.Ability> abilities = battle.PBPGetAbilities(
+                    List<Ability> abilities = battle.PBPGetAbilities(
                         pokemon: targetPokemon,
                         ignoreSuppression: true
                         );
@@ -10209,8 +10209,8 @@ public class BTLManager : MonoBehaviour
 
             BattleTeam targetTeam = battle.GetTeam(targetPokemon);
             List<Pokemon> allyPokemon = battle.GetAllyPokemon(targetPokemon);
-            List<Pokemon.Ability> userAbilities = battle.PBPGetAbilities(userPokemon);
-            List<Pokemon.Ability> targetAbilites = battle.PBPGetAbilities(targetPokemon);
+            List<Ability> userAbilities = battle.PBPGetAbilities(userPokemon);
+            List<Ability> targetAbilites = battle.PBPGetAbilities(targetPokemon);
             // all checks here
 
             // Check if battle conditions block
@@ -10261,11 +10261,11 @@ public class BTLManager : MonoBehaviour
             for (int n = 0; n < allyPokemon.Count && !statusBlockedFully; n++)
             {
                 Pokemon curPokemon = allyPokemon[n];
-                List<Pokemon.Ability> curAbilities = battle.PBPGetAbilities(curPokemon);
+                List<Ability> curAbilities = battle.PBPGetAbilities(curPokemon);
 
                 for (int i = 0; i < curAbilities.Count && !statusBlockedFully; i++)
                 {
-                    Pokemon.Ability ability = curAbilities[i];
+                    Ability ability = curAbilities[i];
                     List<EffectDatabase.AbilityEff.AbilityEffect> limbers_ =
                         ability.data.GetEffectsNew(AbilityEffectType.Limber);
 
@@ -10338,7 +10338,7 @@ public class BTLManager : MonoBehaviour
             // Limber / Immunity / Vital Spirit / etc.
             for (int i = 0; i < targetAbilites.Count && !statusBlockedFully; i++)
             {
-                Pokemon.Ability ability = targetAbilites[i];
+                Ability ability = targetAbilites[i];
                 List<EffectDatabase.AbilityEff.AbilityEffect> limbers_ =
                     ability.data.GetEffectsNew(AbilityEffectType.Limber);
                 for (int k = 0; k < limbers_.Count && !statusBlockedFully; k++)
@@ -10421,7 +10421,7 @@ public class BTLManager : MonoBehaviour
             // Can't overwrite Comatose
             if (!statusBlockedFully)
             {
-                Pokemon.Ability ability = battle.PBPGetComatoseSCAbility(targetPokemon);
+                Ability ability = battle.PBPGetComatoseSCAbility(targetPokemon);
                 if (ability != null)
                 {
                     statusBlockedFully = true;
@@ -10442,7 +10442,7 @@ public class BTLManager : MonoBehaviour
             {
                 for (int i = 0; i < targetAbilites.Count && !statusBlockedFully; i++)
                 {
-                    Pokemon.Ability ability = targetAbilites[i];
+                    Ability ability = targetAbilites[i];
                     EffectDatabase.AbilityEff.AbilityEffect shieldsDown_ = 
                         ability.data.GetEffectNew(AbilityEffectType.ShieldsDown);
                     if (shieldsDown_ != null)
@@ -10638,11 +10638,11 @@ public class BTLManager : MonoBehaviour
                 List<AbilityData> abilities = battle.PBPGetAbilityDatas(targetPokemon);
 
                 bool isReflected = false;
-                List<Pokemon.AbilityEffectPair> synchronizePairs =
+                List<AbilityEffectPair> synchronizePairs =
                     battle.PBPGetAbilityEffectPairs(targetPokemon, AbilityEffectType.Synchronize);
                 for (int i = 0; i < synchronizePairs.Count && !isReflected; i++)
                 {
-                    Pokemon.AbilityEffectPair effectPair = synchronizePairs[i];
+                    AbilityEffectPair effectPair = synchronizePairs[i];
                     EffectDatabase.AbilityEff.Synchronize synchronize =
                         effectPair.effect as EffectDatabase.AbilityEff.Synchronize;
 
@@ -10787,8 +10787,8 @@ public class BTLManager : MonoBehaviour
                 // Move-Limiting
                 if (effect_ is EffectDatabase.StatusPKEff.MoveLimiting)
                 {
-                    List<Pokemon.BattleProperties.MoveLimiter> moveLimiters =
-                        new List<Pokemon.BattleProperties.MoveLimiter>(targetPokemon.bProps.moveLimiters);
+                    List<BattleProperties.MoveLimiter> moveLimiters =
+                        new List<BattleProperties.MoveLimiter>(targetPokemon.bProps.moveLimiters);
 
                     // Disable
                     if (effect_ is EffectDatabase.StatusPKEff.Disable)
@@ -10833,8 +10833,8 @@ public class BTLManager : MonoBehaviour
                         if (!isFail)
                         {
                             success = true;
-                            Pokemon.BattleProperties.MoveLimiter limiter =
-                                new Pokemon.BattleProperties.MoveLimiter(
+                            BattleProperties.MoveLimiter limiter =
+                                new BattleProperties.MoveLimiter(
                                     effect: effect,
                                     turnsLeft: effect.defaultTurns.GetTurns(),
                                     affectedMoves: new string[] { targetPokemon.bProps.lastMove }
@@ -10885,8 +10885,8 @@ public class BTLManager : MonoBehaviour
                         if (!isFail)
                         {
                             success = true;
-                            Pokemon.BattleProperties.MoveLimiter limiter =
-                                new Pokemon.BattleProperties.MoveLimiter(
+                            BattleProperties.MoveLimiter limiter =
+                                new BattleProperties.MoveLimiter(
                                     effect: effect,
                                     turnsLeft: effect.defaultTurns.GetTurns(),
                                     affectedMoves: new string[] { targetPokemon.bProps.lastMove }
@@ -10910,8 +10910,8 @@ public class BTLManager : MonoBehaviour
                         if (!isFail)
                         {
                             success = true;
-                            Pokemon.BattleProperties.MoveLimiter limiter =
-                                new Pokemon.BattleProperties.MoveLimiter(
+                            BattleProperties.MoveLimiter limiter =
+                                new BattleProperties.MoveLimiter(
                                     effect: effect,
                                     turnsLeft: effect.defaultTurns.GetTurns()
                                     );
@@ -10934,8 +10934,8 @@ public class BTLManager : MonoBehaviour
                         if (!isFail)
                         {
                             success = true;
-                            Pokemon.BattleProperties.MoveLimiter limiter =
-                                new Pokemon.BattleProperties.MoveLimiter(
+                            BattleProperties.MoveLimiter limiter =
+                                new BattleProperties.MoveLimiter(
                                     effect: effect,
                                     turnsLeft: effect.defaultTurns.GetTurns()
                                     );
@@ -10958,8 +10958,8 @@ public class BTLManager : MonoBehaviour
                         if (!isFail)
                         {
                             success = true;
-                            Pokemon.BattleProperties.MoveLimiter limiter =
-                                new Pokemon.BattleProperties.MoveLimiter(
+                            BattleProperties.MoveLimiter limiter =
+                                new BattleProperties.MoveLimiter(
                                     effect: effect,
                                     turnsLeft: effect.defaultTurns.GetTurns()
                                     );
@@ -10980,8 +10980,8 @@ public class BTLManager : MonoBehaviour
                     if (!isFail)
                     {
                         success = true;
-                        Pokemon.BattleProperties.Embargo embargo =
-                            new Pokemon.BattleProperties.Embargo(
+                        BattleProperties.Embargo embargo =
+                            new BattleProperties.Embargo(
                                 effect: effect,
                                 turnsLeft: effect.defaultTurns.GetTurns()
                                 );
@@ -11263,7 +11263,7 @@ public class BTLManager : MonoBehaviour
     {
         if (!battle.IsPokemonFainted(pokemon))
         {
-            List<Pokemon.Ability> abilities = battle.PBPGetAbilities(pokemon);
+            List<Ability> abilities = battle.PBPGetAbilities(pokemon);
 
             // HP Loss (ex. Bind / Burn / Poison)
             if (effect_.effectType == PokemonSEType.HPLoss)
@@ -12088,7 +12088,7 @@ public class BTLManager : MonoBehaviour
                             }
                         }
                         // Next Command
-                        Pokemon.PokemonSavedCommand command = pokemon.bProps.nextCommand;
+                        PokemonSavedCommand command = pokemon.bProps.nextCommand;
                         if (command != null)
                         {
                             MoveData moveData = MoveDatabase.instance.GetMoveData(command.moveID);
@@ -12316,10 +12316,10 @@ public class BTLManager : MonoBehaviour
             BattleHitTarget currentTarget = battleHitTargets[i];
             if (currentTarget.affectedByMove)
             {
-                List<Pokemon.Ability> abilities = battle.PBPGetAbilities(currentTarget.pokemon);
+                List<Ability> abilities = battle.PBPGetAbilities(currentTarget.pokemon);
                 for (int k = 0; k < abilities.Count; k++)
                 {
-                    Pokemon.Ability ability = abilities[k];
+                    Ability ability = abilities[k];
 
                     // Iron Barbs / Rough Skin
                     EffectDatabase.AbilityEff.AbilityEffect roughSkin_ =
@@ -12521,14 +12521,14 @@ public class BTLManager : MonoBehaviour
         for (int i = 0; i < battleHitTargets.Count && !triggeredWanderingSpirit; i++)
         {
             BattleHitTarget currentTarget = battleHitTargets[i];
-            List<Pokemon.Ability> userAbilities = battle.PBPGetAbilities(userPokemon);
+            List<Ability> userAbilities = battle.PBPGetAbilities(userPokemon);
 
             if (currentTarget.affectedByMove && battle.IsPokemonOnField(currentTarget.pokemon))
             {
-                List<Pokemon.Ability> targetAbilities = battle.PBPGetAbilities(currentTarget.pokemon);
+                List<Ability> targetAbilities = battle.PBPGetAbilities(currentTarget.pokemon);
                 for (int k = 0; k < targetAbilities.Count && !triggeredWanderingSpirit; k++)
                 {
-                    Pokemon.Ability ability = targetAbilities[k];
+                    Ability ability = targetAbilities[k];
                     EffectDatabase.AbilityEff.AbilityEffect mummy_ = 
                         ability.data.GetEffectNew(AbilityEffectType.Mummy);
                     if (mummy_ != null)
@@ -12541,15 +12541,15 @@ public class BTLManager : MonoBehaviour
                             moveData: moveData
                             ))
                         {
-                            List<Pokemon.Ability> targetSetAbilities = new List<Pokemon.Ability>();
-                            List<Pokemon.Ability> userSetAbilities = new List<Pokemon.Ability>();
+                            List<Ability> targetSetAbilities = new List<Ability>();
+                            List<Ability> userSetAbilities = new List<Ability>();
 
                             // Set abilities
                             if (mummy.setAbilities != null)
                             {
                                 for (int j = 0; j < mummy.setAbilities.Count; j++)
                                 {
-                                    userSetAbilities.Add(new Pokemon.Ability(mummy.setAbilities[j]));
+                                    userSetAbilities.Add(new Ability(mummy.setAbilities[j]));
                                 }
                             }
                             else
@@ -13061,11 +13061,11 @@ public class BTLManager : MonoBehaviour
 
                         // Change Form Back
                         currentTarget.pokemon.bProps.gulpMissile = null;
-                        List<Pokemon.Ability> targetAbilities = battle.PBPGetAbilities(currentTarget.pokemon);
+                        List<Ability> targetAbilities = battle.PBPGetAbilities(currentTarget.pokemon);
                         bool changedForm = false;
                         for (int k = 0; k < targetAbilities.Count && !changedForm; k++)
                         {
-                            Pokemon.Ability ability = targetAbilities[k];
+                            Ability ability = targetAbilities[k];
                             List<EffectDatabase.AbilityEff.AbilityEffect> gulpMissiles_ =
                                 ability.data.GetEffectsNew(AbilityEffectType.GulpMissile);
                             for (int j = 0; j < gulpMissiles_.Count && !changedForm; j++)
@@ -13105,7 +13105,7 @@ public class BTLManager : MonoBehaviour
                 BattleHitTarget currentTarget = battleHitTargets[i];
                 if (currentTarget.affectedByMove && battle.IsPokemonOnFieldAndAble(currentTarget.pokemon))
                 {
-                    List<Pokemon.Ability> abilites = battle.PBPGetAbilities(currentTarget.pokemon);
+                    List<Ability> abilites = battle.PBPGetAbilities(currentTarget.pokemon);
                     for (int k = 0; k < abilites.Count; k++)
                     {
                         // Color Change
@@ -13149,12 +13149,12 @@ public class BTLManager : MonoBehaviour
             if (worrySeed_ != null)
             {
                 EffectDatabase.MoveEff.WorrySeed worrySeed = worrySeed_ as EffectDatabase.MoveEff.WorrySeed;
-                List<Pokemon.Ability> worrySeedAbilities = new List<Pokemon.Ability>();
+                List<Ability> worrySeedAbilities = new List<Ability>();
                 if (worrySeed.abilities.Count > 0)
                 {
                     for (int i = 0; i < worrySeed.abilities.Count; i++)
                     {
-                        Pokemon.Ability ability = new Pokemon.Ability(
+                        Ability ability = new Ability(
                             abilityID: worrySeed.abilities[i]
                             );
                         worrySeedAbilities.Add(ability);
@@ -13162,13 +13162,13 @@ public class BTLManager : MonoBehaviour
                 }
                 if (worrySeed.entrainment)
                 {
-                    List<Pokemon.Ability> pbAbilities = battle.PBPGetAbilities(
+                    List<Ability> pbAbilities = battle.PBPGetAbilities(
                         pokemon: userPokemon,
                         ignoreSuppression: true
                         );
                     for (int i = 0; i < pbAbilities.Count; i++)
                     {
-                        Pokemon.Ability ability = new Pokemon.Ability(
+                        Ability ability = new Ability(
                             abilityID: pbAbilities[i].abilityID
                             );
                         worrySeedAbilities.Add(ability);
@@ -13182,7 +13182,7 @@ public class BTLManager : MonoBehaviour
                         if (currentTarget.affectedByMove
                             && battle.IsPokemonOnFieldAndAble(currentTarget.pokemon))
                         {
-                            List<Pokemon.Ability> replaceableAbilities =
+                            List<Ability> replaceableAbilities =
                                 battle.PBPGetAbilitiesReplaceable(
                                     pokemon: currentTarget.pokemon,
                                     worrySeedAbilities: worrySeedAbilities);
@@ -13190,7 +13190,7 @@ public class BTLManager : MonoBehaviour
                             if (replaceableAbilities.Count > 0
                                 || currentTarget.pokemon.bProps.abilities.Count == 0)
                             {
-                                List<Pokemon.Ability> setAbilities =
+                                List<Ability> setAbilities =
                                     battle.PBPSetAbilitiesReplaceable(
                                         pokemon: currentTarget.pokemon,
                                         worrySeedAbilities: worrySeedAbilities
@@ -13322,7 +13322,7 @@ public class BTLManager : MonoBehaviour
             // Magician
             if (battle.PBPGetAbilityEffect(userPokemon, AbilityEffectType.Magician) != null)
             {
-                List<Pokemon.Ability> userAbilities = battle.PBPGetAbilities(userPokemon);
+                List<Ability> userAbilities = battle.PBPGetAbilities(userPokemon);
                 for (int k = 0; k < battleHitTargets.Count; k++)
                 {
                     BattleHitTarget currentTarget = battleHitTargets[k];
@@ -13340,7 +13340,7 @@ public class BTLManager : MonoBehaviour
                                 bool itemStolen = false;
                                 for (int l = 0; l < userAbilities.Count && !itemStolen; l++)
                                 {
-                                    Pokemon.Ability ability = userAbilities[l];
+                                    Ability ability = userAbilities[l];
                                     EffectDatabase.AbilityEff.AbilityEffect magician_ =
                                         ability.data.GetEffectNew(AbilityEffectType.Magician);
                                     if (magician_ != null)
@@ -13390,10 +13390,10 @@ public class BTLManager : MonoBehaviour
                         if (battle.CanPokemonItemBeLost(userPokemon, userItem)
                             && battle.CanPokemonItemBeGained(currentTarget.pokemon, userItem))
                         {
-                            List<Pokemon.Ability> abilities = battle.PBPGetAbilities(currentTarget.pokemon);
+                            List<Ability> abilities = battle.PBPGetAbilities(currentTarget.pokemon);
                             for (int k = 0; k < abilities.Count; k++)
                             {
-                                Pokemon.Ability ability = abilities[k];
+                                Ability ability = abilities[k];
                                 EffectDatabase.AbilityEff.AbilityEffect pickpocket_ =
                                     abilities[k].data.GetEffectNew(AbilityEffectType.Pickpocket);
                                 if (pickpocket_ != null)
@@ -13603,7 +13603,7 @@ public class BTLManager : MonoBehaviour
             }
 
             // Poison Touch
-            List<Pokemon.Ability> poisonTouchAbilities = 
+            List<Ability> poisonTouchAbilities = 
                 battle.PBPGetAbilitiesWithEffect(userPokemon, AbilityEffectType.PoisonTouch);
             if (poisonTouchAbilities.Count > 0)
             {
@@ -13615,7 +13615,7 @@ public class BTLManager : MonoBehaviour
                     {
                         for (int k = 0; k < poisonTouchAbilities.Count; k++)
                         {
-                            Pokemon.Ability ability = poisonTouchAbilities[k];
+                            Ability ability = poisonTouchAbilities[k];
                             List<EffectDatabase.AbilityEff.AbilityEffect> poisonTouch_ =
                                 ability.data.GetEffectsNew(AbilityEffectType.PoisonTouch);
                             for (int j = 0; j < poisonTouch_.Count; j++)
@@ -13696,13 +13696,13 @@ public class BTLManager : MonoBehaviour
                             // Suction Cups
                             if (canBeWhirlwinded)
                             {
-                                List<Pokemon.AbilityEffectPair> suctionCupPairs =
+                                List<AbilityEffectPair> suctionCupPairs =
                                     battle.PBPGetAbilityEffectPairs(
                                         currentTarget.pokemon, 
                                         AbilityEffectType.SuctionCups);
                                 for (int k = 0; k < suctionCupPairs.Count && canBeWhirlwinded; k++)
                                 {
-                                    Pokemon.AbilityEffectPair abilityPair = suctionCupPairs[k];
+                                    AbilityEffectPair abilityPair = suctionCupPairs[k];
                                     EffectDatabase.AbilityEff.SuctionCups suctionCups =
                                         abilityPair.effect as EffectDatabase.AbilityEff.SuctionCups;
                                     if (battle.DoEffectFiltersPass(
@@ -14109,7 +14109,7 @@ public class BTLManager : MonoBehaviour
             List<Pokemon> dampPokemon = battle.GetPokemonUnfainted();
             for (int i = 0; i < dampPokemon.Count && !failure; i++)
             {
-                List<Pokemon.Ability> abilities = battle.PBPGetAbilities(dampPokemon[i]);
+                List<Ability> abilities = battle.PBPGetAbilities(dampPokemon[i]);
                 for (int k = 0; k < abilities.Count && !failure; k++)
                 {
                     EffectDatabase.AbilityEff.AbilityEffect damp_ = 
@@ -14958,9 +14958,9 @@ public class BTLManager : MonoBehaviour
             }
         }
         
-        List<Pokemon.Ability> userAbilities = battle.PBPGetAbilities(
+        List<Ability> userAbilities = battle.PBPGetAbilities(
             pokemon: userPokemon);
-        List<Pokemon.Ability> targetAbilities = battle.PBPGetAbilities(
+        List<Ability> targetAbilities = battle.PBPGetAbilities(
             pokemon: targetPokemon,
             bypassAbility: bypassAbility);
 
@@ -14983,7 +14983,7 @@ public class BTLManager : MonoBehaviour
                         {
                             for (int i = 0; i < targetAllyPokemon.Count && !failure; i++)
                             {
-                                List<Pokemon.Ability> abilities = battle.PBPGetAbilities(
+                                List<Ability> abilities = battle.PBPGetAbilities(
                                     pokemon: targetAllyPokemon[i], 
                                     bypassAbility: bypassAbility);
                                 for (int k = 0; k < abilities.Count && !failure; k++)
@@ -15147,7 +15147,7 @@ public class BTLManager : MonoBehaviour
                                                 // Flash Fire
                                                 if (triggerCondition.flashFireBoost > 0)
                                                 {
-                                                    Pokemon.BattleProperties.FlashFireBoost flashFireBoost =
+                                                    BattleProperties.FlashFireBoost flashFireBoost =
                                                         targetPokemon.bProps.GetFlashFireBoost(moveData.moveType);
                                                     if (flashFireBoost != null)
                                                     {
@@ -15155,7 +15155,7 @@ public class BTLManager : MonoBehaviour
                                                         {
                                                             targetPokemon.bProps.flashFireBoosts.Remove(flashFireBoost);
                                                             targetPokemon.bProps.flashFireBoosts.Add(
-                                                                new Pokemon.BattleProperties.FlashFireBoost(
+                                                                new BattleProperties.FlashFireBoost(
                                                                     moveType: moveData.moveType,
                                                                     boost: triggerCondition.flashFireBoost
                                                                     ));
@@ -15164,7 +15164,7 @@ public class BTLManager : MonoBehaviour
                                                     else
                                                     {
                                                         targetPokemon.bProps.flashFireBoosts.Add(
-                                                            new Pokemon.BattleProperties.FlashFireBoost(
+                                                            new BattleProperties.FlashFireBoost(
                                                                 moveType: moveData.moveType,
                                                                 boost: triggerCondition.flashFireBoost
                                                                 ));
@@ -15182,7 +15182,7 @@ public class BTLManager : MonoBehaviour
                         {
                             for (int i = 0; i < userAbilities.Count && !failure; i++)
                             {
-                                Pokemon.Ability ability = userAbilities[i];
+                                Ability ability = userAbilities[i];
                                 EffectDatabase.AbilityEff.AbilityEffect prankster_ =
                                     ability.data.GetEffectNew(AbilityEffectType.Prankster);
                                 if (prankster_ != null && !failure)
@@ -15208,7 +15208,7 @@ public class BTLManager : MonoBehaviour
                         {
                             for (int i = 0; i < targetAbilities.Count && !failure; i++)
                             {
-                                Pokemon.Ability ability = targetAbilities[i];
+                                Ability ability = targetAbilities[i];
                                 EffectDatabase.AbilityEff.AbilityEffect telepathy_ =
                                     ability.data.GetEffectNew(AbilityEffectType.Telepathy);
                                 if (telepathy_ != null)
@@ -15237,7 +15237,7 @@ public class BTLManager : MonoBehaviour
                         {
                             for (int i = 0; i < targetAbilities.Count && !failure; i++)
                             {
-                                Pokemon.Ability ability = targetAbilities[i];
+                                Ability ability = targetAbilities[i];
                                 EffectDatabase.AbilityEff.AbilityEffect wonderGuard_ =
                                     ability.data.GetEffectNew(AbilityEffectType.WonderGuard);
                                 if (wonderGuard_ != null)
@@ -15606,9 +15606,9 @@ public class BTLManager : MonoBehaviour
             }
         }
 
-        List<Pokemon.Ability> userAbilities = battle.PBPGetAbilities(
+        List<Ability> userAbilities = battle.PBPGetAbilities(
             pokemon: userPokemon);
-        List<Pokemon.Ability> targetAbilities = battle.PBPGetAbilities(
+        List<Ability> targetAbilities = battle.PBPGetAbilities(
             pokemon: targetPokemon,
             bypassAbility: bypassAbility);
 
@@ -15626,7 +15626,7 @@ public class BTLManager : MonoBehaviour
             {
                 for (int i = 0; i < targetAbilities.Count && magicCoat == null; i++)
                 {
-                    Pokemon.Ability ability = targetAbilities[i];
+                    Ability ability = targetAbilities[i];
                     EffectDatabase.AbilityEff.AbilityEffect magicBounce_ =
                         ability.data.GetEffectNew(AbilityEffectType.MagicBounce);
                     if (magicBounce_ != null)
@@ -15724,8 +15724,8 @@ public class BTLManager : MonoBehaviour
         {
             // TODO: get battle properties for baton pass
             int position = withdrawPokemon.battlePos;
-            Pokemon.BattleProperties withdrawBProps 
-                = Pokemon.BattleProperties.Clone(withdrawPokemon.bProps, withdrawPokemon);
+            BattleProperties withdrawBProps 
+                = BattleProperties.Clone(withdrawPokemon.bProps, withdrawPokemon);
 
             Battle updateModel = Battle.CloneModel(battle);
             List<BattleCommand> replaceCommands = new List<BattleCommand>();
@@ -17121,12 +17121,12 @@ public class BTLManager : MonoBehaviour
             ));
 
         // Ripen
-        List<Pokemon.Ability> ripenAbilities =
+        List<Ability> ripenAbilities =
             battle.PBPGetAbilitiesWithEffect(pokemon, AbilityEffectType.Ripen);
         float ripenMultiplier = 1f;
         for (int i = 0; i < ripenAbilities.Count; i++)
         {
-            Pokemon.Ability ability = ripenAbilities[i];
+            Ability ability = ripenAbilities[i];
             EffectDatabase.AbilityEff.AbilityEffect ripen_ =
                 ability.data.GetEffectNew(AbilityEffectType.Ripen);
             if (ripen_ != null)
@@ -17166,7 +17166,7 @@ public class BTLManager : MonoBehaviour
         // Cheek Pouch
         if (battle.IsPokemonOnFieldAndAble(pokemon))
         {
-            List<Pokemon.Ability> abilities = battle.PBPGetAbilities(pokemon);
+            List<Ability> abilities = battle.PBPGetAbilities(pokemon);
             for (int i = 0; i < abilities.Count; i++)
             {
                 EffectDatabase.AbilityEff.AbilityEffect cheekPouch_ =
@@ -17210,7 +17210,7 @@ public class BTLManager : MonoBehaviour
             for (int i = 0; i < allyPokemon.Count && !triggeredSymbiosis; i++)
             {
                 Pokemon curAlly = allyPokemon[i];
-                List<Pokemon.AbilityEffectPair> symbiosisPairs = 
+                List<AbilityEffectPair> symbiosisPairs = 
                     battle.PBPGetAbilityEffectPairs(curAlly, AbilityEffectType.Symbiosis);
                 Item targetItem = battle.PBPGetHeldItem(curAlly);
                 if (targetItem != null && symbiosisPairs.Count > 0)
@@ -17220,7 +17220,7 @@ public class BTLManager : MonoBehaviour
                     {
                         for (int k = 0; k < symbiosisPairs.Count && !triggeredSymbiosis; k++)
                         {
-                            Pokemon.AbilityEffectPair symbiosisPair = symbiosisPairs[k] as Pokemon.AbilityEffectPair;
+                            AbilityEffectPair symbiosisPair = symbiosisPairs[k] as AbilityEffectPair;
                             EffectDatabase.AbilityEff.Symbiosis symbiosis = 
                                 symbiosisPair.effect as EffectDatabase.AbilityEff.Symbiosis;
                             if (battle.DoEffectFiltersPass(
@@ -17917,10 +17917,10 @@ public class BTLManager : MonoBehaviour
     {
         if (battle.IsPokemonOnFieldAndAble(pokemon))
         {
-            List<Pokemon.Ability> abilities = battle.PBPGetAbilities(pokemon);
+            List<Ability> abilities = battle.PBPGetAbilities(pokemon);
             for (int i = 0; i < abilities.Count; i++)
             {
-                Pokemon.Ability ability = abilities[i];
+                Ability ability = abilities[i];
 
                 // Forecast
                 bool forecastAbilitySatisfied = false;
@@ -17961,7 +17961,7 @@ public class BTLManager : MonoBehaviour
 
     public IEnumerator PBPRemoveForestsCurse(
         Pokemon pokemon,
-        Pokemon.BattleProperties.ForestsCurse forestsCurse = null,
+        BattleProperties.ForestsCurse forestsCurse = null,
         string forestsCurseID = null,
         string textID = ""
         )
@@ -17979,8 +17979,8 @@ public class BTLManager : MonoBehaviour
             }
             else
             {
-                List<Pokemon.BattleProperties.ForestsCurse> existingForestsCurses =
-                    new List<Pokemon.BattleProperties.ForestsCurse>(pokemon.bProps.forestsCurses);
+                List<BattleProperties.ForestsCurse> existingForestsCurses =
+                    new List<BattleProperties.ForestsCurse>(pokemon.bProps.forestsCurses);
 
                 for (int i = 0; i < existingForestsCurses.Count; i++)
                 {
@@ -18028,13 +18028,13 @@ public class BTLManager : MonoBehaviour
     }
     public IEnumerator PBPRunEnterAbilities(Pokemon pokemon)
     {
-        List<Pokemon.Ability> abilities = battle.PBPGetAbilities(pokemon);
+        List<Ability> abilities = battle.PBPGetAbilities(pokemon);
         for (int i = 0; i < abilities.Count; i++)
         {
             yield return StartCoroutine(PBPRunEnterAbility(pokemon, abilities[i]));
         }
     }
-    public IEnumerator PBPRunEnterAbility(Pokemon pokemon, Pokemon.Ability ability)
+    public IEnumerator PBPRunEnterAbility(Pokemon pokemon, Ability ability)
     {
         AbilityData abilityData = ability.data;
         if (battle.IsPokemonOnFieldAndAble(pokemon))
@@ -18365,7 +18365,7 @@ public class BTLManager : MonoBehaviour
                 bool affectedByIntimidate = true;
                 for (int i = 0; i < opposingPokemon.Count; i++)
                 {
-                    List<Pokemon.Ability> oppAbilities = battle.PBPGetAbilities(opposingPokemon[i]);
+                    List<Ability> oppAbilities = battle.PBPGetAbilities(opposingPokemon[i]);
 
                     // Intimidate Block
                     for (int k = 0; k < oppAbilities.Count && affectedByIntimidate; k++)
@@ -18636,13 +18636,13 @@ public class BTLManager : MonoBehaviour
     }
     public IEnumerator PBPRunEndTurnAbilities(Pokemon pokemon)
     {
-        List<Pokemon.Ability> abilities = battle.PBPGetAbilities(pokemon);
+        List<Ability> abilities = battle.PBPGetAbilities(pokemon);
         for (int i = 0; i < abilities.Count; i++)
         {
             yield return StartCoroutine(PBPRunEndTurnAbility(pokemon, abilities[i]));
         }
     }
-    public IEnumerator PBPRunEndTurnAbility(Pokemon pokemon, Pokemon.Ability ability)
+    public IEnumerator PBPRunEndTurnAbility(Pokemon pokemon, Ability ability)
     {
         AbilityData abilityData = ability.data;
         if (battle.IsPokemonOnFieldAndAble(pokemon))
@@ -19102,7 +19102,7 @@ public class BTLManager : MonoBehaviour
     }
     public IEnumerator PBPRunAbilityEffect(
         Pokemon pokemon,
-        Pokemon.Ability ability,
+        Ability ability,
         EffectDatabase.AbilityEff.AbilityEffect effect_,
         System.Action<bool> callback,
         bool apply = true
@@ -19558,7 +19558,7 @@ public class BTLManager : MonoBehaviour
                 if (apply)
                 {
                     Pokemon tracePokemon = traceablePokemon[Random.Range(0, traceablePokemon.Count)];
-                    List<Pokemon.Ability> traceAbilities = battle.PBPGetAbilitiesGainable(tracePokemon);
+                    List<Ability> traceAbilities = battle.PBPGetAbilitiesGainable(tracePokemon);
                     PBPShowAbility(pokemon, ability);
 
                     BTLEvent_GameText textEvent = new BTLEvent_GameText();
@@ -19624,21 +19624,21 @@ public class BTLManager : MonoBehaviour
 
     public IEnumerator PBPAddAbility(
         Pokemon pokemon,
-        Pokemon.Ability ability,
+        Ability ability,
         bool clearAll = false,
         bool activate = true
         )
     {
         yield return StartCoroutine(PBPAddAbilities(
             pokemon: pokemon,
-            abilities: new List<Pokemon.Ability> { ability },
+            abilities: new List<Ability> { ability },
             clearAll: clearAll,
             activate: activate
             ));
     }
     public IEnumerator PBPAddAbilities(
         Pokemon pokemon,
-        List<Pokemon.Ability> abilities,
+        List<Ability> abilities,
         bool clearAll = false,
         bool activate = true
         )
@@ -19649,7 +19649,7 @@ public class BTLManager : MonoBehaviour
         }
         for (int i = 0; i < abilities.Count; i++)
         {
-            Pokemon.Ability ability = abilities[i];
+            Ability ability = abilities[i];
 
             // cannot stack same ability
             if (!battle.PBPHasAbility(pokemon: pokemon, abilityID: ability.data.ID))
@@ -19663,22 +19663,22 @@ public class BTLManager : MonoBehaviour
             }
         }
     }
-    public IEnumerator PBPRemoveAbility(Pokemon pokemon, Pokemon.Ability ability )
+    public IEnumerator PBPRemoveAbility(Pokemon pokemon, Ability ability )
     {
         yield return StartCoroutine(PBPRemoveAbilities(
             pokemon: pokemon,
-            abilities: new List<Pokemon.Ability> { ability }
+            abilities: new List<Ability> { ability }
             ));
     }
     public IEnumerator PBPRemoveAbilities(
         Pokemon pokemon,
-        List<Pokemon.Ability> abilities,
+        List<Ability> abilities,
         bool deactivate = true
         )
     {
         for (int i = 0; i < abilities.Count; i++)
         {
-            Pokemon.Ability ability = abilities[i];
+            Ability ability = abilities[i];
             if (deactivate)
             {
                 // TODO: Illusion
@@ -19688,7 +19688,7 @@ public class BTLManager : MonoBehaviour
         yield return null;
     }
 
-    public void PBPShowAbility(Pokemon pokemon, Pokemon.Ability ability)
+    public void PBPShowAbility(Pokemon pokemon, Ability ability)
     {
         PBPShowAbility(pokemon, ability.data);
     }
@@ -19787,7 +19787,7 @@ public class BTLManager : MonoBehaviour
     }
     public IEnumerator UntiePokemon(Pokemon tiedPokemon)
     {
-        List<Pokemon.Ability> abilities = battle.PBPGetAbilities(tiedPokemon);
+        List<Ability> abilities = battle.PBPGetAbilities(tiedPokemon);
         List<Pokemon> otherPokemon = new List<Pokemon>(battle.pokemonOnField);
         otherPokemon.Remove(tiedPokemon);
 
@@ -19873,8 +19873,8 @@ public class BTLManager : MonoBehaviour
         }
 
         // Unset Lock On
-        List<Pokemon.BattleProperties.LockOn> lockOnTargets 
-            = new List<Pokemon.BattleProperties.LockOn>(targetPokemon.bProps.lockOnTargets);
+        List<BattleProperties.LockOn> lockOnTargets 
+            = new List<BattleProperties.LockOn>(targetPokemon.bProps.lockOnTargets);
         for (int i = 0; i < lockOnTargets.Count; i++)
         {
             if (lockOnTargets[i].pokemonUniqueID == tiedPokemon.uniqueID)
@@ -20083,7 +20083,7 @@ public class BTLManager : MonoBehaviour
         {
             battle.runningPokemon = runPokemon;
 
-            Pokemon.Ability runAwayAbility = 
+            Ability runAwayAbility = 
                 battle.PBPGetAbilityWithEffect(pokemon: runPokemon, effectType: AbilityEffectType.RunAway);
             if (runAwayAbility != null)
             {

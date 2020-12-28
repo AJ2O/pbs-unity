@@ -385,7 +385,7 @@ public class BattleHitTarget
     public int postHP;
     public int subDamage;
     public int damageDealt;
-    public Pokemon.Ability disguise;
+    public Ability disguise;
 
     public BattleTypeEffectiveness effectiveness;
 
@@ -408,7 +408,7 @@ public class BattleHitTarget
     public string reflectItem;
 
     public EffectDatabase.MoveEff.Endure endure;
-    public Pokemon.AbilityEffectPair sturdyPair;
+    public AbilityEffectPair sturdyPair;
     public Item focusBand;
     public string surviveAbility;
     public string surviveItem;
