@@ -1,5 +1,8 @@
 # Pokemon Battle Simulator in Unity (pbs-unity)
 
+## Testing - 2020.12.28
+- This branch is reserved for AWS integration testing
+
 ## Update - 2020.11.20
 Came back to this project for some small updates and to more formally open-source it.
 - Integrated the [Mirror Package](https://github.com/vis2k/Mirror) to enable PvP functionality.
