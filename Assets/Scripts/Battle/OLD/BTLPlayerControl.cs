@@ -1092,11 +1092,11 @@ public class BTLPlayerControl : MonoBehaviour
                 Item item = pokemon.item;
                 if (item != null)
                 {
-                    EffectDatabase.ItemEff.ItemEffect formChangeItemEffect =
+                    Effects.ItemEff.ItemEffect formChangeItemEffect =
                         battleModel.PBPGetItemFormChangeEffect(pokemon, item);
                     if (formChangeItemEffect != null)
                     {
-                        if (formChangeItemEffect is EffectDatabase.ItemEff.MegaStone)
+                        if (formChangeItemEffect is Effects.ItemEff.MegaStone)
                         {
                             canMegaEvolve = true;
                         }
@@ -2763,12 +2763,12 @@ public class BTLPlayerControl : MonoBehaviour
                     {
                         PBS.Main.Pokemon.BattleProperties.MoveLimiter moveLimiter =
                             userPokemon.bProps.moveLimiters[i];
-                        EffectDatabase.StatusPKEff.MoveLimiting effect_ = moveLimiter.effect;
+                        Effects.StatusPKEff.MoveLimiting effect_ = moveLimiter.effect;
 
                         string moveLimitID = moveData.ID;
                         
                         // Disable
-                        if (effect_ is EffectDatabase.StatusPKEff.Disable)
+                        if (effect_ is Effects.StatusPKEff.Disable)
                         {
                             if (moveLimiter.affectedMoves.Contains(moveData.ID))
                             {
@@ -2776,7 +2776,7 @@ public class BTLPlayerControl : MonoBehaviour
                             }
                         }
                         // Encore
-                        else if (effect_ is EffectDatabase.StatusPKEff.Encore)
+                        else if (effect_ is Effects.StatusPKEff.Encore)
                         {
                             if (!moveLimiter.affectedMoves.Contains(moveData.ID))
                             {
@@ -2785,7 +2785,7 @@ public class BTLPlayerControl : MonoBehaviour
                             }
                         }
                         // Heal Block
-                        else if (effect_ is EffectDatabase.StatusPKEff.HealBlock)
+                        else if (effect_ is Effects.StatusPKEff.HealBlock)
                         {
                             if (battleModel.IsHealingMove(moveData))
                             {
@@ -2793,16 +2793,16 @@ public class BTLPlayerControl : MonoBehaviour
                             }
                         }
                         // Taunt
-                        else if (effect_ is EffectDatabase.StatusPKEff.Taunt)
+                        else if (effect_ is Effects.StatusPKEff.Taunt)
                         {
-                            EffectDatabase.StatusPKEff.Taunt taunt = effect_ as EffectDatabase.StatusPKEff.Taunt;
+                            Effects.StatusPKEff.Taunt taunt = effect_ as Effects.StatusPKEff.Taunt;
                             if (taunt.category == MoveCategory.Status)
                             {
                                 commandSuccess = false;
                             }
                         }
                         // Torment
-                        else if (effect_ is EffectDatabase.StatusPKEff.Torment)
+                        else if (effect_ is Effects.StatusPKEff.Torment)
                         {
                             if (moveLimiter.affectedMoves.Contains(moveData.ID))
                             {
@@ -2954,10 +2954,10 @@ public class BTLPlayerControl : MonoBehaviour
                             battleModel.PBPGetAbilityDataWithEffect(trapPokemon, AbilityEffectType.ShadowTag);
                         if (!trapPokemon.IsTheSameAs(userPokemon) && abilityData != null)
                         {
-                            EffectDatabase.AbilityEff.AbilityEffect shadowTag_ = 
+                            Effects.AbilityEff.AbilityEffect shadowTag_ = 
                                 abilityData.GetEffectNew(AbilityEffectType.ShadowTag);
-                            EffectDatabase.AbilityEff.ShadowTag shadowTag = 
-                                shadowTag_ as EffectDatabase.AbilityEff.ShadowTag;
+                            Effects.AbilityEff.ShadowTag shadowTag = 
+                                shadowTag_ as Effects.AbilityEff.ShadowTag;
 
                             if (battleModel.DoEffectFiltersPass(
                                 filters: shadowTag.filters,
@@ -2971,12 +2971,12 @@ public class BTLPlayerControl : MonoBehaviour
                                 // Shed Shell
                                 if (trapped)
                                 {
-                                    EffectDatabase.ItemEff.ItemEffect shedShell_ =
+                                    Effects.ItemEff.ItemEffect shedShell_ =
                                         battleModel.PBPGetItemEffect(userPokemon, ItemEffectType.ShedShell);
                                     if (shedShell_ != null)
                                     {
-                                        EffectDatabase.ItemEff.ShedShell shedShell = 
-                                            shedShell_ as EffectDatabase.ItemEff.ShedShell;
+                                        Effects.ItemEff.ShedShell shedShell = 
+                                            shedShell_ as Effects.ItemEff.ShedShell;
                                         trapped = false;
                                     }
                                 }
@@ -3211,10 +3211,10 @@ public class BTLPlayerControl : MonoBehaviour
             // Trapped
             if (commandSuccess)
             {
-                EffectDatabase.AbilityEff.AbilityEffect runAway_ = 
+                Effects.AbilityEff.AbilityEffect runAway_ = 
                     battleModel.PBPGetAbilityEffect(userPokemon, AbilityEffectType.RunAway);
-                EffectDatabase.AbilityEff.RunAway runAway = (runAway_ == null) ? null :
-                    runAway_ as EffectDatabase.AbilityEff.RunAway;
+                Effects.AbilityEff.RunAway runAway = (runAway_ == null) ? null :
+                    runAway_ as Effects.AbilityEff.RunAway;
 
                 // trainer battle
                 if (!battleModel.battleSettings.isWildBattle)

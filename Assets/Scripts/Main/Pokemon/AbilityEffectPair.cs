@@ -1,12 +1,14 @@
-﻿namespace PBS.Main.Pokemon
+﻿using PBS.Databases;
+
+namespace PBS.Main.Pokemon
 {
     public class AbilityEffectPair
     {
         public Ability ability;
-        public EffectDatabase.AbilityEff.AbilityEffect effect;
+        public Effects.AbilityEff.AbilityEffect effect;
         public AbilityEffectPair(
             Ability ability,
-            EffectDatabase.AbilityEff.AbilityEffect effect)
+            Effects.AbilityEff.AbilityEffect effect)
         {
             this.ability = ability;
             this.effect = effect;

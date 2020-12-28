@@ -42,21 +42,21 @@ namespace PBS.Databases
                     conditionName: "G-Max Cannonade",
                     inflictTextID: "gmax-wildfire",
                     endTextID: "gmax-wildfire-end",
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 4),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: 4),
                     tags: new TeamSTag[]
                     {
 
                     },
-                    effectsNew: new EffectDatabase.StatusTEEff.TeamSE[]
+                    effectsNew: new Effects.StatusTEEff.TeamSE[]
                     {
-                        new EffectDatabase.StatusTEEff.GMaxWildfirePriority(),
-                        new EffectDatabase.StatusTEEff.HPLoss(
+                        new Effects.StatusTEEff.GMaxWildfirePriority(),
+                        new Effects.StatusTEEff.HPLoss(
                             displayText: "gmax-wildfire-damage",
                             hpLossPercent: 1f / 6,
-                            filters: new EffectDatabase.Filter.FilterEffect[]
+                            filters: new Effects.Filter.FilterEffect[]
                             {
-                                new EffectDatabase.Filter.TypeList(
-                                    targetType: EffectDatabase.Filter.TypeList.TargetType.Pokemon,
+                                new Effects.Filter.TypeList(
+                                    targetType: Effects.Filter.TypeList.TargetType.Pokemon,
                                     types: new string[] { "water" },
                                     invert: true
                                     ),
@@ -70,21 +70,21 @@ namespace PBS.Databases
                     conditionName: "G-Max Vine Lash",
                     inflictTextID: "gmax-wildfire",
                     endTextID: "gmax-wildfire-end",
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 4),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: 4),
                     tags: new TeamSTag[]
                     {
 
                     },
-                    effectsNew: new EffectDatabase.StatusTEEff.TeamSE[]
+                    effectsNew: new Effects.StatusTEEff.TeamSE[]
                     {
-                        new EffectDatabase.StatusTEEff.GMaxWildfirePriority(),
-                        new EffectDatabase.StatusTEEff.HPLoss(
+                        new Effects.StatusTEEff.GMaxWildfirePriority(),
+                        new Effects.StatusTEEff.HPLoss(
                             displayText: "gmax-wildfire-damage",
                             hpLossPercent: 1f / 6,
-                            filters: new EffectDatabase.Filter.FilterEffect[]
+                            filters: new Effects.Filter.FilterEffect[]
                             {
-                                new EffectDatabase.Filter.TypeList(
-                                    targetType: EffectDatabase.Filter.TypeList.TargetType.Pokemon,
+                                new Effects.Filter.TypeList(
+                                    targetType: Effects.Filter.TypeList.TargetType.Pokemon,
                                     types: new string[] { "grass" },
                                     invert: true
                                     ),
@@ -98,21 +98,21 @@ namespace PBS.Databases
                     conditionName: "G-Max Volcalith",
                     inflictTextID: "gmax-wildfire",
                     endTextID: "gmax-wildfire-end",
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 4),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: 4),
                     tags: new TeamSTag[]
                     {
 
                     },
-                    effectsNew: new EffectDatabase.StatusTEEff.TeamSE[]
+                    effectsNew: new Effects.StatusTEEff.TeamSE[]
                     {
-                        new EffectDatabase.StatusTEEff.GMaxWildfirePriority(),
-                        new EffectDatabase.StatusTEEff.HPLoss(
+                        new Effects.StatusTEEff.GMaxWildfirePriority(),
+                        new Effects.StatusTEEff.HPLoss(
                             displayText: "gmax-wildfire-damage",
                             hpLossPercent: 1f / 6,
-                            filters: new EffectDatabase.Filter.FilterEffect[]
+                            filters: new Effects.Filter.FilterEffect[]
                             {
-                                new EffectDatabase.Filter.TypeList(
-                                    targetType: EffectDatabase.Filter.TypeList.TargetType.Pokemon,
+                                new Effects.Filter.TypeList(
+                                    targetType: Effects.Filter.TypeList.TargetType.Pokemon,
                                     types: new string[] { "rock" },
                                     invert: true
                                     ),
@@ -126,21 +126,21 @@ namespace PBS.Databases
                     conditionName: "G-Max Wildfire",
                     inflictTextID: "gmax-wildfire",
                     endTextID: "gmax-wildfire-end",
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 4),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: 4),
                     tags: new TeamSTag[]
                     {
 
                     },
-                    effectsNew: new EffectDatabase.StatusTEEff.TeamSE[]
+                    effectsNew: new Effects.StatusTEEff.TeamSE[]
                     {
-                        new EffectDatabase.StatusTEEff.GMaxWildfirePriority(),
-                        new EffectDatabase.StatusTEEff.HPLoss(
+                        new Effects.StatusTEEff.GMaxWildfirePriority(),
+                        new Effects.StatusTEEff.HPLoss(
                             displayText: "gmax-wildfire-damage",
                             hpLossPercent: 1f / 6,
-                            filters: new EffectDatabase.Filter.FilterEffect[]
+                            filters: new Effects.Filter.FilterEffect[]
                             {
-                                new EffectDatabase.Filter.TypeList(
-                                    targetType: EffectDatabase.Filter.TypeList.TargetType.Pokemon,
+                                new Effects.Filter.TypeList(
+                                    targetType: Effects.Filter.TypeList.TargetType.Pokemon,
                                     types: new string[] { "fire" },
                                     invert: true
                                     ),
@@ -160,13 +160,13 @@ namespace PBS.Databases
                     endTextID: "tStatus-auroraveil-end",
                     alreadyTextID: "tStatus-auroraveil-already",
                     failTextID: "tStatus-auroraveil-fail",
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 5),
-                    effectsNew: new EffectDatabase.StatusTEEff.TeamSE[]
+                    defaultTurns: new Effects.General.DefaultTurns(turns: 5),
+                    effectsNew: new Effects.StatusTEEff.TeamSE[]
                     {
-                        new EffectDatabase.StatusTEEff.LightScreen(
-                            filters: new EffectDatabase.Filter.FilterEffect[]
+                        new Effects.StatusTEEff.LightScreen(
+                            filters: new Effects.Filter.FilterEffect[]
                             {
-                                new EffectDatabase.Filter.MoveCheck(
+                                new Effects.Filter.MoveCheck(
                                     moveCategories: new MoveCategory[] { MoveCategory.Physical, MoveCategory.Special }
                                     )
                             }
@@ -181,13 +181,13 @@ namespace PBS.Databases
                     endTextID: "tStatus-lightscreen-end",
                     alreadyTextID: "tStatus-lightscreen-already",
                     failTextID: "tStatus-lightscreen-fail",
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 5),
-                    effectsNew: new EffectDatabase.StatusTEEff.TeamSE[]
+                    defaultTurns: new Effects.General.DefaultTurns(turns: 5),
+                    effectsNew: new Effects.StatusTEEff.TeamSE[]
                     {
-                        new EffectDatabase.StatusTEEff.LightScreen(
-                            filters: new EffectDatabase.Filter.FilterEffect[]
+                        new Effects.StatusTEEff.LightScreen(
+                            filters: new Effects.Filter.FilterEffect[]
                             {
-                                new EffectDatabase.Filter.MoveCheck(
+                                new Effects.Filter.MoveCheck(
                                     moveCategories: new MoveCategory[] { MoveCategory.Special }
                                     )
                             }
@@ -202,13 +202,13 @@ namespace PBS.Databases
                     endTextID: "tStatus-reflect-end",
                     alreadyTextID: "tStatus-reflect-already",
                     failTextID: "tStatus-reflect-fail",
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 5),
-                    effectsNew: new EffectDatabase.StatusTEEff.TeamSE[]
+                    defaultTurns: new Effects.General.DefaultTurns(turns: 5),
+                    effectsNew: new Effects.StatusTEEff.TeamSE[]
                     {
-                        new EffectDatabase.StatusTEEff.LightScreen(
-                            filters: new EffectDatabase.Filter.FilterEffect[]
+                        new Effects.StatusTEEff.LightScreen(
+                            filters: new Effects.Filter.FilterEffect[]
                             {
-                                new EffectDatabase.Filter.MoveCheck(
+                                new Effects.Filter.MoveCheck(
                                     moveCategories: new MoveCategory[] { MoveCategory.Physical }
                                     )
                             }

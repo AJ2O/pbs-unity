@@ -179,14 +179,14 @@ public class MoveData
 
     // New Effects
     private bool combineBaseEffects;
-    private List<EffectDatabase.MoveEff.MoveEffect> p_effectsNew { get; set; }
-    public List<EffectDatabase.MoveEff.MoveEffect> effectsNew 
+    private List<Effects.MoveEff.MoveEffect> p_effectsNew { get; set; }
+    public List<Effects.MoveEff.MoveEffect> effectsNew 
     {
         get
         {
             if (combineBaseEffects && !string.IsNullOrEmpty(baseID))
             {
-                List<EffectDatabase.MoveEff.MoveEffect> unionEffects = new List<EffectDatabase.MoveEff.MoveEffect>();
+                List<Effects.MoveEff.MoveEffect> unionEffects = new List<Effects.MoveEff.MoveEffect>();
                 unionEffects.AddRange(p_effectsNew);
                 unionEffects.AddRange(Moves.instance.GetMoveData(baseID).effectsNew);
                 return unionEffects;
@@ -236,14 +236,14 @@ public class MoveData
     }
 
 
-    private List<EffectDatabase.MoveEff.MoveEffect> p_ZEffectsNew { get; set; }
-    public List<EffectDatabase.MoveEff.MoveEffect> ZEffectsNew
+    private List<Effects.MoveEff.MoveEffect> p_ZEffectsNew { get; set; }
+    public List<Effects.MoveEff.MoveEffect> ZEffectsNew
     {
         get
         {
             if (combineBaseEffects && !string.IsNullOrEmpty(baseID))
             {
-                List<EffectDatabase.MoveEff.MoveEffect> unionEffects = new List<EffectDatabase.MoveEff.MoveEffect>();
+                List<Effects.MoveEff.MoveEffect> unionEffects = new List<Effects.MoveEff.MoveEffect>();
                 unionEffects.AddRange(p_ZEffectsNew);
                 unionEffects.AddRange(Moves.instance.GetMoveData(baseID).ZEffectsNew);
                 return unionEffects;
@@ -278,10 +278,10 @@ public class MoveData
         MoveEffect[] moveEffects = null,
 
         bool combineBaseEffects = false,
-        EffectDatabase.MoveEff.MoveEffect[] effectsNew = null,
+        Effects.MoveEff.MoveEffect[] effectsNew = null,
         
         int ZBasePower = 0,
-        EffectDatabase.MoveEff.MoveEffect[] ZEffectsNew = null,
+        Effects.MoveEff.MoveEffect[] ZEffectsNew = null,
         
         int MaxPower = 0)
     {
@@ -320,10 +320,10 @@ public class MoveData
         }
 
         this.combineBaseEffects = combineBaseEffects;
-        this.effectsNew = new List<EffectDatabase.MoveEff.MoveEffect>();
+        this.effectsNew = new List<Effects.MoveEff.MoveEffect>();
         if (effectsNew != null)
         {
-            List<EffectDatabase.MoveEff.MoveEffect> addableEffects = new List<EffectDatabase.MoveEff.MoveEffect>();
+            List<Effects.MoveEff.MoveEffect> addableEffects = new List<Effects.MoveEff.MoveEffect>();
             for (int i = 0; i < effectsNew.Length; i++)
             {
                 addableEffects.Add(effectsNew[i].Clone());
@@ -332,10 +332,10 @@ public class MoveData
         }
 
         this.ZBasePower = ZBasePower;
-        this.ZEffectsNew = new List<EffectDatabase.MoveEff.MoveEffect>();
+        this.ZEffectsNew = new List<Effects.MoveEff.MoveEffect>();
         if (ZEffectsNew != null)
         {
-            List<EffectDatabase.MoveEff.MoveEffect> addableEffects = new List<EffectDatabase.MoveEff.MoveEffect>();
+            List<Effects.MoveEff.MoveEffect> addableEffects = new List<Effects.MoveEff.MoveEffect>();
             for (int i = 0; i < ZEffectsNew.Length; i++)
             {
                 addableEffects.Add(ZEffectsNew[i].Clone());
@@ -455,9 +455,9 @@ public class MoveData
         return effects;
     }
 
-    public List<EffectDatabase.MoveEff.MoveEffect> GetEffectsNewFiltered(MoveEffectTiming timing)
+    public List<Effects.MoveEff.MoveEffect> GetEffectsNewFiltered(MoveEffectTiming timing)
     {
-        List<EffectDatabase.MoveEff.MoveEffect> effects = new List<EffectDatabase.MoveEff.MoveEffect>();
+        List<Effects.MoveEff.MoveEffect> effects = new List<Effects.MoveEff.MoveEffect>();
         for (int i = 0; i < effectsNew.Count; i++)
         {
             if (effectsNew[i].timing == timing
@@ -468,9 +468,9 @@ public class MoveData
         }
         return effects;
     }
-    public List<EffectDatabase.MoveEff.MoveEffect> GetEffectsNew(MoveEffectType effectType, bool forceUnique = false)
+    public List<Effects.MoveEff.MoveEffect> GetEffectsNew(MoveEffectType effectType, bool forceUnique = false)
     {
-        List<EffectDatabase.MoveEff.MoveEffect> effects = new List<EffectDatabase.MoveEff.MoveEffect>();
+        List<Effects.MoveEff.MoveEffect> effects = new List<Effects.MoveEff.MoveEffect>();
         for (int i = 0; i < effectsNew.Count; i++)
         {
             if (effectsNew[i].effectType == effectType)
@@ -483,9 +483,9 @@ public class MoveData
         }
         return effects;
     }
-    public EffectDatabase.MoveEff.MoveEffect GetEffectNew(MoveEffectType effectType, bool forceUnique = false)
+    public Effects.MoveEff.MoveEffect GetEffectNew(MoveEffectType effectType, bool forceUnique = false)
     {
-        List<EffectDatabase.MoveEff.MoveEffect> effectList = GetEffectsNew(effectType, forceUnique);
+        List<Effects.MoveEff.MoveEffect> effectList = GetEffectsNew(effectType, forceUnique);
         if (effectList.Count > 0)
         {
             return effectList[0];
@@ -493,9 +493,9 @@ public class MoveData
         return null;
     }
 
-    public List<EffectDatabase.MoveEff.MoveEffect> GetZEffects()
+    public List<Effects.MoveEff.MoveEffect> GetZEffects()
     {
-        return new List<EffectDatabase.MoveEff.MoveEffect>(ZEffectsNew);
+        return new List<Effects.MoveEff.MoveEffect>(ZEffectsNew);
     }
 }
 

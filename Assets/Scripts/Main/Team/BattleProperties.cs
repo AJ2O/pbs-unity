@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PBS.Databases;
+using System.Collections.Generic;
 
 namespace PBS.Main.Team
 {
@@ -48,7 +49,7 @@ namespace PBS.Main.Team
 
         public List<TeamCondition> lightScreens;
 
-        public List<EffectDatabase.General.Protect> matBlocks;
+        public List<Effects.General.Protect> matBlocks;
 
         public class ReflectScreen
         {
@@ -145,7 +146,7 @@ namespace PBS.Main.Team
             entryHazards = new List<EntryHazard>();
             GMaxWildfireStatus = null;
             lightScreens = new List<TeamCondition>();
-            matBlocks = new List<EffectDatabase.General.Protect>();
+            matBlocks = new List<Effects.General.Protect>();
             reflectScreens = new List<ReflectScreen>();
             safeguards = new List<Safeguard>();
 

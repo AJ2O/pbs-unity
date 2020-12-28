@@ -33,15 +33,15 @@ public class AbilityData
 
     // New Effects
     private bool combineBaseEffects;
-    private List<EffectDatabase.AbilityEff.AbilityEffect> p_effectsNew { get; set; }
-    public List<EffectDatabase.AbilityEff.AbilityEffect> effectsNew
+    private List<Effects.AbilityEff.AbilityEffect> p_effectsNew { get; set; }
+    public List<Effects.AbilityEff.AbilityEffect> effectsNew
     {
         get
         {
             if (combineBaseEffects && !string.IsNullOrEmpty(baseID))
             {
-                List<EffectDatabase.AbilityEff.AbilityEffect> unionEffects = 
-                    new List<EffectDatabase.AbilityEff.AbilityEffect>();
+                List<Effects.AbilityEff.AbilityEffect> unionEffects = 
+                    new List<Effects.AbilityEff.AbilityEffect>();
                 unionEffects.AddRange(p_effectsNew);
                 unionEffects.AddRange(Abilities.instance.GetAbilityData(baseID).effectsNew);
                 return unionEffects;
@@ -64,7 +64,7 @@ public class AbilityData
         AbilityEffect[] effects = null,
 
         bool combineBaseEffects = false,
-        EffectDatabase.AbilityEff.AbilityEffect[] effectsNew = null)
+        Effects.AbilityEff.AbilityEffect[] effectsNew = null)
     {
         this.ID = ID;
         this.baseID = baseID;
@@ -86,10 +86,10 @@ public class AbilityData
         }
 
         this.combineBaseEffects = combineBaseEffects;
-        this.effectsNew = new List<EffectDatabase.AbilityEff.AbilityEffect>();
+        this.effectsNew = new List<Effects.AbilityEff.AbilityEffect>();
         if (effectsNew != null)
         {
-            List<EffectDatabase.AbilityEff.AbilityEffect> addableEffects = new List<EffectDatabase.AbilityEff.AbilityEffect>();
+            List<Effects.AbilityEff.AbilityEffect> addableEffects = new List<Effects.AbilityEff.AbilityEffect>();
             for (int i = 0; i < effectsNew.Length; i++)
             {
                 addableEffects.Add(effectsNew[i].Clone());
@@ -116,9 +116,9 @@ public class AbilityData
     }
 
 
-    public List<EffectDatabase.AbilityEff.AbilityEffect> GetEffectsNew(AbilityEffectType effectType)
+    public List<Effects.AbilityEff.AbilityEffect> GetEffectsNew(AbilityEffectType effectType)
     {
-        List<EffectDatabase.AbilityEff.AbilityEffect> effects = new List<EffectDatabase.AbilityEff.AbilityEffect>();
+        List<Effects.AbilityEff.AbilityEffect> effects = new List<Effects.AbilityEff.AbilityEffect>();
         for (int i = 0; i < effectsNew.Count; i++)
         {
             if (effectsNew[i].effectType == effectType)
@@ -128,7 +128,7 @@ public class AbilityData
         }
         return effects;
     }
-    public EffectDatabase.AbilityEff.AbilityEffect GetEffectNew(AbilityEffectType effectType)
+    public Effects.AbilityEff.AbilityEffect GetEffectNew(AbilityEffectType effectType)
     {
         for (int i = 0; i < effectsNew.Count; i++)
         {

@@ -90,14 +90,14 @@ public class ItemData
 
     // New Effects
     private bool combineBaseEffects;
-    private List<EffectDatabase.ItemEff.ItemEffect> p_effectsNew { get; set; }
-    public List<EffectDatabase.ItemEff.ItemEffect> effectsNew
+    private List<Effects.ItemEff.ItemEffect> p_effectsNew { get; set; }
+    public List<Effects.ItemEff.ItemEffect> effectsNew
     {
         get
         {
             if (combineBaseEffects && !string.IsNullOrEmpty(baseID))
             {
-                List<EffectDatabase.ItemEff.ItemEffect> unionEffects = new List<EffectDatabase.ItemEff.ItemEffect>();
+                List<Effects.ItemEff.ItemEffect> unionEffects = new List<Effects.ItemEff.ItemEffect>();
                 unionEffects.AddRange(p_effectsNew);
                 unionEffects.AddRange(Items.instance.GetItemData(baseID).effectsNew);
                 return unionEffects;
@@ -124,7 +124,7 @@ public class ItemData
         ItemEffect[] effects = null,
 
         bool combineBaseEffects = false,
-        EffectDatabase.ItemEff.ItemEffect[] effectsNew = null)
+        Effects.ItemEff.ItemEffect[] effectsNew = null)
     {
         this.ID = ID;
         this.baseID = baseID;
@@ -153,10 +153,10 @@ public class ItemData
         }
 
         this.combineBaseEffects = combineBaseEffects;
-        this.effectsNew = new List<EffectDatabase.ItemEff.ItemEffect>();
+        this.effectsNew = new List<Effects.ItemEff.ItemEffect>();
         if (effectsNew != null)
         {
-            List<EffectDatabase.ItemEff.ItemEffect> addableEffects = new List<EffectDatabase.ItemEff.ItemEffect>();
+            List<Effects.ItemEff.ItemEffect> addableEffects = new List<Effects.ItemEff.ItemEffect>();
             for (int i = 0; i < effectsNew.Length; i++)
             {
                 addableEffects.Add(effectsNew[i].Clone());
@@ -195,9 +195,9 @@ public class ItemData
         return effects;
     }
 
-    public List<EffectDatabase.ItemEff.ItemEffect> GetEffectsNew(ItemEffectType effectType)
+    public List<Effects.ItemEff.ItemEffect> GetEffectsNew(ItemEffectType effectType)
     {
-        List<EffectDatabase.ItemEff.ItemEffect> effects = new List<EffectDatabase.ItemEff.ItemEffect>();
+        List<Effects.ItemEff.ItemEffect> effects = new List<Effects.ItemEff.ItemEffect>();
         for (int i = 0; i < effectsNew.Count; i++)
         {
             if (effectsNew[i].effectType == effectType)
@@ -207,7 +207,7 @@ public class ItemData
         }
         return effects;
     }
-    public EffectDatabase.ItemEff.ItemEffect GetEffectNew(ItemEffectType effectType)
+    public Effects.ItemEff.ItemEffect GetEffectNew(ItemEffectType effectType)
     {
         for (int i = 0; i < effectsNew.Count; i++)
         {
@@ -218,9 +218,9 @@ public class ItemData
         }
         return null;
     }
-    public List<EffectDatabase.ItemEff.ItemEffect> GetEffectsOnConsume()
+    public List<Effects.ItemEff.ItemEffect> GetEffectsOnConsume()
     {
-        List<EffectDatabase.ItemEff.ItemEffect> consumeEffects = new List<EffectDatabase.ItemEff.ItemEffect>();
+        List<Effects.ItemEff.ItemEffect> consumeEffects = new List<Effects.ItemEff.ItemEffect>();
         for (int i = 0; i < effectsNew.Count; i++)
         {
             if (effectsNew[i].applyOnConsume)
@@ -230,9 +230,9 @@ public class ItemData
         }
         return consumeEffects;
     }
-    public List<EffectDatabase.ItemEff.ItemEffect> GetEffectsOnUse()
+    public List<Effects.ItemEff.ItemEffect> GetEffectsOnUse()
     {
-        List<EffectDatabase.ItemEff.ItemEffect> useEffects = new List<EffectDatabase.ItemEff.ItemEffect>();
+        List<Effects.ItemEff.ItemEffect> useEffects = new List<Effects.ItemEff.ItemEffect>();
         for (int i = 0; i < effectsNew.Count; i++)
         {
             if (effectsNew[i].applyOnUse)

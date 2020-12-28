@@ -128,14 +128,14 @@ public class TypeData
         }
     }
 
-    private List<EffectDatabase.TypeEff.TypeEffect> p_effectsNew { get; set; }
-    public List<EffectDatabase.TypeEff.TypeEffect> effectsNew
+    private List<Effects.TypeEff.TypeEffect> p_effectsNew { get; set; }
+    public List<Effects.TypeEff.TypeEffect> effectsNew
     {
         get
         {
             if (combineEffects && !string.IsNullOrEmpty(baseID))
             {
-                List<EffectDatabase.TypeEff.TypeEffect> unionEffects = new List<EffectDatabase.TypeEff.TypeEffect>();
+                List<Effects.TypeEff.TypeEffect> unionEffects = new List<Effects.TypeEff.TypeEffect>();
                 unionEffects.AddRange(p_effectsNew);
                 unionEffects.AddRange(ElementalTypes.instance.GetTypeData(baseID).effectsNew);
                 return unionEffects;
@@ -168,7 +168,7 @@ public class TypeData
         bool combineTags = false, IEnumerable<TypeTag> tags = null,
 
         bool combineEffects = false, TypeEffect[] effects = null,
-        EffectDatabase.TypeEff.TypeEffect[] effectsNew = null)
+        Effects.TypeEff.TypeEffect[] effectsNew = null)
     {
         this.ID = ID;
         this.baseID = baseID;
@@ -196,10 +196,10 @@ public class TypeData
             this.effects = new List<TypeEffect>(newEffects);
         }
 
-        this.effectsNew = new List<EffectDatabase.TypeEff.TypeEffect>();
+        this.effectsNew = new List<Effects.TypeEff.TypeEffect>();
         if (effectsNew != null)
         {
-            List<EffectDatabase.TypeEff.TypeEffect> addableEffects = new List<EffectDatabase.TypeEff.TypeEffect>();
+            List<Effects.TypeEff.TypeEffect> addableEffects = new List<Effects.TypeEff.TypeEffect>();
             for (int i = 0; i < effectsNew.Length; i++)
             {
                 addableEffects.Add(effectsNew[i].Clone());

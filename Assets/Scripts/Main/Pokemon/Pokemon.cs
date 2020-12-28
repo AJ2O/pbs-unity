@@ -418,10 +418,10 @@ namespace PBS.Main.Pokemon
             // Items
             if (item != null)
             {
-                List<EffectDatabase.ItemEff.ItemEffect> griseousOrbs_ = item.data.GetEffectsNew(ItemEffectType.GriseousOrb);
+                List<Effects.ItemEff.ItemEffect> griseousOrbs_ = item.data.GetEffectsNew(ItemEffectType.GriseousOrb);
                 for (int i = 0; i < griseousOrbs_.Count; i++)
                 {
-                    EffectDatabase.ItemEff.GriseousOrb griseousOrb = griseousOrbs_[i] as EffectDatabase.ItemEff.GriseousOrb;
+                    Effects.ItemEff.GriseousOrb griseousOrb = griseousOrbs_[i] as Effects.ItemEff.GriseousOrb;
                     PokemonData basePokemonData = Databases.Pokemon.instance.GetPokemonData(griseousOrb.baseFormID);
                     PokemonData toPokemonData = Databases.Pokemon.instance.GetPokemonData(griseousOrb.formID);
 
@@ -433,7 +433,7 @@ namespace PBS.Main.Pokemon
                         bool canTransform = true;
 
                         // Arceus Plate = Multitype Check
-                        if (griseousOrb is EffectDatabase.ItemEff.ArceusPlate)
+                        if (griseousOrb is Effects.ItemEff.ArceusPlate)
                         {
                             if (abilityData.GetEffectNew(AbilityEffectType.Multitype) == null)
                             {
@@ -442,7 +442,7 @@ namespace PBS.Main.Pokemon
                         }
 
                         // RKS Memory = RKS System Check
-                        if (griseousOrb is EffectDatabase.ItemEff.RKSMemory)
+                        if (griseousOrb is Effects.ItemEff.RKSMemory)
                         {
                             if (abilityData.GetEffectNew(AbilityEffectType.RKSSystem) != null)
                             {
@@ -451,7 +451,7 @@ namespace PBS.Main.Pokemon
                         }
 
                         // Mega Stone Requires in-battle activation (not automatic)
-                        if (griseousOrb is EffectDatabase.ItemEff.MegaStone)
+                        if (griseousOrb is Effects.ItemEff.MegaStone)
                         {
                             canTransform = false;
                         }

@@ -53,9 +53,9 @@ namespace PBS.Databases
                         PokemonSTag.NonVolatile,
                     },
 
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.NonVolatile(priority: 0),
+                        new Effects.StatusPKEff.NonVolatile(priority: 0),
                     }
                     ) },
 
@@ -69,31 +69,31 @@ namespace PBS.Databases
                     alreadyTextID: "status-burn-already",
                     failTextID: "status-burn-fail",
 
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: -1),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: -1),
                     statusTags: new PokemonSTag[]
                     {
                         PokemonSTag.NonVolatile,
                         PokemonSTag.TurnsDecreaseOnEnd,
                     },
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.NonVolatile(),
-                        new EffectDatabase.StatusPKEff.TypeImmunity(
-                            filters: new EffectDatabase.Filter.FilterEffect[]
+                        new Effects.StatusPKEff.NonVolatile(),
+                        new Effects.StatusPKEff.TypeImmunity(
+                            filters: new Effects.Filter.FilterEffect[]
                             {
-                                new EffectDatabase.Filter.TypeList(
-                                    targetType: EffectDatabase.Filter.TypeList.TargetType.Pokemon,
+                                new Effects.Filter.TypeList(
+                                    targetType: Effects.Filter.TypeList.TargetType.Pokemon,
                                     types: new string[] { "fire" },
                                     invert: true
                                     ),
                             }
                             ),
-                        new EffectDatabase.StatusPKEff.HPLoss(
+                        new Effects.StatusPKEff.HPLoss(
                             displayText: "status-burn-hploss",
                             hpLossPercent: 1f/16
                             ),
-                        new EffectDatabase.StatusPKEff.Burn(
-                            statScale: new EffectDatabase.General.StatScale(
+                        new Effects.StatusPKEff.Burn(
+                            statScale: new Effects.General.StatScale(
                                 scaleMap: new Dictionary<PokemonStats, float>
                                 {
                                     { PokemonStats.Attack, 0.5f },
@@ -113,22 +113,22 @@ namespace PBS.Databases
                     alreadyTextID: "status-freeze-already",
                     failTextID: "status-freeze-fail",
 
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: -1),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: -1),
                     statusTags: new PokemonSTag[]
                     {
                         PokemonSTag.NonVolatile,
                         PokemonSTag.TurnsDecreaseOnEnd,
                     },
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.NonVolatile(),
-                        new EffectDatabase.StatusPKEff.Freeze(
+                        new Effects.StatusPKEff.NonVolatile(),
+                        new Effects.StatusPKEff.Freeze(
                             thawMoveTypes: new string[] { "fire" }),
-                        new EffectDatabase.StatusPKEff.TypeImmunity(
-                            filters: new EffectDatabase.Filter.FilterEffect[]
+                        new Effects.StatusPKEff.TypeImmunity(
+                            filters: new Effects.Filter.FilterEffect[]
                             {
-                                new EffectDatabase.Filter.TypeList(
-                                    targetType: EffectDatabase.Filter.TypeList.TargetType.Pokemon,
+                                new Effects.Filter.TypeList(
+                                    targetType: Effects.Filter.TypeList.TargetType.Pokemon,
                                     types: new string[] { "ice", },
                                     invert: true
                                     ),
@@ -148,28 +148,28 @@ namespace PBS.Databases
                     alreadyTextID: "status-paralysis-already",
                     failTextID: "status-paralysis-fail",
 
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: -1),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: -1),
                     statusTags: new PokemonSTag[]
                     {
                         PokemonSTag.NonVolatile,
                         PokemonSTag.TurnsDecreaseOnEnd,
                     },
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.NonVolatile(),
-                        new EffectDatabase.StatusPKEff.Paralysis(),
-                        new EffectDatabase.StatusPKEff.Burn(
-                            statScale: new EffectDatabase.General.StatScale(
+                        new Effects.StatusPKEff.NonVolatile(),
+                        new Effects.StatusPKEff.Paralysis(),
+                        new Effects.StatusPKEff.Burn(
+                            statScale: new Effects.General.StatScale(
                                 scaleMap: new Dictionary<PokemonStats, float>
                                 {
                                     { PokemonStats.Speed, 0.5f },
                                 })
                             ),
-                        new EffectDatabase.StatusPKEff.TypeImmunity(
-                            filters: new EffectDatabase.Filter.FilterEffect[]
+                        new Effects.StatusPKEff.TypeImmunity(
+                            filters: new Effects.Filter.FilterEffect[]
                             {
-                                new EffectDatabase.Filter.TypeList(
-                                    targetType: EffectDatabase.Filter.TypeList.TargetType.Pokemon,
+                                new Effects.Filter.TypeList(
+                                    targetType: Effects.Filter.TypeList.TargetType.Pokemon,
                                     types: new string[] { "electric", },
                                     invert: true
                                     ),
@@ -188,24 +188,24 @@ namespace PBS.Databases
                     alreadyTextID: "status-poison-already",
                     failTextID: "status-poison-fail",
 
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: -1),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: -1),
                     statusTags: new PokemonSTag[]
                     {
                         PokemonSTag.NonVolatile,
                         PokemonSTag.TurnsDecreaseOnEnd,
                     },
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.NonVolatile(),
-                        new EffectDatabase.StatusPKEff.HPLoss(
+                        new Effects.StatusPKEff.NonVolatile(),
+                        new Effects.StatusPKEff.HPLoss(
                             displayText: "status-poison-hploss",
                             hpLossPercent: 1f/8
                             ),
-                        new EffectDatabase.StatusPKEff.TypeImmunity(
-                            filters: new EffectDatabase.Filter.FilterEffect[]
+                        new Effects.StatusPKEff.TypeImmunity(
+                            filters: new Effects.Filter.FilterEffect[]
                             {
-                                new EffectDatabase.Filter.TypeList(
-                                    targetType: EffectDatabase.Filter.TypeList.TargetType.Pokemon,
+                                new Effects.Filter.TypeList(
+                                    targetType: Effects.Filter.TypeList.TargetType.Pokemon,
                                     types: new string[] { "poison", "steel" },
                                     invert: true
                                     ),
@@ -225,13 +225,13 @@ namespace PBS.Databases
                     alreadyTextID: "status-poison-already",
                     failTextID: "status-poison-fail",
 
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: -1),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: -1),
 
                     combineBaseTags: true,
                     combineBaseEffects: true,
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.HPLoss(
+                        new Effects.StatusPKEff.HPLoss(
                             displayText: "status-poison-hploss",
                             hpLossPercent: 1f/16,
                             toxicStack: true
@@ -249,16 +249,16 @@ namespace PBS.Databases
                     alreadyTextID: "status-sleep-already",
                     failTextID: "status-sleep-fail",
 
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(useTurnRange: true, lowestTurns: 1, highestTurns: 3),
+                    defaultTurns: new Effects.General.DefaultTurns(useTurnRange: true, lowestTurns: 1, highestTurns: 3),
                     statusTags: new PokemonSTag[]
                     {
                         PokemonSTag.NonVolatile,
                         PokemonSTag.TurnsDecreaseOnMove
                     },
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.NonVolatile(),
-                        new EffectDatabase.StatusPKEff.Sleep(),
+                        new Effects.StatusPKEff.NonVolatile(),
+                        new Effects.StatusPKEff.Sleep(),
                     }
                     ) },
 
@@ -356,9 +356,9 @@ namespace PBS.Databases
                 new StatusPKData(
                     ID: "defensecurl",
                     conditionName: "Defense Curl",
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.DefenseCurl(),
+                        new Effects.StatusPKEff.DefenseCurl(),
                     }
                     ) },
 
@@ -367,10 +367,10 @@ namespace PBS.Databases
                 new StatusPKData(
                     ID: "disable",
                     conditionName: "Disable",
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.Disable(
-                            defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 4)
+                        new Effects.StatusPKEff.Disable(
+                            defaultTurns: new Effects.General.DefaultTurns(turns: 4)
                             ),
                     }
                     ) },
@@ -380,9 +380,9 @@ namespace PBS.Databases
                 new StatusPKData(
                     ID: "electrify",
                     conditionName: "Electrify",
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.Electrify(),
+                        new Effects.StatusPKEff.Electrify(),
                     }
                     ) },
 
@@ -391,10 +391,10 @@ namespace PBS.Databases
                 new StatusPKData(
                     ID: "embargo",
                     conditionName: "Embargo",
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.Embargo(
-                            defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 5)
+                        new Effects.StatusPKEff.Embargo(
+                            defaultTurns: new Effects.General.DefaultTurns(turns: 5)
                             ),
                     }
                     ) },
@@ -404,9 +404,9 @@ namespace PBS.Databases
                 new StatusPKData(
                     ID: "flinch",
                     conditionName: "Flinch",
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.Flinch(),
+                        new Effects.StatusPKEff.Flinch(),
                     }
                     ) },
 
@@ -415,10 +415,10 @@ namespace PBS.Databases
                 new StatusPKData(
                     ID: "healblock",
                     conditionName: "Heal Block",
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.HealBlock(
-                            defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 5)
+                        new Effects.StatusPKEff.HealBlock(
+                            defaultTurns: new Effects.General.DefaultTurns(turns: 5)
                             ),
                     }
                     ) },
@@ -428,9 +428,9 @@ namespace PBS.Databases
                 new StatusPKData(
                     ID: "identification",
                     conditionName: "identification",
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.Identification(
+                        new Effects.StatusPKEff.Identification(
                             types: new string[] { "ghost" }
                             ),
                     }
@@ -441,9 +441,9 @@ namespace PBS.Databases
                 new StatusPKData(
                     ID: "imprison",
                     conditionName: "Imprison",
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.Imprison(),
+                        new Effects.StatusPKEff.Imprison(),
                     }
                     ) },
 
@@ -452,9 +452,9 @@ namespace PBS.Databases
                 new StatusPKData(
                     ID: "infatuation",
                     conditionName: "Infatuation",
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.Infatuation(),
+                        new Effects.StatusPKEff.Infatuation(),
                     }
                     ) },
 
@@ -463,9 +463,9 @@ namespace PBS.Databases
                 new StatusPKData(
                     ID: "perishsong",
                     conditionName: "Perish Song",
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.PerishSong(),
+                        new Effects.StatusPKEff.PerishSong(),
                     }
                     ) },
 
@@ -474,9 +474,9 @@ namespace PBS.Databases
                 new StatusPKData(
                     ID: "tarshot",
                     conditionName: "Tar Shot",
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.TarShot(
+                        new Effects.StatusPKEff.TarShot(
                             startText: "status-tarshot",
                             weaknesses: new string[] { "fire" }
                             )
@@ -488,10 +488,10 @@ namespace PBS.Databases
                 new StatusPKData(
                     ID: "taunt",
                     conditionName: "Taunt",
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.Taunt(
-                            defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 3)
+                        new Effects.StatusPKEff.Taunt(
+                            defaultTurns: new Effects.General.DefaultTurns(turns: 3)
                             ),
                     }
                     ) },
@@ -501,10 +501,10 @@ namespace PBS.Databases
                 new StatusPKData(
                     ID: "torment",
                     conditionName: "Torment",
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.Torment(
-                            defaultTurns: new EffectDatabase.General.DefaultTurns(turns: -1)
+                        new Effects.StatusPKEff.Torment(
+                            defaultTurns: new Effects.General.DefaultTurns(turns: -1)
                             ),
                     }
                     ) },
@@ -514,9 +514,9 @@ namespace PBS.Databases
                 new StatusPKData(
                     ID: "yawn",
                     conditionName: "Yawn",
-                    effectsNew: new EffectDatabase.StatusPKEff.PokemonSE[]
+                    effectsNew: new Effects.StatusPKEff.PokemonSE[]
                     {
-                        new EffectDatabase.StatusPKEff.Yawn(
+                        new Effects.StatusPKEff.Yawn(
                             statusID: "sleep",
                             turnsLeft: 1
                             ),

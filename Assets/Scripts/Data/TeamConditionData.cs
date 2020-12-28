@@ -31,8 +31,8 @@ public class StatusTEData
     public string alreadyTextID { get; set; }
 
     // Turns
-    private EffectDatabase.General.DefaultTurns p_defaultTurns { get; set; }
-    public EffectDatabase.General.DefaultTurns defaultTurns
+    private Effects.General.DefaultTurns p_defaultTurns { get; set; }
+    public Effects.General.DefaultTurns defaultTurns
     {
         get
         {
@@ -55,14 +55,14 @@ public class StatusTEData
 
     // New Effects
     private bool combineBaseEffects;
-    private List<EffectDatabase.StatusTEEff.TeamSE> p_effectsNew { get; set; }
-    public List<EffectDatabase.StatusTEEff.TeamSE> effectsNew
+    private List<Effects.StatusTEEff.TeamSE> p_effectsNew { get; set; }
+    public List<Effects.StatusTEEff.TeamSE> effectsNew
     {
         get
         {
             if (combineBaseEffects && !string.IsNullOrEmpty(baseID))
             {
-                List<EffectDatabase.StatusTEEff.TeamSE> unionEffects = new List<EffectDatabase.StatusTEEff.TeamSE>();
+                List<Effects.StatusTEEff.TeamSE> unionEffects = new List<Effects.StatusTEEff.TeamSE>();
                 unionEffects.AddRange(p_effectsNew);
                 unionEffects.AddRange(TeamStatuses.instance.GetStatusData(baseID).effectsNew);
                 return unionEffects;
@@ -85,12 +85,12 @@ public class StatusTEData
         string endTextID = null,
         string alreadyTextID = null,
         string failTextID = null,
-        EffectDatabase.General.DefaultTurns defaultTurns = null,
+        Effects.General.DefaultTurns defaultTurns = null,
 
         IEnumerable<TeamSTag> tags = null,
         TeamCEff[] conditionEffects = null,
 
-        bool combineBaseEffects = false, EffectDatabase.StatusTEEff.TeamSE[] effectsNew = null)
+        bool combineBaseEffects = false, Effects.StatusTEEff.TeamSE[] effectsNew = null)
     {
         this.ID = ID;
         this.baseID = baseID;
@@ -119,10 +119,10 @@ public class StatusTEData
         }
 
         this.combineBaseEffects = combineBaseEffects;
-        this.effectsNew = new List<EffectDatabase.StatusTEEff.TeamSE>();
+        this.effectsNew = new List<Effects.StatusTEEff.TeamSE>();
         if (effectsNew != null)
         {
-            List<EffectDatabase.StatusTEEff.TeamSE> addableEffects = new List<EffectDatabase.StatusTEEff.TeamSE>();
+            List<Effects.StatusTEEff.TeamSE> addableEffects = new List<Effects.StatusTEEff.TeamSE>();
             for (int i = 0; i < effectsNew.Length; i++)
             {
                 addableEffects.Add(effectsNew[i].Clone());
@@ -211,9 +211,9 @@ public class StatusTEData
         return effects;
     }
 
-    public List<EffectDatabase.StatusTEEff.TeamSE> GetEffectsNewFiltered(TeamSETiming timing)
+    public List<Effects.StatusTEEff.TeamSE> GetEffectsNewFiltered(TeamSETiming timing)
     {
-        List<EffectDatabase.StatusTEEff.TeamSE> effects = new List<EffectDatabase.StatusTEEff.TeamSE>();
+        List<Effects.StatusTEEff.TeamSE> effects = new List<Effects.StatusTEEff.TeamSE>();
         for (int i = 0; i < effectsNew.Count; i++)
         {
             if (effectsNew[i].timing == timing)
@@ -223,9 +223,9 @@ public class StatusTEData
         }
         return effects;
     }
-    public List<EffectDatabase.StatusTEEff.TeamSE> GetEffectsNew(TeamSEType effectType)
+    public List<Effects.StatusTEEff.TeamSE> GetEffectsNew(TeamSEType effectType)
     {
-        List<EffectDatabase.StatusTEEff.TeamSE> effects = new List<EffectDatabase.StatusTEEff.TeamSE>();
+        List<Effects.StatusTEEff.TeamSE> effects = new List<Effects.StatusTEEff.TeamSE>();
         for (int i = 0; i < effectsNew.Count; i++)
         {
             if (effectsNew[i].effectType == effectType)
@@ -235,7 +235,7 @@ public class StatusTEData
         }
         return effects;
     }
-    public EffectDatabase.StatusTEEff.TeamSE GetEffectNew(TeamSEType effectType)
+    public Effects.StatusTEEff.TeamSE GetEffectNew(TeamSEType effectType)
     {
         for (int i = 0; i < effectsNew.Count; i++)
         {
@@ -247,11 +247,11 @@ public class StatusTEData
         return null;
     }
 
-    public void AddEffects(IEnumerable<EffectDatabase.StatusTEEff.TeamSE> effects, bool before = true)
+    public void AddEffects(IEnumerable<Effects.StatusTEEff.TeamSE> effects, bool before = true)
     {
         if (before)
         {
-            List<EffectDatabase.StatusTEEff.TeamSE> unionEffects = new List<EffectDatabase.StatusTEEff.TeamSE>(effects);
+            List<Effects.StatusTEEff.TeamSE> unionEffects = new List<Effects.StatusTEEff.TeamSE>(effects);
             unionEffects.AddRange(p_effectsNew);
             effectsNew = unionEffects;
         }
@@ -260,9 +260,9 @@ public class StatusTEData
             p_effectsNew.AddRange(effects);
         }
     }
-    public void SetEffects(IEnumerable<EffectDatabase.StatusTEEff.TeamSE> effects)
+    public void SetEffects(IEnumerable<Effects.StatusTEEff.TeamSE> effects)
     {
-        effectsNew = new List<EffectDatabase.StatusTEEff.TeamSE>(effects);
+        effectsNew = new List<Effects.StatusTEEff.TeamSE>(effects);
     }
 }
 

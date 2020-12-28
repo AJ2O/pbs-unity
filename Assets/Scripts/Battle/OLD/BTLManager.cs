@@ -244,12 +244,12 @@ public class BTLManager : MonoBehaviour
                     for (int k = 0; k < pbAbilities.Count && !activatedQuickClaw; k++)
                     {
                         Ability ability = pbAbilities[k];
-                        EffectDatabase.AbilityEff.AbilityEffect quickDraw_ =
+                        Effects.AbilityEff.AbilityEffect quickDraw_ =
                             ability.data.GetEffectNew(AbilityEffectType.QuickDraw);
                         if (quickDraw_ != null)
                         {
-                            EffectDatabase.AbilityEff.QuickDraw quickDraw =
-                                quickDraw_ as EffectDatabase.AbilityEff.QuickDraw;
+                            Effects.AbilityEff.QuickDraw quickDraw =
+                                quickDraw_ as Effects.AbilityEff.QuickDraw;
                             if (battle.DoEffectFiltersPass(
                                 filters: quickDraw.filters,
                                 targetPokemon: userPokemon,
@@ -277,12 +277,12 @@ public class BTLManager : MonoBehaviour
                     for (int k = 0; k < pbItems.Count && !activatedQuickClaw; k++)
                     {
                         Item item = pbItems[k];
-                        EffectDatabase.ItemEff.ItemEffect quickClaw_ =
+                        Effects.ItemEff.ItemEffect quickClaw_ =
                             item.data.GetEffectNew(ItemEffectType.QuickClaw);
                         if (quickClaw_ != null)
                         {
-                            EffectDatabase.ItemEff.QuickClaw quickClaw =
-                                quickClaw_ as EffectDatabase.ItemEff.QuickClaw;
+                            Effects.ItemEff.QuickClaw quickClaw =
+                                quickClaw_ as Effects.ItemEff.QuickClaw;
                             if (battle.DoEffectFiltersPass(
                                 filters: quickClaw.filters,
                                 targetPokemon: userPokemon,
@@ -418,15 +418,15 @@ public class BTLManager : MonoBehaviour
                 Item item = pokemon.item;
                 if (item != null)
                 {
-                    EffectDatabase.ItemEff.ItemEffect formChangeItemEffect =
+                    Effects.ItemEff.ItemEffect formChangeItemEffect =
                         battle.PBPGetItemFormChangeEffect(pokemon, item);
                     if (formChangeItemEffect != null)
                     {
                         // Mega-Evolution
-                        if (formChangeItemEffect is EffectDatabase.ItemEff.MegaStone)
+                        if (formChangeItemEffect is Effects.ItemEff.MegaStone)
                         {
-                            EffectDatabase.ItemEff.MegaStone megaStone =
-                                formChangeItemEffect as EffectDatabase.ItemEff.MegaStone;
+                            Effects.ItemEff.MegaStone megaStone =
+                                formChangeItemEffect as Effects.ItemEff.MegaStone;
 
                             BTLEvent_GameText textEvent1 = new BTLEvent_GameText();
                             textEvent1.SetCloneModel(battle);
@@ -530,7 +530,7 @@ public class BTLManager : MonoBehaviour
             List<BattleCondition> conditions = battle.BBPGetSCs();
             for (int i = 0; i < conditions.Count && !battle.IsFinished(); i++)
             {
-                EffectDatabase.StatusBTLEff.BattleSE effect_ = conditions[i].data.GetEffectNew(BattleSEType.HPLoss);
+                Effects.StatusBTLEff.BattleSE effect_ = conditions[i].data.GetEffectNew(BattleSEType.HPLoss);
                 if (effect_ != null)
                 {
                     if (effect_.timing == BattleSETiming.EndOfTurn)
@@ -559,7 +559,7 @@ public class BTLManager : MonoBehaviour
                 if (GMaxWildfire != null)
                 {
                     StatusTEData statusData = TeamStatuses.instance.GetStatusData(GMaxWildfire.statusID); 
-                    EffectDatabase.StatusTEEff.TeamSE effect_ = statusData.GetEffectNew(TeamSEType.HPLoss);
+                    Effects.StatusTEEff.TeamSE effect_ = statusData.GetEffectNew(TeamSEType.HPLoss);
                     if (effect_ != null)
                     {
                         if (effect_.timing == TeamSETiming.EndOfTurn)
@@ -791,7 +791,7 @@ public class BTLManager : MonoBehaviour
             List<BattleCondition> conditions = battle.BBPGetSCs();
             for (int i = 0; i < conditions.Count && !battle.IsFinished(); i++)
             {
-                EffectDatabase.StatusBTLEff.BattleSE effect_ = conditions[i].data.GetEffectNew(BattleSEType.HPGain);
+                Effects.StatusBTLEff.BattleSE effect_ = conditions[i].data.GetEffectNew(BattleSEType.HPGain);
                 if (effect_ != null)
                 {
                     if (effect_.timing == BattleSETiming.EndOfTurn)
@@ -820,7 +820,7 @@ public class BTLManager : MonoBehaviour
                 bool isHealBlocked = false;
                 for (int k = 0; k < currentTarget.bProps.moveLimiters.Count && !isHealBlocked; k++)
                 {
-                    if (currentTarget.bProps.moveLimiters[k].effect is EffectDatabase.StatusPKEff.HealBlock)
+                    if (currentTarget.bProps.moveLimiters[k].effect is Effects.StatusPKEff.HealBlock)
                     {
                         isHealBlocked = true;
                     }
@@ -1100,7 +1100,7 @@ public class BTLManager : MonoBehaviour
                 PBS.Main.Pokemon.Pokemon pokemon = allPokemon[i];
                 if (battle.IsPokemonOnFieldAndAble(pokemon) && pokemon.bProps.perishSong != null)
                 {
-                    EffectDatabase.StatusPKEff.PerishSong perishSong = pokemon.bProps.perishSong;
+                    Effects.StatusPKEff.PerishSong perishSong = pokemon.bProps.perishSong;
 
                     BTLEvent_GameText textEvent = new BTLEvent_GameText();
                     textEvent.SetCloneModel(battle);
@@ -1481,12 +1481,12 @@ public class BTLManager : MonoBehaviour
                     bool transformed = false;
                     for (int k = 0; k < abilities.Count && !transformed; k++)
                     {
-                        EffectDatabase.AbilityEff.AbilityEffect battleBond_ =
+                        Effects.AbilityEff.AbilityEffect battleBond_ =
                             abilities[k].data.GetEffectNew(AbilityEffectType.BattleBond);
                         if (battleBond_ != null)
                         {
-                            EffectDatabase.AbilityEff.BattleBond battleBond =
-                                battleBond_ as EffectDatabase.AbilityEff.BattleBond;
+                            Effects.AbilityEff.BattleBond battleBond =
+                                battleBond_ as Effects.AbilityEff.BattleBond;
 
                             if (opposingPokemonMap.ContainsKey(pokemon))
                             {
@@ -1529,12 +1529,12 @@ public class BTLManager : MonoBehaviour
                 {
                     for (int k = 0; k < abilities.Count; k++)
                     {
-                        EffectDatabase.AbilityEff.AbilityEffect beastBoost_ =
+                        Effects.AbilityEff.AbilityEffect beastBoost_ =
                             abilities[k].data.GetEffectNew(AbilityEffectType.BeastBoost);
                         if (beastBoost_ != null)
                         {
-                            EffectDatabase.AbilityEff.BeastBoost beastBoost =
-                                beastBoost_ as EffectDatabase.AbilityEff.BeastBoost;
+                            Effects.AbilityEff.BeastBoost beastBoost =
+                                beastBoost_ as Effects.AbilityEff.BeastBoost;
 
                             List<PBS.Main.Pokemon.Pokemon> knockedOutPokemon = new List<PBS.Main.Pokemon.Pokemon>();
                             if (allyPokemonMap.ContainsKey(pokemon))
@@ -1551,8 +1551,8 @@ public class BTLManager : MonoBehaviour
                                 int KOCount = knockedOutPokemon.Count;
 
                                 PokemonStats highestStat = battle.GetPokemonHighestStat(pokemon);
-                                EffectDatabase.General.StatStageMod beastBoostStatMod =
-                                    new EffectDatabase.General.StatStageMod(
+                                Effects.General.StatStageMod beastBoostStatMod =
+                                    new Effects.General.StatStageMod(
                                         ATKMod: (highestStat == PokemonStats.Attack)
                                             ? beastBoost.statMod * KOCount : 0,
                                         DEFMod: (highestStat == PokemonStats.Defense)
@@ -1583,12 +1583,12 @@ public class BTLManager : MonoBehaviour
                 {
                     for (int k = 0; k < abilities.Count; k++)
                     {
-                        EffectDatabase.AbilityEff.AbilityEffect moxie_ =
+                        Effects.AbilityEff.AbilityEffect moxie_ =
                             abilities[k].data.GetEffectNew(AbilityEffectType.Moxie);
                         if (moxie_ != null)
                         {
-                            EffectDatabase.AbilityEff.Moxie moxie =
-                                moxie_ as EffectDatabase.AbilityEff.Moxie;
+                            Effects.AbilityEff.Moxie moxie =
+                                moxie_ as Effects.AbilityEff.Moxie;
 
                             List<PBS.Main.Pokemon.Pokemon> knockedOutPokemon = new List<PBS.Main.Pokemon.Pokemon>();
                             if (allyPokemonMap.ContainsKey(pokemon))
@@ -1600,7 +1600,7 @@ public class BTLManager : MonoBehaviour
                                 knockedOutPokemon.AddRange(opposingPokemonMap[pokemon]);
                             }
 
-                            EffectDatabase.General.StatStageMod moxieStatMod = null;
+                            Effects.General.StatStageMod moxieStatMod = null;
                             for (int j = 0; j < knockedOutPokemon.Count; j++)
                             {
                                 if (moxieStatMod == null)
@@ -1631,12 +1631,12 @@ public class BTLManager : MonoBehaviour
                 // Soul Heart
                 for (int k = 0; k < abilities.Count; k++)
                 {
-                    EffectDatabase.AbilityEff.AbilityEffect soulHeart_ =
+                    Effects.AbilityEff.AbilityEffect soulHeart_ =
                         abilities[k].data.GetEffectNew(AbilityEffectType.SoulHeart);
                     if (soulHeart_ != null)
                     {
-                        EffectDatabase.AbilityEff.SoulHeart soulHeart =
-                            soulHeart_ as EffectDatabase.AbilityEff.SoulHeart;
+                        Effects.AbilityEff.SoulHeart soulHeart =
+                            soulHeart_ as Effects.AbilityEff.SoulHeart;
 
                         List<PBS.Main.Pokemon.Pokemon> knockedOutPokemon = new List<PBS.Main.Pokemon.Pokemon>();
                         if (allyPokemonMap.ContainsKey(pokemon))
@@ -1648,7 +1648,7 @@ public class BTLManager : MonoBehaviour
                             knockedOutPokemon.AddRange(opposingPokemonMap[pokemon]);
                         }
 
-                        EffectDatabase.General.StatStageMod soulHeartStatMod = null;
+                        Effects.General.StatStageMod soulHeartStatMod = null;
                         for (int j = 0; j < knockedOutPokemon.Count; j++)
                         {
                             if (soulHeartStatMod == null)
@@ -1679,12 +1679,12 @@ public class BTLManager : MonoBehaviour
                 for (int k = 0; k < abilities.Count; k++)
                 {
                     Ability powerOfAlchemyAbility = abilities[k];
-                    EffectDatabase.AbilityEff.AbilityEffect powerOfAlchemy_ =
+                    Effects.AbilityEff.AbilityEffect powerOfAlchemy_ =
                         powerOfAlchemyAbility.data.GetEffectNew(AbilityEffectType.PowerOfAlchemy);
                     if (powerOfAlchemy_ != null)
                     {
-                        EffectDatabase.AbilityEff.PowerOfAlchemy powerOfAlchemy =
-                            powerOfAlchemy_ as EffectDatabase.AbilityEff.PowerOfAlchemy;
+                        Effects.AbilityEff.PowerOfAlchemy powerOfAlchemy =
+                            powerOfAlchemy_ as Effects.AbilityEff.PowerOfAlchemy;
                         if (battle.DoEffectFiltersPass(
                             filters: powerOfAlchemy_.filters,
                             targetPokemon: pokemon
@@ -1817,12 +1817,12 @@ public class BTLManager : MonoBehaviour
         bool ignoreDamage = false;
         if (!ignoreMagicGuard)
         {
-            List<EffectDatabase.AbilityEff.AbilityEffect> magicGuard_ =
+            List<Effects.AbilityEff.AbilityEffect> magicGuard_ =
                 battle.PBPGetAbilityEffects(pokemon, AbilityEffectType.MagicGuard);
             for (int i = 0; i < magicGuard_.Count && !ignoreDamage; i++)
             {
-                EffectDatabase.AbilityEff.MagicGuard magicGuard =
-                    magicGuard_[i] as EffectDatabase.AbilityEff.MagicGuard;
+                Effects.AbilityEff.MagicGuard magicGuard =
+                    magicGuard_[i] as Effects.AbilityEff.MagicGuard;
                 if (battle.DoEffectFiltersPass(
                     filters: magicGuard.filters,
                     targetPokemon: pokemon
@@ -1868,20 +1868,20 @@ public class BTLManager : MonoBehaviour
                     {
                         Item curItem = sitrusItems[i];
 
-                        EffectDatabase.ItemEff.TriggerSitrusBerry sitrusBerry =
+                        Effects.ItemEff.TriggerSitrusBerry sitrusBerry =
                             curItem.data.GetEffectNew(ItemEffectType.TriggerOnHPLoss)
-                            as EffectDatabase.ItemEff.TriggerSitrusBerry;
+                            as Effects.ItemEff.TriggerSitrusBerry;
                         float triggerThreshold = sitrusBerry.hpThreshold;
 
                         // Gluttony
-                        List<EffectDatabase.AbilityEff.AbilityEffect> gluttony_ =
+                        List<Effects.AbilityEff.AbilityEffect> gluttony_ =
                             battle.PBPGetAbilityEffects(
                                 pokemon: pokemon,
                                 effectType: AbilityEffectType.Gluttony);
                         for (int k = 0; k < gluttony_.Count; k++)
                         {
-                            EffectDatabase.AbilityEff.Gluttony gluttony =
-                                gluttony_[k] as EffectDatabase.AbilityEff.Gluttony;
+                            Effects.AbilityEff.Gluttony gluttony =
+                                gluttony_[k] as Effects.AbilityEff.Gluttony;
                             if (triggerThreshold >= gluttony.minItemHPThreshold
                                 && triggerThreshold <= gluttony.maxItemHPThreshold)
                             {
@@ -1961,7 +1961,7 @@ public class BTLManager : MonoBehaviour
     }
 
     public IEnumerator ApplyHealHP(
-        EffectDatabase.General.HealHP healHP,
+        Effects.General.HealHP healHP,
         System.Action<bool> callback,
         PBS.Main.Pokemon.Pokemon targetPokemon = null,
         PBS.Main.Pokemon.Pokemon healerPokemon = null,
@@ -2131,11 +2131,11 @@ public class BTLManager : MonoBehaviour
             hit: 1);
 
         // Magnitude
-        EffectDatabase.MoveEff.Magnitude.MagnitudeLevel magnitudeLevel = null;
-        EffectDatabase.MoveEff.MoveEffect magnitudeEffect_ = masterMoveData.GetEffectNew(MoveEffectType.Magnitude);
+        Effects.MoveEff.Magnitude.MagnitudeLevel magnitudeLevel = null;
+        Effects.MoveEff.MoveEffect magnitudeEffect_ = masterMoveData.GetEffectNew(MoveEffectType.Magnitude);
         if (magnitudeEffect_ != null)
         {
-            EffectDatabase.MoveEff.Magnitude magnitudeEffect = magnitudeEffect_ as EffectDatabase.MoveEff.Magnitude;
+            Effects.MoveEff.Magnitude magnitudeEffect = magnitudeEffect_ as Effects.MoveEff.Magnitude;
             magnitudeLevel = magnitudeEffect.GetAMagnitudeLevel();
         }
 
@@ -2150,7 +2150,7 @@ public class BTLManager : MonoBehaviour
             {
                 PBS.Main.Pokemon.BattleProperties.MoveLimiter limiter =
                     userPokemon.bProps.moveLimiters[i];
-                if (limiter.effect is EffectDatabase.StatusPKEff.Encore)
+                if (limiter.effect is Effects.StatusPKEff.Encore)
                 {
                     string encoreID = limiter.GetMove();
                     if (encoreID != null)
@@ -2220,14 +2220,14 @@ public class BTLManager : MonoBehaviour
                 bool isComatose = false;
                 StatusCondition freezeCondition = null;
                 StatusPKData freezeStatusData = null;
-                List<EffectDatabase.AbilityEff.AbilityEffect> effects_ =
+                List<Effects.AbilityEff.AbilityEffect> effects_ =
                     battle.PBPGetAbilityEffects(userPokemon, AbilityEffectType.Comatose);
 
                 // Comatose
                 for (int i = 0; i < effects_.Count && freezeStatusData == null; i++)
                 {
-                    EffectDatabase.AbilityEff.Comatose comatose =
-                        effects_[i] as EffectDatabase.AbilityEff.Comatose;
+                    Effects.AbilityEff.Comatose comatose =
+                        effects_[i] as Effects.AbilityEff.Comatose;
                     StatusPKData comatoseStatusData = PokemonStatuses.instance.GetStatusData(comatose.statusID);
                     if (comatoseStatusData.GetEffectNew(PokemonSEType.Freeze) != null)
                     {
@@ -2240,11 +2240,11 @@ public class BTLManager : MonoBehaviour
                 List<StatusCondition> bConds = battle.PBPGetSCs(userPokemon);
                 for (int i = 0; i < bConds.Count && freezeStatusData == null; i++)
                 {
-                    EffectDatabase.StatusPKEff.PokemonSE sleep_ =
+                    Effects.StatusPKEff.PokemonSE sleep_ =
                         bConds[i].data.GetEffectNew(PokemonSEType.Freeze);
                     if (sleep_ != null)
                     {
-                        EffectDatabase.StatusPKEff.Sleep sleep = sleep_ as EffectDatabase.StatusPKEff.Sleep;
+                        Effects.StatusPKEff.Sleep sleep = sleep_ as Effects.StatusPKEff.Sleep;
                         if (bConds[i].data.HasTag(PokemonSTag.TurnsDecreaseOnMove))
                         {
                             bConds[i].AdvanceSelf();
@@ -2270,8 +2270,8 @@ public class BTLManager : MonoBehaviour
                     {
                         bool willThaw = false;
 
-                        EffectDatabase.StatusPKEff.Freeze freeze =
-                            freezeStatusData.GetEffectNew(PokemonSEType.Freeze) as EffectDatabase.StatusPKEff.Freeze;
+                        Effects.StatusPKEff.Freeze freeze =
+                            freezeStatusData.GetEffectNew(PokemonSEType.Freeze) as Effects.StatusPKEff.Freeze;
 
                         // Thaw based on type
                         if (!willThaw
@@ -2286,12 +2286,12 @@ public class BTLManager : MonoBehaviour
                         // Thaw based on move
                         if (!willThaw)
                         {
-                            List<EffectDatabase.MoveEff.MoveEffect> healBeforeUse_ =
+                            List<Effects.MoveEff.MoveEffect> healBeforeUse_ =
                                 masterMoveData.GetEffectsNew(MoveEffectType.HealBeforeUse);
                             for (int i = 0; i < healBeforeUse_.Count && !willThaw; i++)
                             {
-                                EffectDatabase.MoveEff.HealBeforeUse healBeforeUse =
-                                    healBeforeUse_[i] as EffectDatabase.MoveEff.HealBeforeUse;
+                                Effects.MoveEff.HealBeforeUse healBeforeUse =
+                                    healBeforeUse_[i] as Effects.MoveEff.HealBeforeUse;
                                 for (int k = 0; k < healBeforeUse.statuses.Count && !willThaw; k++)
                                 {
                                     StatusPKData statusData = 
@@ -2345,14 +2345,14 @@ public class BTLManager : MonoBehaviour
             {
                 bool isComatose = false;
                 StatusPKData sleepStatusData = null;
-                List<EffectDatabase.AbilityEff.AbilityEffect> effects_ =
+                List<Effects.AbilityEff.AbilityEffect> effects_ =
                     battle.PBPGetAbilityEffects(userPokemon, AbilityEffectType.Comatose);
 
                 // Comatose
                 for (int i = 0; i < effects_.Count && sleepStatusData == null; i++)
                 {
-                    EffectDatabase.AbilityEff.Comatose comatose =
-                        effects_[i] as EffectDatabase.AbilityEff.Comatose;
+                    Effects.AbilityEff.Comatose comatose =
+                        effects_[i] as Effects.AbilityEff.Comatose;
                     StatusPKData comatoseStatusData = PokemonStatuses.instance.GetStatusData(comatose.statusID);
                     if (comatoseStatusData.GetEffectNew(PokemonSEType.Sleep) != null)
                     {
@@ -2365,11 +2365,11 @@ public class BTLManager : MonoBehaviour
                 List<StatusCondition> bConds = battle.PBPGetSCs(userPokemon);
                 for (int i = 0; i < bConds.Count && sleepStatusData == null; i++)
                 {
-                    EffectDatabase.StatusPKEff.PokemonSE sleep_ =
+                    Effects.StatusPKEff.PokemonSE sleep_ =
                         bConds[i].data.GetEffectNew(PokemonSEType.Sleep);
                     if (sleep_ != null)
                     {
-                        EffectDatabase.StatusPKEff.Sleep sleep = sleep_ as EffectDatabase.StatusPKEff.Sleep;
+                        Effects.StatusPKEff.Sleep sleep = sleep_ as Effects.StatusPKEff.Sleep;
                         if (bConds[i].data.HasTag(PokemonSTag.TurnsDecreaseOnMove))
                         {
                             bConds[i].AdvanceSelf();
@@ -2392,8 +2392,8 @@ public class BTLManager : MonoBehaviour
                 {
                     if (!isComatose)
                     {
-                        EffectDatabase.StatusPKEff.Sleep sleep =
-                            sleepStatusData.GetEffectNew(PokemonSEType.Sleep) as EffectDatabase.StatusPKEff.Sleep;
+                        Effects.StatusPKEff.Sleep sleep =
+                            sleepStatusData.GetEffectNew(PokemonSEType.Sleep) as Effects.StatusPKEff.Sleep;
 
                         BTLEvent_GameText textEvent = new BTLEvent_GameText();
                         textEvent.SetBattleModel(battle);
@@ -2438,12 +2438,12 @@ public class BTLManager : MonoBehaviour
                     for (int i = 0; i < pbAbilities.Count; i++)
                     {
                         Ability ability = pbAbilities[i];
-                        EffectDatabase.AbilityEff.AbilityEffect steadfast_ =
+                        Effects.AbilityEff.AbilityEffect steadfast_ =
                             ability.data.GetEffectNew(AbilityEffectType.Steadfast);
                         if (steadfast_ != null)
                         {
-                            EffectDatabase.AbilityEff.Steadfast steadfast =
-                                steadfast_ as EffectDatabase.AbilityEff.Steadfast;
+                            Effects.AbilityEff.Steadfast steadfast =
+                                steadfast_ as Effects.AbilityEff.Steadfast;
                             yield return StartCoroutine(PBPRunAbilityEffect(
                                 pokemon: userPokemon,
                                 ability: ability,
@@ -2590,7 +2590,7 @@ public class BTLManager : MonoBehaviour
             // check Infatuation
             if (moveSuccess)
             {
-                EffectDatabase.StatusPKEff.Infatuation infatuation = userPokemon.bProps.infatuation;
+                Effects.StatusPKEff.Infatuation infatuation = userPokemon.bProps.infatuation;
                 if (infatuation != null)
                 {
                     PBS.Main.Pokemon.Pokemon infatuator = battle.GetPokemonByID(infatuation.infatuator);
@@ -2675,7 +2675,7 @@ public class BTLManager : MonoBehaviour
                 userPokemon.bProps.truantTurns--;
                 PBPShowAbility(userPokemon, truantPair.ability);
 
-                EffectDatabase.AbilityEff.Truant truant = truantPair.effect as EffectDatabase.AbilityEff.Truant;
+                Effects.AbilityEff.Truant truant = truantPair.effect as Effects.AbilityEff.Truant;
                 BTLEvent_GameText textEvent = new BTLEvent_GameText();
                 textEvent.SetCloneModel(battle);
                 textEvent.Create(textID: truant.displayText, userPokemon: userPokemon);
@@ -2688,10 +2688,10 @@ public class BTLManager : MonoBehaviour
         {
             if (battle.BBPIsPokemonAffectedByBSC(userPokemon, battle.gravity))
             {
-                EffectDatabase.StatusBTLEff.BattleSE gravity_ = battle.gravity.data.GetEffectNew(BattleSEType.Gravity);
+                Effects.StatusBTLEff.BattleSE gravity_ = battle.gravity.data.GetEffectNew(BattleSEType.Gravity);
                 if (gravity_ != null)
                 {
-                    EffectDatabase.StatusBTLEff.Gravity gravity = gravity_ as EffectDatabase.StatusBTLEff.Gravity;
+                    Effects.StatusBTLEff.Gravity gravity = gravity_ as Effects.StatusBTLEff.Gravity;
                     bool moveCancelled = false;
                     if (gravity.intensifyGravity)
                     {
@@ -2794,8 +2794,8 @@ public class BTLManager : MonoBehaviour
                         PBPShowAbility(userPokemon, proteanData);
                         
                         battle.SetPokemonType(userPokemon, moveType);
-                        EffectDatabase.AbilityEff.Protean protean =
-                            proteanData.GetEffectNew(AbilityEffectType.Protean) as EffectDatabase.AbilityEff.Protean;
+                        Effects.AbilityEff.Protean protean =
+                            proteanData.GetEffectNew(AbilityEffectType.Protean) as Effects.AbilityEff.Protean;
 
                         BTLEvent_GameText textEvent = new BTLEvent_GameText();
                         textEvent.SetCloneModel(battle);
@@ -2811,15 +2811,15 @@ public class BTLManager : MonoBehaviour
                 for (int i = 0; i < stanceChangeAbilities.Count && !isStanceChanged; i++)
                 {
                     Ability ability = stanceChangeAbilities[i];
-                    List<EffectDatabase.AbilityEff.AbilityEffect> stanceChange_ =
+                    List<Effects.AbilityEff.AbilityEffect> stanceChange_ =
                         ability.data.GetEffectsNew(AbilityEffectType.StanceChange);
                     for (int k = 0; k < stanceChange_.Count && !isStanceChanged; k++)
                     {
-                        EffectDatabase.AbilityEff.StanceChange stanceChange =
-                            stanceChange_[k] as EffectDatabase.AbilityEff.StanceChange;
+                        Effects.AbilityEff.StanceChange stanceChange =
+                            stanceChange_[k] as Effects.AbilityEff.StanceChange;
                         for (int j = 0; j < stanceChange.transformations.Count && !isStanceChanged; j++)
                         {
-                            EffectDatabase.AbilityEff.StanceChange.Transformation trns =
+                            Effects.AbilityEff.StanceChange.Transformation trns =
                                 stanceChange.transformations[j];
                             if (battle.DoesEffectFilterPass(
                                 effect_: trns.moveCheck,
@@ -2853,7 +2853,7 @@ public class BTLManager : MonoBehaviour
                 // Magnitude X!
                 if (magnitudeEffect_ != null && magnitudeLevel != null)
                 {
-                    EffectDatabase.MoveEff.Magnitude magnitude = magnitudeEffect_ as EffectDatabase.MoveEff.Magnitude;
+                    Effects.MoveEff.Magnitude magnitude = magnitudeEffect_ as Effects.MoveEff.Magnitude;
 
                     BTLEvent_GameText textEvent = new BTLEvent_GameText();
                     textEvent.SetCloneModel(battle);
@@ -2887,11 +2887,11 @@ public class BTLManager : MonoBehaviour
                 // Set Truant
                 if (userPokemon.bProps.truantTurns == 0)
                 {
-                    EffectDatabase.AbilityEff.AbilityEffect truant_ =
+                    Effects.AbilityEff.AbilityEffect truant_ =
                         battle.PBPGetAbilityEffect(userPokemon, AbilityEffectType.Truant);
                     if (truant_ != null)
                     {
-                        EffectDatabase.AbilityEff.Truant truant = truant_ as EffectDatabase.AbilityEff.Truant;
+                        Effects.AbilityEff.Truant truant = truant_ as Effects.AbilityEff.Truant;
                         userPokemon.bProps.truantTurns = truant.turnsWaiting;
                     }
                 }
@@ -2908,7 +2908,7 @@ public class BTLManager : MonoBehaviour
         // Z-Effects
         if (moveSuccess && usedZMove)
         {
-            List<EffectDatabase.MoveEff.MoveEffect> ZPowerEffects = masterMoveData.GetZEffects();
+            List<Effects.MoveEff.MoveEffect> ZPowerEffects = masterMoveData.GetZEffects();
             BattleHitTarget userHitTarget = new BattleHitTarget(userPokemon);
             userHitTarget.affectedByMove = true;
 
@@ -3036,10 +3036,10 @@ public class BTLManager : MonoBehaviour
                     targetPositions = new BattlePosition[0];
                 }
             }
-            EffectDatabase.MoveEff.MoveEffect expandingForce_ = masterMoveData.GetEffectNew(MoveEffectType.ExpandingForce);
+            Effects.MoveEff.MoveEffect expandingForce_ = masterMoveData.GetEffectNew(MoveEffectType.ExpandingForce);
             if (expandingForce_ != null)
             {
-                EffectDatabase.MoveEff.ExpandingForce expandingForce = expandingForce_ as EffectDatabase.MoveEff.ExpandingForce;
+                Effects.MoveEff.ExpandingForce expandingForce = expandingForce_ as Effects.MoveEff.ExpandingForce;
                 overwriteMoveTarget = expandingForce.newTargetType;
                 targetPositions = battle.GetMoveAutoTargets(
                     pokemon: userPokemon,
@@ -3676,8 +3676,8 @@ public class BTLManager : MonoBehaviour
             int moveHits = (command.forceOneHit) ? 1 : battle.GetMoveHits(userPokemon, masterMoveData);
 
             // Parental Bond
-            List<EffectDatabase.AbilityEff.ParentalBond.BondedHit> parentalBondHits =
-                new List<EffectDatabase.AbilityEff.ParentalBond.BondedHit>();
+            List<Effects.AbilityEff.ParentalBond.BondedHit> parentalBondHits =
+                new List<Effects.AbilityEff.ParentalBond.BondedHit>();
             Ability parentalBondAbility = null;
             if (!command.forceOneHit)
             {
@@ -3685,12 +3685,12 @@ public class BTLManager : MonoBehaviour
                 for (int i = 0; i < userAbilities.Count && parentalBondAbility == null; i++)
                 {
                     Ability ability = userAbilities[i];
-                    EffectDatabase.AbilityEff.AbilityEffect parentalBond_ =
+                    Effects.AbilityEff.AbilityEffect parentalBond_ =
                         ability.data.GetEffectNew(AbilityEffectType.ParentalBond);
                     if (parentalBond_ != null)
                     {
-                        EffectDatabase.AbilityEff.ParentalBond parentalBond =
-                            parentalBond_ as EffectDatabase.AbilityEff.ParentalBond;
+                        Effects.AbilityEff.ParentalBond parentalBond =
+                            parentalBond_ as Effects.AbilityEff.ParentalBond;
                         if (battle.DoEffectFiltersPass(
                             filters: parentalBond.filters,
                             userPokemon: userPokemon,
@@ -3745,7 +3745,7 @@ public class BTLManager : MonoBehaviour
                 bool effectHitSuccessful = false;
 
                 // Parental Bond Hit
-                EffectDatabase.AbilityEff.ParentalBond.BondedHit parentalBondHit =
+                Effects.AbilityEff.ParentalBond.BondedHit parentalBondHit =
                     (parentalBondHits.Count == 0) ? null : parentalBondHits[moveHits % parentalBondHits.Count];
                 if (parentalBondAbility != null)
                 {
@@ -3784,7 +3784,7 @@ public class BTLManager : MonoBehaviour
                 // Mold Breaker bypasses ability immunities
                 if (!bypassAbility)
                 {
-                    EffectDatabase.AbilityEff.AbilityEffect moldBreakerEffect =
+                    Effects.AbilityEff.AbilityEffect moldBreakerEffect =
                         battle.PBPGetAbilityEffect(userPokemon, AbilityEffectType.MoldBreaker);
                     if (moldBreakerEffect != null)
                     {
@@ -3792,7 +3792,7 @@ public class BTLManager : MonoBehaviour
                     }
 
                     // Sunsteel Strike bypasses ability immunities
-                    EffectDatabase.MoveEff.MoveEffect effect = moveHitData.GetEffectNew(MoveEffectType.SunteelStrike);
+                    Effects.MoveEff.MoveEffect effect = moveHitData.GetEffectNew(MoveEffectType.SunteelStrike);
                     if (effect != null)
                     {
                         bypassAbility = true;
@@ -3803,12 +3803,12 @@ public class BTLManager : MonoBehaviour
                 bool bypassSubstitute = false;
 
                 // Infiltrator
-                List<EffectDatabase.AbilityEff.AbilityEffect> infiltrators_ =
+                List<Effects.AbilityEff.AbilityEffect> infiltrators_ =
                     battle.PBPGetAbilityEffects(userPokemon, AbilityEffectType.Infiltrator);
                 for (int k = 0; k < infiltrators_.Count && !bypassSubstitute; k++)
                 {
-                    EffectDatabase.AbilityEff.Infiltrator infiltrator =
-                        infiltrators_[k] as EffectDatabase.AbilityEff.Infiltrator;
+                    Effects.AbilityEff.Infiltrator infiltrator =
+                        infiltrators_[k] as Effects.AbilityEff.Infiltrator;
                     if (infiltrator.bypassSubstitute)
                     {
                         bypassSubstitute = true;
@@ -3833,10 +3833,10 @@ public class BTLManager : MonoBehaviour
                     curTarget.effectiveness = battle.GetMoveEffectiveness(userPokemon, moveHitData, curTarget.pokemon);
                     preBattleHitTargets.Add(curTarget);
                 }
-                List<EffectDatabase.StatusBTLEff.StrongWinds> preStrongWinds = 
+                List<Effects.StatusBTLEff.StrongWinds> preStrongWinds = 
                     battle.BBPGetStrongWindsEffects(preBattleHitTargets);
-                HashSet<EffectDatabase.StatusBTLEff.StrongWinds> strongWindsUsed = 
-                    new HashSet<EffectDatabase.StatusBTLEff.StrongWinds>();
+                HashSet<Effects.StatusBTLEff.StrongWinds> strongWindsUsed = 
+                    new HashSet<Effects.StatusBTLEff.StrongWinds>();
                 
                 // ---Finished Pre-calculation---
 
@@ -4139,10 +4139,10 @@ public class BTLManager : MonoBehaviour
                     if (hitTarget.affectedByMove)
                     {
                         // Poltergeist
-                        EffectDatabase.MoveEff.MoveEffect poltergeist_ = moveImpactData.GetEffectNew(MoveEffectType.Poltergeist);
+                        Effects.MoveEff.MoveEffect poltergeist_ = moveImpactData.GetEffectNew(MoveEffectType.Poltergeist);
                         if (poltergeist_ != null)
                         {
-                            EffectDatabase.MoveEff.Poltergeist poltergeist = poltergeist_ as EffectDatabase.MoveEff.Poltergeist;
+                            Effects.MoveEff.Poltergeist poltergeist = poltergeist_ as Effects.MoveEff.Poltergeist;
                             Item targetItem = battle.PBPGetHeldItem(currentTarget);
                             if (targetItem != null)
                             {
@@ -4205,7 +4205,7 @@ public class BTLManager : MonoBehaviour
                                     // Delta Stream / Strong Winds Check here
                                     for (int j = 0; j < preStrongWinds.Count; j++)
                                     {
-                                        EffectDatabase.StatusBTLEff.StrongWinds effect = preStrongWinds[j];
+                                        Effects.StatusBTLEff.StrongWinds effect = preStrongWinds[j];
                                         List<string> affectedTypes = battle.BBPGetTargetStrongWindTypes(
                                             target: hitTarget,
                                             effect: effect
@@ -4357,12 +4357,12 @@ public class BTLManager : MonoBehaviour
                                     // Disguise / Ice Face Check
                                     for (int j = 0; j < targetAbilities.Count && directHit; j++)
                                     {
-                                        EffectDatabase.AbilityEff.AbilityEffect disguise_ =
+                                        Effects.AbilityEff.AbilityEffect disguise_ =
                                             targetAbilities[j].data.GetEffectNew(AbilityEffectType.Disguise);
                                         if (disguise_ != null)
                                         {
-                                            EffectDatabase.AbilityEff.Disguise disguise =
-                                                disguise_ as EffectDatabase.AbilityEff.Disguise;
+                                            Effects.AbilityEff.Disguise disguise =
+                                                disguise_ as Effects.AbilityEff.Disguise;
                                             if (battle.DoEffectFiltersPass(
                                                 filters: disguise.filters,
                                                 userPokemon: userPokemon,
@@ -4419,8 +4419,8 @@ public class BTLManager : MonoBehaviour
                                             for (int j = 0; j < sturdyAbilities.Count && !faintAvoided; j++)
                                             {
                                                 AbilityEffectPair abilityPair = sturdyAbilities[j];
-                                                EffectDatabase.AbilityEff.Sturdy sturdy =
-                                                    abilityPair.effect as EffectDatabase.AbilityEff.Sturdy;
+                                                Effects.AbilityEff.Sturdy sturdy =
+                                                    abilityPair.effect as Effects.AbilityEff.Sturdy;
                                                 if (battle.DoEffectFiltersPass(
                                                     filters: sturdy.filters,
                                                     userPokemon: userPokemon,
@@ -4446,9 +4446,9 @@ public class BTLManager : MonoBehaviour
                                             for (int j = 0; j < focusBandItems.Count && !faintAvoided; j++)
                                             {
                                                 Item focusBandItem = focusBandItems[j];
-                                                EffectDatabase.ItemEff.FocusBand focusBand =
+                                                Effects.ItemEff.FocusBand focusBand =
                                                     focusBandItem.data.GetEffectNew(ItemEffectType.FocusBand)
-                                                    as EffectDatabase.ItemEff.FocusBand;
+                                                    as Effects.ItemEff.FocusBand;
                                                 if (battle.DoEffectFiltersPass(
                                                     filters: focusBand.filters,
                                                     userPokemon: userPokemon,
@@ -4700,7 +4700,7 @@ public class BTLManager : MonoBehaviour
                         // Endure
                         if (currentTarget.endure != null)
                         {
-                            EffectDatabase.MoveEff.Endure endure = currentTarget.endure;
+                            Effects.MoveEff.Endure endure = currentTarget.endure;
 
                             BTLEvent_GameText textEvent = new BTLEvent_GameText();
                             textEvent.SetBattleModel(Battle.CloneModel(battle));
@@ -4714,8 +4714,8 @@ public class BTLManager : MonoBehaviour
                         else if (currentTarget.sturdyPair != null)
                         {
                             PBPShowAbility(currentTarget.pokemon, currentTarget.sturdyPair.ability);
-                            EffectDatabase.AbilityEff.Sturdy sturdy =
-                                currentTarget.sturdyPair.effect as EffectDatabase.AbilityEff.Sturdy;
+                            Effects.AbilityEff.Sturdy sturdy =
+                                currentTarget.sturdyPair.effect as Effects.AbilityEff.Sturdy;
 
                             BTLEvent_GameText textEvent = new BTLEvent_GameText();
                             textEvent.SetCloneModel(battle);
@@ -4728,9 +4728,9 @@ public class BTLManager : MonoBehaviour
                         // Focus Band / Focus Sash
                         else if (currentTarget.focusBand != null)
                         {
-                            EffectDatabase.ItemEff.FocusBand focusBand =
+                            Effects.ItemEff.FocusBand focusBand =
                                 currentTarget.focusBand.data.GetEffectNew(ItemEffectType.FocusBand)
-                                as EffectDatabase.ItemEff.FocusBand;
+                                as Effects.ItemEff.FocusBand;
 
                             yield return StartCoroutine(ConsumeItem(
                                 pokemon: currentTarget.pokemon,
@@ -4743,11 +4743,11 @@ public class BTLManager : MonoBehaviour
                 }
 
                 // run HPDrain checks
-                EffectDatabase.MoveEff.MoveEffect absorb_ = moveHitData.GetEffectNew(MoveEffectType.HPDrain);
+                Effects.MoveEff.MoveEffect absorb_ = moveHitData.GetEffectNew(MoveEffectType.HPDrain);
                 MoveEffect HPDrainEffect = moveHitData.GetEffect(MoveEffectType.HPDrain);
                 if (absorb_ != null)
                 {
-                    EffectDatabase.MoveEff.Absorb absorb = absorb_ as EffectDatabase.MoveEff.Absorb;
+                    Effects.MoveEff.Absorb absorb = absorb_ as Effects.MoveEff.Absorb;
                     for (int k = 0; k < battleHitTargets.Count; k++)
                     {
                         BattleHitTarget currentTarget = battleHitTargets[k];
@@ -4767,13 +4767,13 @@ public class BTLManager : MonoBehaviour
                                     for (int j = 0; j < targetAbilities.Count && !ignoreDrain; j++)
                                     {
                                         Ability ability = targetAbilities[j];
-                                        EffectDatabase.AbilityEff.AbilityEffect liquidOoze_ =
+                                        Effects.AbilityEff.AbilityEffect liquidOoze_ =
                                             ability.data.GetEffectNew(AbilityEffectType.LiquidOoze);
 
                                         if (liquidOoze_ != null)
                                         {
-                                            EffectDatabase.AbilityEff.LiquidOoze liquidOoze =
-                                                liquidOoze_ as EffectDatabase.AbilityEff.LiquidOoze;
+                                            Effects.AbilityEff.LiquidOoze liquidOoze =
+                                                liquidOoze_ as Effects.AbilityEff.LiquidOoze;
                                             if (battle.DoEffectFiltersPass(
                                                 filters: liquidOoze.filters,
                                                 userPokemon: currentTarget.pokemon,
@@ -5034,20 +5034,20 @@ public class BTLManager : MonoBehaviour
                         {
                             Item curItem = sitrusItems[j];
 
-                            EffectDatabase.ItemEff.TriggerSitrusBerry sitrusBerry =
+                            Effects.ItemEff.TriggerSitrusBerry sitrusBerry =
                                 curItem.data.GetEffectNew(ItemEffectType.TriggerOnHPLoss)
-                                as EffectDatabase.ItemEff.TriggerSitrusBerry;
+                                as Effects.ItemEff.TriggerSitrusBerry;
                             float triggerThreshold = sitrusBerry.hpThreshold;
 
                             // Gluttony
-                            List<EffectDatabase.AbilityEff.AbilityEffect> gluttony_ =
+                            List<Effects.AbilityEff.AbilityEffect> gluttony_ =
                                 battle.PBPGetAbilityEffects(
                                     pokemon: curTarget.pokemon, 
                                     effectType: AbilityEffectType.Gluttony);
                             for (int l = 0; l < gluttony_.Count; l++)
                             {
-                                EffectDatabase.AbilityEff.Gluttony gluttony =
-                                    gluttony_[l] as EffectDatabase.AbilityEff.Gluttony;
+                                Effects.AbilityEff.Gluttony gluttony =
+                                    gluttony_[l] as Effects.AbilityEff.Gluttony;
                                 if (triggerThreshold >= gluttony.minItemHPThreshold
                                     && triggerThreshold <= gluttony.maxItemHPThreshold)
                                 {
@@ -5084,11 +5084,11 @@ public class BTLManager : MonoBehaviour
                         // Disguise / Ice Face
                         if (currentTarget.disguise != null)
                         {
-                            EffectDatabase.AbilityEff.Disguise disguise =
+                            Effects.AbilityEff.Disguise disguise =
                                 currentTarget.disguise.data.GetEffectNew(AbilityEffectType.Disguise)
-                                as EffectDatabase.AbilityEff.Disguise;
+                                as Effects.AbilityEff.Disguise;
 
-                            EffectDatabase.General.FormTransformation disguiseForm =
+                            Effects.General.FormTransformation disguiseForm =
                                 disguise.GetDisguiseForm(currentTarget.pokemon);
 
                             if (disguiseForm != null)
@@ -5163,7 +5163,7 @@ public class BTLManager : MonoBehaviour
                         // Aftermath check
                         if (currentTarget.fainted)
                         {
-                            EffectDatabase.AbilityEff.AbilityEffect aftermath_ =
+                            Effects.AbilityEff.AbilityEffect aftermath_ =
                                 battle.PBPGetAbilityEffect(currentTarget.pokemon, AbilityEffectType.Aftermath);
                             if (aftermath_ != null 
                                 && battle.IsPokemonOnFieldAndAble(userPokemon)
@@ -5171,8 +5171,8 @@ public class BTLManager : MonoBehaviour
                             {
                                 AbilityData afterMathData 
                                     = battle.PBPGetAbilityDataWithEffect(currentTarget.pokemon, AbilityEffectType.Aftermath);
-                                EffectDatabase.AbilityEff.Aftermath aftermath =
-                                    aftermath_ as EffectDatabase.AbilityEff.Aftermath;
+                                Effects.AbilityEff.Aftermath aftermath =
+                                    aftermath_ as Effects.AbilityEff.Aftermath;
 
                                 if (battle.DoEffectFiltersPass(
                                     filters: aftermath.filters,
@@ -5205,13 +5205,13 @@ public class BTLManager : MonoBehaviour
                                             for (int l = 0; l < abilities.Count && !blocked; l++)
                                             {
                                                 AbilityData dampData = abilities[l].data;
-                                                EffectDatabase.AbilityEff.AbilityEffect damp_ =
+                                                Effects.AbilityEff.AbilityEffect damp_ =
                                                     dampData.GetEffectNew(AbilityEffectType.Damp);
 
                                                 if (damp_ != null)
                                                 {
-                                                    EffectDatabase.AbilityEff.Damp damp =
-                                                        damp_ as EffectDatabase.AbilityEff.Damp;
+                                                    Effects.AbilityEff.Damp damp =
+                                                        damp_ as Effects.AbilityEff.Damp;
 
                                                     if (damp.moveTags.Contains(MoveTag.ExplosiveMove))
                                                     {
@@ -5609,11 +5609,11 @@ public class BTLManager : MonoBehaviour
                         bool wimpedOut = false;
                         for (int i = 0; i < userAbilities.Count && !wimpedOut; i++)
                         {
-                            EffectDatabase.AbilityEff.AbilityEffect wimpOut_ =
+                            Effects.AbilityEff.AbilityEffect wimpOut_ =
                                 userAbilities[i].data.GetEffectNew(AbilityEffectType.WimpOut);
                             if (wimpOut_ != null)
                             {
-                                EffectDatabase.AbilityEff.WimpOut wimpOut = wimpOut_ as EffectDatabase.AbilityEff.WimpOut;
+                                Effects.AbilityEff.WimpOut wimpOut = wimpOut_ as Effects.AbilityEff.WimpOut;
                                 if (currentTarget.preHPPercent > wimpOut.hpThreshold
                                     && currentTarget.postHPPercent <= wimpOut.hpThreshold)
                                 {
@@ -5783,16 +5783,16 @@ public class BTLManager : MonoBehaviour
                     && totalDamageDealt > 0
                     && !userPokemon.bProps.attemptingToSkyDrop)
                 {
-                    EffectDatabase.MoveEff.MoveEffect doubleEdge_ = masterMoveData.GetEffectNew(MoveEffectType.Recoil);
+                    Effects.MoveEff.MoveEffect doubleEdge_ = masterMoveData.GetEffectNew(MoveEffectType.Recoil);
 
                     // Rock Head Check
-                    EffectDatabase.AbilityEff.AbilityEffect rockHead_ = 
+                    Effects.AbilityEff.AbilityEffect rockHead_ = 
                         battle.PBPGetAbilityEffect(userPokemon, AbilityEffectType.RockHead);
 
                     if (doubleEdge_ != null)
                     {
-                        EffectDatabase.MoveEff.DoubleEdge doubleEdge = 
-                            doubleEdge_ as EffectDatabase.MoveEff.DoubleEdge;
+                        Effects.MoveEff.DoubleEdge doubleEdge = 
+                            doubleEdge_ as Effects.MoveEff.DoubleEdge;
 
                         bool applyRecoil = true;
                         if (rockHead_ != null || doubleEdge.bypassRockHead)
@@ -5804,9 +5804,9 @@ public class BTLManager : MonoBehaviour
                         if (applyRecoil)
                         {
                             int recoilDamage =
-                                (doubleEdge.recoilMode == EffectDatabase.MoveEff.DoubleEdge.RecoilMode.Damage) ?
+                                (doubleEdge.recoilMode == Effects.MoveEff.DoubleEdge.RecoilMode.Damage) ?
                                 Mathf.FloorToInt(totalDamageDealt * doubleEdge.hpLossPercent)
-                                : (doubleEdge.recoilMode == EffectDatabase.MoveEff.DoubleEdge.RecoilMode.MaxHP) ?
+                                : (doubleEdge.recoilMode == Effects.MoveEff.DoubleEdge.RecoilMode.MaxHP) ?
                                 battle.GetPokemonHPByPercent(userPokemon, doubleEdge.hpLossPercent)
                                 : 1;
                             recoilDamage = Mathf.Max(1, recoilDamage);
@@ -5845,11 +5845,11 @@ public class BTLManager : MonoBehaviour
                         bool wimpedOut = false;
                         for (int i = 0; i < userAbilities.Count && !wimpedOut; i++)
                         {
-                            EffectDatabase.AbilityEff.AbilityEffect wimpOut_ =
+                            Effects.AbilityEff.AbilityEffect wimpOut_ =
                                 userAbilities[i].data.GetEffectNew(AbilityEffectType.WimpOut);
                             if (wimpOut_ != null)
                             {
-                                EffectDatabase.AbilityEff.WimpOut wimpOut = wimpOut_ as EffectDatabase.AbilityEff.WimpOut;
+                                Effects.AbilityEff.WimpOut wimpOut = wimpOut_ as Effects.AbilityEff.WimpOut;
                                 if (preHPPercent > wimpOut.hpThreshold
                                     && postHPPercent <= wimpOut.hpThreshold)
                                 {
@@ -5889,12 +5889,12 @@ public class BTLManager : MonoBehaviour
                     float userHPPercent = battle.GetPokemonHPAsPercentage(userPokemon);
 
                     // Relic Song
-                    EffectDatabase.MoveEff.MoveEffect relicSong_ =
+                    Effects.MoveEff.MoveEffect relicSong_ =
                         masterMoveData.GetEffectNew(MoveEffectType.RelicSong);
                     if (relicSong_ != null)
                     {
-                        EffectDatabase.MoveEff.RelicSong relicSong =
-                            (relicSong_ as EffectDatabase.MoveEff.RelicSong);
+                        Effects.MoveEff.RelicSong relicSong =
+                            (relicSong_ as Effects.MoveEff.RelicSong);
 
                         bool changedForm = false;
                         string prevForm = userPokemon.pokemonID;
@@ -5926,17 +5926,17 @@ public class BTLManager : MonoBehaviour
                     for (int i = 0; i < userAbilities.Count; i++)
                     {
                         Ability ability = userAbilities[i];
-                        List<EffectDatabase.AbilityEff.AbilityEffect> gulpMissiles_ =
+                        List<Effects.AbilityEff.AbilityEffect> gulpMissiles_ =
                             ability.data.GetEffectsNew(AbilityEffectType.GulpMissile);
                         bool changedForm = false;
 
                         for (int k = 0; k < gulpMissiles_.Count && !changedForm; k++)
                         {
-                            EffectDatabase.AbilityEff.GulpMissile gulpMissile = 
-                                gulpMissiles_[k] as EffectDatabase.AbilityEff.GulpMissile;
+                            Effects.AbilityEff.GulpMissile gulpMissile = 
+                                gulpMissiles_[k] as Effects.AbilityEff.GulpMissile;
                             for (int j = 0; j < gulpMissile.gulpTransformations.Count && !changedForm; j++)
                             {
-                                EffectDatabase.AbilityEff.GulpMissile.GulpTransformation gulpTrns
+                                Effects.AbilityEff.GulpMissile.GulpTransformation gulpTrns
                                     = gulpMissile.gulpTransformations[j];
 
                                 bool canTransform = gulpTrns.transformation.IsPokemonAPreForm(userPokemon)
@@ -6264,10 +6264,10 @@ public class BTLManager : MonoBehaviour
             if (battle.IsPokemonOnFieldAndAble(userPokemon))
             {
                 // Rollout
-                EffectDatabase.MoveEff.MoveEffect rollout_ = masterMoveData.GetEffectNew(MoveEffectType.Rollout);
+                Effects.MoveEff.MoveEffect rollout_ = masterMoveData.GetEffectNew(MoveEffectType.Rollout);
                 if (rollout_ != null && !isCharging)
                 {
-                    EffectDatabase.MoveEff.Rollout rollout = rollout_ as EffectDatabase.MoveEff.Rollout;
+                    Effects.MoveEff.Rollout rollout = rollout_ as Effects.MoveEff.Rollout;
                     bool endRollout = false;
 
                     if (rollout.endOnFail && !moveUsedSuccessfully)
@@ -6440,12 +6440,12 @@ public class BTLManager : MonoBehaviour
                     List<Ability> abilities = battle.PBPGetAbilities(dancerPokemon[i]);
                     for (int k = 0; k < abilities.Count; k++)
                     {
-                        EffectDatabase.AbilityEff.AbilityEffect dancer_ = 
+                        Effects.AbilityEff.AbilityEffect dancer_ = 
                             abilities[k].data.GetEffectNew(AbilityEffectType.Dancer);
                         if (dancer_ != null
                             && battle.IsPokemonOnFieldAndAble(dancerPokemon[i]))
                         {
-                            EffectDatabase.AbilityEff.Dancer dancer = dancer_ as EffectDatabase.AbilityEff.Dancer;
+                            Effects.AbilityEff.Dancer dancer = dancer_ as Effects.AbilityEff.Dancer;
                             if (battle.DoEffectFiltersPass(
                                 filters: dancer.filters,
                                 userPokemon: dancerPokemon[i],
@@ -8925,7 +8925,7 @@ public class BTLManager : MonoBehaviour
         bool apply = true
         )
     {
-        List<EffectDatabase.MoveEff.MoveEffect> effects = moveData.GetEffectsNewFiltered(timing);
+        List<Effects.MoveEff.MoveEffect> effects = moveData.GetEffectsNewFiltered(timing);
         bool effectSuccess = false;
 
         yield return StartCoroutine(ExecuteMoveEffects(
@@ -8950,7 +8950,7 @@ public class BTLManager : MonoBehaviour
     public IEnumerator ExecuteMoveEffects(
         PBS.Main.Pokemon.Pokemon userPokemon,
         MoveData moveData,
-        List<EffectDatabase.MoveEff.MoveEffect> effects,
+        List<Effects.MoveEff.MoveEffect> effects,
         List<BattleHitTarget> battleHitTargets,
         List<Team> targetTeams,
         System.Action<bool> callback,
@@ -8964,7 +8964,7 @@ public class BTLManager : MonoBehaviour
         // Filter out affected targets
         for (int i = 0; i < effects.Count; i++)
         {
-            EffectDatabase.MoveEff.MoveEffect effect = effects[i];
+            Effects.MoveEff.MoveEffect effect = effects[i];
             bool bypassCheck = false;
 
             // For each hit target, run for target, user, user's team and/or battlefield
@@ -9094,7 +9094,7 @@ public class BTLManager : MonoBehaviour
     }
 
     public IEnumerator ExecuteMoveEffect(
-        EffectDatabase.MoveEff.MoveEffect effect_,
+        Effects.MoveEff.MoveEffect effect_,
         MoveData moveData,
         PBS.Main.Pokemon.Pokemon userPokemon,
         System.Action<bool> callback,
@@ -9115,9 +9115,9 @@ public class BTLManager : MonoBehaviour
                 ))
         {
             // Core Enforcer
-            if (effect_ is EffectDatabase.MoveEff.CoreEnforcer && targetPokemon != null)
+            if (effect_ is Effects.MoveEff.CoreEnforcer && targetPokemon != null)
             {
-                EffectDatabase.MoveEff.CoreEnforcer coreEnforcer = effect_ as EffectDatabase.MoveEff.CoreEnforcer;
+                Effects.MoveEff.CoreEnforcer coreEnforcer = effect_ as Effects.MoveEff.CoreEnforcer;
                 if (battle.IsPokemonOnFieldAndAble(targetPokemon))
                 {
                     List<Ability> abilities = battle.PBPGetAbilities(
@@ -9155,9 +9155,9 @@ public class BTLManager : MonoBehaviour
                 }
             }
             // Corrosive Gas
-            if (effect_ is EffectDatabase.MoveEff.CorrosiveGas && targetPokemon != null)
+            if (effect_ is Effects.MoveEff.CorrosiveGas && targetPokemon != null)
             {
-                EffectDatabase.MoveEff.CorrosiveGas effect = effect_ as EffectDatabase.MoveEff.CorrosiveGas;
+                Effects.MoveEff.CorrosiveGas effect = effect_ as Effects.MoveEff.CorrosiveGas;
                 Item targetItem = battle.PBPGetHeldItem(targetPokemon);
                 if (targetItem != null)
                 {
@@ -9182,9 +9182,9 @@ public class BTLManager : MonoBehaviour
                 }
             }
             // Covet
-            if (effect_ is EffectDatabase.MoveEff.Covet && targetPokemon != null)
+            if (effect_ is Effects.MoveEff.Covet && targetPokemon != null)
             {
-                EffectDatabase.MoveEff.Covet effect = effect_ as EffectDatabase.MoveEff.Covet;
+                Effects.MoveEff.Covet effect = effect_ as Effects.MoveEff.Covet;
                 Item userItem = battle.PBPGetHeldItem(userPokemon);
                 Item targetItem = battle.PBPGetHeldItem(targetPokemon);
                 if (targetItem != null
@@ -9212,12 +9212,12 @@ public class BTLManager : MonoBehaviour
                 }
             }
             // Endure
-            else if (effect_ is EffectDatabase.MoveEff.Endure)
+            else if (effect_ is Effects.MoveEff.Endure)
             {
                 effectSuccess = true;
                 userPokemon.bProps.protectCounter++;
 
-                EffectDatabase.MoveEff.Endure effect = effect_ as EffectDatabase.MoveEff.Endure;
+                Effects.MoveEff.Endure effect = effect_ as Effects.MoveEff.Endure;
                 if (effect.targetType == MoveEffectTargetType.Self
                     || effect.targetType == MoveEffectTargetType.Target)
                 {
@@ -9233,9 +9233,9 @@ public class BTLManager : MonoBehaviour
                 }
             }
             // Feint
-            else if (effect_ is EffectDatabase.MoveEff.Feint)
+            else if (effect_ is Effects.MoveEff.Feint)
             {
-                EffectDatabase.MoveEff.Feint effect = effect_ as EffectDatabase.MoveEff.Feint;
+                Effects.MoveEff.Feint effect = effect_ as Effects.MoveEff.Feint;
 
                 // Lifting Protection moves
                 if (targetPokemon.bProps.protect != null)
@@ -9264,8 +9264,8 @@ public class BTLManager : MonoBehaviour
                 {
                     if (targetTeam.bProps.matBlocks.Count > 0)
                     {
-                        List<EffectDatabase.General.Protect> matBlocks = 
-                            new List<EffectDatabase.General.Protect>(targetTeam.bProps.matBlocks);
+                        List<Effects.General.Protect> matBlocks = 
+                            new List<Effects.General.Protect>(targetTeam.bProps.matBlocks);
 
                         bool protectionLifted = false;
                         for (int i = 0; i < matBlocks.Count; i++)
@@ -9297,10 +9297,10 @@ public class BTLManager : MonoBehaviour
                 }
             }
             // Inflict Status
-            else if (effect_ is EffectDatabase.MoveEff.InflictStatus)
+            else if (effect_ is Effects.MoveEff.InflictStatus)
             {
-                EffectDatabase.MoveEff.InflictStatus effect = effect_ as EffectDatabase.MoveEff.InflictStatus;
-                EffectDatabase.General.InflictStatus inflictEffect = effect.inflictStatus;
+                Effects.MoveEff.InflictStatus effect = effect_ as Effects.MoveEff.InflictStatus;
+                Effects.General.InflictStatus inflictEffect = effect.inflictStatus;
                 yield return StartCoroutine(ApplySC(
                     inflictStatus: inflictEffect,
                     targetPokemon: targetPokemon,
@@ -9319,9 +9319,9 @@ public class BTLManager : MonoBehaviour
                     ));
             }
             // Knock Off
-            else if (effect_ is EffectDatabase.MoveEff.KnockOff && targetPokemon != null)
+            else if (effect_ is Effects.MoveEff.KnockOff && targetPokemon != null)
             {
-                EffectDatabase.MoveEff.KnockOff effect = effect_ as EffectDatabase.MoveEff.KnockOff;
+                Effects.MoveEff.KnockOff effect = effect_ as Effects.MoveEff.KnockOff;
                 Item targetItem = battle.PBPGetHeldItem(targetPokemon);
                 if (targetItem != null)
                 {
@@ -9345,12 +9345,12 @@ public class BTLManager : MonoBehaviour
                 }
             }
             // Protect / Mat Block
-            else if (effect_ is EffectDatabase.MoveEff.Protect)
+            else if (effect_ is Effects.MoveEff.Protect)
             {
                 effectSuccess = true;
                 userPokemon.bProps.protectCounter++;
 
-                EffectDatabase.MoveEff.Protect effect = effect_ as EffectDatabase.MoveEff.Protect;
+                Effects.MoveEff.Protect effect = effect_ as Effects.MoveEff.Protect;
                 if (effect.targetType == MoveEffectTargetType.Self
                     || effect.targetType == MoveEffectTargetType.Target)
                 {
@@ -9378,9 +9378,9 @@ public class BTLManager : MonoBehaviour
                 }
             }
             // Refresh
-            else if (effect_ is EffectDatabase.MoveEff.Refresh)
+            else if (effect_ is Effects.MoveEff.Refresh)
             {
-                EffectDatabase.MoveEff.Refresh refresh = effect_ as EffectDatabase.MoveEff.Refresh;
+                Effects.MoveEff.Refresh refresh = effect_ as Effects.MoveEff.Refresh;
                 List<PBS.Main.Pokemon.Pokemon> appliedPokemon = new List<PBS.Main.Pokemon.Pokemon>();
                 
                 if (refresh.targetType == MoveEffectTargetType.Target
@@ -9463,13 +9463,13 @@ public class BTLManager : MonoBehaviour
                 }
             }
             // Secret Power
-            else if (effect_ is EffectDatabase.MoveEff.SecretPower)
+            else if (effect_ is Effects.MoveEff.SecretPower)
             {
                 // Secret Power
-                EffectDatabase.MoveEff.SecretPower effect = effect_ as EffectDatabase.MoveEff.SecretPower;
+                Effects.MoveEff.SecretPower effect = effect_ as Effects.MoveEff.SecretPower;
                 if (effect != null)
                 {
-                    List<EffectDatabase.MoveEff.MoveEffect> secretPowerEffects =
+                    List<Effects.MoveEff.MoveEffect> secretPowerEffects =
                         battle.GetPokemonSecretPowerEffects(userPokemon, moveData, effect);
                     for (int i = 0; i < secretPowerEffects.Count; i++)
                     {
@@ -9497,9 +9497,9 @@ public class BTLManager : MonoBehaviour
                 }
             }
             // Stat Stage Modification
-            else if (effect_ is EffectDatabase.MoveEff.StatStageMod)
+            else if (effect_ is Effects.MoveEff.StatStageMod)
             {
-                EffectDatabase.MoveEff.StatStageMod effect = effect_ as EffectDatabase.MoveEff.StatStageMod;
+                Effects.MoveEff.StatStageMod effect = effect_ as Effects.MoveEff.StatStageMod;
 
                 if (effect.targetType == MoveEffectTargetType.Target
                     || effect.targetType == MoveEffectTargetType.Self)
@@ -9543,9 +9543,9 @@ public class BTLManager : MonoBehaviour
                 }
             }
             // Steel Roller
-            else if (effect_ is EffectDatabase.MoveEff.SteelRoller)
+            else if (effect_ is Effects.MoveEff.SteelRoller)
             {
-                EffectDatabase.MoveEff.SteelRoller effect = effect_ as EffectDatabase.MoveEff.SteelRoller;
+                Effects.MoveEff.SteelRoller effect = effect_ as Effects.MoveEff.SteelRoller;
                 if (!battle.terrain.data.HasTag(BattleSTag.Default))
                 {
                     yield return StartCoroutine(HealBattleSC(
@@ -9562,7 +9562,7 @@ public class BTLManager : MonoBehaviour
 
     public IEnumerator ApplyStatStageMod(
         PBS.Main.Pokemon.Pokemon targetPokemon,
-        EffectDatabase.General.StatStageMod statStageMod,
+        Effects.General.StatStageMod statStageMod,
         System.Action<bool> callback,
         PBS.Main.Pokemon.Pokemon userPokemon = null,
         MoveData moveData = null,
@@ -9585,7 +9585,7 @@ public class BTLManager : MonoBehaviour
             // Mold Breaker bypasses ability immunities
             if (!bypassAbility && userPokemon != null)
             {
-                EffectDatabase.AbilityEff.AbilityEffect moldBreakerEffect =
+                Effects.AbilityEff.AbilityEffect moldBreakerEffect =
                     battle.PBPGetAbilityEffect(userPokemon, AbilityEffectType.MoldBreaker);
                 if (moldBreakerEffect != null)
                 {
@@ -9594,7 +9594,7 @@ public class BTLManager : MonoBehaviour
                 if (moveData != null)
                 {
                     // Sunsteel Strike bypasses ability immunities
-                    EffectDatabase.MoveEff.MoveEffect effect = moveData.GetEffectNew(MoveEffectType.SunteelStrike);
+                    Effects.MoveEff.MoveEffect effect = moveData.GetEffectNew(MoveEffectType.SunteelStrike);
                     if (effect != null)
                     {
                         bypassAbility = true;
@@ -9606,10 +9606,10 @@ public class BTLManager : MonoBehaviour
             List<string> defiantAbilities = new List<string>();
             List<string> mirrorArmorAbilities = new List<string>();
 
-            EffectDatabase.General.StatStageMod defiantStatMod =
-                new EffectDatabase.General.StatStageMod();
-            EffectDatabase.General.StatStageMod mirrorArmorStatMod =
-                    new EffectDatabase.General.StatStageMod();
+            Effects.General.StatStageMod defiantStatMod =
+                new Effects.General.StatStageMod();
+            Effects.General.StatStageMod mirrorArmorStatMod =
+                    new Effects.General.StatStageMod();
 
             bool canModify = true;
 
@@ -9638,12 +9638,12 @@ public class BTLManager : MonoBehaviour
                     {
                         for (int k = 0; k < abilities.Count && keepStatChange; k++)
                         {
-                            EffectDatabase.AbilityEff.AbilityEffect mirrorArmor_ =
+                            Effects.AbilityEff.AbilityEffect mirrorArmor_ =
                                 abilities[k].GetEffectNew(AbilityEffectType.MirrorArmor);
                             if (mirrorArmor_ != null)
                             {
-                                EffectDatabase.AbilityEff.MirrorArmor mirrorArmor =
-                                    mirrorArmor_ as EffectDatabase.AbilityEff.MirrorArmor;
+                                Effects.AbilityEff.MirrorArmor mirrorArmor =
+                                    mirrorArmor_ as Effects.AbilityEff.MirrorArmor;
 
                                 bool statReflected = false;
                                 if (mirrorArmor.lowerTriggers.Contains(curStat))
@@ -9681,12 +9681,12 @@ public class BTLManager : MonoBehaviour
                     // Contrary
                     for (int k = 0; k < abilities.Count && keepStatChange; k++)
                     {
-                        EffectDatabase.AbilityEff.AbilityEffect contrary_ =
+                        Effects.AbilityEff.AbilityEffect contrary_ =
                             abilities[k].GetEffectNew(AbilityEffectType.Contrary);
                         if (contrary_ != null)
                         {
-                            EffectDatabase.AbilityEff.Contrary contrary =
-                                contrary_ as EffectDatabase.AbilityEff.Contrary;
+                            Effects.AbilityEff.Contrary contrary =
+                                contrary_ as Effects.AbilityEff.Contrary;
                             rawStatMod = -rawStatMod;
                         }
                     }
@@ -9694,12 +9694,12 @@ public class BTLManager : MonoBehaviour
                     // Simple
                     for (int k = 0; k < abilities.Count && keepStatChange; k++)
                     {
-                        EffectDatabase.AbilityEff.AbilityEffect simple_ = 
+                        Effects.AbilityEff.AbilityEffect simple_ = 
                             abilities[k].GetEffectNew(AbilityEffectType.Simple);
                         if (simple_ != null)
                         {
-                            EffectDatabase.AbilityEff.Simple simple =
-                                simple_ as EffectDatabase.AbilityEff.Simple;
+                            Effects.AbilityEff.Simple simple =
+                                simple_ as Effects.AbilityEff.Simple;
                             rawStatMod *= simple.statModScale;
                         }
                     }
@@ -9707,12 +9707,12 @@ public class BTLManager : MonoBehaviour
                     // Clear Body / Hyper Cutter
                     for (int k = 0; k < abilities.Count && keepStatChange; k++)
                     {
-                        EffectDatabase.AbilityEff.AbilityEffect hyperCutter_ =
+                        Effects.AbilityEff.AbilityEffect hyperCutter_ =
                             abilities[k].GetEffectNew(AbilityEffectType.HyperCutter);
                         if (hyperCutter_ != null)
                         {
-                            EffectDatabase.AbilityEff.HyperCutter hyperCutter =
-                                hyperCutter_ as EffectDatabase.AbilityEff.HyperCutter;
+                            Effects.AbilityEff.HyperCutter hyperCutter =
+                                hyperCutter_ as Effects.AbilityEff.HyperCutter;
 
                             if (hyperCutter.affectedStats.Contains(curStat) || hyperCutter.clearBody)
                             {
@@ -9815,12 +9815,12 @@ public class BTLManager : MonoBehaviour
                             // Defiant
                             for (int k = 0; k < abilities.Count; k++)
                             {
-                                EffectDatabase.AbilityEff.AbilityEffect defiant_ =
+                                Effects.AbilityEff.AbilityEffect defiant_ =
                                     abilities[k].GetEffectNew(AbilityEffectType.Defiant);
                                 if (defiant_ != null)
                                 {
-                                    EffectDatabase.AbilityEff.Defiant defiant =
-                                        defiant_ as EffectDatabase.AbilityEff.Defiant;
+                                    Effects.AbilityEff.Defiant defiant =
+                                        defiant_ as Effects.AbilityEff.Defiant;
                                     bool defiantTriggered = false;
                                     if (statMod < 0 && defiant.lowerTriggers.Contains(curStat))
                                     {
@@ -9886,9 +9886,9 @@ public class BTLManager : MonoBehaviour
                     {
                         if (hyperCutterStats.ContainsKey(abilities[i]))
                         {
-                            EffectDatabase.AbilityEff.HyperCutter hyperCutter =
+                            Effects.AbilityEff.HyperCutter hyperCutter =
                                 abilities[i].GetEffectNew(AbilityEffectType.HyperCutter)
-                                as EffectDatabase.AbilityEff.HyperCutter;
+                                as Effects.AbilityEff.HyperCutter;
 
                             PBPShowAbility(targetPokemon, abilities[i]);
                             BTLEvent_GameText textEvent = new BTLEvent_GameText();
@@ -10003,7 +10003,7 @@ public class BTLManager : MonoBehaviour
     }
 
     public IEnumerator ApplySC(
-        EffectDatabase.General.InflictStatus inflictStatus,
+        Effects.General.InflictStatus inflictStatus,
         System.Action<bool> callback,
         PBS.Main.Pokemon.Pokemon targetPokemon = null,
         Team targetTeam = null,
@@ -10022,11 +10022,11 @@ public class BTLManager : MonoBehaviour
                 PokemonStatuses.instance.GetStatusData(inflictStatus.statusID);
             StatusPKData modStatusData = statusData.Clone();
             
-            if (inflictStatus.effectMode == EffectDatabase.General.InflictStatus.EffectMode.Additive)
+            if (inflictStatus.effectMode == Effects.General.InflictStatus.EffectMode.Additive)
             {
                 modStatusData.AddEffects(inflictStatus.customPokemonEffects);
             }
-            else if (inflictStatus.effectMode == EffectDatabase.General.InflictStatus.EffectMode.Replace)
+            else if (inflictStatus.effectMode == Effects.General.InflictStatus.EffectMode.Replace)
             {
                 modStatusData.SetEffects(inflictStatus.customPokemonEffects);
             }
@@ -10085,11 +10085,11 @@ public class BTLManager : MonoBehaviour
                 TeamStatuses.instance.GetStatusData(inflictStatus.statusID);
             StatusTEData modStatusData = statusData.Clone();
             
-            if (inflictStatus.effectMode == EffectDatabase.General.InflictStatus.EffectMode.Additive)
+            if (inflictStatus.effectMode == Effects.General.InflictStatus.EffectMode.Additive)
             {
                 modStatusData.AddEffects(inflictStatus.customTeamEffects);
             }
-            else if (inflictStatus.effectMode == EffectDatabase.General.InflictStatus.EffectMode.Replace)
+            else if (inflictStatus.effectMode == Effects.General.InflictStatus.EffectMode.Replace)
             {
                 modStatusData.SetEffects(inflictStatus.customTeamEffects);
             }
@@ -10135,11 +10135,11 @@ public class BTLManager : MonoBehaviour
                 BattleStatuses.instance.GetStatusData(inflictStatus.statusID);
             StatusBTLData modStatusData = statusData.Clone();
             
-            if (inflictStatus.effectMode == EffectDatabase.General.InflictStatus.EffectMode.Additive)
+            if (inflictStatus.effectMode == Effects.General.InflictStatus.EffectMode.Additive)
             {
                 modStatusData.AddEffects(inflictStatus.customBattleEffects);
             }
-            else if (inflictStatus.effectMode == EffectDatabase.General.InflictStatus.EffectMode.Replace)
+            else if (inflictStatus.effectMode == Effects.General.InflictStatus.EffectMode.Replace)
             {
                 modStatusData.SetEffects(inflictStatus.customBattleEffects);
             }
@@ -10222,12 +10222,12 @@ public class BTLManager : MonoBehaviour
             for (int i = 0; i < allConditions.Count && !statusBlockedFully; i++)
             {
                 // Check all blocked status effects for a battle condition
-                List<EffectDatabase.StatusBTLEff.BattleSE> blockStatuses_ =
+                List<Effects.StatusBTLEff.BattleSE> blockStatuses_ =
                     allConditions[i].data.GetEffectsNew(BattleSEType.BlockStatus);
                 for (int k = 0; k < blockStatuses_.Count && !statusBlockedFully; k++)
                 {
-                    EffectDatabase.StatusBTLEff.BlockStatus blockStatus =
-                        blockStatuses_[k] as EffectDatabase.StatusBTLEff.BlockStatus;
+                    Effects.StatusBTLEff.BlockStatus blockStatus =
+                        blockStatuses_[k] as Effects.StatusBTLEff.BlockStatus;
                     if (battle.BBPIsPokemonAffectedByBS(pokemon: targetPokemon, statusData: allConditions[i].data)
                         && battle.DoesBattleEFiltersPass(
                             effect: blockStatus,
@@ -10269,13 +10269,13 @@ public class BTLManager : MonoBehaviour
                 for (int i = 0; i < curAbilities.Count && !statusBlockedFully; i++)
                 {
                     Ability ability = curAbilities[i];
-                    List<EffectDatabase.AbilityEff.AbilityEffect> limbers_ =
+                    List<Effects.AbilityEff.AbilityEffect> limbers_ =
                         ability.data.GetEffectsNew(AbilityEffectType.Limber);
 
                     for (int k = 0; k < limbers_.Count && !statusBlockedFully; k++)
                     {
-                        EffectDatabase.AbilityEff.Limber limber =
-                            limbers_[k] as EffectDatabase.AbilityEff.Limber;
+                        Effects.AbilityEff.Limber limber =
+                            limbers_[k] as Effects.AbilityEff.Limber;
 
                         if (battle.DoEffectFiltersPass(
                             filters: limber.filters,
@@ -10342,12 +10342,12 @@ public class BTLManager : MonoBehaviour
             for (int i = 0; i < targetAbilites.Count && !statusBlockedFully; i++)
             {
                 Ability ability = targetAbilites[i];
-                List<EffectDatabase.AbilityEff.AbilityEffect> limbers_ =
+                List<Effects.AbilityEff.AbilityEffect> limbers_ =
                     ability.data.GetEffectsNew(AbilityEffectType.Limber);
                 for (int k = 0; k < limbers_.Count && !statusBlockedFully; k++)
                 {
-                    EffectDatabase.AbilityEff.Limber limber =
-                        limbers_[k] as EffectDatabase.AbilityEff.Limber;
+                    Effects.AbilityEff.Limber limber =
+                        limbers_[k] as Effects.AbilityEff.Limber;
 
                     if (battle.DoEffectFiltersPass(
                         filters: limber.filters,
@@ -10446,12 +10446,12 @@ public class BTLManager : MonoBehaviour
                 for (int i = 0; i < targetAbilites.Count && !statusBlockedFully; i++)
                 {
                     Ability ability = targetAbilites[i];
-                    EffectDatabase.AbilityEff.AbilityEffect shieldsDown_ = 
+                    Effects.AbilityEff.AbilityEffect shieldsDown_ = 
                         ability.data.GetEffectNew(AbilityEffectType.ShieldsDown);
                     if (shieldsDown_ != null)
                     {
-                        EffectDatabase.AbilityEff.ShieldsDown shieldsDown =
-                            shieldsDown_ as EffectDatabase.AbilityEff.ShieldsDown;
+                        Effects.AbilityEff.ShieldsDown shieldsDown =
+                            shieldsDown_ as Effects.AbilityEff.ShieldsDown;
                         for (int k = 0; k < shieldsDown.meteorForms.Count && !statusBlockedFully; k++)
                         {
                             if (shieldsDown.meteorForms[k].IsAForm(targetPokemon)
@@ -10473,18 +10473,18 @@ public class BTLManager : MonoBehaviour
             // Can't overwrite non-volatile statuses with a higher or equal priority
             if (!statusBlockedFully)
             {
-                EffectDatabase.StatusPKEff.PokemonSE newPriority_ =
+                Effects.StatusPKEff.PokemonSE newPriority_ =
                     statusData.GetEffectNew(PokemonSEType.NonVolatile);
                 if (newPriority_ != null)
                 {
-                    EffectDatabase.StatusPKEff.NonVolatile newPriority =
-                        newPriority_ as EffectDatabase.StatusPKEff.NonVolatile;
-                    EffectDatabase.StatusPKEff.PokemonSE oldPriority_ =
+                    Effects.StatusPKEff.NonVolatile newPriority =
+                        newPriority_ as Effects.StatusPKEff.NonVolatile;
+                    Effects.StatusPKEff.PokemonSE oldPriority_ =
                         targetPokemon.nonVolatileStatus.data.GetEffectNew(PokemonSEType.NonVolatile);
                     if (oldPriority_ != null)
                     {
-                        EffectDatabase.StatusPKEff.NonVolatile oldPriority =
-                            oldPriority_ as EffectDatabase.StatusPKEff.NonVolatile;
+                        Effects.StatusPKEff.NonVolatile oldPriority =
+                            oldPriority_ as Effects.StatusPKEff.NonVolatile;
                         if (newPriority.priority <= oldPriority.priority)
                         {
                             statusBlockedFully = true;
@@ -10510,12 +10510,12 @@ public class BTLManager : MonoBehaviour
                 bool isCorrosive = false;
                 if (!isCorrosive && userPokemon != null)
                 {
-                    List<EffectDatabase.AbilityEff.AbilityEffect> corrosion_ =
+                    List<Effects.AbilityEff.AbilityEffect> corrosion_ =
                         battle.PBPGetAbilityEffects(userPokemon, AbilityEffectType.Corrosion);
                     for (int i = 0; i < corrosion_.Count && !isCorrosive; i++)
                     {
-                        EffectDatabase.AbilityEff.Corrosion corrosion = 
-                            corrosion_[i] as EffectDatabase.AbilityEff.Corrosion;
+                        Effects.AbilityEff.Corrosion corrosion = 
+                            corrosion_[i] as Effects.AbilityEff.Corrosion;
                         for (int k = 0; k < corrosion.statuses.Count && !isCorrosive; k++)
                         {
                             if (statusData.ID == corrosion.statuses[k]
@@ -10529,12 +10529,12 @@ public class BTLManager : MonoBehaviour
                 
                 if (!isCorrosive)
                 {
-                    EffectDatabase.StatusPKEff.PokemonSE typeImmunity_ =
+                    Effects.StatusPKEff.PokemonSE typeImmunity_ =
                         statusData.GetEffectNew(PokemonSEType.TypeImmunity);
                     if (typeImmunity_ != null)
                     {
-                        EffectDatabase.StatusPKEff.TypeImmunity typeImmunity =
-                            typeImmunity_ as EffectDatabase.StatusPKEff.TypeImmunity;
+                        Effects.StatusPKEff.TypeImmunity typeImmunity =
+                            typeImmunity_ as Effects.StatusPKEff.TypeImmunity;
                         if (!battle.DoEffectFiltersPass(
                             filters: typeImmunity.filters,
                             userPokemon: userPokemon,
@@ -10564,15 +10564,15 @@ public class BTLManager : MonoBehaviour
                     if (turnsLeft > 0)
                     {
                         float applyTurns = turnsLeft;
-                        List<EffectDatabase.AbilityEff.AbilityEffect> earlyBirds_ =
+                        List<Effects.AbilityEff.AbilityEffect> earlyBirds_ =
                             battle.PBPGetAbilityEffects(
                                 pokemon: targetPokemon,
                                 effectType: AbilityEffectType.EarlyBird
                                 );
                         for (int i = 0; i < earlyBirds_.Count; i++)
                         {
-                            EffectDatabase.AbilityEff.EarlyBird earlyBird =
-                                earlyBirds_[i] as EffectDatabase.AbilityEff.EarlyBird;
+                            Effects.AbilityEff.EarlyBird earlyBird =
+                                earlyBirds_[i] as Effects.AbilityEff.EarlyBird;
                             for (int k = 0; k < earlyBird.conditions.Count; k++)
                             {
                                 if (statusData.ID == earlyBird.conditions[k]
@@ -10609,8 +10609,8 @@ public class BTLManager : MonoBehaviour
             // Apply volatile statuses if possible
             if (!yawnCheck || !statusBlockedFully)
             {
-                List<EffectDatabase.StatusPKEff.PokemonSE> statusEffects =
-                new List<EffectDatabase.StatusPKEff.PokemonSE>(statusData.effectsNew);
+                List<Effects.StatusPKEff.PokemonSE> statusEffects =
+                new List<Effects.StatusPKEff.PokemonSE>(statusData.effectsNew);
                 for (int i = 0; i < statusEffects.Count; i++)
                 {
                     yield return StartCoroutine(ExecutePokemonSEffect(
@@ -10646,8 +10646,8 @@ public class BTLManager : MonoBehaviour
                 for (int i = 0; i < synchronizePairs.Count && !isReflected; i++)
                 {
                     AbilityEffectPair effectPair = synchronizePairs[i];
-                    EffectDatabase.AbilityEff.Synchronize synchronize =
-                        effectPair.effect as EffectDatabase.AbilityEff.Synchronize;
+                    Effects.AbilityEff.Synchronize synchronize =
+                        effectPair.effect as Effects.AbilityEff.Synchronize;
 
                     if (battle.DoEffectFiltersPass(
                         filters: synchronize.filters,
@@ -10682,7 +10682,7 @@ public class BTLManager : MonoBehaviour
         yield return null;
     }
     public IEnumerator ExecutePokemonSEffect(
-        EffectDatabase.StatusPKEff.PokemonSE effect_,
+        Effects.StatusPKEff.PokemonSE effect_,
         PBS.Main.Pokemon.Pokemon targetPokemon,
         StatusPKData statusData,
         System.Action<bool> callback,
@@ -10702,7 +10702,7 @@ public class BTLManager : MonoBehaviour
         // Mold Breaker bypasses ability immunities
         if (!bypassAbility)
         {
-            EffectDatabase.AbilityEff.AbilityEffect moldBreakerEffect =
+            Effects.AbilityEff.AbilityEffect moldBreakerEffect =
                 battle.PBPGetAbilityEffect(userPokemon, AbilityEffectType.MoldBreaker);
             if (moldBreakerEffect != null)
             {
@@ -10712,7 +10712,7 @@ public class BTLManager : MonoBehaviour
             if (moveData != null)
             {
                 // Sunsteel Strike bypasses ability immunities
-                EffectDatabase.MoveEff.MoveEffect effect = moveData.GetEffectNew(MoveEffectType.SunteelStrike);
+                Effects.MoveEff.MoveEffect effect = moveData.GetEffectNew(MoveEffectType.SunteelStrike);
                 if (effect != null)
                 {
                     bypassAbility = true;
@@ -10729,12 +10729,12 @@ public class BTLManager : MonoBehaviour
                 PBS.Main.Pokemon.Pokemon curPokemon = allyPokemon[i];
                 if (!battle.IsPokemonFainted(curPokemon))
                 {
-                    List<EffectDatabase.AbilityEff.AbilityEffect> obliviousEffects =
+                    List<Effects.AbilityEff.AbilityEffect> obliviousEffects =
                         battle.PBPGetAbilityEffects(curPokemon, AbilityEffectType.Oblivious, bypassAbility);
                     for (int k = 0; k < obliviousEffects.Count; k++)
                     {
-                        EffectDatabase.AbilityEff.Oblivious aromaVeil =
-                            obliviousEffects[k] as EffectDatabase.AbilityEff.Oblivious;
+                        Effects.AbilityEff.Oblivious aromaVeil =
+                            obliviousEffects[k] as Effects.AbilityEff.Oblivious;
 
                         // Team-based blocking
                         if (aromaVeil.aromaVeil && aromaVeil.effectsBlocked.Contains(effect_.effectType))
@@ -10757,11 +10757,11 @@ public class BTLManager : MonoBehaviour
         // Oblivious / Own Tempo / etc. check
         if (!effectWasBlocked)
         {
-            EffectDatabase.AbilityEff.AbilityEffect oblivious_ = 
+            Effects.AbilityEff.AbilityEffect oblivious_ = 
                 battle.PBPGetAbilityEffect(targetPokemon, AbilityEffectType.Oblivious, bypassAbility);
             if (oblivious_ != null)
             {
-                EffectDatabase.AbilityEff.Oblivious oblivious = oblivious_ as EffectDatabase.AbilityEff.Oblivious;
+                Effects.AbilityEff.Oblivious oblivious = oblivious_ as Effects.AbilityEff.Oblivious;
                 if (oblivious.effectsBlocked.Contains(effect_.effectType))
                 {
                     effectWasBlocked = true;
@@ -10780,26 +10780,26 @@ public class BTLManager : MonoBehaviour
         if (!effectWasBlocked)
         {
             // Volatility
-            if (effect_ is EffectDatabase.StatusPKEff.Volatile)
+            if (effect_ is Effects.StatusPKEff.Volatile)
             {
-                EffectDatabase.StatusPKEff.Volatile volatileEffect =
-                    effect_ as EffectDatabase.StatusPKEff.Volatile;
+                Effects.StatusPKEff.Volatile volatileEffect =
+                    effect_ as Effects.StatusPKEff.Volatile;
                 bool isAlready = false;
                 bool isFail = false;
 
                 // Move-Limiting
-                if (effect_ is EffectDatabase.StatusPKEff.MoveLimiting)
+                if (effect_ is Effects.StatusPKEff.MoveLimiting)
                 {
                     List<PBS.Main.Pokemon.BattleProperties.MoveLimiter> moveLimiters =
                         new List<PBS.Main.Pokemon.BattleProperties.MoveLimiter>(targetPokemon.bProps.moveLimiters);
 
                     // Disable
-                    if (effect_ is EffectDatabase.StatusPKEff.Disable)
+                    if (effect_ is Effects.StatusPKEff.Disable)
                     {
-                        EffectDatabase.StatusPKEff.Disable effect = effect_ as EffectDatabase.StatusPKEff.Disable;
+                        Effects.StatusPKEff.Disable effect = effect_ as Effects.StatusPKEff.Disable;
                         for (int i = 0; i < moveLimiters.Count && !isAlready; i++)
                         {
-                            if (moveLimiters[i].effect is EffectDatabase.StatusPKEff.Disable)
+                            if (moveLimiters[i].effect is Effects.StatusPKEff.Disable)
                             {
                                 isAlready = true;
                             }
@@ -10846,12 +10846,12 @@ public class BTLManager : MonoBehaviour
                         }
                     }
                     // Encore
-                    else if (effect_ is EffectDatabase.StatusPKEff.Encore)
+                    else if (effect_ is Effects.StatusPKEff.Encore)
                     {
-                        EffectDatabase.StatusPKEff.Encore effect = effect_ as EffectDatabase.StatusPKEff.Encore;
+                        Effects.StatusPKEff.Encore effect = effect_ as Effects.StatusPKEff.Encore;
                         for (int i = 0; i < moveLimiters.Count && !isAlready; i++)
                         {
-                            if (moveLimiters[i].effect is EffectDatabase.StatusPKEff.Encore)
+                            if (moveLimiters[i].effect is Effects.StatusPKEff.Encore)
                             {
                                 isAlready = true;
                             }
@@ -10898,12 +10898,12 @@ public class BTLManager : MonoBehaviour
                         }
                     }
                     // Heal Block
-                    else if (effect_ is EffectDatabase.StatusPKEff.HealBlock)
+                    else if (effect_ is Effects.StatusPKEff.HealBlock)
                     {
-                        EffectDatabase.StatusPKEff.HealBlock effect = effect_ as EffectDatabase.StatusPKEff.HealBlock;
+                        Effects.StatusPKEff.HealBlock effect = effect_ as Effects.StatusPKEff.HealBlock;
                         for (int i = 0; i < moveLimiters.Count && !isAlready; i++)
                         {
-                            if (moveLimiters[i].effect is EffectDatabase.StatusPKEff.HealBlock)
+                            if (moveLimiters[i].effect is Effects.StatusPKEff.HealBlock)
                             {
                                 isAlready = true;
                             }
@@ -10922,12 +10922,12 @@ public class BTLManager : MonoBehaviour
                         }
                     }
                     // Taunt
-                    else if (effect_ is EffectDatabase.StatusPKEff.Taunt)
+                    else if (effect_ is Effects.StatusPKEff.Taunt)
                     {
-                        EffectDatabase.StatusPKEff.Taunt effect = effect_ as EffectDatabase.StatusPKEff.Taunt;
+                        Effects.StatusPKEff.Taunt effect = effect_ as Effects.StatusPKEff.Taunt;
                         for (int i = 0; i < moveLimiters.Count && !isAlready; i++)
                         {
-                            if (moveLimiters[i].effect is EffectDatabase.StatusPKEff.Taunt)
+                            if (moveLimiters[i].effect is Effects.StatusPKEff.Taunt)
                             {
                                 isAlready = true;
                             }
@@ -10946,12 +10946,12 @@ public class BTLManager : MonoBehaviour
                         }
                     }
                     // Torment
-                    else if (effect_ is EffectDatabase.StatusPKEff.Torment)
+                    else if (effect_ is Effects.StatusPKEff.Torment)
                     {
-                        EffectDatabase.StatusPKEff.Torment effect = effect_ as EffectDatabase.StatusPKEff.Torment;
+                        Effects.StatusPKEff.Torment effect = effect_ as Effects.StatusPKEff.Torment;
                         for (int i = 0; i < moveLimiters.Count && !isAlready; i++)
                         {
-                            if (moveLimiters[i].effect is EffectDatabase.StatusPKEff.Torment)
+                            if (moveLimiters[i].effect is Effects.StatusPKEff.Torment)
                             {
                                 isAlready = true;
                             }
@@ -10971,9 +10971,9 @@ public class BTLManager : MonoBehaviour
                     }
                 }
                 // Embargo
-                else if (effect_ is EffectDatabase.StatusPKEff.Embargo)
+                else if (effect_ is Effects.StatusPKEff.Embargo)
                 {
-                    EffectDatabase.StatusPKEff.Embargo effect = effect_ as EffectDatabase.StatusPKEff.Embargo;
+                    Effects.StatusPKEff.Embargo effect = effect_ as Effects.StatusPKEff.Embargo;
                     if (targetPokemon.bProps.embargo != null)
                     {
                         isAlready = true;
@@ -11010,7 +11010,7 @@ public class BTLManager : MonoBehaviour
             // Defense Curl
             else if (effect_.effectType == PokemonSEType.DefenseCurl)
             {
-                EffectDatabase.StatusPKEff.DefenseCurl defenseCurl = effect_ as EffectDatabase.StatusPKEff.DefenseCurl;
+                Effects.StatusPKEff.DefenseCurl defenseCurl = effect_ as Effects.StatusPKEff.DefenseCurl;
                 success = true;
                 if (apply)
                 {
@@ -11020,7 +11020,7 @@ public class BTLManager : MonoBehaviour
             // Electrify
             else if (effect_.effectType == PokemonSEType.Electrify)
             {
-                EffectDatabase.StatusPKEff.Electrify electrify = effect_ as EffectDatabase.StatusPKEff.Electrify;
+                Effects.StatusPKEff.Electrify electrify = effect_ as Effects.StatusPKEff.Electrify;
                 success = true;
                 if (apply)
                 {
@@ -11036,7 +11036,7 @@ public class BTLManager : MonoBehaviour
             {
                 // check inner focus
 
-                EffectDatabase.StatusPKEff.Flinch flinch = effect_ as EffectDatabase.StatusPKEff.Flinch;
+                Effects.StatusPKEff.Flinch flinch = effect_ as Effects.StatusPKEff.Flinch;
                 if (targetPokemon.bProps.flinch == null
                     && targetPokemon.dynamaxState == PBS.Main.Pokemon.Pokemon.DynamaxState.None)
                 {
@@ -11050,7 +11050,7 @@ public class BTLManager : MonoBehaviour
             // Identification - Foresight / Odor Sleuth / Miracle Eye
             else if (effect_.effectType == PokemonSEType.Identified)
             {
-                EffectDatabase.StatusPKEff.Identification identified = effect_ as EffectDatabase.StatusPKEff.Identification;
+                Effects.StatusPKEff.Identification identified = effect_ as Effects.StatusPKEff.Identification;
                 List<string> affectedTypes = new List<string>(identified.types);
                 if (affectedTypes.Contains("ALL"))
                 {
@@ -11060,7 +11060,7 @@ public class BTLManager : MonoBehaviour
                 bool fail = false;
                 for (int i = 0; i < targetPokemon.bProps.identifieds.Count; i++)
                 {
-                    EffectDatabase.StatusPKEff.Identification curIdentified = targetPokemon.bProps.identifieds[i];
+                    Effects.StatusPKEff.Identification curIdentified = targetPokemon.bProps.identifieds[i];
                     if (battle.AreTypesContained(curIdentified.types, affectedTypes))
                     {
                         fail = true;
@@ -11071,7 +11071,7 @@ public class BTLManager : MonoBehaviour
                 if (success && apply)
                 {
                     targetPokemon.bProps.identifieds.Add(
-                        new EffectDatabase.StatusPKEff.Identification(types: affectedTypes));
+                        new Effects.StatusPKEff.Identification(types: affectedTypes));
                     BTLEvent_GameText textEvent = new BTLEvent_GameText();
                     textEvent.SetCloneModel(battle);
                     textEvent.Create(textID: identified.identifiedText, targetPokemon: targetPokemon);
@@ -11091,7 +11091,7 @@ public class BTLManager : MonoBehaviour
             // Imprison
             else if (effect_.effectType == PokemonSEType.Imprison)
             {
-                EffectDatabase.StatusPKEff.Imprison imprison = effect_ as EffectDatabase.StatusPKEff.Imprison;
+                Effects.StatusPKEff.Imprison imprison = effect_ as Effects.StatusPKEff.Imprison;
                 success = true;
                 if (apply)
                 {
@@ -11107,7 +11107,7 @@ public class BTLManager : MonoBehaviour
             {
                 if (userPokemon != null)
                 {
-                    EffectDatabase.StatusPKEff.Infatuation infatuation = effect_ as EffectDatabase.StatusPKEff.Infatuation;
+                    Effects.StatusPKEff.Infatuation infatuation = effect_ as Effects.StatusPKEff.Infatuation;
                     BTLEvent_GameText failTextEvent = new BTLEvent_GameText();
                     failTextEvent.SetCloneModel(battle);
                     bool fail = false;
@@ -11148,7 +11148,7 @@ public class BTLManager : MonoBehaviour
                     // inflict infatuation
                     if (success && apply)
                     {
-                        EffectDatabase.StatusPKEff.Infatuation appliedInfatuation = infatuation.Clone();
+                        Effects.StatusPKEff.Infatuation appliedInfatuation = infatuation.Clone();
                         appliedInfatuation.infatuator = userPokemon.uniqueID;
                         targetPokemon.bProps.infatuation = appliedInfatuation;
 
@@ -11166,7 +11166,7 @@ public class BTLManager : MonoBehaviour
             // Perish Song
             else if (effect_.effectType == PokemonSEType.PerishSong)
             {
-                EffectDatabase.StatusPKEff.PerishSong perishSong = effect_ as EffectDatabase.StatusPKEff.PerishSong;
+                Effects.StatusPKEff.PerishSong perishSong = effect_ as Effects.StatusPKEff.PerishSong;
                 if (targetPokemon.bProps.perishSong == null)
                 {
                     success = true;
@@ -11188,7 +11188,7 @@ public class BTLManager : MonoBehaviour
             // Tar Shot
             else if (effect_.effectType == PokemonSEType.TarShot)
             {
-                EffectDatabase.StatusPKEff.TarShot tarShot = effect_ as EffectDatabase.StatusPKEff.TarShot;
+                Effects.StatusPKEff.TarShot tarShot = effect_ as Effects.StatusPKEff.TarShot;
                 bool canAdd = true;
                 for (int k = 0; k < targetPokemon.bProps.tarShots.Count; k++)
                 {
@@ -11218,7 +11218,7 @@ public class BTLManager : MonoBehaviour
             // Yawn
             else if (effect_.effectType == PokemonSEType.Yawn)
             {
-                EffectDatabase.StatusPKEff.Yawn yawn = effect_ as EffectDatabase.StatusPKEff.Yawn;
+                Effects.StatusPKEff.Yawn yawn = effect_ as Effects.StatusPKEff.Yawn;
 
                 bool statusSuccess = false;
                 yield return StartCoroutine(ApplyPokemonSC(
@@ -11259,7 +11259,7 @@ public class BTLManager : MonoBehaviour
         yield return null;
     }
     public IEnumerator ExecutePokemonSE(
-        EffectDatabase.StatusPKEff.PokemonSE effect_,
+        Effects.StatusPKEff.PokemonSE effect_,
         PBS.Main.Pokemon.Pokemon pokemon,
         StatusPKData statusData
         )
@@ -11271,7 +11271,7 @@ public class BTLManager : MonoBehaviour
             // HP Loss (ex. Bind / Burn / Poison)
             if (effect_.effectType == PokemonSEType.HPLoss)
             {
-                EffectDatabase.StatusPKEff.HPLoss effect = effect_ as EffectDatabase.StatusPKEff.HPLoss;
+                Effects.StatusPKEff.HPLoss effect = effect_ as Effects.StatusPKEff.HPLoss;
                 if (battle.DoEffectFiltersPass(
                     filters: effect.filters,
                     targetPokemon: pokemon
@@ -11282,12 +11282,12 @@ public class BTLManager : MonoBehaviour
                     // Poison Heal nullifies damage
                     if (applyDamage)
                     {
-                        List<EffectDatabase.AbilityEff.AbilityEffect> poisonHeal_ =
+                        List<Effects.AbilityEff.AbilityEffect> poisonHeal_ =
                             battle.PBPGetAbilityEffects(pokemon, AbilityEffectType.PoisonHeal);
                         for (int i = 0; i < poisonHeal_.Count && applyDamage; i++)
                         {
-                            EffectDatabase.AbilityEff.PoisonHeal poisonHeal =
-                                poisonHeal_[i] as EffectDatabase.AbilityEff.PoisonHeal;
+                            Effects.AbilityEff.PoisonHeal poisonHeal =
+                                poisonHeal_[i] as Effects.AbilityEff.PoisonHeal;
                             if (battle.DoEffectFiltersPass(
                                 filters: poisonHeal.filters,
                                 targetPokemon: pokemon
@@ -11295,12 +11295,12 @@ public class BTLManager : MonoBehaviour
                             {
                                 for (int k = 0; k < poisonHeal.conditions.Count && applyDamage; k++)
                                 {
-                                    EffectDatabase.AbilityEff.PoisonHeal.HealCondition healCond =
+                                    Effects.AbilityEff.PoisonHeal.HealCondition healCond =
                                         poisonHeal.conditions[k];
 
                                     for (int j = 0; j < healCond.conditions.Count && applyDamage; j++)
                                     {
-                                        EffectDatabase.Filter.Harvest curCond = healCond.conditions[j];
+                                        Effects.Filter.Harvest curCond = healCond.conditions[j];
                                         if (curCond.DoesStatusSatisfy(statusData))
                                         {
                                             applyDamage = false;
@@ -11356,11 +11356,11 @@ public class BTLManager : MonoBehaviour
         // G-Max Wildfire
         if (success)
         {
-            EffectDatabase.StatusTEEff.TeamSE newPriority_ = statusData.GetEffectNew(TeamSEType.GMaxWildfirePriority);
+            Effects.StatusTEEff.TeamSE newPriority_ = statusData.GetEffectNew(TeamSEType.GMaxWildfirePriority);
             if (newPriority_ != null)
             {
-                EffectDatabase.StatusTEEff.GMaxWildfirePriority newPriority = 
-                    newPriority_ as EffectDatabase.StatusTEEff.GMaxWildfirePriority;
+                Effects.StatusTEEff.GMaxWildfirePriority newPriority = 
+                    newPriority_ as Effects.StatusTEEff.GMaxWildfirePriority;
                 isGMaxWildfire = true;
 
                 PBS.Main.Team.BattleProperties.GMaxWildfire existingStatus = targetTeam.bProps.GMaxWildfireStatus;
@@ -11368,10 +11368,10 @@ public class BTLManager : MonoBehaviour
                 {
                     StatusTEData existingData = TeamStatuses.instance.GetStatusData(existingStatus.statusID);
 
-                    EffectDatabase.StatusTEEff.TeamSE oldPriority_ = 
+                    Effects.StatusTEEff.TeamSE oldPriority_ = 
                         existingData.GetEffectNew(TeamSEType.GMaxWildfirePriority);
-                    EffectDatabase.StatusTEEff.GMaxWildfirePriority oldPriority =
-                        oldPriority_ as EffectDatabase.StatusTEEff.GMaxWildfirePriority;
+                    Effects.StatusTEEff.GMaxWildfirePriority oldPriority =
+                        oldPriority_ as Effects.StatusTEEff.GMaxWildfirePriority;
 
                     if (existingData.ID == statusData.ID)
                     {
@@ -11500,11 +11500,11 @@ public class BTLManager : MonoBehaviour
         StatusTEData statusData
         )
     {
-        List<EffectDatabase.StatusTEEff.TeamSE> effects = statusData.GetEffectsNewFiltered(TeamSETiming.OnStart);
+        List<Effects.StatusTEEff.TeamSE> effects = statusData.GetEffectsNewFiltered(TeamSETiming.OnStart);
         yield return StartCoroutine(ExecuteTeamSEs(effects: effects, team: team, statusData: statusData));
     }
     public IEnumerator ExecuteTeamSEs(
-        List<EffectDatabase.StatusTEEff.TeamSE> effects,
+        List<Effects.StatusTEEff.TeamSE> effects,
         Team team,
         StatusTEData statusData
         )
@@ -11515,7 +11515,7 @@ public class BTLManager : MonoBehaviour
         }
     }
     public IEnumerator ExecuteTeamSE(
-        EffectDatabase.StatusTEEff.TeamSE effect_,
+        Effects.StatusTEEff.TeamSE effect_,
         Team team,
         StatusTEData statusData
         )
@@ -11523,7 +11523,7 @@ public class BTLManager : MonoBehaviour
         // HP Loss (ex. G-Max Wildfire)
         if (effect_.effectType == TeamSEType.HPLoss)
         {
-            EffectDatabase.StatusTEEff.HPLoss effect = effect_ as EffectDatabase.StatusTEEff.HPLoss;
+            Effects.StatusTEEff.HPLoss effect = effect_ as Effects.StatusTEEff.HPLoss;
             List<PBS.Main.Pokemon.Pokemon> allPokemon = battle.GetTeamPokemonOnField(team);
 
             // create buffet events
@@ -11648,23 +11648,23 @@ public class BTLManager : MonoBehaviour
         }
         
         // Can't inflict lower priority battle environments
-        EffectDatabase.StatusBTLEff.BattleEnvironment higherPriorityEnv = null;
-        EffectDatabase.StatusBTLEff.BattleSE weather_ = statusData.GetEffectNew(BattleSEType.Weather);
-        EffectDatabase.StatusBTLEff.BattleSE terrain_ = statusData.GetEffectNew(BattleSEType.Terrain);
-        EffectDatabase.StatusBTLEff.BattleSE gravity_ = statusData.GetEffectNew(BattleSEType.Gravity);
-        EffectDatabase.StatusBTLEff.BattleSE magicRoom_ = statusData.GetEffectNew(BattleSEType.MagicRoom);
-        EffectDatabase.StatusBTLEff.BattleSE trickRoom_ = statusData.GetEffectNew(BattleSEType.TrickRoom);
-        EffectDatabase.StatusBTLEff.BattleSE wonderRoom_ = statusData.GetEffectNew(BattleSEType.WonderRoom);
+        Effects.StatusBTLEff.BattleEnvironment higherPriorityEnv = null;
+        Effects.StatusBTLEff.BattleSE weather_ = statusData.GetEffectNew(BattleSEType.Weather);
+        Effects.StatusBTLEff.BattleSE terrain_ = statusData.GetEffectNew(BattleSEType.Terrain);
+        Effects.StatusBTLEff.BattleSE gravity_ = statusData.GetEffectNew(BattleSEType.Gravity);
+        Effects.StatusBTLEff.BattleSE magicRoom_ = statusData.GetEffectNew(BattleSEType.MagicRoom);
+        Effects.StatusBTLEff.BattleSE trickRoom_ = statusData.GetEffectNew(BattleSEType.TrickRoom);
+        Effects.StatusBTLEff.BattleSE wonderRoom_ = statusData.GetEffectNew(BattleSEType.WonderRoom);
 
         // Weather
         if (stickCondition && weather_ != null)
         {
-            EffectDatabase.StatusBTLEff.Weather newBattleEnv = weather_ as EffectDatabase.StatusBTLEff.Weather;
-            EffectDatabase.StatusBTLEff.BattleSE oldBattleEnv_ =
+            Effects.StatusBTLEff.Weather newBattleEnv = weather_ as Effects.StatusBTLEff.Weather;
+            Effects.StatusBTLEff.BattleSE oldBattleEnv_ =
                 battle.weather.data.GetEffectNew(BattleSEType.Weather);
             if (oldBattleEnv_ != null)
             {
-                EffectDatabase.StatusBTLEff.Weather oldBattleEnv = oldBattleEnv_ as EffectDatabase.StatusBTLEff.Weather;
+                Effects.StatusBTLEff.Weather oldBattleEnv = oldBattleEnv_ as Effects.StatusBTLEff.Weather;
                 if (newBattleEnv.priority < oldBattleEnv.priority)
                 {
                     stickCondition = false;
@@ -11675,12 +11675,12 @@ public class BTLManager : MonoBehaviour
         // Terrain
         if (stickCondition && terrain_ != null)
         {
-            EffectDatabase.StatusBTLEff.Terrain newBattleEnv = terrain_ as EffectDatabase.StatusBTLEff.Terrain;
-            EffectDatabase.StatusBTLEff.BattleSE oldBattleEnv_ =
+            Effects.StatusBTLEff.Terrain newBattleEnv = terrain_ as Effects.StatusBTLEff.Terrain;
+            Effects.StatusBTLEff.BattleSE oldBattleEnv_ =
                 battle.terrain.data.GetEffectNew(BattleSEType.Terrain);
             if (oldBattleEnv_ != null)
             {
-                EffectDatabase.StatusBTLEff.Terrain oldBattleEnv = oldBattleEnv_ as EffectDatabase.StatusBTLEff.Terrain;
+                Effects.StatusBTLEff.Terrain oldBattleEnv = oldBattleEnv_ as Effects.StatusBTLEff.Terrain;
                 if (newBattleEnv.priority < oldBattleEnv.priority)
                 {
                     stickCondition = false;
@@ -11691,12 +11691,12 @@ public class BTLManager : MonoBehaviour
         // Gravity
         if (stickCondition && gravity_ != null)
         {
-            EffectDatabase.StatusBTLEff.Gravity newBattleEnv = gravity_ as EffectDatabase.StatusBTLEff.Gravity;
-            EffectDatabase.StatusBTLEff.BattleSE oldBattleEnv_ =
+            Effects.StatusBTLEff.Gravity newBattleEnv = gravity_ as Effects.StatusBTLEff.Gravity;
+            Effects.StatusBTLEff.BattleSE oldBattleEnv_ =
                 battle.gravity.data.GetEffectNew(BattleSEType.Gravity);
             if (oldBattleEnv_ != null)
             {
-                EffectDatabase.StatusBTLEff.Gravity oldBattleEnv = oldBattleEnv_ as EffectDatabase.StatusBTLEff.Gravity;
+                Effects.StatusBTLEff.Gravity oldBattleEnv = oldBattleEnv_ as Effects.StatusBTLEff.Gravity;
                 if (newBattleEnv.priority < oldBattleEnv.priority)
                 {
                     stickCondition = false;
@@ -11707,12 +11707,12 @@ public class BTLManager : MonoBehaviour
         // Magic Room
         if (stickCondition && magicRoom_ != null)
         {
-            EffectDatabase.StatusBTLEff.MagicRoom newBattleEnv = magicRoom_ as EffectDatabase.StatusBTLEff.MagicRoom;
-            EffectDatabase.StatusBTLEff.BattleSE oldBattleEnv_ =
+            Effects.StatusBTLEff.MagicRoom newBattleEnv = magicRoom_ as Effects.StatusBTLEff.MagicRoom;
+            Effects.StatusBTLEff.BattleSE oldBattleEnv_ =
                 battle.magicRoom.data.GetEffectNew(BattleSEType.MagicRoom);
             if (oldBattleEnv_ != null)
             {
-                EffectDatabase.StatusBTLEff.MagicRoom oldBattleEnv = oldBattleEnv_ as EffectDatabase.StatusBTLEff.MagicRoom;
+                Effects.StatusBTLEff.MagicRoom oldBattleEnv = oldBattleEnv_ as Effects.StatusBTLEff.MagicRoom;
                 if (newBattleEnv.priority < oldBattleEnv.priority)
                 {
                     stickCondition = false;
@@ -11723,12 +11723,12 @@ public class BTLManager : MonoBehaviour
         // Trick Room
         if (stickCondition && trickRoom_ != null)
         {
-            EffectDatabase.StatusBTLEff.TrickRoom newBattleEnv = trickRoom_ as EffectDatabase.StatusBTLEff.TrickRoom;
-            EffectDatabase.StatusBTLEff.BattleSE oldBattleEnv_ =
+            Effects.StatusBTLEff.TrickRoom newBattleEnv = trickRoom_ as Effects.StatusBTLEff.TrickRoom;
+            Effects.StatusBTLEff.BattleSE oldBattleEnv_ =
                 battle.trickRoom.data.GetEffectNew(BattleSEType.TrickRoom);
             if (oldBattleEnv_ != null)
             {
-                EffectDatabase.StatusBTLEff.TrickRoom oldBattleEnv = oldBattleEnv_ as EffectDatabase.StatusBTLEff.TrickRoom;
+                Effects.StatusBTLEff.TrickRoom oldBattleEnv = oldBattleEnv_ as Effects.StatusBTLEff.TrickRoom;
                 if (newBattleEnv.priority < oldBattleEnv.priority)
                 {
                     stickCondition = false;
@@ -11739,12 +11739,12 @@ public class BTLManager : MonoBehaviour
         // Wonder Room
         if (stickCondition && wonderRoom_ != null)
         {
-            EffectDatabase.StatusBTLEff.WonderRoom newBattleEnv = wonderRoom_ as EffectDatabase.StatusBTLEff.WonderRoom;
-            EffectDatabase.StatusBTLEff.BattleSE oldBattleEnv_ =
+            Effects.StatusBTLEff.WonderRoom newBattleEnv = wonderRoom_ as Effects.StatusBTLEff.WonderRoom;
+            Effects.StatusBTLEff.BattleSE oldBattleEnv_ =
                 battle.wonderRoom.data.GetEffectNew(BattleSEType.WonderRoom);
             if (oldBattleEnv_ != null)
             {
-                EffectDatabase.StatusBTLEff.WonderRoom oldBattleEnv = oldBattleEnv_ as EffectDatabase.StatusBTLEff.WonderRoom;
+                Effects.StatusBTLEff.WonderRoom oldBattleEnv = oldBattleEnv_ as Effects.StatusBTLEff.WonderRoom;
                 if (newBattleEnv.priority < oldBattleEnv.priority)
                 {
                     stickCondition = false;
@@ -11808,7 +11808,7 @@ public class BTLManager : MonoBehaviour
     }
     public IEnumerator ExecuteBattleSEs(
         StatusBTLData statusData,
-        List<EffectDatabase.StatusBTLEff.BattleSE> effects
+        List<Effects.StatusBTLEff.BattleSE> effects
         )
     {
         for (int i = 0; i < effects.Count; i++)
@@ -11820,14 +11820,14 @@ public class BTLManager : MonoBehaviour
         }
     }
     public IEnumerator ExecuteBattleSE(
-        EffectDatabase.StatusBTLEff.BattleSE effect_,
+        Effects.StatusBTLEff.BattleSE effect_,
         StatusBTLData statusData
         )
     {
         // Block Status
         if (effect_.effectType == BattleSEType.BlockStatus)
         {
-            EffectDatabase.StatusBTLEff.BlockStatus effect = effect_ as EffectDatabase.StatusBTLEff.BlockStatus;
+            Effects.StatusBTLEff.BlockStatus effect = effect_ as Effects.StatusBTLEff.BlockStatus;
             List<PBS.Main.Pokemon.Pokemon> allPokemon = battle.GetPokemonBySpeed(battle.pokemonOnField);
             for (int i = 0; i < allPokemon.Count; i++)
             {
@@ -11878,7 +11878,7 @@ public class BTLManager : MonoBehaviour
         // HP Gain (ex. Grassy Terrain)
         if (effect_.effectType == BattleSEType.HPGain)
         {
-            EffectDatabase.StatusBTLEff.HPGain effect = effect_ as EffectDatabase.StatusBTLEff.HPGain;
+            Effects.StatusBTLEff.HPGain effect = effect_ as Effects.StatusBTLEff.HPGain;
             List<PBS.Main.Pokemon.Pokemon> allPokemon = battle.GetPokemonBySpeed(battle.pokemonOnField);
 
             // create heal events
@@ -11956,7 +11956,7 @@ public class BTLManager : MonoBehaviour
         // HP Loss (ex. weather)
         else if (effect_.effectType == BattleSEType.HPLoss)
         {
-            EffectDatabase.StatusBTLEff.HPLoss effect = effect_ as EffectDatabase.StatusBTLEff.HPLoss;
+            Effects.StatusBTLEff.HPLoss effect = effect_ as Effects.StatusBTLEff.HPLoss;
             List<PBS.Main.Pokemon.Pokemon> allPokemon = battle.GetPokemonBySpeed(battle.pokemonOnField);
 
             // create buffet events
@@ -11981,7 +11981,7 @@ public class BTLManager : MonoBehaviour
                         }
                     }
 
-                    /// type immunities done via <seealso cref="EffectDatabase.Filter.TypeList"/>.
+                    /// type immunities done via <seealso cref="Effects.Filter.TypeList"/>.
                     if (buffet)
                     {
                         if (!battle.DoesBattleEFiltersPass(
@@ -11996,11 +11996,11 @@ public class BTLManager : MonoBehaviour
                     // Overcoat
                     if (buffet)
                     {
-                        List<EffectDatabase.AbilityEff.AbilityEffect> overcoat_ =
+                        List<Effects.AbilityEff.AbilityEffect> overcoat_ =
                             battle.PBPGetAbilityEffects(pokemon, AbilityEffectType.Overcoat);
                         for (int k = 0; k < overcoat_.Count && buffet; k++)
                         {
-                            EffectDatabase.AbilityEff.Overcoat overcoat = overcoat_[k] as EffectDatabase.AbilityEff.Overcoat;
+                            Effects.AbilityEff.Overcoat overcoat = overcoat_[k] as Effects.AbilityEff.Overcoat;
                             if (battle.DoEffectFiltersPass(
                                 filters: overcoat.filters,
                                 targetPokemon: pokemon
@@ -12071,7 +12071,7 @@ public class BTLManager : MonoBehaviour
         // Intensify Gravity
         else if (effect_.effectType == BattleSEType.Gravity)
         {
-            EffectDatabase.StatusBTLEff.Gravity effect = effect_ as EffectDatabase.StatusBTLEff.Gravity;
+            Effects.StatusBTLEff.Gravity effect = effect_ as Effects.StatusBTLEff.Gravity;
             List<PBS.Main.Pokemon.Pokemon> allPokemon = battle.GetPokemonBySpeed(battle.pokemonOnField);
             List<PBS.Main.Pokemon.Pokemon> hitPokemon = new List<PBS.Main.Pokemon.Pokemon>();
 
@@ -12144,7 +12144,7 @@ public class BTLManager : MonoBehaviour
     }
 
     public IEnumerator ExecutePokemonAbilityEffect(
-        EffectDatabase.AbilityEff.AbilityEffect effect_,
+        Effects.AbilityEff.AbilityEffect effect_,
         PBS.Main.Pokemon.Pokemon targetPokemon,
         AbilityData abilityData,
         System.Action<bool> callback,
@@ -12325,14 +12325,14 @@ public class BTLManager : MonoBehaviour
                     Ability ability = abilities[k];
 
                     // Iron Barbs / Rough Skin
-                    EffectDatabase.AbilityEff.AbilityEffect roughSkin_ =
+                    Effects.AbilityEff.AbilityEffect roughSkin_ =
                         ability.data.GetEffectNew(AbilityEffectType.RoughSkin);
                     if (roughSkin_ != null
                             && battle.IsPokemonOnFieldAndAble(userPokemon)
                             && !userPokemon.IsTheSameAs(currentTarget.pokemon))
                     {
-                        EffectDatabase.AbilityEff.RoughSkin roughSkin =
-                            roughSkin_ as EffectDatabase.AbilityEff.RoughSkin;
+                        Effects.AbilityEff.RoughSkin roughSkin =
+                            roughSkin_ as Effects.AbilityEff.RoughSkin;
 
                         if (battle.DoEffectFiltersPass(
                             filters: roughSkin.filters,
@@ -12389,15 +12389,15 @@ public class BTLManager : MonoBehaviour
                     }
 
                     // Cute Charm / Flame Body / Static
-                    EffectDatabase.AbilityEff.AbilityEffect flameBody_ =
+                    Effects.AbilityEff.AbilityEffect flameBody_ =
                         abilities[k].data.GetEffectNew(AbilityEffectType.FlameBody);
                     if (flameBody_ != null && battle.IsPokemonOnFieldAndAble(userPokemon))
                     {
-                        EffectDatabase.AbilityEff.FlameBody flameBody = 
-                            flameBody_ as EffectDatabase.AbilityEff.FlameBody;
+                        Effects.AbilityEff.FlameBody flameBody = 
+                            flameBody_ as Effects.AbilityEff.FlameBody;
                         if (Random.value <= flameBody.chance)
                         {
-                            EffectDatabase.General.InflictStatus inflictStatus = flameBody.inflictStatus;
+                            Effects.General.InflictStatus inflictStatus = flameBody.inflictStatus;
 
                             // Effect Spore
                             if (flameBody.effectSpores.Count > 0)
@@ -12437,11 +12437,11 @@ public class BTLManager : MonoBehaviour
                     }
 
                     // Gooey / Tangling Hair / Cotton Down
-                    EffectDatabase.AbilityEff.AbilityEffect gooey_ =
+                    Effects.AbilityEff.AbilityEffect gooey_ =
                         abilities[k].data.GetEffectNew(AbilityEffectType.Gooey);
                     if (gooey_ != null)
                     {
-                        EffectDatabase.AbilityEff.Gooey gooey = gooey_ as EffectDatabase.AbilityEff.Gooey;
+                        Effects.AbilityEff.Gooey gooey = gooey_ as Effects.AbilityEff.Gooey;
 
                         bool trigger = true;
 
@@ -12504,12 +12504,12 @@ public class BTLManager : MonoBehaviour
                     // Illusion
                     if (currentTarget.pokemon.bProps.illusion != null)
                     {
-                        EffectDatabase.AbilityEff.AbilityEffect illusion_ =
+                        Effects.AbilityEff.AbilityEffect illusion_ =
                             abilities[k].data.GetEffectNew(AbilityEffectType.Illusion);
                         if (illusion_ != null)
                         {
-                            EffectDatabase.AbilityEff.Illusion illusion =
-                                illusion_ as EffectDatabase.AbilityEff.Illusion;
+                            Effects.AbilityEff.Illusion illusion =
+                                illusion_ as Effects.AbilityEff.Illusion;
 
                             PBPShowAbility(currentTarget.pokemon, abilities[k]);
                             currentTarget.pokemon.bProps.illusion = null;
@@ -12532,11 +12532,11 @@ public class BTLManager : MonoBehaviour
                 for (int k = 0; k < targetAbilities.Count && !triggeredWanderingSpirit; k++)
                 {
                     Ability ability = targetAbilities[k];
-                    EffectDatabase.AbilityEff.AbilityEffect mummy_ = 
+                    Effects.AbilityEff.AbilityEffect mummy_ = 
                         ability.data.GetEffectNew(AbilityEffectType.Mummy);
                     if (mummy_ != null)
                     {
-                        EffectDatabase.AbilityEff.Mummy mummy = mummy_ as EffectDatabase.AbilityEff.Mummy;
+                        Effects.AbilityEff.Mummy mummy = mummy_ as Effects.AbilityEff.Mummy;
                         if (battle.DoEffectFiltersPass(
                             filters: mummy.filters,
                             userPokemon: userPokemon,
@@ -12908,12 +12908,12 @@ public class BTLManager : MonoBehaviour
                     {
                         for (int k = 0; k < abilities.Count; k++)
                         {
-                            EffectDatabase.AbilityEff.AbilityEffect angerPoint_ =
+                            Effects.AbilityEff.AbilityEffect angerPoint_ =
                                 abilities[k].GetEffectNew(AbilityEffectType.AngerPoint);
                             if (angerPoint_ != null)
                             {
-                                EffectDatabase.AbilityEff.AngerPoint angerPoint =
-                                    angerPoint_ as EffectDatabase.AbilityEff.AngerPoint;
+                                Effects.AbilityEff.AngerPoint angerPoint =
+                                    angerPoint_ as Effects.AbilityEff.AngerPoint;
 
                                 PBPShowAbility(currentTarget.pokemon, abilities[k]);
                                 yield return StartCoroutine(ApplyStatStageMod(
@@ -12932,11 +12932,11 @@ public class BTLManager : MonoBehaviour
                     {
                         for (int k = 0; k < abilities.Count; k++)
                         {
-                            EffectDatabase.AbilityEff.AbilityEffect berserk_ =
+                            Effects.AbilityEff.AbilityEffect berserk_ =
                                 abilities[k].GetEffectNew(AbilityEffectType.Berserk);
                             if (berserk_ != null)
                             {
-                                EffectDatabase.AbilityEff.Berserk berserk = berserk_ as EffectDatabase.AbilityEff.Berserk;
+                                Effects.AbilityEff.Berserk berserk = berserk_ as Effects.AbilityEff.Berserk;
                                 if (currentTarget.preHPPercent > berserk.hpThreshold
                                     && currentTarget.postHPPercent <= berserk.hpThreshold)
                                 {
@@ -12958,12 +12958,12 @@ public class BTLManager : MonoBehaviour
                     {
                         for (int k = 0; k < abilities.Count; k++)
                         {
-                            EffectDatabase.AbilityEff.AbilityEffect justified_ =
+                            Effects.AbilityEff.AbilityEffect justified_ =
                                 abilities[k].GetEffectNew(AbilityEffectType.Justified);
                             if (justified_ != null)
                             {
-                                EffectDatabase.AbilityEff.Justified justified =
-                                    justified_ as EffectDatabase.AbilityEff.Justified;
+                                Effects.AbilityEff.Justified justified =
+                                    justified_ as Effects.AbilityEff.Justified;
                                 if (battle.DoEffectFiltersPass(
                                     filters: justified.filters,
                                     userPokemon: userPokemon,
@@ -13020,7 +13020,7 @@ public class BTLManager : MonoBehaviour
                         && currentTarget.pokemon.bProps.gulpMissile != null
                         && battle.IsPokemonOnFieldAndAble(userPokemon))
                     {
-                        EffectDatabase.AbilityEff.GulpMissile.Missile missile = currentTarget.pokemon.bProps.gulpMissile;
+                        Effects.AbilityEff.GulpMissile.Missile missile = currentTarget.pokemon.bProps.gulpMissile;
                         int damage = battle.GetPokemonHPByPercent(userPokemon, missile.hpLossPercent);
 
                         BTLEvent_GameText dmgText = new BTLEvent_GameText();
@@ -13069,12 +13069,12 @@ public class BTLManager : MonoBehaviour
                         for (int k = 0; k < targetAbilities.Count && !changedForm; k++)
                         {
                             Ability ability = targetAbilities[k];
-                            List<EffectDatabase.AbilityEff.AbilityEffect> gulpMissiles_ =
+                            List<Effects.AbilityEff.AbilityEffect> gulpMissiles_ =
                                 ability.data.GetEffectsNew(AbilityEffectType.GulpMissile);
                             for (int j = 0; j < gulpMissiles_.Count && !changedForm; j++)
                             {
-                                EffectDatabase.AbilityEff.GulpMissile gulpMissile =
-                                    gulpMissiles_[j] as EffectDatabase.AbilityEff.GulpMissile;
+                                Effects.AbilityEff.GulpMissile gulpMissile =
+                                    gulpMissiles_[j] as Effects.AbilityEff.GulpMissile;
                                 for (int l = 0; l < gulpMissile.spitUpTransformations.Count && !changedForm; l++)
                                 {
                                     if (gulpMissile.spitUpTransformations[l].IsPokemonAPreForm(currentTarget.pokemon))
@@ -13112,12 +13112,12 @@ public class BTLManager : MonoBehaviour
                     for (int k = 0; k < abilites.Count; k++)
                     {
                         // Color Change
-                        EffectDatabase.AbilityEff.AbilityEffect colorChange_ =
+                        Effects.AbilityEff.AbilityEffect colorChange_ =
                             abilites[k].data.GetEffectNew(AbilityEffectType.ColorChange);
                         if (colorChange_ != null)
                         {
-                            EffectDatabase.AbilityEff.ColorChange colorChange =
-                                colorChange_ as EffectDatabase.AbilityEff.ColorChange;
+                            Effects.AbilityEff.ColorChange colorChange =
+                                colorChange_ as Effects.AbilityEff.ColorChange;
 
                             bool changeType = true;
                             string toType = moveData.moveType;
@@ -13147,11 +13147,11 @@ public class BTLManager : MonoBehaviour
             }
 
             // Worry Seed
-            EffectDatabase.MoveEff.MoveEffect worrySeed_ =
+            Effects.MoveEff.MoveEffect worrySeed_ =
                 moveData.GetEffectNew(MoveEffectType.WorrySeed);
             if (worrySeed_ != null)
             {
-                EffectDatabase.MoveEff.WorrySeed worrySeed = worrySeed_ as EffectDatabase.MoveEff.WorrySeed;
+                Effects.MoveEff.WorrySeed worrySeed = worrySeed_ as Effects.MoveEff.WorrySeed;
                 List<Ability> worrySeedAbilities = new List<Ability>();
                 if (worrySeed.abilities.Count > 0)
                 {
@@ -13249,13 +13249,13 @@ public class BTLManager : MonoBehaviour
             }
 
             // Core Enforcer
-            EffectDatabase.MoveEff.MoveEffect coreEnforcer_ =
+            Effects.MoveEff.MoveEffect coreEnforcer_ =
                 moveData.GetEffectNew(
                     effectType: MoveEffectType.CoreEnforcer,
                     forceUnique: true);
             if (coreEnforcer_ != null)
             {
-                EffectDatabase.MoveEff.CoreEnforcer coreEnforcer = coreEnforcer_ as EffectDatabase.MoveEff.CoreEnforcer;
+                Effects.MoveEff.CoreEnforcer coreEnforcer = coreEnforcer_ as Effects.MoveEff.CoreEnforcer;
                 for (int i = 0; i < battleHitTargets.Count; i++)
                 {
                     BattleHitTarget currentTarget = battleHitTargets[i];
@@ -13309,13 +13309,13 @@ public class BTLManager : MonoBehaviour
             }
 
             // Covet
-            EffectDatabase.MoveEff.MoveEffect covet_ = moveData.GetEffectNew(MoveEffectType.Covet, true);
+            Effects.MoveEff.MoveEffect covet_ = moveData.GetEffectNew(MoveEffectType.Covet, true);
             if (covet_ != null)
             {
                 yield return StartCoroutine(ExecuteMoveEffects(
                     userPokemon: userPokemon,
                     moveData: moveData,
-                    effects: new List<EffectDatabase.MoveEff.MoveEffect> { covet_ },
+                    effects: new List<Effects.MoveEff.MoveEffect> { covet_ },
                     battleHitTargets: battleHitTargets,
                     targetTeams: new List<Team>(),
                     callback: (result) => { }
@@ -13344,12 +13344,12 @@ public class BTLManager : MonoBehaviour
                                 for (int l = 0; l < userAbilities.Count && !itemStolen; l++)
                                 {
                                     Ability ability = userAbilities[l];
-                                    EffectDatabase.AbilityEff.AbilityEffect magician_ =
+                                    Effects.AbilityEff.AbilityEffect magician_ =
                                         ability.data.GetEffectNew(AbilityEffectType.Magician);
                                     if (magician_ != null)
                                     {
-                                        EffectDatabase.AbilityEff.Magician magician =
-                                            magician_ as EffectDatabase.AbilityEff.Magician;
+                                        Effects.AbilityEff.Magician magician =
+                                            magician_ as Effects.AbilityEff.Magician;
                                         if (battle.DoEffectFiltersPass(
                                             filters: magician.filters,
                                             userPokemon: userPokemon,
@@ -13397,12 +13397,12 @@ public class BTLManager : MonoBehaviour
                             for (int k = 0; k < abilities.Count; k++)
                             {
                                 Ability ability = abilities[k];
-                                EffectDatabase.AbilityEff.AbilityEffect pickpocket_ =
+                                Effects.AbilityEff.AbilityEffect pickpocket_ =
                                     abilities[k].data.GetEffectNew(AbilityEffectType.Pickpocket);
                                 if (pickpocket_ != null)
                                 {
-                                    EffectDatabase.AbilityEff.Pickpocket pickpocket =
-                                        pickpocket_ as EffectDatabase.AbilityEff.Pickpocket;
+                                    Effects.AbilityEff.Pickpocket pickpocket =
+                                        pickpocket_ as Effects.AbilityEff.Pickpocket;
                                     if (battle.DoEffectFiltersPass(
                                         filters: pickpocket.filters,
                                         userPokemon: currentTarget.pokemon,
@@ -13508,13 +13508,13 @@ public class BTLManager : MonoBehaviour
             }
 
             // Knock Off
-            EffectDatabase.MoveEff.MoveEffect knockOff_ = moveData.GetEffectNew(MoveEffectType.KnockOff);
+            Effects.MoveEff.MoveEffect knockOff_ = moveData.GetEffectNew(MoveEffectType.KnockOff);
             if (knockOff_ != null)
             {
                 yield return StartCoroutine(ExecuteMoveEffects(
                     userPokemon: userPokemon,
                     moveData: moveData,
-                    effects: new List<EffectDatabase.MoveEff.MoveEffect> { knockOff_ },
+                    effects: new List<Effects.MoveEff.MoveEffect> { knockOff_ },
                     battleHitTargets: battleHitTargets,
                     targetTeams: new List<Team>(),
                     callback: (result) => { }
@@ -13522,13 +13522,13 @@ public class BTLManager : MonoBehaviour
             }
 
             // Corrosive Gas
-            EffectDatabase.MoveEff.MoveEffect corrosiveGas_ = moveData.GetEffectNew(MoveEffectType.CorrosiveGas);
+            Effects.MoveEff.MoveEffect corrosiveGas_ = moveData.GetEffectNew(MoveEffectType.CorrosiveGas);
             if (corrosiveGas_ != null)
             {
                 yield return StartCoroutine(ExecuteMoveEffects(
                     userPokemon: userPokemon,
                     moveData: moveData,
-                    effects: new List<EffectDatabase.MoveEff.MoveEffect> { corrosiveGas_ },
+                    effects: new List<Effects.MoveEff.MoveEffect> { corrosiveGas_ },
                     battleHitTargets: battleHitTargets,
                     targetTeams: new List<Team>(),
                     callback: (result) => { }
@@ -13619,12 +13619,12 @@ public class BTLManager : MonoBehaviour
                         for (int k = 0; k < poisonTouchAbilities.Count; k++)
                         {
                             Ability ability = poisonTouchAbilities[k];
-                            List<EffectDatabase.AbilityEff.AbilityEffect> poisonTouch_ =
+                            List<Effects.AbilityEff.AbilityEffect> poisonTouch_ =
                                 ability.data.GetEffectsNew(AbilityEffectType.PoisonTouch);
                             for (int j = 0; j < poisonTouch_.Count; j++)
                             {
-                                EffectDatabase.AbilityEff.PoisonTouch poisonTouch =
-                                    poisonTouch_[j] as EffectDatabase.AbilityEff.PoisonTouch;
+                                Effects.AbilityEff.PoisonTouch poisonTouch =
+                                    poisonTouch_[j] as Effects.AbilityEff.PoisonTouch;
                                 if (battle.DoEffectFiltersPass(
                                     filters: poisonTouch.filters,
                                     userPokemon: userPokemon,
@@ -13653,13 +13653,13 @@ public class BTLManager : MonoBehaviour
             }
 
             // Inflict Status (Embargo)
-            EffectDatabase.MoveEff.MoveEffect inflictStatus_ = moveData.GetEffectNew(MoveEffectType.InflictStatus, true);
+            Effects.MoveEff.MoveEffect inflictStatus_ = moveData.GetEffectNew(MoveEffectType.InflictStatus, true);
             if (inflictStatus_ != null)
             {
                 yield return StartCoroutine(ExecuteMoveEffects(
                     userPokemon: userPokemon,
                     moveData: moveData,
-                    effects: new List<EffectDatabase.MoveEff.MoveEffect> { inflictStatus_ },
+                    effects: new List<Effects.MoveEff.MoveEffect> { inflictStatus_ },
                     battleHitTargets: battleHitTargets,
                     targetTeams: new List<Team>(),
                     callback: (result) => { }
@@ -13667,11 +13667,11 @@ public class BTLManager : MonoBehaviour
             }
 
             // check whirlwind
-            EffectDatabase.MoveEff.MoveEffect whirlwind_ =
+            Effects.MoveEff.MoveEffect whirlwind_ =
                 moveData.GetEffectNew(MoveEffectType.Whirlwind);
             if (whirlwind_ != null && !command.isFutureSightMove)
             {
-                EffectDatabase.MoveEff.Whirlwind whirlwind = whirlwind_ as EffectDatabase.MoveEff.Whirlwind;
+                Effects.MoveEff.Whirlwind whirlwind = whirlwind_ as Effects.MoveEff.Whirlwind;
                 for (int i = 0; i < battleHitTargets.Count; i++)
                 {
                     BattleHitTarget currentTarget = battleHitTargets[i];
@@ -13706,8 +13706,8 @@ public class BTLManager : MonoBehaviour
                                 for (int k = 0; k < suctionCupPairs.Count && canBeWhirlwinded; k++)
                                 {
                                     AbilityEffectPair abilityPair = suctionCupPairs[k];
-                                    EffectDatabase.AbilityEff.SuctionCups suctionCups =
-                                        abilityPair.effect as EffectDatabase.AbilityEff.SuctionCups;
+                                    Effects.AbilityEff.SuctionCups suctionCups =
+                                        abilityPair.effect as Effects.AbilityEff.SuctionCups;
                                     if (battle.DoEffectFiltersPass(
                                         filters: suctionCups.filters,
                                         userPokemon: userPokemon,
@@ -13787,7 +13787,7 @@ public class BTLManager : MonoBehaviour
             }
 
             // HP-Trigger Berries
-            EffectDatabase.ItemEff.ItemEffect triggerHPLoss = 
+            Effects.ItemEff.ItemEffect triggerHPLoss = 
                 battle.PBPGetItemEffect(userPokemon, ItemEffectType.TriggerOnHPLoss);
 
         }
@@ -13810,8 +13810,8 @@ public class BTLManager : MonoBehaviour
         // Pokemon User Constraints
         if (!failure && moveData.GetEffectNew(MoveEffectType.FailNotPokemon) != null)
         {
-            EffectDatabase.MoveEff.MoveEffect effect_ = moveData.GetEffectNew(MoveEffectType.FailNotPokemon);
-            EffectDatabase.MoveEff.FailNotPokemon effect = effect_ as EffectDatabase.MoveEff.FailNotPokemon;
+            Effects.MoveEff.MoveEffect effect_ = moveData.GetEffectNew(MoveEffectType.FailNotPokemon);
+            Effects.MoveEff.FailNotPokemon effect = effect_ as Effects.MoveEff.FailNotPokemon;
 
             bool isAValidUser = false;
             bool isAFormPokemon = false;
@@ -13944,12 +13944,12 @@ public class BTLManager : MonoBehaviour
             List<BattleCondition> bConditions = battle.BBPGetSCs();
             for (int i = 0; i < bConditions.Count; i++)
             {
-                EffectDatabase.StatusBTLEff.BattleSE desolateLand_ = 
+                Effects.StatusBTLEff.BattleSE desolateLand_ = 
                     bConditions[i].data.GetEffectNew(BattleSEType.DesolateLand);
                 if (desolateLand_ != null)
                 {
-                    EffectDatabase.StatusBTLEff.DesolateLand desolateLand = 
-                        desolateLand_ as EffectDatabase.StatusBTLEff.DesolateLand;
+                    Effects.StatusBTLEff.DesolateLand desolateLand = 
+                        desolateLand_ as Effects.StatusBTLEff.DesolateLand;
                     bool isContained = false;
                     for (int k = 0; k < desolateLand.types.Count; k++)
                     {
@@ -14098,8 +14098,8 @@ public class BTLManager : MonoBehaviour
         // Steel Roller
         if (!failure && moveData.GetEffectNew(MoveEffectType.SteelRoller) != null)
         {
-            EffectDatabase.MoveEff.MoveEffect steelRoller_ = moveData.GetEffectNew(MoveEffectType.SteelRoller);
-            EffectDatabase.MoveEff.SteelRoller steelRoller = steelRoller_ as EffectDatabase.MoveEff.SteelRoller;
+            Effects.MoveEff.MoveEffect steelRoller_ = moveData.GetEffectNew(MoveEffectType.SteelRoller);
+            Effects.MoveEff.SteelRoller steelRoller = steelRoller_ as Effects.MoveEff.SteelRoller;
             if (steelRoller.failOnNoTerrain && battle.terrain.data.HasTag(BattleSTag.Default))
             {
                 failure = true;
@@ -14115,11 +14115,11 @@ public class BTLManager : MonoBehaviour
                 List<Ability> abilities = battle.PBPGetAbilities(dampPokemon[i]);
                 for (int k = 0; k < abilities.Count && !failure; k++)
                 {
-                    EffectDatabase.AbilityEff.AbilityEffect damp_ = 
+                    Effects.AbilityEff.AbilityEffect damp_ = 
                         abilities[k].data.GetEffectNew(AbilityEffectType.Damp);
                     if (damp_ != null)
                     {
-                        EffectDatabase.AbilityEff.Damp damp = damp_ as EffectDatabase.AbilityEff.Damp;
+                        Effects.AbilityEff.Damp damp = damp_ as Effects.AbilityEff.Damp;
 
                         List<MoveTag> tags = new List<MoveTag>(moveData.moveTags);
                         for (int l = 0; l < tags.Count && !failure; l++)
@@ -14246,10 +14246,10 @@ public class BTLManager : MonoBehaviour
         // Endure
         if (!failure)
         {
-            EffectDatabase.MoveEff.MoveEffect endure_ = moveData.GetEffectNew(MoveEffectType.Endure);
+            Effects.MoveEff.MoveEffect endure_ = moveData.GetEffectNew(MoveEffectType.Endure);
             if (endure_ != null)
             {
-                EffectDatabase.MoveEff.Endure endure = endure_ as EffectDatabase.MoveEff.Endure;
+                Effects.MoveEff.Endure endure = endure_ as Effects.MoveEff.Endure;
                 if (!endure.consecutiveUse)
                 {
                     float chance = Mathf.Pow(1f / 3, userPokemon.bProps.protectCounter);
@@ -14266,10 +14266,10 @@ public class BTLManager : MonoBehaviour
         // Fake Out
         if (!failure)
         {
-            EffectDatabase.MoveEff.MoveEffect fakeOut_ = moveData.GetEffectNew(MoveEffectType.FakeOut);
+            Effects.MoveEff.MoveEffect fakeOut_ = moveData.GetEffectNew(MoveEffectType.FakeOut);
             if (fakeOut_ != null)
             {
-                EffectDatabase.MoveEff.FakeOut fakeOut = fakeOut_ as EffectDatabase.MoveEff.FakeOut;
+                Effects.MoveEff.FakeOut fakeOut = fakeOut_ as Effects.MoveEff.FakeOut;
                 failure = userPokemon.bProps.turnsActive > fakeOut.maxTurn;
             }
         }
@@ -14358,10 +14358,10 @@ public class BTLManager : MonoBehaviour
         // Protect
         if (!failure)
         {
-            EffectDatabase.MoveEff.MoveEffect protect_ = moveData.GetEffectNew(MoveEffectType.Protect);
+            Effects.MoveEff.MoveEffect protect_ = moveData.GetEffectNew(MoveEffectType.Protect);
             if (protect_ != null)
             {
-                EffectDatabase.MoveEff.Protect protect = protect_ as EffectDatabase.MoveEff.Protect;
+                Effects.MoveEff.Protect protect = protect_ as Effects.MoveEff.Protect;
                 if (!protect.protect.consecutiveUse)
                 {
                     float chance = Mathf.Pow(1f / 3, userPokemon.bProps.protectCounter);
@@ -14614,8 +14614,8 @@ public class BTLManager : MonoBehaviour
         // Sucker Punch
         if (!failure && moveData.GetEffectNew(MoveEffectType.SuckerPunch) != null)
         {
-            EffectDatabase.MoveEff.MoveEffect suckerPunch_ = moveData.GetEffectNew(MoveEffectType.SuckerPunch);
-            EffectDatabase.MoveEff.SuckerPunch suckerPunch = suckerPunch_ as EffectDatabase.MoveEff.SuckerPunch;
+            Effects.MoveEff.MoveEffect suckerPunch_ = moveData.GetEffectNew(MoveEffectType.SuckerPunch);
+            Effects.MoveEff.SuckerPunch suckerPunch = suckerPunch_ as Effects.MoveEff.SuckerPunch;
 
             bool foundSuckerPunchTarget = false;
             for (int i = 0; i < targetPokemon.Count; i++)
@@ -14671,10 +14671,10 @@ public class BTLManager : MonoBehaviour
         MoveData moveData,
         Team userTeam,
         Team targetTeam,
-        System.Action<EffectDatabase.General.Protect> callback,
+        System.Action<Effects.General.Protect> callback,
         bool apply = true)
     {
-        EffectDatabase.General.Protect returnProtect = null;
+        Effects.General.Protect returnProtect = null;
 
         // Set bypass protect if possible
         bool bypassProtect = false;
@@ -14694,12 +14694,12 @@ public class BTLManager : MonoBehaviour
         }
 
         // Unseen Fist
-        List<EffectDatabase.AbilityEff.AbilityEffect> unseenFist_ =
+        List<Effects.AbilityEff.AbilityEffect> unseenFist_ =
             battle.PBPGetAbilityEffects(userPokemon, AbilityEffectType.UnseenFist);
         for (int i = 0; i < unseenFist_.Count; i++)
         {
-            EffectDatabase.AbilityEff.UnseenFist unseenFist =
-                unseenFist_[i] as EffectDatabase.AbilityEff.UnseenFist;
+            Effects.AbilityEff.UnseenFist unseenFist =
+                unseenFist_[i] as Effects.AbilityEff.UnseenFist;
             if (battle.DoEffectFiltersPass(
                 filters: unseenFist.filters,
                 userPokemon: userPokemon,
@@ -14733,7 +14733,7 @@ public class BTLManager : MonoBehaviour
         {
             if (targetPokemon.bProps.protect != null)
             {
-                EffectDatabase.General.Protect protect = targetPokemon.bProps.protect;
+                Effects.General.Protect protect = targetPokemon.bProps.protect;
                 bool isProtected = true;
 
                 // Bypass Crafty Shield / Protect / Max Guard
@@ -14804,10 +14804,10 @@ public class BTLManager : MonoBehaviour
         MoveData moveData,
         Team userTeam,
         Team targetTeam,
-        System.Action<EffectDatabase.General.Protect> callback,
+        System.Action<Effects.General.Protect> callback,
         bool apply = true)
     {
-        EffectDatabase.General.Protect returnProtect = null;
+        Effects.General.Protect returnProtect = null;
 
         // Set bypass protect if possible
         bool bypassProtect = false;
@@ -14833,7 +14833,7 @@ public class BTLManager : MonoBehaviour
             // Mat Block
             for (int i = 0; i < targetTeam.bProps.matBlocks.Count; i++)
             {
-                EffectDatabase.General.Protect protect = targetTeam.bProps.matBlocks[i];
+                Effects.General.Protect protect = targetTeam.bProps.matBlocks[i];
                 bool isProtected = true;
 
                 // Bypass Crafty Shield / Protect / Max Guard
@@ -14922,12 +14922,12 @@ public class BTLManager : MonoBehaviour
         bool bypassSubstitute = false;
 
         // Infiltrator
-        List<EffectDatabase.AbilityEff.AbilityEffect> infiltrators_ =
+        List<Effects.AbilityEff.AbilityEffect> infiltrators_ =
             battle.PBPGetAbilityEffects(userPokemon, AbilityEffectType.Infiltrator);
         for (int k = 0; k < infiltrators_.Count && !bypassSubstitute; k++)
         {
-            EffectDatabase.AbilityEff.Infiltrator infiltrator =
-                infiltrators_[k] as EffectDatabase.AbilityEff.Infiltrator;
+            Effects.AbilityEff.Infiltrator infiltrator =
+                infiltrators_[k] as Effects.AbilityEff.Infiltrator;
             if (infiltrator.bypassSubstitute)
             {
                 bypassSubstitute = true;
@@ -14946,7 +14946,7 @@ public class BTLManager : MonoBehaviour
         // Mold Breaker bypasses ability immunities
         if (!bypassAbility)
         {
-            EffectDatabase.AbilityEff.AbilityEffect moldBreakerEffect =
+            Effects.AbilityEff.AbilityEffect moldBreakerEffect =
                 battle.PBPGetAbilityEffect(userPokemon, AbilityEffectType.MoldBreaker);
             if (moldBreakerEffect != null)
             {
@@ -14954,7 +14954,7 @@ public class BTLManager : MonoBehaviour
             }
 
             // Sunsteel Strike bypasses ability immunities
-            EffectDatabase.MoveEff.MoveEffect effect = moveData.GetEffectNew(MoveEffectType.SunteelStrike);
+            Effects.MoveEff.MoveEffect effect = moveData.GetEffectNew(MoveEffectType.SunteelStrike);
             if (effect != null)
             {
                 bypassAbility = true;
@@ -14993,12 +14993,12 @@ public class BTLManager : MonoBehaviour
                                 {
 
                                     // Queenly Majesty / Dazzling
-                                    EffectDatabase.AbilityEff.AbilityEffect queenlyMajesty_ =
+                                    Effects.AbilityEff.AbilityEffect queenlyMajesty_ =
                                         abilities[k].data.GetEffectNew(AbilityEffectType.QueenlyMajesty);
                                     if (queenlyMajesty_ != null && !failure)
                                     {
-                                        EffectDatabase.AbilityEff.QueenlyMajesty queenlyMajesty =
-                                            queenlyMajesty_ as EffectDatabase.AbilityEff.QueenlyMajesty;
+                                        Effects.AbilityEff.QueenlyMajesty queenlyMajesty =
+                                            queenlyMajesty_ as Effects.AbilityEff.QueenlyMajesty;
                                         if (queenlyMajesty.affectsTeam 
                                             && battle.ArePokemonEnemies(userPokemon, targetAllyPokemon[i]))
                                         {
@@ -15026,12 +15026,12 @@ public class BTLManager : MonoBehaviour
                             for (int i = 0; i < targetAbilities.Count && !failure; i++)
                             {
                                 AbilityData abilityData = targetAbilities[i].data;
-                                EffectDatabase.AbilityEff.AbilityEffect cacophony_ =
+                                Effects.AbilityEff.AbilityEffect cacophony_ =
                                     abilityData.GetEffectNew(AbilityEffectType.Cacophony);
                                 if (cacophony_ != null && !failure)
                                 {
-                                    EffectDatabase.AbilityEff.Cacophony cacophony =
-                                        cacophony_ as EffectDatabase.AbilityEff.Cacophony;
+                                    Effects.AbilityEff.Cacophony cacophony =
+                                        cacophony_ as Effects.AbilityEff.Cacophony;
                                     if (battle.DoEffectFiltersPass(
                                         filters: cacophony.filters,
                                         userPokemon: userPokemon,
@@ -15046,7 +15046,7 @@ public class BTLManager : MonoBehaviour
                                 }
                                 
                                 // Queenly Majesty / Dazzling
-                                EffectDatabase.AbilityEff.AbilityEffect queenlyMajesty_ =
+                                Effects.AbilityEff.AbilityEffect queenlyMajesty_ =
                                     abilityData.GetEffectNew(AbilityEffectType.QueenlyMajesty);
                                 if (queenlyMajesty_ != null && !failure)
                                 {
@@ -15075,12 +15075,12 @@ public class BTLManager : MonoBehaviour
                             for (int i = 0; i < targetAbilities.Count && !failure; i++)
                             {
                                 AbilityData abilityData = targetAbilities[i].data;
-                                EffectDatabase.AbilityEff.AbilityEffect voltAbsorb_ =
+                                Effects.AbilityEff.AbilityEffect voltAbsorb_ =
                                     abilityData.GetEffectNew(AbilityEffectType.VoltAbsorb);
                                 if (voltAbsorb_ != null)
                                 {
-                                    EffectDatabase.AbilityEff.VoltAbsorb voltAbsorb =
-                                        voltAbsorb_ as EffectDatabase.AbilityEff.VoltAbsorb;
+                                    Effects.AbilityEff.VoltAbsorb voltAbsorb =
+                                        voltAbsorb_ as Effects.AbilityEff.VoltAbsorb;
 
                                     if (battle.DoEffectFiltersPass(
                                         filters: voltAbsorb.filters,
@@ -15090,12 +15090,12 @@ public class BTLManager : MonoBehaviour
                                         ))
                                     {
                                         bool isBlocked = false;
-                                        EffectDatabase.AbilityEff.VoltAbsorb.VoltAbsorbCondition triggerCondition =
+                                        Effects.AbilityEff.VoltAbsorb.VoltAbsorbCondition triggerCondition =
                                             null;
 
                                         for (int k = 0; k < voltAbsorb.conditions.Count && !isBlocked; k++)
                                         {
-                                            EffectDatabase.AbilityEff.VoltAbsorb.VoltAbsorbCondition
+                                            Effects.AbilityEff.VoltAbsorb.VoltAbsorbCondition
                                                 voltAbsorbCondition = voltAbsorb.conditions[k];
 
                                             // By type
@@ -15186,12 +15186,12 @@ public class BTLManager : MonoBehaviour
                             for (int i = 0; i < userAbilities.Count && !failure; i++)
                             {
                                 Ability ability = userAbilities[i];
-                                EffectDatabase.AbilityEff.AbilityEffect prankster_ =
+                                Effects.AbilityEff.AbilityEffect prankster_ =
                                     ability.data.GetEffectNew(AbilityEffectType.Prankster);
                                 if (prankster_ != null && !failure)
                                 {
-                                    EffectDatabase.AbilityEff.Prankster prankster =
-                                        prankster_ as EffectDatabase.AbilityEff.Prankster;
+                                    Effects.AbilityEff.Prankster prankster =
+                                        prankster_ as Effects.AbilityEff.Prankster;
                                     if (battle.DoEffectFiltersPass(
                                         filters: prankster.filters,
                                         userPokemon: userPokemon,
@@ -15212,12 +15212,12 @@ public class BTLManager : MonoBehaviour
                             for (int i = 0; i < targetAbilities.Count && !failure; i++)
                             {
                                 Ability ability = targetAbilities[i];
-                                EffectDatabase.AbilityEff.AbilityEffect telepathy_ =
+                                Effects.AbilityEff.AbilityEffect telepathy_ =
                                     ability.data.GetEffectNew(AbilityEffectType.Telepathy);
                                 if (telepathy_ != null)
                                 {
-                                    EffectDatabase.AbilityEff.Telepathy telepathy =
-                                        telepathy_ as EffectDatabase.AbilityEff.Telepathy;
+                                    Effects.AbilityEff.Telepathy telepathy =
+                                        telepathy_ as Effects.AbilityEff.Telepathy;
                                     if (battle.DoEffectFiltersPass(
                                         filters: telepathy.filters,
                                         userPokemon: userPokemon,
@@ -15241,12 +15241,12 @@ public class BTLManager : MonoBehaviour
                             for (int i = 0; i < targetAbilities.Count && !failure; i++)
                             {
                                 Ability ability = targetAbilities[i];
-                                EffectDatabase.AbilityEff.AbilityEffect wonderGuard_ =
+                                Effects.AbilityEff.AbilityEffect wonderGuard_ =
                                     ability.data.GetEffectNew(AbilityEffectType.WonderGuard);
                                 if (wonderGuard_ != null)
                                 {
-                                    EffectDatabase.AbilityEff.WonderGuard wonderGuard =
-                                        wonderGuard_ as EffectDatabase.AbilityEff.WonderGuard;
+                                    Effects.AbilityEff.WonderGuard wonderGuard =
+                                        wonderGuard_ as Effects.AbilityEff.WonderGuard;
                                     if (battle.DoEffectFiltersPass(
                                         filters: wonderGuard.filters,
                                         userPokemon: userPokemon,
@@ -15408,10 +15408,10 @@ public class BTLManager : MonoBehaviour
                     }
 
                     // Poltergeist
-                    EffectDatabase.MoveEff.MoveEffect poltergeist_ = moveData.GetEffectNew(MoveEffectType.Poltergeist);
+                    Effects.MoveEff.MoveEffect poltergeist_ = moveData.GetEffectNew(MoveEffectType.Poltergeist);
                     if (!failure && poltergeist_ != null)
                     {
-                        EffectDatabase.MoveEff.Poltergeist poltergeist = poltergeist_ as EffectDatabase.MoveEff.Poltergeist;
+                        Effects.MoveEff.Poltergeist poltergeist = poltergeist_ as Effects.MoveEff.Poltergeist;
                         if (poltergeist.failOnNoItem)
                         {
                             bool noItem = false;
@@ -15496,10 +15496,10 @@ public class BTLManager : MonoBehaviour
                     // Synchronoise
                     if (!failure)
                     {
-                        EffectDatabase.MoveEff.MoveEffect effect_ = moveData.GetEffectNew(MoveEffectType.Synchronoise);
+                        Effects.MoveEff.MoveEffect effect_ = moveData.GetEffectNew(MoveEffectType.Synchronoise);
                         if (effect_ != null)
                         {
-                            EffectDatabase.MoveEff.Synchronoise effect = effect_ as EffectDatabase.MoveEff.Synchronoise;
+                            Effects.MoveEff.Synchronoise effect = effect_ as Effects.MoveEff.Synchronoise;
                             bool foundType = false;
                             List<string> userTypes = battle.PBPGetTypes(userPokemon);
                             for (int i = 0; i < userTypes.Count; i++)
@@ -15560,12 +15560,12 @@ public class BTLManager : MonoBehaviour
         List<PBS.Main.Pokemon.Pokemon> targetPokemon,
         MoveData moveData,
         BattleCommand originalCommand,
-        System.Action<EffectDatabase.General.MagicCoat> callback,
+        System.Action<Effects.General.MagicCoat> callback,
         bool forceOneHit = false,
         bool apply = true
         )
     {
-        EffectDatabase.General.MagicCoat magicCoat = null;
+        Effects.General.MagicCoat magicCoat = null;
 
         //BattleCommand reflectCommand = null;
 
@@ -15582,19 +15582,19 @@ public class BTLManager : MonoBehaviour
         PBS.Main.Pokemon.Pokemon targetPokemon,
         MoveData moveData,
         BattleCommand originalCommand,
-        System.Action<EffectDatabase.General.MagicCoat> callback,
+        System.Action<Effects.General.MagicCoat> callback,
         bool forceOneHit = false,
         bool apply = true
         )
     {
-        EffectDatabase.General.MagicCoat magicCoat = null;
+        Effects.General.MagicCoat magicCoat = null;
 
         // Set ability bypass if possible
         bool bypassAbility = false;
         // Mold Breaker bypasses ability immunities
         if (!bypassAbility)
         {
-            EffectDatabase.AbilityEff.AbilityEffect moldBreakerEffect =
+            Effects.AbilityEff.AbilityEffect moldBreakerEffect =
                 battle.PBPGetAbilityEffect(userPokemon, AbilityEffectType.MoldBreaker);
             if (moldBreakerEffect != null)
             {
@@ -15602,7 +15602,7 @@ public class BTLManager : MonoBehaviour
             }
 
             // Sunsteel Strike bypasses ability immunities
-            EffectDatabase.MoveEff.MoveEffect effect = moveData.GetEffectNew(MoveEffectType.SunteelStrike);
+            Effects.MoveEff.MoveEffect effect = moveData.GetEffectNew(MoveEffectType.SunteelStrike);
             if (effect != null)
             {
                 bypassAbility = true;
@@ -15630,12 +15630,12 @@ public class BTLManager : MonoBehaviour
                 for (int i = 0; i < targetAbilities.Count && magicCoat == null; i++)
                 {
                     Ability ability = targetAbilities[i];
-                    EffectDatabase.AbilityEff.AbilityEffect magicBounce_ =
+                    Effects.AbilityEff.AbilityEffect magicBounce_ =
                         ability.data.GetEffectNew(AbilityEffectType.MagicBounce);
                     if (magicBounce_ != null)
                     {
-                        EffectDatabase.AbilityEff.MagicBounce magicBounce =
-                            magicBounce_ as EffectDatabase.AbilityEff.MagicBounce;
+                        Effects.AbilityEff.MagicBounce magicBounce =
+                            magicBounce_ as Effects.AbilityEff.MagicBounce;
                         if (battle.DoEffectFiltersPass(
                             filters: magicBounce.filters,
                             userPokemon: userPokemon,
@@ -15643,7 +15643,7 @@ public class BTLManager : MonoBehaviour
                             moveData: moveData
                             ))
                         {
-                            EffectDatabase.General.MagicCoat curMagicBounce = magicBounce.magicCoat;
+                            Effects.General.MagicCoat curMagicBounce = magicBounce.magicCoat;
                             magicCoat = curMagicBounce;
 
                             PBPShowAbility(targetPokemon, ability);
@@ -15690,10 +15690,10 @@ public class BTLManager : MonoBehaviour
                     && allCommands[i].commandType == BattleCommandType.Fight)
                 {
                     MoveData pursuitData = Moves.instance.GetMoveData(allCommands[i].moveID);
-                    EffectDatabase.MoveEff.MoveEffect effect_ = pursuitData.GetEffectNew(MoveEffectType.Pursuit);
+                    Effects.MoveEff.MoveEffect effect_ = pursuitData.GetEffectNew(MoveEffectType.Pursuit);
                     if (effect_ != null)
                     {
-                        EffectDatabase.MoveEff.Pursuit effect = effect_ as EffectDatabase.MoveEff.Pursuit;
+                        Effects.MoveEff.Pursuit effect = effect_ as Effects.MoveEff.Pursuit;
                         if ((effect.applyToEnemies && battle.ArePokemonEnemies(withdrawPokemon, pursuitPokemon))
                             || (effect.applyToAllies && battle.ArePokemonAllies(withdrawPokemon, pursuitPokemon)))
                         {
@@ -17130,11 +17130,11 @@ public class BTLManager : MonoBehaviour
         for (int i = 0; i < ripenAbilities.Count; i++)
         {
             Ability ability = ripenAbilities[i];
-            EffectDatabase.AbilityEff.AbilityEffect ripen_ =
+            Effects.AbilityEff.AbilityEffect ripen_ =
                 ability.data.GetEffectNew(AbilityEffectType.Ripen);
             if (ripen_ != null)
             {
-                EffectDatabase.AbilityEff.Ripen ripen = ripen_ as EffectDatabase.AbilityEff.Ripen;
+                Effects.AbilityEff.Ripen ripen = ripen_ as Effects.AbilityEff.Ripen;
                 if (battle.DoEffectFiltersPass(
                     filters: ripen.filters,
                     targetPokemon: pokemon,
@@ -17172,12 +17172,12 @@ public class BTLManager : MonoBehaviour
             List<Ability> abilities = battle.PBPGetAbilities(pokemon);
             for (int i = 0; i < abilities.Count; i++)
             {
-                EffectDatabase.AbilityEff.AbilityEffect cheekPouch_ =
+                Effects.AbilityEff.AbilityEffect cheekPouch_ =
                     abilities[i].data.GetEffectNew(AbilityEffectType.CheekPouch);
                 if (cheekPouch_ != null)
                 {
-                    EffectDatabase.AbilityEff.CheekPouch cheekPouch =
-                        cheekPouch_ as EffectDatabase.AbilityEff.CheekPouch;
+                    Effects.AbilityEff.CheekPouch cheekPouch =
+                        cheekPouch_ as Effects.AbilityEff.CheekPouch;
 
                     bool active = false;
                     if (cheekPouch.onBerry && item.data.pocket == ItemPocket.Berries)
@@ -17224,8 +17224,8 @@ public class BTLManager : MonoBehaviour
                         for (int k = 0; k < symbiosisPairs.Count && !triggeredSymbiosis; k++)
                         {
                             AbilityEffectPair symbiosisPair = symbiosisPairs[k] as AbilityEffectPair;
-                            EffectDatabase.AbilityEff.Symbiosis symbiosis = 
-                                symbiosisPair.effect as EffectDatabase.AbilityEff.Symbiosis;
+                            Effects.AbilityEff.Symbiosis symbiosis = 
+                                symbiosisPair.effect as Effects.AbilityEff.Symbiosis;
                             if (battle.DoEffectFiltersPass(
                                 filters: symbiosis.filters,
                                 userPokemon: curAlly,
@@ -17263,7 +17263,7 @@ public class BTLManager : MonoBehaviour
     public IEnumerator ApplyItemEffects(
         PBS.Main.Pokemon.Pokemon pokemon,
         Item item,
-        List<EffectDatabase.ItemEff.ItemEffect> effects,
+        List<Effects.ItemEff.ItemEffect> effects,
         System.Action<bool> callback,
         float ripenMultiplier = 1f,
         bool apply = true)
@@ -17291,7 +17291,7 @@ public class BTLManager : MonoBehaviour
     public IEnumerator ApplyItemEffect(
         PBS.Main.Pokemon.Pokemon pokemon,
         Item item,
-        EffectDatabase.ItemEff.ItemEffect effect_,
+        Effects.ItemEff.ItemEffect effect_,
         System.Action<bool> callback,
         float ripenMultiplier = 1f,
         bool apply = true)
@@ -17302,9 +17302,9 @@ public class BTLManager : MonoBehaviour
         if (pokemon != null)
         {
             // Heal HP
-            if (effect_ is EffectDatabase.ItemEff.Potion)
+            if (effect_ is Effects.ItemEff.Potion)
             {
-                EffectDatabase.ItemEff.Potion effect = effect_ as EffectDatabase.ItemEff.Potion;
+                Effects.ItemEff.Potion effect = effect_ as Effects.ItemEff.Potion;
                 yield return StartCoroutine(ApplyHealHP(
                     healHP: effect.healHP,
                     scaleAmount: ripenMultiplier,
@@ -17318,10 +17318,10 @@ public class BTLManager : MonoBehaviour
                     ));
             }
             // Liechi Berry (Stat Stage Mod)
-            else if (effect_ is EffectDatabase.ItemEff.LiechiBerry)
+            else if (effect_ is Effects.ItemEff.LiechiBerry)
             {
-                EffectDatabase.ItemEff.LiechiBerry liechiBerry = effect_ as EffectDatabase.ItemEff.LiechiBerry;
-                EffectDatabase.General.StatStageMod statStageMod =
+                Effects.ItemEff.LiechiBerry liechiBerry = effect_ as Effects.ItemEff.LiechiBerry;
+                Effects.General.StatStageMod statStageMod =
                     liechiBerry.statStageMod.Clone();
                 List<PokemonStats> statTypes = GameSettings.btlPkmnStats;
                 for (int i = 0; i < statTypes.Count; i++)
@@ -17551,10 +17551,10 @@ public class BTLManager : MonoBehaviour
                     && allCommands[i].commandType == BattleCommandType.Fight)
                 {
                     MoveData pursuitData = Moves.instance.GetMoveData(allCommands[i].moveID);
-                    EffectDatabase.MoveEff.MoveEffect effect_ = pursuitData.GetEffectNew(MoveEffectType.Pursuit);
+                    Effects.MoveEff.MoveEffect effect_ = pursuitData.GetEffectNew(MoveEffectType.Pursuit);
                     if (effect_ != null)
                     {
-                        EffectDatabase.MoveEff.Pursuit effect = effect_ as EffectDatabase.MoveEff.Pursuit;
+                        Effects.MoveEff.Pursuit effect = effect_ as Effects.MoveEff.Pursuit;
                         if ((effect.applyToEnemies && battle.ArePokemonEnemies(withdrawPokemon, pursuitPokemon))
                             || (effect.applyToAllies && battle.ArePokemonAllies(withdrawPokemon, pursuitPokemon)))
                         {
@@ -17927,7 +17927,7 @@ public class BTLManager : MonoBehaviour
 
                 // Forecast
                 bool forecastAbilitySatisfied = false;
-                List<EffectDatabase.AbilityEff.AbilityEffect> forecasts_ =
+                List<Effects.AbilityEff.AbilityEffect> forecasts_ =
                     abilities[i].data.GetEffectsNew(AbilityEffectType.Forecast);
                 for (int k = 0; k < forecasts_.Count && !forecastAbilitySatisfied; k++)
                 {
@@ -17944,7 +17944,7 @@ public class BTLManager : MonoBehaviour
 
                 // Mimicry
                 bool mimicrySatisfied = false;
-                List<EffectDatabase.AbilityEff.AbilityEffect> mimicrys_ =
+                List<Effects.AbilityEff.AbilityEffect> mimicrys_ =
                     ability.data.GetEffectsNew(AbilityEffectType.Mimicry);
                 for (int k = 0; k < mimicrys_.Count && !mimicrySatisfied; k++)
                 {
@@ -18049,7 +18049,7 @@ public class BTLManager : MonoBehaviour
             yield return StartCoroutine(PBPRunBCAbilityCheck(pokemon: pokemon));
             
             // Mimicry
-            EffectDatabase.AbilityEff.AbilityEffect mimicry_ = abilityData.GetEffectNew(AbilityEffectType.Mimicry);
+            Effects.AbilityEff.AbilityEffect mimicry_ = abilityData.GetEffectNew(AbilityEffectType.Mimicry);
             if (mimicry_ != null)
             {
                 yield return StartCoroutine(PBPRunAbilityEffect(
@@ -18061,10 +18061,10 @@ public class BTLManager : MonoBehaviour
             }
 
             // Air Lock
-            EffectDatabase.AbilityEff.AbilityEffect airLock_ = abilityData.GetEffectNew(AbilityEffectType.AirLock);
+            Effects.AbilityEff.AbilityEffect airLock_ = abilityData.GetEffectNew(AbilityEffectType.AirLock);
             if (airLock_ != null)
             {
-                EffectDatabase.AbilityEff.AirLock airLock = airLock_ as EffectDatabase.AbilityEff.AirLock;
+                Effects.AbilityEff.AirLock airLock = airLock_ as Effects.AbilityEff.AirLock;
                 if (!abilityShown)
                 {
                     abilityShown = true;
@@ -18078,10 +18078,10 @@ public class BTLManager : MonoBehaviour
             }
 
             // Anticipation
-            EffectDatabase.AbilityEff.AbilityEffect anticipation_ = abilityData.GetEffectNew(AbilityEffectType.Anticipation);
+            Effects.AbilityEff.AbilityEffect anticipation_ = abilityData.GetEffectNew(AbilityEffectType.Anticipation);
             if (anticipation_ != null)
             {
-                EffectDatabase.AbilityEff.Anticipation anticipation = anticipation_ as EffectDatabase.AbilityEff.Anticipation;
+                Effects.AbilityEff.Anticipation anticipation = anticipation_ as Effects.AbilityEff.Anticipation;
                 bool showAnticipation = false;
                 opposingPokemon = battle.GetOpposingPokemon(pokemon);
 
@@ -18138,10 +18138,10 @@ public class BTLManager : MonoBehaviour
             }
 
             // Forewarn
-            EffectDatabase.AbilityEff.AbilityEffect forewarn_ = abilityData.GetEffectNew(AbilityEffectType.Forewarn);
+            Effects.AbilityEff.AbilityEffect forewarn_ = abilityData.GetEffectNew(AbilityEffectType.Forewarn);
             if (forewarn_ != null)
             {
-                EffectDatabase.AbilityEff.Forewarn forewarn = forewarn_ as EffectDatabase.AbilityEff.Forewarn;
+                Effects.AbilityEff.Forewarn forewarn = forewarn_ as Effects.AbilityEff.Forewarn;
                 bool showForewarn = false;
 
                 opposingPokemon = battle.GetOpposingPokemon(pokemon);
@@ -18204,10 +18204,10 @@ public class BTLManager : MonoBehaviour
             }
 
             // Frisk
-            EffectDatabase.AbilityEff.AbilityEffect frisk_ = abilityData.GetEffectNew(AbilityEffectType.Frisk);
+            Effects.AbilityEff.AbilityEffect frisk_ = abilityData.GetEffectNew(AbilityEffectType.Frisk);
             if (frisk_ != null)
             {
-                EffectDatabase.AbilityEff.Frisk frisk = frisk_ as EffectDatabase.AbilityEff.Frisk;
+                Effects.AbilityEff.Frisk frisk = frisk_ as Effects.AbilityEff.Frisk;
                 opposingPokemon = battle.GetOpposingPokemon(pokemon);
                 List<PBS.Main.Pokemon.Pokemon> itemPokemon = new List<PBS.Main.Pokemon.Pokemon>();
 
@@ -18247,7 +18247,7 @@ public class BTLManager : MonoBehaviour
             }
 
             // Aura Break
-            EffectDatabase.AbilityEff.AbilityEffect auraBreak_ = abilityData.GetEffectNew(AbilityEffectType.AuraBreak);
+            Effects.AbilityEff.AbilityEffect auraBreak_ = abilityData.GetEffectNew(AbilityEffectType.AuraBreak);
             if (auraBreak_ != null)
             {
                 yield return StartCoroutine(PBPRunAbilityEffect(
@@ -18259,17 +18259,17 @@ public class BTLManager : MonoBehaviour
             }
 
             // Dark Aura
-            List<EffectDatabase.AbilityEff.AbilityEffect> darkAuras_ = abilityData.GetEffectsNew(AbilityEffectType.DarkAura);
+            List<Effects.AbilityEff.AbilityEffect> darkAuras_ = abilityData.GetEffectsNew(AbilityEffectType.DarkAura);
             for (int i = 0; i < darkAuras_.Count; i++)
             {
-                EffectDatabase.AbilityEff.DarkAura darkAura = darkAuras_[i] as EffectDatabase.AbilityEff.DarkAura;
+                Effects.AbilityEff.DarkAura darkAura = darkAuras_[i] as Effects.AbilityEff.DarkAura;
                 List<string> affectedTypes = new List<string>();
                 for (int k = 0; k < darkAura.filters.Count; k++)
                 {
-                    if (darkAura.filters[k] is EffectDatabase.Filter.TypeList)
+                    if (darkAura.filters[k] is Effects.Filter.TypeList)
                     {
-                        EffectDatabase.Filter.TypeList typeList = darkAura.filters[k] as EffectDatabase.Filter.TypeList;
-                        if (typeList.targetType == EffectDatabase.Filter.TypeList.TargetType.Move)
+                        Effects.Filter.TypeList typeList = darkAura.filters[k] as Effects.Filter.TypeList;
+                        if (typeList.targetType == Effects.Filter.TypeList.TargetType.Move)
                         {
                             affectedTypes.AddRange(typeList.types);
                             break;
@@ -18291,7 +18291,7 @@ public class BTLManager : MonoBehaviour
             }
 
             // Download
-            EffectDatabase.AbilityEff.AbilityEffect download_ = abilityData.GetEffectNew(AbilityEffectType.Download);
+            Effects.AbilityEff.AbilityEffect download_ = abilityData.GetEffectNew(AbilityEffectType.Download);
             opposingPokemon = battle.GetOpposingPokemon(pokemon);
             if (download_ != null && opposingPokemon.Count > 0)
             {
@@ -18301,10 +18301,10 @@ public class BTLManager : MonoBehaviour
                     PBPShowAbility(pokemon, abilityData);
                 }
 
-                EffectDatabase.AbilityEff.Download download = download_ as EffectDatabase.AbilityEff.Download;
+                Effects.AbilityEff.Download download = download_ as Effects.AbilityEff.Download;
                 for (int i = 0; i < download.downloadComparisons.Count; i++)
                 {
-                    EffectDatabase.General.StatStageMod statStageMod = null;
+                    Effects.General.StatStageMod statStageMod = null;
                     float totalStat1 = 0;
                     float totalStat2 = 0;
                     for (int k = 0; k < opposingPokemon.Count; k++)
@@ -18343,7 +18343,7 @@ public class BTLManager : MonoBehaviour
             }
 
             // Drought
-            EffectDatabase.AbilityEff.AbilityEffect drought_ = abilityData.GetEffectNew(AbilityEffectType.Drought);
+            Effects.AbilityEff.AbilityEffect drought_ = abilityData.GetEffectNew(AbilityEffectType.Drought);
             if (drought_ != null)
             {
                 yield return StartCoroutine(PBPRunAbilityEffect(
@@ -18355,7 +18355,7 @@ public class BTLManager : MonoBehaviour
             }
 
             // Intimidate
-            List<EffectDatabase.AbilityEff.AbilityEffect> intimidate_ = abilityData.GetEffectsNew(AbilityEffectType.Intimidate);
+            List<Effects.AbilityEff.AbilityEffect> intimidate_ = abilityData.GetEffectsNew(AbilityEffectType.Intimidate);
             opposingPokemon = battle.GetOpposingPokemon(pokemon);
             if (opposingPokemon.Count > 0 && intimidate_.Count > 0)
             {
@@ -18373,12 +18373,12 @@ public class BTLManager : MonoBehaviour
                     // Intimidate Block
                     for (int k = 0; k < oppAbilities.Count && affectedByIntimidate; k++)
                     {
-                        EffectDatabase.AbilityEff.AbilityEffect intimidateBlock_ =
+                        Effects.AbilityEff.AbilityEffect intimidateBlock_ =
                             oppAbilities[k].data.GetEffectNew(AbilityEffectType.IntimidateBlock);
                         if (intimidateBlock_ != null)
                         {
-                            EffectDatabase.AbilityEff.IntimidateBlock intimidateBlock =
-                                intimidateBlock_ as EffectDatabase.AbilityEff.IntimidateBlock;
+                            Effects.AbilityEff.IntimidateBlock intimidateBlock =
+                                intimidateBlock_ as Effects.AbilityEff.IntimidateBlock;
                             if (intimidateBlock.abilitiesBlocked.Contains(abilityData.ID))
                             {
                                 affectedByIntimidate = false;
@@ -18401,8 +18401,8 @@ public class BTLManager : MonoBehaviour
                     {
                         for (int k = 0; k < intimidate_.Count; k++)
                         {
-                            EffectDatabase.AbilityEff.Intimidate intimidate = 
-                                intimidate_[k] as EffectDatabase.AbilityEff.Intimidate;
+                            Effects.AbilityEff.Intimidate intimidate = 
+                                intimidate_[k] as Effects.AbilityEff.Intimidate;
                             yield return StartCoroutine(ApplyStatStageMod(
                                 statStageMod: intimidate.statStageMod,
                                 targetPokemon: opposingPokemon[k],
@@ -18415,12 +18415,12 @@ public class BTLManager : MonoBehaviour
                         // Rattled
                         for  (int k = 0; k < oppAbilities.Count; k++)
                         {
-                            EffectDatabase.AbilityEff.AbilityEffect intimidateTrigger_ =
+                            Effects.AbilityEff.AbilityEffect intimidateTrigger_ =
                                 oppAbilities[k].data.GetEffectNew(AbilityEffectType.IntimidateTrigger);
                             if (intimidateTrigger_ != null)
                             {
-                                EffectDatabase.AbilityEff.IntimidateTrigger intimidateTrigger =
-                                    intimidateTrigger_ as EffectDatabase.AbilityEff.IntimidateTrigger;
+                                Effects.AbilityEff.IntimidateTrigger intimidateTrigger =
+                                    intimidateTrigger_ as Effects.AbilityEff.IntimidateTrigger;
                                 bool isTriggered = false;
 
                                 if (intimidateTrigger.abilityTriggers.Contains(abilityData.ID))
@@ -18445,7 +18445,7 @@ public class BTLManager : MonoBehaviour
             }
             
             // Intrepid Sword / Dauntless Shield
-            List<EffectDatabase.AbilityEff.AbilityEffect> intrepidSword_ = abilityData.GetEffectsNew(AbilityEffectType.IntrepidSword);
+            List<Effects.AbilityEff.AbilityEffect> intrepidSword_ = abilityData.GetEffectsNew(AbilityEffectType.IntrepidSword);
             for (int i = 0; i < intrepidSword_.Count; i++)
             {
                 yield return StartCoroutine(PBPRunAbilityEffect(
@@ -18457,12 +18457,12 @@ public class BTLManager : MonoBehaviour
             }
 
             // Limber
-            List<EffectDatabase.AbilityEff.AbilityEffect> limber_ = ability.data.GetEffectsNew(AbilityEffectType.Limber);
+            List<Effects.AbilityEff.AbilityEffect> limber_ = ability.data.GetEffectsNew(AbilityEffectType.Limber);
             if (limber_.Count > 0)
             {
                 for (int i = 0; i < limber_.Count; i++)
                 {
-                    EffectDatabase.AbilityEff.Limber limber = limber_[i] as EffectDatabase.AbilityEff.Limber;
+                    Effects.AbilityEff.Limber limber = limber_[i] as Effects.AbilityEff.Limber;
                     List<PBS.Main.Pokemon.Pokemon> pokemonToHeal = new List<PBS.Main.Pokemon.Pokemon>();
                     if (limber.healSelf)
                     {
@@ -18539,7 +18539,7 @@ public class BTLManager : MonoBehaviour
             }
 
             // Mold Breaker
-            EffectDatabase.AbilityEff.AbilityEffect moldBreaker_ = ability.data.GetEffectNew(AbilityEffectType.MoldBreaker);
+            Effects.AbilityEff.AbilityEffect moldBreaker_ = ability.data.GetEffectNew(AbilityEffectType.MoldBreaker);
             if (moldBreaker_ != null)
             {
                 yield return StartCoroutine(PBPRunAbilityEffect(
@@ -18551,7 +18551,7 @@ public class BTLManager : MonoBehaviour
             }
 
             // Pressure
-            EffectDatabase.AbilityEff.AbilityEffect pressure_ = ability.data.GetEffectNew(AbilityEffectType.Pressure);
+            Effects.AbilityEff.AbilityEffect pressure_ = ability.data.GetEffectNew(AbilityEffectType.Pressure);
             if (pressure_ != null)
             {
                 yield return StartCoroutine(PBPRunAbilityEffect(
@@ -18563,7 +18563,7 @@ public class BTLManager : MonoBehaviour
             }
 
             // Neutralizing Gas
-            EffectDatabase.AbilityEff.AbilityEffect neutralizingGas_ = ability.data.GetEffectNew(AbilityEffectType.NeutralizingGas);
+            Effects.AbilityEff.AbilityEffect neutralizingGas_ = ability.data.GetEffectNew(AbilityEffectType.NeutralizingGas);
             if (moldBreaker_ != null)
             {
                 yield return StartCoroutine(PBPRunAbilityEffect(
@@ -18575,7 +18575,7 @@ public class BTLManager : MonoBehaviour
             }
 
             // Screen Cleaner
-            EffectDatabase.AbilityEff.AbilityEffect screenCleaner_ = ability.data.GetEffectNew(AbilityEffectType.ScreenCleaner);
+            Effects.AbilityEff.AbilityEffect screenCleaner_ = ability.data.GetEffectNew(AbilityEffectType.ScreenCleaner);
             if (screenCleaner_ != null)
             {
                 yield return StartCoroutine(PBPRunAbilityEffect(
@@ -18587,10 +18587,10 @@ public class BTLManager : MonoBehaviour
             }
 
             // Slow Start
-            EffectDatabase.AbilityEff.AbilityEffect slowStart_ = ability.data.GetEffectNew(AbilityEffectType.SlowStart);
+            Effects.AbilityEff.AbilityEffect slowStart_ = ability.data.GetEffectNew(AbilityEffectType.SlowStart);
             if (slowStart_ != null)
             {
-                EffectDatabase.AbilityEff.SlowStart slowStart = slowStart_ as EffectDatabase.AbilityEff.SlowStart;
+                Effects.AbilityEff.SlowStart slowStart = slowStart_ as Effects.AbilityEff.SlowStart;
                 if (ability.turnsActive <= slowStart.turnsActive)
                 {
                     yield return StartCoroutine(PBPRunAbilityEffect(
@@ -18603,7 +18603,7 @@ public class BTLManager : MonoBehaviour
             }
 
             // Trace
-            EffectDatabase.AbilityEff.AbilityEffect trace_ = ability.data.GetEffectNew(AbilityEffectType.Trace);
+            Effects.AbilityEff.AbilityEffect trace_ = ability.data.GetEffectNew(AbilityEffectType.Trace);
             if (trace_ != null)
             {
                 yield return StartCoroutine(PBPRunAbilityEffect(
@@ -18615,7 +18615,7 @@ public class BTLManager : MonoBehaviour
             }
 
             // Zen Mode
-            List<EffectDatabase.AbilityEff.AbilityEffect> zenMode_ = ability.data.GetEffectsNew(AbilityEffectType.ZenMode);
+            List<Effects.AbilityEff.AbilityEffect> zenMode_ = ability.data.GetEffectsNew(AbilityEffectType.ZenMode);
             if (zenMode_.Count > 0)
             {
                 bool changedForm = false;
@@ -18653,10 +18653,10 @@ public class BTLManager : MonoBehaviour
             bool abilityShown = false;
 
             // Bad Dreams
-            EffectDatabase.AbilityEff.AbilityEffect badDreams_ = abilityData.GetEffectNew(AbilityEffectType.BadDreams);
+            Effects.AbilityEff.AbilityEffect badDreams_ = abilityData.GetEffectNew(AbilityEffectType.BadDreams);
             if (badDreams_ != null)
             {
-                EffectDatabase.AbilityEff.BadDreams badDreams = badDreams_ as EffectDatabase.AbilityEff.BadDreams;
+                Effects.AbilityEff.BadDreams badDreams = badDreams_ as Effects.AbilityEff.BadDreams;
 
                 List<PBS.Main.Pokemon.Pokemon> opposingPokemon = battle.GetOpposingPokemon(pokemon);
                 for (int k = 0; k < opposingPokemon.Count; k++)
@@ -18718,12 +18718,12 @@ public class BTLManager : MonoBehaviour
             }
 
             // Ball Fetch
-            EffectDatabase.AbilityEff.AbilityEffect ballFetch_ = abilityData.GetEffectNew(AbilityEffectType.BallFetch);
+            Effects.AbilityEff.AbilityEffect ballFetch_ = abilityData.GetEffectNew(AbilityEffectType.BallFetch);
             if (ballFetch_ != null)
             {
                 Trainer trainer = battle.GetPokemonOwner(pokemon);
 
-                EffectDatabase.AbilityEff.BallFetch ballFetch = ballFetch_ as EffectDatabase.AbilityEff.BallFetch;
+                Effects.AbilityEff.BallFetch ballFetch = ballFetch_ as Effects.AbilityEff.BallFetch;
                 if (battle.PBPGetHeldItem(pokemon) != null
                     && !trainer.bProps.usedBallFetch
                     && trainer.bProps.failedPokeball != null)
@@ -18747,10 +18747,10 @@ public class BTLManager : MonoBehaviour
             }
 
             // Dry Skin
-            EffectDatabase.AbilityEff.AbilityEffect drySkin_ = abilityData.GetEffectNew(AbilityEffectType.DrySkin);
+            Effects.AbilityEff.AbilityEffect drySkin_ = abilityData.GetEffectNew(AbilityEffectType.DrySkin);
             if (drySkin_ != null)
             {
-                EffectDatabase.AbilityEff.DrySkin drySkin = drySkin_ as EffectDatabase.AbilityEff.DrySkin;
+                Effects.AbilityEff.DrySkin drySkin = drySkin_ as Effects.AbilityEff.DrySkin;
                 if (battle.DoEffectFiltersPass(
                     filters: drySkin.filters,
                     targetPokemon: pokemon
@@ -18758,7 +18758,7 @@ public class BTLManager : MonoBehaviour
                 {
                     for (int i = 0; i < drySkin.conditions.Count; i++)
                     {
-                        EffectDatabase.AbilityEff.DrySkin.DrySkinCondition drySkinCondition =
+                        Effects.AbilityEff.DrySkin.DrySkinCondition drySkinCondition =
                             drySkin.conditions[i];
                         bool activated = false;
 
@@ -18807,7 +18807,7 @@ public class BTLManager : MonoBehaviour
             }
 
             // Harvest
-            List<EffectDatabase.AbilityEff.AbilityEffect> harvest_ = abilityData.GetEffectsNew(AbilityEffectType.Harvest);
+            List<Effects.AbilityEff.AbilityEffect> harvest_ = abilityData.GetEffectsNew(AbilityEffectType.Harvest);
             if (harvest_.Count > 0
                 && pokemon.bProps.consumedItem != null)
             {
@@ -18816,7 +18816,7 @@ public class BTLManager : MonoBehaviour
 
                 for (int i = 0; i < harvest_.Count && !isItemHarvested; i++)
                 {
-                    EffectDatabase.AbilityEff.Harvest harvest = harvest_[i] as EffectDatabase.AbilityEff.Harvest;
+                    Effects.AbilityEff.Harvest harvest = harvest_[i] as Effects.AbilityEff.Harvest;
                     if (battle.DoEffectFiltersPass(
                         filters: harvest.filters,
                         targetPokemon: pokemon
@@ -18859,10 +18859,10 @@ public class BTLManager : MonoBehaviour
             }
 
             // Pickup
-            EffectDatabase.AbilityEff.AbilityEffect pickup_ = abilityData.GetEffectNew(AbilityEffectType.Pickup);
+            Effects.AbilityEff.AbilityEffect pickup_ = abilityData.GetEffectNew(AbilityEffectType.Pickup);
             if (pickup_ != null)
             {
-                EffectDatabase.AbilityEff.Pickup pickup = pickup_ as EffectDatabase.AbilityEff.Pickup;
+                Effects.AbilityEff.Pickup pickup = pickup_ as Effects.AbilityEff.Pickup;
                 if (battle.DoEffectFiltersPass(
                     filters: pickup.filters,
                     userPokemon: pokemon
@@ -18888,7 +18888,7 @@ public class BTLManager : MonoBehaviour
             }
 
             // Poison Heal
-            List<EffectDatabase.AbilityEff.AbilityEffect> poisonHeal_ = ability.data.GetEffectsNew(AbilityEffectType.PoisonHeal);
+            List<Effects.AbilityEff.AbilityEffect> poisonHeal_ = ability.data.GetEffectsNew(AbilityEffectType.PoisonHeal);
             if (poisonHeal_.Count > 0)
             {
                 for (int i = 0; i < poisonHeal_.Count; i++)
@@ -18903,12 +18903,12 @@ public class BTLManager : MonoBehaviour
             }
 
             // Hydration
-            List<EffectDatabase.AbilityEff.AbilityEffect> hydration_ = abilityData.GetEffectsNew(AbilityEffectType.Hydration);
+            List<Effects.AbilityEff.AbilityEffect> hydration_ = abilityData.GetEffectsNew(AbilityEffectType.Hydration);
             if (hydration_.Count > 0)
             {
                 for (int i = 0; i < hydration_.Count; i++)
                 {
-                    EffectDatabase.AbilityEff.Hydration hydration = hydration_[i] as EffectDatabase.AbilityEff.Hydration;
+                    Effects.AbilityEff.Hydration hydration = hydration_[i] as Effects.AbilityEff.Hydration;
                     List<PBS.Main.Pokemon.Pokemon> pokemonToHeal = new List<PBS.Main.Pokemon.Pokemon>();
                     if (hydration.healSelf)
                     {
@@ -18993,16 +18993,16 @@ public class BTLManager : MonoBehaviour
             }
 
             // Hunger Switch
-            List<EffectDatabase.AbilityEff.AbilityEffect> hungerSwitch_ =
+            List<Effects.AbilityEff.AbilityEffect> hungerSwitch_ =
                 abilityData.GetEffectsNew(AbilityEffectType.HungerSwitch);
             if (hungerSwitch_.Count > 0)
             {
                 bool changedForm = false;
                 for (int k = 0; k < hungerSwitch_.Count && !changedForm; k++)
                 {
-                    EffectDatabase.AbilityEff.HungerSwitch hungerSwitch =
-                        hungerSwitch_[k] as EffectDatabase.AbilityEff.HungerSwitch;
-                    if (hungerSwitch.mode == EffectDatabase.AbilityEff.HungerSwitch.ChangeMode.Alternating)
+                    Effects.AbilityEff.HungerSwitch hungerSwitch =
+                        hungerSwitch_[k] as Effects.AbilityEff.HungerSwitch;
+                    if (hungerSwitch.mode == Effects.AbilityEff.HungerSwitch.ChangeMode.Alternating)
                     {
                         bool willChangeForm = false;
                         string toForm = null;
@@ -19033,7 +19033,7 @@ public class BTLManager : MonoBehaviour
                             changedForm = true;
                         }
                     }
-                    else if (hungerSwitch.mode == EffectDatabase.AbilityEff.HungerSwitch.ChangeMode.Consecutive)
+                    else if (hungerSwitch.mode == Effects.AbilityEff.HungerSwitch.ChangeMode.Consecutive)
                     {
                         if (battle.PBPIsPokemonOfForm(pokemon, hungerSwitch.pokemonID1))
                         {
@@ -19055,7 +19055,7 @@ public class BTLManager : MonoBehaviour
             }
 
             // Zen Mode
-            List<EffectDatabase.AbilityEff.AbilityEffect> zenMode_ = ability.data.GetEffectsNew(AbilityEffectType.ZenMode);
+            List<Effects.AbilityEff.AbilityEffect> zenMode_ = ability.data.GetEffectsNew(AbilityEffectType.ZenMode);
             if (zenMode_.Count > 0)
             {
                 bool changedForm = false;
@@ -19074,7 +19074,7 @@ public class BTLManager : MonoBehaviour
             }
 
             // Speed Boost
-            EffectDatabase.AbilityEff.AbilityEffect speedBoost_ =
+            Effects.AbilityEff.AbilityEffect speedBoost_ =
                 ability.data.GetEffectNew(AbilityEffectType.SpeedBoost);
             if (speedBoost_ != null)
             {
@@ -19087,7 +19087,7 @@ public class BTLManager : MonoBehaviour
             }
 
             // Moody
-            EffectDatabase.AbilityEff.AbilityEffect moody_ =
+            Effects.AbilityEff.AbilityEffect moody_ =
                 ability.data.GetEffectNew(AbilityEffectType.Moody);
             if (moody_ != null)
             {
@@ -19106,7 +19106,7 @@ public class BTLManager : MonoBehaviour
     public IEnumerator PBPRunAbilityEffect(
         PBS.Main.Pokemon.Pokemon pokemon,
         Ability ability,
-        EffectDatabase.AbilityEff.AbilityEffect effect_,
+        Effects.AbilityEff.AbilityEffect effect_,
         System.Action<bool> callback,
         bool apply = true
         )
@@ -19114,9 +19114,9 @@ public class BTLManager : MonoBehaviour
         bool success = false;
 
         // Aura Break
-        if (effect_ is EffectDatabase.AbilityEff.AuraBreak)
+        if (effect_ is Effects.AbilityEff.AuraBreak)
         {
-            EffectDatabase.AbilityEff.AuraBreak auraBreak = effect_ as EffectDatabase.AbilityEff.AuraBreak;
+            Effects.AbilityEff.AuraBreak auraBreak = effect_ as Effects.AbilityEff.AuraBreak;
             success = true;
             if (apply)
             {
@@ -19130,9 +19130,9 @@ public class BTLManager : MonoBehaviour
         }
 
         // Drought / Drizzle / Delta Stream / etc.
-        else if (effect_ is EffectDatabase.AbilityEff.Drought)
+        else if (effect_ is Effects.AbilityEff.Drought)
         {
-            EffectDatabase.AbilityEff.Drought drought = effect_ as EffectDatabase.AbilityEff.Drought;
+            Effects.AbilityEff.Drought drought = effect_ as Effects.AbilityEff.Drought;
             if (battle.BBPGetSC(drought.inflictStatus.statusID) == null)
             {
                 if (apply)
@@ -19150,16 +19150,16 @@ public class BTLManager : MonoBehaviour
         }
 
         // Forecast
-        else if (effect_ is EffectDatabase.AbilityEff.Forecast)
+        else if (effect_ is Effects.AbilityEff.Forecast)
         {
             // loop through forecast transformations
             // loop through forecast effects
             bool foundTransformation = false;
-            EffectDatabase.AbilityEff.Forecast forecast = effect_ as EffectDatabase.AbilityEff.Forecast;
+            Effects.AbilityEff.Forecast forecast = effect_ as Effects.AbilityEff.Forecast;
             for (int i = 0; i < forecast.transformations.Count && !foundTransformation; i++)
             {
                 // Check Battle Conditions
-                EffectDatabase.AbilityEff.Forecast.ForecastTransformation curTransformation =
+                Effects.AbilityEff.Forecast.ForecastTransformation curTransformation =
                     forecast.transformations[i];
 
                 // stop searching if we've satisfied Forecast
@@ -19214,9 +19214,9 @@ public class BTLManager : MonoBehaviour
         // Healer
 
         // Gulp Missile
-        else if (effect_ is EffectDatabase.AbilityEff.GulpMissile)
+        else if (effect_ is Effects.AbilityEff.GulpMissile)
         {
-            EffectDatabase.AbilityEff.GulpMissile gulpMissile = effect_ as EffectDatabase.AbilityEff.GulpMissile;
+            Effects.AbilityEff.GulpMissile gulpMissile = effect_ as Effects.AbilityEff.GulpMissile;
             bool changedForm = false;
             for (int i = 0; i < gulpMissile.gulpTransformations.Count && !changedForm; i++)
             {
@@ -19224,9 +19224,9 @@ public class BTLManager : MonoBehaviour
             }
         }
         // Intrepid Sword / Dauntless Shield
-        else if (effect_ is EffectDatabase.AbilityEff.IntrepidSword)
+        else if (effect_ is Effects.AbilityEff.IntrepidSword)
         {
-            EffectDatabase.AbilityEff.IntrepidSword intrepidSword = effect_ as EffectDatabase.AbilityEff.IntrepidSword;
+            Effects.AbilityEff.IntrepidSword intrepidSword = effect_ as Effects.AbilityEff.IntrepidSword;
 
             if (apply)
             {
@@ -19245,15 +19245,15 @@ public class BTLManager : MonoBehaviour
                 ));
         }
         // Mimicry
-        else if (effect_ is EffectDatabase.AbilityEff.Mimicry)
+        else if (effect_ is Effects.AbilityEff.Mimicry)
         {
-            EffectDatabase.AbilityEff.Mimicry mimicry = effect_ as EffectDatabase.AbilityEff.Mimicry;
+            Effects.AbilityEff.Mimicry mimicry = effect_ as Effects.AbilityEff.Mimicry;
             List<string> curTypes = battle.PBPGetTypes(pokemon);
 
             bool foundCondition = false;
             for (int i = 0; i < mimicry.conditions.Count && !foundCondition; i++)
             {
-                EffectDatabase.AbilityEff.Mimicry.MimicryCondition condition = mimicry.conditions[i];
+                Effects.AbilityEff.Mimicry.MimicryCondition condition = mimicry.conditions[i];
                 if (battle.BBPIsActiveFromList(condition.conditions))
                 {
                     foundCondition = true;
@@ -19298,9 +19298,9 @@ public class BTLManager : MonoBehaviour
             }
         }
         // Mold Breaker
-        else if (effect_ is EffectDatabase.AbilityEff.MoldBreaker)
+        else if (effect_ is Effects.AbilityEff.MoldBreaker)
         {
-            EffectDatabase.AbilityEff.MoldBreaker moldBreaker = effect_ as EffectDatabase.AbilityEff.MoldBreaker;
+            Effects.AbilityEff.MoldBreaker moldBreaker = effect_ as Effects.AbilityEff.MoldBreaker;
             success = true;
             if (apply)
             {
@@ -19313,16 +19313,16 @@ public class BTLManager : MonoBehaviour
             }
         }
         // Moody
-        else if (effect_ is EffectDatabase.AbilityEff.Moody)
+        else if (effect_ is Effects.AbilityEff.Moody)
         {
-            EffectDatabase.AbilityEff.Moody moody = effect_ as EffectDatabase.AbilityEff.Moody;
+            Effects.AbilityEff.Moody moody = effect_ as Effects.AbilityEff.Moody;
             if (apply)
             {
                 PBPShowAbility(pokemon, ability);
             }
             if (moody.statStageMods1 != null)
             {
-                EffectDatabase.General.StatStageMod statStageMod1 =
+                Effects.General.StatStageMod statStageMod1 =
                     moody.statStageMods1[Random.Range(0, moody.statStageMods1.Count)];
                 yield return StartCoroutine(ApplyStatStageMod(
                     targetPokemon: pokemon,
@@ -19340,7 +19340,7 @@ public class BTLManager : MonoBehaviour
             }
             if (moody.statStageMods2 != null)
             {
-                EffectDatabase.General.StatStageMod statStageMod2 =
+                Effects.General.StatStageMod statStageMod2 =
                     moody.statStageMods2[Random.Range(0, moody.statStageMods2.Count)];
                 yield return StartCoroutine(ApplyStatStageMod(
                     targetPokemon: pokemon,
@@ -19352,10 +19352,10 @@ public class BTLManager : MonoBehaviour
             }
         }
         // Neutralizing Gas
-        else if (effect_ is EffectDatabase.AbilityEff.NeutralizingGas)
+        else if (effect_ is Effects.AbilityEff.NeutralizingGas)
         {
-            EffectDatabase.AbilityEff.NeutralizingGas neutralizingGas = 
-                effect_ as EffectDatabase.AbilityEff.NeutralizingGas;
+            Effects.AbilityEff.NeutralizingGas neutralizingGas = 
+                effect_ as Effects.AbilityEff.NeutralizingGas;
             success = true;
             if (apply)
             {
@@ -19368,9 +19368,9 @@ public class BTLManager : MonoBehaviour
             }
         }
         // Poison Heal
-        else if (effect_ is EffectDatabase.AbilityEff.PoisonHeal)
+        else if (effect_ is Effects.AbilityEff.PoisonHeal)
         {
-            EffectDatabase.AbilityEff.PoisonHeal poisonHeal = effect_ as EffectDatabase.AbilityEff.PoisonHeal;
+            Effects.AbilityEff.PoisonHeal poisonHeal = effect_ as Effects.AbilityEff.PoisonHeal;
             bool applyHeal = false;
             if (battle.DoEffectFiltersPass(
                 filters: poisonHeal.filters,
@@ -19379,12 +19379,12 @@ public class BTLManager : MonoBehaviour
             {
                 for (int i = 0; i < poisonHeal.conditions.Count && applyHeal; i++)
                 {
-                    EffectDatabase.AbilityEff.PoisonHeal.HealCondition healCond = poisonHeal.conditions[i];
+                    Effects.AbilityEff.PoisonHeal.HealCondition healCond = poisonHeal.conditions[i];
                     if (healCond.heal != null)
                     {
                         for (int k = 0; k < healCond.conditions.Count && applyHeal; k++)
                         {
-                            EffectDatabase.Filter.Harvest curCond = healCond.conditions[k];
+                            Effects.Filter.Harvest curCond = healCond.conditions[k];
                             if (battle.PBPGetSCs(pokemon, curCond).Count > 0)
                             {
                                 applyHeal = true;
@@ -19412,9 +19412,9 @@ public class BTLManager : MonoBehaviour
             }
         }
         // Pressure
-        else if (effect_ is EffectDatabase.AbilityEff.Pressure)
+        else if (effect_ is Effects.AbilityEff.Pressure)
         {
-            EffectDatabase.AbilityEff.Pressure pressure = effect_ as EffectDatabase.AbilityEff.Pressure;
+            Effects.AbilityEff.Pressure pressure = effect_ as Effects.AbilityEff.Pressure;
             success = true;
             if (apply)
             {
@@ -19427,9 +19427,9 @@ public class BTLManager : MonoBehaviour
             }
         }
         // Screen Cleaner
-        else if (effect_ is EffectDatabase.AbilityEff.ScreenCleaner)
+        else if (effect_ is Effects.AbilityEff.ScreenCleaner)
         {
-            EffectDatabase.AbilityEff.ScreenCleaner screenCleaner = effect_ as EffectDatabase.AbilityEff.ScreenCleaner;
+            Effects.AbilityEff.ScreenCleaner screenCleaner = effect_ as Effects.AbilityEff.ScreenCleaner;
 
             bool showAbility = true;
             // Ally screens
@@ -19439,11 +19439,11 @@ public class BTLManager : MonoBehaviour
                 List<TeamCondition> conditions = new List<TeamCondition>(team.bProps.lightScreens);
                 for (int i = 0; i < conditions.Count; i++)
                 {
-                    EffectDatabase.StatusTEEff.TeamSE lightScreen_ = conditions[i].data.GetEffectNew(TeamSEType.LightScreen);
+                    Effects.StatusTEEff.TeamSE lightScreen_ = conditions[i].data.GetEffectNew(TeamSEType.LightScreen);
                     if (lightScreen_ != null)
                     {
-                        EffectDatabase.StatusTEEff.LightScreen lightScreen =
-                            lightScreen_ as EffectDatabase.StatusTEEff.LightScreen;
+                        Effects.StatusTEEff.LightScreen lightScreen =
+                            lightScreen_ as Effects.StatusTEEff.LightScreen;
                         if (lightScreen.canBeScreenCleaned)
                         {
                             success = true;
@@ -19470,11 +19470,11 @@ public class BTLManager : MonoBehaviour
                 List<TeamCondition> conditions = new List<TeamCondition>(team.bProps.lightScreens);
                 for (int i = 0; i < conditions.Count; i++)
                 {
-                    EffectDatabase.StatusTEEff.TeamSE lightScreen_ = conditions[i].data.GetEffectNew(TeamSEType.LightScreen);
+                    Effects.StatusTEEff.TeamSE lightScreen_ = conditions[i].data.GetEffectNew(TeamSEType.LightScreen);
                     if (lightScreen_ != null)
                     {
-                        EffectDatabase.StatusTEEff.LightScreen lightScreen =
-                            lightScreen_ as EffectDatabase.StatusTEEff.LightScreen;
+                        Effects.StatusTEEff.LightScreen lightScreen =
+                            lightScreen_ as Effects.StatusTEEff.LightScreen;
                         if (lightScreen.canBeScreenCleaned)
                         {
                             success = true;
@@ -19495,9 +19495,9 @@ public class BTLManager : MonoBehaviour
             }
         }
         // Slow Start
-        else if (effect_ is EffectDatabase.AbilityEff.SlowStart)
+        else if (effect_ is Effects.AbilityEff.SlowStart)
         {
-            EffectDatabase.AbilityEff.SlowStart slowStart = effect_ as EffectDatabase.AbilityEff.SlowStart;
+            Effects.AbilityEff.SlowStart slowStart = effect_ as Effects.AbilityEff.SlowStart;
             success = true;
             if (apply)
             {
@@ -19510,9 +19510,9 @@ public class BTLManager : MonoBehaviour
             }
         }
         // Speed Boost
-        else if (effect_ is EffectDatabase.AbilityEff.SpeedBoost)
+        else if (effect_ is Effects.AbilityEff.SpeedBoost)
         {
-            EffectDatabase.AbilityEff.SpeedBoost speedBoost = effect_ as EffectDatabase.AbilityEff.SpeedBoost;
+            Effects.AbilityEff.SpeedBoost speedBoost = effect_ as Effects.AbilityEff.SpeedBoost;
             if (apply)
             {
                 PBPShowAbility(pokemon, ability);
@@ -19526,9 +19526,9 @@ public class BTLManager : MonoBehaviour
                 ));
         }
         // Steadfast
-        else if (effect_ is EffectDatabase.AbilityEff.Steadfast)
+        else if (effect_ is Effects.AbilityEff.Steadfast)
         {
-            EffectDatabase.AbilityEff.Steadfast steadfast = effect_ as EffectDatabase.AbilityEff.Steadfast;
+            Effects.AbilityEff.Steadfast steadfast = effect_ as Effects.AbilityEff.Steadfast;
             if (apply)
             {
                 PBPShowAbility(pokemon, ability);
@@ -19542,9 +19542,9 @@ public class BTLManager : MonoBehaviour
                 ));
         }
         // Trace
-        else if (effect_ is EffectDatabase.AbilityEff.Trace)
+        else if (effect_ is Effects.AbilityEff.Trace)
         {
-            EffectDatabase.AbilityEff.Trace trace = effect_ as EffectDatabase.AbilityEff.Trace;
+            Effects.AbilityEff.Trace trace = effect_ as Effects.AbilityEff.Trace;
             List<PBS.Main.Pokemon.Pokemon> traceablePokemon = new List<PBS.Main.Pokemon.Pokemon>();
             List<PBS.Main.Pokemon.Pokemon> opposingPokemon = battle.GetOpposingPokemon(pokemon);
             for (int i = 0; i < opposingPokemon.Count; i++)
@@ -19575,9 +19575,9 @@ public class BTLManager : MonoBehaviour
             }
         }
         // Zen Mode
-        else if (effect_ is EffectDatabase.AbilityEff.ZenMode)
+        else if (effect_ is Effects.AbilityEff.ZenMode)
         {
-            EffectDatabase.AbilityEff.ZenMode zenMode = effect_ as EffectDatabase.AbilityEff.ZenMode;
+            Effects.AbilityEff.ZenMode zenMode = effect_ as Effects.AbilityEff.ZenMode;
             if (battle.DoEffectFiltersPass(
                 filters: zenMode.filters,
                 targetPokemon: pokemon
@@ -19795,11 +19795,11 @@ public class BTLManager : MonoBehaviour
         otherPokemon.Remove(tiedPokemon);
 
         // Desolate Land
-        List<EffectDatabase.AbilityEff.AbilityEffect> drought_ 
+        List<Effects.AbilityEff.AbilityEffect> drought_ 
             = battle.PBPGetAbilityEffects(pokemon: tiedPokemon, effectType: AbilityEffectType.Drought);
         for (int i = 0; i < drought_.Count; i++)
         {
-            EffectDatabase.AbilityEff.Drought drought = drought_[i] as EffectDatabase.AbilityEff.Drought;
+            Effects.AbilityEff.Drought drought = drought_[i] as Effects.AbilityEff.Drought;
             if (drought.desolateLand)
             {
                 BattleCondition existingCondition = battle.BBPGetSC(drought.inflictStatus.statusID);
@@ -19812,14 +19812,14 @@ public class BTLManager : MonoBehaviour
                     {
                         if (battle.IsPokemonOnFieldAndAble(otherPokemon[k]))
                         {
-                            List<EffectDatabase.AbilityEff.AbilityEffect> onFieldDrought_ =
+                            List<Effects.AbilityEff.AbilityEffect> onFieldDrought_ =
                                 battle.PBPGetAbilityEffects(
                                     pokemon: otherPokemon[k], 
                                     effectType: AbilityEffectType.Drought);
                             for (int j = 0; j < onFieldDrought_.Count && !otherUserActive; j++)
                             {
-                                EffectDatabase.AbilityEff.Drought onFieldDrought =
-                                    onFieldDrought_[j] as EffectDatabase.AbilityEff.Drought;
+                                Effects.AbilityEff.Drought onFieldDrought =
+                                    onFieldDrought_[j] as Effects.AbilityEff.Drought;
                                 if (onFieldDrought.desolateLand 
                                     && onFieldDrought.inflictStatus.statusID == drought.inflictStatus.statusID)
                                 {
@@ -20090,8 +20090,8 @@ public class BTLManager : MonoBehaviour
                 battle.PBPGetAbilityWithEffect(pokemon: runPokemon, effectType: AbilityEffectType.RunAway);
             if (runAwayAbility != null)
             {
-                EffectDatabase.AbilityEff.RunAway runAway = 
-                    runAwayAbility.data.GetEffectNew(AbilityEffectType.RunAway) as EffectDatabase.AbilityEff.RunAway;
+                Effects.AbilityEff.RunAway runAway = 
+                    runAwayAbility.data.GetEffectNew(AbilityEffectType.RunAway) as Effects.AbilityEff.RunAway;
                 BTLEvent_GameText textEvent = new BTLEvent_GameText();
                 textEvent.SetCloneModel(battle);
                 textEvent.Create(textID: runAway.displayText, userPokemon: runPokemon, abilityID: runAwayAbility.data.ID);

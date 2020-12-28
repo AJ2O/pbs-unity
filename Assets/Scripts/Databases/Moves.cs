@@ -67,9 +67,9 @@ namespace PBS.Databases
                     new MoveEffect(MoveEffectType.Struggle),
                     new MoveEffect(MoveEffectType.TypelessDamage),
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.DoubleEdge(
+                    new Effects.MoveEff.DoubleEdge(
                         hpLossPercent: 0.25f
                         )
                 }
@@ -190,9 +190,9 @@ namespace PBS.Databases
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Feint(),
+                    new Effects.MoveEff.Feint(),
                 }
                 ) },
 
@@ -217,9 +217,9 @@ namespace PBS.Databases
                 targetType: MoveTargetType.Adjacent,
                 basePower: 20, accuracy: 1.0f, PP: 25,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Absorb(),
+                    new Effects.MoveEff.Absorb(),
                 }
                 ) },
 
@@ -383,9 +383,9 @@ namespace PBS.Databases
                         stringParams: new string[] { "move-aromatherapy" }
                         ),
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Refresh(
+                    new Effects.MoveEff.Refresh(
                         statusEffectTypes: new PokemonSEType[] { PokemonSEType.NonVolatile }
                         ),
                 }
@@ -432,10 +432,10 @@ namespace PBS.Databases
                     MoveTag.MagicCoatSusceptible,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "infatuation"
                             ),
@@ -462,25 +462,25 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.AuraWheel(
+                    new Effects.MoveEff.AuraWheel(
                         type: "electric",
                         pokemonIDs: new string[] { "morpeko" }
                         ),
-                    new EffectDatabase.MoveEff.AuraWheel(
+                    new Effects.MoveEff.AuraWheel(
                         type: "dark",
                         pokemonIDs: new string[] { "morpeko-hangry" }
                         ),
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPEMod: 1
                             ),
                         timing: MoveEffectTiming.AfterSuccessfulMoveUse,
                         occurrence: MoveEffectOccurrence.Once,
                         targetType: MoveEffectTargetType.Self
                         ),
-                    new EffectDatabase.MoveEff.FailNotPokemon(
+                    new Effects.MoveEff.FailNotPokemon(
                         pokemonIDs: new string[] { "morpeko", "morpeko-hangry" },
                         allowTransform: true
                         ),
@@ -501,11 +501,11 @@ namespace PBS.Databases
                 {
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
                         chance: 0.1f,
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             ATKMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -538,10 +538,10 @@ namespace PBS.Databases
                         stringParams: new string[] { "hail" }
                         ),
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Team,
                             statusID: "auroraveil"
                             ),
@@ -796,11 +796,11 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FakeOut(),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.FakeOut(),
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "flinch"
                             ),
@@ -952,10 +952,10 @@ namespace PBS.Databases
                 {
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPEMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -1026,10 +1026,10 @@ namespace PBS.Databases
                 targetType: MoveTargetType.AllAdjacentOpponents,
                 basePower: 70, accuracy: 1.0f, PP: 5,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.BurningJealousy(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.BurningJealousy(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "burn"
                             ),
@@ -1148,9 +1148,9 @@ namespace PBS.Databases
                     MoveTag.UncallableByCopycat,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Whirlwind(),
+                    new Effects.MoveEff.Whirlwind(),
                 }
                 ) },
 
@@ -1169,10 +1169,10 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             DEFMod: -1, SPDMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -1199,9 +1199,9 @@ namespace PBS.Databases
                     MoveTag.PunchMove
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FuryAttack(),
+                    new Effects.MoveEff.FuryAttack(),
                 }
                 ) },
 
@@ -1278,9 +1278,9 @@ namespace PBS.Databases
                 {
 
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.CoreEnforcer(),
+                    new Effects.MoveEff.CoreEnforcer(),
                 },
                 ZBasePower: 140
                 ) },
@@ -1299,9 +1299,9 @@ namespace PBS.Databases
                 {
 
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.CorrosiveGas(),
+                    new Effects.MoveEff.CorrosiveGas(),
                 }
                 ) },
 
@@ -1351,9 +1351,9 @@ namespace PBS.Databases
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Covet(),
+                    new Effects.MoveEff.Covet(),
                 }
                 ) },
 
@@ -1425,10 +1425,10 @@ namespace PBS.Databases
                     MoveTag.Snatchable,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             DEFMod: 1
                             ),
                         timing: MoveEffectTiming.AfterSuccessfulMoveUse,
@@ -1436,8 +1436,8 @@ namespace PBS.Databases
                         targetType: MoveEffectTargetType.Target,
                         forceEffectDisplay: true
                         ),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "defensecurl"
                             ),
@@ -1495,10 +1495,10 @@ namespace PBS.Databases
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Protect(
-                        protect: new EffectDatabase.General.Protect()
+                    new Effects.MoveEff.Protect(
+                        protect: new Effects.General.Protect()
                         ),
                 }
                 ) },
@@ -1518,10 +1518,10 @@ namespace PBS.Databases
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             DEFMod: 2
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -1578,10 +1578,10 @@ namespace PBS.Databases
                     MoveTag.MagicCoatSusceptible,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "disable"
                             ),
@@ -1665,9 +1665,9 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.DoubleEdge(
+                    new Effects.MoveEff.DoubleEdge(
                         hpLossPercent: 1f/3
                         )
                 }
@@ -1689,9 +1689,9 @@ namespace PBS.Databases
                 },
 
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.DoubleKick(),
+                    new Effects.MoveEff.DoubleKick(),
                 }
                 ) },
 
@@ -1711,9 +1711,9 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FuryAttack(),
+                    new Effects.MoveEff.FuryAttack(),
                 }
                 ) },
 
@@ -1734,10 +1734,10 @@ namespace PBS.Databases
                     MoveTag.Snatchable,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             ATKMod: 1, SPEMod: 1
                             ),
                         timing: MoveEffectTiming.AfterSuccessfulMoveUse,
@@ -1763,9 +1763,9 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.DragonRage(damage: 40),
+                    new Effects.MoveEff.DragonRage(damage: 40),
                 }
                 ) },
 
@@ -1786,9 +1786,9 @@ namespace PBS.Databases
                     MoveTag.UncallableByCopycat,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Whirlwind(),
+                    new Effects.MoveEff.Whirlwind(),
                 }
                 ) },
 
@@ -1850,10 +1850,10 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "electricterrain"
                             ),
@@ -1880,10 +1880,10 @@ namespace PBS.Databases
                     MoveTag.MagicCoatSusceptible,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "embargo"
                             ),
@@ -1934,10 +1934,10 @@ namespace PBS.Databases
                     MoveTag.MagicCoatSusceptible,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "encore"
                             ),
@@ -1987,9 +1987,9 @@ namespace PBS.Databases
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Endure(),
+                    new Effects.MoveEff.Endure(),
                 }
                 ) },
 
@@ -2008,11 +2008,11 @@ namespace PBS.Databases
                     MoveTag.BallMove,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
                         chance: 0.1f,
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPDMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -2032,13 +2032,13 @@ namespace PBS.Databases
                 targetType: MoveTargetType.Adjacent,
                 basePower: 80, accuracy: 1.0f, PP: 20,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.ExpandingForce(
+                    new Effects.MoveEff.ExpandingForce(
                         newTargetType: MoveTargetType.AllAdjacentOpponents,
                         conditions: new string[] { "psychicterrain" }
                         ),
-                    new EffectDatabase.MoveEff.ExpandingForcePower(
+                    new Effects.MoveEff.ExpandingForcePower(
                         damageScale: 1.5f,
                         conditions: new string[] { "psychicterrain" }
                         ),
@@ -2087,11 +2087,11 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FakeOut(),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.FakeOut(),
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "flinch"
                             ),
@@ -2142,9 +2142,9 @@ namespace PBS.Databases
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Feint(),
+                    new Effects.MoveEff.Feint(),
                 }
                 ) },
 
@@ -2164,10 +2164,10 @@ namespace PBS.Databases
                     MoveTag.PunchMove
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "burn"
                             ),
@@ -2223,9 +2223,9 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FakeOut(),
+                    new Effects.MoveEff.FakeOut(),
                 }
                 ) },
 
@@ -2239,10 +2239,10 @@ namespace PBS.Databases
                 targetType: MoveTargetType.Adjacent,
                 basePower: 90, accuracy: 1.0f, PP: 15,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "burn"
                             ),
@@ -2438,10 +2438,10 @@ namespace PBS.Databases
                     MoveTag.MagicCoatSusceptible
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "identification"
                             ),
@@ -2555,9 +2555,9 @@ namespace PBS.Databases
                 {
                     MoveTag.MakesContact,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StormThrow(),
+                    new Effects.MoveEff.StormThrow(),
                 }
                 ) },
 
@@ -2576,9 +2576,9 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FuryAttack(),
+                    new Effects.MoveEff.FuryAttack(),
                 }
                 ) },
 
@@ -2625,9 +2625,9 @@ namespace PBS.Databases
                 {
                     MoveTag.MagicCoatSusceptible,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.CoreEnforcer(),
+                    new Effects.MoveEff.CoreEnforcer(),
                 }
                 ) },
 
@@ -2673,9 +2673,9 @@ namespace PBS.Databases
                 targetType: MoveTargetType.Adjacent,
                 basePower: 75, accuracy: 1.0f, PP: 10,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Absorb(),
+                    new Effects.MoveEff.Absorb(),
                 }
                 ) },
 
@@ -2695,9 +2695,9 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.LowKick(),
+                    new Effects.MoveEff.LowKick(),
                 }
                 ) },
 
@@ -2711,10 +2711,10 @@ namespace PBS.Databases
                 targetType: MoveTargetType.Adjacent,
                 basePower: 70, accuracy: 1.0f, PP: 20,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.GrassyGlide(
-                        mode: EffectDatabase.MoveEff.GrassyGlide.PriorityMode.Add, priority: 1,
+                    new Effects.MoveEff.GrassyGlide(
+                        mode: Effects.MoveEff.GrassyGlide.PriorityMode.Add, priority: 1,
                         conditions: new string[] { "grassyterrain" }
                         ),
                 }
@@ -2735,10 +2735,10 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "grassyterrain"
                             ),
@@ -2796,10 +2796,10 @@ namespace PBS.Databases
                     MoveTag.SoundMove,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             ATKMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -3025,11 +3025,11 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FakeOut(),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.FakeOut(),
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "flinch"
                             ),
@@ -3071,9 +3071,9 @@ namespace PBS.Databases
                         stringParams: new string[] { "move-healbell" }
                         ),
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Refresh(
+                    new Effects.MoveEff.Refresh(
                         statusEffectTypes: new PokemonSEType[] { PokemonSEType.NonVolatile }
                         ),
                 }
@@ -3094,10 +3094,10 @@ namespace PBS.Databases
                     MoveTag.MagicCoatSusceptible,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "healblock"
                             ),
@@ -3220,9 +3220,9 @@ namespace PBS.Databases
                         ),
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.HeavySlam(),
+                    new Effects.MoveEff.HeavySlam(),
                 }
                 ) },
 
@@ -3250,9 +3250,9 @@ namespace PBS.Databases
                         ),
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.HeavySlam(),
+                    new Effects.MoveEff.HeavySlam(),
                 }
                 ) },
 
@@ -3321,9 +3321,9 @@ namespace PBS.Databases
                 {
 
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.HiddenPower(),
+                    new Effects.MoveEff.HiddenPower(),
                 }
                 ) },
 
@@ -3495,12 +3495,12 @@ namespace PBS.Databases
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Feint(),
-                    new EffectDatabase.MoveEff.FailNotPokemon(pokemonIDs: new string[] { "hoopa-unbound" }),
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.Feint(),
+                    new Effects.MoveEff.FailNotPokemon(pokemonIDs: new string[] { "hoopa-unbound" }),
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             DEFMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -3529,9 +3529,9 @@ namespace PBS.Databases
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Feint(),
+                    new Effects.MoveEff.Feint(),
                 }
                 ) },
 
@@ -3553,9 +3553,9 @@ namespace PBS.Databases
                     MoveTag.RollingMove,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Rollout(),
+                    new Effects.MoveEff.Rollout(),
                 }
                 ) },
 
@@ -3574,10 +3574,10 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "freeze"
                             ),
@@ -3669,10 +3669,10 @@ namespace PBS.Databases
                     MoveTag.Snatchable
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "imprison"
                             ),
@@ -3774,10 +3774,10 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "iondeluge"
                             ),
@@ -3807,9 +3807,9 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Judgment(),
+                    new Effects.MoveEff.Judgment(),
                 }
                 ) },
 
@@ -3859,9 +3859,9 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.KarateChop(),
+                    new Effects.MoveEff.KarateChop(),
                 }
                 ) },
 
@@ -3915,9 +3915,9 @@ namespace PBS.Databases
                 {
                     MoveTag.MakesContact,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.KnockOff(
+                    new Effects.MoveEff.KnockOff(
                         damageScale: 1.5f
                         ),
                 }
@@ -3940,9 +3940,9 @@ namespace PBS.Databases
                 {
                     MoveTag.MakesContact,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.LashOut(),
+                    new Effects.MoveEff.LashOut(),
                 }
                 ) },
 
@@ -4022,9 +4022,9 @@ namespace PBS.Databases
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.DoubleEdge(
+                    new Effects.MoveEff.DoubleEdge(
                         hpLossPercent: 0.5f
                         )
                 }
@@ -4045,10 +4045,10 @@ namespace PBS.Databases
                     MoveTag.Snatchable,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Team,
                             statusID: "lightscreen"
                             ),
@@ -4075,10 +4075,10 @@ namespace PBS.Databases
                     MoveTag.MakesContact
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             DEFMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -4132,9 +4132,9 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.LowKick(),
+                    new Effects.MoveEff.LowKick(),
                 },
 
                 MaxPower: 100
@@ -4233,13 +4233,13 @@ namespace PBS.Databases
                         stringParams: new string[] { "move-magiccoat-magiccoat" }
                         ),
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.MagicCoat(
-                        magicCoat: new EffectDatabase.General.MagicCoat(),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.MoveEff.MagicCoat(
+                        magicCoat: new Effects.General.MagicCoat(),
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.MagicCoatSusceptible }
                                 )
                         }
@@ -4319,9 +4319,9 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Magnitude(),
+                    new Effects.MoveEff.Magnitude(),
                 }
                 ) },
 
@@ -4344,12 +4344,12 @@ namespace PBS.Databases
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.MatBlock(
-                        protect: new EffectDatabase.General.Protect()
+                    new Effects.MoveEff.MatBlock(
+                        protect: new Effects.General.Protect()
                         ),
-                    new EffectDatabase.MoveEff.FakeOut(),
+                    new Effects.MoveEff.FakeOut(),
                 }
                 ) },
 
@@ -4389,9 +4389,9 @@ namespace PBS.Databases
                 targetType: MoveTargetType.Adjacent,
                 basePower: 40, accuracy: 1.0f, PP: 15,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Absorb(),
+                    new Effects.MoveEff.Absorb(),
                 },
 
                 ZBasePower: 120
@@ -4679,16 +4679,16 @@ namespace PBS.Databases
                     MoveTag.MagicCoatSusceptible
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "identification",
-                            effectMode: EffectDatabase.General.InflictStatus.EffectMode.Replace,
-                            customPokemonEffects: new EffectDatabase.StatusPKEff.PokemonSE[]
+                            effectMode: Effects.General.InflictStatus.EffectMode.Replace,
+                            customPokemonEffects: new Effects.StatusPKEff.PokemonSE[]
                             {
-                                new EffectDatabase.StatusPKEff.Identification(
+                                new Effects.StatusPKEff.Identification(
                                     types: new string[] { "dark" }
                                     ),
                             }
@@ -4802,10 +4802,10 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "mistyterrain"
                             ),
@@ -4833,9 +4833,9 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.SunsteelStrike(),
+                    new Effects.MoveEff.SunsteelStrike(),
                 }
                 ) },
 
@@ -4857,9 +4857,9 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.NaturalGift(),
+                    new Effects.MoveEff.NaturalGift(),
                 }
                 ) },
 
@@ -4903,9 +4903,9 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.SuperFang(damagePercent: 0.5f),
+                    new Effects.MoveEff.SuperFang(damagePercent: 0.5f),
                 }
                 ) },
 
@@ -4983,10 +4983,10 @@ namespace PBS.Databases
                     MoveTag.MagicCoatSusceptible
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "identification"
                             ),
@@ -5106,11 +5106,11 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FakeOut(),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.FakeOut(),
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "perishsong"
                             ),
@@ -5183,9 +5183,9 @@ namespace PBS.Databases
                     new MoveEffect(MoveEffectType.MultiTurnShadowForce),
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Feint(),
+                    new Effects.MoveEff.Feint(),
                 }
                 ) },
 
@@ -5204,10 +5204,10 @@ namespace PBS.Databases
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.PhotonGeyser(),
-                    new EffectDatabase.MoveEff.SunsteelStrike(),
+                    new Effects.MoveEff.PhotonGeyser(),
+                    new Effects.MoveEff.SunsteelStrike(),
                 }
                 ) },
 
@@ -5226,9 +5226,9 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FuryAttack(),
+                    new Effects.MoveEff.FuryAttack(),
                 }
                 ) },
 
@@ -5430,9 +5430,9 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Poltergeist(),
+                    new Effects.MoveEff.Poltergeist(),
                 }
                 ) },
 
@@ -5580,9 +5580,9 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StoredPower(),
+                    new Effects.MoveEff.StoredPower(),
                 }
                 ) },
 
@@ -5603,10 +5603,10 @@ namespace PBS.Databases
                     MoveTag.UncallableByCopycat,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Protect(
-                        protect: new EffectDatabase.General.Protect()
+                    new Effects.MoveEff.Protect(
+                        protect: new Effects.General.Protect()
                         ),
                 }
                 ) },
@@ -5650,11 +5650,11 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
                         chance: 0.1f,
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPDMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -5679,10 +5679,10 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "psychicterrain"
                             ),
@@ -5757,9 +5757,9 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Psywave(),
+                    new Effects.MoveEff.Psywave(),
                 }
                 ) },
 
@@ -5778,9 +5778,9 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Punishment(),
+                    new Effects.MoveEff.Punishment(),
                 }
                 ) },
 
@@ -5800,9 +5800,9 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Pursuit(),
+                    new Effects.MoveEff.Pursuit(),
                 }
                 ) },
 
@@ -6091,10 +6091,10 @@ namespace PBS.Databases
                     MoveTag.Snatchable,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Team,
                             statusID: "reflect"
                             ),
@@ -6122,9 +6122,9 @@ namespace PBS.Databases
                     MoveTag.Snatchable,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Refresh(
+                    new Effects.MoveEff.Refresh(
                         statuses: new string[] { "burn", "paralysis", "poison", },
                         forceEffectDisplay: true
                         ),
@@ -6160,9 +6160,9 @@ namespace PBS.Databases
                         ),
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.RelicSong(
+                    new Effects.MoveEff.RelicSong(
                         form1: "meloetta-aria", form2: "meloetta-pirouette"
                         ),
                 }
@@ -6205,9 +6205,9 @@ namespace PBS.Databases
                 targetType: MoveTargetType.Adjacent,
                 basePower: 70, accuracy: 1.0f, PP: 20,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.RisingVoltage(
+                    new Effects.MoveEff.RisingVoltage(
                         damageScale: 2f,
                         conditions: new string[] { "electricterrain" }
                         )
@@ -6233,9 +6233,9 @@ namespace PBS.Databases
                     MoveTag.UncallableByCopycat,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Whirlwind(),
+                    new Effects.MoveEff.Whirlwind(),
                 }
                 ) },
 
@@ -6280,11 +6280,11 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FakeOut(),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.FakeOut(),
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "flinch"
                             ),
@@ -6312,9 +6312,9 @@ namespace PBS.Databases
                     MoveTag.RollingMove,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Rollout(),
+                    new Effects.MoveEff.Rollout(),
                 }
                 ) },
 
@@ -6514,9 +6514,9 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.SecretPower(secondaryEffectChance: 0.3f),
+                    new Effects.MoveEff.SecretPower(secondaryEffectChance: 0.3f),
                 }
                 ) },
 
@@ -6593,9 +6593,9 @@ namespace PBS.Databases
                         ),
                     new MoveEffect(MoveEffectType.MultiTurnShadowForce),
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Feint(),
+                    new Effects.MoveEff.Feint(),
                 }
                 ) },
 
@@ -6625,9 +6625,9 @@ namespace PBS.Databases
                 targetType: MoveTargetType.Adjacent,
                 basePower: 90, accuracy: 1.0f, PP: 10,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.ShellSideArm(),
+                    new Effects.MoveEff.ShellSideArm(),
                 }
                 ) },
 
@@ -6646,10 +6646,10 @@ namespace PBS.Databases
                     MoveTag.Snatchable,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             ATKMod: 2, SPAMod: 2, SPEMod: 2, DEFMod: -1, SPDMod: -1
                             ),
                         timing: MoveEffectTiming.AfterSuccessfulMoveUse,
@@ -6833,11 +6833,11 @@ namespace PBS.Databases
                         stringParams: new string[] { "move-charge-skyattack" }
                         ),
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FakeOut(),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.FakeOut(),
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "flinch"
                             ),
@@ -7057,11 +7057,11 @@ namespace PBS.Databases
                     MoveTag.UncallableByMetronome,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Snore(),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.Snore(),
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "flinch"
                             ),
@@ -7205,9 +7205,9 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.DragonRage(damage: 20),
+                    new Effects.MoveEff.DragonRage(damage: 20),
                 }
                 ) },
 
@@ -7354,10 +7354,10 @@ namespace PBS.Databases
                     MoveTag.PowderMove,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "sleep"
                             ),
@@ -7452,10 +7452,10 @@ namespace PBS.Databases
                     MoveTag.UncallableByMetronome
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "burn"
                             ),
@@ -7464,10 +7464,10 @@ namespace PBS.Databases
                         targetType: MoveEffectTargetType.Target,
                         chance: 0.3f
                         ),
-                    new EffectDatabase.MoveEff.HealBeforeUse(
+                    new Effects.MoveEff.HealBeforeUse(
                         statuses: new string[] { "burn" }
                         ),
-                    new EffectDatabase.MoveEff.Refresh(
+                    new Effects.MoveEff.Refresh(
                         statuses: new string[] { "burn" }
                         ),
                 }
@@ -7488,9 +7488,9 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.SteelRoller(),
+                    new Effects.MoveEff.SteelRoller(),
                 }
                 ) },
 
@@ -7553,11 +7553,11 @@ namespace PBS.Databases
                         floatParams: new float[] { 2 }
                         ),
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.FakeOut(),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.FakeOut(),
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "flinch"
                             ),
@@ -7584,9 +7584,9 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StoredPower(),
+                    new Effects.MoveEff.StoredPower(),
                 }
                 ) },
 
@@ -7604,9 +7604,9 @@ namespace PBS.Databases
                 {
                     MoveTag.MakesContact,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StormThrow(),
+                    new Effects.MoveEff.StormThrow(),
                 }
                 ) },
 
@@ -7710,9 +7710,9 @@ namespace PBS.Databases
                 {
                     MoveTag.MakesContact,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.SuckerPunch(),
+                    new Effects.MoveEff.SuckerPunch(),
                 }
                 ) },
 
@@ -7731,10 +7731,10 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             ATKMod: -1, DEFMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -7823,9 +7823,9 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.SunsteelStrike(),
+                    new Effects.MoveEff.SunsteelStrike(),
                 }
                 ) },
 
@@ -7843,9 +7843,9 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.SuperFang(damagePercent: 0.5f),
+                    new Effects.MoveEff.SuperFang(damagePercent: 0.5f),
                 }
                 ) },
 
@@ -7917,10 +7917,10 @@ namespace PBS.Databases
                     MoveTag.Snatchable,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             ATKMod: 2
                             ),
                         timing: MoveEffectTiming.AfterSuccessfulMoveUse,
@@ -7946,9 +7946,9 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Synchronoise(),
+                    new Effects.MoveEff.Synchronoise(),
                 }
                 ) },
 
@@ -8021,9 +8021,9 @@ namespace PBS.Databases
                     MoveTag.MakesContact,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.DoubleEdge(
+                    new Effects.MoveEff.DoubleEdge(
                         hpLossPercent: 0.25f
                         )
                 }
@@ -8044,10 +8044,10 @@ namespace PBS.Databases
                     MoveTag.MagicCoatSusceptible
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPEMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -8055,8 +8055,8 @@ namespace PBS.Databases
                         targetType: MoveEffectTargetType.Target,
                         forceEffectDisplay: true
                         ),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "tarshot"
                             ),
@@ -8084,10 +8084,10 @@ namespace PBS.Databases
                     MoveTag.MagicCoatSusceptible,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "taunt"
                             ),
@@ -8183,9 +8183,9 @@ namespace PBS.Databases
                     MoveTag.PulseMove,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.TerrainPulse(),
+                    new Effects.MoveEff.TerrainPulse(),
                 }
                 ) },
         
@@ -8207,9 +8207,9 @@ namespace PBS.Databases
                     MoveTag.UncallableByMeFirst,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Covet(),
+                    new Effects.MoveEff.Covet(),
                 }
                 ) },
 
@@ -8326,10 +8326,10 @@ namespace PBS.Databases
                     MoveTag.PunchMove
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "paralysis"
                             ),
@@ -8355,10 +8355,10 @@ namespace PBS.Databases
                     MoveTag.MagicCoatSusceptible,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "paralysis"
                             ),
@@ -8380,10 +8380,10 @@ namespace PBS.Databases
                 targetType: MoveTargetType.Adjacent,
                 basePower: 90, accuracy: 1.0f, PP: 15,
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "paralysis"
                             ),
@@ -8411,10 +8411,10 @@ namespace PBS.Databases
                     MoveTag.MagicCoatSusceptible,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "torment"
                             ),
@@ -8598,9 +8598,9 @@ namespace PBS.Databases
                 },
 
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.TripleKick(),
+                    new Effects.MoveEff.TripleKick(),
                 }
                 ) },
 
@@ -8622,9 +8622,9 @@ namespace PBS.Databases
                 },
 
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.TripleKick(),
+                    new Effects.MoveEff.TripleKick(),
                 }
                 ) },
 
@@ -8655,11 +8655,11 @@ namespace PBS.Databases
                         stringParams: new string[] { "poison" }
                         ),
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.DoubleKick(),
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.DoubleKick(),
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "poison"
                             ),
@@ -8850,9 +8850,9 @@ namespace PBS.Databases
                     MoveTag.BallMove
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.WeatherBall(),
+                    new Effects.MoveEff.WeatherBall(),
                 },
 
                 ZBasePower: 160
@@ -8877,9 +8877,9 @@ namespace PBS.Databases
                     MoveTag.UncallableByCopycat,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Whirlwind(),
+                    new Effects.MoveEff.Whirlwind(),
                 }
                 ) },
 
@@ -9006,10 +9006,10 @@ namespace PBS.Databases
                     MoveTag.Snatchable,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             DEFMod: 1
                             ),
                         timing: MoveEffectTiming.AfterSuccessfulMoveUse,
@@ -9102,10 +9102,10 @@ namespace PBS.Databases
                     MoveTag.PowderMove,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "yawn"
                             ),
@@ -9174,9 +9174,9 @@ namespace PBS.Databases
                     MoveTag.ZMove,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.SuperFang(damagePercent: 0.75f),
+                    new Effects.MoveEff.SuperFang(damagePercent: 0.75f),
                 }
                 ) },
 
@@ -9195,10 +9195,10 @@ namespace PBS.Databases
                     MoveTag.ZMove
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.PhotonGeyser(),
-                    new EffectDatabase.MoveEff.SunsteelStrike(),
+                    new Effects.MoveEff.PhotonGeyser(),
+                    new Effects.MoveEff.SunsteelStrike(),
                 }
                 ) },
 
@@ -9221,10 +9221,10 @@ namespace PBS.Databases
                     MoveTag.DynamaxMove,
                 },
 
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.Protect(
-                        protect: new EffectDatabase.General.Protect(
+                    new Effects.MoveEff.Protect(
+                        protect: new Effects.General.Protect(
                             maxGuard: true
                             )
                         ),
@@ -9244,10 +9244,10 @@ namespace PBS.Databases
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                            SPEMod: 1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9271,10 +9271,10 @@ namespace PBS.Databases
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPDMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9298,10 +9298,10 @@ namespace PBS.Databases
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "harshsunlight"
                             ),
@@ -9325,10 +9325,10 @@ namespace PBS.Databases
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPAMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9352,10 +9352,10 @@ namespace PBS.Databases
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "rain"
                             ),
@@ -9379,10 +9379,10 @@ namespace PBS.Databases
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "hail"
                             ),
@@ -9406,10 +9406,10 @@ namespace PBS.Databases
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             ATKMod: 1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9433,10 +9433,10 @@ namespace PBS.Databases
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "electricterrain"
                             ),
@@ -9460,10 +9460,10 @@ namespace PBS.Databases
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "psychicterrain"
                             ),
@@ -9487,10 +9487,10 @@ namespace PBS.Databases
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPAMod: 1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9514,10 +9514,10 @@ namespace PBS.Databases
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "grassyterrain"
                             ),
@@ -9541,10 +9541,10 @@ namespace PBS.Databases
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPDMod: 1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9568,10 +9568,10 @@ namespace PBS.Databases
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             DEFMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9595,10 +9595,10 @@ namespace PBS.Databases
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "sandstorm"
                             ),
@@ -9622,10 +9622,10 @@ namespace PBS.Databases
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "mistyterrain"
                             ),
@@ -9649,10 +9649,10 @@ namespace PBS.Databases
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             DEFMod: 1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9676,10 +9676,10 @@ namespace PBS.Databases
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             SPEMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9703,10 +9703,10 @@ namespace PBS.Databases
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.StatStageMod(
-                        statStageMod: new EffectDatabase.General.StatStageMod(
+                    new Effects.MoveEff.StatStageMod(
+                        statStageMod: new Effects.General.StatStageMod(
                             ATKMod: -1
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
@@ -9732,10 +9732,10 @@ namespace PBS.Databases
                 {
                     MoveTag.DynamaxMove,
                 },
-                effectsNew: new EffectDatabase.MoveEff.MoveEffect[]
+                effectsNew: new Effects.MoveEff.MoveEffect[]
                 {
-                    new EffectDatabase.MoveEff.InflictStatus(
-                        new EffectDatabase.General.InflictStatus(
+                    new Effects.MoveEff.InflictStatus(
+                        new Effects.General.InflictStatus(
                             statusType: StatusType.Team,
                             statusID: "gmaxcannonade"
                             ),

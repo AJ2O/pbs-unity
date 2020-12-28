@@ -49,9 +49,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "adaptability",
                 abilityName: "Adaptability",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Adaptability(),
+                    new Effects.AbilityEff.Adaptability(),
                 }
                 ) },
 
@@ -60,14 +60,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "aerilate",
                 abilityName: "Aerilate",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Aerilate(
+                    new Effects.AbilityEff.Aerilate(
                         toMoveType: "flying",
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "normal" }
                                 ),
                         }
@@ -80,11 +80,11 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "aftermath",
                 abilityName: "Aftermath",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Aftermath(
-                        damage: new EffectDatabase.General.Damage(
-                            mode: EffectDatabase.General.Damage.DamageMode.MaxHPPercent,
+                    new Effects.AbilityEff.Aftermath(
+                        damage: new Effects.General.Damage(
+                            mode: Effects.General.Damage.DamageMode.MaxHPPercent,
                             value: 0.25f
                             )
                         ),
@@ -96,9 +96,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "airlock",
                 abilityName: "Air Lock",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.AirLock(),
+                    new Effects.AbilityEff.AirLock(),
                 }
                 ) },
 
@@ -107,9 +107,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "analytic",
                 abilityName: "Analytic",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Analytic(),
+                    new Effects.AbilityEff.Analytic(),
                 }
                 ) },
 
@@ -118,10 +118,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "angerpoint",
                 abilityName: "Anger Point",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.AngerPoint(
-                        statStageMod: new EffectDatabase.General.StatStageMod(maxATK: true)
+                    new Effects.AbilityEff.AngerPoint(
+                        statStageMod: new Effects.General.StatStageMod(maxATK: true)
                         ),
                 }
                 ) },
@@ -131,9 +131,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "anticipation",
                 abilityName: "Anticipation",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Anticipation(),
+                    new Effects.AbilityEff.Anticipation(),
                 }
                 ) },
 
@@ -142,13 +142,13 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "arenatrap",
                 abilityName: "Arena Trap",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.ShadowTag(
+                    new Effects.AbilityEff.ShadowTag(
                         arenaTrap: true,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(types: new string[]{ "ghost" }, invert: true),
+                            new Effects.Filter.TypeList(types: new string[]{ "ghost" }, invert: true),
                         }
                         ),
                 }
@@ -159,9 +159,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "aromaveil",
                 abilityName: "Aroma Veil",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Oblivious(
+                    new Effects.AbilityEff.Oblivious(
                         aromaVeil: true,
                         effectsBlocked: new PokemonSEType[]
                         {
@@ -181,9 +181,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "aurabreak",
                 abilityName: "Aura Break",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.AuraBreak(),
+                    new Effects.AbilityEff.AuraBreak(),
                 }
                 ) },
 
@@ -192,9 +192,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "baddreams",
                 abilityName: "Bad Dreams",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.BadDreams(),
+                    new Effects.AbilityEff.BadDreams(),
                 }
                 ) },
 
@@ -203,9 +203,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "ballfetch",
                 abilityName: "Ball Fetch",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.BallFetch(),
+                    new Effects.AbilityEff.BallFetch(),
                 }
                 ) },
 
@@ -214,12 +214,12 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "battery",
                 abilityName: "Battery",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Battery(
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.AbilityEff.Battery(
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveCategories: new MoveCategory[] { MoveCategory.Special }
                                 )
                         }
@@ -232,9 +232,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "battlearmor",
                 abilityName: "Battle Armor",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.BattleArmor(),
+                    new Effects.AbilityEff.BattleArmor(),
                 }
                 ) },
 
@@ -250,12 +250,12 @@ namespace PBS.Databases
                     AbilityTag.CannotSuppress,
                     AbilityTag.CannotWorrySeed,
                 },
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.BattleBond(
-                        transformations: new EffectDatabase.AbilityEff.BattleBond.BattleBondTransformation[]
+                    new Effects.AbilityEff.BattleBond(
+                        transformations: new Effects.AbilityEff.BattleBond.BattleBondTransformation[]
                         {
-                            new EffectDatabase.AbilityEff.BattleBond.BattleBondTransformation(
+                            new Effects.AbilityEff.BattleBond.BattleBondTransformation(
                                 preForm: "greninja-battlebond", toForm: "greninja-ash"),
                         }
                         ),
@@ -267,9 +267,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "beastboost",
                 abilityName: "Beast Boost",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.BeastBoost(statMod: 1),
+                    new Effects.AbilityEff.BeastBoost(statMod: 1),
                 }
                 ) },
 
@@ -278,11 +278,11 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "berserk",
                 abilityName: "Berserk",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Berserk(
+                    new Effects.AbilityEff.Berserk(
                         hpThreshold: 0.5f,
-                        statStageMod: new EffectDatabase.General.StatStageMod(SPAMod: 1)
+                        statStageMod: new Effects.General.StatStageMod(SPAMod: 1)
                         ),
                 }
                 ) },
@@ -292,9 +292,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "bigpecks",
                 abilityName: "Big Pecks",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.HyperCutter(
+                    new Effects.AbilityEff.HyperCutter(
                         affectedStats: new PokemonStats[] { PokemonStats.Defense, }
                         )
                 }
@@ -305,15 +305,15 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "blaze",
                 abilityName: "Blaze",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.IronFist(
+                    new Effects.AbilityEff.IronFist(
                         powerMultiplier: 1.5f,
                         blazeThreshold: 1f/3,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "fire" }
                                 )
                         }
@@ -326,12 +326,12 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "bulletproof",
                 abilityName: "Bulletproof",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Cacophony(
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.AbilityEff.Cacophony(
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.BallMove, MoveTag.BombMove }
                                 )
                         }
@@ -344,12 +344,12 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "cacophony",
                 abilityName: "Cacophony",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Cacophony(
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.AbilityEff.Cacophony(
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.SoundMove, }
                                 )
                         }
@@ -362,9 +362,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "cheekpouch",
                 abilityName: "Cheek Pouch",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.CheekPouch(),
+                    new Effects.AbilityEff.CheekPouch(),
                 }
                 ) },
 
@@ -373,14 +373,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "chlorophyll",
                 abilityName: "Chlorophyll",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.SwiftSwim(
-                        conditions: new List<EffectDatabase.AbilityEff.SwiftSwim.SwiftSwimCondition>
+                    new Effects.AbilityEff.SwiftSwim(
+                        conditions: new List<Effects.AbilityEff.SwiftSwim.SwiftSwimCondition>
                         {
-                            new EffectDatabase.AbilityEff.SwiftSwim.SwiftSwimCondition(
+                            new Effects.AbilityEff.SwiftSwim.SwiftSwimCondition(
                                 conditions: new string[] { "harshsunlight" },
-                                statScale: new EffectDatabase.General.StatScale(
+                                statScale: new Effects.General.StatScale(
                                     scaleMap: new Dictionary<PokemonStats, float>
                                     {
                                         { PokemonStats.Speed, 2f }
@@ -395,9 +395,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "clearbody",
                 abilityName: "Clear Body",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.HyperCutter(
+                    new Effects.AbilityEff.HyperCutter(
                         clearBody: true,
                         displayText: "ability-clearbody"),
                 }
@@ -408,9 +408,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "colorchange",
                 abilityName: "Color Change",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.ColorChange(),
+                    new Effects.AbilityEff.ColorChange(),
                 }
                 ) },
 
@@ -419,9 +419,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "comatose",
                 abilityName: "Comatose",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Comatose(),
+                    new Effects.AbilityEff.Comatose(),
                 }
                 ) },
 
@@ -430,10 +430,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "competitive",
                 abilityName: "Competitive",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Defiant(
-                        statStageMod: new EffectDatabase.General.StatStageMod(SPAMod: 2),
+                    new Effects.AbilityEff.Defiant(
+                        statStageMod: new Effects.General.StatStageMod(SPAMod: 2),
                         lowerTriggers: new PokemonStats[]
                         {
                             PokemonStats.Attack, PokemonStats.Defense,
@@ -449,10 +449,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "compoundeyes",
                 abilityName: "Compound Eyes",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.CompoundEyes(
-                        statScale: new EffectDatabase.General.StatScale(
+                    new Effects.AbilityEff.CompoundEyes(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.Accuracy, 4f/3 }
@@ -466,9 +466,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "contrary",
                 abilityName: "Contrary",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Contrary(),
+                    new Effects.AbilityEff.Contrary(),
                 }
                 ) },
 
@@ -477,9 +477,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "corrosion",
                 abilityName: "Corrosion",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Corrosion(
+                    new Effects.AbilityEff.Corrosion(
                         statuses: new string[] { "poison" }
                         ),
                 }
@@ -490,10 +490,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "cottondown",
                 abilityName: "Cotton Down",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Gooey(
-                        statStageMod: new EffectDatabase.General.StatStageMod(SPEMod: -1),
+                    new Effects.AbilityEff.Gooey(
+                        statStageMod: new Effects.General.StatStageMod(SPEMod: -1),
                         cottonDown: true,
                         onlyDamaging: true
                         ),
@@ -505,16 +505,16 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "cursedbody",
                 abilityName: "Cursed Body",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.FlameBody(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.AbilityEff.FlameBody(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "disable"
                             ),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.MakesContact }
                                 )
                         },
@@ -528,16 +528,16 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "cutecharm",
                 abilityName: "Cute Charm",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.FlameBody(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.AbilityEff.FlameBody(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "infatuation"
                             ),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.MakesContact }
                                 )
                         },
@@ -551,9 +551,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "damp",
                 abilityName: "Damp",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Damp(moveTags: new MoveTag[] { MoveTag.ExplosiveMove }),
+                    new Effects.AbilityEff.Damp(moveTags: new MoveTag[] { MoveTag.ExplosiveMove }),
                 }
                 ) },
 
@@ -562,9 +562,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "dancer",
                 abilityName: "Dancer",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Dancer(moveTags: new MoveTag[] { MoveTag.DanceMove }),
+                    new Effects.AbilityEff.Dancer(moveTags: new MoveTag[] { MoveTag.DanceMove }),
                 }
                 ) },
 
@@ -577,9 +577,9 @@ namespace PBS.Databases
                 {
 
                 },
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.DarkAura(
+                    new Effects.AbilityEff.DarkAura(
                         damageMultiplier: 4f/3,
                         moveTypes: new string[]{ "dark" }),
                 }
@@ -590,10 +590,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "dauntlessshield",
                 abilityName: "Dauntless Shield",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.IntrepidSword(
-                        statStageMod: new EffectDatabase.General.StatStageMod(DEFMod: 1)
+                    new Effects.AbilityEff.IntrepidSword(
+                        statStageMod: new Effects.General.StatStageMod(DEFMod: 1)
                         ),
                 }
                 ) },
@@ -603,9 +603,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "dazzling",
                 abilityName: "Dazzling",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.QueenlyMajesty(),
+                    new Effects.AbilityEff.QueenlyMajesty(),
                 }
                 ) },
 
@@ -614,11 +614,11 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "defeatist",
                 abilityName: "Defeatist",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.CompoundEyes(
+                    new Effects.AbilityEff.CompoundEyes(
                         defeatistThreshold: 0.5f,
-                        statScale: new EffectDatabase.General.StatScale(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.Attack, 0.5f },
@@ -633,10 +633,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "defiant",
                 abilityName: "Defiant",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Defiant(
-                        statStageMod: new EffectDatabase.General.StatStageMod(ATKMod: 2),
+                    new Effects.AbilityEff.Defiant(
+                        statStageMod: new Effects.General.StatStageMod(ATKMod: 2),
                         lowerTriggers: new PokemonStats[]
                         {
                             PokemonStats.Attack, PokemonStats.Defense,
@@ -652,11 +652,11 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "deltastream",
                 abilityName: "Delta Stream",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Drought(
+                    new Effects.AbilityEff.Drought(
                         desolateLand: true,
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "strongwinds"
                             )
@@ -669,11 +669,11 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "desolateland",
                 abilityName: "Desolate Land",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Drought(
+                    new Effects.AbilityEff.Drought(
                         desolateLand: true,
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "extremelyharshsunlight"
                             )
@@ -693,17 +693,17 @@ namespace PBS.Databases
                     AbilityTag.CannotSuppress,
                     AbilityTag.CannotWorrySeed,
                 },
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Disguise(
-                        disguiseForms: new EffectDatabase.General.FormTransformation[]
+                    new Effects.AbilityEff.Disguise(
+                        disguiseForms: new Effects.General.FormTransformation[]
                         {
-                            new EffectDatabase.General.FormTransformation(
+                            new Effects.General.FormTransformation(
                                 preForm: "mimikyu", toForm: "mimikyu-busted"),
                         },
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveCategories: new MoveCategory[] { MoveCategory.Physical, MoveCategory.Special }
                                 )
                         }
@@ -716,14 +716,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "download",
                 abilityName: "Download",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Download(
-                        downloadComparisons: new EffectDatabase.AbilityEff.Download.DownloadCompare[]
+                    new Effects.AbilityEff.Download(
+                        downloadComparisons: new Effects.AbilityEff.Download.DownloadCompare[]
                         {
-                            new EffectDatabase.AbilityEff.Download.DownloadCompare(
-                                statStageMod1: new EffectDatabase.General.StatStageMod(ATKMod: 1),
-                                statStageMod2: new EffectDatabase.General.StatStageMod(SPAMod: 1),
+                            new Effects.AbilityEff.Download.DownloadCompare(
+                                statStageMod1: new Effects.General.StatStageMod(ATKMod: 1),
+                                statStageMod2: new Effects.General.StatStageMod(SPAMod: 1),
                                 stats1: PokemonStats.Defense,
                                 stats2: PokemonStats.SpecialDefense
                                 )
@@ -737,10 +737,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "drizzle",
                 abilityName: "Drizzle",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Drought(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.AbilityEff.Drought(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "rain"
                             )
@@ -753,10 +753,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "drought",
                 abilityName: "Drought",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Drought(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.AbilityEff.Drought(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "harshsunlight"
                             )
@@ -769,36 +769,36 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "dryskin",
                 abilityName: "Dry Skin",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.DrySkin(
-                        conditions: new EffectDatabase.AbilityEff.DrySkin.DrySkinCondition[]
+                    new Effects.AbilityEff.DrySkin(
+                        conditions: new Effects.AbilityEff.DrySkin.DrySkinCondition[]
                         {
-                            new EffectDatabase.AbilityEff.DrySkin.DrySkinCondition(
+                            new Effects.AbilityEff.DrySkin.DrySkinCondition(
                                 conditions: new string[] { "rain" },
                                 hpGainPercent: 1f/8
                                 ),
-                            new EffectDatabase.AbilityEff.DrySkin.DrySkinCondition(
+                            new Effects.AbilityEff.DrySkin.DrySkinCondition(
                                 conditions: new string[] { "harshsunlight" },
                                 hpLosePercent: 1f/8
                                 ),
                         }
                         ),
 
-                    new EffectDatabase.AbilityEff.VoltAbsorb(
-                        conditions: new EffectDatabase.AbilityEff.VoltAbsorb.VoltAbsorbCondition[]
+                    new Effects.AbilityEff.VoltAbsorb(
+                        conditions: new Effects.AbilityEff.VoltAbsorb.VoltAbsorbCondition[]
                         {
-                            new EffectDatabase.AbilityEff.VoltAbsorb.VoltAbsorbCondition(
+                            new Effects.AbilityEff.VoltAbsorb.VoltAbsorbCondition(
                                 moveTypes: new string[] { "water" },
                                 absorbPercent: 0.25f
                                 ),
                         }),
-                    new EffectDatabase.AbilityEff.IceScales(
+                    new Effects.AbilityEff.IceScales(
                         damageModifier: 1.25f,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "fire" }
                                 )
                         }
@@ -811,9 +811,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "earlybird",
                 abilityName: "Early Bird",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.EarlyBird(
+                    new Effects.AbilityEff.EarlyBird(
                         conditions: new string[] { "sleep" },
                         turnModifier: 0.5f),
                 }
@@ -824,36 +824,36 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "effectspore",
                 abilityName: "Effect Spore",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.FlameBody(
-                        effectSpores: new EffectDatabase.AbilityEff.FlameBody.EffectSporeCondition[]
+                    new Effects.AbilityEff.FlameBody(
+                        effectSpores: new Effects.AbilityEff.FlameBody.EffectSporeCondition[]
                         {
-                            new EffectDatabase.AbilityEff.FlameBody.EffectSporeCondition(
-                                inflictStatus: new EffectDatabase.General.InflictStatus(
+                            new Effects.AbilityEff.FlameBody.EffectSporeCondition(
+                                inflictStatus: new Effects.General.InflictStatus(
                                     statusType: StatusType.Pokemon,
                                     statusID: "poison"
                                     ),
                                 chance: 1f / 3
                                 ),
-                            new EffectDatabase.AbilityEff.FlameBody.EffectSporeCondition(
-                                inflictStatus: new EffectDatabase.General.InflictStatus(
+                            new Effects.AbilityEff.FlameBody.EffectSporeCondition(
+                                inflictStatus: new Effects.General.InflictStatus(
                                     statusType: StatusType.Pokemon,
                                     statusID: "paralysis"
                                     ),
                                 chance: 1f / 3
                                 ),
-                            new EffectDatabase.AbilityEff.FlameBody.EffectSporeCondition(
-                                inflictStatus: new EffectDatabase.General.InflictStatus(
+                            new Effects.AbilityEff.FlameBody.EffectSporeCondition(
+                                inflictStatus: new Effects.General.InflictStatus(
                                     statusType: StatusType.Pokemon,
                                     statusID: "sleep"
                                     ),
                                 chance: 1f / 3
                                 ),
                         },
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.MakesContact }
                                 )
                         },
@@ -867,10 +867,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "electricsurge",
                 abilityName: "Electric Surge",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Drought(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.AbilityEff.Drought(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "electricterrain"
                             )
@@ -883,9 +883,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "emergencyexit",
                 abilityName: "Emergency Exit",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.WimpOut(hpThreshold: 0.5f),
+                    new Effects.AbilityEff.WimpOut(hpThreshold: 0.5f),
                 }
                 ) },
 
@@ -898,9 +898,9 @@ namespace PBS.Databases
                 {
 
                 },
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.DarkAura(
+                    new Effects.AbilityEff.DarkAura(
                         damageMultiplier: 4f/3,
                         moveTypes: new string[]{ "fairy" }),
                 }
@@ -911,9 +911,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "filter",
                 abilityName: "Filter",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.SolidRock(
+                    new Effects.AbilityEff.SolidRock(
                         superEffectiveModifier: 0.75f),
                 }
                 ) },
@@ -923,16 +923,16 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "flamebody",
                 abilityName: "Flame Body",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.FlameBody(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.AbilityEff.FlameBody(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "burn"
                             ),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.MakesContact }
                                 )
                         },
@@ -946,17 +946,17 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "flareboost",
                 abilityName: "Flare Boost",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.FlareBoost(
+                    new Effects.AbilityEff.FlareBoost(
                         powerMultiplier: 1.5f,
-                        conditionCheck: new EffectDatabase.Filter.Harvest(
-                            conditionType: EffectDatabase.Filter.Harvest.ConditionType.Pokemon,
+                        conditionCheck: new Effects.Filter.Harvest(
+                            conditionType: Effects.Filter.Harvest.ConditionType.Pokemon,
                             conditions: new string[] { "burn" }
                             ),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveCategories: new MoveCategory[] { MoveCategory.Special })
                         }
                     )
@@ -968,12 +968,12 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "flashfire",
                 abilityName: "Flash Fire",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.VoltAbsorb(
-                        conditions: new EffectDatabase.AbilityEff.VoltAbsorb.VoltAbsorbCondition[]
+                    new Effects.AbilityEff.VoltAbsorb(
+                        conditions: new Effects.AbilityEff.VoltAbsorb.VoltAbsorbCondition[]
                         {
-                            new EffectDatabase.AbilityEff.VoltAbsorb.VoltAbsorbCondition(
+                            new Effects.AbilityEff.VoltAbsorb.VoltAbsorbCondition(
                                 moveTypes: new string[] { "fire" },
                                 flashFireBoost: 1.5f
                                 ),
@@ -986,32 +986,32 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "flowergift",
                 abilityName: "Flower Gift",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Forecast(
-                        transformations: new EffectDatabase.AbilityEff.Forecast.ForecastTransformation[]
+                    new Effects.AbilityEff.Forecast(
+                        transformations: new Effects.AbilityEff.Forecast.ForecastTransformation[]
                         {
                             // Sunshine Cherrim
-                            new EffectDatabase.AbilityEff.Forecast.ForecastTransformation(
+                            new Effects.AbilityEff.Forecast.ForecastTransformation(
                                 conditions: new string[] { "harshsunlight" },
-                                transformation: new EffectDatabase.General.FormTransformation(
+                                transformation: new Effects.General.FormTransformation(
                                     preForm: "cherrim",
                                     toForm: "cherrim-sunshine"
                                     )
                                 ),
                         },
-                        defaultTransformation: new EffectDatabase.General.FormTransformation(
+                        defaultTransformation: new Effects.General.FormTransformation(
                             preForm: "cherrim-sunshine",
                             toForm: "cherrim"
                             )
                         ),
-                    new EffectDatabase.AbilityEff.SwiftSwim(
-                        conditions: new List<EffectDatabase.AbilityEff.SwiftSwim.SwiftSwimCondition>
+                    new Effects.AbilityEff.SwiftSwim(
+                        conditions: new List<Effects.AbilityEff.SwiftSwim.SwiftSwimCondition>
                         {
-                            new EffectDatabase.AbilityEff.SwiftSwim.SwiftSwimCondition(
+                            new Effects.AbilityEff.SwiftSwim.SwiftSwimCondition(
                                 conditions: new string[] { "harshsunlight" },
                                 flowerGift: true,
-                                statScale: new EffectDatabase.General.StatScale(
+                                statScale: new Effects.General.StatScale(
                                     scaleMap: new Dictionary<PokemonStats, float>
                                     {
                                         { PokemonStats.Attack, 1.5f },
@@ -1027,18 +1027,18 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "fluffy",
                 abilityName: "Fluffy",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.IceScales(
+                    new Effects.AbilityEff.IceScales(
                         damageModifier: 0.5f,
                         tags: new MoveTag[] { MoveTag.MakesContact, }
                     ),
-                    new EffectDatabase.AbilityEff.IceScales(
+                    new Effects.AbilityEff.IceScales(
                         damageModifier: 2f,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "fire", })
                         }
                     )
@@ -1050,35 +1050,35 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "forecast",
                 abilityName: "Forecast",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
                     // Castform
-                    new EffectDatabase.AbilityEff.Forecast(
-                        transformations: new EffectDatabase.AbilityEff.Forecast.ForecastTransformation[]
+                    new Effects.AbilityEff.Forecast(
+                        transformations: new Effects.AbilityEff.Forecast.ForecastTransformation[]
                         {
                             // Sunny
-                            new EffectDatabase.AbilityEff.Forecast.ForecastTransformation(
+                            new Effects.AbilityEff.Forecast.ForecastTransformation(
                                 conditions: new string[] { "harshsunlight" },
-                                transformation: new EffectDatabase.General.FormTransformation(
+                                transformation: new Effects.General.FormTransformation(
                                     preForm: "castform", toForm: "castform-sunny"
                                     )
                                 ),
                             // Rainy
-                            new EffectDatabase.AbilityEff.Forecast.ForecastTransformation(
+                            new Effects.AbilityEff.Forecast.ForecastTransformation(
                                 conditions: new string[] { "rain" },
-                                transformation: new EffectDatabase.General.FormTransformation(
+                                transformation: new Effects.General.FormTransformation(
                                     preForm: "castform", toForm: "castform-rainy"
                                     )
                                 ),
                             // Snowy
-                            new EffectDatabase.AbilityEff.Forecast.ForecastTransformation(
+                            new Effects.AbilityEff.Forecast.ForecastTransformation(
                                 conditions: new string[] { "hail" },
-                                transformation: new EffectDatabase.General.FormTransformation(
+                                transformation: new Effects.General.FormTransformation(
                                     preForm: "castform", toForm: "castform-snowy"
                                     )
                                 ),
                         },
-                        defaultTransformation: new EffectDatabase.General.FormTransformation(
+                        defaultTransformation: new Effects.General.FormTransformation(
                             preForms: new string[] { "castform-sunny", "castform-rainy", "castform-snowy" },
                             toForm: "castform"
                             )
@@ -1091,9 +1091,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "forewarn",
                 abilityName: "Forewarn",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Forewarn(),
+                    new Effects.AbilityEff.Forewarn(),
                 }
                 ) },
 
@@ -1102,9 +1102,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "friendguard",
                 abilityName: "Friend Guard",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.FriendGuard(
+                    new Effects.AbilityEff.FriendGuard(
                         damageModifier: 0.75f),
                 }
                 ) },
@@ -1114,9 +1114,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "frisk",
                 abilityName: "Frisk",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Frisk(),
+                    new Effects.AbilityEff.Frisk(),
                 }
                 ) },
 
@@ -1129,9 +1129,9 @@ namespace PBS.Databases
                 {
                     AbilityTag.BypassMoldBreaker,
                 },
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.HyperCutter(
+                    new Effects.AbilityEff.HyperCutter(
                         clearBody: true,
                         displayText: "ability-clearbody"),
                 }
@@ -1142,10 +1142,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "furcoat",
                 abilityName: "Fur Coat",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.CompoundEyes(
-                        statScale: new EffectDatabase.General.StatScale(
+                    new Effects.AbilityEff.CompoundEyes(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.Defense, 2f },
@@ -1159,13 +1159,13 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "galewings",
                 abilityName: "Gale Wings",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.GaleWings(
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.AbilityEff.GaleWings(
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "flying" }
                                 )
                         }
@@ -1178,14 +1178,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "galvanize",
                 abilityName: "Galvanize",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Aerilate(
+                    new Effects.AbilityEff.Aerilate(
                         toMoveType: "electric",
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "normal" }
                                 ),
                         }
@@ -1198,9 +1198,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "gluttony",
                 abilityName: "Gluttony",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Gluttony(),
+                    new Effects.AbilityEff.Gluttony(),
                 }
                 ) },
 
@@ -1209,10 +1209,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "gooey",
                 abilityName: "Gooey",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Gooey(
-                        statStageMod: new EffectDatabase.General.StatStageMod(SPEMod: -1),
+                    new Effects.AbilityEff.Gooey(
+                        statStageMod: new Effects.General.StatStageMod(SPEMod: -1),
                         triggerTags: new MoveTag[] { MoveTag.MakesContact, }
                         ),
                 }
@@ -1223,11 +1223,11 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "gorillatactics",
                 abilityName: "Gorilla Tactics",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.GorillaTactics(),
-                    new EffectDatabase.AbilityEff.CompoundEyes(
-                        statScale: new EffectDatabase.General.StatScale(
+                    new Effects.AbilityEff.GorillaTactics(),
+                    new Effects.AbilityEff.CompoundEyes(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.Attack, 1.5f }
@@ -1241,14 +1241,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "grasspelt",
                 abilityName: "Grass Pelt",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.SwiftSwim(
-                        conditions: new List<EffectDatabase.AbilityEff.SwiftSwim.SwiftSwimCondition>
+                    new Effects.AbilityEff.SwiftSwim(
+                        conditions: new List<Effects.AbilityEff.SwiftSwim.SwiftSwimCondition>
                         {
-                            new EffectDatabase.AbilityEff.SwiftSwim.SwiftSwimCondition(
+                            new Effects.AbilityEff.SwiftSwim.SwiftSwimCondition(
                                 conditions: new string[] { "grassyterrain" },
-                                statScale: new EffectDatabase.General.StatScale(
+                                statScale: new Effects.General.StatScale(
                                     scaleMap: new Dictionary<PokemonStats, float>
                                     {
                                         { PokemonStats.Defense, 1.5f }
@@ -1263,10 +1263,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "grassysurge",
                 abilityName: "Grassy Surge",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Drought(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.AbilityEff.Drought(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "grassyterrain"
                             )
@@ -1286,46 +1286,46 @@ namespace PBS.Databases
                     AbilityTag.CannotSuppress,
                     AbilityTag.CannotWorrySeed,
                 },
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.GulpMissile(
-                        gulpTransformations: new EffectDatabase.AbilityEff.GulpMissile.GulpTransformation[]
+                    new Effects.AbilityEff.GulpMissile(
+                        gulpTransformations: new Effects.AbilityEff.GulpMissile.GulpTransformation[]
                         {
                             // Gulping (Arrokuda)
-                            new EffectDatabase.AbilityEff.GulpMissile.GulpTransformation(
+                            new Effects.AbilityEff.GulpMissile.GulpTransformation(
                                 moves: new string[] { "surf", "dive" },
-                                missiles: new EffectDatabase.AbilityEff.GulpMissile.Missile[]
+                                missiles: new Effects.AbilityEff.GulpMissile.Missile[]
                                 {
-                                    new EffectDatabase.AbilityEff.GulpMissile.Missile(
+                                    new Effects.AbilityEff.GulpMissile.Missile(
                                         hpThreshold: 1f, hpLossPercent: 0.25f,
-                                        statStageMod: new EffectDatabase.General.StatStageMod(DEFMod: -1)
+                                        statStageMod: new Effects.General.StatStageMod(DEFMod: -1)
                                         )
                                 },
-                                transformation: new EffectDatabase.General.FormTransformation(
+                                transformation: new Effects.General.FormTransformation(
                                     preForm: "cramorant", toForm: "cramorant-gulping"
                                     )
                                 ),
                             // Gorging (Pikachu)
-                            new EffectDatabase.AbilityEff.GulpMissile.GulpTransformation(
+                            new Effects.AbilityEff.GulpMissile.GulpTransformation(
                                 moves: new string[] { "surf", "dive" },
-                                missiles: new EffectDatabase.AbilityEff.GulpMissile.Missile[]
+                                missiles: new Effects.AbilityEff.GulpMissile.Missile[]
                                 {
-                                    new EffectDatabase.AbilityEff.GulpMissile.Missile(
+                                    new Effects.AbilityEff.GulpMissile.Missile(
                                         hpThreshold: 0.5f, hpLossPercent: 0.25f,
-                                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                                        inflictStatus: new Effects.General.InflictStatus(
                                             statusType: StatusType.Pokemon,
                                             statusID: "paralysis"
                                             )
                                         )
                                 },
-                                transformation: new EffectDatabase.General.FormTransformation(
+                                transformation: new Effects.General.FormTransformation(
                                     preForm: "cramorant", toForm: "cramorant-gorging"
                                     )
                                 ),
                         },
-                        spitUpTransformations: new EffectDatabase.General.FormTransformation[]
+                        spitUpTransformations: new Effects.General.FormTransformation[]
                         {
-                            new EffectDatabase.General.FormTransformation(
+                            new Effects.General.FormTransformation(
                                 preForms: new string[] { "cramorant-gulping", "cramorant-gorging" },
                                 toForm: "cramorant"
                                 )
@@ -1340,14 +1340,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "guts",
                 abilityName: "Guts",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Guts(
-                        conditionCheck: new EffectDatabase.Filter.Harvest(
-                            conditionType: EffectDatabase.Filter.Harvest.ConditionType.Pokemon,
+                    new Effects.AbilityEff.Guts(
+                        conditionCheck: new Effects.Filter.Harvest(
+                            conditionType: Effects.Filter.Harvest.ConditionType.Pokemon,
                             conditions: new string[] { "burn", "paralysis", "poison", "sleep" }
                             ),
-                        statScale: new EffectDatabase.General.StatScale(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.Attack, 1.5f },
@@ -1361,21 +1361,21 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "harvest",
                 abilityName: "Harvest",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
                     // 50% base chance
-                    new EffectDatabase.AbilityEff.Harvest(
+                    new Effects.AbilityEff.Harvest(
                         chance: 0.5f,
                         pockets: new ItemPocket[] { ItemPocket.Berries }
                         ),
                     // Always works during sunlight
-                    new EffectDatabase.AbilityEff.Harvest(
+                    new Effects.AbilityEff.Harvest(
                         chance: 1f,
                         pockets: new ItemPocket[] { ItemPocket.Berries },
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.Harvest(
-                                conditionType: EffectDatabase.Filter.Harvest.ConditionType.Battle,
+                            new Effects.Filter.Harvest(
+                                conditionType: Effects.Filter.Harvest.ConditionType.Battle,
                                 conditions: new string[] { "harshsunlight" }
                                 )
                         }
@@ -1388,9 +1388,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "healer",
                 abilityName: "Healer",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Hydration(
+                    new Effects.AbilityEff.Hydration(
                         chance: 0.3f,
                         healSelf: false, healer: true,
                         statusTypes: new PokemonSEType[] { PokemonSEType.NonVolatile }
@@ -1403,14 +1403,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "heatproof",
                 abilityName: "Heatproof",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.IceScales(
+                    new Effects.AbilityEff.IceScales(
                         damageModifier: 0.5f,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "fire", })
                         }
                     )
@@ -1422,9 +1422,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "heavymetal",
                 abilityName: "Heavy Metal",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.HeavyMetal(),
+                    new Effects.AbilityEff.HeavyMetal(),
                 }
                 ) },
 
@@ -1433,10 +1433,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "hugepower",
                 abilityName: "Huge Power",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.CompoundEyes(
-                        statScale: new EffectDatabase.General.StatScale(
+                    new Effects.AbilityEff.CompoundEyes(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.Attack, 2f },
@@ -1450,9 +1450,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "hungerswitch",
                 abilityName: "Hunger Switch",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.HungerSwitch(
+                    new Effects.AbilityEff.HungerSwitch(
                         pokemonID1: "morpeko", pokemonID2: "morpeko-hangry"
                         ),
                 }
@@ -1463,17 +1463,17 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "hustle",
                 abilityName: "Hustle",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.CompoundEyes(
-                        statScale: new EffectDatabase.General.StatScale(
+                    new Effects.AbilityEff.CompoundEyes(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.Attack, 1.5f }
                             })
                     ),
-                    new EffectDatabase.AbilityEff.Hustle(
-                        statScale: new EffectDatabase.General.StatScale(
+                    new Effects.AbilityEff.Hustle(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.Accuracy, 0.8f }
@@ -1488,15 +1488,15 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "hydration",
                 abilityName: "Hydration",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Hydration(
+                    new Effects.AbilityEff.Hydration(
                         chance: 1f,
                         statusTypes: new PokemonSEType[] { PokemonSEType.NonVolatile },
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.Harvest(
-                                conditionType: EffectDatabase.Filter.Harvest.ConditionType.Battle,
+                            new Effects.Filter.Harvest(
+                                conditionType: Effects.Filter.Harvest.ConditionType.Battle,
                                 conditions: new string[] { "rain" }
                                 )
                         }
@@ -1509,9 +1509,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "hypercutter",
                 abilityName: "Hyper Cutter",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.HyperCutter(
+                    new Effects.AbilityEff.HyperCutter(
                         affectedStats: new PokemonStats[] { PokemonStats.Attack, }
                         )
                 }
@@ -1522,12 +1522,12 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "icebody",
                 abilityName: "Ice Body",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.DrySkin(
-                        conditions: new EffectDatabase.AbilityEff.DrySkin.DrySkinCondition[]
+                    new Effects.AbilityEff.DrySkin(
+                        conditions: new Effects.AbilityEff.DrySkin.DrySkinCondition[]
                         {
-                            new EffectDatabase.AbilityEff.DrySkin.DrySkinCondition(
+                            new Effects.AbilityEff.DrySkin.DrySkinCondition(
                                 conditions: new string[] { "hail" },
                                 hpGainPercent: 1f/16
                                 ),
@@ -1548,27 +1548,27 @@ namespace PBS.Databases
                     AbilityTag.CannotSuppress,
                     AbilityTag.CannotWorrySeed,
                 },
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Disguise(
-                        disguiseForms: new EffectDatabase.General.FormTransformation[]
+                    new Effects.AbilityEff.Disguise(
+                        disguiseForms: new Effects.General.FormTransformation[]
                         {
-                            new EffectDatabase.General.FormTransformation(
+                            new Effects.General.FormTransformation(
                                 preForm: "eiscue", toForm: "eiscue-noice"),
                         },
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveCategories: new MoveCategory[] { MoveCategory.Physical }
                                 )
                         }
                         ),
-                    new EffectDatabase.AbilityEff.Forecast(
-                        transformations: new EffectDatabase.AbilityEff.Forecast.ForecastTransformation[]
+                    new Effects.AbilityEff.Forecast(
+                        transformations: new Effects.AbilityEff.Forecast.ForecastTransformation[]
                         {
-                            new EffectDatabase.AbilityEff.Forecast.ForecastTransformation(
+                            new Effects.AbilityEff.Forecast.ForecastTransformation(
                                 conditions: new string[] { "hail" },
-                                transformation: new EffectDatabase.General.FormTransformation(
+                                transformation: new Effects.General.FormTransformation(
                                     preForm: "eiscue-noice", toForm: "eiscue"
                                     )
                                 ),
@@ -1582,9 +1582,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "icescales",
                 abilityName: "Ice Scales",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.IceScales(
+                    new Effects.AbilityEff.IceScales(
                         damageModifier: 0.5f,
                         useCategory: true, category: MoveCategory.Special
                     )
@@ -1601,9 +1601,9 @@ namespace PBS.Databases
                     AbilityTag.CannotRolePlayUser,
                     AbilityTag.CannotSkillSwap, AbilityTag.CannotSkillSwapUser,
                 },
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Illusion(),
+                    new Effects.AbilityEff.Illusion(),
                 }
                 ) },
 
@@ -1612,9 +1612,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "immunity",
                 abilityName: "Immunity",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Limber(
+                    new Effects.AbilityEff.Limber(
                         conditions: new string[] { "poison" }
                         ),
                 }
@@ -1625,9 +1625,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "infiltrator",
                 abilityName: "Infiltrator",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Infiltrator(),
+                    new Effects.AbilityEff.Infiltrator(),
                 }
                 ) },
 
@@ -1636,11 +1636,11 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "innardsout",
                 abilityName: "Innards Out",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Aftermath(
-                        damage: new EffectDatabase.General.Damage(
-                            mode: EffectDatabase.General.Damage.DamageMode.InnardsOut,
+                    new Effects.AbilityEff.Aftermath(
+                        damage: new Effects.General.Damage(
+                            mode: Effects.General.Damage.DamageMode.InnardsOut,
                             value: 1f
                             ),
                         onlyContact: false,
@@ -1654,12 +1654,12 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "innerfocus",
                 abilityName: "Inner Focus",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Oblivious(
+                    new Effects.AbilityEff.Oblivious(
                         effectsBlocked: new PokemonSEType[]{ PokemonSEType.Flinch }
                         ),
-                    new EffectDatabase.AbilityEff.IntimidateBlock(
+                    new Effects.AbilityEff.IntimidateBlock(
                         abilitiesBlocked: new string[] { "intimidate" }
                         ),
                 }
@@ -1670,9 +1670,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "insomnia",
                 abilityName: "Insomnia",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Limber(
+                    new Effects.AbilityEff.Limber(
                         conditions: new string[] { "sleep" }
                         ),
                 }
@@ -1683,10 +1683,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "intimidate",
                 abilityName: "Intimidate",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Intimidate(
-                        statStageMod: new EffectDatabase.General.StatStageMod(ATKMod: -1)
+                    new Effects.AbilityEff.Intimidate(
+                        statStageMod: new Effects.General.StatStageMod(ATKMod: -1)
                         ),
                 }
                 ) },
@@ -1696,10 +1696,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "intrepidsword",
                 abilityName: "Intrepid Sword",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.IntrepidSword(
-                        statStageMod: new EffectDatabase.General.StatStageMod(ATKMod: 1)
+                    new Effects.AbilityEff.IntrepidSword(
+                        statStageMod: new Effects.General.StatStageMod(ATKMod: 1)
                         ),
                 }
                 ) },
@@ -1709,16 +1709,16 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "ironbarbs",
                 abilityName: "Iron Barbs",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.RoughSkin(
-                        damage: new EffectDatabase.General.Damage(
-                            mode: EffectDatabase.General.Damage.DamageMode.MaxHPPercent,
+                    new Effects.AbilityEff.RoughSkin(
+                        damage: new Effects.General.Damage(
+                            mode: Effects.General.Damage.DamageMode.MaxHPPercent,
                             value: 1f/8
                             ),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.MakesContact }
                                 ),
                         }
@@ -1731,13 +1731,13 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "ironfist",
                 abilityName: "Iron Fist",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.IronFist(
+                    new Effects.AbilityEff.IronFist(
                         powerMultiplier: 1.2f,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.PunchMove }
                                 )
                         }
@@ -1750,14 +1750,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "justified",
                 abilityName: "Justified",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Justified(
-                        statStageMod: new EffectDatabase.General.StatStageMod(ATKMod: 1),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.AbilityEff.Justified(
+                        statStageMod: new Effects.General.StatStageMod(ATKMod: 1),
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "dark" }
                                 ),
                         }
@@ -1770,12 +1770,12 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "keeneye",
                 abilityName: "Keen Eye",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.HyperCutter(
+                    new Effects.AbilityEff.HyperCutter(
                         affectedStats: new PokemonStats[] { PokemonStats.Accuracy, }
                         ),
-                    new EffectDatabase.AbilityEff.Unaware(
+                    new Effects.AbilityEff.Unaware(
                         targetStatsIgnored: new PokemonStats[] { PokemonStats.Evasion },
                         attackerStatsIgnored: new PokemonStats[] { }
                         ),
@@ -1787,9 +1787,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "leafguard",
                 abilityName: "Leaf Guard",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Limber(
+                    new Effects.AbilityEff.Limber(
                         statusTypes: new PokemonSEType[] { PokemonSEType.NonVolatile }
                         ),
                 }
@@ -1800,9 +1800,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "levitate",
                 abilityName: "Levitate",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Levitate(),
+                    new Effects.AbilityEff.Levitate(),
                 }
                 ) },
 
@@ -1811,9 +1811,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "libero",
                 abilityName: "Libero",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Protean(),
+                    new Effects.AbilityEff.Protean(),
                 }
                 ) },
 
@@ -1822,9 +1822,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "lightmetal",
                 abilityName: "Light Metal",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.HeavyMetal(weightMultiplier: 0.5f),
+                    new Effects.AbilityEff.HeavyMetal(weightMultiplier: 0.5f),
                 }
                 ) },
 
@@ -1833,22 +1833,22 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "lightningrod",
                 abilityName: "Lightning Rod",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.LightningRod(
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.AbilityEff.LightningRod(
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "electric" }
                                 ),
                         }),
-                    new EffectDatabase.AbilityEff.VoltAbsorb(
-                        conditions: new EffectDatabase.AbilityEff.VoltAbsorb.VoltAbsorbCondition[]
+                    new Effects.AbilityEff.VoltAbsorb(
+                        conditions: new Effects.AbilityEff.VoltAbsorb.VoltAbsorbCondition[]
                         {
-                            new EffectDatabase.AbilityEff.VoltAbsorb.VoltAbsorbCondition(
+                            new Effects.AbilityEff.VoltAbsorb.VoltAbsorbCondition(
                                 moveTypes: new string[] { "electric" },
-                                motorDrive: new EffectDatabase.General.StatStageMod(SPAMod: 1)
+                                motorDrive: new Effects.General.StatStageMod(SPAMod: 1)
                                 ),
                         }),
                 }
@@ -1859,9 +1859,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "limber",
                 abilityName: "Limber",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Limber(
+                    new Effects.AbilityEff.Limber(
                         conditions: new string[] { "paralysis" }
                         ),
                 }
@@ -1872,9 +1872,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "liquidooze",
                 abilityName: "Liquid Ooze",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.LiquidOoze(),
+                    new Effects.AbilityEff.LiquidOoze(),
                 }
                 ) },
 
@@ -1883,14 +1883,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "liquidvoice",
                 abilityName: "Liquid Voice",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Aerilate(
+                    new Effects.AbilityEff.Aerilate(
                         toMoveType: "water",
                         powerMultiplier: 1f,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.SoundMove }
                                 ),
                         }
@@ -1903,13 +1903,13 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "magicbounce",
                 abilityName: "Magic Bounce",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.MagicBounce(
-                        magicCoat: new EffectDatabase.General.MagicCoat(),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.AbilityEff.MagicBounce(
+                        magicCoat: new Effects.General.MagicCoat(),
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.MagicCoatSusceptible }
                                 )
                         }
@@ -1922,10 +1922,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "magicguard",
                 abilityName: "Magic Guard",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Overcoat(allWeather: true),
-                    new EffectDatabase.AbilityEff.MagicGuard(),
+                    new Effects.AbilityEff.Overcoat(allWeather: true),
+                    new Effects.AbilityEff.MagicGuard(),
                 }
                 ) },
 
@@ -1934,9 +1934,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "magician",
                 abilityName: "Magician",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Magician(),
+                    new Effects.AbilityEff.Magician(),
                 }
                 ) },
 
@@ -1945,9 +1945,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "magmaarmor",
                 abilityName: "Magma Armor",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Limber(
+                    new Effects.AbilityEff.Limber(
                         conditions: new string[] { "freeze" }
                         ),
                 }
@@ -1962,13 +1962,13 @@ namespace PBS.Databases
                 {
 
                 },
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.MagnetPull(
+                    new Effects.AbilityEff.MagnetPull(
                         types: new string[] {"steel"},
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(types: new string[]{ "ghost" }, invert: true),
+                            new Effects.Filter.TypeList(types: new string[]{ "ghost" }, invert: true),
                         }
                         ),
                 }
@@ -1979,14 +1979,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "marvelscale",
                 abilityName: "Marvel Scale",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Guts(
-                        conditionCheck: new EffectDatabase.Filter.Harvest(
-                            conditionType: EffectDatabase.Filter.Harvest.ConditionType.Pokemon,
+                    new Effects.AbilityEff.Guts(
+                        conditionCheck: new Effects.Filter.Harvest(
+                            conditionType: Effects.Filter.Harvest.ConditionType.Pokemon,
                             conditions: new string[] { "burn", "freeze", "paralysis", "poison", "sleep" }
                             ),
-                        statScale: new EffectDatabase.General.StatScale(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.Defense, 1.5f },
@@ -2000,13 +2000,13 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "megalauncher",
                 abilityName: "Mega Launcher",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.IronFist(
+                    new Effects.AbilityEff.IronFist(
                         powerMultiplier: 1.5f,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.PulseMove }
                                 )
                         }
@@ -2019,14 +2019,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "merciless",
                 abilityName: "Merciless",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.SuperLuck(
+                    new Effects.AbilityEff.SuperLuck(
                         alwaysCritical: true,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.Harvest(
-                                conditionType: EffectDatabase.Filter.Harvest.ConditionType.Pokemon,
+                            new Effects.Filter.Harvest(
+                                conditionType: Effects.Filter.Harvest.ConditionType.Pokemon,
                                 conditions: new string[] { "poison" }
                                 )
                         }
@@ -2039,24 +2039,24 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "mimicry",
                 abilityName: "Mimicry",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Mimicry(
-                        conditions: new EffectDatabase.AbilityEff.Mimicry.MimicryCondition[]
+                    new Effects.AbilityEff.Mimicry(
+                        conditions: new Effects.AbilityEff.Mimicry.MimicryCondition[]
                         {
-                            new EffectDatabase.AbilityEff.Mimicry.MimicryCondition(
+                            new Effects.AbilityEff.Mimicry.MimicryCondition(
                                 conditions: new string[] { "electricterrain" },
                                 types: new string[] { "electric" }
                                 ),
-                            new EffectDatabase.AbilityEff.Mimicry.MimicryCondition(
+                            new Effects.AbilityEff.Mimicry.MimicryCondition(
                                 conditions: new string[] { "grassyterrain" },
                                 types: new string[] { "grass" }
                                 ),
-                            new EffectDatabase.AbilityEff.Mimicry.MimicryCondition(
+                            new Effects.AbilityEff.Mimicry.MimicryCondition(
                                 conditions: new string[] { "mistyterrain" },
                                 types: new string[] { "fairy" }
                                 ),
-                            new EffectDatabase.AbilityEff.Mimicry.MimicryCondition(
+                            new Effects.AbilityEff.Mimicry.MimicryCondition(
                                 conditions: new string[] { "psychicterrain" },
                                 types: new string[] { "psychic" }
                                 ),
@@ -2070,11 +2070,11 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "minus",
                 abilityName: "Minus",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Minus(
+                    new Effects.AbilityEff.Minus(
                         allyAbilities: new string[] { "minus", "plus" },
-                        statScale: new EffectDatabase.General.StatScale(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.SpecialAttack, 1.5f }
@@ -2089,9 +2089,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "mirrorarmor",
                 abilityName: "Mirror Armor",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.MirrorArmor(
+                    new Effects.AbilityEff.MirrorArmor(
                         lowerTriggers: new PokemonStats[]
                         {
                             PokemonStats.Attack, PokemonStats.Defense,
@@ -2107,10 +2107,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "mistysurge",
                 abilityName: "Misty Surge",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Drought(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.AbilityEff.Drought(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "mistyterrain"
                             )
@@ -2123,9 +2123,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "moldbreaker",
                 abilityName: "Mold Breaker",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.MoldBreaker(),
+                    new Effects.AbilityEff.MoldBreaker(),
                 }
                 ) },
 
@@ -2134,24 +2134,24 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "moody",
                 abilityName: "Moody",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Moody(
-                        statStageMods1: new List<EffectDatabase.General.StatStageMod>
+                    new Effects.AbilityEff.Moody(
+                        statStageMods1: new List<Effects.General.StatStageMod>
                         {
-                            new EffectDatabase.General.StatStageMod(ATKMod: 2),
-                            new EffectDatabase.General.StatStageMod(DEFMod: 2),
-                            new EffectDatabase.General.StatStageMod(SPAMod: 2),
-                            new EffectDatabase.General.StatStageMod(SPDMod: 2),
-                            new EffectDatabase.General.StatStageMod(SPEMod: 2),
+                            new Effects.General.StatStageMod(ATKMod: 2),
+                            new Effects.General.StatStageMod(DEFMod: 2),
+                            new Effects.General.StatStageMod(SPAMod: 2),
+                            new Effects.General.StatStageMod(SPDMod: 2),
+                            new Effects.General.StatStageMod(SPEMod: 2),
                         },
-                        statStageMods2: new List<EffectDatabase.General.StatStageMod>
+                        statStageMods2: new List<Effects.General.StatStageMod>
                         {
-                            new EffectDatabase.General.StatStageMod(ATKMod: -1),
-                            new EffectDatabase.General.StatStageMod(DEFMod: -1),
-                            new EffectDatabase.General.StatStageMod(SPAMod: -1),
-                            new EffectDatabase.General.StatStageMod(SPDMod: -1),
-                            new EffectDatabase.General.StatStageMod(SPEMod: -1),
+                            new Effects.General.StatStageMod(ATKMod: -1),
+                            new Effects.General.StatStageMod(DEFMod: -1),
+                            new Effects.General.StatStageMod(SPAMod: -1),
+                            new Effects.General.StatStageMod(SPDMod: -1),
+                            new Effects.General.StatStageMod(SPEMod: -1),
                         }
                         ),
                 }
@@ -2162,14 +2162,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "motordrive",
                 abilityName: "Motor Drive",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.VoltAbsorb(
-                        conditions: new EffectDatabase.AbilityEff.VoltAbsorb.VoltAbsorbCondition[]
+                    new Effects.AbilityEff.VoltAbsorb(
+                        conditions: new Effects.AbilityEff.VoltAbsorb.VoltAbsorbCondition[]
                         {
-                            new EffectDatabase.AbilityEff.VoltAbsorb.VoltAbsorbCondition(
+                            new Effects.AbilityEff.VoltAbsorb.VoltAbsorbCondition(
                                 moveTypes: new string[] { "electric" },
-                                motorDrive: new EffectDatabase.General.StatStageMod(SPEMod: 1)
+                                motorDrive: new Effects.General.StatStageMod(SPEMod: 1)
                                 ),
                         }),
                 }
@@ -2180,10 +2180,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "moxie",
                 abilityName: "Moxie",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Moxie(
-                        statStageMod: new EffectDatabase.General.StatStageMod(ATKMod: 1)
+                    new Effects.AbilityEff.Moxie(
+                        statStageMod: new Effects.General.StatStageMod(ATKMod: 1)
                         ),
                 }
                 ) },
@@ -2204,9 +2204,9 @@ namespace PBS.Databases
                 {
                     new AbilityEffect(effectType: AbilityEffectType.Multitype)
                 },
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Multitype(),
+                    new Effects.AbilityEff.Multitype(),
                 }
                 ) },
 
@@ -2215,9 +2215,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "multiscale",
                 abilityName: "Multiscale",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Multiscale(),
+                    new Effects.AbilityEff.Multiscale(),
                 }
                 ) },
 
@@ -2226,9 +2226,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "mummy",
                 abilityName: "Mummy",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Mummy(),
+                    new Effects.AbilityEff.Mummy(),
                 }
                 ) },
 
@@ -2237,13 +2237,13 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "naturalcure",
                 abilityName: "Natural Cure",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.NaturalCure(
-                        conditions: new EffectDatabase.Filter.Harvest[]
+                    new Effects.AbilityEff.NaturalCure(
+                        conditions: new Effects.Filter.Harvest[]
                         {
-                            new EffectDatabase.Filter.Harvest(
-                                conditionType: EffectDatabase.Filter.Harvest.ConditionType.Pokemon,
+                            new Effects.Filter.Harvest(
+                                conditionType: Effects.Filter.Harvest.ConditionType.Pokemon,
                                 conditions: new string[] { "burn", "freeze", "paralysis", "poison", "sleep" }
                                 )
                         }
@@ -2256,9 +2256,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "neuroforce",
                 abilityName: "Neuroforce",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.TintedLens(
+                    new Effects.AbilityEff.TintedLens(
                         neuroforceModifier: 1.2f),
                 }
                 ) },
@@ -2272,9 +2272,9 @@ namespace PBS.Databases
                 {
                     AbilityTag.CannotNeutralize,
                 },
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.NeutralizingGas(),
+                    new Effects.AbilityEff.NeutralizingGas(),
                 }
                 ) },
 
@@ -2283,9 +2283,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "noguard",
                 abilityName: "No Guard",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.NoGuard(),
+                    new Effects.AbilityEff.NoGuard(),
                 }
                 ) },
 
@@ -2294,9 +2294,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "normalize",
                 abilityName: "Normalize",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Aerilate(
+                    new Effects.AbilityEff.Aerilate(
                         toMoveType: "normal"
                         ),
                 }
@@ -2307,12 +2307,12 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "oblivious",
                 abilityName: "Oblivious",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Oblivious(
+                    new Effects.AbilityEff.Oblivious(
                         effectsBlocked: new PokemonSEType[]{ PokemonSEType.Infatuation, PokemonSEType.Taunt }
                         ),
-                    new EffectDatabase.AbilityEff.IntimidateBlock(
+                    new Effects.AbilityEff.IntimidateBlock(
                         abilitiesBlocked: new string[] { "intimidate" }
                         ),
                 }
@@ -2323,13 +2323,13 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "overcoat",
                 abilityName: "Overcoat",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Overcoat(allWeather: true),
-                    new EffectDatabase.AbilityEff.Cacophony(
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.AbilityEff.Overcoat(allWeather: true),
+                    new Effects.AbilityEff.Cacophony(
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.PowderMove }
                                 )
                         }
@@ -2342,15 +2342,15 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "overgrow",
                 abilityName: "Overgrow",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.IronFist(
+                    new Effects.AbilityEff.IronFist(
                         powerMultiplier: 1.5f,
                         blazeThreshold: 1f/3,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "grass" }
                                 )
                         }
@@ -2363,12 +2363,12 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "owntempo",
                 abilityName: "Own Tempo",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Oblivious(
+                    new Effects.AbilityEff.Oblivious(
                         effectsBlocked: new PokemonSEType[]{ PokemonSEType.Confusion }
                         ),
-                    new EffectDatabase.AbilityEff.IntimidateBlock(
+                    new Effects.AbilityEff.IntimidateBlock(
                         abilitiesBlocked: new string[] { "intimidate" }
                         ),
                 }
@@ -2379,13 +2379,13 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "parentalbond",
                 abilityName: "Parental Bond",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.ParentalBond(
-                        bondedHits: new EffectDatabase.AbilityEff.ParentalBond.BondedHit[]
+                    new Effects.AbilityEff.ParentalBond(
+                        bondedHits: new Effects.AbilityEff.ParentalBond.BondedHit[]
                         {
-                            new EffectDatabase.AbilityEff.ParentalBond.BondedHit(damageModifier: 1f),
-                            new EffectDatabase.AbilityEff.ParentalBond.BondedHit(damageModifier: 0.25f),
+                            new Effects.AbilityEff.ParentalBond.BondedHit(damageModifier: 1f),
+                            new Effects.AbilityEff.ParentalBond.BondedHit(damageModifier: 0.25f),
                         }
                         ),
                 }
@@ -2396,9 +2396,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "pastelveil",
                 abilityName: "Pastel Veil",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Limber(
+                    new Effects.AbilityEff.Limber(
                         pastelVeil: true,
                         conditions: new string[] { "poison" }
                         ),
@@ -2410,17 +2410,17 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "perishbody",
                 abilityName: "Perish Body",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.FlameBody(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.AbilityEff.FlameBody(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "perishsong"
                             ),
                         perishBody: true,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.MakesContact }
                                 )
                         }
@@ -2433,9 +2433,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "pickpocket",
                 abilityName: "Pickpocket",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Pickpocket(),
+                    new Effects.AbilityEff.Pickpocket(),
                 }
                 ) },
 
@@ -2444,14 +2444,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "pixilate",
                 abilityName: "Pixilate",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Aerilate(
+                    new Effects.AbilityEff.Aerilate(
                         toMoveType: "fairy",
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "normal" }
                                 ),
                         }
@@ -2464,11 +2464,11 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "plus",
                 abilityName: "Plus",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Minus(
+                    new Effects.AbilityEff.Minus(
                         allyAbilities: new string[] { "minus", "plus" },
-                        statScale: new EffectDatabase.General.StatScale(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.SpecialAttack, 1.5f }
@@ -2483,20 +2483,20 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "poisonheal",
                 abilityName: "Poison Heal",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.PoisonHeal(
-                        conditions: new EffectDatabase.AbilityEff.PoisonHeal.HealCondition[]
+                    new Effects.AbilityEff.PoisonHeal(
+                        conditions: new Effects.AbilityEff.PoisonHeal.HealCondition[]
                         {
-                            new EffectDatabase.AbilityEff.PoisonHeal.HealCondition(
-                                heal: new EffectDatabase.General.HealHP(
-                                    healMode: EffectDatabase.General.HealHP.HealMode.MaxHPPercent,
+                            new Effects.AbilityEff.PoisonHeal.HealCondition(
+                                heal: new Effects.General.HealHP(
+                                    healMode: Effects.General.HealHP.HealMode.MaxHPPercent,
                                     healValue: 1f/8
                                     ),
-                                conditions: new EffectDatabase.Filter.Harvest[]
+                                conditions: new Effects.Filter.Harvest[]
                                 {
-                                    new EffectDatabase.Filter.Harvest(
-                                        conditionType: EffectDatabase.Filter.Harvest.ConditionType.Pokemon,
+                                    new Effects.Filter.Harvest(
+                                        conditionType: Effects.Filter.Harvest.ConditionType.Pokemon,
                                         conditions: new string[] { "poison" }
                                         )
                                 }
@@ -2511,16 +2511,16 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "poisonpoint",
                 abilityName: "Poison Point",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.FlameBody(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.AbilityEff.FlameBody(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "poison"
                             ),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.MakesContact }
                                 )
                         },
@@ -2534,16 +2534,16 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "poisontouch",
                 abilityName: "Poison Touch",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.PoisonTouch(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.AbilityEff.PoisonTouch(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "poison"
                             ),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.MakesContact }
                                 )
                         }
@@ -2563,11 +2563,11 @@ namespace PBS.Databases
                     AbilityTag.CannotSuppress,
                     AbilityTag.CannotWorrySeed,
                 },
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.ZenMode(
+                    new Effects.AbilityEff.ZenMode(
                         hpThreshold: 0.5f, checkBelow: true,
-                        transformation: new EffectDatabase.General.FormTransformation(
+                        transformation: new Effects.General.FormTransformation(
                             preForms: new string[] { "zygarde", "zygarde-10" },
                             toForm: "zygarde-complete"
                             )
@@ -2580,9 +2580,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "powerofalchemy",
                 abilityName: "Power Of Alchemy",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.PowerOfAlchemy(),
+                    new Effects.AbilityEff.PowerOfAlchemy(),
                 }
                 ) },
 
@@ -2591,9 +2591,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "powerspot",
                 abilityName: "Power Spot",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Battery(),
+                    new Effects.AbilityEff.Battery(),
                 }
                 ) },
 
@@ -2602,24 +2602,24 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "prankster",
                 abilityName: "Prankster",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.GaleWings(
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.AbilityEff.GaleWings(
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveCategories: new MoveCategory[] { MoveCategory.Status }
                                 )
                         }
                         ),
-                    new EffectDatabase.AbilityEff.Prankster(
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.AbilityEff.Prankster(
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Pokemon,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Pokemon,
                                 types: new string[] { "dark" }
                                 ),
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveCategories: new MoveCategory[] { MoveCategory.Status }
                                 ),
                         }
@@ -2632,9 +2632,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "pressure",
                 abilityName: "Pressure",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Pressure()
+                    new Effects.AbilityEff.Pressure()
                 }
                 ) },
 
@@ -2643,11 +2643,11 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "primordialsea",
                 abilityName: "Primordial Sea",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Drought(
+                    new Effects.AbilityEff.Drought(
                         desolateLand: true,
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "heavyrain"
                             )
@@ -2664,9 +2664,9 @@ namespace PBS.Databases
                 {
                     AbilityTag.BypassMoldBreaker,
                 },
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.SolidRock(
+                    new Effects.AbilityEff.SolidRock(
                         superEffectiveModifier: 0.75f),
                 }
                 ) },
@@ -2676,9 +2676,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "propellertail",
                 abilityName: "Propeller Tail",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.PropellerTail(),
+                    new Effects.AbilityEff.PropellerTail(),
                 }
                 ) },
 
@@ -2687,9 +2687,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "protean",
                 abilityName: "Protean",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Protean(),
+                    new Effects.AbilityEff.Protean(),
                 }
                 ) },
 
@@ -2698,10 +2698,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "psychicsurge",
                 abilityName: "Psychic Surge",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Drought(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.AbilityEff.Drought(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "psychicterrain"
                             )
@@ -2714,18 +2714,18 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "punkrock",
                 abilityName: "Punk Rock",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.IronFist(
+                    new Effects.AbilityEff.IronFist(
                         powerMultiplier: 1.3f,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.SoundMove }
                                 )
                         }
                         ),
-                    new EffectDatabase.AbilityEff.IceScales(
+                    new Effects.AbilityEff.IceScales(
                         damageModifier: 0.5f,
                         tags: new MoveTag[] { MoveTag.SoundMove, }
                         ),
@@ -2737,10 +2737,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "purepower",
                 abilityName: "Pure Power",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.CompoundEyes(
-                        statScale: new EffectDatabase.General.StatScale(
+                    new Effects.AbilityEff.CompoundEyes(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.Attack, 2f },
@@ -2754,9 +2754,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "queenlymajesty",
                 abilityName: "Queenly Majesty",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.QueenlyMajesty(),
+                    new Effects.AbilityEff.QueenlyMajesty(),
                 }
                 ) },
 
@@ -2765,9 +2765,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "quickdraw",
                 abilityName: "Quick Draw",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.QuickDraw(),
+                    new Effects.AbilityEff.QuickDraw(),
                 }
                 ) },
 
@@ -2776,14 +2776,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "quickfeet",
                 abilityName: "Quick Feet",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Guts(
-                        conditionCheck: new EffectDatabase.Filter.Harvest(
-                            conditionType: EffectDatabase.Filter.Harvest.ConditionType.Pokemon,
+                    new Effects.AbilityEff.Guts(
+                        conditionCheck: new Effects.Filter.Harvest(
+                            conditionType: Effects.Filter.Harvest.ConditionType.Pokemon,
                             conditions: new string[] { "burn", "freeze", "paralysis", "poison", "sleep" }
                             ),
-                        statScale: new EffectDatabase.General.StatScale(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.Speed, 1.5f },
@@ -2797,12 +2797,12 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "raindish",
                 abilityName: "Rain Dish",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.DrySkin(
-                        conditions: new EffectDatabase.AbilityEff.DrySkin.DrySkinCondition[]
+                    new Effects.AbilityEff.DrySkin(
+                        conditions: new Effects.AbilityEff.DrySkin.DrySkinCondition[]
                         {
-                            new EffectDatabase.AbilityEff.DrySkin.DrySkinCondition(
+                            new Effects.AbilityEff.DrySkin.DrySkinCondition(
                                 conditions: new string[] { "rain" },
                                 hpGainPercent: 1f/16
                                 ),
@@ -2816,20 +2816,20 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "rattled",
                 abilityName: "Rattled",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Justified(
-                        statStageMod: new EffectDatabase.General.StatStageMod(SPEMod: 1),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.AbilityEff.Justified(
+                        statStageMod: new Effects.General.StatStageMod(SPEMod: 1),
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "bug", "dark", "ghost" }
                                 ),
                         }
                         ),
-                    new EffectDatabase.AbilityEff.IntimidateTrigger(
-                        statStageMod: new EffectDatabase.General.StatStageMod(SPEMod: 1),
+                    new Effects.AbilityEff.IntimidateTrigger(
+                        statStageMod: new Effects.General.StatStageMod(SPEMod: 1),
                         abilityTriggers: new string[] { "intimidate" }
                         ),
                 }
@@ -2840,9 +2840,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "receiver",
                 abilityName: "Receiver",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.PowerOfAlchemy(),
+                    new Effects.AbilityEff.PowerOfAlchemy(),
                 }
                 ) },
 
@@ -2851,13 +2851,13 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "reckless",
                 abilityName: "Reckless",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.IronFist(
+                    new Effects.AbilityEff.IronFist(
                         powerMultiplier: 1.2f,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveEffects: new MoveEffectType[] { MoveEffectType.JumpKick, MoveEffectType.Recoil, }
                                 )
                         }
@@ -2870,14 +2870,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "refrigerate",
                 abilityName: "Refrigerate",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Aerilate(
+                    new Effects.AbilityEff.Aerilate(
                         toMoveType: "ice",
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "normal" }
                                 ),
                         }
@@ -2890,11 +2890,11 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "regenerator",
                 abilityName: "Regenerator",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.NaturalCure(
-                        regenerator: new EffectDatabase.General.HealHP(
-                            healMode: EffectDatabase.General.HealHP.HealMode.MaxHPPercent,
+                    new Effects.AbilityEff.NaturalCure(
+                        regenerator: new Effects.General.HealHP(
+                            healMode: Effects.General.HealHP.HealMode.MaxHPPercent,
                             healValue: 1f/3
                             )
                         ),
@@ -2906,13 +2906,13 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "ripen",
                 abilityName: "Ripen",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Ripen(
+                    new Effects.AbilityEff.Ripen(
                         effectMultiplier: 2f,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.ItemCheck(
+                            new Effects.Filter.ItemCheck(
                                 pockets: new ItemPocket[] { ItemPocket.Berries }
                                 )
                         }
@@ -2925,9 +2925,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "rivalry",
                 abilityName: "Rivalry",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Rivalry(),
+                    new Effects.AbilityEff.Rivalry(),
                 }
                 ) },
 
@@ -2947,9 +2947,9 @@ namespace PBS.Databases
                 {
                     new AbilityEffect(effectType: AbilityEffectType.RKSSystem)
                 },
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.RKSSystem(),
+                    new Effects.AbilityEff.RKSSystem(),
                 }
                 ) },
 
@@ -2958,9 +2958,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "rockhead",
                 abilityName: "Rock Head",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.RockHead(),
+                    new Effects.AbilityEff.RockHead(),
                 }
                 ) },
 
@@ -2969,16 +2969,16 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "roughskin",
                 abilityName: "Rough Skin",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.RoughSkin(
-                        damage: new EffectDatabase.General.Damage(
-                            mode: EffectDatabase.General.Damage.DamageMode.MaxHPPercent,
+                    new Effects.AbilityEff.RoughSkin(
+                        damage: new Effects.General.Damage(
+                            mode: Effects.General.Damage.DamageMode.MaxHPPercent,
                             value: 1f/8
                             ),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.MakesContact }
                                 ),
                         }
@@ -2991,9 +2991,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "runaway",
                 abilityName: "Run Away",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.RunAway(),
+                    new Effects.AbilityEff.RunAway(),
                 }
                 ) },
 
@@ -3002,17 +3002,17 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "sandforce",
                 abilityName: "Sand Force",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Overcoat(
+                    new Effects.AbilityEff.Overcoat(
                         conditions: new string[] { "sandstorm" }
                         ),
-                    new EffectDatabase.AbilityEff.IronFist(
+                    new Effects.AbilityEff.IronFist(
                         powerMultiplier: 1.3f,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "ground", "rock", "steel", }
                                 )
                         }
@@ -3025,17 +3025,17 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "sandrush",
                 abilityName: "Sand Rush",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Overcoat(
+                    new Effects.AbilityEff.Overcoat(
                         conditions: new string[] { "sandstorm" }
                         ),
-                    new EffectDatabase.AbilityEff.SwiftSwim(
-                        conditions: new List<EffectDatabase.AbilityEff.SwiftSwim.SwiftSwimCondition>
+                    new Effects.AbilityEff.SwiftSwim(
+                        conditions: new List<Effects.AbilityEff.SwiftSwim.SwiftSwimCondition>
                         {
-                            new EffectDatabase.AbilityEff.SwiftSwim.SwiftSwimCondition(
+                            new Effects.AbilityEff.SwiftSwim.SwiftSwimCondition(
                                 conditions: new string[] { "sandstorm" },
-                                statScale: new EffectDatabase.General.StatScale(
+                                statScale: new Effects.General.StatScale(
                                     scaleMap: new Dictionary<PokemonStats, float>
                                     {
                                         { PokemonStats.Speed, 2f }
@@ -3050,10 +3050,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "sandspit",
                 abilityName: "Sand Spit",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.FlameBody(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.AbilityEff.FlameBody(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "sandstorm"
                             )
@@ -3066,10 +3066,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "sandstream",
                 abilityName: "Sand Stream",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Drought(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.AbilityEff.Drought(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "sandstorm"
                             )
@@ -3082,21 +3082,21 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "sandveil",
                 abilityName: "Sand Veil",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Overcoat(
+                    new Effects.AbilityEff.Overcoat(
                         conditions: new string[] { "sandstorm" }
                         ),
-                    new EffectDatabase.AbilityEff.CompoundEyes(
-                        statScale: new EffectDatabase.General.StatScale(
+                    new Effects.AbilityEff.CompoundEyes(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.Evasion, 1.2f },
                             }),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.Harvest(
-                                conditionType: EffectDatabase.Filter.Harvest.ConditionType.Battle,
+                            new Effects.Filter.Harvest(
+                                conditionType: Effects.Filter.Harvest.ConditionType.Battle,
                                 conditions: new string[] { "sandstorm" }
                                 )
                         }
@@ -3109,14 +3109,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "sapsipper",
                 abilityName: "Sap Sipper",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.VoltAbsorb(
-                        conditions: new EffectDatabase.AbilityEff.VoltAbsorb.VoltAbsorbCondition[]
+                    new Effects.AbilityEff.VoltAbsorb(
+                        conditions: new Effects.AbilityEff.VoltAbsorb.VoltAbsorbCondition[]
                         {
-                            new EffectDatabase.AbilityEff.VoltAbsorb.VoltAbsorbCondition(
+                            new Effects.AbilityEff.VoltAbsorb.VoltAbsorbCondition(
                                 moveTypes: new string[] { "grass" },
-                                motorDrive: new EffectDatabase.General.StatStageMod(ATKMod: 1)
+                                motorDrive: new Effects.General.StatStageMod(ATKMod: 1)
                                 ),
                         }),
                 }
@@ -3134,17 +3134,17 @@ namespace PBS.Databases
                     AbilityTag.CannotSuppress,
                     AbilityTag.CannotWorrySeed,
                 },
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.ZenMode(
+                    new Effects.AbilityEff.ZenMode(
                         hpThreshold: 0.25f, checkBelow: false,
-                        transformation: new EffectDatabase.General.FormTransformation(
+                        transformation: new Effects.General.FormTransformation(
                             preForm: "wishiwashi", toForm: "wishiwashi-school"
                             )
                         ),
-                    new EffectDatabase.AbilityEff.ZenMode(
+                    new Effects.AbilityEff.ZenMode(
                         hpThreshold: 0.25f, checkBelow: true,
-                        transformation: new EffectDatabase.General.FormTransformation(
+                        transformation: new Effects.General.FormTransformation(
                             preForm: "wishiwashi-school", toForm: "wishiwashi"
                             )
                         ),
@@ -3156,12 +3156,12 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "scrappy",
                 abilityName: "Scrappy",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Scrappy(
+                    new Effects.AbilityEff.Scrappy(
                         bypassImmunities: new string[] { "ghost" }
                         ),
-                    new EffectDatabase.AbilityEff.IntimidateBlock(
+                    new Effects.AbilityEff.IntimidateBlock(
                         abilitiesBlocked: new string[] { "intimidate" }
                         ),
                 }
@@ -3172,9 +3172,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "screencleaner",
                 abilityName: "Screen Cleaner",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.ScreenCleaner(),
+                    new Effects.AbilityEff.ScreenCleaner(),
                 }
                 ) },
 
@@ -3183,9 +3183,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "serenegrace",
                 abilityName: "Serene Grace",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.SereneGrace(),
+                    new Effects.AbilityEff.SereneGrace(),
                 }
                 ) },
 
@@ -3198,9 +3198,9 @@ namespace PBS.Databases
                 {
                     AbilityTag.BypassMoldBreaker
                 },
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Multiscale(),
+                    new Effects.AbilityEff.Multiscale(),
                 }
                 ) },
 
@@ -3213,12 +3213,12 @@ namespace PBS.Databases
                 {
 
                 },
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.ShadowTag(
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.AbilityEff.ShadowTag(
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(types: new string[]{ "ghost" }, invert: true),
+                            new Effects.Filter.TypeList(types: new string[]{ "ghost" }, invert: true),
                         }
                         ),
                 }
@@ -3229,9 +3229,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "shedskin",
                 abilityName: "Shed Skin",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Hydration(
+                    new Effects.AbilityEff.Hydration(
                         chance: 0.3f,
                         statusTypes: new PokemonSEType[] { PokemonSEType.NonVolatile }
                         ),
@@ -3243,9 +3243,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "sheerforce",
                 abilityName: "Sheer Force",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.SheerForce(),
+                    new Effects.AbilityEff.SheerForce(),
                 }
                 ) },
 
@@ -3254,9 +3254,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "shellarmor",
                 abilityName: "Shell Armor",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.BattleArmor(),
+                    new Effects.AbilityEff.BattleArmor(),
                 }
                 ) },
 
@@ -3265,9 +3265,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "shielddust",
                 abilityName: "Shield Dust",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.ShieldDust(),
+                    new Effects.AbilityEff.ShieldDust(),
                 }
                 ) },
 
@@ -3283,29 +3283,29 @@ namespace PBS.Databases
                     AbilityTag.CannotSuppress,
                     AbilityTag.CannotWorrySeed,
                 },
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.ZenMode(
+                    new Effects.AbilityEff.ZenMode(
                         hpThreshold: 0.5f, checkBelow: true,
-                        transformation: new EffectDatabase.General.FormTransformation(
+                        transformation: new Effects.General.FormTransformation(
                             preForm: "minior", toForm: "minior-core"
                             )
                         ),
-                    new EffectDatabase.AbilityEff.ZenMode(
+                    new Effects.AbilityEff.ZenMode(
                         hpThreshold: 0.5f, checkBelow: false,
-                        transformation: new EffectDatabase.General.FormTransformation(
+                        transformation: new Effects.General.FormTransformation(
                             preForm: "minior-core", toForm: "minior"
                             )
                         ),
-                    new EffectDatabase.AbilityEff.ShieldsDown(
-                        meteorForms: new EffectDatabase.AbilityEff.ShieldsDown.MeteorForm[]
+                    new Effects.AbilityEff.ShieldsDown(
+                        meteorForms: new Effects.AbilityEff.ShieldsDown.MeteorForm[]
                         {
-                            new EffectDatabase.AbilityEff.ShieldsDown.MeteorForm(
+                            new Effects.AbilityEff.ShieldsDown.MeteorForm(
                                 forms: new string[] { "minior" },
-                                blockedStatuses: new EffectDatabase.Filter.Harvest[]
+                                blockedStatuses: new Effects.Filter.Harvest[]
                                 {
-                                    new EffectDatabase.Filter.Harvest(
-                                        conditionType: EffectDatabase.Filter.Harvest.ConditionType.Pokemon,
+                                    new Effects.Filter.Harvest(
+                                        conditionType: Effects.Filter.Harvest.ConditionType.Pokemon,
                                         statusPKTypes: new PokemonSEType[] { PokemonSEType.NonVolatile }
                                         )
                                 }
@@ -3320,9 +3320,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "simple",
                 abilityName: "Simple",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Simple(),
+                    new Effects.AbilityEff.Simple(),
                 }
                 ) },
 
@@ -3331,9 +3331,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "skilllink",
                 abilityName: "Skill Link",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.SkillLink(),
+                    new Effects.AbilityEff.SkillLink(),
                 }
                 ) },
 
@@ -3342,10 +3342,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "slowstart",
                 abilityName: "Slow Start",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.SlowStart(
-                        statScale: new EffectDatabase.General.StatScale(
+                    new Effects.AbilityEff.SlowStart(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.Attack, 0.5f },
@@ -3360,14 +3360,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "slushrush",
                 abilityName: "Slush Rush",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.SwiftSwim(
-                        conditions: new List<EffectDatabase.AbilityEff.SwiftSwim.SwiftSwimCondition>
+                    new Effects.AbilityEff.SwiftSwim(
+                        conditions: new List<Effects.AbilityEff.SwiftSwim.SwiftSwimCondition>
                         {
-                            new EffectDatabase.AbilityEff.SwiftSwim.SwiftSwimCondition(
+                            new Effects.AbilityEff.SwiftSwim.SwiftSwimCondition(
                                 conditions: new string[] { "hail" },
-                                statScale: new EffectDatabase.General.StatScale(
+                                statScale: new Effects.General.StatScale(
                                     scaleMap: new Dictionary<PokemonStats, float>
                                     {
                                         { PokemonStats.Speed, 2f }
@@ -3382,9 +3382,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "sniper",
                 abilityName: "Sniper",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Sniper(),
+                    new Effects.AbilityEff.Sniper(),
                 }
                 ) },
 
@@ -3393,21 +3393,21 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "snowcloak",
                 abilityName: "Snow Cloak",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Overcoat(
+                    new Effects.AbilityEff.Overcoat(
                         conditions: new string[] { "hail" }
                         ),
-                    new EffectDatabase.AbilityEff.CompoundEyes(
-                        statScale: new EffectDatabase.General.StatScale(
+                    new Effects.AbilityEff.CompoundEyes(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.Evasion, 1.2f },
                             }),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.Harvest(
-                                conditionType: EffectDatabase.Filter.Harvest.ConditionType.Battle,
+                            new Effects.Filter.Harvest(
+                                conditionType: Effects.Filter.Harvest.ConditionType.Battle,
                                 conditions: new string[] { "hail" }
                                 )
                         }
@@ -3420,10 +3420,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "snowwarning",
                 abilityName: "Snow Warning",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Drought(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.AbilityEff.Drought(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Battle,
                             statusID: "hail"
                             )
@@ -3436,27 +3436,27 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "solarpower",
                 abilityName: "Solar Power",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.DrySkin(
-                        conditions: new EffectDatabase.AbilityEff.DrySkin.DrySkinCondition[]
+                    new Effects.AbilityEff.DrySkin(
+                        conditions: new Effects.AbilityEff.DrySkin.DrySkinCondition[]
                         {
-                            new EffectDatabase.AbilityEff.DrySkin.DrySkinCondition(
+                            new Effects.AbilityEff.DrySkin.DrySkinCondition(
                                 conditions: new string[] { "harshsunlight" },
                                 hpLosePercent: 1f/8
                                 ),
                         }
                         ),
-                    new EffectDatabase.AbilityEff.CompoundEyes(
-                        statScale: new EffectDatabase.General.StatScale(
+                    new Effects.AbilityEff.CompoundEyes(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.SpecialAttack, 1.5f },
                             }),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.Harvest(
-                                conditionType: EffectDatabase.Filter.Harvest.ConditionType.Battle,
+                            new Effects.Filter.Harvest(
+                                conditionType: Effects.Filter.Harvest.ConditionType.Battle,
                                 conditions: new string[] { "harshsunlight" }
                                 )
                         }
@@ -3469,9 +3469,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "solidrock",
                 abilityName: "Solid Rock",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.SolidRock(
+                    new Effects.AbilityEff.SolidRock(
                         superEffectiveModifier: 0.75f),
                 }
                 ) },
@@ -3481,12 +3481,12 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "soundproof",
                 abilityName: "Soundproof",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Cacophony(
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.AbilityEff.Cacophony(
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.SoundMove }
                                 )
                         }
@@ -3499,10 +3499,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "soulheart",
                 abilityName: "Soul-Heart",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.SoulHeart(
-                        statStageMod: new EffectDatabase.General.StatStageMod(SPAMod: 1)
+                    new Effects.AbilityEff.SoulHeart(
+                        statStageMod: new Effects.General.StatStageMod(SPAMod: 1)
                         ),
                 }
                 ) },
@@ -3512,10 +3512,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "speedboost",
                 abilityName: "Speed Boost",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.SpeedBoost(
-                        statStageMod: new EffectDatabase.General.StatStageMod(SPEMod: 1)
+                    new Effects.AbilityEff.SpeedBoost(
+                        statStageMod: new Effects.General.StatStageMod(SPEMod: 1)
                         ),
                 }
                 ) },
@@ -3525,9 +3525,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "stakeout",
                 abilityName: "Stakeout",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Stakeout(),
+                    new Effects.AbilityEff.Stakeout(),
                 }
                 ) },
 
@@ -3536,9 +3536,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "stall",
                 abilityName: "Stall",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Stall(),
+                    new Effects.AbilityEff.Stall(),
                 }
                 ) },
 
@@ -3547,9 +3547,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "stalwart",
                 abilityName: "Stalwart",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.PropellerTail(),
+                    new Effects.AbilityEff.PropellerTail(),
                 }
                 ) },
 
@@ -3558,10 +3558,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "stamina",
                 abilityName: "Stamina",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Justified(
-                        statStageMod: new EffectDatabase.General.StatStageMod(DEFMod: 1)
+                    new Effects.AbilityEff.Justified(
+                        statStageMod: new Effects.General.StatStageMod(DEFMod: 1)
                         ),
                 }
                 ) },
@@ -3571,26 +3571,26 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "stancechange",
                 abilityName: "Stance Change",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.StanceChange(
-                        transformations: new EffectDatabase.AbilityEff.StanceChange.Transformation[]
+                    new Effects.AbilityEff.StanceChange(
+                        transformations: new Effects.AbilityEff.StanceChange.Transformation[]
                         {
                             // Blade
-                            new EffectDatabase.AbilityEff.StanceChange.Transformation(
-                                transformation: new EffectDatabase.General.FormTransformation(
+                            new Effects.AbilityEff.StanceChange.Transformation(
+                                transformation: new Effects.General.FormTransformation(
                                     preForm: "aegislash", toForm: "aegislash-blade"),
-                                moveCheck: new EffectDatabase.Filter.MoveCheck(
+                                moveCheck: new Effects.Filter.MoveCheck(
                                     moveCategories: new MoveCategory[]
                                     {
                                         MoveCategory.Physical, MoveCategory.Special
                                     })
                                 ),
                             // Shield
-                            new EffectDatabase.AbilityEff.StanceChange.Transformation(
-                                transformation: new EffectDatabase.General.FormTransformation(
+                            new Effects.AbilityEff.StanceChange.Transformation(
+                                transformation: new Effects.General.FormTransformation(
                                     preForm: "aegislash-blade", toForm: "aegislash"),
-                                moveCheck: new EffectDatabase.Filter.MoveCheck(
+                                moveCheck: new Effects.Filter.MoveCheck(
                                     specificMoveIDs: new string[] { "kingsshield" })
                                 )
                         }
@@ -3603,16 +3603,16 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "static",
                 abilityName: "Static",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.FlameBody(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.AbilityEff.FlameBody(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "paralysis"
                             ),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.MakesContact }
                                 )
                         },
@@ -3626,14 +3626,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "steamengine",
                 abilityName: "Steam Engine",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Justified(
-                        statStageMod: new EffectDatabase.General.StatStageMod(SPEMod: 6),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.AbilityEff.Justified(
+                        statStageMod: new Effects.General.StatStageMod(SPEMod: 6),
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "water" }
                                 ),
                         }
@@ -3646,14 +3646,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "steelworker",
                 abilityName: "Steelworker",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.IronFist(
+                    new Effects.AbilityEff.IronFist(
                         powerMultiplier: 1.5f,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "steel" }
                                 )
                         }
@@ -3666,15 +3666,15 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "steelyspirit",
                 abilityName: "Steely Spirit",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.IronFist(
+                    new Effects.AbilityEff.IronFist(
                         powerMultiplier: 1.5f,
                         steelySpirit: true,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "steel" }
                                 )
                         }
@@ -3687,16 +3687,16 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "stench",
                 abilityName: "Stench",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.PoisonTouch(
-                        inflictStatus: new EffectDatabase.General.InflictStatus(
+                    new Effects.AbilityEff.PoisonTouch(
+                        inflictStatus: new Effects.General.InflictStatus(
                             statusType: StatusType.Pokemon,
                             statusID: "flinch"
                             ),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.MakesContact }
                                 )
                         }
@@ -3709,9 +3709,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "stickyhold",
                 abilityName: "Sticky Hold",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.StickyHold(),
+                    new Effects.AbilityEff.StickyHold(),
                 }
                 ) },
 
@@ -3720,22 +3720,22 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "stormdrain",
                 abilityName: "Storm Drain",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.LightningRod(
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.AbilityEff.LightningRod(
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "water" }
                                 ),
                         }),
-                    new EffectDatabase.AbilityEff.VoltAbsorb(
-                        conditions: new EffectDatabase.AbilityEff.VoltAbsorb.VoltAbsorbCondition[]
+                    new Effects.AbilityEff.VoltAbsorb(
+                        conditions: new Effects.AbilityEff.VoltAbsorb.VoltAbsorbCondition[]
                         {
-                            new EffectDatabase.AbilityEff.VoltAbsorb.VoltAbsorbCondition(
+                            new Effects.AbilityEff.VoltAbsorb.VoltAbsorbCondition(
                                 moveTypes: new string[] { "water" },
-                                motorDrive: new EffectDatabase.General.StatStageMod(SPAMod: 1)
+                                motorDrive: new Effects.General.StatStageMod(SPAMod: 1)
                                 ),
                         }),
                 }
@@ -3746,13 +3746,13 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "strongjaw",
                 abilityName: "Strong Jaw",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.IronFist(
+                    new Effects.AbilityEff.IronFist(
                         powerMultiplier: 1.5f,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.BiteMove }
                                 )
                         }
@@ -3765,9 +3765,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "sturdy",
                 abilityName: "Sturdy",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Sturdy(),
+                    new Effects.AbilityEff.Sturdy(),
                 }
                 ) },
 
@@ -3776,9 +3776,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "suctioncups",
                 abilityName: "Suction Cups",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.SuctionCups(),
+                    new Effects.AbilityEff.SuctionCups(),
                 }
                 ) },
 
@@ -3787,9 +3787,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "superluck",
                 abilityName: "Super Luck",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.SuperLuck(),
+                    new Effects.AbilityEff.SuperLuck(),
                 }
                 ) },
 
@@ -3798,14 +3798,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "surgesurfer",
                 abilityName: "Surge Surfer",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.SwiftSwim(
-                        conditions: new List<EffectDatabase.AbilityEff.SwiftSwim.SwiftSwimCondition>
+                    new Effects.AbilityEff.SwiftSwim(
+                        conditions: new List<Effects.AbilityEff.SwiftSwim.SwiftSwimCondition>
                         {
-                            new EffectDatabase.AbilityEff.SwiftSwim.SwiftSwimCondition(
+                            new Effects.AbilityEff.SwiftSwim.SwiftSwimCondition(
                                 conditions: new string[] { "electricterrain" },
-                                statScale: new EffectDatabase.General.StatScale(
+                                statScale: new Effects.General.StatScale(
                                     scaleMap: new Dictionary<PokemonStats, float>
                                     {
                                         { PokemonStats.Speed, 2f }
@@ -3820,15 +3820,15 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "swarm",
                 abilityName: "Swarm",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.IronFist(
+                    new Effects.AbilityEff.IronFist(
                         powerMultiplier: 1.5f,
                         blazeThreshold: 1f/3,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "bug" }
                                 )
                         }
@@ -3841,9 +3841,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "sweetveil",
                 abilityName: "Sweet Veil",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Limber(
+                    new Effects.AbilityEff.Limber(
                         pastelVeil: true,
                         conditions: new string[] { "sleep" }
                         ),
@@ -3855,14 +3855,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "swiftswim",
                 abilityName: "Swift Swim",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.SwiftSwim(
-                        conditions: new List<EffectDatabase.AbilityEff.SwiftSwim.SwiftSwimCondition>
+                    new Effects.AbilityEff.SwiftSwim(
+                        conditions: new List<Effects.AbilityEff.SwiftSwim.SwiftSwimCondition>
                         {
-                            new EffectDatabase.AbilityEff.SwiftSwim.SwiftSwimCondition(
+                            new Effects.AbilityEff.SwiftSwim.SwiftSwimCondition(
                                 conditions: new string[] { "rain" },
-                                statScale: new EffectDatabase.General.StatScale(
+                                statScale: new Effects.General.StatScale(
                                     scaleMap: new Dictionary<PokemonStats, float>
                                     {
                                         { PokemonStats.Speed, 2f }
@@ -3877,9 +3877,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "symbiosis",
                 abilityName: "Symbiosis",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Symbiosis(),
+                    new Effects.AbilityEff.Symbiosis(),
                 }
                 ) },
 
@@ -3888,11 +3888,11 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "synchronize",
                 abilityName: "Synchronize",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Synchronize(
-                        conditionCheck: new EffectDatabase.Filter.Harvest(
-                            conditionType: EffectDatabase.Filter.Harvest.ConditionType.Pokemon,
+                    new Effects.AbilityEff.Synchronize(
+                        conditionCheck: new Effects.Filter.Harvest(
+                            conditionType: Effects.Filter.Harvest.ConditionType.Pokemon,
                             conditions: new string[] { "burn", "paralysis", "poison" }
                             )),
                 }
@@ -3903,14 +3903,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "tangledfeet",
                 abilityName: "Tangled Feet",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Guts(
-                        conditionCheck: new EffectDatabase.Filter.Harvest(
-                            conditionType: EffectDatabase.Filter.Harvest.ConditionType.Pokemon,
+                    new Effects.AbilityEff.Guts(
+                        conditionCheck: new Effects.Filter.Harvest(
+                            conditionType: Effects.Filter.Harvest.ConditionType.Pokemon,
                             statusPKTypes: new PokemonSEType[] { PokemonSEType.Confusion }
                             ),
-                        statScale: new EffectDatabase.General.StatScale(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.Evasion, 2f },
@@ -3924,10 +3924,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "tanglinghair",
                 abilityName: "Tangling Hair",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Gooey(
-                        statStageMod: new EffectDatabase.General.StatStageMod(SPEMod: -1),
+                    new Effects.AbilityEff.Gooey(
+                        statStageMod: new Effects.General.StatStageMod(SPEMod: -1),
                         triggerTags: new MoveTag[] { MoveTag.MakesContact, }
                         ),
                 }
@@ -3938,9 +3938,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "technician",
                 abilityName: "Technician",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Technician(),
+                    new Effects.AbilityEff.Technician(),
                 }
                 ) },
 
@@ -3949,9 +3949,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "telepathy",
                 abilityName: "Telepathy",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Telepathy(),
+                    new Effects.AbilityEff.Telepathy(),
                 }
                 ) },
 
@@ -3960,9 +3960,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "teravolt",
                 abilityName: "Teravolt",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.MoldBreaker(displayText: "ability-teravolt"),
+                    new Effects.AbilityEff.MoldBreaker(displayText: "ability-teravolt"),
                 }
                 ) },
 
@@ -3971,14 +3971,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "thickfat",
                 abilityName: "Thick Fat",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.IceScales(
+                    new Effects.AbilityEff.IceScales(
                         damageModifier: 0.5f,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "fire", "ice", })
                         }
                     )
@@ -3990,9 +3990,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "tintedlens",
                 abilityName: "Tinted Lens",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.TintedLens(
+                    new Effects.AbilityEff.TintedLens(
                         notVeryEffectiveModifier: 2f),
                 }
                 ) },
@@ -4002,15 +4002,15 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "torrent",
                 abilityName: "Torrent",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.IronFist(
+                    new Effects.AbilityEff.IronFist(
                         powerMultiplier: 1.5f,
                         blazeThreshold: 1f/3,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "water" }
                                 )
                         }
@@ -4023,17 +4023,17 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "toxicboost",
                 abilityName: "Toxic Boost",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.FlareBoost(
+                    new Effects.AbilityEff.FlareBoost(
                         powerMultiplier: 1.5f,
-                        conditionCheck: new EffectDatabase.Filter.Harvest(
-                            conditionType: EffectDatabase.Filter.Harvest.ConditionType.Pokemon,
+                        conditionCheck: new Effects.Filter.Harvest(
+                            conditionType: Effects.Filter.Harvest.ConditionType.Pokemon,
                             conditions: new string[] { "poison" }
                             ),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveCategories: new MoveCategory[] { MoveCategory.Physical })
                         }
                     )
@@ -4045,9 +4045,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "trace",
                 abilityName: "Trace",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Trace(),
+                    new Effects.AbilityEff.Trace(),
                 }
                 ) },
 
@@ -4056,13 +4056,13 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "toughclaws",
                 abilityName: "Tough Claws",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.IronFist(
+                    new Effects.AbilityEff.IronFist(
                         powerMultiplier: 1.3f,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveTags: new MoveTag[] { MoveTag.MakesContact }
                                 )
                         }
@@ -4075,13 +4075,13 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "triage",
                 abilityName: "Triage",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.GaleWings(
+                    new Effects.AbilityEff.GaleWings(
                         priority: 3,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(healingOnly: true),
+                            new Effects.Filter.MoveCheck(healingOnly: true),
                         }
                         )
                 }
@@ -4092,9 +4092,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "truant",
                 abilityName: "Truant",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Truant(),
+                    new Effects.AbilityEff.Truant(),
                 }
                 ) },
 
@@ -4103,9 +4103,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "turboblaze",
                 abilityName: "Turboblaze",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.MoldBreaker(displayText: "ability-turboblaze"),
+                    new Effects.AbilityEff.MoldBreaker(displayText: "ability-turboblaze"),
                 }
                 ) },
 
@@ -4114,9 +4114,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "unaware",
                 abilityName: "Unaware",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Unaware(),
+                    new Effects.AbilityEff.Unaware(),
                 }
                 ) },
 
@@ -4125,10 +4125,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "unburden",
                 abilityName: "Unburden",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Unburden(
-                        statScale: new EffectDatabase.General.StatScale(
+                    new Effects.AbilityEff.Unburden(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.Speed, 2f }
@@ -4142,9 +4142,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "unseenfist",
                 abilityName: "Unseen Fist",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.UnseenFist(),
+                    new Effects.AbilityEff.UnseenFist(),
                 }
                 ) },
 
@@ -4153,11 +4153,11 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "victorystar",
                 abilityName: "Victory Star",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.CompoundEyes(
+                    new Effects.AbilityEff.CompoundEyes(
                         victoryStar: true,
-                        statScale: new EffectDatabase.General.StatScale(
+                        statScale: new Effects.General.StatScale(
                             scaleMap: new Dictionary<PokemonStats, float>
                             {
                                 { PokemonStats.Accuracy, 1.1f }
@@ -4171,9 +4171,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "vitalspirit",
                 abilityName: "Vital Spirit",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Limber(
+                    new Effects.AbilityEff.Limber(
                         conditions: new string[] { "sleep" }
                         ),
                 }
@@ -4184,12 +4184,12 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "voltabsorb",
                 abilityName: "Volt Absorb",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.VoltAbsorb(
-                        conditions: new EffectDatabase.AbilityEff.VoltAbsorb.VoltAbsorbCondition[]
+                    new Effects.AbilityEff.VoltAbsorb(
+                        conditions: new Effects.AbilityEff.VoltAbsorb.VoltAbsorbCondition[]
                         {
-                            new EffectDatabase.AbilityEff.VoltAbsorb.VoltAbsorbCondition(
+                            new Effects.AbilityEff.VoltAbsorb.VoltAbsorbCondition(
                                 moveTypes: new string[] { "electric" },
                                 absorbPercent: 0.25f
                                 ),
@@ -4202,9 +4202,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "wanderingspirit",
                 abilityName: "Wandering Spirit",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Mummy(
+                    new Effects.AbilityEff.Mummy(
                         wanderingSpirit: false,
                         displayText: "ability-wanderingspirit"
                         ),
@@ -4216,12 +4216,12 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "waterabsorb",
                 abilityName: "Water Absorb",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.VoltAbsorb(
-                        conditions: new EffectDatabase.AbilityEff.VoltAbsorb.VoltAbsorbCondition[]
+                    new Effects.AbilityEff.VoltAbsorb(
+                        conditions: new Effects.AbilityEff.VoltAbsorb.VoltAbsorbCondition[]
                         {
-                            new EffectDatabase.AbilityEff.VoltAbsorb.VoltAbsorbCondition(
+                            new Effects.AbilityEff.VoltAbsorb.VoltAbsorbCondition(
                                 moveTypes: new string[] { "water" },
                                 absorbPercent: 0.25f
                                 ),
@@ -4234,24 +4234,24 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "waterbubble",
                 abilityName: "Water Bubble",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.IronFist(
+                    new Effects.AbilityEff.IronFist(
                         powerMultiplier: 2f,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "water" }
                                 )
                         }
                         ),
-                    new EffectDatabase.AbilityEff.IceScales(
+                    new Effects.AbilityEff.IceScales(
                         damageModifier: 0.5f,
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "fire", })
                         }
                         )
@@ -4263,14 +4263,14 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "watercompaction",
                 abilityName: "Water Compaction",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Justified(
-                        statStageMod: new EffectDatabase.General.StatStageMod(DEFMod: 2),
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.AbilityEff.Justified(
+                        statStageMod: new Effects.General.StatStageMod(DEFMod: 2),
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.TypeList(
-                                targetType: EffectDatabase.Filter.TypeList.TargetType.Move,
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
                                 types: new string[] { "water" }
                                 ),
                         }
@@ -4283,9 +4283,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "waterveil",
                 abilityName: "Water Veil",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Limber(
+                    new Effects.AbilityEff.Limber(
                         conditions: new string[] { "burn" }
                         ),
                 }
@@ -4296,10 +4296,10 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "weakarmor",
                 abilityName: "Weak Armor",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.Justified(
-                        statStageMod: new EffectDatabase.General.StatStageMod(DEFMod: -1, SPEMod: 2),
+                    new Effects.AbilityEff.Justified(
+                        statStageMod: new Effects.General.StatStageMod(DEFMod: -1, SPEMod: 2),
                         mustMatchCategory: true,
                         category: MoveCategory.Physical
                         ),
@@ -4311,9 +4311,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "whitesmoke",
                 abilityName: "White Smoke",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.HyperCutter(
+                    new Effects.AbilityEff.HyperCutter(
                         clearBody: true,
                         displayText: "ability-clearbody"),
                 }
@@ -4324,9 +4324,9 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "wimpout",
                 abilityName: "Wimp Out",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.WimpOut(hpThreshold: 0.5f),
+                    new Effects.AbilityEff.WimpOut(hpThreshold: 0.5f),
                 }
                 ) },
 
@@ -4335,12 +4335,12 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "wonderguard",
                 abilityName: "Wonder Guard",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.WonderGuard(
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.AbilityEff.WonderGuard(
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(damagingOnly: true),
+                            new Effects.Filter.MoveCheck(damagingOnly: true),
                         }),
                 }
                 ) },
@@ -4350,12 +4350,12 @@ namespace PBS.Databases
             new AbilityData(
                 ID: "wonderskin",
                 abilityName: "Wonder Skin",
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.WonderSkin(
-                        filters: new EffectDatabase.Filter.FilterEffect[]
+                    new Effects.AbilityEff.WonderSkin(
+                        filters: new Effects.Filter.FilterEffect[]
                         {
-                            new EffectDatabase.Filter.MoveCheck(
+                            new Effects.Filter.MoveCheck(
                                 moveCategories: new MoveCategory[] { MoveCategory.Status })
                         }
                         ),
@@ -4374,17 +4374,17 @@ namespace PBS.Databases
                     AbilityTag.CannotSuppress,
                     AbilityTag.CannotWorrySeed,
                 },
-                effectsNew: new EffectDatabase.AbilityEff.AbilityEffect[]
+                effectsNew: new Effects.AbilityEff.AbilityEffect[]
                 {
-                    new EffectDatabase.AbilityEff.ZenMode(
+                    new Effects.AbilityEff.ZenMode(
                         hpThreshold: 0.5f, checkBelow: true,
-                        transformation: new EffectDatabase.General.FormTransformation(
+                        transformation: new Effects.General.FormTransformation(
                             preForm: "darmanitan", toForm: "darmanitan-zen"
                             )
                         ),
-                    new EffectDatabase.AbilityEff.ZenMode(
+                    new Effects.AbilityEff.ZenMode(
                         hpThreshold: 0.5f, checkBelow: true,
-                        transformation: new EffectDatabase.General.FormTransformation(
+                        transformation: new Effects.General.FormTransformation(
                             preForm: "darmanitan-galar", toForm: "darmanitan-zen-galar"
                             )
                         ),

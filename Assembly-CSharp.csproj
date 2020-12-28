@@ -138,7 +138,9 @@
     <Compile Include="Assets\Scripts\Data\TypeData.cs" />
     <Compile Include="Assets\Scripts\Databases\Abilities.cs" />
     <Compile Include="Assets\Scripts\Databases\BattleStatuses.cs" />
-    <Compile Include="Assets\Scripts\Databases\EffectDatabase.cs" />
+    <Compile Include="Assets\Scripts\Databases\Effects\Effects.cs" />
+    <Compile Include="Assets\Scripts\Databases\Effects\Filter.cs" />
+    <Compile Include="Assets\Scripts\Databases\Effects\General.cs" />
     <Compile Include="Assets\Scripts\Databases\ElementalTypes.cs" />
     <Compile Include="Assets\Scripts\Databases\GameText.cs" />
     <Compile Include="Assets\Scripts\Databases\Items.cs" />

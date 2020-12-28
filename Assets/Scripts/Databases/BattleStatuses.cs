@@ -48,9 +48,9 @@ namespace PBS.Databases
                         BattleSTag.Default,
                     },
 
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.Weather(weatherBallBoost: false),
+                        new Effects.StatusBTLEff.Weather(weatherBallBoost: false),
                     }
                     ) },
 
@@ -65,9 +65,9 @@ namespace PBS.Databases
                         BattleSTag.Default,
                     },
 
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.Terrain(),
+                        new Effects.StatusBTLEff.Terrain(),
                     }
                     ) },
 
@@ -82,9 +82,9 @@ namespace PBS.Databases
                         BattleSTag.Default,
                     },
 
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.Gravity(),
+                        new Effects.StatusBTLEff.Gravity(),
                     }
                     ) },
 
@@ -99,9 +99,9 @@ namespace PBS.Databases
                         BattleSTag.Default,
                     },
 
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.MagicRoom(),
+                        new Effects.StatusBTLEff.MagicRoom(),
                     }
                     ) },
 
@@ -116,9 +116,9 @@ namespace PBS.Databases
                         BattleSTag.Default,
                     },
 
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.TrickRoom()
+                        new Effects.StatusBTLEff.TrickRoom()
                     }
                     ) },
 
@@ -133,9 +133,9 @@ namespace PBS.Databases
                         BattleSTag.Default,
                     },
 
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.WonderRoom(),
+                        new Effects.StatusBTLEff.WonderRoom(),
                     }
                     ) },
 
@@ -156,9 +156,9 @@ namespace PBS.Databases
                         BattleSTag.UndoesSelf,
                     },
 
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.Gravity(intensifyGravity: true),
+                        new Effects.StatusBTLEff.Gravity(intensifyGravity: true),
                     }
                     ) },
 
@@ -179,9 +179,9 @@ namespace PBS.Databases
                         BattleSTag.UndoesSelf,
                     },
 
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.MagicRoom(suppressItems: true),
+                        new Effects.StatusBTLEff.MagicRoom(suppressItems: true),
                     }
                     ) },
 
@@ -199,9 +199,9 @@ namespace PBS.Databases
                         BattleSTag.UndoesSelf,
                     },
 
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.TrickRoom(speedStat: PokemonStats.Speed, reverse: true)
+                        new Effects.StatusBTLEff.TrickRoom(speedStat: PokemonStats.Speed, reverse: true)
                     }
                     ) },
 
@@ -219,9 +219,9 @@ namespace PBS.Databases
                         BattleSTag.UndoesSelf,
                     },
 
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.WonderRoom(
+                        new Effects.StatusBTLEff.WonderRoom(
                             DEFMap: PokemonStats.SpecialDefense, SPEMap: PokemonStats.Defense
                             )
                     }
@@ -241,25 +241,25 @@ namespace PBS.Databases
                     endTextID: "terrain-electricterrain-end",
                     alreadyTextID: "terrain-electricterrain-already",
 
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 5),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: 5),
 
                     tags: new BattleSTag[]
                     {
                         BattleSTag.IsGrounded,
                         BattleSTag.TurnsDecreaseOnEnd,
                     },
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.Terrain(
+                        new Effects.StatusBTLEff.Terrain(
                             terrainPulseType: "electric",
                             naturePowerMove: "thunderbolt"
                             ),
-                        new EffectDatabase.StatusBTLEff.TypeDamageModifier(
+                        new Effects.StatusBTLEff.TypeDamageModifier(
                             damageScale: 1.3f,
                             types: new string[] { "electric" },
                             offensiveCheck: true
                             ),
-                        new EffectDatabase.StatusBTLEff.BlockStatus(
+                        new Effects.StatusBTLEff.BlockStatus(
                             statusIDs: new string[] { "sleep" },
                             blockText: "terrain-electricterrain-block"
                             ),
@@ -277,30 +277,30 @@ namespace PBS.Databases
                     endTextID: "terrain-grassyterrain-end",
                     alreadyTextID: "terrain-grassyterrain-already",
 
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 5),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: 5),
 
                     tags: new BattleSTag[]
                     {
                         BattleSTag.IsGrounded,
                         BattleSTag.TurnsDecreaseOnEnd,
                     },
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.Terrain(
+                        new Effects.StatusBTLEff.Terrain(
                             terrainPulseType: "grass",
                             naturePowerMove: "energyball"
                             ),
-                        new EffectDatabase.StatusBTLEff.TypeDamageModifier(
+                        new Effects.StatusBTLEff.TypeDamageModifier(
                             damageScale: 1.3f,
                             types: new string[] { "grass" },
                             offensiveCheck: true
                             ),
-                        new EffectDatabase.StatusBTLEff.MoveDamageModifier(
+                        new Effects.StatusBTLEff.MoveDamageModifier(
                             damageScale: 0.5f,
                             moves: new string[] { "bulldoze", "earthquake", "magnitude" },
                             defensiveCheck: true
                             ),
-                        new EffectDatabase.StatusBTLEff.HPGain(
+                        new Effects.StatusBTLEff.HPGain(
                             displayText: "terrain-grassyterrain-heal",
                             hpGainPercent: 1f/16,
                             timing: BattleSETiming.EndOfTurn
@@ -319,25 +319,25 @@ namespace PBS.Databases
                     endTextID: "terrain-mistyterrain-end",
                     alreadyTextID: "terrain-mistyterrain-already",
 
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 5),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: 5),
 
                     tags: new BattleSTag[]
                     {
                         BattleSTag.IsGrounded,
                         BattleSTag.TurnsDecreaseOnEnd,
                     },
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.Terrain(
+                        new Effects.StatusBTLEff.Terrain(
                             terrainPulseType: "fairy",
                             naturePowerMove: "moonblast"
                             ),
-                        new EffectDatabase.StatusBTLEff.TypeDamageModifier(
+                        new Effects.StatusBTLEff.TypeDamageModifier(
                             damageScale: 0.5f,
                             types: new string[] { "dragon" },
                             defensiveCheck: true
                             ),
-                        new EffectDatabase.StatusBTLEff.BlockStatus(
+                        new Effects.StatusBTLEff.BlockStatus(
                             statusIDs: new string[]
                             {
                                 "burn", "freeze", "paralysis", "poison",
@@ -359,25 +359,25 @@ namespace PBS.Databases
                     endTextID: "terrain-psychicterrain-end",
                     alreadyTextID: "terrain-psychicterrain-already",
 
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 5),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: 5),
 
                     tags: new BattleSTag[]
                     {
                         BattleSTag.IsGrounded,
                         BattleSTag.TurnsDecreaseOnEnd,
                     },
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.Terrain(
+                        new Effects.StatusBTLEff.Terrain(
                             terrainPulseType: "psychic",
                             naturePowerMove: "psychic"
                             ),
-                        new EffectDatabase.StatusBTLEff.TypeDamageModifier(
+                        new Effects.StatusBTLEff.TypeDamageModifier(
                             damageScale: 1.3f,
                             types: new string[] { "psychic" },
                             offensiveCheck: true
                             ),
-                        new EffectDatabase.StatusBTLEff.BlockMoves(
+                        new Effects.StatusBTLEff.BlockMoves(
                             psychicTerrain: true,
                             blockText: "terrain-psychicterrain-block"
                             ),
@@ -399,18 +399,18 @@ namespace PBS.Databases
                     endTextID: "weather-extremelyharshsunlight-end",
                     alreadyTextID: "weather-extremelyharshsunlight-already",
 
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: -1),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: -1),
 
                     combineBaseTags: true,
                     combineBaseEffects: true,
 
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.Weather(
+                        new Effects.StatusBTLEff.Weather(
                             weatherBallType: "fire",
                             priority: 1, negateText: "weather-extremelyharshsunlight-block"
                             ),
-                        new EffectDatabase.StatusBTLEff.DesolateLand(
+                        new Effects.StatusBTLEff.DesolateLand(
                             negateText: "weather-extremelyharshsunlight-negate",
                             types: new string[] { "water" }
                             ),
@@ -428,7 +428,7 @@ namespace PBS.Databases
                     endTextID: "weather-fog-end",
                     alreadyTextID: "weather-fog-already",
 
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: -1),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: -1),
 
                     tags: new BattleSTag[]
                     {
@@ -443,9 +443,9 @@ namespace PBS.Databases
                             stringParams: new string[] { "acc" }
                             ),
                     },
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.Weather(),
+                        new Effects.StatusBTLEff.Weather(),
                     }
                     ) },
 
@@ -460,26 +460,26 @@ namespace PBS.Databases
                     endTextID: "weather-hail-end",
                     alreadyTextID: "weather-hail-already",
 
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 5),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: 5),
 
                     tags: new BattleSTag[]
                     {
                         BattleSTag.TurnsDecreaseOnEnd
                     },
 
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.Weather(
+                        new Effects.StatusBTLEff.Weather(
                             weatherBallType: "ice"
                             ),
-                        new EffectDatabase.StatusBTLEff.HPLoss(
+                        new Effects.StatusBTLEff.HPLoss(
                             displayText: "weather-hail-buffet",
                             hpLossPercent: 1f/16,
                             timing: BattleSETiming.EndOfTurn,
-                            filters: new EffectDatabase.Filter.FilterEffect[]
+                            filters: new Effects.Filter.FilterEffect[]
                             {
-                                new EffectDatabase.Filter.TypeList(
-                                    targetType: EffectDatabase.Filter.TypeList.TargetType.Pokemon,
+                                new Effects.Filter.TypeList(
+                                    targetType: Effects.Filter.TypeList.TargetType.Pokemon,
                                     types: new string[] { "ice" },
                                     invert: true
                                     ),
@@ -499,23 +499,23 @@ namespace PBS.Databases
                     endTextID: "weather-harshsunlight-end",
                     alreadyTextID: "weather-harshsunlight-already",
 
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 5),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: 5),
 
                     tags: new BattleSTag[]
                     {
                         BattleSTag.TurnsDecreaseOnEnd
                     },
 
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.Weather(
+                        new Effects.StatusBTLEff.Weather(
                             weatherBallType: "fire"
                             ),
-                        new EffectDatabase.StatusBTLEff.TypeDamageModifier(
+                        new Effects.StatusBTLEff.TypeDamageModifier(
                             damageScale: 1.5f,
                             types: new string[] { "fire" }
                             ),
-                        new EffectDatabase.StatusBTLEff.TypeDamageModifier(
+                        new Effects.StatusBTLEff.TypeDamageModifier(
                             damageScale: 0.5f,
                             types: new string[] { "water" }
                             ),
@@ -534,17 +534,17 @@ namespace PBS.Databases
                     endTextID: "weather-heavyrain-end",
                     alreadyTextID: "weather-heavyrain-already",
 
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: -1),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: -1),
 
                     combineBaseTags: true,
                     combineBaseEffects: true,
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.Weather(
+                        new Effects.StatusBTLEff.Weather(
                             weatherBallType: "water",
                             priority: 1, negateText: "weather-heavyrain-block"
                             ),
-                        new EffectDatabase.StatusBTLEff.DesolateLand(
+                        new Effects.StatusBTLEff.DesolateLand(
                             negateText: "weather-heavyrain-negate",
                             types: new string[] { "fire" }
                             ),
@@ -562,23 +562,23 @@ namespace PBS.Databases
                     endTextID: "weather-rain-end",
                     alreadyTextID: "weather-rain-already",
 
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 5),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: 5),
 
                     tags: new BattleSTag[]
                     {
                         BattleSTag.TurnsDecreaseOnEnd
                     },
 
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.Weather(
+                        new Effects.StatusBTLEff.Weather(
                             weatherBallType: "water"
                             ),
-                        new EffectDatabase.StatusBTLEff.TypeDamageModifier(
+                        new Effects.StatusBTLEff.TypeDamageModifier(
                             damageScale: 1.5f,
                             types: new string[] { "water" }
                             ),
-                        new EffectDatabase.StatusBTLEff.TypeDamageModifier(
+                        new Effects.StatusBTLEff.TypeDamageModifier(
                             damageScale: 0.5f,
                             types: new string[] { "fire" }
                             ),
@@ -596,37 +596,37 @@ namespace PBS.Databases
                     endTextID: "weather-sandstorm-end",
                     alreadyTextID: "weather-sandstorm-already",
 
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 5),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: 5),
 
                     tags: new BattleSTag[]
                     {
                         BattleSTag.TurnsDecreaseOnEnd
                     },
 
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.Weather(
+                        new Effects.StatusBTLEff.Weather(
                             weatherBallType: "rock"
                             ),
-                        new EffectDatabase.StatusBTLEff.HPLoss(
+                        new Effects.StatusBTLEff.HPLoss(
                             displayText: "weather-sandstorm-buffet",
                             hpLossPercent: 1f/16,
                             timing: BattleSETiming.EndOfTurn,
-                            filters: new EffectDatabase.Filter.FilterEffect[]
+                            filters: new Effects.Filter.FilterEffect[]
                             {
-                                new EffectDatabase.Filter.TypeList(
-                                    targetType: EffectDatabase.Filter.TypeList.TargetType.Pokemon,
+                                new Effects.Filter.TypeList(
+                                    targetType: Effects.Filter.TypeList.TargetType.Pokemon,
                                     types: new string[] { "rock", "ground", "steel" },
                                     invert: true
                                     ),
                             }
                             ),
-                        new EffectDatabase.StatusBTLEff.StatScale(
+                        new Effects.StatusBTLEff.StatScale(
                             SPDMod: 1.5f,
-                            filters: new EffectDatabase.Filter.FilterEffect[]
+                            filters: new Effects.Filter.FilterEffect[]
                             {
-                                new EffectDatabase.Filter.TypeList(
-                                    targetType: EffectDatabase.Filter.TypeList.TargetType.Pokemon,
+                                new Effects.Filter.TypeList(
+                                    targetType: Effects.Filter.TypeList.TargetType.Pokemon,
                                     types: new string[] { "rock" }
                                     ),
                             }
@@ -644,20 +644,20 @@ namespace PBS.Databases
                     endTextID: "weather-strongwinds-end",
                     alreadyTextID: "weather-strongwinds-already",
 
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: -1),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: -1),
 
                     tags: new BattleSTag[]
                     {
                         BattleSTag.TurnsDecreaseOnEnd
                     },
 
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.Weather(
+                        new Effects.StatusBTLEff.Weather(
                             weatherBallBoost: false,
                             priority: 1, negateText: "weather-strongwinds-block"
                             ),
-                        new EffectDatabase.StatusBTLEff.StrongWinds(
+                        new Effects.StatusBTLEff.StrongWinds(
                             changeText: "weather-strongwinds-weaken",
                             types: new string[] { "flying" },
                             effectivenessFilter: new HashSet<TypeEffectiveness> { TypeEffectiveness.SuperEffective },
@@ -676,16 +676,16 @@ namespace PBS.Databases
                     conditionName: "Ion Deluge",
                     startTextID: "battle-status-inflict-iondeluge",
 
-                    defaultTurns: new EffectDatabase.General.DefaultTurns(turns: 0),
+                    defaultTurns: new Effects.General.DefaultTurns(turns: 0),
 
                     tags: new BattleSTag[]
                     {
                         BattleSTag.TurnsDecreaseOnEnd,
                     },
 
-                    effectsNew: new EffectDatabase.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
                     {
-                        new EffectDatabase.StatusBTLEff.IonDeluge(
+                        new Effects.StatusBTLEff.IonDeluge(
                             toType: "electric",
                             fromTypes: new string[] { "normal" }
                             )

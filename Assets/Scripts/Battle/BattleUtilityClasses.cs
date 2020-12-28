@@ -1,4 +1,5 @@
-﻿using PBS.Main.Pokemon;
+﻿using PBS.Databases;
+using PBS.Main.Pokemon;
 using PBS.Main.Team;
 using PBS.Main.Trainer;
 using System.Collections;
@@ -41,7 +42,7 @@ public class BattlePosition
         this.teamPos = teamPos;
         this.battlePos = battlePos;
     }
-    public BattlePosition(Pokemon pokemon)
+    public BattlePosition(PBS.Main.Pokemon.Pokemon pokemon)
     {
         teamPos = pokemon.teamPos;
         battlePos = pokemon.battlePos;
@@ -78,7 +79,7 @@ public class BattleCommand
 {
     // General
     public BattleCommandType commandType;
-    public Pokemon commandUser;
+    public PBS.Main.Pokemon.Pokemon commandUser;
     public Trainer commandTrainer;
     public bool inProgress = false;
     public bool completed = false;
@@ -110,7 +111,7 @@ public class BattleCommand
     // Switch
     public int switchPosition;
     public Trainer switchingTrainer;
-    public Pokemon switchInPokemon;
+    public PBS.Main.Pokemon.Pokemon switchInPokemon;
 
     // Item
     public string itemID;
@@ -124,7 +125,7 @@ public class BattleCommand
     }
 
     public static BattleCommand CreateMoveCommand(
-        Pokemon commandUser,
+        PBS.Main.Pokemon.Pokemon commandUser,
         string moveID,
         List<BattlePosition> targetPositions,
         bool isExplicitlySelected = false,
@@ -146,10 +147,10 @@ public class BattleCommand
     }
 
     public static BattleCommand CreateSwitchCommand(
-        Pokemon commandUser,
+        PBS.Main.Pokemon.Pokemon commandUser,
         int switchPosition,
         Trainer trainer,
-        Pokemon switchInPokemon,
+        PBS.Main.Pokemon.Pokemon switchInPokemon,
         bool isExplicitlySelected = false)
     {
         BattleCommand command = new BattleCommand(isExplicitlySelected);
@@ -164,7 +165,7 @@ public class BattleCommand
     public static BattleCommand CreateReplaceCommand(
         int switchPosition,
         Trainer trainer,
-        Pokemon switchInPokemon,
+        PBS.Main.Pokemon.Pokemon switchInPokemon,
         bool isExplicitlySelected = false)
     {
         BattleCommand command = new BattleCommand(isExplicitlySelected);
@@ -176,9 +177,7 @@ public class BattleCommand
         return command;
     }
 
-    public static BattleCommand CreateRechargeCommand(
-        Pokemon commandUser
-        )
+    public static BattleCommand CreateRechargeCommand(PBS.Main.Pokemon.Pokemon commandUser)
     {
         BattleCommand command = new BattleCommand();
         command.commandType = BattleCommandType.Recharge;
@@ -188,7 +187,7 @@ public class BattleCommand
 
     public static BattleCommand CreateBagCommand(
         string itemID,
-        Pokemon itemPokemon,
+        PBS.Main.Pokemon.Pokemon itemPokemon,
         Trainer trainer,
         bool isExplicitlySelected = false)
     {
@@ -201,7 +200,7 @@ public class BattleCommand
     }
 
     public static BattleCommand CreateRunCommand(
-        Pokemon commandUser,
+        PBS.Main.Pokemon.Pokemon commandUser,
         bool isExplicitlySelected = false
         )
     {
@@ -380,7 +379,7 @@ public class BattleEnvironment
 
 public class BattleHitTarget
 {
-    public Pokemon pokemon;
+    public PBS.Main.Pokemon.Pokemon pokemon;
     public float preHPPercent;
     public float postHPPercent;
     public int preHP;
@@ -399,23 +398,23 @@ public class BattleHitTarget
 
     public string destinyBondMove;
 
-    public EffectDatabase.General.Protect protection;
-    public EffectDatabase.General.Protect teamProtection;
+    public Effects.General.Protect protection;
+    public Effects.General.Protect teamProtection;
     public string protectAbility;
     public string protectItem;
-    public EffectDatabase.General.MagicCoat reflection;
+    public Effects.General.MagicCoat reflection;
 
     public string reflectMove;
     public string reflectAbility;
     public string reflectItem;
 
-    public EffectDatabase.MoveEff.Endure endure;
+    public Effects.MoveEff.Endure endure;
     public AbilityEffectPair sturdyPair;
     public Item focusBand;
     public string surviveAbility;
     public string surviveItem;
 
-    public BattleHitTarget(Pokemon pokemon)
+    public BattleHitTarget(PBS.Main.Pokemon.Pokemon pokemon)
     {
         this.pokemon = pokemon;
         preHPPercent = pokemon.HPPercent;
@@ -495,8 +494,8 @@ public class BattleHitTeam
 {
     public Team team;
     public bool affectedByMove;
-    public EffectDatabase.General.Protect protection;
-    public EffectDatabase.General.MagicCoat reflection;
+    public Effects.General.Protect protection;
+    public Effects.General.MagicCoat reflection;
 
     public BattleHitTeam(Team team)
     {
