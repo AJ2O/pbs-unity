@@ -1,4 +1,5 @@
 ﻿using PBS.Enums.Battle;
+using PBS.Main.Trainer;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

@@ -162,7 +162,8 @@
     <Compile Include="Assets\Scripts\Main\Pokemon\TransformProperties.cs" />
     <Compile Include="Assets\Scripts\Main\StatusCondition.cs" />
     <Compile Include="Assets\Scripts\Main\TeamCondition.cs" />
-    <Compile Include="Assets\Scripts\Main\Trainer.cs" />
+    <Compile Include="Assets\Scripts\Main\Trainer\BattleProperties.cs" />
+    <Compile Include="Assets\Scripts\Main\Trainer\Trainer.cs" />
     <Compile Include="Assets\Scripts\Master.cs" />
     <Compile Include="Assets\Scripts\Networking\Core.cs" />
     <Compile Include="Assets\Scripts\Networking\CustomSerialization\Battle\Utility.cs" />

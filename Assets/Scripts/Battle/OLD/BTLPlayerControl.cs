@@ -1,4 +1,5 @@
 ﻿using PBS.Main.Pokemon;
+using PBS.Main.Trainer;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -2758,7 +2759,7 @@ public class BTLPlayerControl : MonoBehaviour
                 {
                     for (int i = 0; i < userPokemon.bProps.moveLimiters.Count && commandSuccess; i++)
                     {
-                        BattleProperties.MoveLimiter moveLimiter =
+                        PBS.Main.Pokemon.BattleProperties.MoveLimiter moveLimiter =
                             userPokemon.bProps.moveLimiters[i];
                         EffectDatabase.StatusPKEff.MoveLimiting effect_ = moveLimiter.effect;
 

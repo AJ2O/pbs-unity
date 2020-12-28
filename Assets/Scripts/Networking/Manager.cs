@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using PBS.Main.Trainer;
 
-namespace PBS.Networking { 
-    
+namespace PBS.Networking
+{
+
     public class Manager : NetworkManager
     {
         /// <summary>

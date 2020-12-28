@@ -1,4 +1,5 @@
 ﻿using PBS.Main.Pokemon;
+using PBS.Main.Trainer;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -875,8 +876,8 @@ public class BTLManager : MonoBehaviour
             for (int i = 0; i < allPokemon.Count; i++)
             {
                 Pokemon currentTarget = allPokemon[i];
-                List<BattleProperties.MoveLimiter> limiters =
-                    new List<BattleProperties.MoveLimiter>(currentTarget.bProps.moveLimiters);
+                List<PBS.Main.Pokemon.BattleProperties.MoveLimiter> limiters =
+                    new List<PBS.Main.Pokemon.BattleProperties.MoveLimiter>(currentTarget.bProps.moveLimiters);
                 for (int k = 0; k < limiters.Count; k++)
                 {
                     if (limiters[k].turnsLeft == 0)
@@ -898,7 +899,7 @@ public class BTLManager : MonoBehaviour
                 // Embargo
                 if (currentTarget.bProps.embargo != null)
                 {
-                    BattleProperties.Embargo embargo = currentTarget.bProps.embargo;
+                    PBS.Main.Pokemon.BattleProperties.Embargo embargo = currentTarget.bProps.embargo;
                     if (embargo.turnsLeft == 0)
                     {
                         currentTarget.bProps.embargo = null;
@@ -957,8 +958,8 @@ public class BTLManager : MonoBehaviour
             for (int i = 0; i < allPokemon.Count; i++)
             {
                 Pokemon curPokemon = allPokemon[i];
-                List<BattleProperties.ForestsCurse> forestsCurses
-                    = new List<BattleProperties.ForestsCurse>(curPokemon.bProps.forestsCurses);
+                List<PBS.Main.Pokemon.BattleProperties.ForestsCurse> forestsCurses
+                    = new List<PBS.Main.Pokemon.BattleProperties.ForestsCurse>(curPokemon.bProps.forestsCurses);
 
                 for (int k = 0; k < forestsCurses.Count; k++)
                 {
@@ -977,8 +978,8 @@ public class BTLManager : MonoBehaviour
             for (int i = 0; i < allPokemon.Count; i++)
             {
                 Pokemon curPokemon = allPokemon[i];
-                List<BattleProperties.LockOn> lockOnTargets 
-                    = new List<BattleProperties.LockOn>(curPokemon.bProps.lockOnTargets);
+                List<PBS.Main.Pokemon.BattleProperties.LockOn> lockOnTargets 
+                    = new List<PBS.Main.Pokemon.BattleProperties.LockOn>(curPokemon.bProps.lockOnTargets);
 
                 for (int k = 0; k < lockOnTargets.Count; k++)
                 {
@@ -2145,7 +2146,7 @@ public class BTLManager : MonoBehaviour
             MoveData encoreData = null;
             for (int i = 0; i < userPokemon.bProps.moveLimiters.Count && encoreData == null; i++)
             {
-                BattleProperties.MoveLimiter limiter =
+                PBS.Main.Pokemon.BattleProperties.MoveLimiter limiter =
                     userPokemon.bProps.moveLimiters[i];
                 if (limiter.effect is EffectDatabase.StatusPKEff.Encore)
                 {
@@ -2640,7 +2641,7 @@ public class BTLManager : MonoBehaviour
             {
                 for (int i = 0; i < userPokemon.bProps.moveLimiters.Count && moveSuccess; i++)
                 {
-                    BattleProperties.MoveLimiter limiter =
+                    PBS.Main.Pokemon.BattleProperties.MoveLimiter limiter =
                         userPokemon.bProps.moveLimiters[i];
                     if (!limiter.justInitialized || !limiter.effect.canUseMiddleOfTurn)
                     {
@@ -6842,8 +6843,8 @@ public class BTLManager : MonoBehaviour
                                 }
 
                                 List<string> typesRemoved = new List<string>();
-                                List<BattleProperties.ForestsCurse> forestsCursesRemoved
-                                    = new List<BattleProperties.ForestsCurse>();
+                                List<PBS.Main.Pokemon.BattleProperties.ForestsCurse> forestsCursesRemoved
+                                    = new List<PBS.Main.Pokemon.BattleProperties.ForestsCurse>();
                                 for (int i = 0; i < removableTypes.Count; i++)
                                 {
                                     bool typeRemoved = false;
@@ -7022,7 +7023,7 @@ public class BTLManager : MonoBehaviour
                                     for (int k = 0; k < targetPokemon.bProps.forestsCurses.Count; k++)
                                     {
                                         // Can't add same forest curse effect
-                                        BattleProperties.ForestsCurse forestCurse = 
+                                        PBS.Main.Pokemon.BattleProperties.ForestsCurse forestCurse = 
                                             targetPokemon.bProps.forestsCurses[k];
                                         if (forestCurse.moveID == moveData.ID
                                             && forestCurse.typeID == curType)
@@ -7066,8 +7067,8 @@ public class BTLManager : MonoBehaviour
 
                                     for (int i = 0; i < addableTypes.Count; i++)
                                     {
-                                        BattleProperties.ForestsCurse forestCurse = 
-                                            new BattleProperties.ForestsCurse(
+                                        PBS.Main.Pokemon.BattleProperties.ForestsCurse forestCurse = 
+                                            new PBS.Main.Pokemon.BattleProperties.ForestsCurse(
                                                 moveData.ID,
                                                 typeID: addableTypes[i],
                                                 turns
@@ -7300,8 +7301,8 @@ public class BTLManager : MonoBehaviour
                                 {
                                     int turns = Mathf.FloorToInt(effect.GetFloat(0));
 
-                                    BattleProperties.LockOn lockOnTarget = 
-                                        new BattleProperties.LockOn(
+                                    PBS.Main.Pokemon.BattleProperties.LockOn lockOnTarget = 
+                                        new PBS.Main.Pokemon.BattleProperties.LockOn(
                                             targetPokemon.uniqueID,
                                             moveData.ID,
                                             turns
@@ -8010,8 +8011,8 @@ public class BTLManager : MonoBehaviour
                                 }
 
                                 List<string> typesRemoved = new List<string>();
-                                List<BattleProperties.ForestsCurse> forestsCursesRemoved
-                                    = new List<BattleProperties.ForestsCurse>();
+                                List<PBS.Main.Pokemon.BattleProperties.ForestsCurse> forestsCursesRemoved
+                                    = new List<PBS.Main.Pokemon.BattleProperties.ForestsCurse>();
                                 for (int i = 0; i < removableTypes.Count; i++)
                                 {
                                     bool typeRemoved = false;
@@ -8147,7 +8148,7 @@ public class BTLManager : MonoBehaviour
                                     for (int k = 0; k < userPokemon.bProps.forestsCurses.Count; k++)
                                     {
                                         // Can't add same forest curse effect
-                                        BattleProperties.ForestsCurse forestCurse =
+                                        PBS.Main.Pokemon.BattleProperties.ForestsCurse forestCurse =
                                             userPokemon.bProps.forestsCurses[k];
                                         if (forestCurse.moveID == moveData.ID
                                             && forestCurse.typeID == curType)
@@ -8191,8 +8192,8 @@ public class BTLManager : MonoBehaviour
 
                                     for (int i = 0; i < addableTypes.Count; i++)
                                     {
-                                        BattleProperties.ForestsCurse forestCurse =
-                                            new BattleProperties.ForestsCurse(
+                                        PBS.Main.Pokemon.BattleProperties.ForestsCurse forestCurse =
+                                            new PBS.Main.Pokemon.BattleProperties.ForestsCurse(
                                                 moveData.ID,
                                                 typeID: addableTypes[i],
                                                 turns
@@ -10787,8 +10788,8 @@ public class BTLManager : MonoBehaviour
                 // Move-Limiting
                 if (effect_ is EffectDatabase.StatusPKEff.MoveLimiting)
                 {
-                    List<BattleProperties.MoveLimiter> moveLimiters =
-                        new List<BattleProperties.MoveLimiter>(targetPokemon.bProps.moveLimiters);
+                    List<PBS.Main.Pokemon.BattleProperties.MoveLimiter> moveLimiters =
+                        new List<PBS.Main.Pokemon.BattleProperties.MoveLimiter>(targetPokemon.bProps.moveLimiters);
 
                     // Disable
                     if (effect_ is EffectDatabase.StatusPKEff.Disable)
@@ -10833,8 +10834,8 @@ public class BTLManager : MonoBehaviour
                         if (!isFail)
                         {
                             success = true;
-                            BattleProperties.MoveLimiter limiter =
-                                new BattleProperties.MoveLimiter(
+                            PBS.Main.Pokemon.BattleProperties.MoveLimiter limiter =
+                                new PBS.Main.Pokemon.BattleProperties.MoveLimiter(
                                     effect: effect,
                                     turnsLeft: effect.defaultTurns.GetTurns(),
                                     affectedMoves: new string[] { targetPokemon.bProps.lastMove }
@@ -10885,8 +10886,8 @@ public class BTLManager : MonoBehaviour
                         if (!isFail)
                         {
                             success = true;
-                            BattleProperties.MoveLimiter limiter =
-                                new BattleProperties.MoveLimiter(
+                            PBS.Main.Pokemon.BattleProperties.MoveLimiter limiter =
+                                new PBS.Main.Pokemon.BattleProperties.MoveLimiter(
                                     effect: effect,
                                     turnsLeft: effect.defaultTurns.GetTurns(),
                                     affectedMoves: new string[] { targetPokemon.bProps.lastMove }
@@ -10910,8 +10911,8 @@ public class BTLManager : MonoBehaviour
                         if (!isFail)
                         {
                             success = true;
-                            BattleProperties.MoveLimiter limiter =
-                                new BattleProperties.MoveLimiter(
+                            PBS.Main.Pokemon.BattleProperties.MoveLimiter limiter =
+                                new PBS.Main.Pokemon.BattleProperties.MoveLimiter(
                                     effect: effect,
                                     turnsLeft: effect.defaultTurns.GetTurns()
                                     );
@@ -10934,8 +10935,8 @@ public class BTLManager : MonoBehaviour
                         if (!isFail)
                         {
                             success = true;
-                            BattleProperties.MoveLimiter limiter =
-                                new BattleProperties.MoveLimiter(
+                            PBS.Main.Pokemon.BattleProperties.MoveLimiter limiter =
+                                new PBS.Main.Pokemon.BattleProperties.MoveLimiter(
                                     effect: effect,
                                     turnsLeft: effect.defaultTurns.GetTurns()
                                     );
@@ -10958,8 +10959,8 @@ public class BTLManager : MonoBehaviour
                         if (!isFail)
                         {
                             success = true;
-                            BattleProperties.MoveLimiter limiter =
-                                new BattleProperties.MoveLimiter(
+                            PBS.Main.Pokemon.BattleProperties.MoveLimiter limiter =
+                                new PBS.Main.Pokemon.BattleProperties.MoveLimiter(
                                     effect: effect,
                                     turnsLeft: effect.defaultTurns.GetTurns()
                                     );
@@ -10980,8 +10981,8 @@ public class BTLManager : MonoBehaviour
                     if (!isFail)
                     {
                         success = true;
-                        BattleProperties.Embargo embargo =
-                            new BattleProperties.Embargo(
+                        PBS.Main.Pokemon.BattleProperties.Embargo embargo =
+                            new PBS.Main.Pokemon.BattleProperties.Embargo(
                                 effect: effect,
                                 turnsLeft: effect.defaultTurns.GetTurns()
                                 );
@@ -15147,7 +15148,7 @@ public class BTLManager : MonoBehaviour
                                                 // Flash Fire
                                                 if (triggerCondition.flashFireBoost > 0)
                                                 {
-                                                    BattleProperties.FlashFireBoost flashFireBoost =
+                                                    PBS.Main.Pokemon.BattleProperties.FlashFireBoost flashFireBoost =
                                                         targetPokemon.bProps.GetFlashFireBoost(moveData.moveType);
                                                     if (flashFireBoost != null)
                                                     {
@@ -15155,7 +15156,7 @@ public class BTLManager : MonoBehaviour
                                                         {
                                                             targetPokemon.bProps.flashFireBoosts.Remove(flashFireBoost);
                                                             targetPokemon.bProps.flashFireBoosts.Add(
-                                                                new BattleProperties.FlashFireBoost(
+                                                                new PBS.Main.Pokemon.BattleProperties.FlashFireBoost(
                                                                     moveType: moveData.moveType,
                                                                     boost: triggerCondition.flashFireBoost
                                                                     ));
@@ -15164,7 +15165,7 @@ public class BTLManager : MonoBehaviour
                                                     else
                                                     {
                                                         targetPokemon.bProps.flashFireBoosts.Add(
-                                                            new BattleProperties.FlashFireBoost(
+                                                            new PBS.Main.Pokemon.BattleProperties.FlashFireBoost(
                                                                 moveType: moveData.moveType,
                                                                 boost: triggerCondition.flashFireBoost
                                                                 ));
@@ -15724,8 +15725,8 @@ public class BTLManager : MonoBehaviour
         {
             // TODO: get battle properties for baton pass
             int position = withdrawPokemon.battlePos;
-            BattleProperties withdrawBProps 
-                = BattleProperties.Clone(withdrawPokemon.bProps, withdrawPokemon);
+            PBS.Main.Pokemon.BattleProperties withdrawBProps 
+                = PBS.Main.Pokemon.BattleProperties.Clone(withdrawPokemon.bProps, withdrawPokemon);
 
             Battle updateModel = Battle.CloneModel(battle);
             List<BattleCommand> replaceCommands = new List<BattleCommand>();
@@ -17961,7 +17962,7 @@ public class BTLManager : MonoBehaviour
 
     public IEnumerator PBPRemoveForestsCurse(
         Pokemon pokemon,
-        BattleProperties.ForestsCurse forestsCurse = null,
+        PBS.Main.Pokemon.BattleProperties.ForestsCurse forestsCurse = null,
         string forestsCurseID = null,
         string textID = ""
         )
@@ -17979,8 +17980,8 @@ public class BTLManager : MonoBehaviour
             }
             else
             {
-                List<BattleProperties.ForestsCurse> existingForestsCurses =
-                    new List<BattleProperties.ForestsCurse>(pokemon.bProps.forestsCurses);
+                List<PBS.Main.Pokemon.BattleProperties.ForestsCurse> existingForestsCurses =
+                    new List<PBS.Main.Pokemon.BattleProperties.ForestsCurse>(pokemon.bProps.forestsCurses);
 
                 for (int i = 0; i < existingForestsCurses.Count; i++)
                 {
@@ -19873,8 +19874,8 @@ public class BTLManager : MonoBehaviour
         }
 
         // Unset Lock On
-        List<BattleProperties.LockOn> lockOnTargets 
-            = new List<BattleProperties.LockOn>(targetPokemon.bProps.lockOnTargets);
+        List<PBS.Main.Pokemon.BattleProperties.LockOn> lockOnTargets 
+            = new List<PBS.Main.Pokemon.BattleProperties.LockOn>(targetPokemon.bProps.lockOnTargets);
         for (int i = 0; i < lockOnTargets.Count; i++)
         {
             if (lockOnTargets[i].pokemonUniqueID == tiedPokemon.uniqueID)
