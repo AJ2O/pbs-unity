@@ -47,10 +47,10 @@ namespace PBS.Databases
                     {
 
                     },
-                    effectsNew: new Effects.StatusTEEff.TeamSE[]
+                    effectsNew: new Effects.TeamStatuses.TeamSE[]
                     {
-                        new Effects.StatusTEEff.GMaxWildfirePriority(),
-                        new Effects.StatusTEEff.HPLoss(
+                        new Effects.TeamStatuses.GMaxWildfirePriority(),
+                        new Effects.TeamStatuses.HPLoss(
                             displayText: "gmax-wildfire-damage",
                             hpLossPercent: 1f / 6,
                             filters: new Effects.Filter.FilterEffect[]
@@ -75,10 +75,10 @@ namespace PBS.Databases
                     {
 
                     },
-                    effectsNew: new Effects.StatusTEEff.TeamSE[]
+                    effectsNew: new Effects.TeamStatuses.TeamSE[]
                     {
-                        new Effects.StatusTEEff.GMaxWildfirePriority(),
-                        new Effects.StatusTEEff.HPLoss(
+                        new Effects.TeamStatuses.GMaxWildfirePriority(),
+                        new Effects.TeamStatuses.HPLoss(
                             displayText: "gmax-wildfire-damage",
                             hpLossPercent: 1f / 6,
                             filters: new Effects.Filter.FilterEffect[]
@@ -103,10 +103,10 @@ namespace PBS.Databases
                     {
 
                     },
-                    effectsNew: new Effects.StatusTEEff.TeamSE[]
+                    effectsNew: new Effects.TeamStatuses.TeamSE[]
                     {
-                        new Effects.StatusTEEff.GMaxWildfirePriority(),
-                        new Effects.StatusTEEff.HPLoss(
+                        new Effects.TeamStatuses.GMaxWildfirePriority(),
+                        new Effects.TeamStatuses.HPLoss(
                             displayText: "gmax-wildfire-damage",
                             hpLossPercent: 1f / 6,
                             filters: new Effects.Filter.FilterEffect[]
@@ -131,10 +131,10 @@ namespace PBS.Databases
                     {
 
                     },
-                    effectsNew: new Effects.StatusTEEff.TeamSE[]
+                    effectsNew: new Effects.TeamStatuses.TeamSE[]
                     {
-                        new Effects.StatusTEEff.GMaxWildfirePriority(),
-                        new Effects.StatusTEEff.HPLoss(
+                        new Effects.TeamStatuses.GMaxWildfirePriority(),
+                        new Effects.TeamStatuses.HPLoss(
                             displayText: "gmax-wildfire-damage",
                             hpLossPercent: 1f / 6,
                             filters: new Effects.Filter.FilterEffect[]
@@ -161,9 +161,9 @@ namespace PBS.Databases
                     alreadyTextID: "tStatus-auroraveil-already",
                     failTextID: "tStatus-auroraveil-fail",
                     defaultTurns: new Effects.General.DefaultTurns(turns: 5),
-                    effectsNew: new Effects.StatusTEEff.TeamSE[]
+                    effectsNew: new Effects.TeamStatuses.TeamSE[]
                     {
-                        new Effects.StatusTEEff.LightScreen(
+                        new Effects.TeamStatuses.LightScreen(
                             filters: new Effects.Filter.FilterEffect[]
                             {
                                 new Effects.Filter.MoveCheck(
@@ -182,9 +182,9 @@ namespace PBS.Databases
                     alreadyTextID: "tStatus-lightscreen-already",
                     failTextID: "tStatus-lightscreen-fail",
                     defaultTurns: new Effects.General.DefaultTurns(turns: 5),
-                    effectsNew: new Effects.StatusTEEff.TeamSE[]
+                    effectsNew: new Effects.TeamStatuses.TeamSE[]
                     {
-                        new Effects.StatusTEEff.LightScreen(
+                        new Effects.TeamStatuses.LightScreen(
                             filters: new Effects.Filter.FilterEffect[]
                             {
                                 new Effects.Filter.MoveCheck(
@@ -203,9 +203,9 @@ namespace PBS.Databases
                     alreadyTextID: "tStatus-reflect-already",
                     failTextID: "tStatus-reflect-fail",
                     defaultTurns: new Effects.General.DefaultTurns(turns: 5),
-                    effectsNew: new Effects.StatusTEEff.TeamSE[]
+                    effectsNew: new Effects.TeamStatuses.TeamSE[]
                     {
-                        new Effects.StatusTEEff.LightScreen(
+                        new Effects.TeamStatuses.LightScreen(
                             filters: new Effects.Filter.FilterEffect[]
                             {
                                 new Effects.Filter.MoveCheck(

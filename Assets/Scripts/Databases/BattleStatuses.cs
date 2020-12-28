@@ -48,9 +48,9 @@ namespace PBS.Databases
                         BattleSTag.Default,
                     },
 
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.Weather(weatherBallBoost: false),
+                        new Effects.BattleStatuses.Weather(weatherBallBoost: false),
                     }
                     ) },
 
@@ -65,9 +65,9 @@ namespace PBS.Databases
                         BattleSTag.Default,
                     },
 
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.Terrain(),
+                        new Effects.BattleStatuses.Terrain(),
                     }
                     ) },
 
@@ -82,9 +82,9 @@ namespace PBS.Databases
                         BattleSTag.Default,
                     },
 
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.Gravity(),
+                        new Effects.BattleStatuses.Gravity(),
                     }
                     ) },
 
@@ -99,9 +99,9 @@ namespace PBS.Databases
                         BattleSTag.Default,
                     },
 
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.MagicRoom(),
+                        new Effects.BattleStatuses.MagicRoom(),
                     }
                     ) },
 
@@ -116,9 +116,9 @@ namespace PBS.Databases
                         BattleSTag.Default,
                     },
 
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.TrickRoom()
+                        new Effects.BattleStatuses.TrickRoom()
                     }
                     ) },
 
@@ -133,9 +133,9 @@ namespace PBS.Databases
                         BattleSTag.Default,
                     },
 
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.WonderRoom(),
+                        new Effects.BattleStatuses.WonderRoom(),
                     }
                     ) },
 
@@ -156,9 +156,9 @@ namespace PBS.Databases
                         BattleSTag.UndoesSelf,
                     },
 
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.Gravity(intensifyGravity: true),
+                        new Effects.BattleStatuses.Gravity(intensifyGravity: true),
                     }
                     ) },
 
@@ -179,9 +179,9 @@ namespace PBS.Databases
                         BattleSTag.UndoesSelf,
                     },
 
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.MagicRoom(suppressItems: true),
+                        new Effects.BattleStatuses.MagicRoom(suppressItems: true),
                     }
                     ) },
 
@@ -199,9 +199,9 @@ namespace PBS.Databases
                         BattleSTag.UndoesSelf,
                     },
 
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.TrickRoom(speedStat: PokemonStats.Speed, reverse: true)
+                        new Effects.BattleStatuses.TrickRoom(speedStat: PokemonStats.Speed, reverse: true)
                     }
                     ) },
 
@@ -219,9 +219,9 @@ namespace PBS.Databases
                         BattleSTag.UndoesSelf,
                     },
 
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.WonderRoom(
+                        new Effects.BattleStatuses.WonderRoom(
                             DEFMap: PokemonStats.SpecialDefense, SPEMap: PokemonStats.Defense
                             )
                     }
@@ -248,18 +248,18 @@ namespace PBS.Databases
                         BattleSTag.IsGrounded,
                         BattleSTag.TurnsDecreaseOnEnd,
                     },
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.Terrain(
+                        new Effects.BattleStatuses.Terrain(
                             terrainPulseType: "electric",
                             naturePowerMove: "thunderbolt"
                             ),
-                        new Effects.StatusBTLEff.TypeDamageModifier(
+                        new Effects.BattleStatuses.TypeDamageModifier(
                             damageScale: 1.3f,
                             types: new string[] { "electric" },
                             offensiveCheck: true
                             ),
-                        new Effects.StatusBTLEff.BlockStatus(
+                        new Effects.BattleStatuses.BlockStatus(
                             statusIDs: new string[] { "sleep" },
                             blockText: "terrain-electricterrain-block"
                             ),
@@ -284,23 +284,23 @@ namespace PBS.Databases
                         BattleSTag.IsGrounded,
                         BattleSTag.TurnsDecreaseOnEnd,
                     },
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.Terrain(
+                        new Effects.BattleStatuses.Terrain(
                             terrainPulseType: "grass",
                             naturePowerMove: "energyball"
                             ),
-                        new Effects.StatusBTLEff.TypeDamageModifier(
+                        new Effects.BattleStatuses.TypeDamageModifier(
                             damageScale: 1.3f,
                             types: new string[] { "grass" },
                             offensiveCheck: true
                             ),
-                        new Effects.StatusBTLEff.MoveDamageModifier(
+                        new Effects.BattleStatuses.MoveDamageModifier(
                             damageScale: 0.5f,
                             moves: new string[] { "bulldoze", "earthquake", "magnitude" },
                             defensiveCheck: true
                             ),
-                        new Effects.StatusBTLEff.HPGain(
+                        new Effects.BattleStatuses.HPGain(
                             displayText: "terrain-grassyterrain-heal",
                             hpGainPercent: 1f/16,
                             timing: BattleSETiming.EndOfTurn
@@ -326,18 +326,18 @@ namespace PBS.Databases
                         BattleSTag.IsGrounded,
                         BattleSTag.TurnsDecreaseOnEnd,
                     },
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.Terrain(
+                        new Effects.BattleStatuses.Terrain(
                             terrainPulseType: "fairy",
                             naturePowerMove: "moonblast"
                             ),
-                        new Effects.StatusBTLEff.TypeDamageModifier(
+                        new Effects.BattleStatuses.TypeDamageModifier(
                             damageScale: 0.5f,
                             types: new string[] { "dragon" },
                             defensiveCheck: true
                             ),
-                        new Effects.StatusBTLEff.BlockStatus(
+                        new Effects.BattleStatuses.BlockStatus(
                             statusIDs: new string[]
                             {
                                 "burn", "freeze", "paralysis", "poison",
@@ -366,18 +366,18 @@ namespace PBS.Databases
                         BattleSTag.IsGrounded,
                         BattleSTag.TurnsDecreaseOnEnd,
                     },
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.Terrain(
+                        new Effects.BattleStatuses.Terrain(
                             terrainPulseType: "psychic",
                             naturePowerMove: "psychic"
                             ),
-                        new Effects.StatusBTLEff.TypeDamageModifier(
+                        new Effects.BattleStatuses.TypeDamageModifier(
                             damageScale: 1.3f,
                             types: new string[] { "psychic" },
                             offensiveCheck: true
                             ),
-                        new Effects.StatusBTLEff.BlockMoves(
+                        new Effects.BattleStatuses.BlockMoves(
                             psychicTerrain: true,
                             blockText: "terrain-psychicterrain-block"
                             ),
@@ -404,13 +404,13 @@ namespace PBS.Databases
                     combineBaseTags: true,
                     combineBaseEffects: true,
 
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.Weather(
+                        new Effects.BattleStatuses.Weather(
                             weatherBallType: "fire",
                             priority: 1, negateText: "weather-extremelyharshsunlight-block"
                             ),
-                        new Effects.StatusBTLEff.DesolateLand(
+                        new Effects.BattleStatuses.DesolateLand(
                             negateText: "weather-extremelyharshsunlight-negate",
                             types: new string[] { "water" }
                             ),
@@ -443,9 +443,9 @@ namespace PBS.Databases
                             stringParams: new string[] { "acc" }
                             ),
                     },
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.Weather(),
+                        new Effects.BattleStatuses.Weather(),
                     }
                     ) },
 
@@ -467,12 +467,12 @@ namespace PBS.Databases
                         BattleSTag.TurnsDecreaseOnEnd
                     },
 
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.Weather(
+                        new Effects.BattleStatuses.Weather(
                             weatherBallType: "ice"
                             ),
-                        new Effects.StatusBTLEff.HPLoss(
+                        new Effects.BattleStatuses.HPLoss(
                             displayText: "weather-hail-buffet",
                             hpLossPercent: 1f/16,
                             timing: BattleSETiming.EndOfTurn,
@@ -506,16 +506,16 @@ namespace PBS.Databases
                         BattleSTag.TurnsDecreaseOnEnd
                     },
 
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.Weather(
+                        new Effects.BattleStatuses.Weather(
                             weatherBallType: "fire"
                             ),
-                        new Effects.StatusBTLEff.TypeDamageModifier(
+                        new Effects.BattleStatuses.TypeDamageModifier(
                             damageScale: 1.5f,
                             types: new string[] { "fire" }
                             ),
-                        new Effects.StatusBTLEff.TypeDamageModifier(
+                        new Effects.BattleStatuses.TypeDamageModifier(
                             damageScale: 0.5f,
                             types: new string[] { "water" }
                             ),
@@ -538,13 +538,13 @@ namespace PBS.Databases
 
                     combineBaseTags: true,
                     combineBaseEffects: true,
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.Weather(
+                        new Effects.BattleStatuses.Weather(
                             weatherBallType: "water",
                             priority: 1, negateText: "weather-heavyrain-block"
                             ),
-                        new Effects.StatusBTLEff.DesolateLand(
+                        new Effects.BattleStatuses.DesolateLand(
                             negateText: "weather-heavyrain-negate",
                             types: new string[] { "fire" }
                             ),
@@ -569,16 +569,16 @@ namespace PBS.Databases
                         BattleSTag.TurnsDecreaseOnEnd
                     },
 
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.Weather(
+                        new Effects.BattleStatuses.Weather(
                             weatherBallType: "water"
                             ),
-                        new Effects.StatusBTLEff.TypeDamageModifier(
+                        new Effects.BattleStatuses.TypeDamageModifier(
                             damageScale: 1.5f,
                             types: new string[] { "water" }
                             ),
-                        new Effects.StatusBTLEff.TypeDamageModifier(
+                        new Effects.BattleStatuses.TypeDamageModifier(
                             damageScale: 0.5f,
                             types: new string[] { "fire" }
                             ),
@@ -603,12 +603,12 @@ namespace PBS.Databases
                         BattleSTag.TurnsDecreaseOnEnd
                     },
 
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.Weather(
+                        new Effects.BattleStatuses.Weather(
                             weatherBallType: "rock"
                             ),
-                        new Effects.StatusBTLEff.HPLoss(
+                        new Effects.BattleStatuses.HPLoss(
                             displayText: "weather-sandstorm-buffet",
                             hpLossPercent: 1f/16,
                             timing: BattleSETiming.EndOfTurn,
@@ -621,7 +621,7 @@ namespace PBS.Databases
                                     ),
                             }
                             ),
-                        new Effects.StatusBTLEff.StatScale(
+                        new Effects.BattleStatuses.StatScale(
                             SPDMod: 1.5f,
                             filters: new Effects.Filter.FilterEffect[]
                             {
@@ -651,13 +651,13 @@ namespace PBS.Databases
                         BattleSTag.TurnsDecreaseOnEnd
                     },
 
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.Weather(
+                        new Effects.BattleStatuses.Weather(
                             weatherBallBoost: false,
                             priority: 1, negateText: "weather-strongwinds-block"
                             ),
-                        new Effects.StatusBTLEff.StrongWinds(
+                        new Effects.BattleStatuses.StrongWinds(
                             changeText: "weather-strongwinds-weaken",
                             types: new string[] { "flying" },
                             effectivenessFilter: new HashSet<TypeEffectiveness> { TypeEffectiveness.SuperEffective },
@@ -683,9 +683,9 @@ namespace PBS.Databases
                         BattleSTag.TurnsDecreaseOnEnd,
                     },
 
-                    effectsNew: new Effects.StatusBTLEff.BattleSE[]
+                    effectsNew: new Effects.BattleStatuses.BattleSE[]
                     {
-                        new Effects.StatusBTLEff.IonDeluge(
+                        new Effects.BattleStatuses.IonDeluge(
                             toType: "electric",
                             fromTypes: new string[] { "normal" }
                             )

@@ -96,8 +96,8 @@ public class StatusBTLData
     }
 
     // Turns
-    private Effects.General.DefaultTurns p_defaultTurns { get; set; }
-    public Effects.General.DefaultTurns defaultTurns 
+    private PBS.Databases.Effects.General.DefaultTurns p_defaultTurns { get; set; }
+    public PBS.Databases.Effects.General.DefaultTurns defaultTurns 
     {
         get
         {
@@ -156,14 +156,14 @@ public class StatusBTLData
 
     // New Effects
     private bool combineBaseEffects;
-    private List<Effects.StatusBTLEff.BattleSE> p_effectsNew { get; set; }
-    public List<Effects.StatusBTLEff.BattleSE> effectsNew
+    private List<PBS.Databases.Effects.BattleStatuses.BattleSE> p_effectsNew { get; set; }
+    public List<PBS.Databases.Effects.BattleStatuses.BattleSE> effectsNew
     {
         get
         {
             if (combineBaseEffects && !string.IsNullOrEmpty(baseID))
             {
-                List<Effects.StatusBTLEff.BattleSE> unionEffects = new List<Effects.StatusBTLEff.BattleSE>();
+                List<PBS.Databases.Effects.BattleStatuses.BattleSE> unionEffects = new List<PBS.Databases.Effects.BattleStatuses.BattleSE>();
                 unionEffects.AddRange(p_effectsNew);
                 unionEffects.AddRange(BattleStatuses.instance.GetStatusData(baseID).effectsNew);
                 return unionEffects;
@@ -185,10 +185,10 @@ public class StatusBTLData
         string natureTextID = null,
         string endTextID = null,
         string alreadyTextID = null,
-        Effects.General.DefaultTurns defaultTurns = null,
+        PBS.Databases.Effects.General.DefaultTurns defaultTurns = null,
 
         bool combineBaseTags = false, IEnumerable<BattleSTag> tags = null,
-        bool combineBaseEffects = false, BattleCEff[] effects = null, Effects.StatusBTLEff.BattleSE[] effectsNew = null)
+        bool combineBaseEffects = false, BattleCEff[] effects = null, PBS.Databases.Effects.BattleStatuses.BattleSE[] effectsNew = null)
     {
         this.ID = ID;
         this.baseID = baseID;
@@ -215,10 +215,10 @@ public class StatusBTLData
             this.effects = new List<BattleCEff>(newEffects);
         }
 
-        this.effectsNew = new List<Effects.StatusBTLEff.BattleSE>();
+        this.effectsNew = new List<PBS.Databases.Effects.BattleStatuses.BattleSE>();
         if (effectsNew != null)
         {
-            List<Effects.StatusBTLEff.BattleSE> addableEffects = new List<Effects.StatusBTLEff.BattleSE>();
+            List<PBS.Databases.Effects.BattleStatuses.BattleSE> addableEffects = new List<PBS.Databases.Effects.BattleStatuses.BattleSE>();
             for (int i = 0; i < effectsNew.Length; i++)
             {
                 addableEffects.Add(effectsNew[i].Clone());
@@ -306,9 +306,9 @@ public class StatusBTLData
         return effects;
     }
 
-    public List<Effects.StatusBTLEff.BattleSE> GetEffectsNewFiltered(BattleSETiming timing)
+    public List<PBS.Databases.Effects.BattleStatuses.BattleSE> GetEffectsNewFiltered(BattleSETiming timing)
     {
-        List<Effects.StatusBTLEff.BattleSE> effects = new List<Effects.StatusBTLEff.BattleSE>();
+        List<PBS.Databases.Effects.BattleStatuses.BattleSE> effects = new List<PBS.Databases.Effects.BattleStatuses.BattleSE>();
         for (int i = 0; i < effectsNew.Count; i++)
         {
             if (effectsNew[i].timing == timing)
@@ -318,9 +318,9 @@ public class StatusBTLData
         }
         return effects;
     }
-    public List<Effects.StatusBTLEff.BattleSE> GetEffectsNew(BattleSEType effectType)
+    public List<PBS.Databases.Effects.BattleStatuses.BattleSE> GetEffectsNew(BattleSEType effectType)
     {
-        List<Effects.StatusBTLEff.BattleSE> effects = new List<Effects.StatusBTLEff.BattleSE>();
+        List<PBS.Databases.Effects.BattleStatuses.BattleSE> effects = new List<PBS.Databases.Effects.BattleStatuses.BattleSE>();
         for (int i = 0; i < effectsNew.Count; i++)
         {
             if (effectsNew[i].effectType == effectType)
@@ -330,7 +330,7 @@ public class StatusBTLData
         }
         return effects;
     }
-    public Effects.StatusBTLEff.BattleSE GetEffectNew(BattleSEType effectType)
+    public PBS.Databases.Effects.BattleStatuses.BattleSE GetEffectNew(BattleSEType effectType)
     {
         for (int i = 0; i < effectsNew.Count; i++)
         {
@@ -342,11 +342,11 @@ public class StatusBTLData
         return null;
     }
 
-    public void AddEffects(IEnumerable<Effects.StatusBTLEff.BattleSE> effects, bool before = true)
+    public void AddEffects(IEnumerable<PBS.Databases.Effects.BattleStatuses.BattleSE> effects, bool before = true)
     {
         if (before)
         {
-            List<Effects.StatusBTLEff.BattleSE> unionEffects = new List<Effects.StatusBTLEff.BattleSE>(effects);
+            List<PBS.Databases.Effects.BattleStatuses.BattleSE> unionEffects = new List<PBS.Databases.Effects.BattleStatuses.BattleSE>(effects);
             unionEffects.AddRange(p_effectsNew);
             effectsNew = unionEffects;
         }
@@ -355,9 +355,9 @@ public class StatusBTLData
             p_effectsNew.AddRange(effects);
         }
     }
-    public void SetEffects(IEnumerable<Effects.StatusBTLEff.BattleSE> effects)
+    public void SetEffects(IEnumerable<PBS.Databases.Effects.BattleStatuses.BattleSE> effects)
     {
-        effectsNew = new List<Effects.StatusBTLEff.BattleSE>(effects);
+        effectsNew = new List<PBS.Databases.Effects.BattleStatuses.BattleSE>(effects);
     }
 }
 

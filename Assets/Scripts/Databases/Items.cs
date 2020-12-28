@@ -45,9 +45,9 @@ namespace PBS.Databases
                 {
                     ItemTag.Consumable,
                 },
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.FocusBand(),
+                    new Effects.Items.FocusBand(),
                 }
                 ) },
 
@@ -65,9 +65,9 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.Potion(
+                    new Effects.Items.Potion(
                         applyOnConsume: false, applyOnUse: true,
                         healHP: new Effects.General.HealHP(
                             healMode: Effects.General.HealHP.HealMode.HitPoints,
@@ -106,9 +106,9 @@ namespace PBS.Databases
                         stringParams: new string[]{ "DEFAULT", "normal", }
                         ),
                 },
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.NaturalGift(
+                    new Effects.Items.NaturalGift(
                         moveType: "normal", basePower: 80
                         ),
                 }
@@ -138,9 +138,9 @@ namespace PBS.Databases
                         stringParams: new string[]{  }
                         ),
                 },
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.NaturalGift(
+                    new Effects.Items.NaturalGift(
                         moveType: "flying", basePower: 80
                         ),
                 }
@@ -169,9 +169,9 @@ namespace PBS.Databases
                         floatParams: new float[] { 10 }
                         ),
                 },
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.NaturalGift(
+                    new Effects.Items.NaturalGift(
                         moveType: "fire", basePower: 80
                         ),
                 }
@@ -189,19 +189,19 @@ namespace PBS.Databases
                     ItemTag.Consumable
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.NaturalGift(
+                    new Effects.Items.NaturalGift(
                         moveType: "poison", basePower: 80
                         ),
-                    new Effects.ItemEff.Potion(
+                    new Effects.Items.Potion(
                         healHP: new Effects.General.HealHP(
                             healMode: Effects.General.HealHP.HealMode.HitPoints,
                             healValue: 10,
                             displayText: "pokemon-heal-hp"
                             )
                         ),
-                    new Effects.ItemEff.TriggerSitrusBerry(hpThreshold: 0.5f),
+                    new Effects.Items.TriggerSitrusBerry(hpThreshold: 0.5f),
                 }
                 ) },
 
@@ -224,9 +224,9 @@ namespace PBS.Databases
                         stringParams: new string[]{ "DEFAULT", "water", }
                         ),
                 },
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.NaturalGift(
+                    new Effects.Items.NaturalGift(
                         moveType: "water", basePower: 80
                         ),
                 }
@@ -243,18 +243,18 @@ namespace PBS.Databases
                     ItemTag.Consumable
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.NaturalGift(
+                    new Effects.Items.NaturalGift(
                         moveType: "psychic", basePower: 80
                         ),
-                    new Effects.ItemEff.Potion(
+                    new Effects.Items.Potion(
                         healHP: new Effects.General.HealHP(
                             healMode: Effects.General.HealHP.HealMode.MaxHPPercent,
                             healValue: 0.25f
                             )
                         ),
-                    new Effects.ItemEff.TriggerSitrusBerry(hpThreshold: 0.5f),
+                    new Effects.Items.TriggerSitrusBerry(hpThreshold: 0.5f),
                 }
                 ) },
 
@@ -277,9 +277,9 @@ namespace PBS.Databases
                         stringParams: new string[]{ "DEFAULT", "electric", }
                         ),
                 },
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.NaturalGift(
+                    new Effects.Items.NaturalGift(
                         moveType: "electric", basePower: 80
                         ),
                 }
@@ -298,9 +298,9 @@ namespace PBS.Databases
                     ItemTag.OnlyUseableInBattle,
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.LiechiBerry(
+                    new Effects.Items.LiechiBerry(
                         statStageMod: new Effects.General.StatStageMod(ATKMod: 1)
                         )
                 }
@@ -318,9 +318,9 @@ namespace PBS.Databases
                     ItemTag.OnlyUseableInBattle,
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.LiechiBerry(
+                    new Effects.Items.LiechiBerry(
                         statStageMod: new Effects.General.StatStageMod(DEFMod: 1)
                         )
                 }
@@ -338,9 +338,9 @@ namespace PBS.Databases
                     ItemTag.OnlyUseableInBattle,
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.LiechiBerry(
+                    new Effects.Items.LiechiBerry(
                         statStageMod: new Effects.General.StatStageMod(SPAMod: 1)
                         )
                 }
@@ -358,9 +358,9 @@ namespace PBS.Databases
                     ItemTag.OnlyUseableInBattle,
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.LiechiBerry(
+                    new Effects.Items.LiechiBerry(
                         statStageMod: new Effects.General.StatStageMod(SPDMod: 1)
                         )
                 }
@@ -378,9 +378,9 @@ namespace PBS.Databases
                     ItemTag.OnlyUseableInBattle,
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.LiechiBerry(
+                    new Effects.Items.LiechiBerry(
                         statStageMod: new Effects.General.StatStageMod(SPEMod: 1)
                         )
                 }
@@ -398,9 +398,9 @@ namespace PBS.Databases
                     ItemTag.OnlyUseableInBattle,
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.LiechiBerry(
+                    new Effects.Items.LiechiBerry(
                         statStageMod: new Effects.General.StatStageMod(ACCMod: 1)
                         )
                 }
@@ -442,9 +442,9 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.MegaStone(baseFormID: "blastoise", formID: "blastoise-mega"),
+                    new Effects.Items.MegaStone(baseFormID: "blastoise", formID: "blastoise-mega"),
                 }
                 ) },
 
@@ -461,11 +461,11 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.ArceusPlate(baseFormID: "arceus", formID: "arceus-dragon"),
-                    new Effects.ItemEff.Judgment(moveType: "dragon"),
-                    new Effects.ItemEff.Charcoal(
+                    new Effects.Items.ArceusPlate(baseFormID: "arceus", formID: "arceus-dragon"),
+                    new Effects.Items.Judgment(moveType: "dragon"),
+                    new Effects.Items.Charcoal(
                         filters: new Effects.Filter.FilterEffect[]
                         {
                             new Effects.Filter.TypeList(
@@ -487,11 +487,11 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.ArceusPlate(baseFormID: "arceus", formID: "arceus-dark"),
-                    new Effects.ItemEff.Judgment(moveType: "dark"),
-                    new Effects.ItemEff.Charcoal(
+                    new Effects.Items.ArceusPlate(baseFormID: "arceus", formID: "arceus-dark"),
+                    new Effects.Items.Judgment(moveType: "dark"),
+                    new Effects.Items.Charcoal(
                         filters: new Effects.Filter.FilterEffect[]
                         {
                             new Effects.Filter.TypeList(
@@ -513,11 +513,11 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.ArceusPlate(baseFormID: "arceus", formID: "arceus-ground"),
-                    new Effects.ItemEff.Judgment(moveType: "ground"),
-                    new Effects.ItemEff.Charcoal(
+                    new Effects.Items.ArceusPlate(baseFormID: "arceus", formID: "arceus-ground"),
+                    new Effects.Items.Judgment(moveType: "ground"),
+                    new Effects.Items.Charcoal(
                         filters: new Effects.Filter.FilterEffect[]
                         {
                             new Effects.Filter.TypeList(
@@ -539,11 +539,11 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.ArceusPlate(baseFormID: "arceus", formID: "arceus-electric"),
-                    new Effects.ItemEff.Judgment(moveType: "electric"),
-                    new Effects.ItemEff.Charcoal(
+                    new Effects.Items.ArceusPlate(baseFormID: "arceus", formID: "arceus-electric"),
+                    new Effects.Items.Judgment(moveType: "electric"),
+                    new Effects.Items.Charcoal(
                         filters: new Effects.Filter.FilterEffect[]
                         {
                             new Effects.Filter.TypeList(
@@ -565,11 +565,11 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.ArceusPlate(baseFormID: "arceus", formID: "arceus-fighting"),
-                    new Effects.ItemEff.Judgment(moveType: "fighting"),
-                    new Effects.ItemEff.Charcoal(
+                    new Effects.Items.ArceusPlate(baseFormID: "arceus", formID: "arceus-fighting"),
+                    new Effects.Items.Judgment(moveType: "fighting"),
+                    new Effects.Items.Charcoal(
                         filters: new Effects.Filter.FilterEffect[]
                         {
                             new Effects.Filter.TypeList(
@@ -591,11 +591,11 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.ArceusPlate(baseFormID: "arceus", formID: "arceus-fire"),
-                    new Effects.ItemEff.Judgment(moveType: "fire"),
-                    new Effects.ItemEff.Charcoal(
+                    new Effects.Items.ArceusPlate(baseFormID: "arceus", formID: "arceus-fire"),
+                    new Effects.Items.Judgment(moveType: "fire"),
+                    new Effects.Items.Charcoal(
                         filters: new Effects.Filter.FilterEffect[]
                         {
                             new Effects.Filter.TypeList(
@@ -617,11 +617,11 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.ArceusPlate(baseFormID: "arceus", formID: "arceus-ice"),
-                    new Effects.ItemEff.Judgment(moveType: "ice"),
-                    new Effects.ItemEff.Charcoal(
+                    new Effects.Items.ArceusPlate(baseFormID: "arceus", formID: "arceus-ice"),
+                    new Effects.Items.Judgment(moveType: "ice"),
+                    new Effects.Items.Charcoal(
                         filters: new Effects.Filter.FilterEffect[]
                         {
                             new Effects.Filter.TypeList(
@@ -643,11 +643,11 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.ArceusPlate(baseFormID: "arceus", formID: "arceus-bug"),
-                    new Effects.ItemEff.Judgment(moveType: "bug"),
-                    new Effects.ItemEff.Charcoal(
+                    new Effects.Items.ArceusPlate(baseFormID: "arceus", formID: "arceus-bug"),
+                    new Effects.Items.Judgment(moveType: "bug"),
+                    new Effects.Items.Charcoal(
                         filters: new Effects.Filter.FilterEffect[]
                         {
                             new Effects.Filter.TypeList(
@@ -669,11 +669,11 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.ArceusPlate(baseFormID: "arceus", formID: "arceus-steel"),
-                    new Effects.ItemEff.Judgment(moveType: "steel"),
-                    new Effects.ItemEff.Charcoal(
+                    new Effects.Items.ArceusPlate(baseFormID: "arceus", formID: "arceus-steel"),
+                    new Effects.Items.Judgment(moveType: "steel"),
+                    new Effects.Items.Charcoal(
                         filters: new Effects.Filter.FilterEffect[]
                         {
                             new Effects.Filter.TypeList(
@@ -695,11 +695,11 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.ArceusPlate(baseFormID: "arceus", formID: "arceus-grass"),
-                    new Effects.ItemEff.Judgment(moveType: "grass"),
-                    new Effects.ItemEff.Charcoal(
+                    new Effects.Items.ArceusPlate(baseFormID: "arceus", formID: "arceus-grass"),
+                    new Effects.Items.Judgment(moveType: "grass"),
+                    new Effects.Items.Charcoal(
                         filters: new Effects.Filter.FilterEffect[]
                         {
                             new Effects.Filter.TypeList(
@@ -721,11 +721,11 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.ArceusPlate(baseFormID: "arceus", formID: "arceus-psychic"),
-                    new Effects.ItemEff.Judgment(moveType: "psychic"),
-                    new Effects.ItemEff.Charcoal(
+                    new Effects.Items.ArceusPlate(baseFormID: "arceus", formID: "arceus-psychic"),
+                    new Effects.Items.Judgment(moveType: "psychic"),
+                    new Effects.Items.Charcoal(
                         filters: new Effects.Filter.FilterEffect[]
                         {
                             new Effects.Filter.TypeList(
@@ -746,11 +746,11 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.ArceusPlate(baseFormID: "arceus", formID: "arceus-fairy"),
-                    new Effects.ItemEff.Judgment(moveType: "fairy"),
-                    new Effects.ItemEff.Charcoal(
+                    new Effects.Items.ArceusPlate(baseFormID: "arceus", formID: "arceus-fairy"),
+                    new Effects.Items.Judgment(moveType: "fairy"),
+                    new Effects.Items.Charcoal(
                         filters: new Effects.Filter.FilterEffect[]
                         {
                             new Effects.Filter.TypeList(
@@ -778,9 +778,9 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.ZCrystal(moveType: "normal", ZMove: "breakneckblitz"),
+                    new Effects.Items.ZCrystal(moveType: "normal", ZMove: "breakneckblitz"),
                 }
                 ) },
         {"psychiumz",
@@ -795,10 +795,10 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.ArceusPlate(baseFormID: "arceus", formID: "arceus-psychic"),
-                    new Effects.ItemEff.ZCrystal(moveType: "psychic", ZMove: "shatteredpsyche"),
+                    new Effects.Items.ArceusPlate(baseFormID: "arceus", formID: "arceus-psychic"),
+                    new Effects.Items.ZCrystal(moveType: "psychic", ZMove: "shatteredpsyche"),
                 }
                 ) },
 
@@ -816,9 +816,9 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.ZCrystalSignature(
+                    new Effects.Items.ZCrystalSignature(
                         ZMove: "guardianofalola",
                         eligibleMoves: new string[] { "naturesmadness" },
                         eligiblePokemonIDs: new string[] { "tapukoko", "tapulele", "tapubulu", "tapufini" }
@@ -837,9 +837,9 @@ namespace PBS.Databases
 
                 },
 
-                effectsNew: new Effects.ItemEff.ItemEffect[]
+                effectsNew: new Effects.Items.ItemEffect[]
                 {
-                    new Effects.ItemEff.ZCrystalSignature(
+                    new Effects.Items.ZCrystalSignature(
                         ZMove: "lightthatburnsthesky",
                         eligibleMoves: new string[] { "photongeyser" },
                         eligiblePokemonIDs: new string[] { "necrozma-ultra" }

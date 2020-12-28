@@ -398,17 +398,17 @@ public class BattleHitTarget
 
     public string destinyBondMove;
 
-    public Effects.General.Protect protection;
-    public Effects.General.Protect teamProtection;
+    public PBS.Databases.Effects.General.Protect protection;
+    public PBS.Databases.Effects.General.Protect teamProtection;
     public string protectAbility;
     public string protectItem;
-    public Effects.General.MagicCoat reflection;
+    public PBS.Databases.Effects.General.MagicCoat reflection;
 
     public string reflectMove;
     public string reflectAbility;
     public string reflectItem;
 
-    public Effects.MoveEff.Endure endure;
+    public PBS.Databases.Effects.Moves.Endure endure;
     public AbilityEffectPair sturdyPair;
     public Item focusBand;
     public string surviveAbility;
@@ -494,8 +494,8 @@ public class BattleHitTeam
 {
     public Team team;
     public bool affectedByMove;
-    public Effects.General.Protect protection;
-    public Effects.General.MagicCoat reflection;
+    public PBS.Databases.Effects.General.Protect protection;
+    public PBS.Databases.Effects.General.MagicCoat reflection;
 
     public BattleHitTeam(Team team)
     {

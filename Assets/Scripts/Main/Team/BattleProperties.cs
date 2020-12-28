@@ -49,7 +49,7 @@ namespace PBS.Main.Team
 
         public List<TeamCondition> lightScreens;
 
-        public List<Effects.General.Protect> matBlocks;
+        public List<PBS.Databases.Effects.General.Protect> matBlocks;
 
         public class ReflectScreen
         {
@@ -146,7 +146,7 @@ namespace PBS.Main.Team
             entryHazards = new List<EntryHazard>();
             GMaxWildfireStatus = null;
             lightScreens = new List<TeamCondition>();
-            matBlocks = new List<Effects.General.Protect>();
+            matBlocks = new List<PBS.Databases.Effects.General.Protect>();
             reflectScreens = new List<ReflectScreen>();
             safeguards = new List<Safeguard>();
 

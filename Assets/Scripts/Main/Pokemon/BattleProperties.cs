@@ -30,7 +30,7 @@ namespace PBS.Main.Pokemon
         }
         public Bound bound;
 
-        public Effects.StatusPKEff.DefenseCurl defenseCurl;
+        public PBS.Databases.Effects.PokemonStatuses.DefenseCurl defenseCurl;
 
         public class Disable
         {
@@ -55,16 +55,16 @@ namespace PBS.Main.Pokemon
         }
         public Disable disable;
 
-        public Effects.StatusPKEff.Electrify electrify;
+        public PBS.Databases.Effects.PokemonStatuses.Electrify electrify;
 
         public class Embargo
         {
-            public Effects.StatusPKEff.Embargo effect;
+            public PBS.Databases.Effects.PokemonStatuses.Embargo effect;
             public int turnsLeft;
             public bool justInitialized;
 
             public Embargo(
-                Effects.StatusPKEff.Embargo effect,
+                PBS.Databases.Effects.PokemonStatuses.Embargo effect,
                 int turnsLeft = -1,
                 bool justInitialized = true
                 )
@@ -107,7 +107,7 @@ namespace PBS.Main.Pokemon
         }
         public Encore encore;
 
-        public Effects.MoveEff.Endure endure;
+        public PBS.Databases.Effects.Moves.Endure endure;
 
         public class FlashFireBoost
         {
@@ -125,7 +125,7 @@ namespace PBS.Main.Pokemon
         }
         public List<FlashFireBoost> flashFireBoosts;
 
-        public Effects.StatusPKEff.Flinch flinch;
+        public PBS.Databases.Effects.PokemonStatuses.Flinch flinch;
 
         public class ForestsCurse
         {
@@ -148,7 +148,7 @@ namespace PBS.Main.Pokemon
 
         public bool friskIdentified;
 
-        public Effects.AbilityEff.GulpMissile.Missile gulpMissile;
+        public PBS.Databases.Effects.Abilities.GulpMissile.Missile gulpMissile;
 
         public class HealBlock
         {
@@ -170,7 +170,7 @@ namespace PBS.Main.Pokemon
         }
         public HealBlock healBlock;
 
-        public List<Effects.StatusPKEff.Identification> identifieds;
+        public List<PBS.Databases.Effects.PokemonStatuses.Identification> identifieds;
 
         public class Illusion
         {
@@ -202,8 +202,8 @@ namespace PBS.Main.Pokemon
         }
         public Illusion illusion;
 
-        public Effects.StatusPKEff.Imprison imprison;
-        public Effects.StatusPKEff.Infatuation infatuation;
+        public PBS.Databases.Effects.PokemonStatuses.Imprison imprison;
+        public PBS.Databases.Effects.PokemonStatuses.Infatuation infatuation;
 
         public class LockOn
         {
@@ -226,13 +226,13 @@ namespace PBS.Main.Pokemon
 
         public class MoveLimiter
         {
-            public Effects.StatusPKEff.MoveLimiting effect;
+            public PBS.Databases.Effects.PokemonStatuses.MoveLimiting effect;
             public int turnsLeft;
             public bool justInitialized;
             public HashSet<string> affectedMoves;
 
             public MoveLimiter(
-                Effects.StatusPKEff.MoveLimiting effect,
+                PBS.Databases.Effects.PokemonStatuses.MoveLimiting effect,
                 int turnsLeft = -1,
                 bool justInitialized = true,
                 IEnumerable<string> affectedMoves = null
@@ -274,9 +274,9 @@ namespace PBS.Main.Pokemon
         }
         public List<MoveLimiter> moveLimiters;
 
-        public Effects.StatusPKEff.PerishSong perishSong;
-        public Effects.General.Protect protect;
-        public List<Effects.StatusPKEff.TarShot> tarShots;
+        public PBS.Databases.Effects.PokemonStatuses.PerishSong perishSong;
+        public PBS.Databases.Effects.General.Protect protect;
+        public List<PBS.Databases.Effects.PokemonStatuses.TarShot> tarShots;
 
         public class Taunt
         {
@@ -326,7 +326,7 @@ namespace PBS.Main.Pokemon
 
         public string unburdenItem;
 
-        public Effects.StatusPKEff.Yawn yawn;
+        public PBS.Databases.Effects.PokemonStatuses.Yawn yawn;
 
         public int turnsActive;
 
@@ -721,7 +721,7 @@ namespace PBS.Main.Pokemon
             forestsCurses = new List<ForestsCurse>();
             friskIdentified = false;
             gulpMissile = null;
-            identifieds = new List<Effects.StatusPKEff.Identification>();
+            identifieds = new List<PBS.Databases.Effects.PokemonStatuses.Identification>();
             illusion = null;
             imprison = null;
             infatuation = null;
@@ -729,7 +729,7 @@ namespace PBS.Main.Pokemon
             moveLimiters = new List<MoveLimiter>();
             perishSong = null;
             protect = null;
-            tarShots = new List<Effects.StatusPKEff.TarShot>();
+            tarShots = new List<PBS.Databases.Effects.PokemonStatuses.TarShot>();
             tProps = null;
             yawn = null;
 

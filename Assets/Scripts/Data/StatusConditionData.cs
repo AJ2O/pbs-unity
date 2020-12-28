@@ -32,8 +32,8 @@ public class StatusPKData
     public string failTextID { get; set; }
 
     // Turns
-    private Effects.General.DefaultTurns p_defaultTurns { get; set; }
-    public Effects.General.DefaultTurns defaultTurns
+    private PBS.Databases.Effects.General.DefaultTurns p_defaultTurns { get; set; }
+    public PBS.Databases.Effects.General.DefaultTurns defaultTurns
     {
         get
         {
@@ -74,14 +74,14 @@ public class StatusPKData
 
     // New Effects
     private bool combineBaseEffects;
-    private List<Effects.StatusPKEff.PokemonSE> p_effectsNew { get; set; }
-    public List<Effects.StatusPKEff.PokemonSE> effectsNew
+    private List<PBS.Databases.Effects.PokemonStatuses.PokemonSE> p_effectsNew { get; set; }
+    public List<PBS.Databases.Effects.PokemonStatuses.PokemonSE> effectsNew
     {
         get
         {
             if (combineBaseEffects && !string.IsNullOrEmpty(baseID))
             {
-                List<Effects.StatusPKEff.PokemonSE> unionEffects = new List<Effects.StatusPKEff.PokemonSE>();
+                List<PBS.Databases.Effects.PokemonStatuses.PokemonSE> unionEffects = new List<PBS.Databases.Effects.PokemonStatuses.PokemonSE>();
                 unionEffects.AddRange(p_effectsNew);
                 unionEffects.AddRange(PokemonStatuses.instance.GetStatusData(baseID).effectsNew);
                 return unionEffects;
@@ -104,12 +104,12 @@ public class StatusPKData
         string healTextID = null,
         string alreadyTextID = null,
         string failTextID = null,
-        Effects.General.DefaultTurns defaultTurns = null,
+        PBS.Databases.Effects.General.DefaultTurns defaultTurns = null,
 
         bool combineBaseTags = false, IEnumerable<PokemonSTag> statusTags = null,
         PokemonCEff[] conditionEffects = null,
 
-        bool combineBaseEffects = false, Effects.StatusPKEff.PokemonSE[] effectsNew = null)
+        bool combineBaseEffects = false, PBS.Databases.Effects.PokemonStatuses.PokemonSE[] effectsNew = null)
     {
         this.ID = ID;
         this.baseID = baseID;
@@ -136,10 +136,10 @@ public class StatusPKData
         }
 
         this.combineBaseEffects = combineBaseEffects;
-        this.effectsNew = new List<Effects.StatusPKEff.PokemonSE>();
+        this.effectsNew = new List<PBS.Databases.Effects.PokemonStatuses.PokemonSE>();
         if (effectsNew != null)
         {
-            List<Effects.StatusPKEff.PokemonSE> addableEffects = new List<Effects.StatusPKEff.PokemonSE>();
+            List<PBS.Databases.Effects.PokemonStatuses.PokemonSE> addableEffects = new List<PBS.Databases.Effects.PokemonStatuses.PokemonSE>();
             for (int i = 0; i < effectsNew.Length; i++)
             {
                 addableEffects.Add(effectsNew[i].Clone());
@@ -228,9 +228,9 @@ public class StatusPKData
         return effects;
     }
 
-    public List<Effects.StatusPKEff.PokemonSE> GetEffectsNewFiltered(PokemonSETiming timing)
+    public List<PBS.Databases.Effects.PokemonStatuses.PokemonSE> GetEffectsNewFiltered(PokemonSETiming timing)
     {
-        List<Effects.StatusPKEff.PokemonSE> effects = new List<Effects.StatusPKEff.PokemonSE>();
+        List<PBS.Databases.Effects.PokemonStatuses.PokemonSE> effects = new List<PBS.Databases.Effects.PokemonStatuses.PokemonSE>();
         for (int i = 0; i < effectsNew.Count; i++)
         {
             if (effectsNew[i].timing == timing)
@@ -240,9 +240,9 @@ public class StatusPKData
         }
         return effects;
     }
-    public List<Effects.StatusPKEff.PokemonSE> GetEffectsNew(PokemonSEType effectType)
+    public List<PBS.Databases.Effects.PokemonStatuses.PokemonSE> GetEffectsNew(PokemonSEType effectType)
     {
-        List<Effects.StatusPKEff.PokemonSE> effects = new List<Effects.StatusPKEff.PokemonSE>();
+        List<PBS.Databases.Effects.PokemonStatuses.PokemonSE> effects = new List<PBS.Databases.Effects.PokemonStatuses.PokemonSE>();
         for (int i = 0; i < effectsNew.Count; i++)
         {
             if (effectsNew[i].effectType == effectType)
@@ -252,7 +252,7 @@ public class StatusPKData
         }
         return effects;
     }
-    public Effects.StatusPKEff.PokemonSE GetEffectNew(PokemonSEType effectType)
+    public PBS.Databases.Effects.PokemonStatuses.PokemonSE GetEffectNew(PokemonSEType effectType)
     {
         for (int i = 0; i < effectsNew.Count; i++)
         {
@@ -264,11 +264,11 @@ public class StatusPKData
         return null;
     }
 
-    public void AddEffects(IEnumerable<Effects.StatusPKEff.PokemonSE> effects, bool before = true)
+    public void AddEffects(IEnumerable<PBS.Databases.Effects.PokemonStatuses.PokemonSE> effects, bool before = true)
     {
         if (before)
         {
-            List<Effects.StatusPKEff.PokemonSE> unionEffects = new List<Effects.StatusPKEff.PokemonSE>(effects);
+            List<PBS.Databases.Effects.PokemonStatuses.PokemonSE> unionEffects = new List<PBS.Databases.Effects.PokemonStatuses.PokemonSE>(effects);
             unionEffects.AddRange(p_effectsNew);
             effectsNew = unionEffects;
         }
@@ -277,9 +277,9 @@ public class StatusPKData
             p_effectsNew.AddRange(effects);
         }
     }
-    public void SetEffects(IEnumerable<Effects.StatusPKEff.PokemonSE> effects)
+    public void SetEffects(IEnumerable<PBS.Databases.Effects.PokemonStatuses.PokemonSE> effects)
     {
-        effectsNew = new List<Effects.StatusPKEff.PokemonSE>(effects);
+        effectsNew = new List<PBS.Databases.Effects.PokemonStatuses.PokemonSE>(effects);
     }
 }
 
