@@ -1,4 +1,5 @@
 ﻿using PBS.Enums.Battle;
+using PBS.Main.Team;
 using PBS.Main.Trainer;
 using System.Collections;
 using System.Collections.Generic;
@@ -159,12 +160,12 @@ namespace PBS.Battle.View.Events
         public List<int> trainers = new List<int>();
 
         public ModelUpdateTeam() { }
-        public ModelUpdateTeam(BattleTeam obj, bool loadAsset = false)
+        public ModelUpdateTeam(Team obj, bool loadAsset = false)
         {
             this.loadAsset = loadAsset;
             teamID = obj.teamID;
-            teamMode = (obj.teamMode == BattleTeam.TeamMode.Single)? TeamMode.Single
-                : (obj.teamMode == BattleTeam.TeamMode.Double)? TeamMode.Double
+            teamMode = (obj.teamMode == Team.TeamMode.Single)? TeamMode.Single
+                : (obj.teamMode == Team.TeamMode.Double)? TeamMode.Double
                 : TeamMode.Triple;
             for (int i = 0; i < obj.trainers.Count; i++)
             {

@@ -1,4 +1,5 @@
 ﻿using PBS.Main.Pokemon;
+using PBS.Main.Team;
 using PBS.Main.Trainer;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,23 +25,23 @@ public class Testing : MonoBehaviour
 
     public void TestBattle()
     {
-        BattleTeam.TeamMode teamMode = (battleSettings.battleType == BattleType.Single) ? BattleTeam.TeamMode.Single
-            : BattleTeam.TeamMode.Double;
+        Team.TeamMode teamMode = (battleSettings.battleType == BattleType.Single) ? Team.TeamMode.Single
+            : Team.TeamMode.Double;
 
         Trainer playerTrainer = CreateTrainerUsingTeamNo("Player 1");
         playerTrainer.playerID = 1;
-        BattleTeam playerTeam = new BattleTeam(
+        Team playerTeam = new Team(
             teamMode: teamMode,
             trainers: new List<Trainer> { playerTrainer }
             );
 
         Trainer aiTrainer = CreateTrainer2("Player 2");
-        BattleTeam aiTeam = new BattleTeam(
+        Team aiTeam = new Team(
             teamMode: teamMode,
             trainers: new List<Trainer> { aiTrainer }
             );
 
-        List<BattleTeam> teams = new List<BattleTeam> { playerTeam, aiTeam };
+        List<Team> teams = new List<Team> { playerTeam, aiTeam };
 
         StartCoroutine(btlManager.StartBattle(battleSettings, teams));
     }

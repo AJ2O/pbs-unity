@@ -1,4 +1,5 @@
 ﻿using PBS.Main.Pokemon;
+using PBS.Main.Team;
 using PBS.Main.Trainer;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class Battle
 
     // Teams
     public List<Pokemon> pokemonOnField;
-    public List<BattleTeam> teams;
+    public List<Team> teams;
 
     // Battling Conditions
     public BattleCondition terrain;
@@ -41,7 +42,7 @@ public class Battle
         BattleSettings battleSettings,
         BattleEnvironment environment = null,
         int turns = 0,
-        List<BattleTeam> teams = null,
+        List<Team> teams = null,
         bool setPos = true,
         List<BattleCondition> statusConditions = null,
         
@@ -58,7 +59,7 @@ public class Battle
         this.environment = (environment == null) ? new BattleEnvironment()
             : BattleEnvironment.Clone(environment);
 
-        this.teams = new List<BattleTeam>();
+        this.teams = new List<Team>();
         if (teams != null)
         {
             for (int i = 0; i < teams.Count; i++)
@@ -111,10 +112,10 @@ public class Battle
     public static Battle CloneModel(Battle original)
     {
         // teams
-        List<BattleTeam> teams = new List<BattleTeam>();
+        List<Team> teams = new List<Team>();
         for (int i = 0; i < original.teams.Count; i++)
         {
-            teams.Add(BattleTeam.Clone(original.teams[i]));
+            teams.Add(Team.Clone(original.teams[i]));
         }
 
         Battle cloneModel = new Battle(
@@ -180,7 +181,7 @@ public class Battle
 
         for (int i = 0; i < this.teams.Count; i++)
         {
-            BattleTeam team = this.teams[i];
+            Team team = this.teams[i];
             str += "Team " + team.teamID + ": ";
             for (int j = 0; j < team.trainers.Count; j++) {
                 Trainer trainer = team.trainers[j];
@@ -380,7 +381,7 @@ public class Battle
         }
 
     }
-    public void AdvanceTurnTeam(BattleTeam team)
+    public void AdvanceTurnTeam(Team team)
     {
         // entry hazards
         for (int i = 0; i < team.bProps.entryHazards.Count; i++)
@@ -430,10 +431,10 @@ public class Battle
             return true;
         }
 
-        List<BattleTeam> teamsLeft = new List<BattleTeam>(teams);
+        List<Team> teamsLeft = new List<Team>(teams);
         for (int i = 0; i < teams.Count; i++)
         {
-            BattleTeam team = teams[i];
+            Team team = teams[i];
             if (!IsTeamAbleToBattle(team))
             {
                 teamsLeft.Remove(team);
@@ -444,12 +445,12 @@ public class Battle
         // 0 Winners = Tie
         return teamsLeft.Count <= 1;
     }
-    public BattleTeam GetWinningTeam()
+    public Team GetWinningTeam()
     {
-        List<BattleTeam> teamsLeft = new List<BattleTeam>(this.teams);
+        List<Team> teamsLeft = new List<Team>(this.teams);
         for (int i = 0; i < this.teams.Count; i++)
         {
-            BattleTeam team = this.teams[i];
+            Team team = this.teams[i];
             if (!IsTeamAbleToBattle(team))
             {
                 teamsLeft.Remove(team);
@@ -457,12 +458,12 @@ public class Battle
         }
         return (teamsLeft.Count == 0) ? null : teamsLeft[0];
     }
-    public List<BattleTeam> GetLosingTeams()
+    public List<Team> GetLosingTeams()
     {
-        List<BattleTeam> losingTeams = new List<BattleTeam>();
+        List<Team> losingTeams = new List<Team>();
         for (int i = 0; i < this.teams.Count; i++)
         {
-            BattleTeam team = this.teams[i];
+            Team team = this.teams[i];
             if (!IsTeamAbleToBattle(team))
             {
                 losingTeams.Add(team);
@@ -480,7 +481,7 @@ public class Battle
         }
         for (int i = 0; i < teams.Count; i++)
         {
-            if (teams[i].teamMode != BattleTeam.TeamMode.Single)
+            if (teams[i].teamMode != Team.TeamMode.Single)
             {
                 return false;
             }
@@ -1102,7 +1103,7 @@ public class Battle
         }
         return null;
     }
-    public BattleTeam GetBattleInstanceOfTeam(BattleTeam searchTeam)
+    public Team GetBattleInstanceOfTeam(Team searchTeam)
     {
         for (int i = 0; i < teams.Count; i++)
         {
@@ -1115,7 +1116,7 @@ public class Battle
     }
 
     // Team Methods
-    public BattleTeam GetAllyTeam(int teamPos)
+    public Team GetAllyTeam(int teamPos)
     {
         for (int i = 0; i < teams.Count; i++)
         {
@@ -1126,9 +1127,9 @@ public class Battle
         }
         return null;
     }
-    public List<BattleTeam> GetEnemyTeams(int teamPos)
+    public List<Team> GetEnemyTeams(int teamPos)
     {
-        List<BattleTeam> enemyTeams = new List<BattleTeam>();
+        List<Team> enemyTeams = new List<Team>();
         for (int i = 0; i < teams.Count; i++)
         {
             if (teams[i].teamID != teamPos)
@@ -1138,7 +1139,7 @@ public class Battle
         }
         return enemyTeams;
     }
-    public BattleTeam GetTeam(Pokemon pokemon)
+    public Team GetTeam(Pokemon pokemon)
     {
         if (pokemon.teamPos != -1)
         {
@@ -1147,7 +1148,7 @@ public class Battle
         Trainer trainer = GetPokemonOwner(pokemon);
         return GetTeamFromPosition(trainer.teamID);
     }
-    public BattleTeam GetTeamFromPosition(int teamPos)
+    public Team GetTeamFromPosition(int teamPos)
     {
         for (int i = 0; i < teams.Count; i++)
         {
@@ -1158,7 +1159,7 @@ public class Battle
         }
         return null;
     }
-    public BattleTeam GetTeamFromBattlePosition(BattlePosition position)
+    public Team GetTeamFromBattlePosition(BattlePosition position)
     {
         return GetTeamFromPosition(position.teamPos);
     }
@@ -1167,7 +1168,7 @@ public class Battle
     /// </summary>
     /// <param name="team"></param>
     /// <returns></returns>
-    public bool IsTeamAbleToBattle(BattleTeam team)
+    public bool IsTeamAbleToBattle(Team team)
     {
         for (int j = 0; j < team.trainers.Count; j++)
         {
@@ -1199,7 +1200,7 @@ public class Battle
 
         return sentOutMap;
     }
-    public List<Pokemon> GetTeamPokemonOnField(BattleTeam team)
+    public List<Pokemon> GetTeamPokemonOnField(Team team)
     {
         List<Pokemon> pokemonOnField = new List<Pokemon>();
         for (int i = 0; i < team.trainers.Count; i++)
@@ -1469,7 +1470,7 @@ public class Battle
     /// <returns></returns>
     public Trainer GetTrainerWithID(int playerID)
     {
-        foreach (BattleTeam team in this.teams)
+        foreach (Team team in this.teams)
         {
             foreach (Trainer trainer in team.trainers)
             {
@@ -1661,7 +1662,7 @@ public class Battle
     {
         return new BattlePosition(pokemon);
     }
-    public BattleTeam GetPokemonOpposingTeam(Pokemon pokemon)
+    public Team GetPokemonOpposingTeam(Pokemon pokemon)
     {
         for (int i = 0; i < teams.Count; i++)
         {
@@ -1715,7 +1716,7 @@ public class Battle
         }
         return null;
     }
-    public List<Pokemon> GetPokemonFromTeam(BattleTeam team)
+    public List<Pokemon> GetPokemonFromTeam(Team team)
     {
         List<Pokemon> allPokemon = new List<Pokemon>();
         for (int i = 0; i < team.trainers.Count; i++)
@@ -3889,7 +3890,7 @@ public class Battle
     // ---TEAM BATTLE PROPERTIES---
 
     // Status Conditions
-    public TeamCondition TBPGetSC(BattleTeam team, string statusID, bool descendant = true)
+    public TeamCondition TBPGetSC(Team team, string statusID, bool descendant = true)
     {
         StatusTEData statusData = StatusTEDatabase.instance.GetStatusData(statusID);
         List<TeamCondition> conditions = TBPGetSCs(team);
@@ -3907,14 +3908,14 @@ public class Battle
         }
         return null;
     }
-    public List<TeamCondition> TBPGetSCs(BattleTeam team)
+    public List<TeamCondition> TBPGetSCs(Team team)
     {
         List<TeamCondition> conditions = new List<TeamCondition>();
         conditions.AddRange(team.bProps.conditions);
         conditions.AddRange(team.bProps.lightScreens);
         return conditions;
     }
-    public List<TeamCondition> TBPGetSCs(BattleTeam team, EffectDatabase.Filter.Harvest filter)
+    public List<TeamCondition> TBPGetSCs(Team team, EffectDatabase.Filter.Harvest filter)
     {
         List<TeamCondition> scs = new List<TeamCondition>();
         if (filter.conditionType == EffectDatabase.Filter.Harvest.ConditionType.Team)
@@ -3934,7 +3935,7 @@ public class Battle
         return scs;
     }
 
-    public void AddTeamEntryHazard(BattleTeam team, BattleTeamProperties.EntryHazard entryHazard)
+    public void AddTeamEntryHazard(Team team, PBS.Main.Team.BattleProperties.EntryHazard entryHazard)
     {
         MoveData moveData = MoveDatabase.instance.GetMoveData(entryHazard.hazardID);
 
@@ -3947,7 +3948,7 @@ public class Battle
         bool wasAdded = false;
         for (int i = 0; i < team.bProps.entryHazards.Count; i++)
         {
-            BattleTeamProperties.EntryHazard curHazard = team.bProps.entryHazards[i];
+            PBS.Main.Team.BattleProperties.EntryHazard curHazard = team.bProps.entryHazards[i];
             MoveData orderedMoveData = MoveDatabase.instance.GetMoveData(curHazard.hazardID);
 
             bool addToList = false;
@@ -3992,15 +3993,15 @@ public class Battle
             team.bProps.entryHazards.Add(entryHazard);
         }
     }
-    public void AddTeamReflectScreen(BattleTeam team, BattleTeamProperties.ReflectScreen reflectScreen)
+    public void AddTeamReflectScreen(Team team, PBS.Main.Team.BattleProperties.ReflectScreen reflectScreen)
     {
         team.bProps.reflectScreens.Add(reflectScreen);
     }
-    public void AddTeamSafeguard(BattleTeam team, BattleTeamProperties.Safeguard safeguard)
+    public void AddTeamSafeguard(Team team, PBS.Main.Team.BattleProperties.Safeguard safeguard)
     {
         team.bProps.safeguards.Add(safeguard);
     }
-    public BattleTeamProperties.EntryHazard GetTeamEntryHazard(BattleTeam team, string moveID)
+    public PBS.Main.Team.BattleProperties.EntryHazard GetTeamEntryHazard(Team team, string moveID)
     {
         for (int i = 0; i < team.bProps.entryHazards.Count; i++)
         {
@@ -4011,7 +4012,7 @@ public class Battle
         }
         return null;
     }
-    public BattleTeamProperties.ReflectScreen GetTeamReflectScreen(BattleTeam team, string moveID)
+    public PBS.Main.Team.BattleProperties.ReflectScreen GetTeamReflectScreen(Team team, string moveID)
     {
         for (int i = 0; i < team.bProps.reflectScreens.Count; i++)
         {
@@ -4022,7 +4023,7 @@ public class Battle
         }
         return null;
     }
-    public BattleTeamProperties.Safeguard GetTeamSafeguard(BattleTeam team, string moveID)
+    public PBS.Main.Team.BattleProperties.Safeguard GetTeamSafeguard(Team team, string moveID)
     {
         for (int i = 0; i < team.bProps.safeguards.Count; i++)
         {
@@ -6189,8 +6190,8 @@ public class Battle
     }
     public bool ArePositionsAdjacent(BattlePosition position1, BattlePosition position2)
     {
-        BattleTeam team1 = GetTeamFromPosition(position1.teamPos);
-        BattleTeam team2 = GetTeamFromPosition(position2.teamPos);
+        Team team1 = GetTeamFromPosition(position1.teamPos);
+        Team team2 = GetTeamFromPosition(position2.teamPos);
 
         // same team
         if (team1 == team2)
@@ -6684,11 +6685,11 @@ public class Battle
         }
 
         // Luck Chant negates critical hits
-        BattleTeam targetTeam = GetTeam(targetPokemon);
+        Team targetTeam = GetTeam(targetPokemon);
         AbilityEffect infiltratorEffect = PBPLegacyGetAbilityEffect(userPokemon, AbilityEffectType.Infiltrator);
         for (int i = 0; i < targetTeam.bProps.safeguards.Count; i++)
         {
-            BattleTeamProperties.Safeguard safeguard = targetTeam.bProps.safeguards[i];
+            PBS.Main.Team.BattleProperties.Safeguard safeguard = targetTeam.bProps.safeguards[i];
             MoveData reflectData = MoveDatabase.instance.GetMoveData(safeguard.moveID);
             MoveEffect effect = reflectData.GetEffect(MoveEffectType.Safeguard);
             MoveEffect luckyChantEffect = reflectData.GetEffect(MoveEffectType.SafeguardLuckyChant);
@@ -6923,8 +6924,8 @@ public class Battle
         BattleTypeEffectiveness typeEffectiveness = null,
         float presetMultipliers = 1f)
     {
-        BattleTeam userTeam = GetTeam(userPokemon);
-        BattleTeam targetTeam = GetTeam(targetPokemon);
+        Team userTeam = GetTeam(userPokemon);
+        Team targetTeam = GetTeam(targetPokemon);
         List<Pokemon> onFieldEnemyPokemon = GetAllyPokemon(targetPokemon);
         TypeData moveTypeData = TypeDatabase.instance.GetTypeData(moveData.moveType);
         string moveType = moveData.moveType;
@@ -8368,7 +8369,7 @@ public class Battle
     public List<string> GetPokemonAssistMoves(Pokemon pokemon)
     {
         List<string> moves = new List<string>();
-        BattleTeam team = GetTeam(pokemon);
+        Team team = GetTeam(pokemon);
         if (team != null)
         {
             for (int i = 0; i < team.trainers.Count; i++)
@@ -8623,12 +8624,12 @@ public class Battle
     }
 
     // Team Conditions
-    public List<TeamCondition> GetTeamSCs(BattleTeam team)
+    public List<TeamCondition> GetTeamSCs(Team team)
     {
         List<TeamCondition> conditions = team.GetAllStatusConditions();
         return conditions;
     }
-    public TeamCondition GetTeamFilteredSC(BattleTeam team, TeamSEType effect)
+    public TeamCondition GetTeamFilteredSC(Team team, TeamSEType effect)
     {
         List<TeamCondition> conditions = GetTeamAllFilteredSC(team, effect);
         if (conditions.Count > 0)
@@ -8637,7 +8638,7 @@ public class Battle
         }
         return null;
     }
-    public List<TeamCondition> GetTeamAllFilteredSC(BattleTeam team, TeamSEType effect)
+    public List<TeamCondition> GetTeamAllFilteredSC(Team team, TeamSEType effect)
     {
         List<TeamCondition> conditions = new List<TeamCondition>();
         List<TeamCondition> allConditions = GetTeamSCs(team);
@@ -8650,13 +8651,13 @@ public class Battle
         }
         return conditions;
     }
-    public void HealTeamSC(BattleTeam team, TeamCondition condition)
+    public void HealTeamSC(Team team, TeamCondition condition)
     {
         team.RemoveStatusCondition(condition.statusID);
         team.bProps.conditions.Remove(condition);
         team.bProps.lightScreens.Remove(condition);
     }
-    public void AdvanceTeamStatusTurns(BattleTeam team, TeamSTag filterTag = TeamSTag.TurnsDecreaseOnEnd)
+    public void AdvanceTeamStatusTurns(Team team, TeamSTag filterTag = TeamSTag.TurnsDecreaseOnEnd)
     {
         List<TeamCondition> conditions = GetTeamSCs(team);
         for (int i = 0; i < conditions.Count; i++)
@@ -8668,7 +8669,7 @@ public class Battle
             }
         }
     }
-    public void AdvanceTeamStatusTurns(BattleTeam team, TeamCondition condition)
+    public void AdvanceTeamStatusTurns(Team team, TeamCondition condition)
     {
         if (condition.turnsLeft > 0)
         {
@@ -8677,7 +8678,7 @@ public class Battle
         }
     }
 
-    public bool ApplyTeamSC(BattleTeam team, TeamCondition condition)
+    public bool ApplyTeamSC(Team team, TeamCondition condition)
     {
         bool isAdded = false;
         // Screens
@@ -8694,7 +8695,7 @@ public class Battle
         }
         return isAdded;
     }
-    public TeamCondition ApplyTeamSC(BattleTeam team, string statusID, int turnsLeft = -1)
+    public TeamCondition ApplyTeamSC(Team team, string statusID, int turnsLeft = -1)
     {
         StatusTEData statusData = StatusTEDatabase.instance.GetStatusData(statusID);
         TeamCondition condition = new TeamCondition(
@@ -8860,7 +8861,7 @@ public class Battle
         EffectDatabase.Filter.FilterEffect effect_,
         Pokemon userPokemon = null,
         Pokemon targetPokemon = null,
-        BattleTeam targetTeam = null,
+        Team targetTeam = null,
         MoveData moveData = null,
         AbilityData abilityData = null,
         Item item = null
@@ -9095,7 +9096,7 @@ public class Battle
         List<EffectDatabase.Filter.FilterEffect> filters,
         Pokemon userPokemon = null,
         Pokemon targetPokemon = null,
-        BattleTeam targetTeam = null,
+        Team targetTeam = null,
         MoveData moveData = null,
         AbilityData abilityData = null,
         Item item = null
@@ -9123,7 +9124,7 @@ public class Battle
         MoveData moveData,
         Pokemon userPokemon = null,
         Pokemon targetPokemon = null,
-        BattleTeam targetTeam = null
+        Team targetTeam = null
         )
     {
         return DoEffectFiltersPass(
@@ -9138,7 +9139,7 @@ public class Battle
         EffectDatabase.StatusPKEff.PokemonSE effect,
         Pokemon userPokemon = null,
         Pokemon targetPokemon = null,
-        BattleTeam targetTeam = null
+        Team targetTeam = null
         )
     {
         for (int i = 0; i < effect.filters.Count; i++)
@@ -9159,7 +9160,7 @@ public class Battle
         EffectDatabase.StatusTEEff.TeamSE effect,
         Pokemon userPokemon = null,
         Pokemon targetPokemon = null,
-        BattleTeam targetTeam = null
+        Team targetTeam = null
         )
     {
         for (int i = 0; i < effect.filters.Count; i++)
@@ -9180,7 +9181,7 @@ public class Battle
         EffectDatabase.StatusBTLEff.BattleSE effect,
         Pokemon userPokemon = null,
         Pokemon targetPokemon = null,
-        BattleTeam targetTeam = null
+        Team targetTeam = null
         )
     {
         for (int i = 0; i < effect.filters.Count; i++)
@@ -9216,7 +9217,7 @@ public class Battle
         MoveData moveData,
         Pokemon userPokemon = null,
         Pokemon targetPokemon = null,
-        BattleTeam targetTeam = null,
+        Team targetTeam = null,
         float startChance = 0)
     {
         float chance;
@@ -9251,7 +9252,7 @@ public class Battle
         MoveData moveData,
         Pokemon userPokemon = null,
         Pokemon targetPokemon = null,
-        BattleTeam targetTeam = null,
+        Team targetTeam = null,
         float startChance = 0)
     {
         // Check Filters here

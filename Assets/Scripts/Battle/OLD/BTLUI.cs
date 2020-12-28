@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 using System;
 using PBS.Main.Pokemon;
 using PBS.Main.Trainer;
+using PBS.Main.Team;
 
 public class BTLUI : MonoBehaviour
 {
@@ -546,7 +547,7 @@ public class BTLUI : MonoBehaviour
         for (int i = 0; i < allPositions.Count; i++)
         {
             BattlePosition curPos = allPositions[i];
-            BattleTeam team = battleModel.GetTeamFromBattlePosition(curPos);
+            Team team = battleModel.GetTeamFromBattlePosition(curPos);
             bool isAlly = (teamPos == curPos.teamPos);
             GameObject spawn = isAlly ? fieldTargetOptionObjNear : fieldTargetOptionObjFar;
 
@@ -555,17 +556,17 @@ public class BTLUI : MonoBehaviour
 
             switch (team.teamMode)
             {
-                case BattleTeam.TeamMode.Single:
+                case Team.TeamMode.Single:
                     newBtn.rectTransform.localPosition = new Vector3(0, 0);
                     break;
 
-                case BattleTeam.TeamMode.Double:
+                case Team.TeamMode.Double:
                     float xPosDouble = isAlly ? -48f : 48f;
                     if (curPos.battlePos == 1) xPosDouble = -xPosDouble;
                     newBtn.rectTransform.localPosition = new Vector3(xPosDouble, 0);
                     break;
 
-                case BattleTeam.TeamMode.Triple:
+                case Team.TeamMode.Triple:
                     float xPosTriple = isAlly ? -96f : 96f;
                     xPosTriple += curPos.battlePos * (isAlly ? 96f : -96f);
                     newBtn.rectTransform.localPosition = new Vector3(xPosTriple, 0);
@@ -1040,19 +1041,19 @@ public class BTLUI : MonoBehaviour
     {
         // get spawn position
         Transform spawnPos = this.transform;
-        BattleTeam team = battle.GetTeam(pokemon);
+        Team team = battle.GetTeam(pokemon);
         switch (team.teamMode)
         {
-            case BattleTeam.TeamMode.Single:
+            case Team.TeamMode.Single:
                 spawnPos = (isNear) ? spawnNearSingle : spawnFarSingle;
                 break;
 
-            case BattleTeam.TeamMode.Double:
+            case Team.TeamMode.Double:
                 spawnPos = (pokemon.battlePos == 0) ? (isNear ? spawnNearDouble0 : spawnFarDouble0)
                     : isNear ? spawnNearDouble1 : spawnFarDouble1;
                 break;
 
-            case BattleTeam.TeamMode.Triple:
+            case Team.TeamMode.Triple:
                 spawnPos = (pokemon.battlePos == 0) ? (isNear ? spawnNearTriple0 : spawnFarTriple0)
                     : (pokemon.battlePos == 1) ? (isNear ? spawnNearTriple1 : spawnFarTriple1)
                     : isNear ? spawnNearTriple2 : spawnFarTriple2;
@@ -1063,8 +1064,8 @@ public class BTLUI : MonoBehaviour
         BTLUI_PokemonHUD pokemonHUD = Instantiate(pokemonHUDPrefab, spawnPos.position, Quaternion.identity, spawnPos);
         pokemonHUD.pokemonUniqueID = pokemon.uniqueID;
         pokemonHUD.hpObj.gameObject.SetActive(isNear 
-            && (team.teamMode == BattleTeam.TeamMode.Single
-                || team.teamMode == BattleTeam.TeamMode.Double));
+            && (team.teamMode == Team.TeamMode.Single
+                || team.teamMode == Team.TeamMode.Double));
         /*pokemonHUD.expObj.SetActive(isNear
             && (team.teamMode == BattleTeam.TeamMode.Single
                 || team.teamMode == BattleTeam.TeamMode.Double));*/

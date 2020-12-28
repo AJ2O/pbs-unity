@@ -1,4 +1,5 @@
 ﻿using PBS.Main.Pokemon;
+using PBS.Main.Team;
 using PBS.Main.Trainer;
 using System;
 using System.Collections;
@@ -355,8 +356,8 @@ public class BTLPlayerControl : MonoBehaviour
     {
         UpdateModel(bEvent.battleModel);
 
-        BattleTeam allyTeam = battleModel.GetAllyTeam(view.teamPos);
-        List<BattleTeam> enemyTeams = battleModel.GetEnemyTeams(view.teamPos);
+        Team allyTeam = battleModel.GetAllyTeam(view.teamPos);
+        List<Team> enemyTeams = battleModel.GetEnemyTeams(view.teamPos);
 
         List<BTLEvent_SendOut> enemySendEvents = new List<BTLEvent_SendOut>();
         List<BTLEvent_SendOut> allySendEvents = new List<BTLEvent_SendOut>();

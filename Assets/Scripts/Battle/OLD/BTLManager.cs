@@ -1,4 +1,5 @@
 ﻿using PBS.Main.Pokemon;
+using PBS.Main.Team;
 using PBS.Main.Trainer;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,7 +45,7 @@ public class BTLManager : MonoBehaviour
 
     public IEnumerator StartBattle(
         BattleSettings battleSettings, 
-        List<BattleTeam> teams)
+        List<Team> teams)
     {
         InitializeComponents();
         battle = new Battle(battleSettings: battleSettings, turns: 0, teams: teams);
@@ -552,8 +553,8 @@ public class BTLManager : MonoBehaviour
         {
             for (int i = 0; i < battle.teams.Count; i++)
             {
-                BattleTeam team = battle.teams[i];
-                BattleTeamProperties.GMaxWildfire GMaxWildfire = team.bProps.GMaxWildfireStatus;
+                Team team = battle.teams[i];
+                PBS.Main.Team.BattleProperties.GMaxWildfire GMaxWildfire = team.bProps.GMaxWildfireStatus;
                 if (GMaxWildfire != null)
                 {
                     StatusTEData statusData = StatusTEDatabase.instance.GetStatusData(GMaxWildfire.statusID); 
@@ -1023,9 +1024,9 @@ public class BTLManager : MonoBehaviour
         {
             for (int i = 0; i < battle.teams.Count; i++)
             {
-                BattleTeam team = battle.teams[i];
-                List<BattleTeamProperties.EntryHazard> entryHazards 
-                    = new List<BattleTeamProperties.EntryHazard>(team.bProps.entryHazards);
+                Team team = battle.teams[i];
+                List<PBS.Main.Team.BattleProperties.EntryHazard> entryHazards 
+                    = new List<PBS.Main.Team.BattleProperties.EntryHazard>(team.bProps.entryHazards);
                 for (int k = 0; k < entryHazards.Count; k++)
                 {
                     if (entryHazards[k].turnsLeft == 0)
@@ -1041,9 +1042,9 @@ public class BTLManager : MonoBehaviour
         {
             for (int i = 0; i < battle.teams.Count; i++)
             {
-                BattleTeam team = battle.teams[i];
-                List<BattleTeamProperties.ReflectScreen> reflectScreens
-                    = new List<BattleTeamProperties.ReflectScreen>(team.bProps.reflectScreens);
+                Team team = battle.teams[i];
+                List<PBS.Main.Team.BattleProperties.ReflectScreen> reflectScreens
+                    = new List<PBS.Main.Team.BattleProperties.ReflectScreen>(team.bProps.reflectScreens);
                 for (int k = 0; k < reflectScreens.Count; k++)
                 {
                     if (reflectScreens[k].turnsLeft == 0)
@@ -1059,9 +1060,9 @@ public class BTLManager : MonoBehaviour
         {
             for (int i = 0; i < battle.teams.Count; i++)
             {
-                BattleTeam team = battle.teams[i];
-                List<BattleTeamProperties.Safeguard> safeguards
-                    = new List<BattleTeamProperties.Safeguard>(team.bProps.safeguards);
+                Team team = battle.teams[i];
+                List<PBS.Main.Team.BattleProperties.Safeguard> safeguards
+                    = new List<PBS.Main.Team.BattleProperties.Safeguard>(team.bProps.safeguards);
                 for (int k = 0; k < safeguards.Count; k++)
                 {
                     if (safeguards[k].turnsLeft == 0)
@@ -1173,7 +1174,7 @@ public class BTLManager : MonoBehaviour
         {
             for (int i = 0; i < battle.teams.Count; i++)
             {
-                BattleTeam team = battle.teams[i];
+                Team team = battle.teams[i];
                 List<TeamCondition> conditions = battle.GetTeamSCs(team);
                 for (int k = 0; k < conditions.Count; k++)
                 {
@@ -2118,8 +2119,8 @@ public class BTLManager : MonoBehaviour
         // Form change if it hasn't been done already
         yield return StartCoroutine(PBPFormTransformation(userPokemon, command));
 
-        BattleTeam userTeam = battle.GetTeam(userPokemon);
-        List<BattleTeam> targetTeams = new List<BattleTeam>();
+        Team userTeam = battle.GetTeam(userPokemon);
+        List<Team> targetTeams = new List<Team>();
 
         // Move Data
         MoveData masterMoveData = battle.GetPokemonMoveData(
@@ -2915,7 +2916,7 @@ public class BTLManager : MonoBehaviour
                 moveData: masterMoveData,
                 effects: ZPowerEffects,
                 battleHitTargets: new List<BattleHitTarget> { userHitTarget },
-                targetTeams: new List<BattleTeam> { userTeam },
+                targetTeams: new List<Team> { userTeam },
                 callback: (result) =>
                 {
 
@@ -3184,7 +3185,7 @@ public class BTLManager : MonoBehaviour
                     yield return StartCoroutine(ExecuteMoveEffects(
                         userPokemon: userPokemon,
                         battleHitTargets: new List<BattleHitTarget>(),
-                        targetTeams: new List<BattleTeam>(),
+                        targetTeams: new List<Team>(),
                         moveData: masterMoveData,
                         timing: MoveEffectTiming.OnChargeTurn,
                         callback: (result) =>
@@ -3195,7 +3196,7 @@ public class BTLManager : MonoBehaviour
                     yield return StartCoroutine(ExecuteMoveEffectsByTiming(
                         userPokemon: userPokemon,
                         battleHitTargets: new List<BattleHitTarget>(),
-                        targetTeams: new List<BattleTeam>(),
+                        targetTeams: new List<Team>(),
                         moveData: masterMoveData,
                         timing: MoveEffectTiming.OnChargeTurn,
                         callback: (result) =>
@@ -3592,7 +3593,7 @@ public class BTLManager : MonoBehaviour
         {
             for (int i = 0; i < targetPositions.Length; i++)
             {
-                BattleTeam team = battle.GetTeamFromBattlePosition(targetPositions[i]);
+                Team team = battle.GetTeamFromBattlePosition(targetPositions[i]);
                 if (!targetTeams.Contains(team))
                 {
                     targetTeams.Add(team);
@@ -3613,7 +3614,7 @@ public class BTLManager : MonoBehaviour
         // establish major variables
         int totalDamageDealt = 0;
         List<BattleHitTarget> lastHitTargets = new List<BattleHitTarget>();
-        List<BattleTeam> allHitTeams = new List<BattleTeam>();
+        List<Team> allHitTeams = new List<Team>();
         if (moveSuccess)
         {
 
@@ -3838,7 +3839,7 @@ public class BTLManager : MonoBehaviour
                 
                 // ---Finished Pre-calculation---
 
-                List<BattleTeam> hitTeams = new List<BattleTeam>();
+                List<Team> hitTeams = new List<Team>();
                 List<bool> teamBlocked = new List<bool>();
                 List<BTLEvent_MoveHitTarget> hitTargetEvents = new List<BTLEvent_MoveHitTarget>();
 
@@ -3848,7 +3849,7 @@ public class BTLManager : MonoBehaviour
                 // Add teams based on target type
                 for (int k = 0; k < battle.teams.Count; k++)
                 {
-                    BattleTeam curTeam = battle.teams[k];
+                    Team curTeam = battle.teams[k];
                     BattleHitTeam hitTeam = new BattleHitTeam(curTeam);
                     if (moveHitData.targetType == MoveTargetType.TeamAlly)
                     {
@@ -3868,7 +3869,7 @@ public class BTLManager : MonoBehaviour
                 // Add teams based on target pokemon
                 for (int k = 0; k < alivePokemon.Count; k++)
                 {
-                    BattleTeam curTeam = battle.GetTeam(alivePokemon[k]);
+                    Team curTeam = battle.GetTeam(alivePokemon[k]);
                     bool foundTeam = false;
                     for (int j = 0; j < battleHitTeams.Count && !foundTeam; j++)
                     {
@@ -3890,7 +3891,7 @@ public class BTLManager : MonoBehaviour
                 for (int k = 0; k < battleHitTeams.Count; k++)
                 {
                     BattleHitTeam curHitTeam = battleHitTeams[k];
-                    BattleTeam currentTeam = battleHitTeams[k].team;
+                    Team currentTeam = battleHitTeams[k].team;
                     yield return StartCoroutine(TryToTeamProtectMoveHit(
                         userPokemon: userPokemon,
                         moveData: moveHitData,
@@ -3927,7 +3928,7 @@ public class BTLManager : MonoBehaviour
                     for (int k = 0; k < battleHitTeams.Count; k++)
                     {
                         BattleHitTeam curHitTeam = battleHitTeams[k];
-                        BattleTeam currentTeam = battleHitTeams[k].team;
+                        Team currentTeam = battleHitTeams[k].team;
                         yield return StartCoroutine(TryToTeamProtectMoveHit(
                             userPokemon: userPokemon,
                             moveData: moveHitData,
@@ -3964,7 +3965,7 @@ public class BTLManager : MonoBehaviour
                 for (int k = 0; k < alivePokemon.Count && !skipHitChecks; k++)
                 {
                     Pokemon currentTarget = alivePokemon[k];
-                    BattleTeam currentTeam = battle.GetTeam(currentTarget);
+                    Team currentTeam = battle.GetTeam(currentTarget);
                     BattleHitTarget hitTarget = new BattleHitTarget(currentTarget);
                     MoveData moveImpactData = battle.GetPokemonMoveData(
                         userPokemon: userPokemon,
@@ -6532,7 +6533,7 @@ public class BTLManager : MonoBehaviour
     public IEnumerator ExecuteMoveEffects(
         Pokemon userPokemon,
         List<BattleHitTarget> battleHitTargets,
-        List<BattleTeam> targetTeams,
+        List<Team> targetTeams,
         MoveData moveData,
         System.Action<bool> callback,
         MoveEffectTiming timing = MoveEffectTiming.Unique,
@@ -6553,7 +6554,7 @@ public class BTLManager : MonoBehaviour
                 for (int k = 0; k < battleHitTargets.Count; k++)
                 {
                     BattleHitTarget currentTarget = battleHitTargets[k];
-                    BattleTeam currentTeam = battle.GetTeam(currentTarget.pokemon);
+                    Team currentTeam = battle.GetTeam(currentTarget.pokemon);
                     if (currentTarget.affectedByMove || bypassChecks)
                     {
                         if (battle.CanApplyMoveEffect(userPokemon, currentTarget.pokemon, moveData, effect))
@@ -6601,7 +6602,7 @@ public class BTLManager : MonoBehaviour
             // self team effects
             if (effect.effectTargetType == MoveEffectTargetType.SelfTeam)
             {
-                BattleTeam userTeam = battle.GetTeam(userPokemon);
+                Team userTeam = battle.GetTeam(userPokemon);
                 yield return StartCoroutine(ExecuteMoveEffect(
                     effect: effect,
                     moveData: moveData,
@@ -6671,7 +6672,7 @@ public class BTLManager : MonoBehaviour
         MoveData moveData,
         Pokemon userPokemon,
         Pokemon targetPokemon,
-        BattleTeam targetTeam,
+        Team targetTeam,
         System.Action<bool> callback,
         bool apply = true)
     {
@@ -8526,7 +8527,7 @@ public class BTLManager : MonoBehaviour
                 else if (effect.effectType == MoveEffectType.EntryHazard)
                 {
                     bool canSetupHazard = true;
-                    BattleTeamProperties.EntryHazard existingHazard = battle.GetTeamEntryHazard(targetTeam, moveData.ID);
+                    PBS.Main.Team.BattleProperties.EntryHazard existingHazard = battle.GetTeamEntryHazard(targetTeam, moveData.ID);
 
                     int turns = Mathf.FloorToInt(effect.GetFloat(0));
                     int maxLayers = Mathf.FloorToInt(effect.GetFloat(1));
@@ -8535,7 +8536,7 @@ public class BTLManager : MonoBehaviour
                     {
                         if (existingHazard == null)
                         {
-                            BattleTeamProperties.EntryHazard entryHazard = new BattleTeamProperties.EntryHazard(
+                            PBS.Main.Team.BattleProperties.EntryHazard entryHazard = new PBS.Main.Team.BattleProperties.EntryHazard(
                                 moveID: moveData.ID,
                                 turnsLeft: turns,
                                 layers: 1
@@ -8654,7 +8655,7 @@ public class BTLManager : MonoBehaviour
                     if (apply && canSetup)
                     {
                         int turns = Mathf.FloorToInt(effect.GetFloat(0));
-                        BattleTeamProperties.ReflectScreen reflectScreen = new BattleTeamProperties.ReflectScreen(
+                        PBS.Main.Team.BattleProperties.ReflectScreen reflectScreen = new PBS.Main.Team.BattleProperties.ReflectScreen(
                             moveID: moveData.ID,
                             turnsLeft: turns
                             );
@@ -8707,7 +8708,7 @@ public class BTLManager : MonoBehaviour
                     if (apply && canSetup)
                     {
                         int turns = Mathf.FloorToInt(effect.GetFloat(0));
-                        BattleTeamProperties.Safeguard safeguard = new BattleTeamProperties.Safeguard(
+                        PBS.Main.Team.BattleProperties.Safeguard safeguard = new PBS.Main.Team.BattleProperties.Safeguard(
                             moveID: moveData.ID,
                             turnsLeft: turns
                             );
@@ -8915,7 +8916,7 @@ public class BTLManager : MonoBehaviour
     public IEnumerator ExecuteMoveEffectsByTiming(
         Pokemon userPokemon,
         List<BattleHitTarget> battleHitTargets,
-        List<BattleTeam> targetTeams,
+        List<Team> targetTeams,
         MoveData moveData,
         System.Action<bool> callback,
         MoveEffectTiming timing = MoveEffectTiming.Unique,
@@ -8950,14 +8951,14 @@ public class BTLManager : MonoBehaviour
         MoveData moveData,
         List<EffectDatabase.MoveEff.MoveEffect> effects,
         List<BattleHitTarget> battleHitTargets,
-        List<BattleTeam> targetTeams,
+        List<Team> targetTeams,
         System.Action<bool> callback,
         bool bypassChecks = false,
         bool apply = true
         )
     {
         bool effectSuccess = false;
-        BattleTeam userTeam = battle.GetTeam(userPokemon);
+        Team userTeam = battle.GetTeam(userPokemon);
 
         // Filter out affected targets
         for (int i = 0; i < effects.Count; i++)
@@ -8971,7 +8972,7 @@ public class BTLManager : MonoBehaviour
                 for (int k = 0; k < battleHitTargets.Count; k++)
                 {
                     BattleHitTarget currentTarget = battleHitTargets[k];
-                    BattleTeam currentTeam = battle.GetTeam(currentTarget.pokemon);
+                    Team currentTeam = battle.GetTeam(currentTarget.pokemon);
 
                     Pokemon targetPokemon = currentTarget.pokemon;
                     if (effect.targetType == MoveEffectTargetType.Self)
@@ -9017,7 +9018,7 @@ public class BTLManager : MonoBehaviour
                 // Run once for each affected team
                 for (int k = 0; k < targetTeams.Count; k++)
                 {
-                    BattleTeam targetTeam = targetTeams[k];
+                    Team targetTeam = targetTeams[k];
 
                     Pokemon targetPokemon = null;
                     if (effect.targetType == MoveEffectTargetType.Self)
@@ -9057,7 +9058,7 @@ public class BTLManager : MonoBehaviour
             else if (effect.occurrence == MoveEffectOccurrence.Once)
             {
                 Pokemon targetPokemon = null;
-                BattleTeam targetTeam = null;
+                Team targetTeam = null;
                 if (effect.targetType == MoveEffectTargetType.Self)
                 {
                     targetPokemon = userPokemon;
@@ -9097,7 +9098,7 @@ public class BTLManager : MonoBehaviour
         Pokemon userPokemon,
         System.Action<bool> callback,
         Pokemon targetPokemon = null,
-        BattleTeam targetTeam = null,
+        Team targetTeam = null,
         bool bypassChanceCheck = false,
         bool apply = true
         )
@@ -10004,7 +10005,7 @@ public class BTLManager : MonoBehaviour
         EffectDatabase.General.InflictStatus inflictStatus,
         System.Action<bool> callback,
         Pokemon targetPokemon = null,
-        BattleTeam targetTeam = null,
+        Team targetTeam = null,
         Pokemon userPokemon = null,
         MoveData moveData = null,
         bool forceFailMessage = false,
@@ -10208,7 +10209,7 @@ public class BTLManager : MonoBehaviour
             bool isNonVolatile = statusData.GetEffectNew(PokemonSEType.NonVolatile) != null;
             bool statusBlockedFully = false;
 
-            BattleTeam targetTeam = battle.GetTeam(targetPokemon);
+            Team targetTeam = battle.GetTeam(targetPokemon);
             List<Pokemon> allyPokemon = battle.GetAllyPokemon(targetPokemon);
             List<Ability> userAbilities = battle.PBPGetAbilities(userPokemon);
             List<Ability> targetAbilites = battle.PBPGetAbilities(targetPokemon);
@@ -11337,7 +11338,7 @@ public class BTLManager : MonoBehaviour
     // Team Status Conditions
     public IEnumerator ApplyTeamSC(
         StatusTEData statusData,
-        BattleTeam targetTeam,
+        Team targetTeam,
         System.Action<bool> callback,
         int turnsLeft = -1,
         Pokemon userPokemon = null,
@@ -11361,7 +11362,7 @@ public class BTLManager : MonoBehaviour
                     newPriority_ as EffectDatabase.StatusTEEff.GMaxWildfirePriority;
                 isGMaxWildfire = true;
 
-                BattleTeamProperties.GMaxWildfire existingStatus = targetTeam.bProps.GMaxWildfireStatus;
+                PBS.Main.Team.BattleProperties.GMaxWildfire existingStatus = targetTeam.bProps.GMaxWildfireStatus;
                 if (existingStatus != null)
                 {
                     StatusTEData existingData = StatusTEDatabase.instance.GetStatusData(existingStatus.statusID);
@@ -11441,7 +11442,7 @@ public class BTLManager : MonoBehaviour
                 if (isGMaxWildfire)
                 {
                     targetTeam.bProps.GMaxWildfireStatus = 
-                        new BattleTeamProperties.GMaxWildfire(inflictData.ID, turnsLeft);
+                        new PBS.Main.Team.BattleProperties.GMaxWildfire(inflictData.ID, turnsLeft);
                 }
                 else
                 {
@@ -11459,7 +11460,7 @@ public class BTLManager : MonoBehaviour
     }
     public IEnumerator EndTeamSC(
         StatusTEData statusData,
-        BattleTeam targetTeam,
+        Team targetTeam,
         System.Action<bool> callback,
         string endOverwrite = "",
         bool apply = true
@@ -11494,7 +11495,7 @@ public class BTLManager : MonoBehaviour
     }
 
     public IEnumerator ExecuteTeamSETiming(
-        BattleTeam team,
+        Team team,
         StatusTEData statusData
         )
     {
@@ -11503,7 +11504,7 @@ public class BTLManager : MonoBehaviour
     }
     public IEnumerator ExecuteTeamSEs(
         List<EffectDatabase.StatusTEEff.TeamSE> effects,
-        BattleTeam team,
+        Team team,
         StatusTEData statusData
         )
     {
@@ -11514,7 +11515,7 @@ public class BTLManager : MonoBehaviour
     }
     public IEnumerator ExecuteTeamSE(
         EffectDatabase.StatusTEEff.TeamSE effect_,
-        BattleTeam team,
+        Team team,
         StatusTEData statusData
         )
     {
@@ -12168,7 +12169,7 @@ public class BTLManager : MonoBehaviour
         BattlePosition userPosition = battle.GetPokemonPosition(userPokemon);
 
         // run team protection moves here
-        List<BattleTeam> accountedTeams = new List<BattleTeam>();
+        List<Team> accountedTeams = new List<Team>();
 
         // run protection moves here
         for (int k = 0; k < battleHitTargets.Count; k++)
@@ -13315,7 +13316,7 @@ public class BTLManager : MonoBehaviour
                     moveData: moveData,
                     effects: new List<EffectDatabase.MoveEff.MoveEffect> { covet_ },
                     battleHitTargets: battleHitTargets,
-                    targetTeams: new List<BattleTeam>(),
+                    targetTeams: new List<Team>(),
                     callback: (result) => { }
                     ));
             }
@@ -13514,7 +13515,7 @@ public class BTLManager : MonoBehaviour
                     moveData: moveData,
                     effects: new List<EffectDatabase.MoveEff.MoveEffect> { knockOff_ },
                     battleHitTargets: battleHitTargets,
-                    targetTeams: new List<BattleTeam>(),
+                    targetTeams: new List<Team>(),
                     callback: (result) => { }
                     ));
             }
@@ -13528,7 +13529,7 @@ public class BTLManager : MonoBehaviour
                     moveData: moveData,
                     effects: new List<EffectDatabase.MoveEff.MoveEffect> { corrosiveGas_ },
                     battleHitTargets: battleHitTargets,
-                    targetTeams: new List<BattleTeam>(),
+                    targetTeams: new List<Team>(),
                     callback: (result) => { }
                     ));
             }
@@ -13659,7 +13660,7 @@ public class BTLManager : MonoBehaviour
                     moveData: moveData,
                     effects: new List<EffectDatabase.MoveEff.MoveEffect> { inflictStatus_ },
                     battleHitTargets: battleHitTargets,
-                    targetTeams: new List<BattleTeam>(),
+                    targetTeams: new List<Team>(),
                     callback: (result) => { }
                     ));
             }
@@ -13795,7 +13796,7 @@ public class BTLManager : MonoBehaviour
 
     public IEnumerator TryToFailMove(
         Pokemon userPokemon,
-        BattleTeam userTeam,
+        Team userTeam,
         MoveData moveData,
         System.Action<bool> callback,
         bool apply = true)
@@ -14597,7 +14598,7 @@ public class BTLManager : MonoBehaviour
     
     public IEnumerator TryToFailMoveWithTargets(
         Pokemon userPokemon,
-        BattleTeam userTeam,
+        Team userTeam,
         MoveData moveData,
         List<Pokemon> targetPokemon,
         System.Action<bool> callback,
@@ -14667,8 +14668,8 @@ public class BTLManager : MonoBehaviour
         Pokemon userPokemon,
         Pokemon targetPokemon,
         MoveData moveData,
-        BattleTeam userTeam,
-        BattleTeam targetTeam,
+        Team userTeam,
+        Team targetTeam,
         System.Action<EffectDatabase.General.Protect> callback,
         bool apply = true)
     {
@@ -14800,8 +14801,8 @@ public class BTLManager : MonoBehaviour
     public IEnumerator TryToTeamProtectMoveHit(
         Pokemon userPokemon,
         MoveData moveData,
-        BattleTeam userTeam,
-        BattleTeam targetTeam,
+        Team userTeam,
+        Team targetTeam,
         System.Action<EffectDatabase.General.Protect> callback,
         bool apply = true)
     {
@@ -14903,8 +14904,8 @@ public class BTLManager : MonoBehaviour
         Pokemon userPokemon,
         Pokemon targetPokemon,
         MoveData moveData,
-        BattleTeam userTeam,
-        BattleTeam targetTeam,
+        Team userTeam,
+        Team targetTeam,
         System.Action<bool> callback,
         BattleTypeEffectiveness effectiveness = null,
         bool forceFailureMessage = true,
@@ -16005,7 +16006,7 @@ public class BTLManager : MonoBehaviour
     {
         bool success = true;
         StatusPKData statusData = StatusPKDatabase.instance.GetStatusData(statusID);
-        BattleTeam targetTeam = battle.GetTeam(targetPokemon);
+        Team targetTeam = battle.GetTeam(targetPokemon);
 
         // run a bunch of checks here
         BTLEvent_GameText defaultFail = new BTLEvent_GameText();
@@ -16371,7 +16372,7 @@ public class BTLManager : MonoBehaviour
 
     // Team Status Conditions
     public IEnumerator ApplyTeamStatusEffectsByTiming(
-        BattleTeam team,
+        Team team,
         TeamCondition condition,
         TeamSETiming timing
         )
@@ -16383,7 +16384,7 @@ public class BTLManager : MonoBehaviour
             ));
     }
     public IEnumerator ApplyTeamStatusEffects(
-        BattleTeam team,
+        Team team,
         TeamCondition condition,
         List<TeamCEff> effects
         )
@@ -16400,7 +16401,7 @@ public class BTLManager : MonoBehaviour
     public IEnumerator ApplyTeamStatusEffect(
         TeamCEff effect,
         TeamCondition condition,
-        BattleTeam team
+        Team team
         )
     {
         if (team != null)
@@ -16411,7 +16412,7 @@ public class BTLManager : MonoBehaviour
     }
     public IEnumerator TryToInflictTeamSC(
         string statusID,
-        BattleTeam targetTeam,
+        Team targetTeam,
         System.Action<bool> callback,
         int turnsLeft = -1,
         Pokemon userPokemon = null,
@@ -16468,7 +16469,7 @@ public class BTLManager : MonoBehaviour
         yield return null;
     }
     public IEnumerator HealTeamSC(
-        BattleTeam targetTeam,
+        Team targetTeam,
         TeamCondition condition,
         Pokemon healerPokemon = null,
         string overwriteText = null
@@ -16715,8 +16716,8 @@ public class BTLManager : MonoBehaviour
     {
         forceFailureMessage = (apply) ? forceFailureMessage : false;
 
-        BattleTeam targetTeam = battle.GetTeam(targetPokemon);
-        BattleTeam userTeam = (userPokemon == null) ? null : battle.GetTeam(userPokemon);
+        Team targetTeam = battle.GetTeam(targetPokemon);
+        Team userTeam = (userPokemon == null) ? null : battle.GetTeam(userPokemon);
 
         // Get the correct stat mod value (factor in abilities, etc.)
         AbilityData targetAbilityData = battle.PBPGetAbilityData(targetPokemon);
@@ -17656,16 +17657,16 @@ public class BTLManager : MonoBehaviour
     }
     public IEnumerator ApplyToPokemonEntryHazards(Pokemon pokemon)
     {
-        BattleTeam team = battle.GetTeam(pokemon);
-        List<BattleTeamProperties.EntryHazard> entryHazards 
-            = new List<BattleTeamProperties.EntryHazard>(team.bProps.entryHazards);
+        Team team = battle.GetTeam(pokemon);
+        List<PBS.Main.Team.BattleProperties.EntryHazard> entryHazards 
+            = new List<PBS.Main.Team.BattleProperties.EntryHazard>(team.bProps.entryHazards);
 
         for (int i = 0; i < entryHazards.Count; i++)
         {
             yield return StartCoroutine(ApplyToPokemonEntryHazard(pokemon, team, entryHazards[i]));
         }
     }
-    public IEnumerator ApplyToPokemonEntryHazard(Pokemon pokemon, BattleTeam team, BattleTeamProperties.EntryHazard entryHazard)
+    public IEnumerator ApplyToPokemonEntryHazard(Pokemon pokemon, Team team, PBS.Main.Team.BattleProperties.EntryHazard entryHazard)
     {
         if (!battle.IsPokemonFainted(pokemon))
         {
@@ -18474,7 +18475,7 @@ public class BTLManager : MonoBehaviour
                     for (int k = 0; k < pokemonToHeal.Count; k++)
                     {
                         Pokemon curPokemon = pokemonToHeal[k];
-                        BattleTeam curTeam = battle.GetTeam(curPokemon);
+                        Team curTeam = battle.GetTeam(curPokemon);
                         if (battle.DoEffectFiltersPass(
                             filters: limber.filters,
                             userPokemon: pokemon,
@@ -18923,7 +18924,7 @@ public class BTLManager : MonoBehaviour
                         for (int k = 0; k < pokemonToHeal.Count; k++)
                         {
                             Pokemon curPokemon = pokemonToHeal[k];
-                            BattleTeam curTeam = battle.GetTeam(curPokemon);
+                            Team curTeam = battle.GetTeam(curPokemon);
                             if (battle.DoEffectFiltersPass(
                                 filters: hydration.filters,
                                 userPokemon: pokemon,
@@ -19433,7 +19434,7 @@ public class BTLManager : MonoBehaviour
             // Ally screens
             if (screenCleaner.affectAlly)
             {
-                BattleTeam team = battle.GetTeam(pokemon);
+                Team team = battle.GetTeam(pokemon);
                 List<TeamCondition> conditions = new List<TeamCondition>(team.bProps.lightScreens);
                 for (int i = 0; i < conditions.Count; i++)
                 {
@@ -19464,7 +19465,7 @@ public class BTLManager : MonoBehaviour
             // Enemy Screens
             if (screenCleaner.affectOpposing)
             {
-                BattleTeam team = battle.GetPokemonOpposingTeam(pokemon);
+                Team team = battle.GetPokemonOpposingTeam(pokemon);
                 List<TeamCondition> conditions = new List<TeamCondition>(team.bProps.lightScreens);
                 for (int i = 0; i < conditions.Count; i++)
                 {
@@ -19704,8 +19705,8 @@ public class BTLManager : MonoBehaviour
 
     // ---TEAM PROPERTIES---
     public IEnumerator TBPRemoveEntryHazard(
-        BattleTeam team, 
-        BattleTeamProperties.EntryHazard entryHazard,
+        Team team,
+        PBS.Main.Team.BattleProperties.EntryHazard entryHazard,
         string textID = "")
     {
         MoveData moveData = MoveDatabase.instance.GetMoveData(entryHazard.hazardID);
@@ -19727,8 +19728,8 @@ public class BTLManager : MonoBehaviour
         yield return null;
     }
     public IEnumerator TBPRemoveReflectScreen(
-        BattleTeam team, 
-        BattleTeamProperties.ReflectScreen reflectScreen,
+        Team team,
+        PBS.Main.Team.BattleProperties.ReflectScreen reflectScreen,
         string textID = "")
     {
         MoveData moveData = MoveDatabase.instance.GetMoveData(reflectScreen.moveID);
@@ -19752,8 +19753,8 @@ public class BTLManager : MonoBehaviour
         yield return null;
     }
     public IEnumerator TBPRemoveSafeguard(
-        BattleTeam team,
-        BattleTeamProperties.Safeguard safeguard,
+        Team team,
+        PBS.Main.Team.BattleProperties.Safeguard safeguard,
         string textID = "")
     {
         MoveData moveData = MoveDatabase.instance.GetMoveData(safeguard.moveID);

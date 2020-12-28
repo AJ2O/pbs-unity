@@ -149,7 +149,6 @@
     <Compile Include="Assets\Scripts\Databases\TypeDatabase.cs" />
     <Compile Include="Assets\Scripts\Enums\Battle.cs" />
     <Compile Include="Assets\Scripts\Main\BattleCondition.cs" />
-    <Compile Include="Assets\Scripts\Main\BattleTeam.cs" />
     <Compile Include="Assets\Scripts\Main\Item.cs" />
     <Compile Include="Assets\Scripts\Main\PlayerSave.cs" />
     <Compile Include="Assets\Scripts\Main\Pokemon\Ability.cs" />
@@ -161,6 +160,8 @@
     <Compile Include="Assets\Scripts\Main\Pokemon\SavedCommand.cs" />
     <Compile Include="Assets\Scripts\Main\Pokemon\TransformProperties.cs" />
     <Compile Include="Assets\Scripts\Main\StatusCondition.cs" />
+    <Compile Include="Assets\Scripts\Main\Team\BattleProperties.cs" />
+    <Compile Include="Assets\Scripts\Main\Team\Team.cs" />
     <Compile Include="Assets\Scripts\Main\TeamCondition.cs" />
     <Compile Include="Assets\Scripts\Main\Trainer\BattleProperties.cs" />
     <Compile Include="Assets\Scripts\Main\Trainer\Trainer.cs" />

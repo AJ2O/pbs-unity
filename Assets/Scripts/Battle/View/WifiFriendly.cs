@@ -1,4 +1,5 @@
 ﻿using PBS.Enums.Battle;
+using PBS.Main.Team;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -110,11 +111,11 @@ namespace PBS.Battle.View.WifiFriendly
         public List<int> playerIDs = new List<int>();
 
         public Team() { }
-        public Team(global::BattleTeam obj)
+        public Team(Main.Team.Team obj)
         {
             teamID = obj.teamID;
-            teamMode = (obj.teamMode == BattleTeam.TeamMode.Single)? TeamMode.Single
-                : (obj.teamMode == BattleTeam.TeamMode.Double)? TeamMode.Double
+            teamMode = (obj.teamMode == Main.Team.Team.TeamMode.Single)? TeamMode.Single
+                : (obj.teamMode == Main.Team.Team.TeamMode.Double)? TeamMode.Double
                 : TeamMode.Triple;
             trainers = new List<Trainer>();
             for (int i = 0; i < obj.trainers.Count; i++)

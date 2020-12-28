@@ -2,6 +2,7 @@
 using UnityEngine;
 using Mirror;
 using PBS.Main.Trainer;
+using PBS.Main.Team;
 
 namespace PBS.Networking
 {
@@ -130,7 +131,7 @@ namespace PBS.Networking
         public void StartBattle()
         {
             // Create teams using trainerConnections
-            List<BattleTeam> teams = new List<BattleTeam>();
+            List<Team> teams = new List<Team>();
             List<Trainer> humanTrainers = new List<Trainer>(trainerConnections.Values);
 
             // Configure AI Trainers
@@ -145,20 +146,20 @@ namespace PBS.Networking
             }
 
             // TODO: More battle configurations than single or double
-            BattleTeam.TeamMode teamMode = (battleSettings.battleType == BattleType.Single) ? BattleTeam.TeamMode.Single
-                : BattleTeam.TeamMode.Double;
+            Team.TeamMode teamMode = (battleSettings.battleType == BattleType.Single) ? Team.TeamMode.Single
+                : Team.TeamMode.Double;
             
             List<Trainer> allTrainers = new List<Trainer>();
             allTrainers.AddRange(humanTrainers);
             allTrainers.AddRange(aiTrainers);
             int midpoint = allTrainers.Count / 2;
 
-            BattleTeam team1 = new BattleTeam(
+            Team team1 = new Team(
                 teamID: 1,
                 trainers: allTrainers.GetRange(0, midpoint),
                 teamMode: teamMode
                 );
-            BattleTeam team2 = new BattleTeam(
+            Team team2 = new Team(
                 teamID: 2,
                 trainers: allTrainers.GetRange(midpoint, allTrainers.Count - midpoint),
                 teamMode: teamMode
@@ -170,7 +171,7 @@ namespace PBS.Networking
             for (int i = 0; i < humanTrainers.Count; i++)
             {
                 Trainer trainer = humanTrainers[i];
-                BattleTeam team = (trainer.teamID == team1.teamID)? team1 : team2;
+                Team team = (trainer.teamID == team1.teamID)? team1 : team2;
 
                 // Synchronize trainer & team to player
                 PBS.Networking.Player player = GetPlayer(trainer.playerID);
