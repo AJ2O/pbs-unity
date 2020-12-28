@@ -1,5 +1,6 @@
 ﻿using PBS.Battle;
 using PBS.Main.Pokemon;
+using PBS.Main.Trainer;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

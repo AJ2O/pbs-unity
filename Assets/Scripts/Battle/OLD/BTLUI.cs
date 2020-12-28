@@ -6,6 +6,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Rendering;
 using System;
 using PBS.Main.Pokemon;
+using PBS.Main.Trainer;
 
 public class BTLUI : MonoBehaviour
 {

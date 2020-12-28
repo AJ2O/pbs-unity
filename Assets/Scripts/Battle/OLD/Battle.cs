@@ -1,4 +1,5 @@
 ﻿using PBS.Main.Pokemon;
+using PBS.Main.Trainer;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -2861,8 +2862,8 @@ public class Battle
     }
     public bool IsPokemonMoveLimited(
         Pokemon pokemon, 
-        MoveData moveData, 
-        BattleProperties.MoveLimiter moveLimiter)
+        MoveData moveData,
+        PBS.Main.Pokemon.BattleProperties.MoveLimiter moveLimiter)
     {
         // Disable
         if (moveLimiter.effect is EffectDatabase.StatusPKEff.Disable)
@@ -8197,7 +8198,7 @@ public class Battle
         // Torment
         for (int i = 0; i < pokemon.bProps.moveLimiters.Count; i++)
         {
-            BattleProperties.MoveLimiter limiter
+            PBS.Main.Pokemon.BattleProperties.MoveLimiter limiter
                 = pokemon.bProps.moveLimiters[i];
             if (limiter.effect is EffectDatabase.StatusPKEff.Torment)
             {

@@ -4,6 +4,7 @@ using UnityEngine;
 using Mirror;
 using PBS.Battle;
 using PBS.Main.Pokemon;
+using PBS.Main.Trainer;
 
 namespace PBS.Networking
 {
@@ -1001,8 +1002,8 @@ namespace PBS.Networking
                 for (int i = 0; i < allPokemon.Count; i++)
                 {
                     Pokemon currentTarget = allPokemon[i];
-                    List<BattleProperties.MoveLimiter> limiters =
-                        new List<BattleProperties.MoveLimiter>(currentTarget.bProps.moveLimiters);
+                    List<Main.Pokemon.BattleProperties.MoveLimiter> limiters =
+                        new List<Main.Pokemon.BattleProperties.MoveLimiter>(currentTarget.bProps.moveLimiters);
                     for (int k = 0; k < limiters.Count; k++)
                     {
                         if (limiters[k].turnsLeft == 0)
@@ -1021,7 +1022,7 @@ namespace PBS.Networking
                     // Embargo
                     if (currentTarget.bProps.embargo != null)
                     {
-                        BattleProperties.Embargo embargo = currentTarget.bProps.embargo;
+                        Main.Pokemon.BattleProperties.Embargo embargo = currentTarget.bProps.embargo;
                         if (embargo.turnsLeft == 0)
                         {
                             currentTarget.bProps.embargo = null;
@@ -1075,8 +1076,8 @@ namespace PBS.Networking
                 for (int i = 0; i < allPokemon.Count; i++)
                 {
                     Pokemon curPokemon = allPokemon[i];
-                    List<BattleProperties.ForestsCurse> forestsCurses
-                        = new List<BattleProperties.ForestsCurse>(curPokemon.bProps.forestsCurses);
+                    List<Main.Pokemon.BattleProperties.ForestsCurse> forestsCurses
+                        = new List<Main.Pokemon.BattleProperties.ForestsCurse>(curPokemon.bProps.forestsCurses);
 
                     for (int k = 0; k < forestsCurses.Count; k++)
                     {
@@ -1095,8 +1096,8 @@ namespace PBS.Networking
                 for (int i = 0; i < allPokemon.Count; i++)
                 {
                     Pokemon curPokemon = allPokemon[i];
-                    List<BattleProperties.LockOn> lockOnTargets 
-                        = new List<BattleProperties.LockOn>(curPokemon.bProps.lockOnTargets);
+                    List<Main.Pokemon.BattleProperties.LockOn> lockOnTargets 
+                        = new List<Main.Pokemon.BattleProperties.LockOn>(curPokemon.bProps.lockOnTargets);
 
                     for (int k = 0; k < lockOnTargets.Count; k++)
                     {
@@ -2213,7 +2214,7 @@ namespace PBS.Networking
                 MoveData encoreData = null;
                 for (int i = 0; i < userPokemon.bProps.moveLimiters.Count && encoreData == null; i++)
                 {
-                    BattleProperties.MoveLimiter limiter =
+                    Main.Pokemon.BattleProperties.MoveLimiter limiter =
                         userPokemon.bProps.moveLimiters[i];
                     if (limiter.effect is EffectDatabase.StatusPKEff.Encore)
                     {
@@ -2697,7 +2698,7 @@ namespace PBS.Networking
                 {
                     for (int i = 0; i < userPokemon.bProps.moveLimiters.Count && moveSuccess; i++)
                     {
-                        BattleProperties.MoveLimiter limiter =
+                        Main.Pokemon.BattleProperties.MoveLimiter limiter =
                             userPokemon.bProps.moveLimiters[i];
                         if (!limiter.justInitialized || !limiter.effect.canUseMiddleOfTurn)
                         {
@@ -6829,8 +6830,8 @@ namespace PBS.Networking
                                     }
 
                                     List<string> typesRemoved = new List<string>();
-                                    List<BattleProperties.ForestsCurse> forestsCursesRemoved
-                                        = new List<BattleProperties.ForestsCurse>();
+                                    List<Main.Pokemon.BattleProperties.ForestsCurse> forestsCursesRemoved
+                                        = new List<Main.Pokemon.BattleProperties.ForestsCurse>();
                                     for (int i = 0; i < removableTypes.Count; i++)
                                     {
                                         bool typeRemoved = false;
@@ -6996,7 +6997,7 @@ namespace PBS.Networking
                                         for (int k = 0; k < targetPokemon.bProps.forestsCurses.Count; k++)
                                         {
                                             // Can't add same forest curse effect
-                                            BattleProperties.ForestsCurse forestCurse = 
+                                            Main.Pokemon.BattleProperties.ForestsCurse forestCurse = 
                                                 targetPokemon.bProps.forestsCurses[k];
                                             if (forestCurse.moveID == moveData.ID
                                                 && forestCurse.typeID == curType)
@@ -7040,8 +7041,8 @@ namespace PBS.Networking
 
                                         for (int i = 0; i < addableTypes.Count; i++)
                                         {
-                                            BattleProperties.ForestsCurse forestCurse = 
-                                                new BattleProperties.ForestsCurse(
+                                            Main.Pokemon.BattleProperties.ForestsCurse forestCurse = 
+                                                new Main.Pokemon.BattleProperties.ForestsCurse(
                                                     moveData.ID,
                                                     typeID: addableTypes[i],
                                                     turns
@@ -7258,8 +7259,8 @@ namespace PBS.Networking
                                     {
                                         int turns = Mathf.FloorToInt(effect.GetFloat(0));
 
-                                        BattleProperties.LockOn lockOnTarget = 
-                                            new BattleProperties.LockOn(
+                                        Main.Pokemon.BattleProperties.LockOn lockOnTarget = 
+                                            new Main.Pokemon.BattleProperties.LockOn(
                                                 targetPokemon.uniqueID,
                                                 moveData.ID,
                                                 turns
@@ -7942,8 +7943,8 @@ namespace PBS.Networking
                                     }
 
                                     List<string> typesRemoved = new List<string>();
-                                    List<BattleProperties.ForestsCurse> forestsCursesRemoved
-                                        = new List<BattleProperties.ForestsCurse>();
+                                    List<Main.Pokemon.BattleProperties.ForestsCurse> forestsCursesRemoved
+                                        = new List<Main.Pokemon.BattleProperties.ForestsCurse>();
                                     for (int i = 0; i < removableTypes.Count; i++)
                                     {
                                         bool typeRemoved = false;
@@ -8070,7 +8071,7 @@ namespace PBS.Networking
                                         for (int k = 0; k < userPokemon.bProps.forestsCurses.Count; k++)
                                         {
                                             // Can't add same forest curse effect
-                                            BattleProperties.ForestsCurse forestCurse =
+                                            Main.Pokemon.BattleProperties.ForestsCurse forestCurse =
                                                 userPokemon.bProps.forestsCurses[k];
                                             if (forestCurse.moveID == moveData.ID
                                                 && forestCurse.typeID == curType)
@@ -8114,8 +8115,8 @@ namespace PBS.Networking
 
                                         for (int i = 0; i < addableTypes.Count; i++)
                                         {
-                                            BattleProperties.ForestsCurse forestCurse =
-                                                new BattleProperties.ForestsCurse(
+                                            Main.Pokemon.BattleProperties.ForestsCurse forestCurse =
+                                                new Main.Pokemon.BattleProperties.ForestsCurse(
                                                     moveData.ID,
                                                     typeID: addableTypes[i],
                                                     turns
@@ -10650,8 +10651,8 @@ namespace PBS.Networking
                     // Move-Limiting
                     if (effect_ is EffectDatabase.StatusPKEff.MoveLimiting)
                     {
-                        List<BattleProperties.MoveLimiter> moveLimiters =
-                            new List<BattleProperties.MoveLimiter>(targetPokemon.bProps.moveLimiters);
+                        List<Main.Pokemon.BattleProperties.MoveLimiter> moveLimiters =
+                            new List<Main.Pokemon.BattleProperties.MoveLimiter>(targetPokemon.bProps.moveLimiters);
 
                         // Disable
                         if (effect_ is EffectDatabase.StatusPKEff.Disable)
@@ -10696,8 +10697,8 @@ namespace PBS.Networking
                             if (!isFail)
                             {
                                 success = true;
-                                BattleProperties.MoveLimiter limiter =
-                                    new BattleProperties.MoveLimiter(
+                                Main.Pokemon.BattleProperties.MoveLimiter limiter =
+                                    new Main.Pokemon.BattleProperties.MoveLimiter(
                                         effect: effect,
                                         turnsLeft: effect.defaultTurns.GetTurns(),
                                         affectedMoves: new string[] { targetPokemon.bProps.lastMove }
@@ -10753,8 +10754,8 @@ namespace PBS.Networking
                             if (!isFail)
                             {
                                 success = true;
-                                BattleProperties.MoveLimiter limiter =
-                                    new BattleProperties.MoveLimiter(
+                                Main.Pokemon.BattleProperties.MoveLimiter limiter =
+                                    new Main.Pokemon.BattleProperties.MoveLimiter(
                                         effect: effect,
                                         turnsLeft: effect.defaultTurns.GetTurns(),
                                         affectedMoves: new string[] { targetPokemon.bProps.lastMove }
@@ -10783,8 +10784,8 @@ namespace PBS.Networking
                             if (!isFail)
                             {
                                 success = true;
-                                BattleProperties.MoveLimiter limiter =
-                                    new BattleProperties.MoveLimiter(
+                                Main.Pokemon.BattleProperties.MoveLimiter limiter =
+                                    new Main.Pokemon.BattleProperties.MoveLimiter(
                                         effect: effect,
                                         turnsLeft: effect.defaultTurns.GetTurns()
                                         );
@@ -10812,8 +10813,8 @@ namespace PBS.Networking
                             if (!isFail)
                             {
                                 success = true;
-                                BattleProperties.MoveLimiter limiter =
-                                    new BattleProperties.MoveLimiter(
+                                Main.Pokemon.BattleProperties.MoveLimiter limiter =
+                                    new Main.Pokemon.BattleProperties.MoveLimiter(
                                         effect: effect,
                                         turnsLeft: effect.defaultTurns.GetTurns()
                                         );
@@ -10841,8 +10842,8 @@ namespace PBS.Networking
                             if (!isFail)
                             {
                                 success = true;
-                                BattleProperties.MoveLimiter limiter =
-                                    new BattleProperties.MoveLimiter(
+                                Main.Pokemon.BattleProperties.MoveLimiter limiter =
+                                    new Main.Pokemon.BattleProperties.MoveLimiter(
                                         effect: effect,
                                         turnsLeft: effect.defaultTurns.GetTurns()
                                         );
@@ -10868,8 +10869,8 @@ namespace PBS.Networking
                         if (!isFail)
                         {
                             success = true;
-                            BattleProperties.Embargo embargo =
-                                new BattleProperties.Embargo(
+                            Main.Pokemon.BattleProperties.Embargo embargo =
+                                new Main.Pokemon.BattleProperties.Embargo(
                                     effect: effect,
                                     turnsLeft: effect.defaultTurns.GetTurns()
                                     );
@@ -15004,7 +15005,7 @@ namespace PBS.Networking
                                                     // Flash Fire
                                                     if (triggerCondition.flashFireBoost > 0)
                                                     {
-                                                        BattleProperties.FlashFireBoost flashFireBoost =
+                                                        Main.Pokemon.BattleProperties.FlashFireBoost flashFireBoost =
                                                             targetPokemon.bProps.GetFlashFireBoost(moveData.moveType);
                                                         if (flashFireBoost != null)
                                                         {
@@ -15012,7 +15013,7 @@ namespace PBS.Networking
                                                             {
                                                                 targetPokemon.bProps.flashFireBoosts.Remove(flashFireBoost);
                                                                 targetPokemon.bProps.flashFireBoosts.Add(
-                                                                    new BattleProperties.FlashFireBoost(
+                                                                    new Main.Pokemon.BattleProperties.FlashFireBoost(
                                                                         moveType: moveData.moveType,
                                                                         boost: triggerCondition.flashFireBoost
                                                                         ));
@@ -15021,7 +15022,7 @@ namespace PBS.Networking
                                                         else
                                                         {
                                                             targetPokemon.bProps.flashFireBoosts.Add(
-                                                                new BattleProperties.FlashFireBoost(
+                                                                new Main.Pokemon.BattleProperties.FlashFireBoost(
                                                                     moveType: moveData.moveType,
                                                                     boost: triggerCondition.flashFireBoost
                                                                     ));
@@ -15578,8 +15579,8 @@ namespace PBS.Networking
             {
                 // TODO: get battle properties for baton pass
                 int position = withdrawPokemon.battlePos;
-                BattleProperties withdrawBProps 
-                    = BattleProperties.Clone(withdrawPokemon.bProps, withdrawPokemon);
+                Main.Pokemon.BattleProperties withdrawBProps 
+                    = Main.Pokemon.BattleProperties.Clone(withdrawPokemon.bProps, withdrawPokemon);
                 Model updateModel = Model.CloneModel(battle);
 
                 executingBatonPass = true;
@@ -17706,7 +17707,7 @@ namespace PBS.Networking
 
         public IEnumerator PBPRemoveForestsCurse(
             Pokemon pokemon,
-            BattleProperties.ForestsCurse forestsCurse = null,
+            Main.Pokemon.BattleProperties.ForestsCurse forestsCurse = null,
             string forestsCurseID = null,
             string textID = ""
             )
@@ -17724,8 +17725,8 @@ namespace PBS.Networking
                 }
                 else
                 {
-                    List<BattleProperties.ForestsCurse> existingForestsCurses =
-                        new List<BattleProperties.ForestsCurse>(pokemon.bProps.forestsCurses);
+                    List<Main.Pokemon.BattleProperties.ForestsCurse> existingForestsCurses =
+                        new List<Main.Pokemon.BattleProperties.ForestsCurse>(pokemon.bProps.forestsCurses);
 
                     for (int i = 0; i < existingForestsCurses.Count; i++)
                     {
@@ -19608,8 +19609,8 @@ namespace PBS.Networking
             }
 
             // Unset Lock On
-            List<BattleProperties.LockOn> lockOnTargets 
-                = new List<BattleProperties.LockOn>(targetPokemon.bProps.lockOnTargets);
+            List<Main.Pokemon.BattleProperties.LockOn> lockOnTargets 
+                = new List<Main.Pokemon.BattleProperties.LockOn>(targetPokemon.bProps.lockOnTargets);
             for (int i = 0; i < lockOnTargets.Count; i++)
             {
                 if (lockOnTargets[i].pokemonUniqueID == tiedPokemon.uniqueID)

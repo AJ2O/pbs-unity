@@ -62,13 +62,13 @@ namespace PBS.Battle.View.WifiFriendly
         public string name;
         public int playerID;
         public int teamPos;
-        public List<WifiFriendly.Pokemon> party;
+        public List<Pokemon> party;
         public List<string> partyIDs = new List<string>();
         public List<string> items;
         public List<int> controlPos;
 
         public Trainer() { }
-        public Trainer(global:: Trainer obj)
+        public Trainer(Main.Trainer.Trainer obj)
         {
             name = obj.name;
             playerID = obj.playerID;
