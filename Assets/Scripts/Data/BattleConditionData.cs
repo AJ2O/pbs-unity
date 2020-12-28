@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Databases;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ public class StatusBTLData
         {
             if (string.IsNullOrEmpty(p_conditionName) && !string.IsNullOrEmpty(baseID))
             {
-                return StatusBTLDatabase.instance.GetStatusData(baseID).conditionName;
+                return BattleStatuses.instance.GetStatusData(baseID).conditionName;
             }
             return p_conditionName;
         }
@@ -29,7 +30,7 @@ public class StatusBTLData
         {
             if (string.IsNullOrEmpty(p_inflictTextID) && !string.IsNullOrEmpty(baseID))
             {
-                return StatusBTLDatabase.instance.GetStatusData(baseID).inflictTextID;
+                return BattleStatuses.instance.GetStatusData(baseID).inflictTextID;
             }
             return p_inflictTextID;
         }
@@ -47,7 +48,7 @@ public class StatusBTLData
             {
                 if (!string.IsNullOrEmpty(baseID))
                 {
-                    return StatusBTLDatabase.instance.GetStatusData(baseID).natureTextID;
+                    return BattleStatuses.instance.GetStatusData(baseID).natureTextID;
                 }
                 else
                 {
@@ -68,7 +69,7 @@ public class StatusBTLData
         {
             if (string.IsNullOrEmpty(p_endTextID) && !string.IsNullOrEmpty(baseID))
             {
-                return StatusBTLDatabase.instance.GetStatusData(baseID).endTextID;
+                return BattleStatuses.instance.GetStatusData(baseID).endTextID;
             }
             return p_endTextID;
         }
@@ -84,7 +85,7 @@ public class StatusBTLData
         {
             if (string.IsNullOrEmpty(p_alreadyTextID) && !string.IsNullOrEmpty(baseID))
             {
-                return StatusBTLDatabase.instance.GetStatusData(baseID).alreadyTextID;
+                return BattleStatuses.instance.GetStatusData(baseID).alreadyTextID;
             }
             return p_alreadyTextID;
         }
@@ -102,7 +103,7 @@ public class StatusBTLData
         {
             if (p_defaultTurns == null && !string.IsNullOrEmpty(baseID))
             {
-                return StatusBTLDatabase.instance.GetStatusData(baseID).defaultTurns;
+                return BattleStatuses.instance.GetStatusData(baseID).defaultTurns;
             }
             return p_defaultTurns;
         }
@@ -122,7 +123,7 @@ public class StatusBTLData
             if (combineBaseTags && !string.IsNullOrEmpty(baseID))
             {
                 HashSet<BattleSTag> unionTags = new HashSet<BattleSTag>(p_tags);
-                unionTags.UnionWith(StatusBTLDatabase.instance.GetStatusData(baseID).tags);
+                unionTags.UnionWith(BattleStatuses.instance.GetStatusData(baseID).tags);
                 return unionTags;
             }
             return p_tags;
@@ -142,7 +143,7 @@ public class StatusBTLData
             if (combineBaseEffects && !string.IsNullOrEmpty(baseID))
             {
                 List<BattleCEff> unionEffects = new List<BattleCEff>(p_effects);
-                unionEffects.AddRange(StatusBTLDatabase.instance.GetStatusData(baseID).effects);
+                unionEffects.AddRange(BattleStatuses.instance.GetStatusData(baseID).effects);
                 return unionEffects;
             }
             return p_effects;
@@ -164,7 +165,7 @@ public class StatusBTLData
             {
                 List<EffectDatabase.StatusBTLEff.BattleSE> unionEffects = new List<EffectDatabase.StatusBTLEff.BattleSE>();
                 unionEffects.AddRange(p_effectsNew);
-                unionEffects.AddRange(StatusBTLDatabase.instance.GetStatusData(baseID).effectsNew);
+                unionEffects.AddRange(BattleStatuses.instance.GetStatusData(baseID).effectsNew);
                 return unionEffects;
             }
             return p_effectsNew;
@@ -257,7 +258,7 @@ public class StatusBTLData
         }
         if (baseID != null)
         {
-            StatusBTLData baseData = StatusBTLDatabase.instance.GetStatusData(baseID);
+            StatusBTLData baseData = BattleStatuses.instance.GetStatusData(baseID);
             return baseData.IsABaseID(tryBaseID);
         }
         return false;

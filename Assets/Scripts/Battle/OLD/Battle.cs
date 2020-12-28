@@ -75,17 +75,17 @@ public class Battle
         pokemonOnField = new List<PBS.Main.Pokemon.Pokemon>();
 
         weather = !string.IsNullOrEmpty(defaultWeather) ? new BattleCondition(defaultWeather)
-            : new BattleCondition(StatusBTLDatabase.instance.GetDefaultWeather().ID);
+            : new BattleCondition(BattleStatuses.instance.GetDefaultWeather().ID);
         terrain = !string.IsNullOrEmpty(defaultTerrain) ? new BattleCondition(defaultTerrain)
-            : new BattleCondition(StatusBTLDatabase.instance.GetDefaultTerrain().ID);
+            : new BattleCondition(BattleStatuses.instance.GetDefaultTerrain().ID);
         gravity = !string.IsNullOrEmpty(defaultGravity) ? new BattleCondition(defaultGravity)
-            : new BattleCondition(StatusBTLDatabase.instance.GetDefaultGravity().ID);
+            : new BattleCondition(BattleStatuses.instance.GetDefaultGravity().ID);
         magicRoom = !string.IsNullOrEmpty(defaultMagicRoom) ? new BattleCondition(defaultMagicRoom)
-            : new BattleCondition(StatusBTLDatabase.instance.GetDefaultMagicRoom().ID);
+            : new BattleCondition(BattleStatuses.instance.GetDefaultMagicRoom().ID);
         trickRoom = !string.IsNullOrEmpty(defaultTrickRoom) ? new BattleCondition(defaultTrickRoom)
-            : new BattleCondition(StatusBTLDatabase.instance.GetDefaultTrickRoom().ID);
+            : new BattleCondition(BattleStatuses.instance.GetDefaultTrickRoom().ID);
         wonderRoom = !string.IsNullOrEmpty(defaultWonderRoom) ? new BattleCondition(defaultWonderRoom)
-            : new BattleCondition(StatusBTLDatabase.instance.GetDefaultWonderRoom().ID);
+            : new BattleCondition(BattleStatuses.instance.GetDefaultWonderRoom().ID);
 
         this.defaultWeather = weather.statusID;
         this.defaultTerrain = terrain.statusID;
@@ -2203,7 +2203,7 @@ public class Battle
                 List<PokemonCEff> effects = conditions[i].data.GetEffects(PokemonSEType.StatScale);
                 for (int k = 0; k < effects.Count; k++)
                 {
-                    List<PokemonStats> scaledStats = GameTextDatabase.GetStatsFromList(effects[k].stringParams);
+                    List<PokemonStats> scaledStats = GameText.GetStatsFromList(effects[k].stringParams);
                     if (scaledStats.Contains(statType))
                     {
                         pokemonModifiers *= effects[k].GetFloat(0);
@@ -3893,7 +3893,7 @@ public class Battle
     // Status Conditions
     public TeamCondition TBPGetSC(Team team, string statusID, bool descendant = true)
     {
-        StatusTEData statusData = StatusTEDatabase.instance.GetStatusData(statusID);
+        StatusTEData statusData = TeamStatuses.instance.GetStatusData(statusID);
         List<TeamCondition> conditions = TBPGetSCs(team);
         for (int i = 0; i < conditions.Count; i++)
         {
@@ -4071,7 +4071,7 @@ public class Battle
     // Status Conditions
     public BattleCondition BBPGetSC(string statusID, bool descendant = true)
     {
-        StatusBTLData statusData = StatusBTLDatabase.instance.GetStatusData(statusID);
+        StatusBTLData statusData = BattleStatuses.instance.GetStatusData(statusID);
         List<BattleCondition> conditions = BBPGetSCs();
         for (int i = 0; i < conditions.Count; i++)
         {
@@ -5529,7 +5529,7 @@ public class Battle
                     if (BBPIsPokemonAffectedByBS(userPokemon, conditions[k].data))
                     {
                         StatusBTLData statusData =
-                            StatusBTLDatabase.instance.GetStatusData(grassyGlide.conditions[k]);
+                            BattleStatuses.instance.GetStatusData(grassyGlide.conditions[k]);
                         if (conditions[i].statusID == statusData.ID
                             || conditions[i].data.IsABaseID(statusData.ID))
                         {
@@ -6568,7 +6568,7 @@ public class Battle
         MoveEffect psyshock = moveData.GetEffect(MoveEffectType.PsyshockOffense);
         if (psyshock != null)
         {
-            statToUse = GameTextDatabase.GetStatFromString(psyshock.GetString(0));
+            statToUse = GameText.GetStatFromString(psyshock.GetString(0));
         }
 
         // Ignore Stat Changes
@@ -6618,7 +6618,7 @@ public class Battle
         MoveEffect psyshock = moveData.GetEffect(MoveEffectType.Psyshock);
         if (psyshock != null)
         {
-            statToUse = GameTextDatabase.GetStatFromString(psyshock.GetString(0));
+            statToUse = GameText.GetStatFromString(psyshock.GetString(0));
         }
 
         // Ignore Stat Changes
@@ -6630,7 +6630,7 @@ public class Battle
                 = PBPLegacyGetAbilityEffect(userPokemon, AbilityEffectType.UnawareOffense);
             if (unaware != null)
             {
-                List<PokemonStats> ignoredStats = GameTextDatabase.GetStatsFromList(unaware.stringParams);
+                List<PokemonStats> ignoredStats = GameText.GetStatsFromList(unaware.stringParams);
                 if (ignoredStats.Contains(statToUse))
                 {
                     applyStatStage = false;
@@ -6641,7 +6641,7 @@ public class Battle
         MoveEffect chipAway = moveData.GetEffect(MoveEffectType.ChipAway);
         if (chipAway != null)
         {
-            List<PokemonStats> ignoredStats = GameTextDatabase.GetStatsFromList(chipAway.stringParams);
+            List<PokemonStats> ignoredStats = GameText.GetStatsFromList(chipAway.stringParams);
             if (ignoredStats.Contains(statToUse))
             {
                 applyStatStage = false;
@@ -8615,7 +8615,7 @@ public class Battle
 
     public StatusCondition ApplyStatusCondition(PBS.Main.Pokemon.Pokemon pokemon, string statusID, int turnsLeft = -1)
     {
-        StatusPKData statusData = StatusPKDatabase.instance.GetStatusData(statusID);
+        StatusPKData statusData = PokemonStatuses.instance.GetStatusData(statusID);
         StatusCondition condition = new StatusCondition(
             statusID: statusID,
             turnsLeft: turnsLeft
@@ -8698,7 +8698,7 @@ public class Battle
     }
     public TeamCondition ApplyTeamSC(Team team, string statusID, int turnsLeft = -1)
     {
-        StatusTEData statusData = StatusTEDatabase.instance.GetStatusData(statusID);
+        StatusTEData statusData = TeamStatuses.instance.GetStatusData(statusID);
         TeamCondition condition = new TeamCondition(
             statusID: statusID,
             turnsLeft: turnsLeft
@@ -8812,7 +8812,7 @@ public class Battle
 
     public BattleCondition InflictBattleSC(string statusID, int turnsLeft = -1)
     {
-        StatusBTLData statusData = StatusBTLDatabase.instance.GetStatusData(statusID);
+        StatusBTLData statusData = BattleStatuses.instance.GetStatusData(statusID);
         BattleCondition condition = new BattleCondition(
             statusID: statusID,
             turnsLeft: turnsLeft

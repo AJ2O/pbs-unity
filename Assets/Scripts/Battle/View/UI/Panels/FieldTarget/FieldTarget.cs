@@ -186,7 +186,7 @@ namespace PBS.Battle.View.UI.Panels
                 btn.statusTxt.text = "";
                 if (!string.IsNullOrEmpty(pokemon.nonVolatileStatus))
                 {
-                    StatusPKData statusData = StatusPKDatabase.instance.GetStatusData(pokemon.nonVolatileStatus);
+                    StatusPKData statusData = PokemonStatuses.instance.GetStatusData(pokemon.nonVolatileStatus);
                     btn.statusTxt.text = statusData.shortName;
                 }
 

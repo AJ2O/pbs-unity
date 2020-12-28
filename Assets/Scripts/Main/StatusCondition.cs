@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Databases;
+using System.Collections;
 using System.Collections.Generic;
 
 public class StatusCondition
@@ -11,7 +12,7 @@ public class StatusCondition
     {
         get
         {
-            return StatusPKDatabase.instance.GetStatusData(this.statusID);
+            return PokemonStatuses.instance.GetStatusData(this.statusID);
         }
     }
 

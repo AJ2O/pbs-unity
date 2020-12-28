@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Databases;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ public class StatusPKData
         {
             if (string.IsNullOrEmpty(p_conditionName) && !string.IsNullOrEmpty(baseID))
             {
-                return StatusPKDatabase.instance.GetStatusData(baseID).conditionName;
+                return PokemonStatuses.instance.GetStatusData(baseID).conditionName;
             }
             return p_conditionName;
         }
@@ -38,7 +39,7 @@ public class StatusPKData
         {
             if (p_defaultTurns == null && !string.IsNullOrEmpty(baseID))
             {
-                return StatusBTLDatabase.instance.GetStatusData(baseID).defaultTurns;
+                return BattleStatuses.instance.GetStatusData(baseID).defaultTurns;
             }
             return p_defaultTurns;
         }
@@ -58,7 +59,7 @@ public class StatusPKData
             if (combineBaseTags && !string.IsNullOrEmpty(baseID))
             {
                 HashSet<PokemonSTag> unionTags = new HashSet<PokemonSTag>(p_tags);
-                unionTags.UnionWith(StatusPKDatabase.instance.GetStatusData(baseID).statusTags);
+                unionTags.UnionWith(PokemonStatuses.instance.GetStatusData(baseID).statusTags);
                 return unionTags;
             }
             return p_tags;
@@ -82,7 +83,7 @@ public class StatusPKData
             {
                 List<EffectDatabase.StatusPKEff.PokemonSE> unionEffects = new List<EffectDatabase.StatusPKEff.PokemonSE>();
                 unionEffects.AddRange(p_effectsNew);
-                unionEffects.AddRange(StatusPKDatabase.instance.GetStatusData(baseID).effectsNew);
+                unionEffects.AddRange(PokemonStatuses.instance.GetStatusData(baseID).effectsNew);
                 return unionEffects;
             }
             return p_effectsNew;
@@ -179,7 +180,7 @@ public class StatusPKData
         }
         if (baseID != null)
         {
-            StatusPKData baseData = StatusPKDatabase.instance.GetStatusData(baseID);
+            StatusPKData baseData = PokemonStatuses.instance.GetStatusData(baseID);
             return baseData.IsABaseID(tryBaseID);
         }
         return false;

@@ -558,7 +558,7 @@ public class BTLManager : MonoBehaviour
                 PBS.Main.Team.BattleProperties.GMaxWildfire GMaxWildfire = team.bProps.GMaxWildfireStatus;
                 if (GMaxWildfire != null)
                 {
-                    StatusTEData statusData = StatusTEDatabase.instance.GetStatusData(GMaxWildfire.statusID); 
+                    StatusTEData statusData = TeamStatuses.instance.GetStatusData(GMaxWildfire.statusID); 
                     EffectDatabase.StatusTEEff.TeamSE effect_ = statusData.GetEffectNew(TeamSEType.HPLoss);
                     if (effect_ != null)
                     {
@@ -931,7 +931,7 @@ public class BTLManager : MonoBehaviour
                     if (currentTarget.bProps.yawn.turnsLeft == 0)
                     {
                         StatusPKData yawnStatusData = 
-                            StatusPKDatabase.instance.GetStatusData(currentTarget.bProps.yawn.statusID);
+                            PokemonStatuses.instance.GetStatusData(currentTarget.bProps.yawn.statusID);
                         currentTarget.bProps.yawn = null;
                         yield return StartCoroutine(ApplyPokemonSC(
                             statusData: yawnStatusData,
@@ -2228,7 +2228,7 @@ public class BTLManager : MonoBehaviour
                 {
                     EffectDatabase.AbilityEff.Comatose comatose =
                         effects_[i] as EffectDatabase.AbilityEff.Comatose;
-                    StatusPKData comatoseStatusData = StatusPKDatabase.instance.GetStatusData(comatose.statusID);
+                    StatusPKData comatoseStatusData = PokemonStatuses.instance.GetStatusData(comatose.statusID);
                     if (comatoseStatusData.GetEffectNew(PokemonSEType.Freeze) != null)
                     {
                         isComatose = true;
@@ -2295,7 +2295,7 @@ public class BTLManager : MonoBehaviour
                                 for (int k = 0; k < healBeforeUse.statuses.Count && !willThaw; k++)
                                 {
                                     StatusPKData statusData = 
-                                        StatusPKDatabase.instance.GetStatusData(healBeforeUse.statuses[k]);
+                                        PokemonStatuses.instance.GetStatusData(healBeforeUse.statuses[k]);
                                     if (freezeStatusData.ID == statusData.ID
                                         || freezeStatusData.IsABaseID(statusData.ID))
                                     {
@@ -2353,7 +2353,7 @@ public class BTLManager : MonoBehaviour
                 {
                     EffectDatabase.AbilityEff.Comatose comatose =
                         effects_[i] as EffectDatabase.AbilityEff.Comatose;
-                    StatusPKData comatoseStatusData = StatusPKDatabase.instance.GetStatusData(comatose.statusID);
+                    StatusPKData comatoseStatusData = PokemonStatuses.instance.GetStatusData(comatose.statusID);
                     if (comatoseStatusData.GetEffectNew(PokemonSEType.Sleep) != null)
                     {
                         isComatose = true;
@@ -7102,7 +7102,7 @@ public class BTLManager : MonoBehaviour
                         {
                             if (apply)
                             {
-                                List<PokemonStats> statsToModify = GameTextDatabase.GetStatsFromList(effect.stringParams);
+                                List<PokemonStats> statsToModify = GameText.GetStatsFromList(effect.stringParams);
                                 if (statsToModify.Contains(PokemonStats.Attack))
                                 {
                                     targetPokemon.bProps.ATKStage = 0;
@@ -7365,8 +7365,8 @@ public class BTLManager : MonoBehaviour
                         // Power Trick
                         else if (effect.effectType == MoveEffectType.PowerTrick)
                         {
-                            PokemonStats statToSwap1 = GameTextDatabase.GetStatFromString(effect.GetString(1));
-                            PokemonStats statToSwap2 = GameTextDatabase.GetStatFromString(effect.GetString(2));
+                            PokemonStats statToSwap1 = GameText.GetStatFromString(effect.GetString(1));
+                            PokemonStats statToSwap2 = GameText.GetStatFromString(effect.GetString(2));
 
                             if (apply)
                             {
@@ -7661,7 +7661,7 @@ public class BTLManager : MonoBehaviour
                         {
                             bool stoleStats = false;
 
-                            List<PokemonStats> statsToSteal = GameTextDatabase.GetStatsFromList(effect.stringParams);
+                            List<PokemonStats> statsToSteal = GameText.GetStatsFromList(effect.stringParams);
                             for (int i = 0; i < statsToSteal.Count; i++)
                             {
                                 bool stealStat = true;
@@ -7820,7 +7820,7 @@ public class BTLManager : MonoBehaviour
                             int statMod = (effect.effectType == MoveEffectType.StatStageMod)
                                 ? Mathf.FloorToInt(effect.GetFloat(0)) : 0;
 
-                            List<PokemonStats> statsToModify = GameTextDatabase.GetStatsFromList(effect.stringParams);
+                            List<PokemonStats> statsToModify = GameText.GetStatsFromList(effect.stringParams);
                             if (statsToModify.Count > 0)
                             {
                                 yield return StartCoroutine(TryToApplyStatStageMods(
@@ -7845,7 +7845,7 @@ public class BTLManager : MonoBehaviour
                         {
                             string statusID = effect.GetString(0);
                             StatusPKData statusData =
-                                StatusPKDatabase.instance.GetStatusData(statusID);
+                                PokemonStatuses.instance.GetStatusData(statusID);
 
                             // turn calculation
                             int turnCount = Mathf.FloorToInt(effect.GetFloat(0));
@@ -7921,7 +7921,7 @@ public class BTLManager : MonoBehaviour
                                     int statMod = (effect.effectType == MoveEffectType.StuffCheeks)
                                     ? Mathf.FloorToInt(effect.GetFloat(0)) : 0;
 
-                                    List<PokemonStats> statsToModify = GameTextDatabase.GetStatsFromList(effect.stringParams);
+                                    List<PokemonStats> statsToModify = GameText.GetStatsFromList(effect.stringParams);
                                     if (statsToModify.Count > 0)
                                     {
                                         yield return StartCoroutine(TryToApplyStatStageMods(
@@ -8316,7 +8316,7 @@ public class BTLManager : MonoBehaviour
                             int statMod = (effect.effectType == MoveEffectType.StatStageSelfMod) 
                                 ? Mathf.FloorToInt(effect.GetFloat(0)) : 0;
 
-                            List<PokemonStats> statsToModify = GameTextDatabase.GetStatsFromList(effect.stringParams);
+                            List<PokemonStats> statsToModify = GameText.GetStatsFromList(effect.stringParams);
                             if (statsToModify.Count > 0)
                             {
                                 yield return StartCoroutine(TryToApplyStatStageMods(
@@ -8585,7 +8585,7 @@ public class BTLManager : MonoBehaviour
                         List<PBS.Main.Pokemon.Pokemon> fieldPokemon = battle.GetTeamPokemonOnField(targetTeam);
                         if (fieldPokemon.Count > 0)
                         {
-                            List<PokemonStats> statsToModify = GameTextDatabase.GetStatsFromList(effect.stringParams);
+                            List<PokemonStats> statsToModify = GameText.GetStatsFromList(effect.stringParams);
                             for (int i = 0; i < fieldPokemon.Count; i++)
                             {
                                 if (statsToModify.Contains(PokemonStats.Attack))
@@ -8750,7 +8750,7 @@ public class BTLManager : MonoBehaviour
                 {
                     string statusID = effect.GetString(0);
                     StatusTEData statusData =
-                        StatusTEDatabase.instance.GetStatusData(statusID);
+                        TeamStatuses.instance.GetStatusData(statusID);
 
                     // turn calculation
                     int turnCount = Mathf.FloorToInt(effect.GetFloat(0));
@@ -8801,7 +8801,7 @@ public class BTLManager : MonoBehaviour
             {
                 string statusID = effect.GetString(0);
                 StatusBTLData statusData =
-                    StatusBTLDatabase.instance.GetStatusData(statusID);
+                    BattleStatuses.instance.GetStatusData(statusID);
 
                 // turn calculation
                 int turnCount = Mathf.FloorToInt(effect.GetFloat(0));
@@ -8842,7 +8842,7 @@ public class BTLManager : MonoBehaviour
                     List<PBS.Main.Pokemon.Pokemon> fieldPokemon = new List<PBS.Main.Pokemon.Pokemon>(battle.pokemonOnField);
                     if (fieldPokemon.Count > 0)
                     {
-                        List<PokemonStats> statsToModify = GameTextDatabase.GetStatsFromList(effect.stringParams);
+                        List<PokemonStats> statsToModify = GameText.GetStatsFromList(effect.stringParams);
                         for (int i = 0; i < fieldPokemon.Count; i++)
                         {
                             if (statsToModify.Contains(PokemonStats.Attack))
@@ -10019,7 +10019,7 @@ public class BTLManager : MonoBehaviour
         if (inflictStatus.statusType == StatusType.Pokemon)
         {
             StatusPKData statusData =
-                StatusPKDatabase.instance.GetStatusData(inflictStatus.statusID);
+                PokemonStatuses.instance.GetStatusData(inflictStatus.statusID);
             StatusPKData modStatusData = statusData.Clone();
             
             if (inflictStatus.effectMode == EffectDatabase.General.InflictStatus.EffectMode.Additive)
@@ -10082,7 +10082,7 @@ public class BTLManager : MonoBehaviour
         else if (inflictStatus.statusType == StatusType.Team && targetTeam != null)
         {
             StatusTEData statusData =
-                StatusTEDatabase.instance.GetStatusData(inflictStatus.statusID);
+                TeamStatuses.instance.GetStatusData(inflictStatus.statusID);
             StatusTEData modStatusData = statusData.Clone();
             
             if (inflictStatus.effectMode == EffectDatabase.General.InflictStatus.EffectMode.Additive)
@@ -10132,7 +10132,7 @@ public class BTLManager : MonoBehaviour
         else if (inflictStatus.statusType == StatusType.Battle)
         {
             StatusBTLData statusData =
-                StatusBTLDatabase.instance.GetStatusData(inflictStatus.statusID);
+                BattleStatuses.instance.GetStatusData(inflictStatus.statusID);
             StatusBTLData modStatusData = statusData.Clone();
             
             if (inflictStatus.effectMode == EffectDatabase.General.InflictStatus.EffectMode.Additive)
@@ -11222,7 +11222,7 @@ public class BTLManager : MonoBehaviour
 
                 bool statusSuccess = false;
                 yield return StartCoroutine(ApplyPokemonSC(
-                    statusData: StatusPKDatabase.instance.GetStatusData(yawn.statusID),
+                    statusData: PokemonStatuses.instance.GetStatusData(yawn.statusID),
                     targetPokemon: targetPokemon,
                     userPokemon: userPokemon,
                     moveData: moveData,
@@ -11366,7 +11366,7 @@ public class BTLManager : MonoBehaviour
                 PBS.Main.Team.BattleProperties.GMaxWildfire existingStatus = targetTeam.bProps.GMaxWildfireStatus;
                 if (existingStatus != null)
                 {
-                    StatusTEData existingData = StatusTEDatabase.instance.GetStatusData(existingStatus.statusID);
+                    StatusTEData existingData = TeamStatuses.instance.GetStatusData(existingStatus.statusID);
 
                     EffectDatabase.StatusTEEff.TeamSE oldPriority_ = 
                         existingData.GetEffectNew(TeamSEType.GMaxWildfirePriority);
@@ -12773,7 +12773,7 @@ public class BTLManager : MonoBehaviour
             {
                 MoveEffect effect = moveData.GetEffect(MoveEffectType.PowerSplit);
                 Dictionary<PokemonStats, int> totalStatMap = new Dictionary<PokemonStats, int>();
-                List<PokemonStats> statsToMod = GameTextDatabase.GetStatsFromList(effect.stringParams);
+                List<PokemonStats> statsToMod = GameText.GetStatsFromList(effect.stringParams);
 
                 List<PBS.Main.Pokemon.Pokemon> pokemonToSplit = new List<PBS.Main.Pokemon.Pokemon> { userPokemon };
                 for (int i = 0; i < statsToMod.Count; i++)
@@ -12853,7 +12853,7 @@ public class BTLManager : MonoBehaviour
             {
                 MoveEffect effect = moveData.GetEffect(MoveEffectType.PowerSwap);
                 PBS.Main.Pokemon.Pokemon swapPokemon = null;
-                List<PokemonStats> statsToMod = GameTextDatabase.GetStatsFromList(effect.stringParams);
+                List<PokemonStats> statsToMod = GameText.GetStatsFromList(effect.stringParams);
 
                 for (int k = 0; k < battleHitTargets.Count; k++)
                 {
@@ -14001,7 +14001,7 @@ public class BTLManager : MonoBehaviour
 
             for (int i = 0; i < weatherList.Count; i++)
             {
-                StatusBTLData weatherData = StatusBTLDatabase.instance.GetStatusData(weatherList[i]);
+                StatusBTLData weatherData = BattleStatuses.instance.GetStatusData(weatherList[i]);
 
                 if (battle.weather.statusID != weatherData.ID)
                 {
@@ -14055,7 +14055,7 @@ public class BTLManager : MonoBehaviour
 
             for (int i = 0; i < terrainList.Count; i++)
             {
-                StatusBTLData terrainData = StatusBTLDatabase.instance.GetStatusData(terrainList[i]);
+                StatusBTLData terrainData = BattleStatuses.instance.GetStatusData(terrainList[i]);
 
                 if (battle.terrain.statusID != terrainData.ID)
                 {
@@ -16006,7 +16006,7 @@ public class BTLManager : MonoBehaviour
         )
     {
         bool success = true;
-        StatusPKData statusData = StatusPKDatabase.instance.GetStatusData(statusID);
+        StatusPKData statusData = PokemonStatuses.instance.GetStatusData(statusID);
         Team targetTeam = battle.GetTeam(targetPokemon);
 
         // run a bunch of checks here
@@ -16426,7 +16426,7 @@ public class BTLManager : MonoBehaviour
     {
         forceFailureMessage = (forceNoText) ? false : forceFailureMessage;
         bool success = true;
-        StatusTEData statusData = StatusTEDatabase.instance.GetStatusData(statusID);
+        StatusTEData statusData = TeamStatuses.instance.GetStatusData(statusID);
 
         // can't be inflicted if the target already has the status
         if (success && targetTeam.HasStatusCondition(statusID))
@@ -16505,7 +16505,7 @@ public class BTLManager : MonoBehaviour
         )
     {
         bool success = true;
-        StatusBTLData statusData = StatusBTLDatabase.instance.GetStatusData(statusID);
+        StatusBTLData statusData = BattleStatuses.instance.GetStatusData(statusID);
 
         // run a bunch of checks here
         BTLEvent_GameText failTextEvent = new BTLEvent_GameText();
@@ -16812,7 +16812,7 @@ public class BTLManager : MonoBehaviour
                                     tempStats.Add(mistEffect.stringParams[k]);
                                 }
 
-                                List<PokemonStats> stats = GameTextDatabase.GetStatsFromList(tempStats.ToArray());
+                                List<PokemonStats> stats = GameText.GetStatsFromList(tempStats.ToArray());
                                 List<PokemonStats> removedStats = new List<PokemonStats>();
                                 for (int k = 0; k < stats.Count; k++)
                                 {
@@ -17484,7 +17484,7 @@ public class BTLManager : MonoBehaviour
                     int statMod = (effect.effectType == ItemEffectType.XAttack)
                         ? Mathf.FloorToInt(effect.GetFloat(0)) : 0;
 
-                    List<PokemonStats> statsToModify = GameTextDatabase.GetStatsFromList(effect.stringParams);
+                    List<PokemonStats> statsToModify = GameText.GetStatsFromList(effect.stringParams);
                     if (statsToModify.Count > 0)
                     {
                         yield return StartCoroutine(TryToApplyStatStageMods(
@@ -17795,7 +17795,7 @@ public class BTLManager : MonoBehaviour
                             {
                                 int statMod = Mathf.FloorToInt(statsEffects[i].GetFloat(0));
 
-                                List<PokemonStats> statsToModify = GameTextDatabase.GetStatsFromList(statsEffects[i].stringParams);
+                                List<PokemonStats> statsToModify = GameText.GetStatsFromList(statsEffects[i].stringParams);
                                 if (statsToModify.Count > 0)
                                 {
                                     yield return StartCoroutine(TryToApplyStatStageMods(
@@ -18670,7 +18670,7 @@ public class BTLManager : MonoBehaviour
                         for (int j = 0; j < badDreams.affectedStatuses.Count && !isAffected; j++)
                         {
                             StatusPKData statusData =
-                                StatusPKDatabase.instance.GetStatusData(badDreams.affectedStatuses[j]);
+                                PokemonStatuses.instance.GetStatusData(badDreams.affectedStatuses[j]);
                             if (statusData.ID == targetPokemon.nonVolatileStatus.statusID)
                             {
                                 isAffected = true;

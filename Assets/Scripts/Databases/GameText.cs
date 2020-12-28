@@ -1,5 +1,4 @@
-﻿using PBS.Databases;
-using PBS.Main.Pokemon;
+﻿using PBS.Main.Pokemon;
 using PBS.Main.Team;
 using PBS.Main.Trainer;
 using System.Collections.Generic;
@@ -7,33 +6,30 @@ using UnityEngine;
 
 namespace PBS.Databases
 {
-
-}
-
-public class GameTextDatabase
-{
-    //create an object of SingleObject
-    private static GameTextDatabase singleton = new GameTextDatabase();
-
-    //make the constructor private so that this class cannot be
-    //instantiated
-    private GameTextDatabase() { }
-
-    //Get the only object available
-    public static GameTextDatabase instance
+    public class GameText
     {
-        get
-        {
-            return singleton;
-        }
-        private set
-        {
-            singleton = value;
-        }
-    }
+        //create an object of SingleObject
+        private static GameText singleton = new GameText();
 
-    // Database
-    private Dictionary<string, GameTextData> database = new Dictionary<string, GameTextData>
+        //make the constructor private so that this class cannot be
+        //instantiated
+        private GameText() { }
+
+        //Get the only object available
+        public static GameText instance
+        {
+            get
+            {
+                return singleton;
+            }
+            private set
+            {
+                singleton = value;
+            }
+        }
+
+        // Database
+        private Dictionary<string, GameTextData> database = new Dictionary<string, GameTextData>
     {
         // Null / Placeholder
         {"",
@@ -198,8 +194,8 @@ public class GameTextDatabase
                 {
                     { GameLanguages.English, "{{-user-pokemon-}} transformed into the {{-type-list-}}!" },
                 }
-                ) },     
-                
+                ) },
+
         {"pokemon-choiced",
             new GameTextData(
                 ID: "pokemon-choiced",
@@ -208,7 +204,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} is locked into {{-move-name-}}!" },
                 }
                 ) },
-                
+
         {"pokemon-damage",
             new GameTextData(
                 ID: "pokemon-damage",
@@ -217,7 +213,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-}} was hurt!" },
                 }
                 ) },
-        
+
         {"pokemon-dynamax",
             new GameTextData(
                 ID: "pokemon-dynamax",
@@ -250,7 +246,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} returned to regular size!" },
                 }
                 ) },
-                
+
         {"pokemon-faint",
             new GameTextData(
                 ID: "pokemon-faint",
@@ -259,7 +255,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-}} fainted!" },
                 }
                 ) },
-                
+
         {"pokemon-forcein",
             new GameTextData(
                 ID: "pokemon-forcein",
@@ -268,7 +264,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-}} was dragged out!" },
                 }
                 ) },
-                
+
         {"pokemon-gigantamax",
             new GameTextData(
                 ID: "pokemon-gigantamax",
@@ -277,7 +273,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} gigantamaxed!" },
                 }
                 ) },
-                
+
         {"pokemon-heal",
             new GameTextData(
                 ID: "pokemon-heal",
@@ -294,7 +290,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-poss-}} recovered {{-int-0-}} HP!" },
                 }
                 ) },
-        
+
         {"pokemon-heal-fail",
             new GameTextData(
                 ID: "pokemon-heal-fail",
@@ -359,7 +355,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} can't switch out due to {{-move-name-}}!" },
                 }
                 ) },
-                
+
         {"pokemon-unaffect",
             new GameTextData(
                 ID: "pokemon-unaffect",
@@ -368,7 +364,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-}} was unaffected!" },
                 }
                 ) },
-                
+
         {"pokemon-use-move",
             new GameTextData(
                 ID: "pokemon-use-move",
@@ -388,7 +384,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "The effects of weather were eliminated!" },
                 }
                 ) },
-                
+
         {"ability-anticipation",
             new GameTextData(
                 ID: "ability-anticipation",
@@ -397,7 +393,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} shuddered!" },
                 }
                 ) },
-                
+
         {"ability-aurabreak",
             new GameTextData(
                 ID: "ability-aurabreak",
@@ -406,7 +402,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "The effects of aura abilities is reversed!" },
                 }
                 ) },
-                
+
         {"ability-baddreams",
             new GameTextData(
                 ID: "ability-baddreams",
@@ -415,7 +411,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-}} was hurt due to {{-user-pokemon-poss-}} {{-ability-name-}}!" },
                 }
                 ) },
-                
+
         {"ability-ballfetch",
             new GameTextData(
                 ID: "ability-ballfetch",
@@ -424,7 +420,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} retrieved one {{-item-name-}}!" },
                 }
                 ) },
-                
+
         {"ability-battlebond",
             new GameTextData(
                 ID: "ability-battlebond",
@@ -441,7 +437,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} became {{-user-pokemon-form-}}" },
                 }
                 ) },
-                
+
         {"ability-clearbody",
             new GameTextData(
                 ID: "ability-clearbody",
@@ -450,7 +446,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-poss-}} stats cannot be lowered!" },
                 }
                 ) },
-                
+
         {"ability-colorchange",
             new GameTextData(
                 ID: "ability-colorchange",
@@ -459,7 +455,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-}} turned into the {{-type-name-}}!" },
                 }
                 ) },
-                
+
         {"ability-darkaura",
             new GameTextData(
                 ID: "ability-darkaura",
@@ -468,7 +464,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "All {{-type-list-}} moves are increased in power!" },
                 }
                 ) },
-                
+
         {"ability-disguise",
             new GameTextData(
                 ID: "ability-disguise",
@@ -477,7 +473,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-poss-}} disguise was busted!" },
                 }
                 ) },
-                
+
         {"ability-forewarn",
             new GameTextData(
                 ID: "ability-forewarn",
@@ -486,7 +482,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} was alerted to {{-target-pokemon-poss-}} {{-move-name-}}!" },
                 }
                 ) },
-                
+
         {"ability-frisk",
             new GameTextData(
                 ID: "ability-frisk",
@@ -495,7 +491,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} frisked {{-target-pokemon-}} and found one {{-item-name-}}!" },
                 }
                 ) },
-                
+
         {"ability-gulpmissile",
             new GameTextData(
                 ID: "ability-gulpmissile",
@@ -504,7 +500,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} launched a missile at {{-target-pokemon-}}!" },
                 }
                 ) },
-                
+
         {"ability-harvest",
             new GameTextData(
                 ID: "ability-harvest",
@@ -513,7 +509,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} harvested one {{-item-name-}}!" },
                 }
                 ) },
-                
+
         {"ability-hypercutter",
             new GameTextData(
                 ID: "ability-hypercutter",
@@ -522,7 +518,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-poss-}} {{-stat-types-}} cannot be lowered!" },
                 }
                 ) },
-                
+
         {"ability-illusion",
             new GameTextData(
                 ID: "ability-illusion",
@@ -531,7 +527,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-poss-}} illusion was broken!" },
                 }
                 ) },
-                
+
         {"ability-magicbounce",
             new GameTextData(
                 ID: "ability-magicbounce",
@@ -549,7 +545,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} stole {{-target-pokemon-poss-}} {{-item-name-}}!" },
                 }
                 ) },
-        
+
         {"ability-mirrorarmor-fail",
             new GameTextData(
                 ID: "ability-mirrorarmor-fail",
@@ -558,7 +554,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "There was no target to reflect stat changes back to!" },
                 }
                 ) },
-                
+
         {"ability-moldbreaker",
             new GameTextData(
                 ID: "ability-moldbreaker",
@@ -567,7 +563,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} breaks the mold!" },
                 }
                 ) },
-                
+
         {"ability-mummy",
             new GameTextData(
                 ID: "ability-mummy",
@@ -585,7 +581,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "Abilities have been neutralized!" },
                 }
                 ) },
-                
+
         {"ability-oblivious",
             new GameTextData(
                 ID: "ability-oblivious",
@@ -594,7 +590,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-}} was protected by {{-ability-name-}}!" },
                 }
                 ) },
-                
+
         {"ability-pickup",
             new GameTextData(
                 ID: "ability-pickup",
@@ -603,7 +599,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} picked up one {{-item-name-}}!" },
                 }
                 ) },
-                
+
         {"ability-powerofalchemy",
             new GameTextData(
                 ID: "ability-powerofalchemy",
@@ -612,7 +608,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} swapped abilities with {{-target-pokemon-}}!" },
                 }
                 ) },
-                
+
         {"ability-pressure",
             new GameTextData(
                 ID: "ability-pressure",
@@ -621,7 +617,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} is exerting its Pressure!" },
                 }
                 ) },
-                
+
         {"ability-protean",
             new GameTextData(
                 ID: "ability-protean",
@@ -630,7 +626,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} turned into the {{-type-name-}}!" },
                 }
                 ) },
-                
+
         {"ability-quickdraw",
             new GameTextData(
                 ID: "ability-quickdraw",
@@ -639,7 +635,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} attacked first!" },
                 }
                 ) },
-                
+
         {"ability-ripen",
             new GameTextData(
                 ID: "ability-ripen",
@@ -648,7 +644,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "The berry's effect was doubled!" },
                 }
                 ) },
-                
+
         {"ability-runaway",
             new GameTextData(
                 ID: "ability-runaway",
@@ -657,7 +653,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} escaped using {{-ability-name-}}!" },
                 }
                 ) },
-                
+
         {"ability-shadowtag",
             new GameTextData(
                 ID: "ability-shadowtag",
@@ -666,7 +662,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-}} is unable to flee!" },
                 }
                 ) },
-                
+
         {"ability-slowstart",
             new GameTextData(
                 ID: "ability-slowstart",
@@ -675,7 +671,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} has to get it going!" },
                 }
                 ) },
-                
+
         {"ability-sturdy",
             new GameTextData(
                 ID: "ability-sturdy",
@@ -684,7 +680,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-}} survived the hit!" },
                 }
                 ) },
-                
+
         {"ability-symbiosis",
             new GameTextData(
                 ID: "ability-symbiosis",
@@ -692,8 +688,8 @@ public class GameTextDatabase
                 {
                     { GameLanguages.English, "{{-user-pokemon-}} passed one {{-item-name-}} to {{-target-pokemon-}}!" },
                 }
-                ) },        
-                
+                ) },
+
         {"ability-teravolt",
             new GameTextData(
                 ID: "ability-teravolt",
@@ -702,7 +698,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} radiates a bursting aura!" },
                 }
                 ) },
-                
+
         {"ability-trace",
             new GameTextData(
                 ID: "ability-trace",
@@ -711,7 +707,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} traced {{-target-pokemon-poss-}} ability!" },
                 }
                 ) },
-                
+
         {"ability-truant",
             new GameTextData(
                 ID: "ability-truant",
@@ -720,7 +716,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} is loafing around!" },
                 }
                 ) },
-                
+
         {"ability-turboblaze",
             new GameTextData(
                 ID: "ability-turboblaze",
@@ -729,7 +725,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} radiates a blazing aura!" },
                 }
                 ) },
-                
+
         {"ability-wanderingspirit",
             new GameTextData(
                 ID: "ability-wanderingspirit",
@@ -768,7 +764,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} consumed its {{-item-name-}}!" },
                 }
                 ) },
-                
+
         {"item-focusband",
             new GameTextData(
                 ID: "item-focusband",
@@ -786,7 +782,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} hung onto its {{-item-name-}}!" },
                 }
                 ) },
-                
+
         {"item-lifeorb",
             new GameTextData(
                 ID: "item-lifeorb",
@@ -795,7 +791,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} was hurt by its {{-item-name-}}!" },
                 }
                 ) },
-                
+
         {"item-quickclaw",
             new GameTextData(
                 ID: "item-quickclaw",
@@ -913,7 +909,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} has no useable moves!" },
                 }
                 ) },
-                
+
         {"move-absorb",
             new GameTextData(
                 ID: "move-absorb",
@@ -948,7 +944,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-}} recovered HP with its veil of water!" },
                 }
                 ) },
-                
+
         {"move-auroraveil",
             new GameTextData(
                 ID: "move-auroraveil",
@@ -957,7 +953,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-move-name-}} will reduce damage taken for {{-target-team-}}!" },
                 }
                 ) },
-                
+
         {"move-burnup",
             new GameTextData(
                 ID: "move-burnup",
@@ -974,7 +970,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-}} lost every one of its types!" },
                 }
                 ) },
-                
+
         {"move-coreenforcer",
             new GameTextData(
                 ID: "move-coreenforcer",
@@ -992,7 +988,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-poss-}} ability couldn't be suppressed!" },
                 }
                 ) },
-                
+
         {"move-corrosivegas",
             new GameTextData(
                 ID: "move-corrosivegas",
@@ -1001,7 +997,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-poss-}} {{-item-name-}} was burned away!" },
                 }
                 ) },
-                
+
         {"move-covet",
             new GameTextData(
                 ID: "move-covet",
@@ -1010,7 +1006,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} stole {{-target-pokemon-poss-}} {{-item-name-}}!" },
                 }
                 ) },
-                
+
         {"move-doubleedge",
             new GameTextData(
                 ID: "move-doubleedge",
@@ -1019,7 +1015,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} is damaged by recoil!" },
                 }
                 ) },
-                
+
         {"move-endure",
             new GameTextData(
                 ID: "move-endure",
@@ -1036,7 +1032,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-}} endured the hit!" },
                 }
                 ) },
-                
+
         {"move-feint",
             new GameTextData(
                 ID: "move-feint-protect-default",
@@ -1053,7 +1049,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-team-poss-}} protection was lifted!" },
                 }
                 ) },
-                
+
         {"move-forestscurse",
             new GameTextData(
                 ID: "move-forestscurse",
@@ -1120,7 +1116,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} shared its guard with the target!" },
                 }
                 ) },
-        
+
         {"move-haze",
             new GameTextData(
                 ID: "move-haze",
@@ -1162,7 +1158,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-}} absorbed nutrients with its roots!" },
                 }
                 ) },
-                
+
         {"move-knockoff",
             new GameTextData(
                 ID: "move-knockoff",
@@ -1171,7 +1167,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} knocked off {{-target-pokemon-poss-}} {{-item-name-}}!" },
                 }
                 ) },
-                
+
         {"move-lightscreen",
             new GameTextData(
                 ID: "move-lightscreen",
@@ -1205,7 +1201,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} is already taking aim at {{-target-pokemon-}}!" },
                 }
                 ) },
-                
+
         {"move-luckychant",
             new GameTextData(
                 ID: "move-luckychant",
@@ -1230,7 +1226,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-team-}} is no longer shielded by {{-move-name-}}!" },
                 }
                 ) },
-                
+
         {"move-magiccoat",
             new GameTextData(
                 ID: "move-magiccoat",
@@ -1239,7 +1235,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-move-name-}} was reflected back!" },
                 }
                 ) },
-                
+
         {"move-magnitude",
             new GameTextData(
                 ID: "move-magnitude",
@@ -1248,7 +1244,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-move-name-}} {{-int-0-}}!" },
                 }
                 ) },
-                
+
         {"move-matblock",
             new GameTextData(
                 ID: "move-matblock",
@@ -1265,7 +1261,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-team-}} was protected against the attack!" },
                 }
                 ) },
-        
+
         {"move-mist",
             new GameTextData(
                 ID: "move-mist",
@@ -1298,7 +1294,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-team-}} is no longer shrouded in mist!" },
                 }
                 ) },
-                
+
         {"move-poltergeist",
             new GameTextData(
                 ID: "move-poltergeist",
@@ -1325,7 +1321,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} switched all changes to its {{-stat-types-}} with the target!" },
                 }
                 ) },
-                
+
         {"move-protect",
             new GameTextData(
                 ID: "move-protect",
@@ -1384,7 +1380,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-team-}}'s {{-move-name-}} wore off!" },
                 }
                 ) },
-        
+
         {"move-refresh-fail",
             new GameTextData(
                 ID: "move-refresh-fail",
@@ -1393,7 +1389,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-move-name-}} couldn't cure anything for {{-target-pokemon-}}!" },
                 }
                 ) },
-        
+
         {"move-roleplay",
             new GameTextData(
                 ID: "move-roleplay",
@@ -1402,7 +1398,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-user-pokemon-}} copied {{-target-pokemon-poss-}} {{-ability-name-}}!" },
                 }
                 ) },
-                
+
         {"move-safeguard",
             new GameTextData(
                 ID: "move-safeguard",
@@ -1486,7 +1482,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "The spikes around {{-target-team-}}'s feet disappeared!" },
                 }
                 ) },
-                
+
         {"move-spikyshield",
             new GameTextData(
                 ID: "move-spikyshield",
@@ -1528,7 +1524,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "The pointed stones around {{-target-team-}} disappeared!" },
                 }
                 ) },
-                
+
         {"move-steelroller",
             new GameTextData(
                 ID: "move-steelroller",
@@ -1587,7 +1583,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "The poisonous spikes around {{-target-team-}}'s feet disappeared!" },
                 }
                 ) },
-                
+
         {"move-whirlwind",
             new GameTextData(
                 ID: "move-whirlwind",
@@ -1629,7 +1625,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-}} couldn't fully protect itself!" },
                 }
                 ) },
-                
+
         {"gmax-wildfire",
             new GameTextData(
                 ID: "gmax-wildfire",
@@ -1654,7 +1650,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-team-}} was hurt by {{-team-status-name-}}!" },
                 }
                 ) },
-                
+
         {"move-worryseed-fail",
             new GameTextData(
                 ID: "move-worryseed-fail",
@@ -1673,7 +1669,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-}} moves became electrified!" },
                 }
                 ) },
-        
+
         {"status-flinch",
             new GameTextData(
                 ID: "status-flinch",
@@ -1690,7 +1686,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-}} blinked!" },
                 }
                 ) },
-                
+
         {"status-identification",
             new GameTextData(
                 ID: "status-identification",
@@ -1707,7 +1703,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-}} was already identified!" },
                 }
                 ) },
-                
+
         {"status-imprison",
             new GameTextData(
                 ID: "status-imprison",
@@ -1732,7 +1728,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-move-name-}} is sealed!" },
                 }
                 ) },
-                
+
         {"status-infatuation",
             new GameTextData(
                 ID: "status-infatuation",
@@ -1781,7 +1777,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-}} is already infatuated with {{-user-pokemon-}}!" },
                 }
                 ) },
-                
+
         {"status-perishsong",
             new GameTextData(
                 ID: "status-perishsong",
@@ -1798,7 +1794,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-poss-}} Perish Song count fell to {{-int-0-}}!" },
                 }
                 ) },
-                
+
         {"status-tarshot",
             new GameTextData(
                 ID: "status-tarshot",
@@ -1807,7 +1803,7 @@ public class GameTextDatabase
                     { GameLanguages.English, "{{-target-pokemon-}} became weaker to Fire-type moves!" },
                 }
                 ) },
-                
+
         {"status-yawn",
             new GameTextData(
                 ID: "status-yawn",
@@ -4605,375 +4601,375 @@ public class GameTextDatabase
 
     };
 
-    // Methods
-    public GameTextData GetGameTextData(string ID)
-    {
-        if (database.ContainsKey(ID))
+        // Methods
+        public GameTextData GetGameTextData(string ID)
         {
-            return database[ID];
-        }
-        Debug.LogWarning("Could not find move with ID: " + ID);
-        return database[""];
-    }
-
-    public static string ConvertToString(
-        string baseString,
-        int playerID = 0,
-        int viewPos = 0,
-        PBS.Main.Pokemon.Pokemon pokemon = null,
-        PBS.Main.Pokemon.Pokemon userPokemon = null,
-        PBS.Main.Pokemon.Pokemon targetPokemon = null,
-        PBS.Main.Pokemon.Pokemon[] pokemonList = null,
-        Trainer trainer = null,
-        Team targetTeam = null,
-        PokemonStats[] statList = null,
-
-        string typeID = null,
-        string moveID = null,
-        string abilityID = null,
-        string itemID = null,
-        string statusID = null,
-        string teamStatusID = null,
-        string battleStatusID = null,
-
-        string[] moveIDs = null,
-        string[] typeIDs = null,
-
-        Battle battleModel = null,
-
-        List<int> intArgs = null
-        )
-    {
-        // set player references
-        Team playerTeam = null;
-        Trainer playerTrainer = null;
-        if (battleModel != null)
-        {
-            playerTeam = battleModel.GetTeamFromPosition(viewPos);
-            playerTrainer = battleModel.GetTrainerWithID(playerID);
+            if (database.ContainsKey(ID))
+            {
+                return database[ID];
+            }
+            Debug.LogWarning("Could not find move with ID: " + ID);
+            return database[""];
         }
 
-        // set core variables
-        string newString = baseString;
-        TypeData typeData = (typeID == null) ? null : ElementalTypes.instance.GetTypeData(typeID);
-        MoveData moveData = (moveID == null) ? null : Moves.instance.GetMoveData(moveID);
-        AbilityData abilityData = (abilityID == null) ? null : Abilities.instance.GetAbilityData(abilityID);
-        ItemData itemData = (itemID == null) ? null : Items.instance.GetItemData(itemID);
-        StatusPKData statusData = (statusID == null) ? null 
-            : StatusPKDatabase.instance.GetStatusData(statusID);
-        StatusTEData teamStatusData = (teamStatusID == null) ? null
-            : StatusTEDatabase.instance.GetStatusData(teamStatusID);
-        StatusBTLData battleStatusData = (battleStatusID == null) ? null
-            : StatusBTLDatabase.instance.GetStatusData(battleStatusID);
+        public static string ConvertToString(
+            string baseString,
+            int playerID = 0,
+            int viewPos = 0,
+            Main.Pokemon.Pokemon pokemon = null,
+            Main.Pokemon.Pokemon userPokemon = null,
+            Main.Pokemon.Pokemon targetPokemon = null,
+            Main.Pokemon.Pokemon[] pokemonList = null,
+            Trainer trainer = null,
+            Team targetTeam = null,
+            PokemonStats[] statList = null,
 
-        // swapping substrings
-        intArgs = (intArgs == null) ? new List<int>() : intArgs;
-        for (int i = 0; i < intArgs.Count; i++)
+            string typeID = null,
+            string moveID = null,
+            string abilityID = null,
+            string itemID = null,
+            string statusID = null,
+            string teamStatusID = null,
+            string battleStatusID = null,
+
+            string[] moveIDs = null,
+            string[] typeIDs = null,
+
+            global::Battle battleModel = null,
+
+            List<int> intArgs = null
+            )
         {
-            string partToReplace = "{{-int-" + i + "-}}";
-            newString = newString.Replace(partToReplace, intArgs[i].ToString());
-        }
-
-        // Replacing
-
-        // player
-        newString = newString.Replace("{{-player-name-}}", PlayerSave.instance.name);
-
-        if (pokemon != null)
-        {
-            newString = newString.Replace("{{-pokemon-}}", pokemon.nickname);
-            newString = newString.Replace("{{-pokemon-poss-}}", pokemon.nickname
-                + ((pokemon.nickname.EndsWith("s")) ? "'" : "'s")
-                );
-        }
-        if (userPokemon != null)
-        {
-            string name = userPokemon.nickname;
-            string prefix = "";
+            // set player references
+            Team playerTeam = null;
+            Trainer playerTrainer = null;
             if (battleModel != null)
             {
-                Trainer ownerTrainer = battleModel.GetPokemonOwner(userPokemon);
-                Team team = battleModel.GetTeam(userPokemon);
+                playerTeam = battleModel.GetTeamFromPosition(viewPos);
+                playerTrainer = battleModel.GetTrainerWithID(playerID);
+            }
 
-                if (playerTeam != team)
+            // set core variables
+            string newString = baseString;
+            TypeData typeData = typeID == null ? null : ElementalTypes.instance.GetTypeData(typeID);
+            MoveData moveData = moveID == null ? null : Moves.instance.GetMoveData(moveID);
+            AbilityData abilityData = abilityID == null ? null : Abilities.instance.GetAbilityData(abilityID);
+            ItemData itemData = itemID == null ? null : Items.instance.GetItemData(itemID);
+            StatusPKData statusData = statusID == null ? null
+                : PokemonStatuses.instance.GetStatusData(statusID);
+            StatusTEData teamStatusData = teamStatusID == null ? null
+                : TeamStatuses.instance.GetStatusData(teamStatusID);
+            StatusBTLData battleStatusData = battleStatusID == null ? null
+                : BattleStatuses.instance.GetStatusData(battleStatusID);
+
+            // swapping substrings
+            intArgs = intArgs == null ? new List<int>() : intArgs;
+            for (int i = 0; i < intArgs.Count; i++)
+            {
+                string partToReplace = "{{-int-" + i + "-}}";
+                newString = newString.Replace(partToReplace, intArgs[i].ToString());
+            }
+
+            // Replacing
+
+            // player
+            newString = newString.Replace("{{-player-name-}}", PlayerSave.instance.name);
+
+            if (pokemon != null)
+            {
+                newString = newString.Replace("{{-pokemon-}}", pokemon.nickname);
+                newString = newString.Replace("{{-pokemon-poss-}}", pokemon.nickname
+                    + (pokemon.nickname.EndsWith("s") ? "'" : "'s")
+                    );
+            }
+            if (userPokemon != null)
+            {
+                string name = userPokemon.nickname;
+                string prefix = "";
+                if (battleModel != null)
                 {
-                    if (battleModel.battleSettings.isWildBattle)
+                    Trainer ownerTrainer = battleModel.GetPokemonOwner(userPokemon);
+                    Team team = battleModel.GetTeam(userPokemon);
+
+                    if (playerTeam != team)
                     {
-                        prefix = "The wild ";
+                        if (battleModel.battleSettings.isWildBattle)
+                        {
+                            prefix = "The wild ";
+                        }
+                        else
+                        {
+                            prefix = "The foe's ";
+                        }
+                    }
+                    else if (playerTrainer != ownerTrainer)
+                    {
+                        prefix = "The ally ";
                     }
                     else
                     {
-                        prefix = "The foe's ";
+                        prefix = "";
                     }
                 }
-                else if (playerTrainer != ownerTrainer)
-                {
-                    prefix = "The ally ";
-                }
-                else
-                {
-                    prefix = "";
-                }
-            }
-            prefix = newString.StartsWith("{{-user-pokemon-") ? prefix : prefix.ToLower();
+                prefix = newString.StartsWith("{{-user-pokemon-") ? prefix : prefix.ToLower();
 
-            newString = newString.Replace("{{-user-pokemon-}}", prefix + name);
-            newString = newString.Replace("{{-user-pokemon-form-}}", userPokemon.data.formName);
-            newString = newString.Replace("{{-user-pokemon-poss-}}", prefix + (name
-                + (name.EndsWith("s") ? "'" : "'s"))
-                );
-        }
-        if (targetPokemon != null)
-        {
-            string name = targetPokemon.nickname;
-            string prefix = "";
-            if (battleModel != null)
+                newString = newString.Replace("{{-user-pokemon-}}", prefix + name);
+                newString = newString.Replace("{{-user-pokemon-form-}}", userPokemon.data.formName);
+                newString = newString.Replace("{{-user-pokemon-poss-}}", prefix + name
+                    + (name.EndsWith("s") ? "'" : "'s")
+                    );
+            }
+            if (targetPokemon != null)
             {
-                Trainer ownerTrainer = battleModel.GetPokemonOwner(targetPokemon);
-                Team team = battleModel.GetTeam(targetPokemon);
-                if (playerTeam != team)
+                string name = targetPokemon.nickname;
+                string prefix = "";
+                if (battleModel != null)
                 {
-                    if (battleModel.battleSettings.isWildBattle)
+                    Trainer ownerTrainer = battleModel.GetPokemonOwner(targetPokemon);
+                    Team team = battleModel.GetTeam(targetPokemon);
+                    if (playerTeam != team)
                     {
-                        prefix = "The wild ";
+                        if (battleModel.battleSettings.isWildBattle)
+                        {
+                            prefix = "The wild ";
+                        }
+                        else
+                        {
+                            prefix = "The foe's ";
+                        }
+                    }
+                    else if (playerTrainer != ownerTrainer)
+                    {
+                        prefix = "The ally";
                     }
                     else
                     {
-                        prefix = "The foe's ";
+                        prefix = "";
                     }
                 }
-                else if (playerTrainer != ownerTrainer)
+                prefix = newString.StartsWith("{{-target-pokemon-") ? prefix : prefix.ToLower();
+
+                newString = newString.Replace("{{-target-pokemon-}}", prefix + name);
+                newString = newString.Replace("{{-target-pokemon-poss-}}", prefix + name
+                    + (name.EndsWith("s") ? "'" : "'s")
+                    );
+            }
+            if (pokemonList != null)
+            {
+                string pokemonNameList = GetPokemonNames(new List<Main.Pokemon.Pokemon>(pokemonList));
+                newString = newString.Replace("{{-pokemon-list-}}", pokemonNameList);
+            }
+            if (trainer != null)
+            {
+                string trainerName = trainer.name;
+                string trainerNamePoss = trainerName + (trainerName.EndsWith("s") ? "'" : "'s");
+                if (trainer == playerTrainer)
                 {
-                    prefix = "The ally";
+                    trainerName = "You";
+                    trainerNamePoss = "Your";
+                }
+                newString = newString.Replace("{{-trainer-}}", trainerName);
+                newString = newString.Replace("{{-trainer-poss-}}", trainerNamePoss);
+                if (trainer == playerTrainer)
+                {
+                    newString = newString.Replace("{{-trainer-LC-}}", trainerName.ToLower());
+                    newString = newString.Replace("{{-trainer-poss-LC-}}", trainerNamePoss.ToLower());
                 }
                 else
                 {
-                    prefix = "";
+                    newString = newString.Replace("{{-trainer-LC-}}", trainerName);
+                    newString = newString.Replace("{{-trainer-poss-LC-}}", trainerNamePoss);
                 }
             }
-            prefix = newString.StartsWith("{{-target-pokemon-") ? prefix : prefix.ToLower();
-
-            newString = newString.Replace("{{-target-pokemon-}}", prefix + name);
-            newString = newString.Replace("{{-target-pokemon-poss-}}", prefix + name
-                + (name.EndsWith("s") ? "'" : "'s")
-                );
-        }
-        if (pokemonList != null)
-        {
-            string pokemonNameList = GetPokemonNames(new List<PBS.Main.Pokemon.Pokemon>(pokemonList));
-            newString = newString.Replace("{{-pokemon-list-}}", pokemonNameList);
-        }
-        if (trainer != null)
-        {
-            string trainerName = trainer.name;
-            string trainerNamePoss = trainerName + (trainerName.EndsWith("s") ? "'" : "'s");
-            if (trainer == playerTrainer)
+            if (targetTeam != null)
             {
-                trainerName = "You";
-                trainerNamePoss = "Your";
+                string yourTeamStr = targetTeam == playerTeam ? "Your team"
+                        : "The opposing team";
+                yourTeamStr = newString.StartsWith("{{-target-team-") ? yourTeamStr : yourTeamStr.ToLower();
+                newString = newString.Replace("{{-target-team-}}", yourTeamStr);
+                newString = newString.Replace("{{-target-team-poss-}}", yourTeamStr
+                    + (yourTeamStr.EndsWith("s") ? "'" : "'s")
+                    );
             }
-            newString = newString.Replace("{{-trainer-}}", trainerName);
-            newString = newString.Replace("{{-trainer-poss-}}", trainerNamePoss);
-            if (trainer == playerTrainer)
+            if (statList != null)
             {
-                newString = newString.Replace("{{-trainer-LC-}}", trainerName.ToLower());
-                newString = newString.Replace("{{-trainer-poss-LC-}}", trainerNamePoss.ToLower());
+                newString = newString.Replace("{{-stat-types-}}", ConvertStatsToString(statList));
+                newString = newString.Replace("{{-stat-types-was-}}", statList.Length == 1 ? "was" : "were");
+                newString = newString.Replace("{{-stat-types-LC-}}", ConvertStatsToString(statList, false));
+            }
+            if (typeData != null)
+            {
+                newString = newString.Replace("{{-type-name-}}", typeData.typeName + "-type");
+            }
+            if (typeIDs != null)
+            {
+                newString = newString.Replace("{{-type-list-}}", ConvertTypesToString(typeIDs));
+            }
+            if (moveData != null)
+            {
+                newString = newString.Replace("{{-move-name-}}", moveData.moveName);
+            }
+            if (moveIDs != null)
+            {
+                for (int i = 0; i < moveIDs.Length; i++)
+                {
+                    MoveData moveXData = Moves.instance.GetMoveData(moveIDs[i]);
+                    string partToReplace = "{{-move-name-" + i + "-}}";
+                    newString = newString.Replace(partToReplace, moveXData.moveName);
+                }
+            }
+            if (abilityData != null)
+            {
+                newString = newString.Replace("{{-ability-name-}}", abilityData.abilityName);
+            }
+            if (itemData != null)
+            {
+                newString = newString.Replace("{{-item-name-}}", itemData.itemName);
+            }
+
+            if (statusData != null)
+            {
+                newString = newString.Replace("{{-status-name-}}", statusData.conditionName);
+            }
+
+            if (teamStatusData != null)
+            {
+                newString = newString.Replace("{{-team-status-name-}}", teamStatusData.conditionName);
+            }
+
+            if (battleStatusData != null)
+            {
+                newString = newString.Replace("{{-battle-status-name-}}", battleStatusData.conditionName);
+            }
+
+            return newString;
+        }
+
+        public static string GetPokemonName(Main.Pokemon.Pokemon pokemon)
+        {
+            return GetPokemonNames(new List<Main.Pokemon.Pokemon> { pokemon });
+        }
+        public static string GetPokemonNames(List<Main.Pokemon.Pokemon> pokemonList)
+        {
+            string names = "";
+            if (pokemonList.Count == 1)
+            {
+                return pokemonList[0].nickname;
+            }
+            else if (pokemonList.Count == 2)
+            {
+                return pokemonList[0].nickname + " and " + pokemonList[1].nickname;
             }
             else
             {
-                newString = newString.Replace("{{-trainer-LC-}}", trainerName);
-                newString = newString.Replace("{{-trainer-poss-LC-}}", trainerNamePoss);
+                for (int i = 0; i < pokemonList.Count; i++)
+                {
+                    names += i == pokemonList.Count - 1 ?
+                        "and " + pokemonList[i].nickname :
+                        pokemonList[i].nickname + ", ";
+                }
             }
+            return names;
         }
-        if (targetTeam != null)
+
+        public static string ConvertTypesToString(string[] typeIDs)
         {
-            string yourTeamStr = (targetTeam == playerTeam) ? "Your team"
-                    : "The opposing team";
-            yourTeamStr = newString.StartsWith("{{-target-team-") ? yourTeamStr : yourTeamStr.ToLower();
-            newString = newString.Replace("{{-target-team-}}", yourTeamStr);
-            newString = newString.Replace("{{-target-team-poss-}}", yourTeamStr
-                + (yourTeamStr.EndsWith("s") ? "'" : "'s")
-                );
-        }
-        if (statList != null)
-        {
-            newString = newString.Replace("{{-stat-types-}}", ConvertStatsToString(statList));
-            newString = newString.Replace("{{-stat-types-was-}}", (statList.Length == 1)? "was" : "were");
-            newString = newString.Replace("{{-stat-types-LC-}}", ConvertStatsToString(statList, false));
-        }
-        if (typeData != null)
-        {
-            newString = newString.Replace("{{-type-name-}}", typeData.typeName + "-type");
-        }
-        if (typeIDs != null)
-        {
-            newString = newString.Replace("{{-type-list-}}", ConvertTypesToString(typeIDs));
-        }
-        if (moveData != null)
-        {
-            newString = newString.Replace("{{-move-name-}}", moveData.moveName);
-        }
-        if (moveIDs != null)
-        {
-            for (int i = 0; i < moveIDs.Length; i++)
+            string names = "";
+            if (typeIDs.Length == 1)
             {
-                MoveData moveXData = Moves.instance.GetMoveData(moveIDs[i]);
-                string partToReplace = "{{-move-name-" + i + "-}}";
-                newString = newString.Replace(partToReplace, moveXData.moveName);
+                return ElementalTypes.instance.GetTypeData(typeIDs[0]).typeName + "-type";
             }
-        }
-        if (abilityData != null)
-        {
-            newString = newString.Replace("{{-ability-name-}}", abilityData.abilityName);
-        }
-        if (itemData != null)
-        {
-            newString = newString.Replace("{{-item-name-}}", itemData.itemName);
-        }
-
-        if (statusData != null)
-        {
-            newString = newString.Replace("{{-status-name-}}", statusData.conditionName);
-        }
-
-        if (teamStatusData != null)
-        {
-            newString = newString.Replace("{{-team-status-name-}}", teamStatusData.conditionName);
-        }
-
-        if (battleStatusData != null)
-        {
-            newString = newString.Replace("{{-battle-status-name-}}", battleStatusData.conditionName);
-        }
-        
-        return newString;
-    }
-
-    public static string GetPokemonName(PBS.Main.Pokemon.Pokemon pokemon)
-    {
-        return GetPokemonNames(new List<PBS.Main.Pokemon.Pokemon> { pokemon });
-    }
-    public static string GetPokemonNames(List<PBS.Main.Pokemon.Pokemon> pokemonList)
-    {
-        string names = "";
-        if (pokemonList.Count == 1)
-        {
-            return pokemonList[0].nickname;
-        }
-        else if (pokemonList.Count == 2)
-        {
-            return pokemonList[0].nickname + " and " + pokemonList[1].nickname;
-        }
-        else
-        {
-            for (int i = 0; i < pokemonList.Count; i++)
+            else if (typeIDs.Length == 2)
             {
-                names += (i == pokemonList.Count - 1) ?
-                    "and " + pokemonList[i].nickname :
-                    pokemonList[i].nickname + ", ";
+                return ElementalTypes.instance.GetTypeData(typeIDs[0]).typeName
+                    + "- and "
+                    + ElementalTypes.instance.GetTypeData(typeIDs[1]).typeName + "-type";
             }
-        }
-        return names;
-    }
-
-    public static string ConvertTypesToString(string[] typeIDs)
-    {
-        string names = "";
-        if (typeIDs.Length == 1)
-        {
-            return ElementalTypes.instance.GetTypeData(typeIDs[0]).typeName + "-type";
-        }
-        else if (typeIDs.Length == 2)
-        {
-            return ElementalTypes.instance.GetTypeData(typeIDs[0]).typeName 
-                + "- and " 
-                + ElementalTypes.instance.GetTypeData(typeIDs[1]).typeName + "-type";
-        }
-        else
-        {
-            for (int i = 0; i < typeIDs.Length; i++)
+            else
             {
-                names += (i == typeIDs.Length - 1) ?
-                    "and " + ElementalTypes.instance.GetTypeData(typeIDs[i]).typeName + "-type" :
-                    ElementalTypes.instance.GetTypeData(typeIDs[i]).typeName + "-, ";
+                for (int i = 0; i < typeIDs.Length; i++)
+                {
+                    names += i == typeIDs.Length - 1 ?
+                        "and " + ElementalTypes.instance.GetTypeData(typeIDs[i]).typeName + "-type" :
+                        ElementalTypes.instance.GetTypeData(typeIDs[i]).typeName + "-, ";
+                }
             }
-        }
-        return names;
-    }
-
-    public static PokemonGender ConvertToGender(string genderString)
-    {
-        return (genderString == "m") ? PokemonGender.Male
-            : (genderString == "f") ? PokemonGender.Female
-            : PokemonGender.Genderless;
-    }
-    public static string ConvertGenderToString(PokemonGender gender)
-    {
-        return (gender == PokemonGender.Male) ? "m"
-            : (gender == PokemonGender.Female) ? "f"
-            : (gender == PokemonGender.Genderless)? "g"
-            : null;
-    }
-
-    public static string ConvertStatToString(PokemonStats stat, bool capitalize = true)
-    {
-        GameTextData textData = (stat == PokemonStats.Attack) ? instance.GetGameTextData("stat-attack")
-            : (stat == PokemonStats.Defense) ? instance.GetGameTextData("stat-defense")
-            : (stat == PokemonStats.SpecialAttack) ? instance.GetGameTextData("stat-special-attack")
-            : (stat == PokemonStats.SpecialDefense) ? instance.GetGameTextData("stat-special-defense")
-            : (stat == PokemonStats.Speed) ? instance.GetGameTextData("stat-speed")
-            : (stat == PokemonStats.Accuracy) ? instance.GetGameTextData("stat-accuracy")
-            : (stat == PokemonStats.Evasion) ? instance.GetGameTextData("stat-evasion")
-            : instance.GetGameTextData("stat-hp");
-        return textData.GetText();
-    }
-    private static string ConvertStatsToString(PokemonStats[] statList, bool capitalize = true)
-    {
-        if (statList.Length == 7)
-        {
-            string s = "Stats";
-            s = (capitalize) ? s : s.ToLower();
-            return s;
+            return names;
         }
 
-        string text = "";
-        if (statList.Length == 1)
+        public static PokemonGender ConvertToGender(string genderString)
         {
-            return ConvertStatToString(statList[0], capitalize);
+            return genderString == "m" ? PokemonGender.Male
+                : genderString == "f" ? PokemonGender.Female
+                : PokemonGender.Genderless;
         }
-        else if (statList.Length == 2)
+        public static string ConvertGenderToString(PokemonGender gender)
         {
-            return ConvertStatToString(statList[0], capitalize) 
-                + " and " 
-                + ConvertStatToString(statList[1], capitalize);
+            return gender == PokemonGender.Male ? "m"
+                : gender == PokemonGender.Female ? "f"
+                : gender == PokemonGender.Genderless ? "g"
+                : null;
         }
-        else
+
+        public static string ConvertStatToString(PokemonStats stat, bool capitalize = true)
         {
-            for (int i = 0; i < statList.Length; i++)
+            GameTextData textData = stat == PokemonStats.Attack ? instance.GetGameTextData("stat-attack")
+                : stat == PokemonStats.Defense ? instance.GetGameTextData("stat-defense")
+                : stat == PokemonStats.SpecialAttack ? instance.GetGameTextData("stat-special-attack")
+                : stat == PokemonStats.SpecialDefense ? instance.GetGameTextData("stat-special-defense")
+                : stat == PokemonStats.Speed ? instance.GetGameTextData("stat-speed")
+                : stat == PokemonStats.Accuracy ? instance.GetGameTextData("stat-accuracy")
+                : stat == PokemonStats.Evasion ? instance.GetGameTextData("stat-evasion")
+                : instance.GetGameTextData("stat-hp");
+            return textData.GetText();
+        }
+        private static string ConvertStatsToString(PokemonStats[] statList, bool capitalize = true)
+        {
+            if (statList.Length == 7)
             {
-                text += (i == statList.Length - 1) ? "and " + ConvertStatToString(statList[i], capitalize) 
-                    : ConvertStatToString(statList[i], capitalize) + ", ";
+                string s = "Stats";
+                s = capitalize ? s : s.ToLower();
+                return s;
             }
-        }
-        return text;
-    }
-    public static PokemonStats GetStatFromString(string statString)
-    {
-        statString = statString.ToLower();
-        PokemonStats statType = (statString == "hp") ? PokemonStats.HitPoints
-            : (statString == "atk") ? PokemonStats.Attack
-            : (statString == "def") ? PokemonStats.Defense
-            : (statString == "spa") ? PokemonStats.SpecialAttack
-            : (statString == "spd") ? PokemonStats.SpecialDefense
-            : (statString == "spe") ? PokemonStats.Speed
-            : (statString == "acc") ? PokemonStats.Accuracy
-            : (statString == "eva") ? PokemonStats.Evasion
-            : PokemonStats.None;
 
-        // random stat
-        if (statString == "rnd")
+            string text = "";
+            if (statList.Length == 1)
+            {
+                return ConvertStatToString(statList[0], capitalize);
+            }
+            else if (statList.Length == 2)
+            {
+                return ConvertStatToString(statList[0], capitalize)
+                    + " and "
+                    + ConvertStatToString(statList[1], capitalize);
+            }
+            else
+            {
+                for (int i = 0; i < statList.Length; i++)
+                {
+                    text += i == statList.Length - 1 ? "and " + ConvertStatToString(statList[i], capitalize)
+                        : ConvertStatToString(statList[i], capitalize) + ", ";
+                }
+            }
+            return text;
+        }
+        public static PokemonStats GetStatFromString(string statString)
         {
-            List<PokemonStats> rndList = new List<PokemonStats>
+            statString = statString.ToLower();
+            PokemonStats statType = statString == "hp" ? PokemonStats.HitPoints
+                : statString == "atk" ? PokemonStats.Attack
+                : statString == "def" ? PokemonStats.Defense
+                : statString == "spa" ? PokemonStats.SpecialAttack
+                : statString == "spd" ? PokemonStats.SpecialDefense
+                : statString == "spe" ? PokemonStats.Speed
+                : statString == "acc" ? PokemonStats.Accuracy
+                : statString == "eva" ? PokemonStats.Evasion
+                : PokemonStats.None;
+
+            // random stat
+            if (statString == "rnd")
+            {
+                List<PokemonStats> rndList = new List<PokemonStats>
             {
                 PokemonStats.Attack,
                 PokemonStats.Defense,
@@ -4983,20 +4979,20 @@ public class GameTextDatabase
                 PokemonStats.Accuracy,
                 PokemonStats.Evasion
             };
-            return rndList[Random.Range(0, rndList.Count)];
-        }
+                return rndList[Random.Range(0, rndList.Count)];
+            }
 
-        return statType;
-    }
-    public static List<PokemonStats> GetStatsFromList(string[] statStrings)
-    {
-        // check if "all" stats
-        if (statStrings.Length > 0)
+            return statType;
+        }
+        public static List<PokemonStats> GetStatsFromList(string[] statStrings)
         {
-            List<string> statStringList = new List<string>(statStrings); 
-            if (statStringList.Contains("ALL") || statStringList.Contains("all"))
+            // check if "all" stats
+            if (statStrings.Length > 0)
             {
-                return new List<PokemonStats>
+                List<string> statStringList = new List<string>(statStrings);
+                if (statStringList.Contains("ALL") || statStringList.Contains("all"))
+                {
+                    return new List<PokemonStats>
                 {
                     PokemonStats.Attack,
                     PokemonStats.Defense,
@@ -5006,35 +5002,36 @@ public class GameTextDatabase
                     PokemonStats.Accuracy,
                     PokemonStats.Evasion
                 };
+                }
             }
-        }
 
-        List<PokemonStats> statList = new List<PokemonStats>();
-        for (int i = 0; i < statStrings.Length; i++)
-        {
-            PokemonStats stat = GetStatFromString(statStrings[i]);
-            if (stat != PokemonStats.None)
+            List<PokemonStats> statList = new List<PokemonStats>();
+            for (int i = 0; i < statStrings.Length; i++)
             {
-                statList.Add(stat);
+                PokemonStats stat = GetStatFromString(statStrings[i]);
+                if (stat != PokemonStats.None)
+                {
+                    statList.Add(stat);
+                }
             }
+            return statList;
         }
-        return statList;
-    }
 
-    public static MoveTargetType ConvertToMoveTargetType(string targetString)
-    {
-        return (targetString == "self") ? MoveTargetType.Self
-            : (targetString == "any") ? MoveTargetType.Any
-            : (targetString == "adjacent") ? MoveTargetType.Adjacent
-            : (targetString == "adjacentopponent") ? MoveTargetType.AdjacentOpponent
-            : (targetString == "adjacentally") ? MoveTargetType.AdjacentAlly
-            : (targetString == "selforadjacentally") ? MoveTargetType.SelfOrAdjacentAlly
-            : (targetString == "alladjacent") ? MoveTargetType.AllAdjacent
-            : (targetString == "alladjacentopponents") ? MoveTargetType.AllAdjacentOpponents
-            : (targetString == "teamally") ? MoveTargetType.TeamAlly
-            : (targetString == "teamopponent") ? MoveTargetType.TeamOpponent
-            : (targetString == "battlefield") ? MoveTargetType.Battlefield
-            : MoveTargetType.Self;
-    }
+        public static MoveTargetType ConvertToMoveTargetType(string targetString)
+        {
+            return targetString == "self" ? MoveTargetType.Self
+                : targetString == "any" ? MoveTargetType.Any
+                : targetString == "adjacent" ? MoveTargetType.Adjacent
+                : targetString == "adjacentopponent" ? MoveTargetType.AdjacentOpponent
+                : targetString == "adjacentally" ? MoveTargetType.AdjacentAlly
+                : targetString == "selforadjacentally" ? MoveTargetType.SelfOrAdjacentAlly
+                : targetString == "alladjacent" ? MoveTargetType.AllAdjacent
+                : targetString == "alladjacentopponents" ? MoveTargetType.AllAdjacentOpponents
+                : targetString == "teamally" ? MoveTargetType.TeamAlly
+                : targetString == "teamopponent" ? MoveTargetType.TeamOpponent
+                : targetString == "battlefield" ? MoveTargetType.Battlefield
+                : MoveTargetType.Self;
+        }
 
+    }
 }

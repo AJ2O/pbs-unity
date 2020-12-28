@@ -824,9 +824,9 @@ namespace PBS.Battle.View.UI
             WifiFriendly.Trainer trainer = myModel.GetMatchingTrainer(playerID);
             GameTextData textData = 
                 (trainer.teamPos != teamPerspectiveID)? 
-                GameTextDatabase.instance.GetGameTextData("trainer-perspective-opposing")
-                : (myTrainer == null)? GameTextDatabase.instance.GetGameTextData("trainer-perspective-ally")
-                : GameTextDatabase.instance.GetGameTextData("trainer-perspective-player");
+                GameText.instance.GetGameTextData("trainer-perspective-opposing")
+                : (myTrainer == null)? GameText.instance.GetGameTextData("trainer-perspective-ally")
+                : GameText.instance.GetGameTextData("trainer-perspective-player");
 
             string replaceString = textData.languageDict[GameSettings.language];
             if (replaceString == "{{-trainer-}}")
@@ -883,9 +883,9 @@ namespace PBS.Battle.View.UI
                 teamPerspectiveID = myTeamPerspective.teamID;
             }
             GameTextData textData = 
-                (teamID != teamPerspectiveID)? GameTextDatabase.instance.GetGameTextData("team-perspective-opposing")
-                : (myTrainer == null)? GameTextDatabase.instance.GetGameTextData("team-perspective-ally")
-                : GameTextDatabase.instance.GetGameTextData("team-perspective-player");
+                (teamID != teamPerspectiveID)? GameText.instance.GetGameTextData("team-perspective-opposing")
+                : (myTrainer == null)? GameText.instance.GetGameTextData("team-perspective-ally")
+                : GameText.instance.GetGameTextData("team-perspective-player");
 
             string teamString = textData.languageDict[GameSettings.language];
             if (!string.IsNullOrEmpty(baseString))
@@ -922,7 +922,7 @@ namespace PBS.Battle.View.UI
             WifiFriendly.Trainer myTrainer = null,
             WifiFriendly.Team myTeamPerspective = null)
         {
-            GameTextData textData = GameTextDatabase.instance.GetGameTextData(message.messageCode);
+            GameTextData textData = GameText.instance.GetGameTextData(message.messageCode);
             if (textData == null)
             {
                 return "";
@@ -1013,7 +1013,7 @@ namespace PBS.Battle.View.UI
             }
             if (message.typeIDs.Count > 0)
             {
-                newString = newString.Replace("{{-type-list-}}", GameTextDatabase.ConvertTypesToString(message.typeIDs.ToArray()));
+                newString = newString.Replace("{{-type-list-}}", GameText.ConvertTypesToString(message.typeIDs.ToArray()));
             }
 
             if (!string.IsNullOrEmpty(message.moveID))
@@ -1054,17 +1054,17 @@ namespace PBS.Battle.View.UI
 
             if (!string.IsNullOrEmpty(message.statusID))
             {
-                StatusPKData statusData = StatusPKDatabase.instance.GetStatusData(message.statusID);
+                StatusPKData statusData = PokemonStatuses.instance.GetStatusData(message.statusID);
                 newString = newString.Replace("{{-status-name-}}", statusData.conditionName);
             }
             if (!string.IsNullOrEmpty(message.statusTeamID))
             {
-                StatusTEData statusData = StatusTEDatabase.instance.GetStatusData(message.statusTeamID);
+                StatusTEData statusData = TeamStatuses.instance.GetStatusData(message.statusTeamID);
                 newString = newString.Replace("{{-team-status-name-}}", statusData.conditionName);
             }
             if (!string.IsNullOrEmpty(message.statusEnvironmentID))
             {
-                StatusBTLData statusData = StatusBTLDatabase.instance.GetStatusData(message.statusEnvironmentID);
+                StatusBTLData statusData = BattleStatuses.instance.GetStatusData(message.statusEnvironmentID);
                 newString = newString.Replace("{{-battle-status-name-}}", statusData.conditionName);
             }
 

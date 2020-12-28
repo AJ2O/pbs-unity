@@ -292,7 +292,7 @@ namespace PBS.Main.Pokemon
             }
             else
             {
-                gender = GameTextDatabase.ConvertToGender(genderID);
+                gender = GameText.ConvertToGender(genderID);
             }
 
             // stats
@@ -383,7 +383,7 @@ namespace PBS.Main.Pokemon
                 nickname: original.nickname,
                 level: original.level,
                 natureID: original.natureID,
-                genderID: GameTextDatabase.ConvertGenderToString(original.gender),
+                genderID: GameText.ConvertGenderToString(original.gender),
 
                 currentHP: original.currentHP,
                 ivHP: original.ivHP, ivATK: original.ivATK, ivDEF: original.ivDEF,

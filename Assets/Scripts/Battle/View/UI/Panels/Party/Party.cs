@@ -88,7 +88,7 @@ namespace PBS.Battle.View.UI.Panels
             button.lvlTxt.text = "Lv." + pokemon.level;
             button.hpTxt.text = pokemon.currentHP + "/" + pokemon.maxHP;
             button.statusTxt.text = (string.IsNullOrEmpty(pokemon.nonVolatileStatus)) ? ""
-                : StatusPKDatabase.instance.GetStatusData(pokemon.nonVolatileStatus).shortName;
+                : PokemonStatuses.instance.GetStatusData(pokemon.nonVolatileStatus).shortName;
 
             // draw icon
             string drawPath = "pokemonSprites/icon/" + Pokemon.instance.GetPokemonData(pokemon.pokemonID).displayID;

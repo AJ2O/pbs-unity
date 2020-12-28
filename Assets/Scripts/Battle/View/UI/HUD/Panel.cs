@@ -1,4 +1,5 @@
-﻿using PBS.Enums.Battle;
+﻿using PBS.Databases;
+using PBS.Enums.Battle;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -170,7 +171,7 @@ namespace PBS.Battle.View.UI.HUD
                 pokemonHUD.statusTxt.text = "";
                 if (!string.IsNullOrEmpty(nonVolatileStatusID))
                 {
-                    StatusPKData statusData = StatusPKDatabase.instance.GetStatusData(nonVolatileStatusID);
+                    StatusPKData statusData = PokemonStatuses.instance.GetStatusData(nonVolatileStatusID);
                     pokemonHUD.statusTxt.text = statusData.shortName;
                 }
 

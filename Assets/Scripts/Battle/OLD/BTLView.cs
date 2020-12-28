@@ -111,7 +111,7 @@ public class BTLView : MonoBehaviour
 
             string typeString = " (Types - ";
             List<string> pokemonTypes = battleModel.PBPGetTypes(pokemon);
-            typeString += GameTextDatabase.ConvertTypesToString(pokemonTypes.ToArray());
+            typeString += GameText.ConvertTypesToString(pokemonTypes.ToArray());
             typeString += ")";
 
             string statusString = " (";
@@ -780,7 +780,7 @@ public class BTLView : MonoBehaviour
         string statusID
         )
     {
-        string statusString = StatusPKDatabase.instance.GetStatusData(statusID).conditionName;
+        string statusString = PokemonStatuses.instance.GetStatusData(statusID).conditionName;
         string text = statusString + " was inflicted on " + GetPokemonName(pokemon);
         Debug.Log("ANIM - " + text);
 
@@ -995,9 +995,9 @@ public class BTLView : MonoBehaviour
     {
         if (bEvent.textID != null)
         {
-            GameTextData gameTextData = GameTextDatabase.instance.GetGameTextData(bEvent.textID);
+            GameTextData gameTextData = GameText.instance.GetGameTextData(bEvent.textID);
             string baseText = gameTextData.GetText();
-            string gameText = GameTextDatabase.ConvertToString(
+            string gameText = GameText.ConvertToString(
                 baseString: baseText,
                 viewPos: teamPos,
                 playerID: playerID,

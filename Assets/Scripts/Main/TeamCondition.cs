@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PBS.Databases;
+using System.Collections;
 using System.Collections.Generic;
 
 public class TeamCondition
@@ -11,7 +12,7 @@ public class TeamCondition
     {
         get
         {
-            return StatusTEDatabase.instance.GetStatusData(statusID);
+            return TeamStatuses.instance.GetStatusData(statusID);
         }
     }
 

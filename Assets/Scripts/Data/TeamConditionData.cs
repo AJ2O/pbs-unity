@@ -38,7 +38,7 @@ public class StatusTEData
         {
             if (p_defaultTurns == null && !string.IsNullOrEmpty(baseID))
             {
-                return StatusBTLDatabase.instance.GetStatusData(baseID).defaultTurns;
+                return BattleStatuses.instance.GetStatusData(baseID).defaultTurns;
             }
             return p_defaultTurns;
         }
@@ -64,7 +64,7 @@ public class StatusTEData
             {
                 List<EffectDatabase.StatusTEEff.TeamSE> unionEffects = new List<EffectDatabase.StatusTEEff.TeamSE>();
                 unionEffects.AddRange(p_effectsNew);
-                unionEffects.AddRange(StatusTEDatabase.instance.GetStatusData(baseID).effectsNew);
+                unionEffects.AddRange(TeamStatuses.instance.GetStatusData(baseID).effectsNew);
                 return unionEffects;
             }
             return p_effectsNew;
@@ -163,7 +163,7 @@ public class StatusTEData
         }
         if (baseID != null)
         {
-            StatusTEData baseData = StatusTEDatabase.instance.GetStatusData(baseID);
+            StatusTEData baseData = TeamStatuses.instance.GetStatusData(baseID);
             return baseData.IsABaseID(tryBaseID);
         }
         return false;
