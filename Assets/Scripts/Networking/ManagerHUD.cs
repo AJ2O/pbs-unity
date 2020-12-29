@@ -7,11 +7,20 @@ namespace PBS.Networking
 {
     public class ManagerHUD : NetworkManagerHUD
     {
+        public bool isServer = true;
         Networking.Manager networkManager;
 
         void Awake()
         {
             networkManager = GetComponent<Networking.Manager>();
+        }
+
+        private void Start()
+        {
+            if (isServer)
+            {
+                networkManager.StartServer();
+            }
         }
 
         void OnGUI()
@@ -20,7 +29,7 @@ namespace PBS.Networking
                 return;
 
             GUILayout.BeginArea(new Rect(offsetX, offsetY, 120, 120));
-            if (!NetworkClient.isConnected && !NetworkServer.active)
+            if (!NetworkClient.isConnected && !NetworkServer.active && !isServer)
             {
                 StartButtons();
             }
@@ -30,21 +39,22 @@ namespace PBS.Networking
             }
 
             // client ready
-            if (NetworkClient.isConnected && !ClientScene.ready)
+            if (!isServer)
             {
-                if (GUILayout.Button("Client Ready"))
+                if (NetworkClient.isConnected && !ClientScene.ready)
                 {
-                    ClientScene.Ready(NetworkClient.connection);
-
-                    if (ClientScene.localPlayer == null)
+                    if (GUILayout.Button("Client Ready"))
                     {
-                        ClientScene.AddPlayer(NetworkClient.connection);
+                        ClientScene.Ready(NetworkClient.connection);
+
+                        if (ClientScene.localPlayer == null)
+                        {
+                            ClientScene.AddPlayer(NetworkClient.connection);
+                        }
                     }
                 }
+                StopButtons();
             }
-
-            StopButtons();
-
             GUILayout.EndArea();
         }
 
