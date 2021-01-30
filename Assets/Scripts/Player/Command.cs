@@ -137,7 +137,7 @@ namespace PBS.Player
         public string switchInPokemon = "";
         #endregion
 
-        #region
+        #region Item
         /// <summary>
         /// See <seealso cref="BattleCommand.itemID"/>.
         /// </summary>

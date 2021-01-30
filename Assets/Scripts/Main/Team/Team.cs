@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace PBS.Main.Team
 {
+    /// <summary>
+    /// This class represents a team, which is composed of a group of trainers.
+    /// </summary>
     public class Team
     {
         public enum TeamMode
@@ -13,26 +16,37 @@ namespace PBS.Main.Team
             Triple
         }
 
-        // General
+        #region Attributes
+        /// <summary>
+        /// The unique identifier for this team.
+        /// </summary>
         public int teamID;
+        /// <summary>
+        /// The configuration assigned to this team.
+        /// </summary>
         public TeamMode teamMode;
 
-        // Trainers
-        public List<Main.Trainer.Trainer> trainers;
+        /// <summary>
+        /// The trainers on this team.
+        /// </summary>
+        public List<Trainer.Trainer> trainers;
 
-        // Battle-only Properties
+        /// <summary>
+        /// The battle-specific properties assigned to this team.
+        /// </summary>
         public BattleProperties bProps;
+        #endregion
 
-        // Constructor
+        #region Constructor
         public Team(
             TeamMode teamMode = TeamMode.Single,
-            List<Main.Trainer.Trainer> trainers = null,
+            List<Trainer.Trainer> trainers = null,
             int teamID = 0,
             bool setupControl = true)
         {
             this.teamMode = teamMode;
             this.teamID = teamID;
-            this.trainers = new List<Main.Trainer.Trainer>();
+            this.trainers = new List<Trainer.Trainer>();
             if (trainers != null)
             {
                 this.trainers.AddRange(trainers);
@@ -64,7 +78,13 @@ namespace PBS.Main.Team
             cloneTeam.bProps = BattleProperties.Clone(original.bProps);
             return cloneTeam;
         }
+        #endregion
 
+        #region Positioning Methods
+        /// <summary>
+        /// Assigns a team ID to this team.
+        /// </summary>
+        /// <param name="pos">The team ID to assign.</param>
         public void SetTeamPos(int pos)
         {
             teamID = pos;
@@ -74,6 +94,9 @@ namespace PBS.Main.Team
             }
         }
 
+        /// <summary>
+        /// Automatically calculates the in-battle positions controlled by each trainer on this team.
+        /// </summary>
         public void SetUpTrainerControl()
         {
             if (trainers.Count == 1 && teamMode != TeamMode.Single)
@@ -91,8 +114,14 @@ namespace PBS.Main.Team
                 }
             }
         }
+        #endregion
 
-        // Status Condition Methods
+        #region Status Condition Methods
+        /// <summary>
+        /// Adds the given status condition to this team.
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns></returns>
         public bool AddStatusCondition(TeamCondition condition)
         {
             if (!HasStatusCondition(condition.statusID))
@@ -102,6 +131,11 @@ namespace PBS.Main.Team
             }
             return false;
         }
+        /// <summary>
+        /// Returns true if this team has the given status.
+        /// </summary>
+        /// <param name="statusID"></param>
+        /// <returns></returns>
         public bool HasStatusCondition(string statusID)
         {
             for (int i = 0; i < bProps.conditions.Count; i++)
@@ -113,6 +147,10 @@ namespace PBS.Main.Team
             }
             return false;
         }
+        /// <summary>
+        /// Removes the given status from this team.
+        /// </summary>
+        /// <param name="statusID"></param>
         public void RemoveStatusCondition(string statusID)
         {
             List<TeamCondition> newStatusConditions = new List<TeamCondition>();
@@ -126,24 +164,17 @@ namespace PBS.Main.Team
             bProps.conditions.Clear();
             bProps.conditions.AddRange(newStatusConditions);
         }
+        /// <summary>
+        /// Returns all the status conditions inflicted on this team.
+        /// </summary>
+        /// <returns></returns>
         public List<TeamCondition> GetAllStatusConditions()
         {
             List<TeamCondition> conditions = new List<TeamCondition>();
             conditions.AddRange(bProps.conditions);
             return conditions;
         }
-
-        public bool IsPlayerOnTeam(int playerID)
-        {
-            for (int i = 0; i < trainers.Count; i++)
-            {
-                if (trainers[i].playerID == playerID)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        #endregion
 
     }
 }
