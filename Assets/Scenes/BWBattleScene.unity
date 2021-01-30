@@ -606,7 +606,7 @@ MonoBehaviour:
   offlineScene: 
   onlineScene: 
   transport: {fileID: 25127937}
-  networkAddress: localhost
+  networkAddress: 35.170.70.154
   maxConnections: 4
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
@@ -641,6 +641,7 @@ MonoBehaviour:
   showGUI: 1
   offsetX: 8
   offsetY: 8
+  isServer: 0
 --- !u!1 &36246642
 GameObject:
   m_ObjectHideFlags: 0
@@ -9418,7 +9419,6 @@ MonoBehaviour:
   dialogBox: {fileID: 1601206136}
   dialogBoxText: {fileID: 2066607800}
   charPerSec: 60
-  scrollSpeed: 0.1
   defaultDialogLines: 2
   advancedDialogPressed: 0
 --- !u!114 &734418590
