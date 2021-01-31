@@ -59,6 +59,8 @@ namespace PBS.Databases.Effects.Items
                 : this is Judgment ? (this as Judgment).Clone()
                 : this is LiechiBerry ? (this as LiechiBerry).Clone()
                 : this is LifeOrb ? (this as LifeOrb).Clone()
+                : this is LumBerry ? (this as LumBerry).Clone()
+                : this is LumBerryTrigger ? (this as LumBerryTrigger).Clone()
                 : this is MegaStone ? (this as MegaStone).Clone()
                 : this is NaturalGift ? (this as NaturalGift).Clone()
                 : this is PokeBall ? (this as PokeBall).Clone()
@@ -113,6 +115,132 @@ namespace PBS.Databases.Effects.Items
         public new GriseousOrb Clone()
         {
             return new GriseousOrb(baseFormID: baseFormID, formID: formID);
+        }
+    }
+    /// <summary>
+    /// Heals the specified status conditions.
+    /// </summary>
+    public class LumBerry : ItemEffect
+    {
+        /// <summary>
+        /// The statuses that are healed.
+        /// </summary>
+        public List<string> statuses;
+
+        /// <summary>
+        /// Statuses with the specified effect types are healed.
+        /// </summary>
+        public HashSet<PokemonSEType> statusEffectTypes;
+
+        /// <summary>
+        /// The text displayed when the item fails to heal any status.
+        /// </summary>
+        public string failText;
+
+        public LumBerry(
+            IEnumerable<string> statuses = null,
+            IEnumerable<PokemonSEType> statusEffectTypes = null,
+            string failText = "item-lumberry-fail",
+
+            IEnumerable<Filter.FilterEffect> filters = null
+            )
+            : base(effectType: ItemEffectType.LumBerry, filters: filters)
+        {
+            this.statuses = statuses == null ? new List<string>() : new List<string>(statuses);
+            this.statusEffectTypes = statusEffectTypes == null ? new HashSet<PokemonSEType>()
+                : new HashSet<PokemonSEType>(statusEffectTypes);
+            this.failText = failText;
+        }
+        public new LumBerry Clone()
+        {
+            return new LumBerry(
+                statuses: statuses,
+                statusEffectTypes: statusEffectTypes,
+                failText: failText,
+                filters: filters
+                );
+        }
+        public bool IsStatusHealed(string statusID)
+        {
+            // check explicit statuses
+            for (int i = 0; i < statuses.Count; i++)
+            {
+                if (statuses[i] == statusID)
+                {
+                    return true;
+                }
+            }
+
+            // check status effects
+            PBS.Data.PokemonStatus statusData = PBS.Databases.PokemonStatuses.instance.GetStatusData(statusID);
+            foreach (PokemonSEType effectType in statusEffectTypes)
+            {
+                if (statusData.GetEffectNew(effectType) != null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+    /// <summary>
+    /// Heals the specified status conditions.
+    /// </summary>
+    public class LumBerryTrigger : ItemEffect
+    {
+        /// <summary>
+        /// The statuses that are healed.
+        /// </summary>
+        public List<string> statuses;
+
+        /// <summary>
+        /// Statuses with the specified effect types are healed.
+        /// </summary>
+        public HashSet<PokemonSEType> statusEffectTypes;
+
+        public LumBerryTrigger(
+            IEnumerable<string> statuses = null,
+            IEnumerable<PokemonSEType> statusEffectTypes = null,
+
+            IEnumerable<Filter.FilterEffect> filters = null
+            )
+            : base(effectType: ItemEffectType.LumBerryTrigger, filters: filters)
+        {
+            this.statuses = statuses == null ? new List<string>() : new List<string>(statuses);
+            this.statusEffectTypes = statusEffectTypes == null ? new HashSet<PokemonSEType>()
+                : new HashSet<PokemonSEType>(statusEffectTypes);
+        }
+        public new LumBerryTrigger Clone()
+        {
+            return new LumBerryTrigger(
+                statuses: statuses,
+                statusEffectTypes: statusEffectTypes,
+                filters: filters
+                );
+        }
+        public bool IsStatusHealed(string statusID)
+        {
+            // check explicit statuses
+            for (int i = 0; i < statuses.Count; i++)
+            {
+                if (statuses[i] == statusID)
+                {
+                    return true;
+                }
+            }
+
+            // check status effects
+            PBS.Data.PokemonStatus statusData = PBS.Databases.PokemonStatuses.instance.GetStatusData(statusID);
+            foreach (PokemonSEType effectType in statusEffectTypes)
+            {
+                if (statusData.GetEffectNew(effectType) != null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
     /// <summary>

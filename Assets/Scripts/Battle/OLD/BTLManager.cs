@@ -16319,13 +16319,13 @@ public class BTLManager : MonoBehaviour
             }
 
             // Status-Triggered Items
-            Item statusTriggerItem = battle.GetPokemonItemFiltered(targetPokemon, ItemEffectType.TriggerOnStatus);
+            Item statusTriggerItem = battle.GetPokemonItemFiltered(targetPokemon, ItemEffectType.LumBerryTrigger);
             if (statusTriggerItem != null)
             {
-                ItemEffect statusTrigger = statusTriggerItem.data.GetEffect(ItemEffectType.TriggerOnStatus);
+                ItemEffect statusTrigger = statusTriggerItem.data.GetEffect(ItemEffectType.LumBerryTrigger);
                 bool willConsume = false;
 
-                ItemEffect healEffect = statusTriggerItem.data.GetEffect(ItemEffectType.HealStatus);
+                ItemEffect healEffect = statusTriggerItem.data.GetEffect(ItemEffectType.LumBerry);
                 if (!willConsume && healEffect != null)
                 {
 
@@ -17434,7 +17434,7 @@ public class BTLManager : MonoBehaviour
                     effectSuccess = canRecover;
                 }
                 // Heal Status
-                if (effect.effectType == ItemEffectType.HealStatus)
+                if (effect.effectType == ItemEffectType.LumBerry)
                 {
                     List<string> statusThatCanHeal = new List<string>(effect.stringParams);
 

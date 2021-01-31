@@ -16146,24 +16146,34 @@ namespace PBS.Networking
                 }
 
                 // Status-Triggered Items
-                Item statusTriggerItem = battle.GetPokemonItemFiltered(targetPokemon, ItemEffectType.TriggerOnStatus);
-                if (statusTriggerItem != null)
+                List<Item> statusTriggeredItems = battle.PBPGetItemsWithEffect(targetPokemon, ItemEffectType.LumBerryTrigger);
+                for (int i = 0; i < statusTriggeredItems.Count; i++)
                 {
-                    ItemEffect statusTrigger = statusTriggerItem.data.GetEffect(ItemEffectType.TriggerOnStatus);
+                    Item triggerItem = statusTriggeredItems[i];
                     bool willConsume = false;
 
-                    ItemEffect healEffect = statusTriggerItem.data.GetEffect(ItemEffectType.HealStatus);
-                    if (!willConsume && healEffect != null)
+                    List<PBS.Databases.Effects.Items.ItemEffect> lumTriggers =
+                        triggerItem.data.GetEffectsNew(ItemEffectType.LumBerryTrigger);
+                    for (int k = 0; k < lumTriggers.Count && !willConsume; k++)
                     {
-
+                        PBS.Databases.Effects.Items.LumBerryTrigger trigger =
+                            lumTriggers[k] as PBS.Databases.Effects.Items.LumBerryTrigger;
+                        if (battle.DoEffectFiltersPass(
+                            filters: trigger.filters,
+                            userPokemon: userPokemon,
+                            targetPokemon: targetPokemon,
+                            item: triggerItem
+                            ))
+                        {
+                            willConsume = trigger.IsStatusHealed(statusID);
+                        }
                     }
-
                     if (willConsume)
                     {
                         yield return StartCoroutine(TryToConsumeItem(
                             pokemon: targetPokemon,
                             holderPokemon: targetPokemon,
-                            item: statusTriggerItem,
+                            item: triggerItem,
                             (result) => 
                             {
                             
@@ -16884,20 +16894,6 @@ namespace PBS.Networking
                 });
             }
 
-            // Legacy
-            yield return StartCoroutine(ApplyItemEffects(
-                pokemon: pokemon,
-                item: item,
-                apply: apply,
-                callback: (result) =>
-                {
-                    if (result)
-                    {
-                        itemSuccess = true;
-                    }
-                }
-                ));
-
             // Ripen
             List<Main.Pokemon.Ability> ripenAbilities =
                 battle.PBPGetAbilitiesWithEffect(pokemon, AbilityEffectType.Ripen);
@@ -17108,156 +17104,18 @@ namespace PBS.Networking
                         callback: (result) => { }
                         ));
                 }
-            }
-            callback(effectSuccess);
-            yield return null;
-        }
-
-        public IEnumerator ApplyItemEffects(
-            Main.Pokemon.Pokemon pokemon,
-            Item item,
-            System.Action<bool> callback,
-            bool apply = true)
-        {
-            bool effectSuccess = false;
-            ItemEffect[] effects = item.data.effects;
-            for (int i = 0; i < effects.Length; i++)
-            {
-                yield return StartCoroutine(ApplyItemEffect(
-                    pokemon,
-                    item,
-                    effects[i],
-                    (result) =>
-                    {
-                        if (result)
-                        {
-                            effectSuccess = true;
-                        }
-                    },
-                    apply: apply
-                    ));
-            }
-            callback(effectSuccess);
-        }
-        public IEnumerator ApplyItemEffect(
-            Main.Pokemon.Pokemon pokemon, 
-            Item item, 
-            ItemEffect effect, 
-            System.Action<bool> callback,
-            bool apply = true)
-        {
-            bool effectSuccess = false;
-            bool forceEffectDisplay = true;
-
-            if (pokemon != null)
-            {
-                if (!battle.IsPokemonFainted(pokemon))
+                // Lum Berry (Heal Status Conditions)
+                else if (effect_ is PBS.Databases.Effects.Items.LumBerry)
                 {
-                    // Heal HP
-                    if (effect.effectType == ItemEffectType.Potion
-                        || effect.effectType == ItemEffectType.HealPercent
-                        || effect.effectType == ItemEffectType.Revive)
+                    PBS.Databases.Effects.Items.LumBerry lumBerry = effect_ as PBS.Databases.Effects.Items.LumBerry;
+                    List<StatusCondition> conditions = battle.GetPokemonStatusConditions(pokemon);
+                    for (int i = 0; i < conditions.Count; i++)
                     {
-                        bool canRecover = true;
-                        int HPGain =
-                            (effect.effectType == ItemEffectType.Potion) ? Mathf.FloorToInt(effect.GetFloat(0))
-                            : battle.GetPokemonHPByPercent(pokemon, effect.GetFloat(0));
-                        int preHP = pokemon.currentHP;
-                        int recoverableHP = pokemon.HPdifference;
-
-                        if (recoverableHP == 0)
+                        if (lumBerry.IsStatusHealed(conditions[i].statusID))
                         {
-                            canRecover = false;
-                            if (forceEffectDisplay)
-                            {
-                                SendEvent(new Battle.View.Events.MessageParameterized
-                                {
-                                    messageCode = "pokemon-heal-fail",
-                                    pokemonTargetID = pokemon.uniqueID
-                                });
-                            }
-                        }
-                        if (canRecover && apply)
-                        {
-                            int hpRecovered = battle.AddPokemonHP(pokemon, HPGain);
-                            int postHP = pokemon.currentHP;
-                            yield return StartCoroutine(PBPChangePokemonHP(
-                                pokemon: pokemon,
-                                preHP: preHP,
-                                hpChange: hpRecovered,
-                                postHP: postHP,
-                                heal: true
-                            ));
-                        }
-                        effectSuccess = canRecover;
-                    }
-                    // Heal Status
-                    if (effect.effectType == ItemEffectType.HealStatus)
-                    {
-                        List<string> statusThatCanHeal = new List<string>(effect.stringParams);
-
-                        List<StatusCondition> conditions = battle.GetPokemonStatusConditions(pokemon);
-                        for (int i = 0; i < conditions.Count; i++)
-                        {
-                            if (statusThatCanHeal.Contains(conditions[i].statusID))
-                            {
-                                if (apply)
-                                {
-                                    yield return StartCoroutine(HealPokemonSC(
-                                        targetPokemon: pokemon,
-                                        condition: conditions[i]
-                                        ));
-                                }
-                                effectSuccess = true;
-                            }
-                        }
-                    }
-                    // Heal Non-Volatile Status
-                    else if (effect.effectType == ItemEffectType.HealStatusNonVolatile)
-                    {
-                        List<StatusCondition> conditions = battle.GetPokemonStatusConditions(pokemon);
-                        for (int i = 0; i < conditions.Count; i++)
-                        {
-                            if (conditions[i].data.HasTag(PokemonSTag.NonVolatile))
-                            {
-                                if (apply)
-                                {
-                                    yield return StartCoroutine(HealPokemonSC(
-                                        targetPokemon: pokemon,
-                                        condition: conditions[i]
-                                        ));
-                                }
-                                effectSuccess = true;
-                            }
-                        }
-                    }
-                    // Stat Stage Changes
-                    else if (effect.effectType == ItemEffectType.XAttack
-                        || effect.effectType == ItemEffectType.StatStageMax)
-                    {
-                        bool maximizeStats = (effect.effectType == ItemEffectType.StatStageMax)
-                            ? effect.GetBool(1) : false;
-                        bool minimizeStats = (effect.effectType == ItemEffectType.StatStageMax)
-                            ? !effect.GetBool(1) : false;
-
-                        int statMod = (effect.effectType == ItemEffectType.XAttack)
-                            ? Mathf.FloorToInt(effect.GetFloat(0)) : 0;
-
-                        List<PokemonStats> statsToModify = PBS.Databases.GameText.GetStatsFromList(effect.stringParams);
-                        if (statsToModify.Count > 0)
-                        {
-                            yield return StartCoroutine(TryToApplyStatStageMods(
-                                statsToModify: statsToModify,
-                                modValue: statMod,
+                            yield return StartCoroutine(HealPokemonSC(
                                 targetPokemon: pokemon,
-                                maximize: maximizeStats,
-                                minimize: minimizeStats,
-                                forceFailureMessage: forceEffectDisplay,
-                                apply: apply,
-                                callback: (result) =>
-                                {
-                                    effectSuccess = result;
-                                }
+                                condition: conditions[i]
                                 ));
                         }
                     }
@@ -19738,14 +19596,6 @@ namespace PBS.Networking
                 });
 
                 bool effectSuccess = false;
-                yield return StartCoroutine(ApplyItemEffects(
-                    pokemon: itemPokemon,
-                    item: item,
-                    callback: (result) =>
-                    {
-
-                    }
-                    ));
 
                 // Run On-Use Effects
                 yield return StartCoroutine(ApplyItemEffects(
