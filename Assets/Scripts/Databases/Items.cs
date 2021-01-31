@@ -84,7 +84,14 @@ namespace PBS.Databases
                 ID: "antidote",
                 itemName: "Antidote",
                 pocket: ItemPocket.Medicine,
-                battlePocket: ItemBattlePocket.StatusRestore
+                battlePocket: ItemBattlePocket.StatusRestore,
+
+                effectsNew: new Effects.Items.ItemEffect[]
+                {
+                    new Effects.Items.LumBerry(
+                        statuses: new string[]{ "poison", "poison2" }
+                        )
+                }
                 ) },
 
         // BERRIES
@@ -127,20 +134,14 @@ namespace PBS.Databases
                     ItemTag.Consumable
                 },
 
-                effects: new ItemEffect[]
-                {
-                    new ItemEffect(
-                        ItemEffectType.HealStatus,
-                        stringParams: new string[]{ "burn", "confusion", "freeze", "paralysis", "poison", "poison2", "sleep" }
-                        ),
-                    new ItemEffect(
-                        ItemEffectType.TriggerOnStatus,
-                        boolParams: new bool[] { true },
-                        stringParams: new string[]{  }
-                        ),
-                },
                 effectsNew: new Effects.Items.ItemEffect[]
                 {
+                    new Effects.Items.LumBerry(
+                        statuses: new string[]{ "burn", "confusion", "freeze", "paralysis", "poison", "poison2", "sleep" }
+                        ),
+                    new Effects.Items.LumBerryTrigger(
+                        statuses: new string[]{ "burn", "confusion", "freeze", "paralysis", "poison", "poison2", "sleep" }
+                        ),
                     new Effects.Items.NaturalGift(
                         moveType: "flying", basePower: 80
                         ),

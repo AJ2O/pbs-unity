@@ -290,7 +290,7 @@ public enum ItemEffectType
     /// <summary>
     /// Removes the listed statuses for a pokemon.
     /// </summary>
-    HealStatus,
+    LumBerry,
     /// stringx:
     ///     range:  status IDs
     ///     desc:   statuses with the given IDs are cured
@@ -408,7 +408,7 @@ public enum ItemEffectType
     /// <summary>
     /// This item can have its effects triggered instantly when inflicted with one of the given status conditions.
     /// </summary>
-    TriggerOnStatus,
+    LumBerryTrigger,
     /// bool0:
     ///     desc:   set to true to automatically trigger with a paired "HealStatus" and its listed status IDs
     ///             stringx is ignored if true

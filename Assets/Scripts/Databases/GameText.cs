@@ -793,6 +793,15 @@ namespace PBS.Databases
                 }
                 ) },
 
+        {"item-lumberry-fail",
+            new PBS.Data.GameText(
+                ID: "item-lumberry-fail",
+                languageDict: new Dictionary<GameLanguages, string>
+                {
+                    { GameLanguages.English, "{{-item-name-}} couldn't cure anything for {{-target-pokemon-}}!" },
+                }
+                ) },
+
         {"item-quickclaw",
             new PBS.Data.GameText(
                 ID: "item-quickclaw",
