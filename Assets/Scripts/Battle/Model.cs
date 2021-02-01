@@ -951,6 +951,7 @@ namespace PBS.Battle
                             {
                                 response.messageCode = effect_.attemptText;
                                 response.moveID = moveLimitID;
+                                response.pokemonUserID = userPokemon.uniqueID;
                             }
                         }
                     }
@@ -3653,6 +3654,12 @@ namespace PBS.Battle
             bool ignoreSuppression = false,
             bool skipNeutralizingGasCheck = false)
         {
+            if (pokemon == null)
+            {
+                Debug.LogWarning("Checking for a null Pokemon");
+                return new List<Main.Pokemon.Ability>();
+            }
+
             List<Main.Pokemon.Ability> abilities = new List<Main.Pokemon.Ability>();
             for (int i = 0; i < pokemon.bProps.abilities.Count; i++)
             {

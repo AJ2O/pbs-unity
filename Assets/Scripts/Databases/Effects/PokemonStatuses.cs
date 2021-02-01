@@ -65,12 +65,8 @@ namespace PBS.Databases.Effects.PokemonStatuses
                 : this is TarShot ? (this as TarShot).Clone()
                 : this is TypeImmunity ? (this as TypeImmunity).Clone()
                 : this is Volatile ?
-                    this is Disable ? (this as Disable).Clone()
-                    : this is Encore ? (this as Encore).Clone()
+                    this is MoveLimiting ? (this as MoveLimiting).Clone()
                     : this is Embargo ? (this as Embargo).Clone()
-                    : this is HealBlock ? (this as HealBlock).Clone()
-                    : this is Taunt ? (this as Taunt).Clone()
-                    : this is Torment ? (this as Torment).Clone()
                     : (this as Volatile).Clone()
                 : this is Yawn ? (this as Yawn).Clone()
                 : new PokemonSE(
@@ -223,7 +219,7 @@ namespace PBS.Databases.Effects.PokemonStatuses
     }
 
     /// <summary>
-    /// Prevents this Pokemon from any other move but its encored move for a few turns.
+    /// Prevents this Pokemon from using any items for a few turns.
     /// </summary>
     public class Embargo : Volatile
     {
@@ -593,7 +589,7 @@ namespace PBS.Databases.Effects.PokemonStatuses
             : base(
                     effectType: effectType,
                     startText: startText, endText: endText,
-                    alreadyText: attemptText, failText: failText,
+                    alreadyText: alreadyText, failText: failText,
                     defaultTurns: defaultTurns)
         {
             this.attemptText = attemptText;
@@ -601,14 +597,20 @@ namespace PBS.Databases.Effects.PokemonStatuses
         }
         public new MoveLimiting Clone()
         {
-            return new MoveLimiting(
-                effectType: effectType,
-                startText: startText, endText: endText,
-                alreadyText: alreadyText, failText: failText,
-                attemptText: attemptText,
-                canUseMiddleOfTurn: canUseMiddleOfTurn,
-                defaultTurns: defaultTurns
-                );
+            return 
+                this is Disable ? (this as Disable).Clone()
+                : this is Encore ? (this as Encore).Clone()
+                : this is HealBlock ? (this as HealBlock).Clone()
+                : this is Taunt ? (this as Taunt).Clone()
+                : this is Torment ? (this as Torment).Clone()
+                : new MoveLimiting(
+                    effectType: effectType,
+                    startText: startText, endText: endText,
+                    alreadyText: alreadyText, failText: failText,
+                    attemptText: attemptText,
+                    canUseMiddleOfTurn: canUseMiddleOfTurn,
+                    defaultTurns: defaultTurns
+                    );
         }
     }
 
