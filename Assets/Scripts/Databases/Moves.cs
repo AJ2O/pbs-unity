@@ -1588,7 +1588,8 @@ namespace PBS.Databases
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
                         occurrence: MoveEffectOccurrence.OnceForEachTarget,
-                        targetType: MoveEffectTargetType.Target
+                        targetType: MoveEffectTargetType.Target,
+                        forceEffectDisplay: true
                         ),
                 }
                 ) },
@@ -1890,7 +1891,8 @@ namespace PBS.Databases
                             ),
                         timing: MoveEffectTiming.Unique,
                         occurrence: MoveEffectOccurrence.OnceForEachTarget,
-                        targetType: MoveEffectTargetType.Target
+                        targetType: MoveEffectTargetType.Target,
+                        forceEffectDisplay: true
                         ),
                 }
                 ) },
@@ -1944,7 +1946,8 @@ namespace PBS.Databases
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
                         occurrence: MoveEffectOccurrence.OnceForEachTarget,
-                        targetType: MoveEffectTargetType.Target
+                        targetType: MoveEffectTargetType.Target,
+                        forceEffectDisplay: true
                         ),
                 }
                 ) },
@@ -3104,7 +3107,8 @@ namespace PBS.Databases
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
                         occurrence: MoveEffectOccurrence.OnceForEachTarget,
-                        targetType: MoveEffectTargetType.Target
+                        targetType: MoveEffectTargetType.Target,
+                        forceEffectDisplay: true
                         ),
                 }
                 ) },
@@ -8094,7 +8098,8 @@ namespace PBS.Databases
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
                         occurrence: MoveEffectOccurrence.OnceForEachTarget,
-                        targetType: MoveEffectTargetType.Target
+                        targetType: MoveEffectTargetType.Target,
+                        forceEffectDisplay: true
                         ),
                 }
                 ) },
@@ -8421,7 +8426,8 @@ namespace PBS.Databases
                             ),
                         timing: MoveEffectTiming.AfterTargetImpact,
                         occurrence: MoveEffectOccurrence.OnceForEachTarget,
-                        targetType: MoveEffectTargetType.Target
+                        targetType: MoveEffectTargetType.Target,
+                        forceEffectDisplay: true
                         ),
                 }
                 ) },

@@ -2705,13 +2705,49 @@ namespace PBS.Networking
                             userPokemon.bProps.moveLimiters[i];
                         if (!limiter.justInitialized || !limiter.effect.canUseMiddleOfTurn)
                         {
-                            moveSuccess = false;
-                            SendEvent(new Battle.View.Events.MessageParameterized
+                            // Disable
+                            if (limiter.effect is PBS.Databases.Effects.PokemonStatuses.Disable)
                             {
-                                messageCode = limiter.effect.attemptText,
-                                pokemonUserID = userPokemon.uniqueID,
-                                moveID = masterMoveData.ID
-                            });
+                                if (limiter.affectedMoves.Contains(masterMoveData.ID))
+                                {
+                                    moveSuccess = false;
+                                }
+                            }
+                            // Heal Block
+                            else if (limiter.effect is PBS.Databases.Effects.PokemonStatuses.HealBlock)
+                            {
+                                if (battle.IsHealingMove(masterMoveData)) 
+                                {
+                                    moveSuccess = false;
+                                }
+                            }
+                            // Taunt
+                            else if (limiter.effect is PBS.Databases.Effects.PokemonStatuses.Taunt)
+                            {
+                                PBS.Databases.Effects.PokemonStatuses.Taunt taunt = limiter.effect as PBS.Databases.Effects.PokemonStatuses.Taunt;
+                                if (taunt.category == masterMoveData.category)
+                                {
+                                    moveSuccess = false;
+                                }
+                            }
+                            // Torment
+                            else if (limiter.effect is PBS.Databases.Effects.PokemonStatuses.Torment)
+                            {
+                                if (limiter.affectedMoves.Contains(masterMoveData.ID))
+                                {
+                                    moveSuccess = false;
+                                }
+                            }
+
+                            if (!moveSuccess)
+                            {
+                                SendEvent(new Battle.View.Events.MessageParameterized
+                                {
+                                    messageCode = limiter.effect.attemptText,
+                                    pokemonUserID = userPokemon.uniqueID,
+                                    moveID = masterMoveData.ID
+                                });
+                            }
                         }
                     }
                 }

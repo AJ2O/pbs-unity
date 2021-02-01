@@ -1165,7 +1165,7 @@ namespace PBS.Databases.Effects.Abilities
     }
 
     /// <summary>
-    /// Modifies the turns applied for status conditions
+    /// Modifies the turns applied to this Pokémon for status conditions.
     /// </summary>
     public class EarlyBird : AbilityEffect
     {
@@ -1624,7 +1624,7 @@ namespace PBS.Databases.Effects.Abilities
     }
 
     /// <summary>
-    /// Locks the user into its first-selected move as long the user remains in battle.
+    /// Locks the user into its first-selected move as long as the user remains in battle.
     /// </summary>
     public class GorillaTactics : AbilityEffect
     {
@@ -2262,7 +2262,7 @@ namespace PBS.Databases.Effects.Abilities
     }
 
     /// <summary>
-    /// Modifies stats the opposing team's stats when it enters battle.
+    /// Modifies the opposing team's stats when the user enters battle.
     /// </summary>
     public class Intimidate : AbilityEffect
     {
@@ -2318,7 +2318,7 @@ namespace PBS.Databases.Effects.Abilities
         }
     }
     /// <summary>
-    /// Modifies stats the opposing team's stats when it enters battle.
+    /// Modifies the user's stats when an opponent with <seealso cref="Intimidate"/> enters battle.
     /// </summary>
     public class IntimidateTrigger : AbilityEffect
     {
