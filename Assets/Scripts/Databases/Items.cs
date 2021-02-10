@@ -106,14 +106,6 @@ namespace PBS.Databases
                     ItemTag.Consumable
                 },
 
-                effects: new ItemEffect[]
-                {
-                    new ItemEffect(
-                        ItemEffectType.YacheBerry,
-                        floatParams: new float[] { 0.5f },
-                        stringParams: new string[]{ "DEFAULT", "normal", }
-                        ),
-                },
                 effectsNew: new Effects.Items.ItemEffect[]
                 {
                     new Effects.Items.NaturalGift(
@@ -170,11 +162,6 @@ namespace PBS.Databases
                 effects: new ItemEffect[]
                 {
                     new ItemEffect(
-                        ItemEffectType.TypeBerrySuperEffective,
-                        floatParams: new float[] { 0.5f },
-                        stringParams: new string[]{ "DEFAULT", "fire", }
-                        ),
-                    new ItemEffect(
                         ItemEffectType.Fling,
                         floatParams: new float[] { 10 }
                         ),
@@ -184,6 +171,13 @@ namespace PBS.Databases
                     new Effects.Items.NaturalGift(
                         moveType: "fire", basePower: 80
                         ),
+                    new Effects.Items.YacheBerry(
+                        filters: new Effects.Filter.FilterEffect[]
+                        {
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
+                                types: new string[]{ "fire" })
+                        })
                 }
                 ) },
 
@@ -226,19 +220,18 @@ namespace PBS.Databases
                     ItemTag.Consumable
                 },
 
-                effects: new ItemEffect[]
-                {
-                    new ItemEffect(
-                        ItemEffectType.TypeBerrySuperEffective,
-                        floatParams: new float[] { 0.5f },
-                        stringParams: new string[]{ "DEFAULT", "water", }
-                        ),
-                },
                 effectsNew: new Effects.Items.ItemEffect[]
                 {
                     new Effects.Items.NaturalGift(
                         moveType: "water", basePower: 80
                         ),
+                    new Effects.Items.YacheBerry(
+                        filters: new Effects.Filter.FilterEffect[]
+                        {
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
+                                types: new string[]{ "water" })
+                        })
                 }
                 ) },
 
@@ -279,19 +272,18 @@ namespace PBS.Databases
                     ItemTag.Consumable
                 },
 
-                effects: new ItemEffect[]
-                {
-                    new ItemEffect(
-                        ItemEffectType.TypeBerrySuperEffective,
-                        floatParams: new float[] { 0.5f },
-                        stringParams: new string[]{ "DEFAULT", "electric", }
-                        ),
-                },
                 effectsNew: new Effects.Items.ItemEffect[]
                 {
                     new Effects.Items.NaturalGift(
                         moveType: "electric", basePower: 80
                         ),
+                    new Effects.Items.YacheBerry(
+                        filters: new Effects.Filter.FilterEffect[]
+                        {
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
+                                types: new string[]{ "electric" })
+                        })
                 }
                 ) },
 
