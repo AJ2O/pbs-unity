@@ -68,6 +68,7 @@ namespace PBS.Databases.Effects.Items
                 : this is QuickClaw ? (this as QuickClaw).Clone()
                 : this is ShedShell ? (this as ShedShell).Clone()
                 : this is TriggerSitrusBerry ? (this as TriggerSitrusBerry).Clone()
+                : this is YacheBerry ? (this as YacheBerry).Clone()
                 : this is ZCrystal ? (this as ZCrystal).Clone()
                 : this is ZCrystalSignature ? (this as ZCrystalSignature).Clone()
                 : new ItemEffect(
@@ -635,6 +636,49 @@ namespace PBS.Databases.Effects.Items
         {
             return new TriggerSitrusBerry(
                 hpThreshold: hpThreshold
+                );
+        }
+    }
+
+    /// <summary>
+    /// Scales damage taken if the holder is hit by moves that satisfy the given conditions.
+    /// </summary>
+    public class YacheBerry : ItemEffect
+    {
+        /// <summary>
+        /// The amount to scale move power by.
+        /// </summary>
+        public float damageModifier;
+
+        /// <summary>
+        /// The text displayed when the user hangs on.
+        /// </summary>
+        public string displayText;
+
+        /// <summary>
+        /// This item only triggers when the move used is super-effective against the holder.
+        /// </summary>
+        public bool mustBeSuperEffective;
+
+        public YacheBerry(
+            float damageModifier = 0.5f,
+            string displayText = "item-yacheberry",
+            bool mustBeSuperEffective = true,
+            IEnumerable<Filter.FilterEffect> filters = null
+            )
+            : base(effectType: ItemEffectType.YacheBerry, filters: filters)
+        {
+            this.damageModifier = damageModifier;
+            this.displayText = displayText;
+            this.mustBeSuperEffective = mustBeSuperEffective;
+        }
+
+        public new YacheBerry Clone()
+        {
+            return new YacheBerry(
+                damageModifier: damageModifier,
+                displayText: displayText,
+                mustBeSuperEffective: mustBeSuperEffective
                 );
         }
     }

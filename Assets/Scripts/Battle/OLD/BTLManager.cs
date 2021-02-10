@@ -4253,11 +4253,11 @@ public class BTLManager : MonoBehaviour
                                         {
                                             moveTypeItem = battle.GetPokemonItemFiltered(
                                                 currentTarget,
-                                                ItemEffectType.TypeBerry);
+                                                ItemEffectType.YacheBerry);
                                             if (moveTypeItem != null)
                                             {
                                                 moveTypeEffect =
-                                                    moveTypeItem.data.GetEffect(ItemEffectType.TypeBerry);
+                                                    moveTypeItem.data.GetEffect(ItemEffectType.YacheBerry);
                                             }
                                         }
                                         else if (hitTarget.effectiveness.GetTotalEffectiveness() > 1f)
