@@ -4308,81 +4308,78 @@ namespace PBS.Networking
                                         }
 
                                         // move-type items here
-                                        Item moveTypeItem = null;
-                                        ItemEffect moveTypeEffect = null;
+                                        List<Item> yacheBerries = battle.PBPGetItemsWithEffect(currentTarget, ItemEffectType.YacheBerry);
+                                        List<Item> yachedBerriesActivated = new List<Item>();
+                                        List<PBS.Databases.Effects.Items.YacheBerry> yacheEffectsActivated = new List<Databases.Effects.Items.YacheBerry>();
 
                                         // Only activate berry on direct contact
                                         if (bypassSubstitute || string.IsNullOrEmpty(currentTarget.bProps.substituteMove))
                                         {
-                                            if (hitTarget.effectiveness.GetTotalEffectiveness() == 1f)
+                                            for (int yacheBerryIndex = 0; yacheBerryIndex < yacheBerries.Count; yacheBerryIndex++)
                                             {
-                                                moveTypeItem = battle.GetPokemonItemFiltered(
-                                                    currentTarget,
-                                                    ItemEffectType.TypeBerry);
-                                                if (moveTypeItem != null)
+                                                Item curYacheBerry = yacheBerries[yacheBerryIndex];
+                                                PBS.Databases.Effects.Items.YacheBerry yacheEffect = 
+                                                    curYacheBerry.data.GetEffectNew(ItemEffectType.YacheBerry) as 
+                                                    PBS.Databases.Effects.Items.YacheBerry;
+                                                
+                                                if (battle.DoEffectFiltersPass(
+                                                    filters: yacheEffect.filters,
+                                                    userPokemon: userPokemon,
+                                                    targetPokemon: currentTarget,
+                                                    moveData: moveImpactData,
+                                                    item: curYacheBerry
+                                                    ))
                                                 {
-                                                    moveTypeEffect =
-                                                        moveTypeItem.data.GetEffect(ItemEffectType.TypeBerry);
-                                                }
-                                            }
-                                            else if (hitTarget.effectiveness.GetTotalEffectiveness() > 1f)
-                                            {
-                                                moveTypeItem = battle.GetPokemonItemFiltered(
-                                                    currentTarget,
-                                                    ItemEffectType.TypeBerrySuperEffective);
-                                                if (moveTypeItem != null)
-                                                {
-                                                    moveTypeEffect =
-                                                        moveTypeItem.data.GetEffect(ItemEffectType.TypeBerrySuperEffective);
+                                                    bool activateYache = true;
+
+                                                    if (yacheEffect.mustBeSuperEffective && !hitTarget.effectiveness.IsSuperEffective())
+                                                    {
+                                                        activateYache = false;
+                                                    }
+
+                                                    if (activateYache)
+                                                    {
+                                                        yachedBerriesActivated.Add(curYacheBerry);
+                                                        yacheEffectsActivated.Add(yacheEffect);
+                                                    }
                                                 }
                                             }
                                         }
 
-                                        // Try to activate item
-                                        if (moveTypeItem != null)
+                                        // Try to activate yache berry
+                                        for (int yacheBerryIndex = 0; yacheBerryIndex < yachedBerriesActivated.Count; yacheBerryIndex++)
                                         {
-                                            List<string> typesAffected = new List<string>();
-                                            for (int j = 1; j < moveTypeEffect.stringParams.Length; j++)
-                                            {
-                                                typesAffected.Add(moveTypeEffect.stringParams[j]);
-                                            }
+                                            Item curYacheBerry = yachedBerriesActivated[yacheBerryIndex];
+                                            PBS.Databases.Effects.Items.YacheBerry curYacheEffect = yacheEffectsActivated[yacheBerryIndex];
 
-                                            if (typesAffected.Contains(moveImpactData.moveType))
+                                            // Test if the item can be consumed
+                                            bool canConsumeItem = false;
+                                            yield return StartCoroutine(TryToConsumeItem(
+                                                pokemon: currentTarget,
+                                                holderPokemon: currentTarget,
+                                                item: curYacheBerry,
+                                                (result) =>
+                                                {
+                                                    canConsumeItem = result;
+                                                },
+                                                apply: false
+                                            ));
+
+                                            // Consume the item, modify the damage
+                                            if (canConsumeItem)
                                             {
-                                                // Test if item can be consumed
-                                                bool canConsumeItem = false;
-                                                yield return StartCoroutine(TryToConsumeItem(
+                                                presetMultipliers *= curYacheEffect.damageModifier;
+                                                yield return StartCoroutine(ConsumeItem(
                                                     pokemon: currentTarget,
                                                     holderPokemon: currentTarget,
-                                                    item: moveTypeItem,
-                                                    (result) =>
+                                                    item: curYacheBerry,
+                                                    consumeText: curYacheEffect.displayText,
+                                                    typeID: moveImpactData.moveType,
+                                                    callback: (result) =>
                                                     {
-                                                        canConsumeItem = result;
-                                                    },
-                                                    apply: false
+
+                                                    }
                                                     ));
-
-                                                // Consume the item, modify the damage
-                                                if (canConsumeItem)
-                                                {
-                                                    presetMultipliers *= moveTypeEffect.GetFloat(0);
-
-                                                    string textID = moveTypeEffect.GetString(0);
-                                                    textID = (textID == "DEFAULT") ? "item-typeberry-default"
-                                                        : textID;
-
-                                                    yield return StartCoroutine(ConsumeItem(
-                                                        pokemon: currentTarget,
-                                                        holderPokemon: currentTarget,
-                                                        item: moveTypeItem,
-                                                        consumeText: textID,
-                                                        typeID: moveImpactData.moveType,
-                                                        callback: (result) =>
-                                                        {
-
-                                                        }
-                                                        ));
-                                                }
                                             }
                                         }
 

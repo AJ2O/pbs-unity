@@ -232,7 +232,7 @@ public enum ItemEffectType
     /// <summary>
     /// Scales the damage taken by moves of the listed types.
     /// </summary>
-    TypeBerry,
+    YacheBerry,
     /// float0:
     ///     range:  0-any
     ///     desc:   damage multiplier to apply to moves of the listed types

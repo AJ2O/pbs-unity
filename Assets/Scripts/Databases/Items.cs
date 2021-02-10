@@ -109,7 +109,7 @@ namespace PBS.Databases
                 effects: new ItemEffect[]
                 {
                     new ItemEffect(
-                        ItemEffectType.TypeBerry,
+                        ItemEffectType.YacheBerry,
                         floatParams: new float[] { 0.5f },
                         stringParams: new string[]{ "DEFAULT", "normal", }
                         ),
@@ -119,6 +119,14 @@ namespace PBS.Databases
                     new Effects.Items.NaturalGift(
                         moveType: "normal", basePower: 80
                         ),
+                    new Effects.Items.YacheBerry(
+                        mustBeSuperEffective: false,
+                        filters: new Effects.Filter.FilterEffect[]
+                        {
+                            new Effects.Filter.TypeList(
+                                targetType: Effects.Filter.TypeList.TargetType.Move,
+                                types: new string[]{ "normal" })
+                        })
                 }
                 ) },
 
