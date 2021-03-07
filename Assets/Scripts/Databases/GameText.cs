@@ -820,6 +820,15 @@ namespace PBS.Databases
                 }
                 ) },
 
+        {"item-yacheberry",
+            new PBS.Data.GameText(
+                ID: "item-yacheberry",
+                languageDict: new Dictionary<GameLanguages, string>
+                {
+                    { GameLanguages.English, "{{-target-pokemon-poss-}} {{-item-name-}} weakened the {{-type-name-}} attack!" },
+                }
+                ) },
+
         {"item-use",
             new PBS.Data.GameText(
                 ID: "item-use",
