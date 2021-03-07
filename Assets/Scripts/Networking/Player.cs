@@ -435,7 +435,7 @@ namespace PBS.Networking
             Debug.LogWarning("Received unknown event type");
             yield return null;
         }
-
+        
         #region Battle Phases
         /// <summary>
         /// Displays the event for starting the battle.
@@ -467,7 +467,10 @@ namespace PBS.Networking
 
             // End Statement
             string endString = "!";
-            yield return StartCoroutine(battleUI.DrawText($"{allyString}{challengeString}{enemyString}{endString}"));
+            yield return StartCoroutine(battleUI.DrawText(
+                text: $"{allyString}{challengeString}{enemyString}{endString}",
+                callback: delegate() { Debug.Log("This is the first callback!"); }
+                ));
         }
         /// <summary>
         /// Displays the event for finishing the battle.

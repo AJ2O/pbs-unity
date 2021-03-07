@@ -436,16 +436,27 @@ namespace PBS.Battle.View.UI
             HUDPanel.pokemonHUDNearRoot.gameObject.SetActive(true);
         }
 
-        public IEnumerator DrawText(string text, bool undrawOnFinish = true, Text textBox = null, int lines = -1)
+        public IEnumerator DrawText(
+            string text, 
+            bool undrawOnFinish = true, 
+            Text textBox = null, 
+            int lines = -1,
+            System.Action callback = null)
         {
             yield return StartCoroutine(DrawText(
                 text: text,
                 secPerChar: 1f / dialog.charPerSec,
                 undrawOnFinish: undrawOnFinish,
                 textBox: textBox,
-                lines: lines));
+                lines: lines,
+                callback: callback));
         }
-        public IEnumerator DrawTextNoWait(string text, bool undrawOnFinish = true, Text textBox = null, int lines = -1)
+        public IEnumerator DrawTextNoWait(
+            string text, 
+            bool undrawOnFinish = true, 
+            Text textBox = null, 
+            int lines = -1,
+            System.Action callback = null)
         {
             yield return StartCoroutine(DrawText(
                 text: text,
@@ -453,18 +464,30 @@ namespace PBS.Battle.View.UI
                 time: 0,
                 undrawOnFinish: undrawOnFinish,
                 textBox: textBox,
-                lines: lines));
+                lines: lines,
+                callback: callback));
         }
-        public IEnumerator DrawTextInstant(string text, bool undrawOnFinish = true, Text textBox = null, int lines = -1)
+        public IEnumerator DrawTextInstant(
+            string text, 
+            bool undrawOnFinish = true, 
+            Text textBox = null, 
+            int lines = -1,
+            System.Action callback = null)
         {
             yield return StartCoroutine(DrawText(
                 text: text,
                 secPerChar: 0,
                 undrawOnFinish: undrawOnFinish,
                 textBox: textBox,
-                lines: lines));
+                lines: lines,
+                callback: callback));
         }
-        public IEnumerator DrawTextInstantNoWait(string text, bool undrawOnFinish = true, Text textBox = null, int lines = -1)
+        public IEnumerator DrawTextInstantNoWait(
+            string text, 
+            bool undrawOnFinish = true, 
+            Text textBox = null, 
+            int lines = -1,
+            System.Action callback = null)
         {
             yield return StartCoroutine(DrawText(
                 text: text,
@@ -472,9 +495,16 @@ namespace PBS.Battle.View.UI
                 time: 0,
                 undrawOnFinish: undrawOnFinish,
                 textBox: textBox,
-                lines: lines));
+                lines: lines,
+                callback: callback));
         }
-        public IEnumerator DrawText(string text, float time, float lockedTime, bool undrawOnFinish = true, Text textBox = null, int lines = -1)
+        public IEnumerator DrawText(
+            string text, float time,
+            float lockedTime, 
+            bool undrawOnFinish = true,
+            Text textBox = null, 
+            int lines = -1,
+            System.Action callback = null)
         {
             yield return StartCoroutine(DrawText(
                 text: text,
@@ -484,7 +514,8 @@ namespace PBS.Battle.View.UI
                 silent: true,
                 undrawOnFinish: undrawOnFinish,
                 textBox: textBox,
-                lines: lines));
+                lines: lines,
+                callback: callback));
         }
         public IEnumerator DrawText(
             string text,
@@ -495,7 +526,8 @@ namespace PBS.Battle.View.UI
             bool hold = false,
             bool undrawOnFinish = true,
             Text textBox = null,
-            int lines = -1
+            int lines = -1,
+            System.Action callback = null
             )
         {
             // Default Dialog Box
@@ -519,6 +551,12 @@ namespace PBS.Battle.View.UI
             if (textBox == null && undrawOnFinish)
             {
                 UndrawDialogBox();
+            }
+
+            // execute callback if given one
+            if (callback != null)
+            {
+                callback();
             }
         }
         #endregion
