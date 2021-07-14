@@ -47,7 +47,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Unity/VSTU</UnityProjectGenerator>
-    <UnityProjectGeneratorVersion>4.8.2.0</UnityProjectGeneratorVersion>
+    <UnityProjectGeneratorVersion>4.10.3.0</UnityProjectGeneratorVersion>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2019.4.18f1</UnityVersion>
@@ -151,6 +151,7 @@
     <Compile Include="Assets\Scripts\Databases\ElementalTypes.cs" />
     <Compile Include="Assets\Scripts\Databases\GameText.cs" />
     <Compile Include="Assets\Scripts\Databases\Items.cs" />
+    <Compile Include="Assets\Scripts\Databases\Loader.cs" />
     <Compile Include="Assets\Scripts\Databases\Moves.cs" />
     <Compile Include="Assets\Scripts\Databases\Pokemon.cs" />
     <Compile Include="Assets\Scripts\Databases\PokemonNatures.cs" />
@@ -196,6 +197,7 @@
     <None Include="Assets\External Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\External Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\External Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\Packages\Newtonsoft.Json.13.0.1\lib\netstandard2.0\Newtonsoft.Json.xml" />
     <None Include="Assets\External Assets\Mirror\Version.txt" />
     <None Include="Assets\External Assets\Mirror\Readme.txt" />
     <None Include="Assets\External Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
@@ -408,6 +410,9 @@
     </Reference>
     <Reference Include="Mono.CecilX.Rocks">
       <HintPath>C:/Users/Owner/workspace/Projects/pbs-unity/Assets/External Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>C:/Users/Owner/workspace/Projects/pbs-unity/Assets/Packages/Newtonsoft.Json.13.0.1/lib/netstandard2.0/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.18f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
