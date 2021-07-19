@@ -1,0 +1,339 @@
+{
+  "bug": {
+    "ID": "bug",
+    "typeName": "Bug",
+    "typeColor": "#80ffc0",
+    "maxMove": "maxflutterby",
+
+    "resistances": [
+      "fighting",
+      "grass",
+      "ground"
+    ],
+    "weaknesses": [
+      "fire",
+      "flying",
+      "rock"
+    ]
+  },
+  "dark": {
+    "ID": "dark",
+    "typeName": "Dark",
+    "typeColor": "#404040",
+    "maxMove": "maxdarkness",
+
+    "immunities": [
+      "psychic"
+    ],
+    "resistances": [
+      "dark",
+      "ghost"
+    ],
+    "weaknesses": [
+      "bug",
+      "fairy",
+      "fighting"
+    ]
+  },
+  "dragon": {
+    "ID": "dragon",
+    "typeName": "Dragon",
+    "typeColor": "#a080ff",
+    "maxMove": "maxwyrmwind",
+
+    "resistances": [
+      "electric",
+      "fire",
+      "grass",
+      "water"
+    ],
+    "weaknesses": [
+      "dragon",
+      "fairy",
+      "ice"
+    ]
+  },
+  "electric": {
+    "ID": "electric",
+    "typeName": "Electric",
+    "typeColor": "#ffff00",
+    "maxMove": "maxlightning",
+
+    "resistances": [
+      "electric",
+      "flying",
+      "steel"
+    ],
+    "weaknesses": [
+      "ground"
+    ]
+  },
+  "fairy": {
+    "ID": "fairy",
+    "typeName": "Fairy",
+    "typeColor": "#404040",
+    "maxMove": "maxstarfall",
+
+    "immunities": [
+      "dragon"
+    ],
+    "resistances": [
+      "bug",
+      "dark",
+      "fighting"
+    ],
+    "weaknesses": [
+      "poison",
+      "steel"
+    ]
+  },
+  "fighting": {
+    "ID": "fighting",
+    "typeName": "Fighting",
+    "typeColor": "#c04040",
+    "maxMove": "maxknuckle",
+
+    "resistances": [
+      "bug",
+      "dark",
+      "rock"
+    ],
+    "weaknesses": [
+      "fairy",
+      "flying",
+      "psychic"
+    ]
+  },
+  "fire": {
+    "ID": "fire",
+    "typeName": "Fire",
+    "typeColor": "#ff0000",
+    "maxMove": "maxflare",
+
+    "resistances": [
+      "bug",
+      "fairy",
+      "fire",
+      "grass",
+      "ice",
+      "steel"
+    ],
+    "weaknesses": [
+      "ground",
+      "rock",
+      "water"
+    ]
+  },
+  "flying": {
+    "ID": "flying",
+    "typeName": "Flying",
+    "typeColor": "#80ffe0",
+    "maxMove": "maxairstream",
+
+    "immunities": [
+      "ground"
+    ],
+    "resistances": [
+      "bug",
+      "fighting",
+      "grass"
+    ],
+    "weaknesses": [
+      "electric",
+      "ice",
+      "rock"
+    ],
+
+    "tags": [
+      "Airborne"
+    ]
+  },
+  "ghost": {
+    "ID": "ghost",
+    "typeName": "Ghost",
+    "typeColor": "#8060a0",
+    "maxMove": "maxphantasm",
+
+    "immunities": [
+      "fighting",
+      "normal"
+    ],
+    "resistances": [
+      "bug",
+      "poison"
+    ],
+    "weaknesses": [
+      "dark",
+      "ghost"
+    ],
+
+    "tags": [
+      "CannotTrap"
+    ]
+  },
+  "grass": {
+    "ID": "grass",
+    "typeName": "Grass",
+    "typeColor": "#00ff00",
+    "maxMove": "maxovergrowth",
+
+    "resistances": [
+      "electric",
+      "grass",
+      "ground",
+      "water"
+    ],
+    "weaknesses": [
+      "bug",
+      "fire",
+      "flying",
+      "ice",
+      "poison"
+    ]
+  },
+  "ground": {
+    "ID": "ground",
+    "typeName": "Ground",
+    "typeColor": "#ffa05c",
+    "maxMove": "maxquake",
+
+    "immunities": [
+      "electric"
+    ],
+    "resistances": [
+      "poison",
+      "rock"
+    ],
+    "weaknesses": [
+      "grass",
+      "ice",
+      "water"
+    ]
+  },
+  "ice": {
+    "ID": "ice",
+    "typeName": "Ice",
+    "typeColor": "#c0e0fc",
+    "maxMove": "maxhailstorm",
+
+    "resistances": [
+      "ice"
+    ],
+    "weaknesses": [
+      "fighting",
+      "fire",
+      "rock",
+      "steel"
+    ]
+  },
+  "normal": {
+    "ID": "normal",
+    "typeName": "Normal",
+    "typeColor": "#ffc0a0",
+    "maxMove": "maxstrike",
+
+    "immunities": [
+      "ghost"
+    ],
+    "weaknesses": [
+      "fighting"
+    ]
+  },
+  "poison": {
+    "ID": "poison",
+    "typeName": "Poison",
+    "typeColor": "#bf00ff",
+    "maxMove": "maxooze",
+
+    "resistances": [
+      "bug",
+      "fairy",
+      "fighting",
+      "grass",
+      "poison"
+    ],
+    "weaknesses": [
+      "ground",
+      "psychic"
+    ]
+  },
+  "psychic": {
+    "ID": "psychic",
+    "typeName": "Psychic",
+    "typeColor": "#ff60ff",
+    "maxMove": "maxmindstorm",
+
+    "resistances": [
+      "fighting",
+      "psychic"
+    ],
+    "weaknesses": [
+      "dark",
+      "ghost"
+    ]
+  },
+  "rock": {
+    "ID": "rock",
+    "typeName": "Rock",
+    "typeColor": "#804000",
+    "maxMove": "maxrockfall",
+
+    "resistances": [
+      "fire",
+      "flying",
+      "normal",
+      "poison"
+    ],
+    "weaknesses": [
+      "fighting",
+      "grass",
+      "ground",
+      "steel",
+      "water"
+    ]
+  },
+  "steel": {
+    "ID": "steel",
+    "typeName": "Steel",
+    "typeColor": "#d0d0e0",
+    "maxMove": "maxsteelspike",
+
+    "immunities": [
+      "poison"
+    ],
+    "resistances": [
+      "bug",
+      "dragon",
+      "fairy",
+      "flying",
+      "grass",
+      "ice",
+      "normal",
+      "psychic",
+      "rock",
+      "steel"
+    ],
+    "weaknesses": [
+      "fighting",
+      "fire",
+      "ground"
+    ]
+  },
+  "water": {
+    "ID": "water",
+    "typeName": "Water",
+    "typeColor": "#4040ff",
+    "maxMove": "maxgeyser",
+
+    "resistances": [
+      "fire",
+      "ice",
+      "steel",
+      "water"
+    ],
+    "weaknesses": [
+      "electric",
+      "grass"
+    ]
+  }
+}

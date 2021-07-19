@@ -46,25 +46,26 @@ public enum PokemonStats
 }
 public enum PokemonTag
 {
+    // Special Pokemon
     Legendary,
     Mythical,
     PseudoLegendary,
     Starter,
     UltraBeast,
 
-    // Special Pokemon Sub-Classes
+    // Legendary Sub-Classes
     GuardianDeity,
     LunarDuo,
 
     /// <summary>
     /// This is a Gigantamax pokemon.
     /// </summary>
-    IsGigantamaxPokemon,
+    IsGigantamax,
     
     /// <summary>
     /// This is a Mega Pokemon.
     /// </summary>
-    IsMegaPokemon,
+    IsMega,
 
     /// <summary>
     /// If this pokemon entered battle under a different form, it will revert back to its base form once 

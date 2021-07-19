@@ -174,8 +174,8 @@ public class Testing : MonoBehaviour
                 new Moveslot("dragondance"),
                 new Moveslot("growl"),
             },
-            //item: new Item("psychiumz"),
-            item: new Item("ironplate"),
+            item: new Item("psychiumz"),
+            //item: new Item("ironplate"),
             checkForm: true
             );
 
@@ -409,7 +409,7 @@ public class Testing : MonoBehaviour
                             new Moveslot("aurawheel", PPUps: GameSettings.pkmnMaxPPUps),
                         },
                         //nonVolatileStatus: new StatusCondition("poison2"),
-                        isHiddenAbility: true,
+                        //isHiddenAbility: true,
 
                         item: new Item("wacanberry")
                         ),

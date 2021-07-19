@@ -678,7 +678,8 @@ namespace PBS.Databases.Effects.Items
             return new YacheBerry(
                 damageModifier: damageModifier,
                 displayText: displayText,
-                mustBeSuperEffective: mustBeSuperEffective
+                mustBeSuperEffective: mustBeSuperEffective,
+                filters: filters
                 );
         }
     }

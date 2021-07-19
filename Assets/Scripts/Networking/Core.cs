@@ -4308,9 +4308,11 @@ namespace PBS.Networking
                                         }
 
                                         // move-type items here
+                                        // Occa Berry, Yache Berry, Chilan Berry, etc.
                                         List<Item> yacheBerries = battle.PBPGetItemsWithEffect(currentTarget, ItemEffectType.YacheBerry);
                                         List<Item> yachedBerriesActivated = new List<Item>();
-                                        List<PBS.Databases.Effects.Items.YacheBerry> yacheEffectsActivated = new List<Databases.Effects.Items.YacheBerry>();
+                                        List<PBS.Databases.Effects.Items.YacheBerry> yacheEffectsActivated 
+                                            = new List<Databases.Effects.Items.YacheBerry>();
 
                                         // Only activate berry on direct contact
                                         if (bypassSubstitute || string.IsNullOrEmpty(currentTarget.bProps.substituteMove))
@@ -4318,9 +4320,10 @@ namespace PBS.Networking
                                             for (int yacheBerryIndex = 0; yacheBerryIndex < yacheBerries.Count; yacheBerryIndex++)
                                             {
                                                 Item curYacheBerry = yacheBerries[yacheBerryIndex];
-                                                PBS.Databases.Effects.Items.YacheBerry yacheEffect = 
-                                                    curYacheBerry.data.GetEffectNew(ItemEffectType.YacheBerry) as 
+                                                PBS.Databases.Effects.Items.YacheBerry yacheEffect 
+                                                    = curYacheBerry.data.GetEffectNew(ItemEffectType.YacheBerry) as 
                                                     PBS.Databases.Effects.Items.YacheBerry;
+                                                Debug.Log($"Yache check - {curYacheBerry.data.itemName} - {yacheEffect.filters.Count}");
                                                 
                                                 if (battle.DoEffectFiltersPass(
                                                     filters: yacheEffect.filters,

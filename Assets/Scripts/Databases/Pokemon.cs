@@ -105,7 +105,7 @@ namespace PBS.Databases
                 combineBaseTags: true,
                 tags: new PokemonTag[]
                 {
-                    PokemonTag.IsMegaPokemon,
+                    PokemonTag.IsMega,
                 }
                 ) },
         {"blastoise-gmax",
@@ -116,7 +116,7 @@ namespace PBS.Databases
                 height: 25.0f, weight: 9999f,
                 tags: new PokemonTag[]
                 {
-                    PokemonTag.IsGigantamaxPokemon,
+                    PokemonTag.IsGigantamax,
                 }
                 ) },
 
@@ -665,12 +665,16 @@ namespace PBS.Databases
         // Methods
         public PBS.Data.Pokemon GetPokemonData(string ID)
         {
+            return Loader.instance.GetPokemonData(ID);
+
+            /*
             if (database.ContainsKey(ID))
             {
                 return database[ID];
             }
             Debug.LogWarning("Could not find Pokemon with ID: " + ID);
             return database[""];
+            */
         }
         public PBS.Data.Pokemon GetPokemonIllusionData(Main.Pokemon.BattleProperties.Illusion illusion)
         {
