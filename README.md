@@ -1,4 +1,4 @@
-# Pokemon Battle Simulator in Unity (pbs-unity)
+# Pokemon Battle Simulator in Unity (PBS)
 
 ## Update - 2020.11.20
 Came back to this project for some small updates and to more formally open-source it.
