@@ -71,7 +71,7 @@ All the game data classes are designed to be customizable and allow for easy plu
 # Looking for Contributors
 [Discord Link](https://discord.com/invite/nNApAGQ)
 
-### Anyone can contribute to this huge project, and contributors will be needed!
+## Anyone can contribute to this huge project, and contributors will be needed!
 You can contribute by:
 - Opening issues for missing features
 - Working on open issues
@@ -85,3 +85,10 @@ Any small contribution helps! Here are some [smaller issues](https://github.com/
 - Most of the code isn't documented as well as I'd like, and that work will be captured by [this epic](https://github.com/AJ2O/pbs-unity/issues/9) 
 - There is some legacy code, and that will generally be phased out, captured by [this epic](https://github.com/AJ2O/pbs-unity/issues/11)
 - If you need help with learning what certain parts of code does, just hit up the [Discord](https://discord.com/invite/nNApAGQ)
+
+# Disclaimer
+Pokémon Battle Simulator (PBS) is an unaffiliated, fan-created project based on
+the Pokémon video game series, owned by Nintendo, Game Freak, and The Pokémon Company. PBS 
+neither owns nor claims to own any portion of the Pokémon franchise. All 
+custom artwork and coding for PBS is credited to their creators, but the 
+intellectual property remains under ownership of the aformentioned parties.
